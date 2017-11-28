@@ -1,1 +1,22 @@
 theme: jekyll-theme-cayman
+kramdown:
+  parse_block_html: true
+
+permalink: pretty
+
+url: "https://subhadipchowdhury.github.io/"
+  
+exclude: ['deploy', 'stylesheet.scss']
+
+analytics_id: "UA-36444201-2"
+
+defaults:
+
+  - scope:
+      path: ""
+    values:
+      robots: true
+
+compress_html:
+  clippings: all
+  blanklines: true
