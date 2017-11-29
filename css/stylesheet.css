@@ -16,7 +16,7 @@ box-shadow:inset 0 0 20px #000000;
 
 @font-face {
     font-family: 'Charter';
-    src: url('assets/CharterR.ttf');
+    src: url('resources/CharterR.ttf');
 }
 
 body{
