@@ -25,19 +25,24 @@ Sixth Year Graduate Student
 
 </div>
 
-### Curriculum Vitae
-
+<div class='anchor'>
+## Curriculum Vitae
+</div>
 My CV is available [here](assets/cv.pdf).
+<hr>
 
-### Research interests and background
-
+<div class='anchor'>
+## Research interests and background
+</div>
 I am currently interested in various Topological and Dynamical properties of Group of homeomorphisms of Circle and related problems in low dimensional Dynamics, Geometry, Topology and Geometric Group Theory.
 
 My papers and preprints are on my [research page](research).
 
 I was an undergraduate at [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
+<hr>
 
-### Teaching
+<div class='anchor'>
+## Teaching
 In Fall 2017, I am teaching [Math 195](teaching/2017Fall195) (Math. methods for social Sciences).
 Older teaching is listed on my [teaching page](teaching).
-
+</div>
