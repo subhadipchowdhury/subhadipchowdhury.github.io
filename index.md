@@ -22,9 +22,9 @@ Sixth Year Graduate Student
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
 
 </div>
-
 </div>
 
+<hr><hr>
 <div class='anchor'>
 ## Curriculum Vitae
 </div>
