@@ -16,19 +16,24 @@ Sixth Year Graduate Student
 [5734 S. University Avenue, Chicago, Il-60637](https://maps.google.com/maps?q=5734+S.+University+Avenue,+Chicago,+Il-60637)
 
 
-**Office:** Eckhart 3
-**Phone:** 773-490-5763
-**Email:** `subhadip` at `math` dot `uchicago` dot `edu`  
+**Office:** Eckhart 3  
+**Phone:** 773-490-5763  
+**Email:** `subhadip` at `math` dot `uchicago` dot `edu`    
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
 
 </div>
 
 </div>
 
+### Curriculum Vitae
+
+My CV is available [here](assets/cv.pdf).
+
 ### Research interests and background
 
 I am currently interested in various Topological and Dynamical properties of Group of homeomorphisms of Circle and related problems in low dimensional Dynamics, Geometry, Topology and Geometric Group Theory.
-My papers and preprints are on my [research page](research), and my CV is available [here](assets/cv.pdf).
+
+My papers and preprints are on my [research page](research).
 
 I was an undergraduate at [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 
