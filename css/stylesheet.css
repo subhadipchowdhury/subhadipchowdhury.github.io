@@ -1,3 +1,5 @@
+
+
 h3 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 600; }
 /* h3 { COLOR: #155F83; font-family: 'ProximaNova-Regular'; } */
 h4 { COLOR: #155F83; font-family: 'ProximaNova-Semibold'; }
@@ -6,12 +8,15 @@ h5 { COLOR: #155F83; font-family: 'Architects Daughter', cursive; }
 
 html
 {
-background-color: white; 
+background-color: white;
+-moz-box-shadow:inset 0 0 20px #000000; 
+-webkit-box-shadow:inset 0 0 20px #000000; 
+box-shadow:inset 0 0 20px #000000;
 }
 
 @font-face {
     font-family: 'Charter';
-    src: url('CharterR.ttf');
+    src: url('assets/CharterR.ttf');
 }
 
 body{
