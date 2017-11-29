@@ -1,0 +1,17 @@
+- title: Ziggurat fringes are self-similar
+  comment: Ergodic Theory and Dynamical Systems, (2017), 37, 739–757
+  links:
+    pdf: papers/selfsimilar.pdf
+    arXiv: http://arxiv.org/abs/1503.04227
+    journal: http://doi.org/10.1017/etds.2015.75
+	
+- title: A topological proof that O<sub>2</sub> is 2-MCFL
+  links:
+    pdf: papers/O2MCFL.pdf
+    arXiv: https://arxiv.org/abs/1710.04597
+
+- title: Stable Commutator Length and Quasimorphisms
+  comment: Topic proposal (expository)
+  links:
+    pdf: papers/topic-proposal.pdf
+
