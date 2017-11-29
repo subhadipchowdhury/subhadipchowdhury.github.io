@@ -8,7 +8,7 @@ navigation_weight: 2
 
 ### Papers/Preprints
 
-{% for paper in site.data.papers %}
+{% for paper in site.research.paperslist %}
 <div class="papers">
 **{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
