@@ -141,27 +141,6 @@ footer {
 	margin: 20px 50px 0px 50px; 
 }
 
-footer p.left 
-{ 
-	float: left; width:45%;  
-}
-
-footer p.right 
-{ 
-	float: right; width:45%; 
-}
- 
-footer p.right a{
-	color:#FED67F;
-	transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
-}
-footer p.right a:hover{
-	color:#000;
-}
-
 
 #mypicture {
     width:15em;
