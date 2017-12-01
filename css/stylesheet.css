@@ -107,30 +107,14 @@ header {
 
 
 
-nav {
-    ul {
-        padding-left: 0em;
-        margin: 0.5em 0em;
-    }
-    li {
-        display: inline;
-        list-style-type:none;
-        margin:0em;
-        padding-left:0.5em;
-        padding-right:0.5em;
-        text-align:left;
-    }
-float:right;
-}
-
-
-/*nav{
+nav{
 	float:right;
 }
 nav ul li{
 	display: inline-block;
 	margin-left: 1em;
-}*/
+	list-style-type:none;
+}
 nav ul li a{
 	font-family: 'Alegreya Sans SC', sans-serif;
 	font-size: 1em;
