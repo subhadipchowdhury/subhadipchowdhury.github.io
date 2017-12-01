@@ -261,7 +261,7 @@ header {
 
 
 
-nav {
+/*nav {
     ul {
         padding-left: 0em;
         margin: 0.5em 0em;
@@ -275,16 +275,16 @@ nav {
         text-align:left;
 	float:right;
     }
-}
+}*/
 
-footer {
-	@extend %small;
-	border-top: 0.1em dotted;
-	padding-top:0.3em;
-	border: 60px solid #FFF; 
-	margin: 20px 50px 0px 50px; 
-}
 
+nav{
+	float:right;
+}
+nav ul li{
+	display: inline-block;
+	margin-left: 1em;
+}
 nav ul li a{
 	font-family: 'Voltaire';
 	font-size: 1em;
@@ -303,6 +303,13 @@ nav li> a:hover {
 	
 }
 
+footer {
+	@extend %small;
+	border-top: 0.1em dotted;
+	padding-top:0.3em;
+	border: 60px solid #FFF; 
+	margin: 20px 50px 0px 50px; 
+}
 
 footer p.left 
 { 
