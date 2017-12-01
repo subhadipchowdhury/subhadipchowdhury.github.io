@@ -177,9 +177,7 @@ a {
 	font-family: 'ProximaNova-Light';
 	color: #C16622;
 	transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
+	
 	&:hover{
 		COLOR: #155F83;
 		text-decoration: underline; 
@@ -269,7 +267,7 @@ nav {
         margin: 0.5em 0em;
     }
     li {
-        display: inline-block;
+        display: inline;
         list-style-type:none;
         margin:0em;
         padding-left:0.5em;
