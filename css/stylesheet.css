@@ -137,9 +137,8 @@ nav li> a:hover {
 
 footer {
 	@extend %small;
-	border-top: 0.1em dotted;
+	border-top: 0.1em dotted #FFF;
 	padding-top:0.3em;
-	border: 60px solid #FFF; 
 	margin: 20px 50px 0px 50px; 
 }
 
