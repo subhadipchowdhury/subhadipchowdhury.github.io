@@ -6,12 +6,13 @@
     journal: http://doi.org/10.1017/etds.2015.75
     
 - title: A topological proof that O<sub>2</sub> is 2-MCFL
+  comment: Preprint
   links:
-    pdf: papers/O2MCFL.pdf
+    pdf: papers/O2_is_a_2_mcfl.pdf
     arXiv: https://arxiv.org/abs/1710.04597
     
 - title: Stable Commutator Length and Quasimorphisms
   comment: Topic proposal (expository)
   links:
-    pdf: papers/topic-proposal.pdf
+    pdf: papers/topic_proposal.pdf
 
