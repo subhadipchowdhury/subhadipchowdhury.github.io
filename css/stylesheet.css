@@ -273,6 +273,7 @@ nav {
         padding-left:0.5em;
         padding-right:0.5em;
         text-align:left;
+	float:right;
     }
 }
 
