@@ -7,174 +7,24 @@ background-color: white;
 box-shadow:inset 0 0 20px #000000;
 }
 
-/*FONTS######################################*/
-@font-face {
-    font-family: 'Charter';
-    src: url('../resources/CharterR.ttf');
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Almendra';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Almendra Regular'), local('Almendra-Regular'), url(http://fonts.gstatic.com/s/almendra/v10/uzCu8MxE9FBRB1UNllkhORTbgVql8nDJpwnrE27mub0.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Almendra';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Almendra Regular'), local('Almendra-Regular'), url(http://fonts.gstatic.com/s/almendra/v10/nn6qd3WfGL85pmBWUjz1lvesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin */
-@font-face {
-  font-family: 'Architects Daughter';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Architects Daughter Regular'), local('ArchitectsDaughter-Regular'), url(http://fonts.gstatic.com/s/architectsdaughter/v8/RXTgOOQ9AAtaVOHxx0IUBM3t7GjCYufj5TXV5VnA2p8.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Glass Antiqua';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Glass Antiqua'), local('GlassAntiqua-Regular'), url(http://fonts.gstatic.com/s/glassantiqua/v5/0yLrXKplgdUDIMz5TnCHNBLE1M_n0V67aubpfN9Cf9U.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Glass Antiqua';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Glass Antiqua'), local('GlassAntiqua-Regular'), url(http://fonts.gstatic.com/s/glassantiqua/v5/0yLrXKplgdUDIMz5TnCHNMI79x-VWsl9ZLFyGx7L0Fo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Lancelot';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Lancelot'), url(http://fonts.gstatic.com/s/lancelot/v7/zso0wCWqDVtlNlMhm6XLFRTbgVql8nDJpwnrE27mub0.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Lancelot';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Lancelot'), url(http://fonts.gstatic.com/s/lancelot/v7/gZYRnEKnl9YYo3PI6fF7bfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Neucha';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Neucha'), url(http://fonts.gstatic.com/s/neucha/v9/kfCpWUYjzqqtPFESHGr73_esZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* latin */
-@font-face {
-  font-family: 'Neucha';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Neucha'), url(http://fonts.gstatic.com/s/neucha/v9/irvP3TB0tsoy_UMHmCQlTw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway'), local('Raleway-Regular'), url(http://fonts.gstatic.com/s/raleway/v12/yQiAaD56cjx1AooMTSghGfY6323mHUZFJMgTvxaG2iE.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway'), local('Raleway-Regular'), url(http://fonts.gstatic.com/s/raleway/v12/0dTEPzkLWceF7z0koJaX1A.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Raleway SemiBold'), local('Raleway-SemiBold'), url(http://fonts.gstatic.com/s/raleway/v12/STBOO2waD2LpX45SXYjQBSEAvth_LlrfE80CYdSH47w.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Raleway SemiBold'), local('Raleway-SemiBold'), url(http://fonts.gstatic.com/s/raleway/v12/xkvoNo9fC8O2RDydKj12b_k_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Raleway Bold'), local('Raleway-Bold'), url(http://fonts.gstatic.com/s/raleway/v12/WmVKXVcOuffP_qmCpFuyzSEAvth_LlrfE80CYdSH47w.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Raleway Bold'), local('Raleway-Bold'), url(http://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaI_k_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Simonetta';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Simonetta Regular'), local('Simonetta-Regular'), url(http://fonts.gstatic.com/s/simonetta/v7/iFyKwM6I4-Jwf1d2XEwobRJtnKITppOI_IvcXXDNrsc.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Simonetta';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Simonetta Regular'), local('Simonetta-Regular'), url(http://fonts.gstatic.com/s/simonetta/v7/pP-YCzhElv5jnwzoOUSUyltXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* latin */
-@font-face {
-  font-family: 'Voltaire';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Voltaire'), url(http://fonts.gstatic.com/s/voltaire/v7/Bcdym-dNGztfenGzlRsZ3_esZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/*#############################*/
+
 body{
 	background-color: #ffffff;
 	color: #800000;
 	font-size: 16px;
-	font-family: 'Charter';
+	font-family: 'Raleway', sans-serif;
 }
 
 .anchor h2 {
 	font-size: 1.15em;
 	text-align:center;
 	COLOR: #155F83; 
-	font-family: 'ProximaNova-Light'; 
-	text-transform: uppercase;
+	font-family: 'Spectral SC', serif;
 }
 
 a {
 	text-decoration: none;
-	font-family: 'ProximaNova-Light';
+	font-family: 'Raleway', sans-serif;
 	color: #C16622;
 	transition:0.5s all;
 	
@@ -187,12 +37,8 @@ a {
 	}
 }
 
-
+h2 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 700; }
 h3 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 600; }
-/* h3 { COLOR: #155F83; font-family: 'ProximaNova-Regular'; } */
-h4 { COLOR: #155F83; font-family: 'ProximaNova-Semibold'; }
-h5 { COLOR: #155F83; font-family: 'Architects Daughter', cursive; }
-
 
 .main
 {
@@ -273,20 +119,20 @@ header {
         padding-left:0.5em;
         padding-right:0.5em;
         text-align:left;
-	float:right;
     }
+float:right;
 }*/
 
 
-nav{
+/*nav{
 	float:right;
 }
 nav ul li{
 	display: inline-block;
 	margin-left: 1em;
-}
+}*/
 nav ul li a{
-	font-family: 'Voltaire';
+	font-family: 'Alegreya Sans SC', sans-serif;
 	font-size: 1em;
 	color: #3A494C;
 	padding: 0.4em 1em;
