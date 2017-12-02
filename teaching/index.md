@@ -11,6 +11,6 @@ navigation_weight: 3
 
 {% for course in site.data.courses %}
 <div class="course">
-**{{ course.Duration }}**: {{ course.Role  }} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.link }})) {% if course.Instructor %} taught by [{{ course.Instructor }}]({{ course.Homepage}}) {% endif %} 
+**{{ course.Duration }}**: {{ course.Role  }} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.link }})) {% if course.Instructor %} taught by Prof. [{{ course.Instructor }}]({{ course.Homepage}}) {% endif %} 
 </div>
 {% endfor %}
