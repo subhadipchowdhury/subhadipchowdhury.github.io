@@ -81,7 +81,6 @@ ol {
 }
 
 .course {
-    	margin: 1em;
 	border-top: dotted 0.1em;
     	display: flex;
    	flex-direction: column;
