@@ -8,7 +8,7 @@ navigation_weight: 3
 ## {{ page.title }}
 
 ### University of Chicago
-
+<hr>
 
 {% for course in site.data.courses %}
 <div class="course">
