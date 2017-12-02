@@ -30,7 +30,7 @@ Sixth Year Graduate Student
 </div>
 My CV is available [here](assets/CV.pdf).
 
-Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teching Statement](assets/Research_Statement.pdf) as of Fall 2017.
+Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teaching Statement](assets/Teaching_Statement.pdf) as of Fall 2017.
 <hr>
 
 <div class='anchor'>
