@@ -80,6 +80,13 @@ ol {
     }
 }
 
+.course {
+	border-top: dotted 0.1em;
+    	display: flex;
+   	flex-direction: column;
+    	justify-content: space-between;
+}
+
 header {
   font-family: ProximaNova-Regular;
   font-size: 110%;
