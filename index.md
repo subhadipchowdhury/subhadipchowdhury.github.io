@@ -6,7 +6,7 @@ navigation_weight: 1
 
 <div class="about">
 
-![My name](assets/mypic.jpg){:#mypicture}
+![Subhadip Chowdhury](assets/me_2012.png){:#mypicture}
 
 <div class="mailing_address">
 
