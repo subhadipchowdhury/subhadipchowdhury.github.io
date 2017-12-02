@@ -81,7 +81,7 @@ ol {
 }
 
 .course {
-	border-top: dotted 0.05em;
+	border-top: dotted 2mm;
     	display: flex;
    	flex-direction: column;
     	justify-content: space-between;
