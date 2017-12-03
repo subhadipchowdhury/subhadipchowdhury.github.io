@@ -8,20 +8,16 @@ navigation_weight: 1
 
 ![Subhadip Chowdhury](assets/me_2012.png){:#mypicture}
 
-<div class="mailing_address">
-
 Sixth Year Graduate Student  
 [Department of Mathematics](http://math.uchicago.edu)  
 [The University of Chicago](http://www.uchicago.edu)  
 [5734 S. University Avenue, Chicago, Il-60637](https://maps.google.com/maps?q=5734+S.+University+Avenue,+Chicago,+Il-60637)
-
 
 **Office:** Eckhart 3  
 **Phone:** 773-490-5763  
 **Email:** `subhadip` at `math` dot `uchicago` dot `edu`    
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
 
-</div>
 </div>
 
 <hr><hr>
