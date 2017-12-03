@@ -1,4 +1,40 @@
 
+@media screen and (max-width: 480px) {
+    body {
+        max-width:95%;
+        font-size:100%;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    body {
+        max-width:80%;
+    }
+}
+
+@media screen and (min-width: 550px) {
+    body {
+        .intro {
+          flex-direction: row-reverse;
+        }
+        font-size:110%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    body {
+        max-width:1000px;
+
+        header {
+          flex-direction: row;
+        }
+
+        .papers {
+        flex-direction: row;
+        }
+    }
+}
+
 html
 {
 	width:100%;
