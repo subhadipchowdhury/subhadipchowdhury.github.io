@@ -15,6 +15,15 @@ category: coursepage
 | **Office Hours**| TBA |
 | **Textbook**| 1. [Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq) <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
 
+<div class="backlink">
+ 
+ ![Back](/assets/back.png){:#backicon}
+   
+  [Back](/teaching)
+</div>
+
+[Assignments](#assignments)
+
 ---
 
 ## General Policy
@@ -67,7 +76,7 @@ __It is the policy of the Department of Mathematics that the following rules app
 
 ---
 
-<div class='anchor'>
+<div class='anchor' id="assignments">
 ## HOMEWORK ASSIGNMENTS
 </div>
 __You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given. The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
