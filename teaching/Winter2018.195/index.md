@@ -57,6 +57,8 @@ max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
 __It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:__
 + _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
 + _Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete._
+
+
 ---
 ---
 
@@ -64,6 +66,8 @@ __It is the policy of the Department of Mathematics that the following rules app
 * Incompletes are rarely given, and are mainly for cases of medical emergency or extreme personal tragedy.
 * I will almost never give a make-up exam. However you should ask me __before the end of 8th week__ if you can do any extra credit work.
 * There are two holidays this quarter, Monday Jan 15 (MLK, Jr. Day) and Friday Feb 9 (College Break)
+
+
 ---
 ---
 
