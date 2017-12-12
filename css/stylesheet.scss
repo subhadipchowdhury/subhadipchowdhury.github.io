@@ -126,9 +126,14 @@ header {
   	display: -webkit-flex;
   	display: flex;
   	flex-flow: row wrap;
-  	justify-content: space-evenly;
+  	justify-content: space-between;
   	align-items: center;
   }
+@media all and (max-width: 500px) {
+	.about{
+		flex-direction: column;
+	}
+}
 
 
 @media all and (min-width: 960px) {
