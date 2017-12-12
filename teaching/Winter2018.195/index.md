@@ -1,5 +1,5 @@
 ---
-layout:default
+layout: default
 title: Math 195, Winter '18
 ---
 
