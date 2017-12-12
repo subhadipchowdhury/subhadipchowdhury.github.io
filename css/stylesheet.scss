@@ -198,9 +198,9 @@ footer {
 
 
 #mypicture {
-    width:15em;
+    width:10em;
     @media screen and (min-width: 960px) {
-        width: 20em;
+        width: 15em;
     }
     @media screen and (max-width: 480px) {
       margin-left: 0;
@@ -209,10 +209,12 @@ footer {
 
 .picture{
 	order: 1;
+	width: 40%;
 }
 
 .mail{
 	order:2;
+	width: 60%;
 	display: -webkit-box;
   	display: -moz-box;
   	display: -ms-flexbox;
