@@ -1,5 +1,5 @@
 <header>
     <h1><a href="/">Subhadip Chowdhury</a></h1>
-
-    {% include navigation.html %}
+    
+    {% if page.category != "Coursepage" %} {% include navigation.html %} {% endif %}
 </header>
