@@ -172,11 +172,9 @@ nav ul li a{
 nav li> a:hover {
 	color: #A5D3DB;
 	background:#3A494C;
-	
 }
 
 footer {
-	@extend %small;
 	border-top: 0.1em dotted #FFF;
 	padding-top:0.3em;
 	margin: 20px 50px 0px 50px; 
