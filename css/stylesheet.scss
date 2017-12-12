@@ -119,7 +119,7 @@ header {
 }
 
 .about {
-	width= 80%;
+	width: 80%;
 	display: -webkit-box;
   	display: -moz-box;
   	display: -ms-flexbox;
@@ -170,23 +170,25 @@ nav ul li{
 	display: inline-block;
 	margin-left: 1em;
 	list-style-type:none;
+	a{
+		font-family: 'Alegreya Sans SC', sans-serif;
+		font-size: 1em;
+		color: #3A494C;
+		padding: 0.4em 1em;
+		display: block;
+		border-radius: 0.5em;
+		-webkit-border-radius: 0.5em;
+		-moz-border-radius: 0.5em;
+		-o-border-radius: 0.5em;
+		font-weight: 900;
+		
+		&:hover{
+			color: #A5D3DB;
+			background:#3A494C;
+		}
+	}
 }
-nav ul li a{
-	font-family: 'Alegreya Sans SC', sans-serif;
-	font-size: 1em;
-	color: #3A494C;
-	padding: 0.4em 1em;
-	display: block;
-	border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-o-border-radius: 0.5em;
-	font-weight: 900;
-}
-nav li> a:hover {
-	color: #A5D3DB;
-	background:#3A494C;
-}
+
 
 footer {
 	border-top: 0.1em dotted #FFF;
