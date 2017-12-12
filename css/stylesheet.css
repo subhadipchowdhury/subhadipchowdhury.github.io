@@ -15,6 +15,7 @@ body{
 	color: #800000;
 	font-size: 16px;
 	font-family: 'Raleway', sans-serif;
+	font-weight: 500;
 }
 
 .anchor h2 {
@@ -27,6 +28,7 @@ body{
 a {
 	text-decoration: none;
 	font-family: 'Raleway', sans-serif;
+	font-weight: 400;
 	color: #C16622;
 	transition:0.5s all;
 	
@@ -39,8 +41,8 @@ a {
 	}
 }
 
-h2 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 700; }
-h3 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 600; }
+h2 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 800; }
+h3 { COLOR: #155F83; font-family: 'Raleway'; font-weight: 700; }
 
 .main
 {
