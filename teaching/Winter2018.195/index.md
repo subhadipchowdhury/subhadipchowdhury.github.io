@@ -47,17 +47,18 @@ Apart from homework, there will be `n` in-class quizzes, two midterms, and a fin
 | Midterm 2 | Friday of week 7 |
 | Final Exam | Exam week |
 
-**It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:
+__It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:
 * _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
-* Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.**
-
+* Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.__
 ---
+
 ## Miscellaneous Items of Interest:
 
 * Incompletes are rarely given, and are mainly for cases of medical emergency or extreme personal tragedy.
 * I will almost never give a make-up exam. However you should ask me __before the end of 8th week__ if you can do any extra credit work.
 * There are two holidays this quarter, Monday Jan 15 (MLK, Jr. Day) and Friday Feb 9 (College Break)
 ---
+
 ## HOMEWORK ASSIGNMENTS
 
 You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given.
