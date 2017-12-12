@@ -131,7 +131,7 @@ header {
   }
 @media all and (max-width: 500px) {
 	.about{
-		flex-direction: column;
+		flex-flow: column wrap;
 	}
 }
 
@@ -165,7 +165,7 @@ nav ul{
 @media all and (max-width: 500px) {
 nav ul{
     /* On small screens, we are no longer using row direction but column */
-    flex-direction: column;
+    flex-flow: column wrap;
   }
 }
 
@@ -212,7 +212,7 @@ footer {
 }
 
 #university_shield{
-	width:10em;
+	width:6em;
 }
 
 .picture{
