@@ -13,7 +13,6 @@ title: Math 195, Winter '18
 | **Problem sessions**| TBA |
 | **Office Hours**| TBA |
 | **Textbook**| 1. [Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq) <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
-|||
 
 ---
 
@@ -50,7 +49,6 @@ max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
 | **Midterm 1** | Friday of week 4 |
 | **Midterm 2** | Friday of week 7 |
 | **Final Exam** | Exam week |
-|||
 
 ---
 ---
