@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Math 195, Winter '18
+category: coursepage
 ---
 
 # Math 19520, Section 59
