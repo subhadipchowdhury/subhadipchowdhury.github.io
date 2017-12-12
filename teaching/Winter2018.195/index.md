@@ -23,7 +23,7 @@ title: Math 195, Winter '18
 
 * Homework is to be turned in on the given date at the BEGINNING of the class. Usually an assignment will be set in every class and will be due ONCE a week.
 * Please STAPLE the work you're turning in if you want it to be read. Folding the corner over doesn't count. Messy, mutilated or illegible homework will NOT be graded.
-* Usually, Wednesday and Friday and (next week)Monday's homework are due on (next week)Friday.
+* Usually, Wednesday and Friday and (next week) Monday's homework are due on (next week) Friday.
 * The point of the homework is for you to work out what you do and don't understand. You should help each other to understand things and come and ask me if a whole group of you gets really stuck together. When your homework has been handed back to you, you should go through it and see if you understand what has been written on it by the grader. If you don't, you should come to office hours and ask.
 * I encourage you to work together on homework, but you should make sure you understand what you have written down. If you write up what was done in a group without understanding it, that counts as cheating.
 * Late submission for homeworks will not be accepted unless in extreme circumstances.
@@ -53,9 +53,9 @@ max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
 |||
 
 ---
-__It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:
+__It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:__
 + _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
-+ Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.__
++ Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.
 ---
 
 ## Miscellaneous Items of Interest:
@@ -67,8 +67,12 @@ __It is the policy of the Department of Mathematics that the following rules app
 
 ## HOMEWORK ASSIGNMENTS
 
-You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given.
+__You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given. The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 
-The pattern is: Wednesday and Friday and Monday's homework is due on Friday.
 
+| Lec. No. | Date | Assignment | Exams | Due Date |
+|!--------!|!----!|!----------!|!-----!|!--------!|
+| 1. | Jan 3 | [Assignment 1](195_Assignment1.pdf) | | Jan 12 |
+| 2. | Jan 5 | [Assignment 2](195_Assignment2.pdf) | | Jan 12 |
+| | | | | |
 
