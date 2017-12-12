@@ -116,7 +116,9 @@ header {
 		text-align: center;
 		margin: 0.5em;
 	    }
-	text-decoration: none;
+	a:hover{
+		text-decoration: none;
+	}
 }
 
 .about {
