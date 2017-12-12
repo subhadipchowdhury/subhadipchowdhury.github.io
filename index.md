@@ -19,7 +19,6 @@ Sixth Year Graduate Student
 **Email:** `subhadip` at `math` dot `uchicago` dot `edu`    
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
 </div>
-<div class="clearfix"></div>
 </div>
 
 <hr><hr>
