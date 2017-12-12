@@ -241,3 +241,18 @@ footer {
 	float:right;
 }
 
+table {
+        padding-top: 0.5em;
+        border-collapse:collapse;
+        th, td {
+            padding:0.1em 0.5em;
+        }
+        td:first-child {
+            font-weight: bold;
+            text-align: right;
+        }
+	
+	tr:nth-child(even) {
+    		background-color: #dddddd;
+	}	
+    }
