@@ -18,12 +18,12 @@ category: coursepage
 <div class="backlink">
  
  ![Back](/assets/back.png){:#backicon}
-   
-  [Back](/teaching)
-</div>
+
+[Back](/teaching)
+
 
 [Assignments](#assignments)
-
+</div>
 ---
 
 ## General Policy
