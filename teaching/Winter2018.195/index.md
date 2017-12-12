@@ -37,8 +37,7 @@ Apart from homework, there will be `n` in-class quizzes, two midterms, and a fin
 ```
 0.1 * Assignment_Total + 
 0.1 * Quiz_Total + 
-0.25 * Midterm_2 + 
-max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
+max{ 0.2 * Midterm_1 + 0.25 * Midterm_2 + 0.35 * Final , 0.15 * Midterm_1 + 0.2 * Midterm_2 + 0.45 * Final}
 ```
 ---
 
