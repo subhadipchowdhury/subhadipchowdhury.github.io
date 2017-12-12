@@ -36,20 +36,26 @@ Please use office hours wisely. It is best to discuss problems with others in th
 
 Apart from homework, there will be `n` in-class quizzes, two midterms, and a final exam. The quiz will usually be on Friday at the end of class. Your score at the end of the quarter will be determined by the following formula:
 ```
-0.1 * Assignment_Total + 0.1 * Quiz_Total + 0.25 * Midterm_2 + max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
+0.1 * Assignment_Total + 
+0.1 * Quiz_Total + 
+0.25 * Midterm_2 + 
+max{ 0.2 * Midterm_1 + 0.35 * Final , 0.15 * Midterm_1  + 0.4 * Final}
 ```
 ---
 
 ## Important Dates:
 
-| Midterm 1 | Friday of week 4 |
-| --- | --- |
-| Midterm 2 | Friday of week 7 |
-| Final Exam | Exam week |
+|||
+|---|---|
+| **Midterm 1** | Friday of week 4 |
+| **Midterm 2** | Friday of week 7 |
+| **Final Exam** | Exam week |
+|||
 
-__It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:
-* _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
-* Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.__
+---
+It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:
++ _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
++ Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete.
 ---
 
 ## Miscellaneous Items of Interest:
