@@ -12,7 +12,7 @@ title: Math 195, Winter '18
 | **Instrutor**| Subhadip Chowdhury (subhadip `at` math `dot` uchicago `dot` edu)|
 | **Problem sessions**| TBA |
 | **Office Hours**| TBA |
-| **Textbook**| <ul><li>[Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq)</li><li>[Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)</li></ul> |
+| **Textbook**| <ol><li>[Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq)</li><li>[Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)</li></ol> |
 |||
 
 ---
