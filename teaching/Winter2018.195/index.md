@@ -72,7 +72,8 @@ __It is the policy of the Department of Mathematics that the following rules app
 </div>
 __You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given. The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 
-
+<div class='schedule'>
+  
 | Lec. No. | Date | Assignment | Exams | Due Date |
 |----------|------|------------|-------|----------|
 | 1. | Jan 3 | [Assignment 1](195_Assignment1.pdf) | | Jan 12 |
@@ -84,3 +85,4 @@ __You should do the homework exercises and reading BEFORE the next class, but tu
 | 6. | Jan 17 | [Assignment 6](195_Assignment6.pdf) | | Jan 26 |
 | | | | | |
 
+</div>
