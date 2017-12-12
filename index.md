@@ -5,9 +5,10 @@ navigation_weight: 1
 ---
 
 <div class="about">
-
+<div class="picture"
 ![Subhadip Chowdhury](assets/me_2012.png){:#mypicture}
-
+</div>
+<div class="mail">
 Sixth Year Graduate Student  
 [Department of Mathematics](http://math.uchicago.edu)  
 [The University of Chicago](http://www.uchicago.edu)  
@@ -17,7 +18,8 @@ Sixth Year Graduate Student
 **Phone:** 773-490-5763  
 **Email:** `subhadip` at `math` dot `uchicago` dot `edu`    
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
-
+</div>
+<div class="clearfix"></div>
 </div>
 
 <hr><hr>
