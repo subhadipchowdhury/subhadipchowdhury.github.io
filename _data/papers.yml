@@ -1,5 +1,6 @@
 - title: Ziggurat fringes are self-similar
   comment: Ergodic Theory and Dynamical Systems, (2017), 37, 739–757
+  type: published
   links:
     pdf: papers/selfsimilar.pdf
     arXiv: http://arxiv.org/abs/1503.04227
@@ -7,6 +8,7 @@
     
 - title: A topological proof that O<sub>2</sub> is 2-MCFL
   comment: Preprint
+  type: preprint
   links:
     pdf: papers/O2_is_a_2_mcfl.pdf
     arXiv: https://arxiv.org/abs/1710.04597
