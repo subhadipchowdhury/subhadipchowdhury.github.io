@@ -6,6 +6,11 @@ category: coursepage
 
 # Math 19520, Section 59
 ## Winter 2018
+<div class="backlink">
+ 
+  ![Back](/assets/back.png){:#backicon} [Back](/teaching) 
+</div>  
+
 
 |||
 |---|---|
@@ -15,10 +20,6 @@ category: coursepage
 | **Office Hours**| TBA |
 | **Textbook**| 1. [Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq) <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
 
-<div class="backlink">
- 
-  ![Back](/assets/back.png){:#backicon} [Back](/teaching) 
-</div>  
 
 ---
 
