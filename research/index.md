@@ -15,3 +15,15 @@ navigation_weight: 2
 {% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
 </div>
 {% endfor %}
+
+### Expository Notes
+
+{% for paper in site.data.papers %}
+{% if paper.type == "expository" %}
+<div class="papers">
+**{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
+
+{% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
