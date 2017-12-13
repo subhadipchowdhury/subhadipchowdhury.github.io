@@ -8,7 +8,7 @@ category: coursepage
 ## Winter 2018
 <div class="backlink">
  
-  ![Back](/assets/back.png){:#backicon} [Back](/teaching) 
+  ![Back](/resources/back.png){:#backicon} [Back](/teaching) 
 </div>  
 
 
