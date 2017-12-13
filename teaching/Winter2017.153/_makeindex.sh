@@ -1,4 +1,3 @@
 #!/bin/sh
 
-ls | egrep '(pdf)' | \\ #filter the content you want in the index
-perl -e 'print "<html><body><ul>"; while(<>) { chop $_; print "<li><a href=\"./$_\">$_</a></li>";} print "</ul></body></html>"' > index.html
+ls | egrep '(pdf)' | perl -e 'print "<html><body><ul>"; while(<>) { chop $_; print "<li><a href=\"$_\">$_</a></li>";} print "</ul></body></html>"' > index.html
