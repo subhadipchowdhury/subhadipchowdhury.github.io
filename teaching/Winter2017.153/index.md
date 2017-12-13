@@ -1,6 +1,6 @@
 ---
- layout:default 
- category:coursepage 
+ layout: default 
+ category: coursepage 
  title: Winter2017.153 
 ---
  
