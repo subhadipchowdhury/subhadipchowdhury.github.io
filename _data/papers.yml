@@ -12,7 +12,8 @@
     arXiv: https://arxiv.org/abs/1710.04597
     
 - title: Stable Commutator Length and Quasimorphisms
-  comment: Topic proposal (expository)
+  comment: Topic proposal
+  type: expository
   links:
     pdf: papers/topic_proposal.pdf
 
