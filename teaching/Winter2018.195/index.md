@@ -17,12 +17,9 @@ category: coursepage
 
 <div class="backlink">
  
- ![Back](/assets/back.png){:#backicon}
-
-[Back](/teaching)
-
-
-[Assignments](#assignments)
+  ![Back](/assets/back.png){:#backicon} [Back](/teaching) 
+  
+  [Assignments](#assignments)
 </div>
 ---
 
