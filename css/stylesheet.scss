@@ -270,5 +270,12 @@ code{
 	}
 }	
 
-.backlink { float:right; }
-#backicon{ width:1em; }
+.backlink { 
+	display:flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	float:right;
+}
+#backicon{ 
+	width:1em; 
+}
