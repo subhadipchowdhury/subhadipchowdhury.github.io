@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ls | egrep '(pdf)' | perl -e 'print "<html> \n <body> \n <ul>"; while(<>) { chop $_; print "<li><a href=\"$_\">$_</a></li>";} print "</ul> \n </body> \n </html>"' > index.html
+ls | egrep '(pdf)' | perl -e '  use Cwd; $cwd =cwd(); $dir= pop @{[split m|/|, $cwd]}; print "--- \n layout:default \n category:coursepage \n title: $dir \n--- \n \n ";  while(<>) { chop $_; print "+ [$_]($_) \n";}' > index.md
