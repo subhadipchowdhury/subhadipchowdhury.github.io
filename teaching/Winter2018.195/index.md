@@ -18,7 +18,7 @@ category: coursepage
 | **Instrutor**| Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
 | **Problem sessions**| TBA |
 | **Office Hours**| TBA |
-| **Textbook**| 1. [Multivariable Calculus, 8th edition, by James Stewart](http://bit.ly/2BCB1hq) <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
+| **Textbook**| 1. Multivariable Calculus, __8th__ edition, by James Stewart <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
 
 
 ---
