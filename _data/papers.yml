@@ -2,7 +2,7 @@
   comment: Ergodic Theory and Dynamical Systems, (2017), 37, 739–757
   type: published
   links:
-    pdf: assets/papers/selfsimilar.pdf
+    pdf: /assets/papers/selfsimilar.pdf
     arXiv: http://arxiv.org/abs/1503.04227
     journal: http://doi.org/10.1017/etds.2015.75
     
@@ -10,18 +10,18 @@
   comment: Preprint
   type: preprint
   links:
-    pdf: assets/papers/O2_is_a_2_mcfl.pdf
+    pdf: /assets/papers/O2_is_a_2_mcfl.pdf
     arXiv: https://arxiv.org/abs/1710.04597
     
 - title: Stable Commutator Length and Quasimorphisms
   comment: Topic proposal
   type: expository
   links:
-    pdf: assets/papers/topic_proposal.pdf
+    pdf: /assets/papers/topic_proposal.pdf
     
 - title: Siegel Discs in Complex Dynamics
   comment: MATH 31400 (Spring 13), Analysis 3 Final project
   type: expository
   links:
-    pdf: assets/papers/siegel_disks.pdf
+    pdf: /assets/papers/siegel_disks.pdf
 
