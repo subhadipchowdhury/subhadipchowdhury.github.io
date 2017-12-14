@@ -36,7 +36,7 @@ Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teachi
 <div class='anchor'>
 ## Research Interests and Background
 </div>
-I am currently interested in various Topological and Dynamical properties of Group of homeomorphisms of Circle and related problems in low dimensional Dynamics, Geometry, Topology and Geometric Group Theory.
+My research area is low-dimensional dynamics and topology, specifically nonabelian action of free groups on circles via orientation preserving homeomorphisms. I am also interested in application of algebraic topology to formal language theory. I am broadly interested in Geometric Group Theory topics like stable commutator length and quasimorphisms as well.
 
 My papers and preprints are on my [research page](research).
 
