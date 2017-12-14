@@ -5,7 +5,7 @@ navigation_weight: 2
 ---
 
 ## {{ page.title }}
----
+
 ### Papers/Preprints
 
 {% for paper in site.data.papers %}
@@ -18,7 +18,8 @@ navigation_weight: 2
 {% endif %}
 {% endfor %}
 
----
+# 
+
 ### Expository Notes
 
 {% for paper in site.data.papers %}
