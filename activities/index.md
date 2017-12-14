@@ -18,7 +18,7 @@ navigation_weight: 4
 
 - *April 2017*: Pizza Seminar, University of Chicago
 - *December 2015*: Pizza Seminar, University of Chicago
-- *Summer 2013*: Rigidity Seminar, student reading group, University of Chicago (Notes are available [here](assets/talks/rig_sem_notes.pdf).)
+- *Summer 2013*: Rigidity Seminar, student reading group, University of Chicago (Notes are available [here](/assets/talks/rig_sem_notes.pdf).)
 - *February 2013*: Farb and Friends Student Seminar, University of Chicago
 
 ### Organization
