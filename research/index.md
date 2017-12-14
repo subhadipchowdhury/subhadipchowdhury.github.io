@@ -18,7 +18,7 @@ navigation_weight: 2
 {% endif %}
 {% endfor %}
 
-# 
+
 
 ### Expository Notes
 
