@@ -34,7 +34,7 @@ Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teachi
 <hr>
 
 <div class='anchor'>
-## Research interests and background
+## Research Interests and Background
 </div>
 I am currently interested in various Topological and Dynamical properties of Group of homeomorphisms of Circle and related problems in low dimensional Dynamics, Geometry, Topology and Geometric Group Theory.
 
