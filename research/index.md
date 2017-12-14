@@ -18,6 +18,7 @@ navigation_weight: 2
 {% endif %}
 {% endfor %}
 
+---
 ### Expository Notes
 
 {% for paper in site.data.papers %}
