@@ -42,13 +42,14 @@ Please use office hours wisely. It is best to discuss problems with others in th
 
 Apart from homework, there will be `n` in-class quizzes, two midterms, and a final exam. The quiz will usually be on Friday at the end of class. Your score at the end of the quarter will be determined as follows:
 
-<ul>
-<li>Homework: 10% total
-<li>Quizzes: About 10% total
-<li>Midterm 1: About 20%
-<li>Midterm 2: About 25%
-<li>Final Exam: At least 35%
-</ul>
+
++ Homework: 10% total
++ Quizzes: About 10% total
++ Midterm 1: About 20%
++ Midterm 2: About 25%
++ Final Exam: At least 35%
+
+
 ---
 
 ## Important Dates:
@@ -61,6 +62,7 @@ Apart from homework, there will be `n` in-class quizzes, two midterms, and a fin
 
 
 ---
+
 __It is the policy of the Department of Mathematics that the following rules apply to final exams in all undergraduate mathematics courses:__
 + _The final exam must occur at the time and place designated on the College Final Exam Schedule_. In particular, _NO_ final examinations may be given during the tenth week of the quarter, except in the case of graduating seniors.
 + _Instructors are not permitted to excuse students from the scheduled time of the final exam except in the cases of an Incomplete._
@@ -80,12 +82,10 @@ __It is the policy of the Department of Mathematics that the following rules app
 <div class='anchor' id="assignments">
 ## Homework Assignments
 </div>
+
 __You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given. The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 
-<div align=center width=100%>
-
 + [195_Assignment1.pdf](195_Assignment1.pdf) 
-+ [195_Assignment10.pdf](195_Assignment10.pdf) 
 + [195_Assignment2.pdf](195_Assignment2.pdf) 
 + [195_Assignment3.pdf](195_Assignment3.pdf) 
 + [195_Assignment4.pdf](195_Assignment4.pdf) 
@@ -94,10 +94,24 @@ __You should do the homework exercises and reading BEFORE the next class, but tu
 + [195_Assignment7.pdf](195_Assignment7.pdf) 
 + [195_Assignment8.pdf](195_Assignment8.pdf) 
 + [195_Assignment9.pdf](195_Assignment9.pdf) 
-+ [195_Final.pdf](195_Final.pdf) 
++ [195_Assignment10.pdf](195_Assignment10.pdf) 
++ [195_Assignment11.pdf](195_Assignment11.pdf) 
++ [195_Assignment12.pdf](195_Assignment12.pdf) 
++ [195_Assignment13.pdf](195_Assignment13.pdf) 
++ [195_Assignment14.pdf](195_Assignment14.pdf) 
++ [195_Assignment15.pdf](195_Assignment15.pdf) 
++ [195_Assignment16.pdf](195_Assignment16.pdf) 
++ [195_Assignment17.pdf](195_Assignment17.pdf) 
++ [195_Assignment18.pdf](195_Assignment18.pdf) 
++ [195_Assignment19.pdf](195_Assignment19.pdf) 
++ [195_Assignment20.pdf](195_Assignment20.pdf) 
++ [195_Assignment21.pdf](195_Assignment21.pdf) 
++ [195_Assignment22.pdf](195_Assignment22.pdf) 
++ [195_Assignment23.pdf](195_Assignment23.pdf) 
 + [195_Midterm1.pdf](195_Midterm1.pdf) 
 + [195_Midterm2.pdf](195_Midterm2.pdf) 
 + [195_PracticeProblems.pdf](195_PracticeProblems.pdf) 
++ [195_Final.pdf](195_Final.pdf) 
 + [195_Quiz1.pdf](195_Quiz1.pdf) 
 + [195_Quiz2.pdf](195_Quiz2.pdf) 
 + [195_Quiz3.pdf](195_Quiz3.pdf) 
@@ -106,4 +120,4 @@ __You should do the homework exercises and reading BEFORE the next class, but tu
 + [195_Quiz7.pdf](195_Quiz7.pdf) 
 + [Vanderbei_Linear_Programming.pdf](Vanderbei_Linear_Programming.pdf) 
 
-</div>
+
