@@ -8,7 +8,7 @@ navigation_weight: 5
 ## Math blogs, seminars, and others
 
 + [Prof. Danny Calegari's blog](https://lamington.wordpress.com)
-+ [UChicago Dynamics Seminar](math.uchicago.edu/~dynamics/)
++ [UChicago Dynamics Seminar](https://math.uchicago.edu/~dynamics/)
 + [UChicago Geometry/Topology Seminar](http://www.math.uchicago.edu/~geometry/gt_seminar.html)
 + [UChicago AWM](http://math.uchicago.edu/~awm/)
 
