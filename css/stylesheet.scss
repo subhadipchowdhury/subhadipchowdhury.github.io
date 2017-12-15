@@ -277,8 +277,10 @@ code{
 }
 
 .schedule {
-	align:center;
+	overflow-x:auto;
 	table{
+		margin-left:auto; 
+    		margin-right:auto;
 		th, td {
 			text-align: center;
 		}
