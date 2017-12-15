@@ -43,15 +43,15 @@ Please use office hours wisely. It is best to discuss problems with others in th
 Apart from homework, there will be `n` in-class quizzes, two midterms, and a final exam. The quiz will usually be on Friday at the end of class. Your score at the end of the quarter will be determined by the following formula:
 
 ```
-0.1 * Assignment_Total +
+ 0.1 * Assignment_Total +
 
-0.1 * Quiz_Total + 
+ 0.1 * Quiz_Total + 
 
-max { 0.2 * Midterm_1 + 0.25 
-* Midterm_2 + 0.35 * Final , 
+ max { 0.2 * Midterm_1 + 0.25 
+ * Midterm_2 + 0.35 * Final , 
 
-0.15 * Midterm_1 + 0.2 * 
-Midterm_2 + 0.45 * Final }
+ 0.15 * Midterm_1 + 0.2 * 
+ Midterm_2 + 0.45 * Final }
 ```
 
 ---
