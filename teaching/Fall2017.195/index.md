@@ -111,7 +111,7 @@ __You should do the homework exercises and reading BEFORE the next class, but tu
 + [195_Midterm1.pdf](195_Midterm1.pdf) 
 + [195_Midterm2.pdf](195_Midterm2.pdf) 
 + [195_PracticeProblems.pdf](195_PracticeProblems.pdf) 
-+ [195_final.pdf](195_final.pdf) 
++ [195_Final.pdf](195_Final.pdf) 
 + [195_Quiz1.pdf](195_Quiz1.pdf) 
 + [195_Quiz2.pdf](195_Quiz2.pdf) 
 + [195_Quiz3.pdf](195_Quiz3.pdf) 
