@@ -4,6 +4,10 @@
 $base-font: 'Raleway', sans-serif;
 $anchor-font: 'Alegreya SC', serif;
 
+@font-face { font-family: mplus-1m; font-weight: regular; src: url('resources/mplus-1m-regular.ttf');}
+
+$code-font: 'mplus-1m';
+	
 html
 {
 	width:100%;
@@ -266,6 +270,7 @@ code{
 	background-color: #ddd;
 	border-radius: 5px;
 	display: inline-block;
+	font-family: $code-font;
 }
 
 .schedule {
