@@ -84,9 +84,11 @@ __It is the policy of the Department of Mathematics that the following rules app
 <div class='anchor' id="assignments">
 ## Homework Assignments
 </div>
-__You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given. The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 
 <div class='schedule'>
+ 
+__You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given.__ 
+__The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
   
 | Lec. No. | Date | Assignment | Due Date |
 |----------|------|------------|----------|
