@@ -56,9 +56,9 @@ Apart from homework, there will be `n` in-class quizzes, two midterms, and a fin
 
 |||
 |---|---|
-| **Midterm 1** | Friday of week 4 |
-| **Midterm 2** | Friday of week 7 |
-| **Final Exam** | Exam week |
+| **Midterm 1** | Friday of week 4, October 20, 11:30AM-12:20PM |
+| **Midterm 2** | Wednesday of week 8, November 15, 11:30AM-12:20PM |
+| **Final Exam** | Monday, December 4, 10:30AM-12:30PM |
 
 
 ---
