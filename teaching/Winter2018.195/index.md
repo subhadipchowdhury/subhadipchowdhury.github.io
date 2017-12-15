@@ -88,15 +88,15 @@ __You should do the homework exercises and reading BEFORE the next class, but tu
 
 <div class='schedule'>
   
-| Lec. No. | Date | Assignment | Exams | Due Date |
-|----------|------|------------|-------|----------|
-| 1. | Jan 3 | [Assignment 1](195_Assignment1.pdf) | | Jan 12 |
-| 2. | Jan 5 | [Assignment 2](195_Assignment2.pdf) | | Jan 12 |
-| 3. | Jan 8 | [Assignment 3](195_Assignment3.pdf) | | Jan 12 |
-| 4. | Jan 10 | [Assignment 4](195_Assignment4.pdf) | | Jan 19 |
-| 5. | Jan 12 | [Assignment 5](195_Assignment5.pdf) | | Jan 19 |
-| | Jan 15 | No Assignment | |  |
-| 6. | Jan 17 | [Assignment 6](195_Assignment6.pdf) | | Jan 26 |
-| | | | | |
+| Lec. No. | Date | Assignment | Due Date |
+|----------|------|------------|----------|
+| 1. | Jan 3 | [Assignment 1](195_Assignment1.pdf) | Jan 12 |
+| 2. | Jan 5 | [Assignment 2](195_Assignment2.pdf) | Jan 12 |
+| 3. | Jan 8 | [Assignment 3](195_Assignment3.pdf) | Jan 12 |
+| 4. | Jan 10 | [Assignment 4](195_Assignment4.pdf) | Jan 19 |
+| 5. | Jan 12 | [Assignment 5](195_Assignment5.pdf) | Jan 19 |
+| | Jan 15 | No Assignment |  |
+| 6. | Jan 17 | [Assignment 6](195_Assignment6.pdf) | Jan 26 |
+| | | | |
 
 </div>
