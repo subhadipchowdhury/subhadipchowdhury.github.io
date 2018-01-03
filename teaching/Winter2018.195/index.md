@@ -8,7 +8,7 @@ category: coursepage
 ## Winter 2018
 <div class="backlink">
  
-  ![Back](/resources/back.png){:#backicon} [Back](/teaching) 
+  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching) 
 </div>  
 
 
@@ -22,17 +22,24 @@ category: coursepage
 
 
 ---
+## Course Description
+
+This will be a course on multivariable calculus and obtimization, intended as a follow-up to Math 133/153/163. We will review the material on multivariable calculus from the first year courses, and then introduce more advanced material, with a particular emphasis on
+optimization problems. 
+
+We will spend about 4 weeks reviewing vectors and partial derivatives, and introducing optimization techniques such as the second derivative test and Lagrange multipliers. We will then spend 1-2 weeks reviewing multiple integrals and introducing further integration techniques (particularly change of variables). We will then spend approximately 2 weeks discussing linear programming. We will finish with a review of sequences and series, followed by a discussion of Taylor series, lasting about 2 weeks.
+---
 
 ## General Policy
 
 ### Homework
 
 * Homework is to be turned in on the given date at the BEGINNING of the class. Usually an assignment will be set in every class and will be due ONCE a week.
-* Please STAPLE the work you're turning in if you want it to be read. Folding the corner over doesn't count. Messy, mutilated or illegible homework will NOT be graded.
+* Please STAPLE the work you're turning in if you want it to be read. Folding the corner over doesn't count. Messy, mutilated or illegible homework will NOT be graded.  __The grader may impose a 10% penalty for solutions, which are otherwise correct, but are lacking in clarity.__
 * Usually, Wednesday and Friday and (next week) Monday's homework are due on (next week) Friday.
 * The point of the homework is for you to work out what you do and don't understand. You should help each other to understand things and come and ask me if a whole group of you gets really stuck together. When your homework has been handed back to you, you should go through it and see if you understand what has been written on it by the grader. If you don't, you should come to office hours and ask.
 * I encourage you to work together on homework, but you should make sure you understand what you have written down. If you write up what was done in a group without understanding it, that counts as cheating.
-* Late submission for homeworks will not be accepted unless in extreme circumstances.
+* __Late Homework Policy:__ Late submission for homeworks will not be accepted unless in extreme circumstances. If you have to submit it late,  email me in advance, and some penalty might be imposed.
 
 ### Office hours and Problem Sessions
 
