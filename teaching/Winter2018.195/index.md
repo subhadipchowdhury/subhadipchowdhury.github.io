@@ -83,6 +83,7 @@ __It is the policy of the Department of Mathematics that the following rules app
 * Incompletes are rarely given, and are mainly for cases of medical emergency or extreme personal tragedy.
 * I will almost never give a make-up exam. However you should ask me __before the end of 8th week__ if you can do any extra credit work.
 * There are two holidays this quarter, Monday Jan 15 (MLK, Jr. Day) and Friday Feb 9 (College Break)
+* For any communication regarding this course, please email me from your uchicago email address.
 
 
 ---
