@@ -27,7 +27,6 @@ category: coursepage
 This will be a course on multivariable calculus and obtimization, intended as a follow-up to Math 133/153/163. We will review the material on multivariable calculus from the first year courses, and then introduce more advanced material, with a particular emphasis on
 optimization problems. We will spend about 4 weeks reviewing vectors and partial derivatives, and introducing optimization techniques such as the second derivative test and Lagrange multipliers. We will then spend 1-2 weeks reviewing multiple integrals and introducing further integration techniques (particularly change of variables). We will then spend approximately 2 weeks discussing linear programming. We will finish with a review of sequences and series, followed by a discussion of Taylor series, lasting about 2 weeks.
 
-
 ---
 ## General Policy
 
