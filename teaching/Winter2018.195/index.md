@@ -16,8 +16,8 @@ category: coursepage
 |---|---|
 | **Lectures** | MWF	12:30 pm - 01:20 pm,	Pick	016 |
 | **Instrutor**| Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
-| **Problem sessions**| TBA |
-| **Office Hours**| TBA |
+| **Problem sessions**| Monday 6-7PM, Eckhart 29 |
+| **Office Hours**| Wednesday 5-6PM and Thursday 6-7PM, Eckhart 3 |
 | **Textbook**| 1. Multivariable Calculus, __8th__ edition, by James Stewart <br>2. [Linear Programming: Foundations and Extensions, by Robert J. Vanderbei](Vanderbei_Linear_Programming.pdf)|
 
 
