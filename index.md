@@ -6,7 +6,7 @@ navigation_weight: 1
 
 <div class="about">
 <div class="picture">
-![Subhadip Chowdhury](assets/me_2012.png){:#mypicture}
+[![Subhadip Chowdhury](assets/me_small.jpg){:#mypicture}][assets/me_2018.jpg]
 </div>
 <div class="mail">
 Sixth Year Graduate Student  
