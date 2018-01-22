@@ -108,12 +108,12 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 6. | Jan 17 | [Assignment 6](195_Assignment6.pdf) | Jan 26 |
 | 7. | Jan 19 | [Assignment 7](195_Assignment7.pdf) | Jan 26 |
 | 8. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
-~~| 9. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
-| 10. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
+| 9. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
+| 10. | Jan 22 | [~~Assignment 8](195_Assignment8.pdf) | Jan 26 |
 | 11. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
 | 12. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
 | 13. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
-| 14. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |~~
+| 14. | Jan 22 | [Assignment 8](195_Assignment8.pdf)~~ | Jan 26 |
 | | | | |
 
 </div>
