@@ -109,7 +109,7 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 7. | Jan 19 | [Assignment 7](195_Assignment7.pdf) | Jan 26 |
 | 8. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
 | 9. | Jan 24 | [~~Assignment 8~~](195_Assignment8.pdf) | Feb 2 |
-| 10. | Jan 26 | Midterm 1 | Feb 2 |
+| 10. | Jan 26 | Midterm 1 |  |
 | 11. | Jan 22 | [~~Assignment 8~~](195_Assignment8.pdf) | Feb 2 |
 | 12. | Jan 22 | [~~Assignment 8~~](195_Assignment8.pdf) | Jan 26 |
 | 13. | Jan 22 | [~~Assignment 8~~](195_Assignment8.pdf) | Jan 26 |
