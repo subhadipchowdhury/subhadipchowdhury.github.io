@@ -109,7 +109,7 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 7. | Jan 19 | [Assignment 7](195_Assignment7.pdf) | Jan 26 |
 | 8. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
 | 9. | Jan 24 | No Assignment |  |
-| 10. | Jan 26 | Midterm 1 |  |
+| 10. | Jan 26 | [Midterm 1](195_Midterm1.pdf) |  |
 | 11. | Jan 29 | [Assignment 9](195_Assignment9.pdf) | Feb 2 |
 | 12. | Jan 31 | [Assignment 10](195_Assignment10.pdf) | Feb 12 |
 | 12. | Feb 2 | [Assignment 11](195_Assignment11.pdf) | Feb 12 |
@@ -117,8 +117,8 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 14. | Feb 7 | [Assignment 13](195_Assignment13.pdf)  | Feb 16 |
 | | Feb 9 | No Class |   |
 | 15. | Feb 12 | [Assignment 14](195_Assignment14.pdf) | Feb 16 |
-| 16. | Feb 14 |  | Feb 23 |
-| | Feb 16 | Midterm 2 | |
+| 16. | Feb 14 | No Assignment | |
+| | Feb 16 | [Midterm 2](195_Midterm2.pdf) | |
 | | | | |
 
 </div>
