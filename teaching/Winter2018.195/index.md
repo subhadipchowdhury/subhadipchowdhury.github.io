@@ -120,5 +120,6 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 16. | Feb 14 | No Assignment | |
 | | Feb 16 | [Midterm 2 (with Solutions)](195_Midterm2.pdf) | |
 | 17. | Feb 19 |  [Assignment 15](195_Assignment15.pdf) | Feb 23 |
+| 18. | Feb 21 |  [Assignment 16](195_Assignment16.pdf) | Mar 2 |
 
 </div>
