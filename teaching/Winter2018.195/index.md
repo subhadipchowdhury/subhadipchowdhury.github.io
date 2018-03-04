@@ -104,7 +104,7 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | 3. | Jan 8 | [Assignment 3](195_Assignment3.pdf) | Jan 12 |
 | 4. | Jan 10 | See next Assignment | Jan 19 |
 | 5. | Jan 12 | [Assignment 4+5](195_Assignment4_5.pdf) | Jan 19 |
-| | Jan 15 | No Assignment |   |
+| | Jan 15 | No Class |   |
 | 6. | Jan 17 | [Assignment 6](195_Assignment6.pdf) | Jan 26 |
 | 7. | Jan 19 | [Assignment 7](195_Assignment7.pdf) | Jan 26 |
 | 8. | Jan 22 | [Assignment 8](195_Assignment8.pdf) | Jan 26 |
@@ -118,13 +118,13 @@ __The pattern is: Wednesday and Friday and Monday's homework is due on Friday.__
 | | Feb 9 | No Class |   |
 | 15. | Feb 12 | [Assignment 14](195_Assignment14.pdf) | Feb 16 |
 | 16. | Feb 14 | No Assignment | |
-| | Feb 16 | Midterm 2 | |
-| 17. | Feb 19 |  [Assignment 15](195_Assignment15.pdf) | Feb 23 |
-| 18. | Feb 21 |  See Next Assignment | |
-| 19. | Feb 23 |  [Assignment 16](195_Assignment16.pdf) | Mar 2 |
-| 20. | Feb 26 |  [Assignment 17](195_Assignment17.pdf) | Mar 2 |
-| 21. | Feb 28 |  [Assignment 18](195_Assignment18.pdf) | Mar 7 |
-
+| 17. | Feb 16 | Midterm 2 | |
+| 18. | Feb 19 |  [Assignment 15](195_Assignment15.pdf) | Feb 23 |
+| 19. | Feb 21 |  See Next Assignment | |
+| 20. | Feb 23 |  [Assignment 16](195_Assignment16.pdf) | Mar 2 |
+| 21. | Feb 26 |  [Assignment 17](195_Assignment17.pdf) | Mar 2 |
+| 22. | Feb 28 |  [Assignment 18](195_Assignment18.pdf) | Mar 7 |
+| 23. | Mar 2 |  [Assignment 19](195_Assignment19.pdf) | Mar 7 |
 
 __Midterms and Quizes__
 * [Midterm 1](195_Midterm1.pdf)
