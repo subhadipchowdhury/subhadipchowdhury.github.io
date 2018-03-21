@@ -46,6 +46,6 @@ I was an undergraduate at [Indian Statistical Institute, Bangalore Centre](http:
 
 <div class='anchor'>
 ## Teaching
-In Winter 2018, I am teaching [Math 195](teaching/Winter2018.195) (Math. methods for social Sciences).
+In Winter 2018, I was teaching [Math 195](teaching/Winter2018.195) (Math. methods for social Sciences).
 Older teaching is listed on my [teaching page](teaching).
 </div>
