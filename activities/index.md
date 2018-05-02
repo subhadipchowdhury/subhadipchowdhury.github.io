@@ -25,8 +25,8 @@ navigation_weight: 4
 - *Summer 2013*: [Gromov's Proof of Mostow Rigidity](/assets/talks/rig_sem_notes.pdf), Rigidity Seminar, student reading group, University of Chicago
 - *February 2013*: Farb and Friends Student Seminar, University of Chicago
 
-
 Please note that some of the talks are very much of an outline in nature.
+
 ### Organization
 
 - *May 2014*: AWM Postdoc Panel, University of Chicago 
