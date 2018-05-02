@@ -17,10 +17,10 @@ navigation_weight: 4
 
 ### Expository Talks in Student Seminars
 
-- *April 2018*: [Rotation Number and Dynamics on the Circle](/assests/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College
-- *April 2018*: [Explorations in Circle Packings](/assests/talks/circle_packings.pdf), Pizza Seminar, University of Chicago
+- *April 2018*: [Rotation Number and Dynamics on the Circle](/assests/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College (Source code of this talk is available [here](https://github.com/subhadipchowdhury/math_presentation).)
+- *April 2018*: [Explorations in Circle Packings](/assests/talks/circle_packings.pptx), Pizza Seminar, University of Chicago
 - *April 2017*: [Hilbert's 3rd Problem and the Dehn Invariant](/assests/talks/hilbert3rd.pdf), Pizza Seminar, University of Chicago 
-- *December 2015*: [Combinatorics of chessboard puzzles about domination, independence and tours](/assests/talks/domination.pdf), Pizza Seminar, University of Chicago
+- *December 2015*: [Combinatorics of chessboard puzzles about domination, independence and tours](/assests/talks/domination.pptx), Pizza Seminar, University of Chicago
 - *November 2013*: [Cut-Copy-Paste — Algebra and Tiling](), Pizza Seminar, University of Chicago
 - *Summer 2013*: [Gromov's Proof of Mostow Rigidity](/assets/talks/rig_sem_notes.pdf), Rigidity Seminar, student reading group, University of Chicago
 - *February 2013*: Farb and Friends Student Seminar, University of Chicago
