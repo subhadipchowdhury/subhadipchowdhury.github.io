@@ -27,6 +27,7 @@ navigation_weight: 4
 
 Please note that some of the talks are very much of an outline in nature.
 
+
 ### Organization
 
 - *May 2014*: AWM Postdoc Panel, University of Chicago 
