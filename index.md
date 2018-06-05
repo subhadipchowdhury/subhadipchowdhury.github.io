@@ -10,7 +10,6 @@ navigation_weight: 1
 [![Subhadip Chowdhury](assets/me_small.jpg){:#mypicture}](assets/me_2018.jpg)
 </div>
 <div class="mail">
-Sixth Year Graduate Student  
 [Department of Mathematics](http://math.uchicago.edu)  
 [The University of Chicago](http://www.uchicago.edu)  
 [5734 S. University Avenue, Chicago, Il-60637](https://maps.google.com/maps?q=5734+S.+University+Avenue,+Chicago,+Il-60637)
@@ -32,6 +31,10 @@ Sixth Year Graduate Student
 My CV is available [here](assets/CV.pdf). 
 
 Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teaching Statement](assets/Teaching_Statement.pdf) as of Fall 2017.
+
+I successfully defended my thesis on June 5, 2018 under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/) and expect to receive my Ph.D. in August 2018.
+
+I will be joining [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as a Visiting Assistant Professor in Fall 2018.
 <hr>
 
 <div class='anchor'>
@@ -46,6 +49,7 @@ I was an undergraduate at [Indian Statistical Institute, Bangalore Centre](http:
 
 <div class='anchor'>
 ## Teaching
-In Winter 2018, I was teaching [Math 195](teaching/Winter2018.195) (Math. methods for social Sciences).
+In Summer 2018, I will be teaching in the [Chicago Academic Achievement Program](https://ccss.uchicago.edu/page/chicago-academic-achievement-program) Summer Academy as a Mathematics Instructor. The course webpage is available [here.](teaching/Summer2018.CAAP)
+  
 Older teaching is listed on my [teaching page](teaching).
 </div>
