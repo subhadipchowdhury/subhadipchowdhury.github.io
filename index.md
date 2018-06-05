@@ -30,7 +30,7 @@ navigation_weight: 1
 </div>
 My CV is available [here](assets/CV.pdf). 
 
-Also here are my [Research Statement](assets/Research_Statement.pdf) and [Teaching Statement](assets/Teaching_Statement.pdf) as of Fall 2017.
+Here are my [Research Statement](assets/Research_Statement.pdf) and [Teaching Statement](assets/Teaching_Statement.pdf) as of Fall 2017.
 
 I successfully defended my thesis on June 5, 2018 under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/) and expect to receive my Ph.D. in August 2018.
 
