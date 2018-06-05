@@ -24,7 +24,7 @@ category: coursepage
 ---
 ## Syllabus and Policies 
 
-You can find a pdf file containing the course description, syllabus, and policies [here](CAAP_summer18_syllabus.pdf).
+You can find a pdf file containing the course description, syllabus, and policies [here](syllabus.pdf).
 
 
 ---
