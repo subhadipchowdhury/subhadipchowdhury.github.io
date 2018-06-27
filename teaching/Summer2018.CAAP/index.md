@@ -47,7 +47,7 @@ are due on Friday (same week).__
 | n. | August 7 | Final Exam | |
 
 
-__Midterms and Quizes__
+__Quizzes__
 * [Quiz 1](CAAP18_Quiz1.pdf)
 </div>
 
