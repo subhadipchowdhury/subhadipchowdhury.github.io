@@ -42,13 +42,12 @@ are due on Friday (same week).__
   
 | Lec. No. | Date | Assignment | Due Date |
 |----------|------|------------|----------|
-| 1. | June 28 | [Assignment 1](CAAP18_Assignment1.pdf) | ??? |
-
-|  |  | Final Exam | |
+| 1. | June 28 | [Assignment 1](CAAP18_Assignment1.pdf) | July 3 |
+|----------|------|------------|----------|
+| n. | August 7 | Final Exam | |
 
 
 __Midterms and Quizes__
 * [Quiz 1](CAAP18_Quiz1.pdf)
-* 
 </div>
 
