@@ -44,6 +44,7 @@ are due on Friday (same week).__
 |----------|------|------------|----------|
 | 1. | June 28 | [Assignment 1](CAAP_Assignment1.pdf) | July 3 |
 | 2. | June 29 | [Assignment 2](CAAP_Assignment2.pdf) | July 3 |
+| 3. | July 2 | [Assignment 3](CAAP_Assignment2.pdf) | July 6 |
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
 
