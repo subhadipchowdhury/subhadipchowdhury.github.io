@@ -49,7 +49,7 @@ are due on Friday (same week).__
 | 4. | July 3 | [Assignment 4](CAAP_Assignment4.pdf) | July 6 |
 | 5. | July 5 | [Assignment 5](CAAP_Assignment5.pdf) | July 10 |
 | 6. | July 5 | [Assignment 6](CAAP_Assignment6.pdf) | July 10 |
-|    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](caap_quiz1_solution.pdf)
+|    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](CAAP_Quiz1_solution.pdf)
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
 
