@@ -45,9 +45,9 @@ are due on Friday (same week).__
 |----------|------|------------|----------|-----------|
 | 1. | June 28 | [Assignment 1](CAAP_Assignment1.pdf) | July 3 | [Solution](caap-proofs-assignment1.pdf) |
 | 2. | June 29 | [Assignment 2](CAAP_Assignment2.pdf) | July 3 | [Solution](caap-proofs-assignment2.pdf) |
-| 3. | July 2 | [Assignment 3](CAAP_Assignment3.pdf) | July 6 |
-| 4. | July 3 | [Assignment 4](CAAP_Assignment4.pdf) | July 6 |
-| 5. | July 5 | [Assignment 5](CAAP_Assignment5.pdf) | July 12 |
+| 3. | July 2 | [Assignment 3](CAAP_Assignment3.pdf) | July 6 | [Solution](caap-proofs-assignment3.pdf) |
+| 4. | July 3 | [Assignment 4](CAAP_Assignment4.pdf) | July 6 | [Solution](caap-proofs-assignment4.pdf) |
+| 5. | July 5 | [Assignment 5](CAAP_Assignment5.pdf) | July 12 | 
 | 6. | July 5 | [Assignment 6](CAAP_Assignment6.pdf) | July 12 |
 | 6. | July 5 | [Assignment 7](CAAP_Assignment7.pdf) | July 16 |
 |    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](CAAP_Quiz1_solution.pdf)
