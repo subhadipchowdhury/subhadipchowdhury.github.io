@@ -48,9 +48,10 @@ are due on Friday (same week).__
 | 3. | July 2 | [Assignment 3](CAAP_Assignment3.pdf) | July 6 | [Solution](caap-proofs-assignment3.pdf) |
 | 4. | July 3 | [Assignment 4](CAAP_Assignment4.pdf) | July 6 | [Solution](caap-proofs-assignment4.pdf) |
 | 5. | July 5 | [Assignment 5](CAAP_Assignment5.pdf) | July 12 | Solution |
-| 6. | July 5 | [Assignment 6](CAAP_Assignment6.pdf) | July 12 |
-| 6. | July 5 | [Assignment 7](CAAP_Assignment7.pdf) | July 16 |
-| 6. | July 5 | [Assignment 8](CAAP_Assignment8.pdf) | July 16 |
+| 6. | July 6 | [Assignment 6](CAAP_Assignment6.pdf) | July 12 |
+| 7. | July 9 | [Assignment 7](CAAP_Assignment7.pdf) | July 17 |
+| 8. | July 10 | [Assignment 8](CAAP_Assignment8.pdf) | July 17 |
+| 9. | July 12 | [Assignment 9](CAAP_Assignment9.pdf) | July 19 |
 |    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](CAAP_Quiz1_solution.pdf)
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
