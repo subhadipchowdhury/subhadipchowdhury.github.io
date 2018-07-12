@@ -17,8 +17,8 @@ navigation_weight: 5
 
 You can find me online at the following places:
 
-+ [Facebook](https://www.facebook.com/subhadip.chowdhury)
 + [linkedIn](https://www.linkedin.com/in/subhadip-chowdhury/)
-+ [Goodreads](https://www.goodreads.com/subhadip)
 + [Github](https://github.com/subhadipchowdhury)
++ [Goodreads](https://www.goodreads.com/subhadip)
+
 
