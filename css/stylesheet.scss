@@ -126,6 +126,12 @@ header {
 		text-decoration: none;
 	}
 }
+@media all and (max-width: 600px){
+	header{
+		/* On small screens, menu is on the side, flex in row direction. */
+		flex-direction: row;
+	}
+}
 
 
 /***********************************************/
