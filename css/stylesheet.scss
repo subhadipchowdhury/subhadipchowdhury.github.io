@@ -138,7 +138,7 @@ nav ul{
 	margin: 0; 
 
 	display:flex;
-	flex-flow: row wrap;
+	flex-flow: row nowrap;
 	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
 	justify-content: flex-evenly;
 	}
