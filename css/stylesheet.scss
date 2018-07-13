@@ -113,15 +113,15 @@ header {
 	justify-content: space-between;
 	align-items: center;
 
-    	margin-top:0em;
-    	margin-bottom: 2em;
-    	padding-top: 0.5em;
-    	padding-bottom: 0.2em;
+	margin-top:0em;
+	margin-bottom: 2em;
+	padding-top: 0.5em;
+	padding-bottom: 0.2em;
 
-    	h1 {
+	h1 {
 		text-align: center;
 		margin: 0.5em;
-	    }
+	}
 	a:hover{
 		text-decoration: none;
 	}
@@ -142,18 +142,22 @@ nav ul{
 	
 	display:flex;
 	flex-flow: row wrap;
-	/* This aligns items to the end line on main-axis */
-	justify-content: flex-end;
+	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
+	justify-content: flex-evenly;
 	}
 }
 
-/* Medium screens */
+/* Medium screens 
 @media all and (max-width: 800px) {
 nav ul{
-    /* When on medium sized screens, we center it by evenly distributing empty space around items */
+	/* items are evenly distributed in the line with equal space around them. Note that visually the spaces aren't equal,
+	since all the items have equal space on both sides. The first item will have one unit of space against the container edge,
+	 but two units of space between the next item because that next item has its own spacing that applies 
     justify-content: space-around;
   }
 }
+*/
+
 
 /* Small screens */
 @media all and (max-width: 500px) {
