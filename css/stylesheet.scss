@@ -132,14 +132,11 @@ header {
 
 
 nav ul{
+	padding-left: 0em;
+
 	list-style: none;
 	margin: 0; 
 
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: -webkit-flex;
-	
 	display:flex;
 	flex-flow: row wrap;
 	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
