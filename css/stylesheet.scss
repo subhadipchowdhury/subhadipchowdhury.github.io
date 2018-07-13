@@ -8,9 +8,11 @@ $anchor-font: 'Alegreya SC', serif;
 	font-family: 'mplus-1m';
 	src: url("/resources/mplus-1m-regular.ttf");
 }
-
 $code-font: 'mplus-1m', sans-serif;
 	
+
+/***********************************************/
+
 html
 {
 	width:100%;
@@ -60,6 +62,26 @@ h3 {
 	font-family: $base-font; 
 	font-weight: 700; }
 
+ul {
+	padding-left: 1em;
+}
+
+ol {
+	padding-left: 1em;
+	li {
+		padding-left: 0.5em;
+	}
+}
+	
+	
+
+/***********************************************/
+
+
+
+
+
+
 .main-wrapper
 {
 	margin: 20px 50px 0px 50px; 
@@ -73,41 +95,13 @@ h3 {
 
 @media all and (max-width: 500px) {
 	.main-wrapper{
-		margin: 10px 20px 0px 20px; 
+		margin: 5px 10px 0px 10px; 
 	}
 }
 
-ul {
-    padding-left: 1em;
-}
 
-ol {
-    padding-left: 1em;
-    li {
-        padding-left: 0.5em;
-    }
-}
 
-.papers {
-    padding: 0em;
-    margin: 0em;
-    border-top: dotted 0.1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    p {
-        padding: 0em;
-        margin: 0.5em 0em;
-    }
-}
-
-.course {
-	@extend .papers;
-	p{
-		padding: 0em;
-		margin: 0.2em 0em;
-	}
-}
+/***********************************************/
 
 header {
   	font-family: ProximaNova-Regular;
@@ -131,23 +125,8 @@ header {
 	}
 }
 
-.about {
-	width: 95%;
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: -webkit-flex;
-  	display: flex;
-  	flex-flow: row wrap;
-  	justify-content: space-evenly;
-  	align-items: center;
-  }
-@media all and (max-width: 500px) {
-	.about{
-		flex-flow: column wrap;
-	}
-}
 
+/***********************************************/
 
 @media all and (min-width: 960px) {
 nav ul{
@@ -207,6 +186,7 @@ nav ul li{
 	}
 }
 
+/***********************************************/
 
 footer {
 	font-weight: 300;
@@ -215,6 +195,26 @@ footer {
 	padding-top:0.3em;
 	margin: 20px 50px 0px 50px;
 }
+
+/***********************************************/
+.about {
+	width: 95%;
+	display: -webkit-box;
+  	display: -moz-box;
+  	display: -ms-flexbox;
+  	display: -webkit-flex;
+  	display: flex;
+  	flex-flow: row wrap;
+  	justify-content: space-evenly;
+  	align-items: center;
+  }
+
+@media all and (max-width: 500px) {
+	.about{
+		flex-flow: column wrap;
+	}
+}
+
 
 
 #mypicture {
@@ -250,6 +250,12 @@ footer {
 	order: 3;
 	float:right;
 }
+
+
+
+
+/***********************************************/
+
 
 table {
         padding-top: 0.5em;
@@ -290,4 +296,28 @@ code{
 }
 #backicon{ 
 	width:1em; 
+}
+
+/***********************************************/
+
+
+.papers {
+    padding: 0em;
+    margin: 0em;
+    border-top: dotted 0.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p {
+        padding: 0em;
+        margin: 0.5em 0em;
+    }
+}
+
+.course {
+	@extend .papers;
+	p{
+		padding: 0em;
+		margin: 0.2em 0em;
+	}
 }
