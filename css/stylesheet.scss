@@ -96,7 +96,8 @@ ol {
 @media all and (max-width: 500px) {
 	.main-wrapper{
 		margin: 5px 10px 0px 10px; 
-		border: 10px;
+		border: 20px;
+		border-top: 10px;
 	}
 }
 
@@ -183,6 +184,10 @@ nav ul li{
 			color: #A5D3DB;
 			background:#3A494C;
 			text-decoration: none;
+		}
+
+		.active{
+
 		}
 	}
 }
