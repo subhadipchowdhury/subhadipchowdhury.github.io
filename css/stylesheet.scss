@@ -130,7 +130,7 @@ header {
 
 /***********************************************/
 
-@media all and (min-width: 960px) {
+
 nav ul{
 	list-style: none;
 	margin: 0; 
@@ -145,7 +145,7 @@ nav ul{
 	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
 	justify-content: flex-evenly;
 	}
-}
+
 
 /* Medium screens 
 @media all and (max-width: 800px) {
