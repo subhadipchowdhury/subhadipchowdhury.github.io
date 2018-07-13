@@ -3,6 +3,7 @@
 
 $base-font: 'Raleway', sans-serif;
 $anchor-font: 'Alegreya SC', serif;
+$nav-font: 'Alegreya SC', sans-serif;
 
 @font-face {
 	font-family: 'mplus-1m';
@@ -136,8 +137,7 @@ header {
 
 /***********************************************/
 
-
-nav ul{
+nav#nav-main ul{
 	padding-left: 0em;
 
 	list-style: none;
@@ -147,57 +147,51 @@ nav ul{
 	flex-flow: row nowrap;
 	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
 	justify-content: flex-evenly;
+
+	li{
+		display: inline-block;
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+		list-style-type:none;
+		a{
+			font-family: $nav-font;
+			font-size: 1.2em;
+			color: #3A494C;
+			padding: 0.4em 1em;
+			display: block;
+			border-radius: 0.5em;
+			-webkit-border-radius: 0.5em;
+			-moz-border-radius: 0.5em;
+			-o-border-radius: 0.5em;
+			font-weight: 900;
+			
+			&:hover{
+				color: #A5D3DB;
+				background:#3A494C;
+				text-decoration: none;
+			}
+	
+			.active{
+				/* nothing for now */
+			}
+		}
 	}
-
-
-/* Medium screens 
-@media all and (max-width: 800px) {
-nav ul{
-	/* items are evenly distributed in the line with equal space around them. Note that visually the spaces aren't equal,
-	since all the items have equal space on both sides. The first item will have one unit of space against the container edge,
-	 but two units of space between the next item because that next item has its own spacing that applies 
-    justify-content: space-around;
-  }
-}
-*/
-
-
+	}
 /* Small screens */
 @media all and (max-width: 600px) {
-nav ul{
+nav#nav-main ul{
     /* On small screens, we are no longer using row direction but column */
     flex-flow: column wrap;
   }
 }
 
+nav#nav-mobile{
+    display:none;
+}
 
-nav ul li{
-	display: inline-block;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	list-style-type:none;
-	a{
-		font-family: 'Alegreya Sans SC', sans-serif;
-		font-size: 1.2em;
-		color: #3A494C;
-		padding: 0.4em 1em;
-		display: block;
-		border-radius: 0.5em;
-		-webkit-border-radius: 0.5em;
-		-moz-border-radius: 0.5em;
-		-o-border-radius: 0.5em;
-		font-weight: 900;
-		
-		&:hover{
-			color: #A5D3DB;
-			background:#3A494C;
-			text-decoration: none;
-		}
-
-		.active{
-
-		}
-	}
+#nav-trigger{
+	display:none; 
+	text-align:center;
 }
 
 /***********************************************/

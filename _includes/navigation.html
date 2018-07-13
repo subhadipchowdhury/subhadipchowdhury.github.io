@@ -1,4 +1,4 @@
-<nav>
+<nav id="nav-main">
     <ul>
         {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
         {% for p in navigation_pages %}
@@ -11,4 +11,29 @@
         {% endif %}
         {% endfor %}
     </ul>
+</nav>
+
+<div id="nav-trigger"> 
+    <span>
+        <div class="wrapper-menu noSelect">
+            <div class="line-menu half start"></div>
+            <div class="line-menu"></div>
+            <div class="line-menu half end"></div>
+        </div>
+    </span>
+</div>
+
+<nav id="nav-mobile">
+        <ul>
+            {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
+            {% for p in navigation_pages %}
+            {% if p.navigation_weight %}
+            <li>
+                <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                    {{ p.title }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>        
 </nav>
