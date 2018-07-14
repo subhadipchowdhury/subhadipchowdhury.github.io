@@ -29,6 +29,12 @@ You can find a pdf file containing the course description, syllabus, and policie
 
 
 ---
+## Class Project Ideas, Guideline, and Rubric
+
+You can find a pdf file containing the class project ideas, guidelines, and rubric [here](Projects_CAAP_Summer_2018.pdf).
+
+
+---
 
 <div class='anchor' id="assignments">
 ## Homework Assignments
