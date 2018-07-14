@@ -13,16 +13,6 @@
     </ul>
 </nav>
 
-<div id="nav-trigger"> 
-    <span>
-        <div class="wrapper-menu">
-            <div class="line-menu half start"></div>
-            <div class="line-menu"></div>
-            <div class="line-menu half end"></div>
-        </div>
-    </span>
-</div>
-
 <nav id="nav-mobile">
         <ul>
             {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
@@ -37,3 +27,14 @@
             {% endfor %}
         </ul>        
 </nav>
+
+<div id="nav-trigger"> 
+    <span>
+        <div class="wrapper-menu">
+            <div class="line-menu half start"></div>
+            <div class="line-menu"></div>
+            <div class="line-menu half end"></div>
+        </div>
+    </span>
+</div>
+
