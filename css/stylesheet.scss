@@ -110,12 +110,11 @@ header {
   	font-family: ProximaNova-Regular;
 
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 
-	margin-top:0em;
-	margin-bottom: 2em;
+	margin: 0px 50px 0px 50px; 
 	padding-top: 0.5em;
 	padding-bottom: 0.2em;
 
