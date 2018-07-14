@@ -126,7 +126,7 @@ header {
 		text-decoration: none;
 	}
 }
-@media all and (max-width: 800px){
+@media all and (max-width: 900px){
 	header{
 		/* On small screens, menu is on the side, flex in row direction. */
 		flex-direction: row;
@@ -187,7 +187,7 @@ nav#nav-main ul{
 	}
 	}
 /* Small screens */
-@media all and (max-width: 800px) {
+@media all and (max-width: 900px) {
 	nav#nav-main{
 		display:none;
 	}
@@ -202,7 +202,7 @@ nav#nav-main ul{
 	display:none; 
 	text-align:center;
 }
-@media all and (max-width: 800px) {
+@media all and (max-width: 900px) {
     #nav-trigger{
         display:-webkit-box;
         display:-ms-flexbox;
@@ -308,7 +308,7 @@ nav#nav-mobile{
     display:none;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 900px) {
     nav#nav-mobile {
 		display:block;
 	}
