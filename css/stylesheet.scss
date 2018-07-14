@@ -131,6 +131,7 @@ header {
 	header{
 		/* On small screens, menu is on the side, flex in row direction. */
 		flex-direction: row;
+		justify-content: space-around;
 		margin-left: 10px;
 		margin-right: 10px;
 		margin-bottom: 1em;	
