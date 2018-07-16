@@ -110,12 +110,11 @@ header {
   	font-family: ProximaNova-Regular;
 
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 
-	margin-top:0em;
-	margin-bottom: 2em;
+	margin: 0px 50px 0px 50px; 
 	padding-top: 0.5em;
 	padding-bottom: 0.2em;
 
@@ -127,7 +126,7 @@ header {
 		text-decoration: none;
 	}
 }
-@media all and (max-width: 600px){
+@media all and (max-width: 900px){
 	header{
 		/* On small screens, menu is on the side, flex in row direction. */
 		flex-direction: row;
@@ -188,7 +187,7 @@ nav#nav-main ul{
 	}
 	}
 /* Small screens */
-@media all and (max-width: 600px) {
+@media all and (max-width: 900px) {
 	nav#nav-main{
 		display:none;
 	}
@@ -203,7 +202,7 @@ nav#nav-main ul{
 	display:none; 
 	text-align:center;
 }
-@media all and (max-width: 600px) {
+@media all and (max-width: 900px) {
     #nav-trigger{
         display:-webkit-box;
         display:-ms-flexbox;
@@ -254,59 +253,61 @@ nav#nav-main ul{
     -webkit-transform:rotate(-45deg);
     transform:rotate(-45deg);
 }
+
+/**********************Thanks Ratul Saha for the following part of the code ******************************************************/
 .line-menu{
     background-color:#800000;
     border-radius:5px;
     width:100%;
 	height:4px;
+}
+
+
+.line-menu.half{
+	width:50%;
+}
+
 	
-	.half{
-		width:50%;
-	}
-
-	.start{
-		-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		-webkit-transform-origin:right;
-		transform-origin:right;
-	}
-
-	.end{
-		-ms-flex-item-align:end;
-		align-self:flex-end;
-		-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		-webkit-transform-origin:left;
-		transform-origin:left;
-	}
+.line-menu.start{
+	-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	-webkit-transform-origin:right;
+	transform-origin:right;
 }
 
-.open.line-menu{
-	.start{
-		-webkit-transform:rotate(-90deg) translateX(3px);
-		transform:rotate(-90deg) translateX(3px);
-	}
+.open .line-menu.start {
+	-webkit-transform:rotate(-90deg) translateX(3px);
+	transform:rotate(-90deg) translateX(3px)	
 
-	.end{
-		-webkit-transform:rotate(-90deg) translateX(-3px);
-		transform:rotate(-90deg) translateX(-3px);
-	}
+}
+.line-menu.end {
+	-ms-flex-item-align:end;
+	align-self:flex-end;
+	-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	-webkit-transform-origin:left;
+	transform-origin:left;
+}
+
+.open .line-menu.end{
+	-webkit-transform:rotate(-90deg) translateX(-3px);
+	transform:rotate(-90deg) translateX(-3px)
 }
 
 
 
-/*******************************************/
+/******************************************Above part of code copied from  getonchain.com ****************************************************************/
 
 
 nav#nav-mobile{
     display:none;
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 900px) {
     nav#nav-mobile {
 		display:block;
 	}
