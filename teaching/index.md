@@ -15,3 +15,12 @@ navigation_weight: 3
 {% endfor %}
 
 
+<div class="teaching-menu">
+  
++ Teaching Statement
++ Course List
++ Sample Syllabi
++ Select Course Materials
++ Student Evaluations
+ </div>
+  
