@@ -6,8 +6,6 @@ navigation_weight: 3
 
 ## {{ page.title }}
 
-### University of Chicago
-
 <div id=teaching-menu>
     <ul>
         <li>Teaching Statement</li>
