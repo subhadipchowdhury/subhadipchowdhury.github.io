@@ -16,11 +16,11 @@ navigation_weight: 3
 
 
 <div class="teaching-menu">
-    <ul>
-        <li>Teaching Statement</li>
-        <li>Course List</li>
-        <li>Sample Syllabi</li>
-        <li>Select Course Materials</li>
-        <li>Student Evaluations</li>
-    </ul>
+
++Teaching Statement
++Course List
++Sample Syllabi
++Select Course Materials
++Student Evaluations
+
 </div>
