@@ -496,8 +496,9 @@ code{
 		display:-webkit-box;
 		display:-ms-flexbox;
 		display:flex;
-		flex-flow: column nowrap;
+		flex-flow: column;
 		justify-content: flex-evenly;
+		flex: 1;
 	}
 	
 }
