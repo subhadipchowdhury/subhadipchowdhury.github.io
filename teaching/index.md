@@ -14,7 +14,6 @@ navigation_weight: 3
 </div>
 {% endfor %}
 
-
 <div class="teaching-menu">
   
 + Teaching Statement
@@ -22,5 +21,6 @@ navigation_weight: 3
 + Sample Syllabi
 + Select Course Materials
 + Student Evaluations
- </div>
+</div>
   
+---
