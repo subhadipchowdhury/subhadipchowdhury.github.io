@@ -488,21 +488,15 @@ code{
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-.teaching-menu ul{
+.teaching-menu {
 	float: right;
-	display:-webkit-box;
-    display:-ms-flexbox;
-	display:flex;
-	flex-flow: column nowrap;
-	justify-content: flex-evenly;
+
+	ul{
+		display:-webkit-box;
+		display:-ms-flexbox;
+		display:flex;
+		flex-flow: column nowrap;
+		justify-content: flex-evenly;
+	}
+	
 }
