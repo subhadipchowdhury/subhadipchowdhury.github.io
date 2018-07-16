@@ -505,42 +505,5 @@ code{
     display:-ms-flexbox;
 	display:flex;
 	flex-flow: column nowrap;
-	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
 	justify-content: flex-evenly;
-	/*
-	li{
-		display: inline-block;
-		margin-left: 0.5em;
-		margin-right: 0.5em;
-		list-style-type:none;
-		a{
-			font-family: $nav-font;
-			font-weight: 900;
-			font-size: 1.2em;
-			color: #3A494C;
-			padding: 0.4em 1em;
-			display: block;
-			border-radius: 0.5em;
-			-webkit-border-radius: 0.5em;
-			-moz-border-radius: 0.5em;
-			-o-border-radius: 0.5em;
-			
-			
-			&:hover{
-				color: #A5D3DB;
-				background:#3A494C;
-				text-decoration: none;
-			}
-	
-			.active{
-				/* nothing for now 
-			}
-		}
-	}
-	}
-/* Small screens 
-@media all and (max-width: 600px) {
-	nav#nav-main{
-		display:none;
-	}*/
 }
