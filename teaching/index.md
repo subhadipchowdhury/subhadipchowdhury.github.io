@@ -6,7 +6,7 @@ navigation_weight: 3
 
 ## {{ page.title }}
 
-<div id="teaching-menu">
+<div class="teaching-menu">
     <ul>
         <li>Teaching Statement</li>
         <li>Course List</li>
