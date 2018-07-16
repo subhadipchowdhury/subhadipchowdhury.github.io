@@ -92,6 +92,8 @@ ol {
 	-webkit-box-shadow: 0 0 15px 2px #00f; 
 	-moz-box-shadow: 0 0 15px 2px #000;     
 	box-shadow: 0 0 15px 2px #000;
+
+	overflow: auto;
 }
 
 @media all and (max-width: 500px) {
@@ -502,3 +504,9 @@ code{
 	}
 	
 }
+/*
+.teaching-menu::after{
+	content: "";
+    clear: both;
+    display: table;
+}*/
