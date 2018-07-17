@@ -4,7 +4,6 @@ title: Teaching
 navigation_weight: 3
 ---
 
-
 ## {{ page.title }}
 
 ### University of Chicago
@@ -14,3 +13,14 @@ navigation_weight: 3
 **{{ course.Duration }}**: {{ course.Role  }} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.link }})) {% if course.Instructor %} taught by Prof. [{{ course.Instructor }}]({{ course.Homepage}}) {% endif %} 
 </div>
 {% endfor %}
+
+<div class="teaching-menu">
+  
++ Teaching Statement
++ Course List
++ Sample Syllabi
++ Select Course Materials
++ Student Evaluations
+</div>
+  
+---

@@ -92,6 +92,8 @@ ol {
 	-webkit-box-shadow: 0 0 15px 2px #00f; 
 	-moz-box-shadow: 0 0 15px 2px #000;     
 	box-shadow: 0 0 15px 2px #000;
+
+	overflow: auto;
 }
 
 @media all and (max-width: 500px) {
@@ -262,28 +264,26 @@ nav#nav-main ul{
 	height:4px;
 }
 
+
 .line-menu.half{
-		width:50%;
-	}
+	width:50%;
+}
 
 	
-
-
 .line-menu.start{
-		-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
-		transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-		-webkit-transform-origin:right;
-		transform-origin:right;
-	}
+	-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
+	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
+	-webkit-transform-origin:right;
+	transform-origin:right;
+}
 
 .open .line-menu.start {
 	-webkit-transform:rotate(-90deg) translateX(3px);
 	transform:rotate(-90deg) translateX(3px)	
+
 }
-
-
 .line-menu.end {
 	-ms-flex-item-align:end;
 	align-self:flex-end;
@@ -292,7 +292,7 @@ nav#nav-main ul{
 	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
 	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
 	-webkit-transform-origin:left;
-	transform-origin:left
+	transform-origin:left;
 }
 
 .open .line-menu.end{
@@ -301,7 +301,8 @@ nav#nav-main ul{
 }
 
 
-/*****************************************Above part of code copied from  getonchain.com *******************************************/
+
+/******************************************Above part of code copied from  getonchain.com ****************************************************************/
 
 
 nav#nav-mobile{
@@ -489,3 +490,23 @@ code{
 		margin: 0.2em 0em;
 	}
 }
+
+.teaching-menu {
+	float: right;
+
+	ul{
+		display:-webkit-box;
+		display:-ms-flexbox;
+		display:flex;
+		flex-flow: column;
+		justify-content: flex-evenly;
+		flex: 1 1 auto;
+	}
+	
+}
+/*
+.teaching-menu::after{
+	content: "";
+    clear: both;
+    display: table;
+}*/
