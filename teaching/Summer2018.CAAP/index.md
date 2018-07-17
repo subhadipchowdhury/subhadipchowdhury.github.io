@@ -36,9 +36,8 @@ You can find a pdf file containing the class project ideas, guidelines, and rubr
 
 ---
 
-<div class='anchor' id="assignments">
 ## Homework Assignments
-</div>
+
 
 <div class='schedule'>
  
