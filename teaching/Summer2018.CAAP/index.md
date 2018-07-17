@@ -44,8 +44,8 @@ You can find a pdf file containing the class project ideas, guidelines, and rubr
  
 __You should do the homework exercises and reading BEFORE the next class, but turn in your work on the date given.__ 
 
-__Thursday and Friday’s assignments are due on Tuesday next week. Monday and Tuesday’s assignments
-are due on Friday (same week).__
+__Thursday and Friday’s assignments are due on Thursday next week. Monday and Tuesday’s assignments
+are due on Tuesday next week.__
   
 | Lec. No. | Date | Assignment/Quiz | Due Date | Solutions |
 |----------|------|------------|----------|-----------|
