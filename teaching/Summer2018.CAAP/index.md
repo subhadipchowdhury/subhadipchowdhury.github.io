@@ -55,8 +55,8 @@ are due on Tuesday next week.__
 | 5. | July 5 | [Assignment 5](CAAP_Assignment5.pdf) | July 12 | [Solution](caap-proofs-assignment5-6.pdf) |
 | 6. | July 6 | [Assignment 6](CAAP_Assignment6.pdf) | July 12 | [Solution](caap-proofs-assignment5-6.pdf) |
 |    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](CAAP_Quiz1_solution.pdf)
-| 7. | July 9 | [Assignment 7](CAAP_Assignment7.pdf) | July 17 |
-| 8. | July 10 | [Assignment 8](CAAP_Assignment8.pdf) | July 17 |
+| 7. | July 9 | [Assignment 7](CAAP_Assignment7.pdf) | July 17 | [Solution](caap-proofs-assignment7-8.pdf) |
+| 8. | July 10 | [Assignment 8](CAAP_Assignment8.pdf) | July 17 | [Solution](caap-proofs-assignment7-8.pdf) |
 | 9. | July 12 | [Assignment 9](CAAP_Assignment9.pdf) | July 19 |
 | 10. | July 13 | [Assignment 10](CAAP_Assignment10.pdf) | July 19 |
 |    |        | [Quiz 2](CAAP_Quiz2.pdf)             |         | [Solution](CAAP_Quiz2_solution.pdf) |
