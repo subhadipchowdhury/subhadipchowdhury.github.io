@@ -34,6 +34,7 @@ You can find a pdf file containing the course description, syllabus, and policie
 You can find a pdf file containing the class project ideas, guidelines, and rubric [here](Projects_CAAP_Summer_2018.pdf).
 
 The Project Assignments for the class can be found in Canvas.
+
 ---
 
 ## Homework Assignments
