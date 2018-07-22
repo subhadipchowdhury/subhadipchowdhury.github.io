@@ -193,6 +193,12 @@ nav#nav-main ul{
 		}
 		
 		ul{
+			display:-webkit-box;
+			display:-ms-flexbox;
+			display:flex;
+			flex-flow: column nowrap;
+			/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
+			justify-content: flex-start;
 			list-style: none;
 			margin: 0;
 			padding: 0;
@@ -204,8 +210,6 @@ nav#nav-main ul{
 			-moz-transition:opacity 0.2s linear, visibility 0.2s linear;
 			-o-transition:opacity 0.2s linear, visibility 0.2s linear;
 			transition:opacity 0.2s linear, visibility 0.2s linear;	
-			top: 43px;
-			left: 1px;
 		}
 	}
 	}
