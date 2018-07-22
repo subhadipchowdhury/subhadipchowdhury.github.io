@@ -8,7 +8,7 @@
                 {{ p.title }}
             </a>
 			{% if p.has_subnav %}
-					<ul>
+					<ul id="subnav">
 					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
 					{% for q in subnav_pages %}
 					<li>
