@@ -365,6 +365,7 @@ footer {
 	margin: 20px 50px 0px 50px;
 }
 
+
 /***********************************************/
 .about {
 	width: 95%;
@@ -491,22 +492,6 @@ code{
 	}
 }
 
-.teaching-menu {
-	float: right;
+/******************************************************/
 
-	ul{
-		display:-webkit-box;
-		display:-ms-flexbox;
-		display:flex;
-		flex-flow: column;
-		justify-content: flex-evenly;
-		flex: 1 1 auto;
-	}
-	
-}
-/*
-.teaching-menu::after{
-	content: "";
-    clear: both;
-    display: table;
-}*/
+

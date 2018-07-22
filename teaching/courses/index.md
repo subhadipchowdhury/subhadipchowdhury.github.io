@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Teaching
-navigation_weight: 3
-has_subnav: 1
+title: List of Courses Taught
+parentnav: Teaching
+subnav_weight: 32
 ---
 
 ## {{ page.title }}
@@ -14,5 +14,5 @@ has_subnav: 1
 **{{ course.Duration }}**: {{ course.Role  }} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.link }})) {% if course.Instructor %} taught by Prof. [{{ course.Instructor }}]({{ course.Homepage}}) {% endif %} 
 </div>
 {% endfor %}
-
+  
 ---
