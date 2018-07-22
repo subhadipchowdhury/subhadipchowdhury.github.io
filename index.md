@@ -49,7 +49,7 @@ I was an undergraduate at [Indian Statistical Institute, Bangalore Centre](http:
 
 <div class='anchor'>
 ## Teaching
-In Summer 2018, I will be teaching in the [Chicago Academic Achievement Program](https://ccss.uchicago.edu/page/chicago-academic-achievement-program) Summer Academy as a Mathematics Instructor. The course webpage is available [here.](teaching/Summer2018.CAAP)
+In Summer 2018, I will be teaching in the [Chicago Academic Achievement Program](https://ccss.uchicago.edu/page/chicago-academic-achievement-program) Summer Academy as a Mathematics Instructor. The course webpage is available [here](teaching/courses/Summer2018.CAAP).
   
 Older teaching is listed on my [teaching page](teaching).
 </div>
