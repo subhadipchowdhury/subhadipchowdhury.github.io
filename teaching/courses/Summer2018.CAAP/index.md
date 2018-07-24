@@ -65,6 +65,8 @@ are due on Tuesday next week.__
 | 12. | July 16 | [Assignment 12](CAAP_Assignment12.pdf) | July 24 | |
 | 13. | July 19 | [Assignment 13](CAAP_Assignment13.pdf) | July 26 | |
 |    |        | [Quiz 3](CAAP_Quiz3.pdf)             |         | [Solution](CAAP_Quiz3_solution.pdf) |
+| 14. | July 20 | No Assignment 14 | | |
+| 15. | July 23 | [Assignment 15](CAAP_Assignment15.pdf) | July 31 | |
 |    |        |             |         | |
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
