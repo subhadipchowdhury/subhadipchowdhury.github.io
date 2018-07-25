@@ -1,8 +1,8 @@
 ---
 ---
 
-$base-font: 'Raleway', sans-serif;
-$anchor-font: 'Alegreya SC', serif;
+$heading-font: 'Raleway', sans-serif;
+$base-font: 'Montserrat', sans-serif;
 $nav-font: 'Alegreya Sans SC', sans-serif;
 
 @font-face {
@@ -34,7 +34,7 @@ body{
 	font-size: 1.15em;
 	text-align:center;
 	COLOR: #155F83; 
-	font-family: $anchor-font;
+	font-family: $heading-font;
 }
 
 a {
@@ -55,17 +55,17 @@ a {
 
 h2 { 
 	COLOR: #155F83; 
-	font-family: $base-font; 
+	font-family: $heading-font; 
 	font-weight: 800; 
 }
 h3 { 
 	COLOR: #155F83; 
-	font-family: $base-font; 
+	font-family: $heading-font; 
 	font-weight: 700; }
 
 h4 { 
 	COLOR: #155F83; 
-	font-family: $base-font; 
+	font-family: $heading-font; 
 	font-weight: 500; }
 
 ul {
