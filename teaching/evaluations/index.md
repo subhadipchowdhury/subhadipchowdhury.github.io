@@ -9,6 +9,10 @@ subnav_weight: 35
 
 ### University of Chicago
 
-samples
-  
+This page contains a selection of students evaluations for courses taught at University of Chicago from 2014-2018. 
+
+To download a pdf document with _my evaluations in full_, please [CLICK HERE](full_evaluations.pdf).
+
+
+
 ---

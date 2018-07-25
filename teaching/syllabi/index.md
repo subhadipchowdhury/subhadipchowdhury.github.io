@@ -9,6 +9,8 @@ subnav_weight: 33
 
 ### University of Chicago
 
-samples
+#### For Courses Taught
+
+#### For Future Courses
   
 ---
