@@ -7,7 +7,6 @@ subnav_weight: 33
 
 ## {{ page.title }}
 
-### University of Chicago
 
 #### For Courses Taught
 
