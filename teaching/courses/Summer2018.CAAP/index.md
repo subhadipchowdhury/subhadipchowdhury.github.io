@@ -58,11 +58,11 @@ are due on Tuesday next week.__
 |    |        | [Quiz 1](CAAP_Quiz1.pdf)             |         | [Solution](CAAP_Quiz1_solution.pdf)
 | 7. | July 9 | [Assignment 7](CAAP_Assignment7.pdf) | July 17 | [Solution](caap-proofs-assignment7-8.pdf) |
 | 8. | July 10 | [Assignment 8](CAAP_Assignment8.pdf) | July 17 | [Solution](caap-proofs-assignment7-8.pdf) |
-| 9. | July 12 | [Assignment 9](CAAP_Assignment9.pdf) | July 19 | |
-| 10. | July 13 | [Assignment 10](CAAP_Assignment10.pdf) | July 19 | |
+| 9. | July 12 | [Assignment 9](CAAP_Assignment9.pdf) | July 19 | [Solution](caap-proofs-assignment9-10.pdf) |
+| 10. | July 13 | [Assignment 10](CAAP_Assignment10.pdf) | July 19 | [Solution](caap-proofs-assignment9-10.pdf) |
 |    |        | [Quiz 2](CAAP_Quiz2.pdf)             |         | [Solution](CAAP_Quiz2_solution.pdf) |
-| 11. | July 16 | [Assignment 11](CAAP_Assignment11.pdf) | July 24 | |
-| 12. | July 16 | [Assignment 12](CAAP_Assignment12.pdf) | July 24 | |
+| 11. | July 16 | [Assignment 11](CAAP_Assignment11.pdf) | July 24 | [Solution](caap-proofs-assignment11-12.pdf) |
+| 12. | July 16 | [Assignment 12](CAAP_Assignment12.pdf) | July 24 | [Solution](caap-proofs-assignment11-12.pdf) |
 | 13. | July 19 | [Assignment 13](CAAP_Assignment13.pdf) | July 26 | |
 |    |        | [Quiz 3](CAAP_Quiz3.pdf)             |         | [Solution](CAAP_Quiz3_solution.pdf) |
 | 14. | July 20 | No Assignment 14 | | |
