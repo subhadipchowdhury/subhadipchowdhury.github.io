@@ -7,7 +7,7 @@ has_subnav: 1
 
 ## {{ page.title }}
 
-### Current Schedule (Fall 2018)
+### Upcoming Schedule (Fall 2018)
 
 #### [Math 1600: Differential Calculus](/teaching/Fall2018.1600)
 
