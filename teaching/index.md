@@ -7,6 +7,14 @@ has_subnav: 1
 
 ## {{ page.title }}
 
+### Current Schedule (Summer 2018)
+
+#### [CAAP Summer Academy: Proof-based Methods in Caculus](/teaching/Summer2018.CAAP)
+
+* __Time:__ MTRF 11:00-12:30
+* __Location:__ Ryerson 277
+* __Office Hour:__ TR 7:00-9:00 PM 
+<!--
 ### Upcoming Schedule (Fall 2018)
 
 #### [Math 1600: Differential Calculus](/teaching/Fall2018.1600)
@@ -25,7 +33,7 @@ has_subnav: 1
 ### Office Hours
 
 TBA
-
+-->
 ### Teaching Experience
 
 * [Statement of Teaching Philosophy](/teaching/statement): You can find both pdf and html versions of the statement here.
