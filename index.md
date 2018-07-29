@@ -9,15 +9,15 @@ navigation_weight: 1
 
 [![Subhadip Chowdhury](assets/me_small.jpg){:#mypicture}](assets/me_2018.jpg)
 </div>
-<div class="mail">
-[Department of Mathematics](http://math.uchicago.edu)  
-[The University of Chicago](http://www.uchicago.edu)  
-[5734 S. University Avenue, Chicago, Il-60637](https://maps.google.com/maps?q=5734+S.+University+Avenue,+Chicago,+Il-60637)
 
-**Office:** Eckhart 3  
-**Phone:** 773-490-5763  
-**Email:** `subhadip` at `math` dot `uchicago` dot `edu`    
-**My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
+<div class="mail">
+Visiting Assistant Professor
+[Department of Mathematics](https://www.bowdoin.edu/math/)  
+[Bowdoin College](http://www.bowdoin.edu/)  
+[Brunswick, ME 04011](https://www.google.com/maps/place/Searles+Science+Building,+Brunswick,+ME+04011)
+
+**Office:** Searles Science Building - 103 
+**Phone:** 207-725-3572
 </div>
 <div class="shield">
   <div class="current">
