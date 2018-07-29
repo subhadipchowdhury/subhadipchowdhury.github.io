@@ -20,8 +20,16 @@ navigation_weight: 1
 **My advisor:** [Danny Calegari](http://math.uchicago.edu/~dannyc/)
 </div>
 <div class="shield">
-![The University of Chicago](assets/uchicago_shield.png){:#university_shield}
+  <div class="current">
+     
+   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum"){:#bowdoin_seal}
+  </div>
+  <div class="old">
+  
+   ![The University of Chicago](assets/uchicago_shield.png){:#uchicago_shield}
+  </div>
 </div>
+
 </div>
 
 <hr><hr>
