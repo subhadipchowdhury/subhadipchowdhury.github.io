@@ -18,6 +18,7 @@ Visiting Assistant Professor
 [Brunswick, ME 04011](https://www.google.com/maps/place/Searles+Science+Building,+Brunswick,+ME+04011)
 
 **Office:** Searles Science Building - 103 
+
 **Phone:** 207-725-3572
 </div>
 <div class="shield">
