@@ -12,14 +12,13 @@ navigation_weight: 1
 
 <div class="mail">
 
-Visiting Assistant Professor
+Visiting Assistant Professor<br>
 [Department of Mathematics](https://www.bowdoin.edu/math/)  
 [Bowdoin College](http://www.bowdoin.edu/)  
 [Brunswick, ME 04011](https://www.google.com/maps/place/Searles+Science+Building,+Brunswick,+ME+04011)
 
- **Office:** Searles Science Building - 103
- 
- **Phone:** 207-725-3572
+**Office:** Searles Science Building - 103<br>
+**Phone:** 207-725-3572
 </div>
 <div class="shield">
   <div class="current">
