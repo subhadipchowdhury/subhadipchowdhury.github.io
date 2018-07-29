@@ -27,6 +27,7 @@ navigation_weight: 1
   <div class="old">
   
    ![The University of Chicago](assets/uchicago_shield.png){:#uchicago_shield}
+   ![Indian Statistical Institute](assets/isi_logo.png){:#isi_logo}
   </div>
 </div>
 
