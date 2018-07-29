@@ -12,6 +12,7 @@ navigation_weight: 1
 
 <div class="mail">
 Visiting Assistant Professor
+  
 [Department of Mathematics](https://www.bowdoin.edu/math/)  
 [Bowdoin College](http://www.bowdoin.edu/)  
 [Brunswick, ME 04011](https://www.google.com/maps/place/Searles+Science+Building,+Brunswick,+ME+04011)
