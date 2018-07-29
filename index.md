@@ -27,8 +27,8 @@ Visiting Assistant Professor<br>
   </div>
   <div class="old">
   
-   ![The University of Chicago](assets/uchicago_shield.png){:#uchicago_shield}
-   ![Indian Statistical Institute](assets/isi_logo.png){:#isi_logo}
+   ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur"){:#uchicago_shield}
+   ![Indian Statistical Institute](assets/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्"){:#isi_logo}
   </div>
 </div>
 
