@@ -463,14 +463,14 @@ footer {
 	order: 3;
 	float:right;
 	display:flex;
-	fles-direction: column;
+	flex-direction: column;
 	justify-content: space-evenly;
 	align-items:center;
 }
 
 .shield .old{
 	display:flex;
-	fles-direction: row;
+	flex-direction: row;
 	justify-content: space-evenly;
 	align-items:center;
 }
