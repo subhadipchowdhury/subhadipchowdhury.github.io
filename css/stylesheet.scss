@@ -436,17 +436,6 @@ footer {
     }
 }
 
-#uchicago_shield{
-	height:3.5em;
-}
-#isi_logo{
-	height:3.5em;
-}
-
-#bowdoin_seal{
-	width: 8em;
-}
-
 .picture{
 	order: 1;
 	float:left;
@@ -469,15 +458,23 @@ footer {
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items:center;
+	
+	.old{
+		display:flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items:center;
+		
+		.img{
+			height:3.5em;
+		}		
+	}
+	
+	.new img{
+		height:9em;
+	}
+	
 }
-
-.shield .old{
-	display:flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	align-items:center;
-}
-
 
 /***********************************************/
 
