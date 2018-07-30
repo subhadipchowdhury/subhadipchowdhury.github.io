@@ -206,14 +206,14 @@ nav#nav-main ul{
 			
 			&:hover:after{
 				z-index: -10;
-				animation: fill 1s forwards;
-				-webkit-animation: fill 1s forwards;
-				-moz-animation: fill 1s forwards;
+				animation: fill 0.5s forwards;
+				-webkit-animation: fill 0.5s forwards;
+				-moz-animation: fill 0.5s forwards;
 				opacity: 1;
 			}
 
 			&.active{
-				border-bottom:3px solid #800000;
+				border-bottom:1.5px solid #800000;
 			}
 		}
 		
