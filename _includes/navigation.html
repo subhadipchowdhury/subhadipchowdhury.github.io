@@ -12,7 +12,7 @@
 					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
 					{% for q in subnav_pages %}
 					<li>
-						<a href="{{ q.url }}" {% if q.url == page.url %}class="active"{% endif %}>
+						<a href="{{ q.url }}">
 							{{ q.title }}
 						</a>
 					</li>

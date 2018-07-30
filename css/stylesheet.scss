@@ -201,7 +201,8 @@ nav#nav-main ul{
 				-moz-animation: fill 1s forwards;
 				opacity: 1;
 			}
-			.active{
+
+			&.active{
 				border-bottom:3px solid #800000;
 			}
 		}
