@@ -63,7 +63,7 @@ are due on Tuesday next week.__
 |    |        | [Quiz 2](CAAP_Quiz2.pdf)             |         | [Solution](CAAP_Quiz2_solution.pdf) |
 | 11. | July 16 | [Assignment 11](CAAP_Assignment11.pdf) | July 24 | [Solution](caap-proofs-assignment11-12.pdf) |
 | 12. | July 16 | [Assignment 12](CAAP_Assignment12.pdf) | July 24 | [Solution](caap-proofs-assignment11-12.pdf) |
-| 13. | July 19 | [Assignment 13](CAAP_Assignment13.pdf) | July 26 | |
+| 13. | July 19 | [Assignment 13](CAAP_Assignment13.pdf) | July 26 | [Solution](caap-proofs-assignment13.pdf) |
 |    |        | [Quiz 3](CAAP_Quiz3.pdf)             |         | [Solution](CAAP_Quiz3_solution.pdf) |
 | 14. | July 20 | No Assignment 14 | | |
 | 15. | July 23 | [Assignment 15](CAAP_Assignment15.pdf) | July 31 | |
