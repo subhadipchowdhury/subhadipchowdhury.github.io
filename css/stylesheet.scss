@@ -181,20 +181,32 @@ nav#nav-main ul{
 			-o-border-radius: 0.5em;
 			
 			transition: all 2s;
-
+			
+			&:after{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				width: 0%;
+				content: '.';
+				color: transparent;
+				background: #aaa;
+				height: 1px;
+			}
 			
 			&:hover{
 				color: #A5D3DB;
 				text-decoration: none;
-				// z-index: 1;
+				z-index: 1;
 			}
 			
 			&:hover:after{
-				// z-index: -10;
+				z-index: -10;
 				animation: fill 1s forwards;
 				-webkit-animation: fill 1s forwards;
 				-moz-animation: fill 1s forwards;
-				// opacity: 1;
+				opacity: 1;
 			}
 
 			&.active{
