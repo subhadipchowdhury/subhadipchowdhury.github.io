@@ -187,12 +187,14 @@ nav#nav-main ul{
 				bottom: 0;
 				left: 0;
 				right: 0;
-				margin: auto;
+				margin: 0;
 				width: 0%;
 				content: '.';
 				color: transparent;
 				background: #aaa;
 				height: 1px;
+				text-align: left;
+				opacity: 0;
 			}
 			
 			&:hover{
