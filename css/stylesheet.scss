@@ -186,15 +186,15 @@ nav#nav-main ul{
 			&:hover{
 				color: #A5D3DB;
 				text-decoration: none;
-				z-index: 1;
+				// z-index: 1;
 			}
 			
 			&:hover:after{
-				z-index: -10;
+				// z-index: -10;
 				animation: fill 1s forwards;
 				-webkit-animation: fill 1s forwards;
 				-moz-animation: fill 1s forwards;
-				opacity: 1;
+				// opacity: 1;
 			}
 
 			&.active{
@@ -243,6 +243,21 @@ nav#nav-main ul{
 
 /* Keyframes */
 
+@keyframes fill {
+	0% {
+	  width: 0%;
+	  height: 1px;
+	}
+	50% {
+	  width: 100%;
+	  height: 1px;
+	}
+	100% {
+	  width: 100%;
+	  height: 100%;
+	  background:#3A494C;
+	}
+}
 
 @-webkit-keyframes fill{
 	0% {
@@ -258,23 +273,9 @@ nav#nav-main ul{
 	  height: 100%;
 	  background:#3A494C;
 	}
-  }
+}
 
-  @keyframes fill {
-	0% {
-	  width: 0%;
-	  height: 1px;
-	}
-	50% {
-	  width: 100%;
-	  height: 1px;
-	}
-	100% {
-	  width: 100%;
-	  height: 100%;
-	  background:#3A494C;
-	}
-  }
+
 
   @-moz-keyframes fill {
 	0% {
@@ -290,9 +291,9 @@ nav#nav-main ul{
 	  height: 100%;
 	  background:#3A494C;
 	}
-  }
+}
 
-  @-o-keyframes fill {
+@-o-keyframes fill {
 	0% {
 	  width: 0%;
 	  height: 1px;
@@ -306,7 +307,7 @@ nav#nav-main ul{
 	  height: 100%;
 	  background:#3A494C;
 	}
-  }
+}
 
 
 /*************************************/
