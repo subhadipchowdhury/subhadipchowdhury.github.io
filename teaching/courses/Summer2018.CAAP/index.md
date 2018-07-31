@@ -72,7 +72,7 @@ are due on Tuesday next week.__
 | 18. | July 27 | No Assignment 18 | | |
 |    |        | [Quiz 4](CAAP_Quiz4.pdf)             |         | [Solution](CAAP_Quiz4_solution.pdf) |
 | 19. | July 30 | [Assignment 19](CAAP_Assignment19.pdf) | July 31 | |
-|    |        |             |         | |
+| 20. | July 31 | [Assignment 20](CAAP_Assignment20.pdf) | August 6 | |
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
 
