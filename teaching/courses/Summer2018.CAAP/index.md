@@ -66,13 +66,13 @@ are due on Tuesday next week.__
 | 13. | July 19 | [Assignment 13](CAAP_Assignment13.pdf) | July 26 | [Solution](caap-proofs-assignment13.pdf) |
 |    |        | [Quiz 3](CAAP_Quiz3.pdf)             |         | [Solution](CAAP_Quiz3_solution.pdf) |
 | 14. | July 20 | No Assignment 14 | | |
-| 15. | July 23 | [Assignment 15](CAAP_Assignment15.pdf) | July 31 | |
-| 16. | July 24 | [Assignment 16](CAAP_Assignment16.pdf) | July 31 | |
+| 15. | July 23 | [Assignment 15](CAAP_Assignment15.pdf) | July 31 | [Solution](caap-proofs-assignment15-16.pdf) |
+| 16. | July 24 | [Assignment 16](CAAP_Assignment16.pdf) | July 31 | [Solution](caap-proofs-assignment15-16.pdf) |
 | 17. | July 26 | [Assignment 17](CAAP_Assignment17.pdf) | July 31 | |
 | 18. | July 27 | No Assignment 18 | | |
 |    |        | [Quiz 4](CAAP_Quiz4.pdf)             |         | [Solution](CAAP_Quiz4_solution.pdf) |
 | 19. | July 30 | [Assignment 19](CAAP_Assignment19.pdf) | July 31 | |
-| 20. | July 31 | [Assignment 20](CAAP_Assignment20.pdf) | August 6 | |
+| 20. | July 31 | [Assignment 20](CAAP_Assignment20.pdf) | August 6 | [Solution](caap-proofs-assignment20.pdf) |
 |----------|------|------------|----------|
 | n. | August 7 | Final Exam | |
 
