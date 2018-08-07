@@ -7,16 +7,7 @@ has_subnav: 1
 
 ## {{ page.title }}
 
-### Current Schedule (Summer 2018)
-
-#### [CAAP Summer Academy: Proof-based Methods in Caculus](/teaching/courses/Summer2018.CAAP)
-
-* __Time:__ MTRF 11:00-12:30
-* __Location:__ Ryerson 277
-* __Office Hour:__ TR 7:00-9:00 PM 
-
-
-### Upcoming Schedule (Fall 2018)
+### Current Schedule (Fall 2018)
 
 #### [Math 1600: Differential Calculus](/teaching/courses/Fall2018.1600)
 
