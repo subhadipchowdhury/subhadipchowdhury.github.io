@@ -74,7 +74,7 @@ are due on Tuesday next week.__
 | 19. | July 30 | [Assignment 19](CAAP_Assignment19.pdf) | July 31 | |
 | 20. | July 31 | [Assignment 20](CAAP_Assignment20.pdf) | August 6 | [Solution](caap-proofs-assignment20.pdf) |
 |----------|------|------------|----------|
-| n. | August 7 | Final Exam | |
+| n. | August 7 | [Final Exam](CAAP_Final.pdf) |  | [Solution](CAAP_Final_solution.pdf) |
 
 </div>
 
