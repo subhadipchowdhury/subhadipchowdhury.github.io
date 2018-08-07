@@ -244,8 +244,13 @@ nav#nav-main ul{
 			transition:opacity 0.2s linear, visibility 0.2s linear;	
 			
 			background-color:#FFF;
-			border-bottom:3px solid #800000;
 			border-left:3px solid #800000;
+			border-bottom:3px solid;
+			-webkit-border-image: -webkit-gradient(linear, 0 0, 0 100%, from(#800000), to(rgba(0, 0, 0, 0))) 1 100%; 			 -webkit-border-image: -webkit-linear-gradient(#800000, rgba(0, 0, 0, 0)) 1 100%; 
+			-moz-border-image: -moz-linear-gradient(#800000, rgba(0, 0, 0, 0)) 1 100%; 
+			-o-border-image: -o-linear-gradient(#800000, rgba(0, 0, 0, 0)) 1 100%; 
+			border-image: linear-gradient(to right, #800000, rgba(0, 0, 0, 0)) 1 100%;
+			
 		}
 	}
 	}
