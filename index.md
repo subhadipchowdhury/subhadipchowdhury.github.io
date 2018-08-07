@@ -44,7 +44,7 @@ My CV is available [HERE](assets/CV.pdf).
 
 I will be joining [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as a Visiting Assistant Professor in Fall 2018.
 
-I successfully defended my thesis on June 5, 2018 under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/) and expect to receive my Ph.D. in August 2018. 
+I successfully defended my thesis on June 5, 2018 under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/) and expect to receive my Ph.D. on 25 August 2018. 
 
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 
@@ -64,7 +64,5 @@ My papers and preprints are on my [research page](research).
 ## Teaching
 </div>
 
-In Summer 2018, I am teaching in the [Chicago Academic Achievement Program](https://ccss.uchicago.edu/page/chicago-academic-achievement-program) Summer Academy as a Mathematics Instructor. The course webpage is available [here](teaching/courses/Summer2018.CAAP).
-  
-Older teaching is listed on my [teaching page](teaching).
+In Fall 2018, I am teaching Math 1600 and Math 1800. The course webpages are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
