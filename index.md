@@ -40,15 +40,15 @@ Visiting Assistant Professor<br>
 ## Curriculum Vitae
 </div>
 
-My CV is available [HERE](assets/CV.pdf). 
+I am a Visiting Assistant Professor at [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as of Fall 2018.
 
-I will be joining [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as a Visiting Assistant Professor in Fall 2018.
-
-I successfully defended my thesis on June 5, 2018 under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/) and expect to receive my Ph.D. on 25 August 2018. 
+I receive my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
 
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 
+My CV is available [HERE](assets/CV.pdf). 
 <hr>
+
 
 <div class='anchor'>
 ## Research Interests
