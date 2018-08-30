@@ -9,22 +9,21 @@ has_subnav: 1
 
 ### Current Schedule (Fall 2018)
 
-#### [Math 1600: Differential Calculus](/teaching/courses/Fall2018.1600)
+#### [Math 1600: Differential Calculus](https://blackboard.bowdoin.edu)
 
 * __Time:__ TR 10:05-11:30 AM
-* __Location:__ TBA
 * __Lab:__ F 2:30-4:15 PM 
 
 
-#### [Math 1800: Multivariate Calculus](/teaching/courses/Fall2018.1800)
+#### [Math 1800: Multivariate Calculus](https://blackboard.bowdoin.edu)
 
 * __Time:__ MWF 10:40-11:35 AM
-* __Location:__ TBA
 * __Lab:__ T 2:50-4:15 PM
 
 #### Office Hours
 
-TBA
+My office hours will be Monday 2-3:30PM, Tuesday 1-2PM, and Thursday 2-3:30PM. I will have another office hour on Friday 1-2PM which will be by appointment only. There are also course specific office hours as detailed in the schedule.
+
 
 ### Teaching Experience
 
