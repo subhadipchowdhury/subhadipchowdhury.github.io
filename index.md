@@ -7,7 +7,7 @@ navigation_weight: 1
 <div class="about">
 <div class="picture">
 
-[![Subhadip Chowdhury](assets/me_small.jpg){:#mypicture}](assets/me_2018.jpg)
+[![Subhadip Chowdhury](assets/photos/me_small.jpg){:#mypicture}](assets/photos/)
 </div>
 
 <div class="mail">
