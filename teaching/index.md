@@ -15,7 +15,7 @@ has_subnav: 1
 * __Lab:__ F 2:30-4:15 PM 
 
 
-#### [Math 1800: Multivariate Calculus](https://blackboard.bowdoin.edu)
+#### [Math 1800: Multivariate Calculus](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1800/)
 
 * __Time:__ MWF 10:40-11:35 AM
 * __Lab:__ T 2:50-4:15 PM
