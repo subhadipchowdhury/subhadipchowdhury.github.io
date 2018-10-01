@@ -9,7 +9,7 @@ has_subnav: 1
 
 ### Current Schedule (Fall 2018)
 
-#### [Math 1600: Differential Calculus](https://blackboard.bowdoin.edu)
+#### [Math 1600: Differential Calculus](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/)
 
 * __Time:__ TR 10:05-11:30 AM
 * __Lab:__ F 2:30-4:15 PM 

@@ -14,7 +14,7 @@ category: coursepage
 
 |||
 |---|---|
-| **Lectures** | MWF	10:40 am - 11:35 pm, Searles 215 |
+| **Lectures** | MWF	10:40 am - 11:35 am, Searles 215 |
 | **Instrutor**| Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
 | **Study Group Leader**| Nan Ding (`nding` at `bowdoin` dot `edu`)
 | **Office Hours**| MR 2-3:30PM, TF 1-2PM |
