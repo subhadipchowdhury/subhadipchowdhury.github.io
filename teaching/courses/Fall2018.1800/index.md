@@ -39,6 +39,7 @@ ___
 ## Other Materials
 
 ### Lab handouts
+Most of these lab materials are due to Professor Adam Levy and Professor William Barker.
 
 + [Lab 1 - 3D Graphing with Mathematica](Lab1_1800.pdf)
 + [Lab 2 - Partial Derivatives](Lab2_1800.pdf)
