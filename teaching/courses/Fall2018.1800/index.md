@@ -55,6 +55,5 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 
 + [Quiz 1](Fall2018_1800_Quiz1.pdf)
 + [Quiz 4](Fall2018_1800_Quiz4.pdf)
-+ [Quiz 9](Fall2018_1800_Quiz9.pdf)
 
 + [Midterm 1](Fall2018_1800_Midterm1.pdf)
