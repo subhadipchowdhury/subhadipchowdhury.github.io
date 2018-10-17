@@ -49,7 +49,7 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 
 + [Handout 1 - Functions of Several Variables](Fall2018_1800_Handout1.pdf)
 + [Handout 2 - Vectors](Fall2018_1800_Handout2.pdf)
-+ [Handout 3 - Paramteric Curves and Chain Rule](Fall2018_1800_Handout3.pdf)
++ [Handout 3 - Parametrized Curves and Chain Rule](Fall2018_1800_Handout3.pdf)
 
 ### Quizzes and Exams
 
