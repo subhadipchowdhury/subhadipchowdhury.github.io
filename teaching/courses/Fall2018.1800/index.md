@@ -44,16 +44,23 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 + [Lab 1 - 3D Graphing with Mathematica](Lab1_1800.pdf)
 + [Lab 2 - Partial Derivatives](Lab2_1800.pdf)
 + [Lab 3 - Parametric Plotting](Lab3_1800.pdf)
++ [Lab 4 - Stationary Points](Lab4_1800.pdf)
++ [Lab 5 - Volume Integration](Lab5_1800.pdf)
 
 ### Review Handouts
 
 + [Handout 1 - Functions of Several Variables](Fall2018_1800_Handout1.pdf)
 + [Handout 2 - Vectors](Fall2018_1800_Handout2.pdf)
 + [Handout 3 - Parametrized Curves and Chain Rule](Fall2018_1800_Handout3.pdf)
++ [Handout 4](Fall2018_1800_Handout4.pdf)
++ [Handout 5 - Double Integral Using Polar
+Coordinates and Probability Density Function](Fall2018_1800_Handout5.pdf)
 
 ### Quizzes and Exams
 
 + [Quiz 1](Fall2018_1800_Quiz1.pdf)
 + [Quiz 4](Fall2018_1800_Quiz4.pdf)
++ [Quiz 5](Fall2018_1800_Quiz5.pdf)
 
 + [Midterm 1](Fall2018_1800_Midterm1.pdf)
++ [Midterm 2](Fall2018_1800_Midterm2.pdf)
