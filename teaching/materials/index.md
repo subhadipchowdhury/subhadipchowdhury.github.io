@@ -25,4 +25,7 @@ Here you can find some of the materials I have designed for my classes.
 ### Introduction to Proof-based Methods
 
 + [End of quarter Class Project Ideas, Guidelines, and Rubric](https://subhadipchowdhury.github.io/teaching/courses/Summer2018.CAAP/Projects_CAAP_Summer_2018.pdf)
+
+
+
 ---
