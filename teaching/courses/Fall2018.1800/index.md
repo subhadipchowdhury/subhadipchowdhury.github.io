@@ -26,7 +26,7 @@ category: coursepage
 ## Syllabus and Policies 
 
 + You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_1800_Fall_2018.pdf). 
-+ A tentative schedule is available [here](Schedule_1800.pdf)
++ A tentative schedule is available [here](Schedule_1800.pdf).
 ---
 
 ## Homework Assignments
