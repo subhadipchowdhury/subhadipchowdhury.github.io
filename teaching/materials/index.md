@@ -11,9 +11,9 @@ Here you can find some of the materials I have designed for my classes.
 
 ### Differential Calculus
 
-+ [How to graph a rational function](Fall2018_1600_Handout1.pdf)
-+ [Interpolation using Mathematica](Lab2_1600.pdf)
-+ [Newton-Raphson Method of finding Roots](Lab4_1600.pdf), [Mathematica Notebook File](Lab4_1600_Rootfinding.nb)
++ [How to graph a rational function](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/Fall2018_1600_Handout1.pdf)
++ [Interpolation using Mathematica](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/Lab2_1600.pdf)
++ [Newton-Raphson Method of finding Roots](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/Lab4_1600.pdf), [Mathematica Notebook File](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/Lab4_1600_Rootfinding.nb)
   
 ### Multivariable Calculus
   
