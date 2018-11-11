@@ -7,7 +7,9 @@ subnav_weight: 32
 
 ## {{ page.title }}
 
-Below is a list of courses I have taught in the past. This page contains the syllabi, assignments, class notes, exams etc. Select materials from some courses can be found on the [Sample Course Materials](/teaching/materials) page.
+Below is a list of courses I have taught in the past. This page contains the syllabi, assignments, class notes, exams etc. To download a summary of all the courses taught in pdf form, [Click Here](List_of_Courses_Taught.pdf).
+
+Select materials from some courses can be found on the [Sample Course Materials](/teaching/materials) page.
 
 ### Bowdoin College
 
