@@ -25,7 +25,7 @@ category: coursepage
 ---
 ## Syllabus and Policies 
 
-+ You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_1600_Fall_2016.pdf). The last page has a tentative course outline.
++ You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_1600_Fall_2018.pdf). The last page has a tentative course outline.
 
 ---
 
