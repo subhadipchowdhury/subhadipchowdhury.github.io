@@ -45,6 +45,7 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 + [Lab 3 - Parametric Plotting](Lab3_1800.pdf)
 + [Lab 4 - Stationary Points](Lab4_1800.pdf)
 + [Lab 5 - Volume Integration](Lab5_1800.pdf)
++ [Lab 5 - Vector Fields](Lab6_1800.pdf), [.nb file](Lab6_1800.nb)
 
 ### Review Handouts
 
@@ -52,14 +53,7 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 + [Handout 2 - Vectors](Fall2018_1800_Handout2.pdf)
 + [Handout 3 - Parametrized Curves and Chain Rule](Fall2018_1800_Handout3.pdf)
 + [Handout 4](Fall2018_1800_Handout4.pdf)
-+ [Handout 5 - Double Integral Using Polar
-Coordinates and Probability Density Function](Fall2018_1800_Handout5.pdf)
-
-### Quizzes and Exams
-
-+ [Quiz 1](Fall2018_1800_Quiz1.pdf)
-+ [Quiz 4](Fall2018_1800_Quiz4.pdf)
-+ [Quiz 5](Fall2018_1800_Quiz5.pdf)
-
-+ [Midterm 1](Fall2018_1800_Midterm1.pdf)
-+ [Midterm 2](Fall2018_1800_Midterm2.pdf)
++ [Handout 5 - Double Integral Using Polar Coordinates and Probability Density Function](Fall2018_1800_Handout5.pdf)
++ [Handout 6 - Vector Fields and Recap on Integrals](Fall2018_1800_Handout6.pdf)
++ [Handout 7 - Applications of Green's Theorem](Fall2018_1800_Handout7.pdf)
++ [Handout 8 - 3D Curl and Divergence](Fall2018_1800_Handout8.pdf)
