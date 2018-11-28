@@ -52,14 +52,3 @@ ___
 + [Practice Problems for Second Derivative, Power Rule, Exponential Function, and Product Rule](Fall2018_1600_Handout3.pdf)
 + [Practice Problems for Chain Rule, Squeeze Theorem and Derivative of Trigonometric Functions](Fall2018_1600_Handout4.pdf)
 + [Practice Problems for Chain Rule, Derivative of Inverse Functions, and Implicit Differentiation](Fall2018_1600_Handout5.pdf)
-
-### Quizzes and Exams
-
-+ [Midterm 1](Fall2018_1600_Midterm1.pdf)
-+ [Midterm 2](Fall2018_1600_Midterm2.pdf)
-
-+ [Quiz 8](Fall2018_1600_Quiz8.pdf)
-+ [Quiz 9](Fall2018_1600_Quiz9.pdf)
-+ [Quiz 10](Fall2018_1600_Quiz10.pdf)
-+ [Quiz 11](Fall2018_1600_Quiz11.pdf)
-+ [Quiz 12](Fall2018_1600_Quiz12.pdf)
