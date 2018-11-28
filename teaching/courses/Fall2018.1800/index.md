@@ -45,7 +45,7 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 + [Lab 3 - Parametric Plotting](Lab3_1800.pdf)
 + [Lab 4 - Stationary Points](Lab4_1800.pdf)
 + [Lab 5 - Volume Integration](Lab5_1800.pdf)
-+ [Lab 5 - Vector Fields](Lab6_1800.pdf), [.nb file](Lab6_1800.nb)
++ [Lab 5 - Vector Fields](Lab6_1800.pdf), [Mathematica file](Lab6_1800.nb)
 
 ### Review Handouts
 
