@@ -57,3 +57,5 @@ Most of these lab materials are due to Professor Adam Levy and Professor William
 + [Handout 6 - Vector Fields and Recap on Integrals](Fall2018_1800_Handout6.pdf)
 + [Handout 7 - Applications of Green's Theorem](Fall2018_1800_Handout7.pdf)
 + [Handout 8 - 3D Curl and Divergence](Fall2018_1800_Handout8.pdf)
++ [Handout 9 - How to Calculate Line Integrals: A Summary](Fall2018_1800_Handout9.pdf)
++ [Handout 10 - Practice Problems on Line Integrals](Fall2018_1800_Handout10.pdf)
