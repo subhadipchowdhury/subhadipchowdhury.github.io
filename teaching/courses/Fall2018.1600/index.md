@@ -52,3 +52,4 @@ ___
 + [Practice Problems for Second Derivative, Power Rule, Exponential Function, and Product Rule](Fall2018_1600_Handout3.pdf)
 + [Practice Problems for Chain Rule, Squeeze Theorem and Derivative of Trigonometric Functions](Fall2018_1600_Handout4.pdf)
 + [Practice Problems for Chain Rule, Derivative of Inverse Functions, and Implicit Differentiation](Fall2018_1600_Handout5.pdf)
++ [Summary and Practice Problems for Related Rates, Optimization, and Curve Sketching](Fall2018_1600_Handout6.pdf)
