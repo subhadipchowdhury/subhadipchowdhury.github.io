@@ -9,6 +9,7 @@ subnav_weight: 33
 
 #### For Future Courses
 
++ [Math 2000, Linear Algebra, Spring 2019](Syllabus_2000_Spring_2019.pdf)
 + [Math 1800, Multivariable Calculus, Spring 2019](Syllabus_1800_Spring_2019.pdf)
 
 #### For Courses Taught
