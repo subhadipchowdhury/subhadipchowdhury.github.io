@@ -11,7 +11,7 @@ subnav_weight: 35
  + [Fall 2018](/teaching/evaluations/all_evaluations/Bowdoin/Fall18)
 
 ### University of Chicago
- + [2015-2018]](/teaching/evaluations/all_evaluations/UChicago).
+ + [2015-2018](/teaching/evaluations/all_evaluations/UChicago).
 
 ### Chicago Academic Achievement Program
  + [Summer 2018](/teaching/evaluations/all_evaluations/CAAP).
