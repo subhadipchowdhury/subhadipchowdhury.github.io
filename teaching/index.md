@@ -7,22 +7,21 @@ has_subnav: 1
 
 ## {{ page.title }}
 
-### Current Schedule (Fall 2018)
+### Current Schedule (Spring 2019)
 
-#### [Math 1600: Differential Calculus](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1600/)
-
-* __Time:__ TR 10:05-11:30 AM
-* __Lab:__ F 2:30-4:15 PM 
-
-
-#### [Math 1800: Multivariate Calculus](https://subhadipchowdhury.github.io/teaching/courses/Fall2018.1800/)
+#### [Math 1800: Multivariate Calculus](https://subhadipchowdhury.github.io/teaching/courses/Spring2019.1800/)
 
 * __Time:__ MWF 10:40-11:35 AM
-* __Lab:__ T 2:50-4:15 PM
+* __Lab:__ R 1:15-2:40 PM
+
+#### [Math 2000: Linear Algebra](https://subhadipchowdhury.github.io/teaching/courses/Spring2019.2000/)
+
+* __Time:__ MWF 11:45-12:40 PM
+
 
 #### Office Hours
 
-My office hours will be Monday 2-3:30PM, Tuesday 1-2PM, and Thursday 2-3:30PM. I will have another office hour on Friday 1-2PM which will be by appointment only. There are also course specific office hours as detailed in the schedule.
+My office hours will be MTW 2:30-4PM, and Thursday 3-4:15PM. I will have another office hour on Friday afternoon which will be by appointment only.
 
 
 ### Teaching Experience
