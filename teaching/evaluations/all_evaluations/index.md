@@ -1,8 +1,7 @@
 ---
-layout: default
-title: Student Evaluations
-parentnav: Teaching
-subnav_weight: 35
+ layout: default 
+ category: coursepage 
+ title: All Evaluations 
 ---
 
 ## {{ page.title }}
