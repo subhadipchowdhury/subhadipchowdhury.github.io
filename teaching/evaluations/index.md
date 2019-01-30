@@ -8,7 +8,7 @@ subnav_weight: 35
 ## {{ page.title }}
 
 ### Bowdoin College
- + A _numerical summary_ of student evaluations from Fall 2018 is [here](Bowdoin_Fall18.pdf)
+ + A _numerical summary_ of student evaluations from Fall 2018 is [here](Bowdoin_Fall18.pdf).
 
 ### University of Chicago
  + A _numerical summary_ of student evaluations from 2014-2018 is [here](UChicago_14_18.pdf).
