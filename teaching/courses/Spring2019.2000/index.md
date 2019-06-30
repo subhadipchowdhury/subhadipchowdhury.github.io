@@ -4,7 +4,7 @@ title: Math 2000, Spring 2019
 category: coursepage
 ---
 
-# Multivariable Calculus
+# Linear Algebra
 ## Spring 2019
 <div class="backlink">
  
