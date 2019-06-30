@@ -39,7 +39,6 @@ ___
 ### Lab handouts
 Some of these lab materials are due to Professor Adam Levy and Professor William Barker.
 
-+ [Lab 0 - Intro to Mathematica](Spring2019_1800_Lab0.pdf)
 + [Lab 1 - 3D Graphing with Mathematica](Spring2019_1800_Lab1.pdf)
 + [Lab 2 - Partial Derivatives](Spring2019_1800_Lab2.pdf)
 + [Lab 3 - Parametric Plotting with Lissajous Curves](Spring2019_1800_Lab3.pdf)
