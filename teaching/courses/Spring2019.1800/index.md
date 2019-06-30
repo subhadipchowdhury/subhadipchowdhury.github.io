@@ -44,10 +44,10 @@ Some of these lab materials are due to Professor Adam Levy and Professor William
 + [Lab 2 - Partial Derivatives](Spring2019_1800_Lab2.pdf)
 + [Lab 3 - Parametric Plotting with Lissajous Curves](Spring2019_1800_Lab3.pdf)
 + [Lab 4 - Stationary Points](Spring2019_1800_Lab4.pdf)
-+ [Lab 5 - Volume Integration](Spring2019_1800_Lab5.nb)
-+ [Lab 6 - ?](Spring2019_1800_Lab6.nb)
-+ [Lab 7 - ?](Spring2019_1800_Lab7.nb)
-+ [Lab 8 - ?](Spring2019_1800_Lab8.nb)
++ [Lab 5 - Max/Min Problems](Spring2019_1800_Lab5.nb)
++ [Lab 6 - Volume Integration](Spring2019_1800_Lab6.nb)
++ [Lab 7 - Polar Curves](Spring2019_1800_Lab7.nb)
++ [Lab 8 - Vector Fields](Spring2019_1800_Lab8.nb)
 
 
 ### Review Handouts
