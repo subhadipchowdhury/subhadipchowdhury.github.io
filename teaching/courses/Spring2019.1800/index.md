@@ -37,5 +37,27 @@ ___
 ## Other Materials
 
 ### Lab handouts
+Some of these lab materials are due to Professor Adam Levy and Professor William Barker.
+
++ [Lab 0 - Intro to Mathematica](Spring2019_1800_Lab0.pdf)
++ [Lab 1 - 3D Graphing with Mathematica](Spring2019_1800_Lab1.pdf)
++ [Lab 2 - Partial Derivatives](Spring2019_1800_Lab2.pdf)
++ [Lab 3 - Parametric Plotting with Lissajous Curves](Spring2019_1800_Lab3.pdf)
++ [Lab 4 - Stationary Points](Spring2019_1800_Lab4.pdf)
++ [Lab 5 - Volume Integration](Spring2019_1800_Lab5.nb)
++ [Lab 6 - ?](Spring2019_1800_Lab6.nb)
++ [Lab 7 - ?](Spring2019_1800_Lab7.nb)
++ [Lab 8 - ?](Spring2019_1800_Lab8.nb)
+
 
 ### Review Handouts
+
++ [Handout 1 - Functions of Several Variables](Spring2019_1800_Handout1.pdf)
++ [Handout 2 - Vectors](Spring2019_1800_Handout2.pdf)
++ [Handout 3 - Lines and Planes in 3D](Spring2019_1800_Handout3.pdf)
++ [Handout 4 - Review](Spring2019_1800_Handout4.pdf)
++ [Handout 5 - Practice Problems](Spring2019_1800_Handout5.pdf)
++ [Handout 6 - Vector Fields and Flow Lines](Spring2019_1800_Handout6.pdf)
++ [Handout 7 - Applications and Extensions of Green's Theorem](Spring2019_1800_Handout7.pdf)
++ [Handout 8 - 3D Curl and Divergence](Spring2019_1800_Handout8.pdf)
++ [Handout 9 - How to Calculate Line Integrals: A Summary and Practice Problems](Spring2019_1800_Handout9.pdf)

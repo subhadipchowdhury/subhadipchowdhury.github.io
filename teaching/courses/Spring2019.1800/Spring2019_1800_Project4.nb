@@ -1,0 +1,190 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7195,        182]
+NotebookOptionsPosition[      6513,        164]
+NotebookOutlinePosition[      6868,        180]
+CellTagsIndexPosition[      6825,        177]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{"t_", ",", "a_", ",", "b_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "-", "b"}], ")"}], 
+      RowBox[{"Cos", "[", "t", "]"}]}], "+", 
+     RowBox[{"b", " ", 
+      RowBox[{"Cos", "[", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"a", "-", "b"}], ")"}], " ", "t"}], ")"}], "/", " ", "b"}],
+        "]"}]}]}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "-", "b"}], ")"}], 
+      RowBox[{"Sin", "[", "t", "]"}]}], "-", 
+     RowBox[{"b", " ", 
+      RowBox[{"Sin", "[", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"a", "-", "b"}], ")"}], " ", "t"}], ")"}], "/", " ", "b"}],
+        "]"}]}]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.759768235121539*^9, 3.759768292656364*^9}, {
+  3.759768381545362*^9, 3.75976839761742*^9}},
+ CellLabel->
+  "In[177]:=",ExpressionUUID->"6e657d03-f432-406f-8da0-d298a52a29d6"],
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"f", "[", 
+   RowBox[{"t", ",", "4", ",", "1"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7597683649662237`*^9, 3.759768375600072*^9}, {
+  3.759779260242556*^9, 3.759779264496142*^9}},
+ CellLabel->
+  "In[178]:=",ExpressionUUID->"86d80d84-c1c8-445e-aece-c13fb24e3652"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Hypocycloid", "[", 
+   RowBox[{"a_", ",", "b_", ",", "maxdomain_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ParametricPlot", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"f", "[", 
+       RowBox[{"t", ",", "a", ",", "b"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0", ",", "d"}], "}"}], ",", 
+      RowBox[{"PlotRange", "\[Rule]", 
+       RowBox[{"Max", "[", 
+        RowBox[{"a", ",", 
+         RowBox[{
+          RowBox[{"2", "b"}], "-", "a"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"d", ",", 
+        RowBox[{"2", "*", "Pi"}], ",", "\"\<Domain\>\""}], "}"}], ",", 
+      "0.001", ",", "maxdomain"}], "}"}], ",", 
+    RowBox[{"SaveDefinitions", "\[Rule]", "True"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"FrameLabel", "\[Rule]", 
+     RowBox[{"Text", "[", 
+      RowBox[{"\"\<Current value of t = \[Pi] \[Times] \>\"", " ", 
+       RowBox[{"Dynamic", "[", 
+        RowBox[{"d", "/", "Pi"}], "]"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.759768302187067*^9, 3.7597683440092382`*^9}, {
+   3.7597684119703693`*^9, 3.759768492960477*^9}, {3.759768645956561*^9, 
+   3.759768650064498*^9}, {3.759768680649493*^9, 3.759768722216374*^9}, {
+   3.7597689104993353`*^9, 3.759768914024403*^9}, {3.7597690927943993`*^9, 
+   3.7597691218964663`*^9}, 3.759769461704665*^9, {3.759769502561915*^9, 
+   3.7597695029603558`*^9}, {3.759769579762638*^9, 3.75976959545885*^9}, {
+   3.759769703258739*^9, 3.759769707249566*^9}, {3.759769843762825*^9, 
+   3.7597698533766937`*^9}, {3.759769885930092*^9, 3.7597698869857473`*^9}, {
+   3.759771248428001*^9, 3.7597712555684357`*^9}, {3.7597715834577293`*^9, 
+   3.759771584768281*^9}, {3.759771676003003*^9, 3.759771694433865*^9}, {
+   3.75977187453928*^9, 3.759771881520721*^9}, {3.759771960146247*^9, 
+   3.759771960544709*^9}, {3.759772592595098*^9, 3.759772658202126*^9}, {
+   3.759778419676149*^9, 3.759778423112604*^9}, {3.759778497329875*^9, 
+   3.759778518985828*^9}, {3.759778563908793*^9, 3.759778619240727*^9}, {
+   3.759778737788122*^9, 3.7597787849929857`*^9}, {3.759778820067719*^9, 
+   3.759778832321072*^9}, {3.7597789015552483`*^9, 3.7597789044001493`*^9}, {
+   3.759779007546183*^9, 3.7597790863450737`*^9}, 3.759779408786395*^9, {
+   3.759779451345079*^9, 3.759779454321081*^9}, 3.759779485961502*^9},
+ CellLabel->
+  "In[185]:=",ExpressionUUID->"d8814e94-4dc3-426c-bc7e-3ce10d3059d5"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Hypocycloid", "[", 
+    RowBox[{
+     RowBox[{"n", "/", "d"}], ",", "1", ",", 
+     RowBox[{"d", "*", "2", "*", "Pi"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "1"}], "}"}], ",", "1", ",", "10", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d", ",", "4"}], "}"}], ",", "1", ",", "10", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.759768498140615*^9, 3.759768500887966*^9}, {
+   3.759769445002839*^9, 3.759769485823971*^9}, 3.759769716449502*^9, {
+   3.759769863450485*^9, 3.75976986790399*^9}, {3.7597710282522306`*^9, 
+   3.759771097929541*^9}, {3.7597711799950323`*^9, 3.759771183865397*^9}, {
+   3.7597712158984957`*^9, 3.759771226561429*^9}, {3.7597712662490396`*^9, 
+   3.7597712802718763`*^9}, 3.7597714159944887`*^9, {3.75977147917032*^9, 
+   3.759771499904258*^9}, {3.759771532146928*^9, 3.759771538688341*^9}, {
+   3.759771588825726*^9, 3.759771590024417*^9}, {3.759772343746969*^9, 
+   3.759772355904224*^9}, {3.759772386978899*^9, 3.759772406744049*^9}, {
+   3.759772508859139*^9, 3.759772529672868*^9}, {3.759779079275157*^9, 
+   3.759779082296438*^9}, {3.759779162819008*^9, 3.7597791728418093`*^9}, {
+   3.759779324538769*^9, 3.75977934248848*^9}, {3.759779469563086*^9, 
+   3.7597794762017193`*^9}},
+ CellLabel->
+  "In[186]:=",ExpressionUUID->"e44770e8-3887-43d1-99d8-2176c5d390d4"],
+
+Cell[BoxData[
+ RowBox[{"Hypocycloid", "[", 
+  RowBox[{
+   RowBox[{"Sqrt", "[", "2", "]"}], ",", "1", ",", 
+   RowBox[{"4", "Pi"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.759779371697359*^9, 3.759779374616893*^9}, {
+  3.759779523882657*^9, 3.759779548376134*^9}, {3.759779723978355*^9, 
+  3.7597797349044313`*^9}},ExpressionUUID->"51343c46-2915-42f9-a9c7-\
+c7615f95db45"]
+},
+WindowSize->{808, 890},
+WindowMargins->{{137, Automatic}, {13, Automatic}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1075, 35, 30, "Input",ExpressionUUID->"6e657d03-f432-406f-8da0-d298a52a29d6"],
+Cell[1636, 57, 327, 7, 30, "Input",ExpressionUUID->"86d80d84-c1c8-445e-aece-c13fb24e3652"],
+Cell[1966, 66, 2630, 52, 178, "Input",ExpressionUUID->"d8814e94-4dc3-426c-bc7e-3ce10d3059d5"],
+Cell[4599, 120, 1535, 32, 52, "Input",ExpressionUUID->"e44770e8-3887-43d1-99d8-2176c5d390d4"],
+Cell[6137, 154, 372, 8, 30, "Input",ExpressionUUID->"51343c46-2915-42f9-a9c7-c7615f95db45"]
+}
+]
+*)
+
