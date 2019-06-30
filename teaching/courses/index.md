@@ -15,7 +15,7 @@ Select materials from some courses can be found on the [Sample Course Materials]
 
 {% for course in site.data.courses_bowdoin %}
 <div class="course">
-**{{ course.Duration }}**: {{ course.Role  }} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.link }})) 
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
 
@@ -23,7 +23,7 @@ Select materials from some courses can be found on the [Sample Course Materials]
 
 {% for course in site.data.courses_uchicago %}
 <div class="course">
-**{{ course.Name }}(Math {{ course.Code }})** : {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
   
@@ -31,7 +31,7 @@ Select materials from some courses can be found on the [Sample Course Materials]
 
 {% for course in site.data.nonteaching_courses_uchicago %}
 <div class="course">
-**{{ course.Duration }}**: {{ course.Role}} for {{ course.Name }}(Math [{{ course.Code }}]({{ course.Link }})), taught by Professor {{ course.Instructor }} 
+**{{ course.Duration }}**: {{ course.Role}} for {{ course.Name }} (Math [{{ course.Code }}]({{ course.Link }})), taught by Professor [{{ course.Instructor }}]({{ course:Homepage }})
 </div>
 {% endfor %}
 ---
