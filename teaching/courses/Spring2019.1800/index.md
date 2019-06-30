@@ -48,6 +48,18 @@ Some of these lab materials are due to Professor Adam Levy and Professor William
 + [Lab 7 - Polar Curves](Spring2019_1800_Lab7.nb)
 + [Lab 8 - Vector Fields](Spring2019_1800_Lab8.nb)
 
+### Collaborative Projects
+
++ [Project 1 - Heatmaps](Spring2019_1800_Project1.pdf)
++ [Project 2 - Vectors and Euclidean Geometry](Spring2019_1800_Project2.pdf)
++ [Project 3 - Three Dimensional Puthagorean Theorem](Spring2019_1800_Project3.pdf)
++ [Project 4 - Running Circles around Circles](Spring2019_1800_Project4.pdf), [Mathematica File](Spring2019_1800_Project4.nb)
++ [Optional Project 5 - Intro to LaTeX](Spring2019_1800_Project5_LaTeX.pdf)
++ [Optional Project 6 - The Second Derivative Test](Spring2019_1800_Project6.pdf), [Mathematica File](Spring2019_1800_Project6.nb)
++ [Project 7 - Ordinary Linear Regression](Spring2019_1800_Project7.pdf), [Mathematica File](Spring2019_1800_Project7.nb)
++ [Project 8 - Rocket Science](Spring2019_1800_Project8.pdf)
++ [Project 9 - Normal Density Integral](Spring2019_1800_Project9.pdf)
++ [Project 10 - Planimeter]()
 
 ### Review Handouts
 
