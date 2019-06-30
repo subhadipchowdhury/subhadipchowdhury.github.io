@@ -23,10 +23,9 @@ Select materials from some courses can be found on the [Sample Course Materials]
 
 {% for course in site.data.courses_uchicago %}
 <div class="course">
-**Math {{ course.Code }}:{{ course.Name }}**
-
+**Math {{ course.Code }}: {{ course.Name }}**
 {% for coursepage in course.Coursepages %}
-- [{{ coursepage.Duration }}]({{ coursepage.link }})) 
+- [{{ coursepage.Duration }}](/teaching/courses/{{ coursepage.Duration }}.{{course.Name}}) 
 {% endfor %}
 </div>
 {% endfor %}
