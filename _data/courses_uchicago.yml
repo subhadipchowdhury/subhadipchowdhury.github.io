@@ -1,111 +1,40 @@
-- Duration: Summer 2018
-  Role: Instructor
-  Name: Proof-Based Methods in Calculus
-  Code: Summer Academy, CAAP
-  link: /teaching/courses/Summer2018.CAAP
-
-- Duration: Winter 2018
-  Role: Instructor
-  Name: Mathematical Methods for Social Sciences
-  Code: 195
-  link: /teaching/courses/Winter2018.195
-  
-- Duration: Fall 2017
-  Role: Instructor
-  Name: Mathematical Methods for Social Sciences
-  Code: 195
-  link: /teaching/courses/Fall2017.195
-  
-- Duration: Summer 2017
-  Role: Instructor
-  Name: Linear Algebra
-  Code: 196
-  link: /teaching/courses/Summer2017.196
-  
-- Duration: Winter 2017
-  Role: Instructor
-  Name: Calculus III
-  Code: 153
-  link: /teaching/courses/Winter2017.153
-  
-- Duration: Fall 2016
-  Role: Instructor
-  Name: Calculus II
-  Code: 152
-  link: /teaching/courses/Fall2016.152
-
-- Duration: Spring 2016
-  Role: Instructor
-  Name: Elementary Functions and Caclulus
-  Code: 133
-  link: /teaching/courses/Spring2016.133
-  
-- Duration: Winter 2016
-  Role: Instructor
-  Name: Calculus III
-  Code: 153
-  link: /teaching/courses/Winter2016.153
-  
-- Duration: Fall 2015
-  Role: Instructor
-  Name: Calculus II
-  Code: 152
-  link: /teaching/courses/Fall2015.152
+-   Code: Summer Academy, CAAP
+    Name: Proof-Based Methods in Calculus
+    Coursepages:
+        - Duration: Summer 2018
+          link: /teaching/courses/Summer2018.CAAP
+          
+-   Code: 196
+    Name: Linear Algebra
+    Coursepages:
+        - Duration: Summer 2017
+          link: /teaching/courses/Summer2017.196
+         
+-   Code: 195
+    Name: Mathematical Methods for Social Sciences
+    Coursepages:
+        - Duration: Winter 2018
+          link: /teaching/courses/Winter2018.195
+        - Duration: Fall 2017
+          link: /teaching/courses/Fall2017.195
+        
+-   Code: 153
+    Name: Calculus III
+    Coursepages:
+        - Duration: Winter 2017
+          link: /teaching/courses/Winter2017.153
+        - Duration: Winter 2016
+          link: /teaching/courses/Winter2016.153
+        - Duration: Spring 2015
+          link: /teaching/courses/Spring2015.153
  
-
-- Duration: Spring 2015
-  Role: Instructor
-  Name: Caclulus III
-  Code: 153
-  link: /teaching/courses/Spring2015.153
-  
-- Duration: Winter 2015
-  Role: Instructor
-  Name: Calculus II
-  Code: 152
-  link: /teaching/courses/Winter2015.152
-  
-- Duration: Fall 2014
-  Role: Instructor
-  Name: Calculus I
-  Code: 151
-  link: /teaching/courses/Fall2014.151
-  
-- Duration: Fall 2013-Spring 2014
-  Role: College Fellow
-  Name: Honors Calculus
-  Code: 161,162, and 163
-  Instructor: Eugenia Cheng
-  Homepage: http://eugeniacheng.com/
-  
-- Duration: Winter 2015
-  Role: Grader
-  Name: Graduate Differential Topology
-  Code: 318
-  Instructor: Sidney Webster
-  link: https://math.uchicago.edu/graduate/first-year-courses/
-  
-- Duration: Winter 2016
-  Role: Grader
-  Name: Graduate Differential Topology
-  Code: 318
-  Instructor: Danny Calegari
-  link: http://math.uchicago.edu/~dannyc/courses/differential_topology_2016/differential_topology_2016.html
-  Homepage: http://math.uchicago.edu/~dannyc/
-  
-- Duration: Fall 2013
-  Role: Grader
-  Name: Graduate Algebraic Topology
-  Code: 317
-  Instructor: Danny Calegari
-  link: http://math.uchicago.edu/~dannyc/courses/alg_topol_2013/alg_topol_2013.html
-  Homepage: http://math.uchicago.edu/~dannyc/
-  
-- Duration: Spring 2017
-  Role: Grader
-  Name: Graduate Differential Geometry
-  Code: 319
-  Instructor: Andr&eacute; Neves
-  link: https://math.uchicago.edu/graduate/first-year-courses/
-  Homepage: https://math.uchicago.edu/~aneves/
-  
+-   Code: 152
+    Name: Calculus II
+    Coursepages:
+        - Duration: Fall 2016
+          link: /teaching/courses/Fall2016.152
+        - Duration: Fall 2015
+          link: /teaching/courses/Fall2015.152
+        - Duration: Winter 2015
+          link: /teaching/courses/Winter2015.152
+ 

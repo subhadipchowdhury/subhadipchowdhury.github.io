@@ -1,23 +1,36 @@
-- Duration: Spring 2019
-  Role: Instructor
-  Name: Multivariable Calculus
-  Code: 1800
-  link: /teaching/courses/Spring2019.1800/
 
+- Duration: Fall 2019
+  Role: Instructor
+  Name: Ordinary Differential Equations
+  Code: 2208
+  link: /teaching/courses/Fall2019.2208/
+  
 - Duration: Spring 2019
   Role: Instructor
   Name: Linear Algebra
   Code: 2000
   link: /teaching/courses/Spring2019.2000/
 
-- Duration: Fall 2018
+- Duration: Fall 2019
   Role: Instructor
-  Name: Differential Calculus
-  Code: 1600
-  link: /teaching/courses/Fall2018.1600/
+  Name: Multivariable Calculus
+  Code: 1800
+  link: /teaching/courses/Fall2019.1800/
+
+- Duration: Spring 2019
+  Role: Instructor
+  Name: Multivariable Calculus
+  Code: 1800
+  link: /teaching/courses/Spring2019.1800/
 
 - Duration: Fall 2018
   Role: Instructor
   Name: Multivariate Calculus
   Code: 1800
   link: /teaching/courses/Fall2018.1800/ 
+  
+- Duration: Fall 2018
+  Role: Instructor
+  Name: Differential Calculus
+  Code: 1600
+  link: /teaching/courses/Fall2018.1600/
