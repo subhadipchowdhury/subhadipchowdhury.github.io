@@ -64,5 +64,5 @@ My papers and preprints are on my [research page](research).
 ## Teaching
 </div>
 
-In Fall 2018, I am teaching Math 2000 and Math 1800. The course webpages are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Fall 2019, I am teaching Math 2208 and Math 1800. The course webpages are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
