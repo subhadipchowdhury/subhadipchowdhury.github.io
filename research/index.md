@@ -6,7 +6,7 @@ navigation_weight: 2
 
 ## {{ page.title }}
 
-A pdf copy of my Research Statement as of Fall 2017 can be found [HERE](Research_Statement.pdf).
+A pdf copy of my Research Statement as of Fall 2019 can be found [HERE](Research_Statement.pdf).
 
 
 ### Papers/Preprints
