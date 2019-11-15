@@ -36,5 +36,5 @@ Please note that some of the talks are very much of an outline in nature.
   
 ### Membership
 
-- *November 2014-Present*: Member of American Mathematical Society
+- *2014-2018*: Member of American Mathematical Society
 - *2014-2018*: Active member and Webmaster for the UChicago chapter of [Association for Women in Mathematics](http://math.uchicago.edu/~awm/index.html)
