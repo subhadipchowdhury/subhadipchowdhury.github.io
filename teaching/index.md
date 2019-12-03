@@ -26,7 +26,8 @@ My office hours will be TBA.
 
 ### Teaching Experience
 
-* [Statement of Teaching Philosophy](/teaching/statement): You can find pdf version of the statement here.
+* [Teaching Philosophy and Methodology](/teaching/teachingstatement): You can find pdf version of the statement here.
+* [Diversity Statement](/teaching/diversitystatement): You can find pdf version of the statement here.
 * [Past Courses](/teaching/courses): Here you can see the courses I have taught in the past.
 * [Sample Syllabi](/teaching/syllabi): You can find sample syllabi for some of the past courses I have taught and for some planned future courses.
 * [Sample Course Materials](/teaching/materials): Here you can find some of the materials I have designed for my classes.
