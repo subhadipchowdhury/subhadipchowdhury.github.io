@@ -7,7 +7,7 @@ subnav_weight: 32
 
 ## {{ page.title }}
 
-Below is a list of courses I have taught in the past. This page contains the syllabi, assignments, class notes, exams etc. 
+Below is a list of courses I have taught in the past. This page contains the syllabi, assignments, class notes, exams etc. A pdf copy of my Teaching Portfolio is available [here](/teaching/courses/portfolio.pdf).
 
 Select materials from some courses can be found on the [Sample Course Materials](/teaching/materials) page.
 
