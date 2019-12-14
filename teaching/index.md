@@ -7,6 +7,16 @@ has_subnav: 1
 
 ## {{ page.title }}
 
+### Teaching Experience
+
+* [Teaching Philosophy and Methodology](/teaching/teachingstatement): You can find pdf version of the statement here.
+* [Diversity and Inclusion Statement](/teaching/diversitystatement): You can find pdf version of the statement here.
+* [Past Courses](/teaching/courses): Here you can see the courses I have taught in the past and find my teaching portfolio.
+* [Sample Syllabi](/teaching/syllabi): You can find sample syllabi for some of the past courses I have taught and for some planned future courses.
+* [Sample Course Materials](/teaching/materials): Here you can find some of the materials I have designed for my classes.
+* [Student Evaluations](/teaching/evaluations): This page contains a selection of students evaluations for courses taught at Bowdoin College from 2018-2019 and at University of Chicago from 2014-2018.
+
+
 ### Current Schedule (Fall 2019)
 
 #### [Math 1800: Multivariate Calculus](https://subhadipchowdhury.github.io/teaching/courses/Fall2019.1800/)
@@ -21,16 +31,7 @@ has_subnav: 1
 
 #### Office Hours
 
-My office hours will be TBA.
+Office hours will be announced on Blackboard.
 
-
-### Teaching Experience
-
-* [Teaching Philosophy and Methodology](/teaching/teachingstatement): You can find pdf version of the statement here.
-* [Diversity Statement](/teaching/diversitystatement): You can find pdf version of the statement here.
-* [Past Courses](/teaching/courses): Here you can see the courses I have taught in the past.
-* [Sample Syllabi](/teaching/syllabi): You can find sample syllabi for some of the past courses I have taught and for some planned future courses.
-* [Sample Course Materials](/teaching/materials): Here you can find some of the materials I have designed for my classes.
-* [Student Evaluations](/teaching/evaluations): This page contains a selection of students evaluations for courses taught at Bowdoin College from 2018-2019 and at University of Chicago from 2014-2018.
 
 ---
