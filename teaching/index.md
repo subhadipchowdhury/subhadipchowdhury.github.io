@@ -9,6 +9,8 @@ has_subnav: 1
 
 ### Teaching Experience
 
+A pdf copy of my Teaching Portfolio is available [here](/teaching/courses/portfolio.pdf). For more details, please visit the links below.
+
 * [Teaching Philosophy and Methodology](/teaching/teachingstatement): You can find pdf version of the statement here.
 * [Diversity and Inclusion Statement](/teaching/diversitystatement): You can find pdf version of the statement here.
 * [Past Courses](/teaching/courses): Here you can see the courses I have taught in the past and find my teaching portfolio.
