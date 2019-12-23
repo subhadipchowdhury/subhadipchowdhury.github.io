@@ -8,7 +8,7 @@ category: coursepage
 ## Summer 2018
 <div class="backlink">
  
-  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching) 
+  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
 </div>  
 
 

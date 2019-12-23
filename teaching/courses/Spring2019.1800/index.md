@@ -8,7 +8,7 @@ category: coursepage
 ## Spring 2019
 <div class="backlink">
  
-  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching) 
+  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
 </div>  
 
 
@@ -25,7 +25,10 @@ category: coursepage
 ## Syllabus and Policies 
 
 + You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_1800_Spring_2019.pdf). 
+
 + A tentative schedule is available [here](S1800.pdf).
+
+
 ---
 
 ## Homework Assignments

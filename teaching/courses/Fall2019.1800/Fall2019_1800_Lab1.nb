@@ -1,0 +1,1507 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     48411,       1499]
+NotebookOptionsPosition[     43782,       1408]
+NotebookOutlinePosition[     44214,       1425]
+CellTagsIndexPosition[     44171,       1422]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["Lab 1 : Lines and Planes",
+ FontFamily->"Palatino",
+ FontWeight->"Bold"]], "Title",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellChangeTimes->{{3.762611604704356*^9, 3.762611617642314*^9}, 
+   3.7644269299601*^9, 3.7644270249369383`*^9, {3.768072786933922*^9, 
+   3.768072791887888*^9}, 3.769095525700966*^9},
+ TextAlignment->Center,
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"bf6129ea-be50-4984-936d-d7518acf7cbb"],
+
+Cell["based on a lab by David S. Yuen (http://math.lfc.edu/~yuen/)", \
+"Subsubtitle",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellChangeTimes->{{3.768073576501191*^9, 3.768073581793771*^9}, {
+  3.7680736566062574`*^9, 3.7680736729275675`*^9}, {3.7680738245325174`*^9, 
+  3.76807382490114*^9}},
+ TextAlignment->Center,ExpressionUUID->"d97ed311-e449-4f50-aa33-646f6a54cef0"],
+
+Cell[TextData[{
+ StyleBox["In this lab, we will deal with three dimensional visualization (",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["\[DoubleStruckCapitalR]", "3"], TraditionalForm]],
+  FontSize->24,
+  FontColor->RGBColor[0, 0, 1],ExpressionUUID->
+  "5774325f-84bb-442b-97df-e25f4e9ac2ce"],
+ StyleBox["). In Mathematica, a vector ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[LeftAngleBracket]", 
+    RowBox[{"a", ",", "b", ",", "c"}], "\[RightAngleBracket]"}], 
+   TraditionalForm]],
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1],ExpressionUUID->
+  "93673eea-c4e8-4dfc-bc9a-deb3d6abcc69"],
+ StyleBox[" is entered as a list enclosed in braces ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", " ", "}"}], TraditionalForm]],
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1],ExpressionUUID->
+  "8a563b2b-9e73-46a1-8ed5-5bdaf9003a4d"],
+ StyleBox[". For example, the vector ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[LeftAngleBracket]", 
+    RowBox[{"1", ",", "0", ",", "2"}], "\[RightAngleBracket]"}], 
+   TraditionalForm]],
+  FontSize->24,
+  FontColor->RGBColor[0, 0, 1],ExpressionUUID->
+  "542f8f9e-c660-4941-b842-e7affb390ec5"],
+ StyleBox[" would be entered as ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ Cell[BoxData[
+  FormBox[
+  Cell["{ 1, 0, -2 }",ExpressionUUID->"b2b3a1f5-d205-4a9f-9a79-24b93413eff0"],
+    TraditionalForm]],
+  FontSize->24,
+  FontColor->RGBColor[0, 0, 1],ExpressionUUID->
+  "b0be3c2e-dea5-4773-a165-1657a0275175"],
+ StyleBox[". We will be using some customized commands ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox["PlotLine",
+  FontSize->24,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox[", ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox["PlotPlane",
+  FontSize->24,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox[", and ",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox["SeeVectors",
+  FontSize->24,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0, 0, 1]],
+ StyleBox[", to graph lines and planes along with their determining vectors \
+in three dimensions.",
+  FontSize->24,
+  FontWeight->"Plain",
+  FontColor->RGBColor[0, 0, 1]]
+}], "Text",
+ CellChangeTimes->{{3.762535789569969*^9, 3.7625357963322*^9}, {
+  3.768073078259739*^9, 3.768073111391856*^9}, {3.7680732812211995`*^9, 
+  3.76807333396323*^9}, {3.768073367425008*^9, 3.7680734013173437`*^9}, {
+  3.768073441471281*^9, 3.76807351235279*^9}, {3.768073839001721*^9, 
+  3.768073859739523*^9}},
+ FontFamily->"Palatino",
+ FontWeight->"Regular",ExpressionUUID->"1d644399-683a-40fc-83d6-a567801723d7"],
+
+Cell[CellGroupData[{
+
+Cell["Customized programs (don't mess with this).", "Section",
+ Evaluatable->False,
+ CellOpen->False,
+ AspectRatioFixed->True,
+ Background->RGBColor[
+  1, 1, 0],ExpressionUUID->"4a971af2-1243-4e95-b9e6-fe619a9e6425"],
+
+Cell["Execute the following initializations. (Do not modify.)", "Text",
+ Evaluatable->False,
+ CellOpen->False,
+ AspectRatioFixed->True,
+ FontFamily->"Times",
+ FontSize->14,ExpressionUUID->"84de060c-d366-4e41-9590-1182fad21279"],
+
+Cell["\<\
+defaultvp={2.8,.3,1.8};
+
+Magnitude[a_]:= Sqrt[Dot[a,a]];
+
+Clear[myvector];
+myvector[a_,ccc___]:=Module[{b,c,ii,tt,w,sc,aa},
+\tii={-10.112,-10.012,.112};
+\ttt=.5;
+\tw=Cross[Cross[ii,a],a];
+\tw=w/Sqrt[Dot[w,w]];
+\taa=Sqrt[Dot[a,a]];
+\tsc=Min[.5,aa/4];
+\tb=sc(-Cos[tt] a/aa + Sin[tt] w);
+\tc=sc(-Cos[tt] a/aa - Sin[tt] w);
+\t{Thickness[.02],ccc,Line[{{0,0,0},a,a+b,a,a+c}]}
+\t];
+\t
+myvectordash[a_]:=Module[{b,c,ii,tt,w,sc,aa},
+\tii={-10.112,-10.012,.112};
+\ttt=.5;
+\tw=Cross[Cross[ii,a],a];
+\tw=w/Sqrt[Dot[w,w]];
+\taa=Sqrt[Dot[a,a]];
+\tsc=Max[aa/6,Min[.5,aa/4]];
+\tb=sc(-Cos[tt] a/aa + Sin[tt] w);
+\tc=sc(-Cos[tt] a/aa - Sin[tt] w);
+\t{{Thickness[.02],Dashing[{.02,.02}],
+\tLine[{{0,0,0},a}]},
+\t {Thickness[.02],Line[{a+b,a,a+c}]}}
+\t];
+col[i_]:=If[i<=4,
+\t{RGBColor[1,0,0],
+\tRGBColor[0,1,0],
+\tRGBColor[0,0,1],
+\tPurple}[[i]],
+\tRGBColor[Random[],Random[],Random[]]
+\t];
+\t
+mylabels={\"x\",\"y\",\"z\"};
+
+SeeVector[a_]:=
+\tModule[{d},
+\td=Floor[Max[Abs[a]]]+1;
+\tShow[
+\tGraphics3D[{myvector[a], threeaxes[d]},
+\tPlotRange->{{-d,d},{-d,d},{-d,d}},
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp
+\t\t]
+\t]];\t
+\t
+Clear[SeeVectors];
+SeeVectors[lii___] :=
+  \tModule[{d, li, i},
+   \tli = {lii};
+\td=Max[3,Ceiling[Max[Abs[li]]]];
+   \tShow[
+    \tGraphics3D[{threeaxes[d],Table[myvector[li[[i]], col[i]],
+      \t\t{i, Length[li], 1, -1}]},
+     \tPlotRange -> {{-d, d}, {-d, d}, {-d, d}},
+     \tAxes -> True,
+     \tAxesLabel -> {\"x\", \"y\", \"z\"},
+     \tViewPoint -> defaultvp,
+     PlotLabel \[Rule] If[Length[li] \[Equal] 1, li[[1]]]
+     \t\t]
+    \t]];\t
+
+
+SeeVectorResult[li_]:=
+\tModule[{d,nn},
+\tnn=Length[li];
+\td=Floor[Max[Abs[li]]]+1;
+\tShow[
+\tGraphics3D[
+\t\tAppend[Map[myvector,Take[li,nn-1]],
+\t\t\t\t\tmyvectordash[li[[nn]]] ],
+\tPlotRange->{{-d,d},{-d,d},{-d,d}},
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp
+\t\t]
+\t]];
+\t\t
+SeeVector::usage = \"SeeVector plots one single vector
+in three dimensions. The syntax is
+SeeVector[x], where x is a three dimensional vector.
+For example, SeeVector[{1,2,3}].\";
+
+SeeVectors::usage = \"SeeVectors plots a list of vectors
+in three dimensions. The syntax is
+SeeVectors[vector_list], where vector_list is a LIST of
+three dimensional vectors.
+For example, SeeVectors[{a, b, c}], where each of a, b, c 
+has been defined as an individual vector.\";
+
+SeeVectorResult::usage = \"SeeVectorResult is the
+same as SeeVectors except that the last vector in
+the list will be highlighted as a dashed vector.\";
+
+SpinAround[gr_]:=SpinAroundHeight[gr,defaultvp[[3]]];
+
+SpinAroundHeight[gr_,height_]:= Module[{len,tt,t},
+\ttt=16;
+\tlen=Magnitude[Take[defaultvp,2]];
+\tTable[Show[gr,ViewPoint->
+\t\t\t{len Cos[2 Pi t/tt +.15], 
+\t\t\tlen Sin[2 Pi t/tt +.15],
+\t\t\t\theight},
+\t\t\t\tViewCenter->{1/2,1/2,1/2} ],
+\t\t{t,1,tt}];
+\t];
+\t\t
+mysign[vv_,kk_]:= Abs[(Sign[vv]+3)/2-kk]+1
+
+IWantAxes:= (mewannaaxes=1;
+\t\tPrint[\"Axes option turned on.\"];);
+IDontWantAxes:= (mewannaaxes=0;
+\t\tPrint[\"Axes option turned off.\"];);
+mewannaaxes=1;
+
+threeaxes[d_] :=
+\tIf[mewannaaxes==1,
+\t{{Thickness[.002],Line[{{-d,0,0},{d,0,0}}]},
+\t {Thickness[.002],Line[{{0,-d,0},{0,d,0}}]},
+\t {Thickness[.002],Line[{{0,0,-d},{0,0,d}}]}
+\t},
+\t{{Line[{{1000,0,0},{1000,0,0}}]}}];
+
+drawline[r0_,v_,dimen_] :=
+\tModule[{tt,t,aa,k,kk,ourr},
+\ttt={{},{}};
+\taa=r0 + t v;
+\tDo[If[v[[k]] !=0,
+\t\t\tourr=Solve[aa[[k]]==dimen[[k,kk]],t];
+\t\t\tAppendTo[tt[[mysign[v[[k]],kk]]],t /. ourr]
+\t\t],
+\t{k,1,3},{kk,1,2}];
+\t{Thickness[.02],
+\tLine[{r0+Min[tt[[1]]]v,r0+Max[tt[[2]]]v}]}
+\t];
+
+
+PlotLine[r0_,v_]:=
+\tModule[{d,dimen},
+\td=Floor[Max[Abs[{r0,r0+v,r0-v,v}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tShow[
+\t\tGraphics3D[drawline[r0,v,dimen],
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp
+\t\t]
+\t]];
+
+PlotLine::usage = \"PlotLine plots one single line
+in three dimensions. The syntax is
+PlotLine[r0, v], where r0, v are the vectors
+for the parametric equation of a line
+in the form r = r0 + t v.
+For example, PlotLine[{1,2,3}, {-2,0,1}].\";
+
+PlotLines[li_]:=
+\tModule[{rr,vv,d,dimen,f},
+\trr=Transpose[li][[1]];
+\tvv=Transpose[li][[2]];
+\td=Floor[Max[Abs[{rr,rr+vv,rr-vv,vv}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tf[x_]:=drawline[x[[1]],x[[2]],dimen];
+\tShow[
+\t\tGraphics3D[{Map[f,li],threeaxes[d]},
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp
+\t\t]
+\t]];
+
+PlotLineWithVectors[r0_,v_]:=
+\tModule[{d,dimen},
+\td=Floor[Max[Abs[{r0,r0+v,r0-v,v}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tShow[
+\t\tGraphics3D[{drawline[r0,v,dimen],
+\t\t\t\tmyvector[r0],
+\t\t\t\tmyvector[v],
+\t\t\t\tthreeaxes[d]
+\t\t\t   },
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp
+\t\t]
+\t]];\t
+drawplane[r_,n_,d_,g_]:=
+Module[{ourr,x,y,z},
+ourr=Solve[({x,y,z}-r) . n ==0,z];
+z = z/. Flatten[ourr];
+Plot3D[z,{x,-d,d},{y,-d,d},
+\tBoxRatios->{1,1,1},
+\tPlotRange->{{-d,d},{-d,d},{-d,d}},
+\tClippingStyle->None,
+\tPlotPoints->15,
+\tMeshStyle->GrayLevel[g],
+\tDisplayFunction->Identity]
+\t]
+
+PlotPlane::usage = \"PlotPlane plots one single plane
+in three dimensions. The syntax is
+PlotLine[r0, n], where r0, n are the vectors
+for the equation of a plane
+in the form (r - r0) . n = 0.
+For example, PlotPlane[{1,2,3}, {-2,0,1}].\";
+
+PlotPlane[r_,n_]:=
+\tModule[{d,dimen},
+\tPrint[r,n];
+\td=Floor[Max[Abs[{r,r+n,r-n,n}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tShow[drawplane[r,n,d,.5],
+\t\tGraphics3D[{
+\t\t\t\tmyvector[r],
+\t\t\t\tmyvector[n],
+\t\t\t\tthreeaxes[d]
+\t\t\t   }],
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp,
+\tDisplayFunction->$DisplayFunction
+\t\t]
+\t];\t
+PlotPlanes[li_]:=
+\tModule[{rr,vv,nn,d,dimen,f},
+\tnn=Length[li];
+\trr=Transpose[li][[1]];
+\tvv=Transpose[li][[2]];
+\td=Floor[Max[Abs[{rr,rr+vv,rr-vv,vv}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tShow[Table[drawplane[li[[k,1]],li[[k,2]],d,
+\t\t\t\t\t.4+.1 k],{k,1,nn} ],
+\t\tGraphics3D[{Map[myvector,vv],
+\t\t\tthreeaxes[d]}],
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp,
+\tDisplayFunction->$DisplayFunction
+\t\t]
+\t];
+\t
+PlotLineAndPlane[lin_,pla_]:=
+\tModule[{rr,vv,nn,d,dimen,f},
+\td=Floor[Max[Abs[{lin[[1]],lin[[2]],lin[[1]]+lin[[2]],
+\t\t\t\t\tlin[[1]]-lin[[2]],
+\t\t\t\t\tpla[[1]],pla[[2]],pla[[1]]+pla[[2]],
+\t\t\t\t\tpla[[1]]-pla[[2]]}]]]+1;
+\tdimen={{-d,d},{-d,d},{-d,d}};
+\tShow[drawplane[pla[[1]],pla[[2]],d,.5],
+\t\tGraphics3D[{drawline[lin[[1]],lin[[2]],dimen],
+\t\t\t\tthreeaxes[d]}],
+\tPlotRange->dimen,
+\tAxes->True,
+\tAxesLabel->mylabels,
+\tViewPoint->defaultvp,
+\tDisplayFunction->$DisplayFunction
+\t\t]
+\t];
+
+\
+\>", "Input",
+ CellOpen->False,
+ InitializationCell->True,
+ CellChangeTimes->{{3.3986167435620003`*^9, 3.398616747494*^9}, {
+   3.398616942707*^9, 3.398616943105*^9}, {3.3986169966800003`*^9, 
+   3.3986170098310003`*^9}, {3.39861761841*^9, 3.3986176210439997`*^9}, {
+   3.399651529172*^9, 3.3996515906524*^9}, {3.3996518499941998`*^9, 
+   3.3996518775601997`*^9}, 3.5568263161040125`*^9},
+ AspectRatioFixed->True,
+ CellLabel->"In[59]:=",ExpressionUUID->"4e75172a-c246-480e-b712-b804d60458d0"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["1. We will plot the line with position vector ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"ed460945-fc3e-4f9b-803e-56bf06fe3232"],
+ StyleBox[" and direction vector ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"139ae0bc-38e5-4e33-a3c4-3e1682a88257"],
+ StyleBox[". Let ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"10f8a19c-64a2-45cd-bffa-58cf2e998096"],
+ StyleBox[" be the position vector corresponding to the point ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"1", ",", "2", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"0f636384-7f10-4005-ac9d-06e743bc03bb"],
+ StyleBox[", and let ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"ac1df265-178d-4310-b06c-9c9f9f9d9abd"],
+ StyleBox[" be your favorite direction vector (you may start off trying ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", "0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"eec66104-21e2-4879-9c41-b23fab64232d"],
+ StyleBox["). (You can always change this to get a prettier picture.) The \
+following commands will plot the vectors ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"550b3985-448e-46a3-8d38-d6fc3a4fa385"],
+ StyleBox[" and ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"0b7691d8-a86e-40ba-8e0e-7fe1f39eb302"],
+ StyleBox[" , and then plot the line corresponding to these two vectors.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{{3.4653121213514*^9, 3.4653121213514*^9}, {
+   3.762535642217811*^9, 3.762535665496966*^9}, 3.762535732024407*^9, 
+   3.7625362398575287`*^9, 3.762780162536214*^9, {3.7680729252374773`*^9, 
+   3.768073024694762*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"bdc1783a-e557-494d-92e6-ac72bb6ce47c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   StyleBox["r0",
+    FontColor->RGBColor[1, 0, 0]], "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "1"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   StyleBox["v",
+    FontColor->RGBColor[0, 1, 0]], "=", "  ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", "0", ",", "1"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view1", "=", " ", 
+  RowBox[{"SeeVectors", "[", 
+   RowBox[{"r0", ",", " ", "v"}], "]"}]}], "\n", 
+ RowBox[{"view2", "=", " ", 
+  RowBox[{"PlotLine", "[", 
+   RowBox[{"r0", ",", " ", "v"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.4015584893024*^9, 3.4015584951734*^9}, {
+   3.5610404561307273`*^9, 3.561040474441775*^9}, 3.768073041561512*^9, {
+   3.7772962735845737`*^9, 3.7772962759828367`*^9}, {3.777296323077015*^9, 
+   3.777296332678719*^9}},
+ AspectRatioFixed->True,
+ CellLabel->
+  "In[117]:=",ExpressionUUID->"4ad9c305-d1ee-4fc9-8662-6b7df7cf34e3"],
+
+Cell["Now we can plot them together by doing...", "Text",
+ CellChangeTimes->{{3.762535789569969*^9, 3.7625357963322*^9}, {
+  3.768073078259739*^9, 3.768073111391856*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"7cc30b3a-b3a6-455c-8971-dbe7f46fa900"],
+
+Cell[BoxData[
+ RowBox[{"view3", "=", " ", 
+  RowBox[{"Show", "[", 
+   RowBox[{"view2", ",", "view1"}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.4015585320834*^9, {3.4015585639404*^9, 3.4015585884824*^9}, {
+   3.4653109463324003`*^9, 3.4653109467344*^9}, {3.5281948324777603`*^9, 
+   3.528194858017356*^9}, {3.5610406437944613`*^9, 3.561040644020474*^9}, 
+   3.768073129090784*^9},
+ AspectRatioFixed->True,
+ CellLabel->
+  "In[121]:=",ExpressionUUID->"fb0b85d4-d9c2-45cf-9a4d-82565912d990"],
+
+Cell[TextData[StyleBox["To visualize this better, you can drag-spin it \
+around.",
+ FontSize->18]], "Text",
+ CellChangeTimes->{{3.762535789569969*^9, 3.7625357963322*^9}, 
+   3.768073147275158*^9},
+ FontFamily->"Palatino",
+ FontSize->36,
+ FontWeight->"Regular",ExpressionUUID->"ffc43219-67fa-4aae-8c50-d71a4b98d03f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["2. Let us plot two lines together in the same plot by using \
+PlotLines. We will plot the lines ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"r", 
+     RowBox[{"(", "t", ")"}]}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{
+       RowBox[{"-", "3"}], ",", "0", ",", "2"}], "\[RightAngleBracket]"}], 
+     " ", "+", " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"4", ",", 
+        RowBox[{"-", "2"}], ",", "2"}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"e5b4470f-42c3-4a86-8f2f-049fdae635e0"],
+ StyleBox[" and ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"r", 
+     RowBox[{"(", "t", ")"}]}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{"0", ",", "1", ",", 
+       RowBox[{"-", "3"}]}], "\[RightAngleBracket]"}], " ", "+", " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "1", ",", 
+        RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"ba7b51bb-95e5-41a0-8844-355708399fe5"],
+ StyleBox[". (Note that below, we may separate commands with a \
+\[OpenCurlyDoubleQuote];\[CloseCurlyDoubleQuote] which also suppresses the \
+output of those commands.)",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"d77ec8ec-bbc5-4ff8-9b05-547a8702915e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "0", ",", "2"}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"v1", "=", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", 
+     RowBox[{"-", "3"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"v2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", "1", ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view5", "=", 
+  RowBox[{"PlotLines", "[", 
+   RowBox[{"{", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r1", ",", " ", "v1"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"r2", ",", " ", "v2"}], "}"}]}], " ", "}"}], "]"}]}]}], "Input",\
+
+ CellChangeTimes->{3.398617076791*^9, 3.3986171187539997`*^9},
+ CellLabel->
+  "In[122]:=",ExpressionUUID->"40d9c8fd-d5d3-4b3d-9945-a77a9a9268ea"],
+
+Cell["\<\
+Do the two lines look parallel (spin it around yourself until you get a very \
+convincing picture)?  Determine whether these two lines are parallel and \
+explain the algebraic mathematical reason for these lines to be parallel or \
+not, based on the direction vectors of these lines.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"a6013f3f-f875-478d-8d57-aef03680b143"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"b919c873-8693-4ef7-93c2-70ea5f1642e3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["3. Plot the lines ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"r", 
+     RowBox[{"(", "t", ")"}]}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{
+       RowBox[{"-", "3"}], ",", "3", ",", "0"}], "\[RightAngleBracket]"}], 
+     " ", "+", " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"2", ",", 
+        RowBox[{"-", "2"}], ",", "3"}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"40da4ee0-6437-4b1d-ae46-5abe6b3e6947"],
+ StyleBox[" and ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"r", 
+     RowBox[{"(", "t", ")"}]}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{"2", ",", 
+       RowBox[{"-", "2"}], ",", "3"}], "\[RightAngleBracket]"}], " ", "+", 
+     " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"4", ",", "1", ",", 
+        RowBox[{"-", "2"}]}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"af172842-03a5-488e-b41d-ee95d963e6dd"],
+ StyleBox[".",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"a91e453d-ca3c-43b5-81dc-ef11e51563e0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3", ",", "0"}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"v1", "=", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", 
+     RowBox[{"-", "2"}], ",", "3"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", "r1"}], " ", ";", "  ", 
+  RowBox[{"v2", "=", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1", ",", 
+     RowBox[{"-", "2"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{"PlotLines", "[", 
+  RowBox[{"{", " ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"r1", ",", " ", "v1"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"r2", ",", " ", "v2"}], "}"}]}], " ", "}"}], "]"}]}], "Input",
+ CellChangeTimes->{
+  3.398617411315*^9, {3.5249153959502735`*^9, 3.524915396340909*^9}},
+ CellLabel->
+  "In[125]:=",ExpressionUUID->"6d0cb51d-7e29-4cc2-8889-8e2c770b7a35"],
+
+Cell["\<\
+Do the two lines intersect each other (spin it around yourself until you get \
+a very convincing picture)?  Determine whether these two lines intersect each \
+other and explain the algebraic mathematical reason for your claim.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}, {
+   3.7772963900490627`*^9, 3.7772964040867968`*^9}, {3.7772964913348637`*^9, 
+   3.777296496094509*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"aba7facd-3e30-48c8-bb73-c2c725f77230"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"9474aa5a-fc2e-4cda-8f16-cb4473f11616"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["4. We will plot the plane with position vector ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"76e2c498-699b-47e5-b821-531612180f7f"],
+ StyleBox[" and normal vector ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"1201c1f5-551e-4cea-9fb9-c8f8ebe2450c"],
+ StyleBox[". Let ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"0064f0aa-d5b5-4735-b49a-3a1c1e33ebd4"],
+ StyleBox[" be the position vector corresponding to the point ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "1"}]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"5ab6f7c2-5bb5-48e2-8fb5-dcde401d7dd0"],
+ StyleBox[" and let ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"b8c0c8d9-bbc8-4cf6-b1d1-219cde947e49"],
+ StyleBox[" be your favorite vector (you could start off with ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[LeftAngleBracket]", 
+    RowBox[{"1", ",", "2", ",", "3"}], "\[RightAngleBracket]"}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"bc0e6159-7e9b-419b-a383-56c4320f213f"],
+ StyleBox["). The following command will plot the plane along with the \
+vectors.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}, {
+   3.7680741886281524`*^9, 3.7680742233366556`*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"a6a64740-6c73-4828-9f31-5683ef6ec8bc"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r0", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"n", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view7", "=", " ", 
+  RowBox[{"PlotPlane", "[", 
+   RowBox[{"r0", ",", "n"}], "]"}]}]}], "Input",
+ CellChangeTimes->{
+  3.398617530716*^9, {3.3986175617539997`*^9, 3.398617562682*^9}},
+ CellLabel->
+  "In[128]:=",ExpressionUUID->"c44619b3-af12-4025-b029-ef1a84b9b912"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["5. Let us plot two planes together in the same plot by using \
+PlotPlanes. We will plot the planes",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{" ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"r", " ", "-", " ", 
+        RowBox[{"\[LeftAngleBracket]", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", 
+          RowBox[{"-", "2"}], ",", 
+          RowBox[{"-", "5"}]}], "\[RightAngleBracket]"}]}], ")"}], " ", ".", 
+      " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "1"}], ",", "2"}], "\[RightAngleBracket]"}]}], " ", "=", 
+     " ", 
+     RowBox[{
+      RowBox[{"0", " ", "and", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"r", " ", "-", " ", 
+          RowBox[{"\[LeftAngleBracket]", 
+           RowBox[{"3", ",", "2", ",", "1"}], "\[RightAngleBracket]"}]}], 
+         ")"}], " ", ".", " ", 
+        RowBox[{"\[LeftAngleBracket]", 
+         RowBox[{"2", ",", 
+          RowBox[{"-", "2"}], ",", "4"}], "\[RightAngleBracket]"}]}]}], " ", 
+      "=", " ", "0"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"197e57d4-c7df-444d-b8e3-341f04b6f059"],
+ StyleBox[".  The planes are shown with their normal vectors.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}, {
+   3.7680741886281524`*^9, 3.7680742233366556`*^9}, {3.768074339186176*^9, 
+   3.7680743642355595`*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"536654aa-0625-460d-a857-656078b68917"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "5"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n1", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "1"}], ",", "2"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", "1"}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n2", "=", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", 
+     RowBox[{"-", "2"}], ",", "4"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view8", "=", " ", 
+  RowBox[{"PlotPlanes", "[", 
+   RowBox[{"{", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r1", ",", " ", "n1"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"r2", ",", " ", "n2"}], "}"}]}], " ", "}"}], "]"}]}]}], "Input",\
+
+ CellChangeTimes->{3.3986176548050003`*^9},
+ CellLabel->
+  "In[131]:=",ExpressionUUID->"91813ec6-babd-41c7-a5f2-b47b54da4cac"],
+
+Cell["\<\
+Do the two planes look parallel (spin it around yourself until you get a very \
+convincing picture)?  Determine whether these two planes are parallel and \
+explain the algebraic mathematical reason for these planes to be parallel or \
+not, based on their normal vectors.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}, {
+   3.7680744108388977`*^9, 3.76807443988619*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"23be0df7-9f36-4db1-891c-b81934d0eaf4"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"b952be2b-f0af-4af0-b03f-5975ae854b9b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["6. Plot the planes ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"r", " ", "-", " ", 
+       RowBox[{"\[LeftAngleBracket]", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", 
+         RowBox[{"-", "2"}], ",", 
+         RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}]}], ")"}], " ", ".", 
+     " ", 
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{"1", ",", "2", ",", "3"}], "\[RightAngleBracket]"}]}], " ", "=",
+     " ", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"12601dd2-7815-4e2b-ab44-4745e74bc57a"],
+ StyleBox[" and ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"r", " ", "-", " ", 
+       RowBox[{"\[LeftAngleBracket]", 
+        RowBox[{
+         RowBox[{"-", "2"}], ",", 
+         RowBox[{"-", "2"}], ",", 
+         RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}]}], ")"}], " ", ".", 
+     " ", 
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{
+       RowBox[{"-", "3"}], ",", "0", ",", "1"}], "\[RightAngleBracket]"}]}], 
+    " ", "=", " ", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"8bd1d4f5-6c4c-472a-8a53-700e02e6e0da"],
+ StyleBox[" together.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}, {
+   3.7680741886281524`*^9, 3.7680742233366556`*^9}, {3.768074339186176*^9, 
+   3.7680743642355595`*^9}, {3.768074463554985*^9, 3.7680744778433695`*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"a6dc7c99-980f-43bd-bdf3-74866d8366e1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n1", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "0", ",", "1"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view9", "=", " ", 
+  RowBox[{"PlotPlanes", "[", 
+   RowBox[{"{", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r1", ",", " ", "n1"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"r2", ",", " ", "n2"}], "}"}]}], " ", "}"}], "]"}]}]}], "Input",\
+
+ CellChangeTimes->{3.3986177573120003`*^9},
+ CellLabel->
+  "In[134]:=",ExpressionUUID->"41937984-58f9-47f5-929c-c1d38a529f3d"],
+
+Cell["\<\
+Do the two planes look parallel (spin it around yourself until you get a very \
+convincing picture)?  Determine the equation of the line of intersection of \
+the planes.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}, {
+   3.7680744108388977`*^9, 3.76807443988619*^9}, {3.7772964667588253`*^9, 
+   3.777296477782693*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"efddb9bb-5674-4a46-b189-5ca736c28d3d"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"cebe4cec-d4d9-48f3-8f5d-00e6e90fa3cc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["7. Plot the line ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{
+       RowBox[{"-", "3"}], ",", "3", ",", "0"}], "\[RightAngleBracket]"}], 
+     " ", "+", " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "2"}], ",", "3"}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"08f8fa87-5cf2-47fc-94c2-a37cb619e07d"],
+ StyleBox[" and the plane ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"r", " ", "-", " ", 
+       RowBox[{"\[LeftAngleBracket]", 
+        RowBox[{
+         RowBox[{"-", "2"}], ",", 
+         RowBox[{"-", "2"}], ",", 
+         RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}]}], ")"}], " ", ".", 
+     " ", 
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{
+       RowBox[{"-", "4"}], ",", 
+       RowBox[{"-", "3"}], ",", 
+       RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}]}], " ", "=", " ", "0"}],
+    TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"5b4c3a07-9742-4a79-a775-08654cc2fdf5"],
+ StyleBox[" together.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}, {
+   3.7680741886281524`*^9, 3.7680742233366556`*^9}, {3.768074339186176*^9, 
+   3.7680743642355595`*^9}, {3.768074463554985*^9, 3.7680744778433695`*^9}, {
+   3.7680745348580627`*^9, 3.7680745523401804`*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"5385410e-b327-4f4b-9737-a5efeed8ff39"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3", ",", "0"}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"v1", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "2"}], ",", "3"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "2"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "4"}], ",", 
+     RowBox[{"-", "3"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view10", "=", " ", 
+  RowBox[{"PlotLineAndPlane", "[", " ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"r1", ",", " ", "v1"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"r2", ",", " ", "n2"}], "}"}]}], " ", "]"}]}]}], "Input",
+ CellChangeTimes->{3.398617848043*^9},
+ CellLabel->
+  "In[137]:=",ExpressionUUID->"dd1c2251-d659-463e-95d1-2dc5904aca20"],
+
+Cell["\<\
+Do the line and the plane plane look parallel (spin it around yourself until \
+you get a very convincing picture)?  Determine for sure which, based on the \
+direction vector and normal vector, and explain your algebraic computations.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}, {
+   3.7680744108388977`*^9, 3.76807443988619*^9}, {3.7680745917948313`*^9, 
+   3.768074611646529*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"7c6c1819-31a2-49f5-a2be-747ea86f5386"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"2f5618b8-814c-4535-b7c2-30a9db9105d2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["8. Plot the line ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{"3", ",", "2", ",", 
+       RowBox[{"-", "1"}]}], "\[RightAngleBracket]"}], " ", "+", " ", 
+     RowBox[{"t", " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "1"}], ",", "1"}], "\[RightAngleBracket]"}]}]}]}], 
+   TraditionalForm]],
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"209f76f3-1346-46f9-826f-c8031e4e5513"],
+ StyleBox[" and the plane ",
+  FontSize->24,
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"r", " ", "-", " ", 
+       RowBox[{"\[LeftAngleBracket]", 
+        RowBox[{"2", ",", "0", ",", "0"}], "\[RightAngleBracket]"}]}], ")"}], 
+     " ", ".", " ", 
+     RowBox[{"\[LeftAngleBracket]", 
+      RowBox[{"1", ",", 
+       RowBox[{"-", "2"}], ",", "3"}], "\[RightAngleBracket]"}]}], " ", "=", 
+    " ", "0"}], TraditionalForm]],
+  FontSize->24,
+  FontWeight->"Bold",ExpressionUUID->"d738219b-9839-4ca3-938a-d3993b3c6dfb"],
+ StyleBox[" together.",
+  FontSize->24,
+  FontWeight->"Bold"]
+}], "Chapter",
+ Evaluatable->False,
+ CellChangeTimes->{
+  3.762535329401647*^9, 3.762535661920651*^9, 3.7625361605454884`*^9, 
+   3.762536242056596*^9, 3.762780159640239*^9, {3.7680738881314764`*^9, 
+   3.768073928163537*^9}, {3.7680740391380386`*^9, 3.768074057406355*^9}, {
+   3.7680741886281524`*^9, 3.7680742233366556`*^9}, {3.768074339186176*^9, 
+   3.7680743642355595`*^9}, {3.768074463554985*^9, 3.7680744778433695`*^9}, {
+   3.7680745348580627`*^9, 3.7680745523401804`*^9}, 3.77729653678409*^9, {
+   3.77729666606656*^9, 3.7772966878793163`*^9}, {3.7772967375934353`*^9, 
+   3.777296749713687*^9}},
+ AspectRatioFixed->True,
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"9eda4e5b-16d6-4551-a7b9-84f6cbf337b9"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r1", "=", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", 
+     RowBox[{"-", "1"}]}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"v1", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "1"}], ",", "1"}], "}"}]}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{"r2", "=", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "0", ",", "0"}], "}"}]}], " ", ";", "  ", 
+  RowBox[{"n2", "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "2"}], ",", "3"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"view10", "=", " ", 
+  RowBox[{"PlotLineAndPlane", "[", " ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"r1", ",", " ", "v1"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"r2", ",", " ", "n2"}], "}"}]}], " ", "]"}]}]}], "Input",
+ CellChangeTimes->{
+  3.398617848043*^9, {3.777296692535784*^9, 3.777296697982658*^9}, {
+   3.777296753743031*^9, 3.777296759726831*^9}},
+ CellLabel->
+  "In[140]:=",ExpressionUUID->"bc3db045-7f9c-487d-84a2-298f72aabed1"],
+
+Cell["\<\
+Do the line and the plane intersect each other (spin it around yourself until \
+you get a very convincing picture)?  Determine the point of intersection.\
+\>", "Text",
+ CellChangeTimes->{{3.76253560521972*^9, 3.7625356096250896`*^9}, 
+   3.762536173089673*^9, {3.7680739768507423`*^9, 3.7680739815130033`*^9}, {
+   3.7680744108388977`*^9, 3.76807443988619*^9}, {3.7680745917948313`*^9, 
+   3.768074611646529*^9}, {3.777296793848048*^9, 3.777296806846519*^9}},
+ FontFamily->"Palatino",
+ FontSize->18,
+ FontWeight->"Regular",ExpressionUUID->"98876d2f-eefc-4e59-b12e-2c26ad61eb73"],
+
+Cell["Response:", "Subsubsection",
+ Evaluatable->False,
+ CellChangeTimes->{{3.5610403081822653`*^9, 3.5610403235411434`*^9}, 
+   3.7680739975295935`*^9},
+ AspectRatioFixed->True,
+ FontSize->18,
+ FontWeight->"Plain",
+ FontSlant->"Italic",
+ FontTracking->"Plain",
+ FontVariations->{"Outline"->False,
+ "Shadow"->False,
+ "Underline"->False},
+ Background->RGBColor[
+  0.87, 0.94, 1],ExpressionUUID->"ffd87e80-f9d3-463c-aa51-08c581f964ed"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1920, 961},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "ProgrammingLabDefault.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 442, 9, 108, "Title",ExpressionUUID->"bf6129ea-be50-4984-936d-d7518acf7cbb"],
+Cell[1025, 33, 365, 6, 40, "Subsubtitle",ExpressionUUID->"d97ed311-e449-4f50-aa33-646f6a54cef0"],
+Cell[1393, 41, 2989, 94, 107, "Text",ExpressionUUID->"1d644399-683a-40fc-83d6-a567801723d7"],
+Cell[CellGroupData[{
+Cell[4407, 139, 216, 5, 28, "Section",ExpressionUUID->"4a971af2-1243-4e95-b9e6-fe619a9e6425",
+ Evaluatable->False,
+ CellOpen->False],
+Cell[4626, 146, 227, 5, 39, "Text",ExpressionUUID->"84de060c-d366-4e41-9590-1182fad21279",
+ Evaluatable->False,
+ CellOpen->False],
+Cell[4856, 153, 7089, 281, 5523, "Input",ExpressionUUID->"4e75172a-c246-480e-b712-b804d60458d0",
+ CellOpen->False,
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11982, 439, 2891, 86, 103, "Chapter",ExpressionUUID->"bdc1783a-e557-494d-92e6-ac72bb6ce47c",
+ Evaluatable->False],
+Cell[14876, 527, 931, 26, 99, "Input",ExpressionUUID->"4ad9c305-d1ee-4fc9-8662-6b7df7cf34e3"],
+Cell[15810, 555, 289, 5, 35, "Text",ExpressionUUID->"7cc30b3a-b3a6-455c-8971-dbe7f46fa900"],
+Cell[16102, 562, 490, 11, 32, "Input",ExpressionUUID->"fb0b85d4-d9c2-45cf-9a4d-82565912d990"],
+Cell[16595, 575, 316, 7, 35, "Text",ExpressionUUID->"ffc43219-67fa-4aae-8c50-d71a4b98d03f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16948, 587, 1972, 58, 83, "Chapter",ExpressionUUID->"d77ec8ec-bbc5-4ff8-9b05-547a8702915e",
+ Evaluatable->False],
+Cell[18923, 647, 963, 31, 77, "Input",ExpressionUUID->"40d9c8fd-d5d3-4b3d-9945-a77a9a9268ea"],
+Cell[19889, 680, 569, 10, 58, "Text",ExpressionUUID->"a6013f3f-f875-478d-8d57-aef03680b143"],
+Cell[20461, 692, 433, 13, 59, "Subsubsection",ExpressionUUID->"b919c873-8693-4ef7-93c2-70ea5f1642e3",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20931, 710, 1768, 55, 52, "Chapter",ExpressionUUID->"a91e453d-ca3c-43b5-81dc-ef11e51563e0",
+ Evaluatable->False],
+Cell[22702, 767, 855, 26, 77, "Input",ExpressionUUID->"6d0cb51d-7e29-4cc2-8889-8e2c770b7a35"],
+Cell[23560, 795, 618, 11, 35, "Text",ExpressionUUID->"aba7facd-3e30-48c8-bb73-c2c725f77230"],
+Cell[24181, 808, 433, 13, 59, "Subsubsection",ExpressionUUID->"9474aa5a-fc2e-4cda-8f16-cb4473f11616",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24651, 826, 2435, 73, 83, "Chapter",ExpressionUUID->"a6a64740-6c73-4828-9f31-5683ef6ec8bc",
+ Evaluatable->False],
+Cell[27089, 901, 575, 18, 77, "Input",ExpressionUUID->"c44619b3-af12-4025-b029-ef1a84b9b912"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27701, 924, 1888, 51, 83, "Chapter",ExpressionUUID->"536654aa-0625-460d-a857-656078b68917",
+ Evaluatable->False],
+Cell[29592, 977, 950, 31, 77, "Input",ExpressionUUID->"91813ec6-babd-41c7-a5f2-b47b54da4cac"],
+Cell[30545, 1010, 607, 11, 58, "Text",ExpressionUUID->"23be0df7-9f36-4db1-891c-b81934d0eaf4"],
+Cell[31155, 1023, 433, 13, 59, "Subsubsection",ExpressionUUID->"b952be2b-f0af-4af0-b03f-5975ae854b9b",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31625, 1041, 1999, 58, 52, "Chapter",ExpressionUUID->"a6dc7c99-980f-43bd-bdf3-74866d8366e1",
+ Evaluatable->False],
+Cell[33627, 1101, 992, 33, 77, "Input",ExpressionUUID->"41937984-58f9-47f5-929c-c1d38a529f3d"],
+Cell[34622, 1136, 558, 11, 35, "Text",ExpressionUUID->"efddb9bb-5674-4a46-b189-5ca736c28d3d"],
+Cell[35183, 1149, 433, 13, 59, "Subsubsection",ExpressionUUID->"cebe4cec-d4d9-48f3-8f5d-00e6e90fa3cc",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35653, 1167, 2038, 59, 52, "Chapter",ExpressionUUID->"5385410e-b327-4f4b-9737-a5efeed8ff39",
+ Evaluatable->False],
+Cell[37694, 1228, 984, 32, 77, "Input",ExpressionUUID->"dd1c2251-d659-463e-95d1-2dc5904aca20"],
+Cell[38681, 1262, 622, 11, 58, "Text",ExpressionUUID->"7c6c1819-31a2-49f5-a2be-747ea86f5386"],
+Cell[39306, 1275, 433, 13, 59, "Subsubsection",ExpressionUUID->"2f5618b8-814c-4535-b7c2-30a9db9105d2",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39776, 1293, 1970, 53, 52, "Chapter",ExpressionUUID->"9eda4e5b-16d6-4551-a7b9-84f6cbf337b9",
+ Evaluatable->False],
+Cell[41749, 1348, 978, 29, 77, "Input",ExpressionUUID->"bc3db045-7f9c-487d-84a2-298f72aabed1"],
+Cell[42730, 1379, 588, 10, 35, "Text",ExpressionUUID->"98876d2f-eefc-4e59-b12e-2c26ad61eb73"],
+Cell[43321, 1391, 433, 13, 59, "Subsubsection",ExpressionUUID->"ffd87e80-f9d3-463c-aa51-08c581f964ed",
+ Evaluatable->False]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
