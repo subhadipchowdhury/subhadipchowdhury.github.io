@@ -25,7 +25,10 @@ category: coursepage
 ## Syllabus and Policies 
 
 + You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_2000_Spring_2019.pdf). 
+
 + A tentative schedule is available [here](S2000.pdf).
+
+
 ---
 
 ## Homework Assignments
