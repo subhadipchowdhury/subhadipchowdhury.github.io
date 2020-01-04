@@ -11,8 +11,9 @@ My past evaluations in full are available on request. Below you can find _numeri
 
 ### Bowdoin College
 
-- [Spring 2019](Bowdoin_Spring19.pdf) 
-- [Fall 2018](Bowdoin_Fall18.pdf)
+- [Fall 2019](BCQ_Fall2019.pdf)
+- [Spring 2019](BCQ_Spring2019.pdf) 
+- [Fall 2018](BCQ_Fall2018.pdf)
 
 ### University of Chicago
 
