@@ -47,7 +47,7 @@ ___
 
 ### Review Handouts
 
-+ [How to graph Rational Functions](Fall2018_1600_Handout1.pdf)
++ [How to graph Rational Functions](Fall2018_1600_Handout1.pdf) 
 + [Midterm 1 Practice Problems](Fall2018_1600_Handout2.pdf)
 + [Summary and Practice Problems for Second Derivative, Power Rule, Exponential Function, and Product Rule](Fall2018_1600_Handout3.pdf)
 + [Summary and Practice Problems for Chain Rule, Squeeze Theorem and Derivative of Trigonometric Functions](Fall2018_1600_Handout4.pdf)
