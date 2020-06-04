@@ -6,4 +6,3 @@
 + [January 2018](me_2018_Jan.jpg)
 + [June 2018](me_2018_Jun.jpg)
 + [Aug 2018](me_2018_Aug.jpg)
-+ [Nov 2019](me_2019_Nov.jpg)
