@@ -18,7 +18,7 @@ navigation_weight: 4
 ### Expository Talks in Student Seminars
 
 - *November 2018*: [The Illumination Problem and Rational Billiards](/assets/talks/illu_prob_rat_bil.pptx), Student Seminar, Bowdoin College
-- *April 2018*: [Rotation Number and Dynamics on the Circle](/assets/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College (Source code of this talk is available [here](https://github.com/subhadipchowdhury/math_presentation).)
+- *April 2018*: [Rotation Number and Dynamics on the Circle](/assets/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College (Updated source code of this talk is available [here](https://github.com/subhadipchowdhury/math_presentation).)
 - *April 2018*: [Explorations in Circle Packings](/assets/talks/circle_packings.pptx), Pizza Seminar, University of Chicago
 - *April 2017*: [Hilbert's 3rd Problem and the Dehn Invariant](/assets/talks/hilbert3rd.pdf), Pizza Seminar, University of Chicago 
 - *December 2015*: [Combinatorics of chessboard puzzles about domination, independence and tours](/assets/talks/domination.pptx), Pizza Seminar, University of Chicago
