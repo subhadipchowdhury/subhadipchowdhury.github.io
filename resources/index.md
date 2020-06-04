@@ -17,6 +17,6 @@ navigation_weight: 5
 
 You can find me online at the following places:
 
-+ [LinkedIn](https://www.linkedin.com/in/subhadip-chowdhury/)
++ [LinkedIn](https://www.linkedin.com/in/subhadipchowdhury/)
 + [Goodreads](https://www.goodreads.com/subhadip)
 
