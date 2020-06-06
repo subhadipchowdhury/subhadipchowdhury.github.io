@@ -24,7 +24,7 @@ category: coursepage
 ---
 ## Syllabus and Policies 
 
-+ You can find a pdf file containing the course description, syllabus, and policies [here](Syllabus_1800_Spring_2019.pdf). 
++ You can find a pdf file containing the course description, syllabus, and policies [here](Spring2020_1800_Syllabus.pdf). 
 
 + A tentative schedule is available [here](S1800.pdf).
 
@@ -34,15 +34,3 @@ category: coursepage
 ## Homework Assignments
 
 + You can find these from the Blackboard coursepage.
-
-___
-
-## Other Materials
-
-### Lab handouts
-
-
-### Collaborative Projects
-
-
-### Review Handouts
