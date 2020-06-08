@@ -566,6 +566,19 @@ footer {
 }
 
 
+.education {
+	order:2;
+	float:right;
+	h3 {
+		text-align: center;
+	}
+	ul li:before {    
+		font-family: 'FontAwesome';
+		content: '\f19d';
+		margin:0 5px 0 -15px;
+	}
+}
+
 /***********************************************/
 
 

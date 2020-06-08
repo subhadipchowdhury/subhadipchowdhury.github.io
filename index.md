@@ -40,6 +40,17 @@ I am currently a Visiting Assistant Professor in the [Department of Mathematics]
 
 | Curriculum Vitae: | <i class="far fa-file-pdf"></i>[pdf](assets/CV.pdf) |
 
+<div class='experience'>
+
+</div>
+
+<div class='education'>
+
++ UChicago
++ ISI
+
+</div>
+
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 </div>
 
