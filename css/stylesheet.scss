@@ -572,6 +572,11 @@ footer {
 	h3 {
 		text-align: center;
 	}
+
+	ul li {
+		list-style-type: none;
+	}
+	
 	ul li:before {    
 		font-family: 'FontAwesome';
 		content: '\f19d';
