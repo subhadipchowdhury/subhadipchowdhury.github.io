@@ -30,16 +30,13 @@ a {
 	text-decoration: none;
 	font-family: $base-font;
 	font-weight: 400;
-	color: #C16622;
+	color: #155F83;
 	transition:0.5s all;
 	
 	&:hover{
-		COLOR: #155F83;
 		text-decoration: underline; 
 	}
-	&:visited{
-		COLOR: #155F83;
-	}
+
 }
 
 h2 { 

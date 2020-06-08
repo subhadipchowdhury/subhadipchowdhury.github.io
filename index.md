@@ -36,7 +36,9 @@ navigation_weight: 1
 <div class='anchor'>
 ## Biography
 
-I am currently a Visiting Assistant Professor in the [Department of Mathematics](https://www.bowdoin.edu/math/) at [Bowdoin College](https://www.bowdoin.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). My CV is available [HERE](assets/CV.pdf).
+I am currently a Visiting Assistant Professor in the [Department of Mathematics](https://www.bowdoin.edu/math/) at [Bowdoin College](https://www.bowdoin.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
+
+| Curriculum Vitae: | <i class="far fa-file-pdf"></i>[pdf](assets/CV.pdf) |
 
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 </div>
