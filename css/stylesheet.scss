@@ -510,20 +510,18 @@ footer {
 
 
 
-#mypicture {
-    width:10em;
-    @media screen and (min-width: 960px) {
-        width: 15em;
-    }
-    @media screen and (max-width: 480px) {
-      margin-left: 0;
-    }
-}
+
 
 .picture{
 	order: 1;
 	float:left;
+	width:10em;
+    @media screen and (min-width: 960px) {
+        width: 15em;
+    }
 }
+
+
 .mail{
 	order:2;
 	padding: 1em;
