@@ -17,6 +17,7 @@ navigation_weight: 1
 |        |    |
 | Office: | Searles Science Building - 103 |
 | Phone: | 207-725-3572 |
+|        |    |
 | CV: | <i class="far fa-file-pdf"></i>[pdf](assets/CV.pdf) |
 
 </div>
