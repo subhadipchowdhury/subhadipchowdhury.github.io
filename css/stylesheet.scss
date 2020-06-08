@@ -87,10 +87,10 @@ ol {
 .main-wrapper
 {
 	margin: 20px 20% 0px 20%; 
-	padding-left: 10% solid #F7F6EE; 
-	padding-right: 10% solid #F7F6EE; 
-	padding-top: 2rem solid #F7F6EE;  
-	padding-bottom: 2rem solid #F7F6EE; 
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
 	background-color:#F7F6EE; 
 	-webkit-box-shadow: 0 0 15px 2px #000; 
 	-moz-box-shadow: 0 0 15px 2px #000;     
@@ -497,7 +497,6 @@ footer {
 
 /***********************************************/
 .about {
-	width: 90%;
 	display: -webkit-box;
   	display: -moz-box;
   	display: -ms-flexbox;
