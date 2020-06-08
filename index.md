@@ -57,10 +57,8 @@ I am currently a Visiting Assistant Professor in the [Department of Mathematics]
 
 * Ph.D. in Mathematics, 2018<br>
   University of Chicago
-
 * M.S. in Mathematics, 2014<br>
   University of Chicago
-
 * B.Math.(Hons.), 2012<br>
   Indian Statistical Institute
 

@@ -561,6 +561,8 @@ footer {
 .anchor {
 	@extend .about;
 
+	align-items: flex-start;
+
 	h2 {
 		text-align:center;
 		}
