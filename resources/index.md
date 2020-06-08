@@ -3,17 +3,17 @@ layout: default
 title: Resources
 navigation_weight: 5
 ---
-# {{ page.title }}
+## {{ page.title }}
 
-## Custom Beamer Template
+### Custom Beamer Template
 
 + [math_presentation repository](https://github.com/subhadipchowdhury/math_presentation)
 
-## Custom In-class Worksheet Template
+### Custom In-class Worksheet Template
 
 + [worksheet repository](https://github.com/subhadipchowdhury/worksheet)
 
-## Social
+### Social
 
 You can find me online at the following places:
 

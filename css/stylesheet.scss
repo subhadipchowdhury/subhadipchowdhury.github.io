@@ -27,7 +27,6 @@ body{
 
 .anchor h2 {
 	text-align:center;
-	font-size: 1em;
 }
 
 a {
@@ -51,11 +50,14 @@ h2 {
 	font-family: $heading-font; 
 	font-weight: 800; 
 	font-variant: small-caps;
+	font-size: 2.25rem;
 }
 h3 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
-	font-weight: 700; }
+	font-weight: 700; 
+	font-size: 1.25rem;
+}
 
 h4 { 
 	COLOR: #155F83; 
@@ -84,11 +86,13 @@ ol {
 
 .main-wrapper
 {
-	margin: 20px 50px 0px 50px; 
-	border: 60px solid #F7F6EE; 
+	margin: 20px 300px 0px 300px; 
+	border-left: 400px solid #F7F6EE; 
+	border-right: 400px solid #F7F6EE; 
 	border-top: 10px solid #F7F6EE;  
+	border-bottom: 100px solid #F7F6EE; 
 	background-color:#F7F6EE; 
-	-webkit-box-shadow: 0 0 15px 2px #00f; 
+	-webkit-box-shadow: 0 0 15px 2px #000; 
 	-moz-box-shadow: 0 0 15px 2px #000;     
 	box-shadow: 0 0 15px 2px #000;
 
@@ -379,7 +383,7 @@ nav#nav-main ul{
     transform:rotate(-45deg);
 }
 
-/**********************Thanks Ratul Saha for the following part of the code ******************************************************/
+/**********************Hamburger Menu******************************************************/
 .line-menu{
     background-color:#800000;
     border-radius:5px;
@@ -425,7 +429,7 @@ nav#nav-main ul{
 
 
 
-/******************************************Above part of code copied from  getonchain.com ****************************************************************/
+/**********************************************************************************************************/
 
 
 nav#nav-mobile{
@@ -493,7 +497,7 @@ footer {
 
 /***********************************************/
 .about {
-	width: 95%;
+	width: 90%;
 	display: -webkit-box;
   	display: -moz-box;
   	display: -ms-flexbox;
