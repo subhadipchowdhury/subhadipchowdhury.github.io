@@ -559,12 +559,13 @@ footer {
 
 
 .anchor {
-	@extend .about {
-		h2 {
-			text-align:center;
-			}
-			border-bottom: 2px  solid #800000;
-	}
+	@extend .about;
+	
+	h2 {
+		text-align:center;
+		}
+	
+	border-bottom: 2px  solid #800000;
 }
 
 
