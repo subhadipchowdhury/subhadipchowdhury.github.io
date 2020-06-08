@@ -559,12 +559,34 @@ footer {
 
 
 .anchor {
-	h2 {
-	text-align:center;
+	@extend .about {
+		h2 {
+			text-align:center;
+			}
+			border-bottom: 2px  solid #800000;
 	}
-	border-bottom: 2px  solid #800000;
 }
 
+
+
+
+.experience {
+	order:1;
+	float:left;
+	h3 {
+		text-align: center;
+	}
+
+	ul li {
+		list-style-type: none;
+	}
+
+	ul li:before {    
+		font-family: 'FontAwesome';
+		content: '\f508';
+		margin:0 5px 0 -15px;
+	}
+}
 
 .education {
 	order:2;
@@ -576,7 +598,7 @@ footer {
 	ul li {
 		list-style-type: none;
 	}
-	
+
 	ul li:before {    
 		font-family: 'FontAwesome';
 		content: '\f19d';
