@@ -12,10 +12,9 @@ category: coursepage
 </div>  
 
 
-|||
-|---|---|
-| **Lectures** | MTRF	11:00 am - 12:30 pm, RY 277 |
-| **Instrutor**| Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
+
+| Lectures | MTRF	11:00 am - 12:30 pm, RY 277 |
+| Instrutor| Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
 |**TA**| John Judge (`jjudge354` at `gmail` dot `com`)
 | **Office Hours**| TR 7-9PM |
 | **TA Office Hours**| MW 7-9PM |

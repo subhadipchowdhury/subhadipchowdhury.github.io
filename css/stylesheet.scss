@@ -566,35 +566,39 @@ footer {
 
 
 table {
-        padding-top: 0.5em;
-        border-collapse:collapse;
-        th, td {
-            padding:0.1em 0.5em;
-        }
-        td:first-child {
-            font-weight: bold;
-            text-align: right;
-        }
-	
-	tr:nth-child(odd) {
-    		background-color: #eee;
-	}	
-    }
+	padding-top: 0.5em;
+	border-collapse:collapse;
+	th, td {
+		padding:0.1em 0.5em;
+	}
+	td:first-child {
+		font-weight: bold;
+		text-align: right;
+	}
+
+tr:nth-child(odd) {
+		background-color: #eee;
+}	
+}
+
+
+.schedule {
+overflow-x:auto;
+text-align: center;
+table{
+	margin-left:auto; 
+		margin-right:auto;
+}
+}	
+
+
+
 code{
 	background-color: #ddd;
 	border-radius: 5px;
 	display: inline-block;
 	font-family: $code-font;
 }
-
-.schedule {
-	overflow-x:auto;
-	text-align: center;
-	table{
-		margin-left:auto; 
-    		margin-right:auto;
-	}
-}	
 
 .backlink { 
 	display:flex;
@@ -631,4 +635,6 @@ code{
 }
 
 /******************************************************/
+
+
 
