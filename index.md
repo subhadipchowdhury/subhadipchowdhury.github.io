@@ -38,7 +38,7 @@ Visiting Assistant Professor<br>
 <hr><hr>
 <div class='anchor'>
 ## Curriculum Vitae
-</div>
+
 
 I am a Visiting Assistant Professor at [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as of Fall 2018.
 
@@ -47,7 +47,7 @@ I received my Ph.D. from University of Chicago under the direction of Prof. [Dan
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 
 My CV is available [HERE](assets/CV.pdf). 
-<hr>
+</div>
 
 
 <div class='anchor'>
