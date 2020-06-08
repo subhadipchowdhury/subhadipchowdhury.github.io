@@ -7,7 +7,7 @@ navigation_weight: 1
 <div class="about">
 <div class="picture">
 
-[![Subhadip Chowdhury](assets/photos/me_small.jpg){:#mypicture}](assets/photos/)
+[![Subhadip Chowdhury](assets/photos/me_small.jpg)](assets/photos/)
 </div>
 
 <div class="mail">
@@ -24,12 +24,12 @@ Visiting Assistant Professor<br>
 <div class="shield">
   <div class="current">
      
-   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum"){:#bowdoin_seal}
+   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum")
   </div>
   <div class="old">
   
-   ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur"){:#uchicago_shield}
-   ![Indian Statistical Institute](assets/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्"){:#isi_logo}
+   ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur")
+   ![Indian Statistical Institute](assets/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्")
   </div>
 </div>
 
