@@ -99,7 +99,7 @@ ol {
 	overflow: auto;
 }
 
-@media all and (max-width: 1450px) {
+@media all and (max-width: 1920px) {
 	.main-wrapper{
 		margin: 5px 5% 0px 5%; 
 		padding:10%;
@@ -115,7 +115,7 @@ header {
 
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	align-items: center;
 
 	margin: 0px 20% 0px 20%; 
@@ -530,13 +530,14 @@ footer {
 }
 .mail{
 	order:2;
+	padding: 1em;
 	display: -webkit-box;
   	display: -moz-box;
   	display: -ms-flexbox;
   	display: -webkit-flex;
 	display:flex;
 	flex-direction: column;
-  	justify-content: space-evenly;	
+	justify-content: space-evenly;
 }
 
 .shield{
