@@ -44,11 +44,9 @@ I am currently a Visiting Assistant Professor in the [Department of Mathematics]
 
 ### Experience ###
 
-+ Visiting Assistant Professor <br>
-  Bowdoin College, Aug 2018 - Present
+* Visiting Assistant Professor <br> Bowdoin College, Aug 2018 - Present
 
-+ Instructor of Record<br>
-  University of Chicago, 2014 - 2018
+* Instructor of Record<br> University of Chicago, 2014 - 2018
 
 </div>
 
@@ -56,13 +54,13 @@ I am currently a Visiting Assistant Professor in the [Department of Mathematics]
 
 ### Education ###
 
-+ Ph.D. in Mathematics, 2018<br>
+* Ph.D. in Mathematics, 2018<br>
   University of Chicago
 
-+ M.S. in Mathematics, 2014<br>
+* M.S. in Mathematics, 2014<br>
   University of Chicago
 
-+ B.Math.(Hons.), 2012<br>
+* B.Math.(Hons.), 2012<br>
   Indian Statistical Institute
 
 </div>
