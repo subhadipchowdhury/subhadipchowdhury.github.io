@@ -11,9 +11,6 @@ category: coursepage
   ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
 </div>  
 
-
-|||
-|---|---|
 |  Lectures  | TR	10:05 am - 11:30 am, Searles 215 |
 |  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
 |  Study Group Leader | Jessica Joseph (`jrjoseph` at `bowdoin` dot `edu`)

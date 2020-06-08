@@ -11,9 +11,6 @@ category: coursepage
   ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
 </div>  
 
-
-|||
-|---|---|
 |  Lectures  | MWF	11:45 am - 12:40 am, Searles 213 |
 |  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
 |  Study Group Leader | Chloe Renfro (`crenfro` at `bowdoin` dot `edu`)
