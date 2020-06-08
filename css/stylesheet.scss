@@ -99,11 +99,10 @@ ol {
 	overflow: auto;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 850px) {
 	.main-wrapper{
-		margin: 5px 10px 0px 10px; 
-		border: 20px solid #F7F6EE;
-		border-top: 10px solid #F7F6EE;  
+		margin: 5px 5% 0px 5%; 
+		padding:10%;
 	}
 }
 
