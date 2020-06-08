@@ -14,11 +14,11 @@ category: coursepage
 
 |||
 |---|---|
-| **Lectures** | MWF	10:40 am - 11:35 am, Searles 213 |
-| **Instrutor**| Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
-| **Study Group Leader**| TBA
-| **Study Group Session**| TBA |
-| **Textbook**| _Calculus (Multivariable)_ by Huges-Hallett, Gleason, McCallum et al. |
+|  Lectures  | MWF	10:40 am - 11:35 am, Searles 213 |
+|  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
+|  Study Group Leader | TBA
+|  Study Group Session | TBA |
+|  Textbook | _Calculus (Multivariable)_ by Huges-Hallett, Gleason, McCallum et al. |
 
 
 ---

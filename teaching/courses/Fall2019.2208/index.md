@@ -14,9 +14,9 @@ category: coursepage
 
 |||
 |---|---|
-| **Lectures** | MW	1:15 pm - 2:40 pm, Searles 213 |
-| **Instrutor**| Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
-| **Textbook**| _Differential Equations_, 4th edition, by Blanchard, Devaney and Hall |
+|  Lectures  | MW	1:15 pm - 2:40 pm, Searles 213 |
+|  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
+|  Textbook | _Differential Equations_, 4th edition, by Blanchard, Devaney and Hall |
 
 
 ---

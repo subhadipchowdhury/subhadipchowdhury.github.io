@@ -14,11 +14,11 @@ category: coursepage
 
 |||
 |---|---|
-| **Lectures** | MWF	11:45 am - 12:40 am, Searles 213 |
-| **Instrutor**| Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
-| **Study Group Leader**| Chloe Renfro (`crenfro` at `bowdoin` dot `edu`)
-| **Study Group Session**| M 6-7PM, Searles 213 |
-| **Textbook**| _Linear  Algebra  and  Its Applications_ by David C. Lay. |
+|  Lectures  | MWF	11:45 am - 12:40 am, Searles 213 |
+|  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
+|  Study Group Leader | Chloe Renfro (`crenfro` at `bowdoin` dot `edu`)
+|  Study Group Session | M 6-7PM, Searles 213 |
+|  Textbook | _Linear  Algebra  and  Its Applications_ by David C. Lay. |
 
 
 ---

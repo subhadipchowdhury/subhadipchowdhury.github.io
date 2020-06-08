@@ -12,13 +12,11 @@ category: coursepage
 </div>  
 
 
-|||
-|---|---|
-| **Lectures** | MWF	10:40 am - 11:35 am, Searles 213 |
-| **Instrutor**| Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
-| **Study Group Leader**| Nan Ding (`nding` at `bowdoin` dot `edu`)
-| **Study Group Session**| M 8-9PM, Searles 213 |
-| **Textbook**| _Calculus (Multivariable)_ by Huges-Hallett, Gleason, McCallum et al. |
+|  Lectures  | MWF	10:40 am - 11:35 am, Searles 213 |
+|  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
+|  Study Group Leader | Nan Ding (`nding` at `bowdoin` dot `edu`)
+|  Study Group Session | M 8-9PM, Searles 213 |
+|  Textbook | _Calculus (Multivariable)_ by Huges-Hallett, Gleason, McCallum et al. |
 
 
 ---
