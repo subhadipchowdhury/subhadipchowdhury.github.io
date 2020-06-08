@@ -35,10 +35,8 @@ Visiting Assistant Professor<br>
 
 </div>
 
-<hr><hr>
 <div class='anchor'>
 ## Curriculum Vitae
-
 
 I am a Visiting Assistant Professor at [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as of Fall 2018.
 
@@ -49,20 +47,18 @@ I received my Bachelor of Mathematics degree from [Indian Statistical Institute,
 My CV is available [HERE](assets/CV.pdf). 
 </div>
 
-
 <div class='anchor'>
 ## Research Interests
-</div>
 
 My research area is low-dimensional dynamics and topology, specifically nonabelian actions of free groups on the circle via orientation preserving homeomorphisms. I am also interested in application of algebraic topology to formal language theory. I am broadly interested in Geometric Group Theory topics like stable commutator length and quasimorphisms as well.
 
 My papers and preprints are on my [research page](research).
 
-<hr>
+</div>
 
 <div class='anchor'>
 ## Teaching
-</div>
 
 In Spring 2020, I am teaching Math 2208 and Math 1800. The course webpages are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
+</div>
