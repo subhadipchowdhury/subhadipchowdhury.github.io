@@ -61,6 +61,16 @@ h4 {
 	font-family: $heading-font; 
 	font-weight: 500; }
 
+ul {
+	padding-left: 1em;
+}
+
+ol {
+	padding-left: 1em;
+	li {
+		padding-left: 0.5em;
+	}
+}
 	
 
 .anchor {
@@ -68,7 +78,6 @@ h4 {
 	text-align:center;
 	}
 	border-bottom: thick;
-
 }
 
 /***********************************************/
