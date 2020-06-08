@@ -64,7 +64,6 @@ I am currently a Visiting Assistant Professor in the [Department of Mathematics]
 
 </div>
 
-I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
 </div>
 
 <div class='anchor'>
