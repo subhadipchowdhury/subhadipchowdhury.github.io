@@ -515,10 +515,13 @@ footer {
 .picture{
 	order: 1;
 	float:left;
-	width:10em;
-    @media screen and (min-width: 960px) {
-        width: 15em;
-    }
+	img{
+		width:10em;
+		@media screen and (min-width: 960px) {
+			width: 15em;
+		}
+	}
+	
 }
 
 
