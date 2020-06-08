@@ -25,9 +25,6 @@ body{
 	font-weight: 500;
 }
 
-.anchor h2 {
-	text-align:center;
-}
 
 a {
 	text-decoration: none;
@@ -64,18 +61,11 @@ h4 {
 	font-family: $heading-font; 
 	font-weight: 500; }
 
-ul {
-	padding-left: 1em;
-}
+	
 
-ol {
-	padding-left: 1em;
-	li {
-		padding-left: 0.5em;
-	}
+.anchor h2 {
+	text-align:center;
 }
-	
-	
 
 /***********************************************/
 
