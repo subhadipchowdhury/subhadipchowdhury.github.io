@@ -86,7 +86,8 @@ ol {
 
 .main-wrapper
 {
-	margin: 20px 20% 0px 20%; 
+	width: min(960px,60%);
+	margin: 20px auto 0px auto; 
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-top: 2rem;
@@ -99,10 +100,11 @@ ol {
 	overflow: auto;
 }
 
-@media all and (max-width: 1920px) {
+@media all and (max-width: 1600px) {
 	.main-wrapper{
-		margin: 5px 5% 0px 5%; 
-		padding:10%;
+		margin: 5px auto 0px auto; 
+		padding-left: 5%;
+		padding-right: 5%;
 	}
 }
 
