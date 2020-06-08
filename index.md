@@ -12,11 +12,9 @@ navigation_weight: 1
 
 <div class="mail">
 
-Visiting Assistant Professor<br>
-[Department of Mathematics](https://www.bowdoin.edu/math/)  
-[Bowdoin College](http://www.bowdoin.edu/)  
-[Brunswick, ME 04011](https://www.google.com/maps/place/Searles+Science+Building,+Brunswick,+ME+04011)
-
+|        | Visiting Assistant Professor |
+|        | [Bowdoin College](http://www.bowdoin.edu/)  |
+|        |    |
 | Office: | Searles Science Building - 103 |
 | Phone: | 207-725-3572 |
 
@@ -36,15 +34,11 @@ Visiting Assistant Professor<br>
 </div>
 
 <div class='anchor'>
-## Curriculum Vitae
+## Biography
 
-I am a Visiting Assistant Professor at [Bowdoin College](https://www.bowdoin.edu/) [Mathematics Department](https://www.bowdoin.edu/math/) as of Fall 2018.
-
-I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
+I am currently a Visiting Assistant Professor in the [Department of Mathematics](https://www.bowdoin.edu/math/) at [Bowdoin College](https://www.bowdoin.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). My CV is available [HERE](assets/CV.pdf).
 
 I received my Bachelor of Mathematics degree from [Indian Statistical Institute, Bangalore Centre](http://www.isibang.ac.in/).
-
-My CV is available [HERE](assets/CV.pdf). 
 </div>
 
 <div class='anchor'>
