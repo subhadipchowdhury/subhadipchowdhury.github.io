@@ -31,13 +31,3 @@ category: coursepage
 ## Homework Assignments
 
 + You can find these from the Blackboard coursepage.
-
----
-
-## Other Materials
-
-### In Class Worksheets
-
-
-### Collaborative Projects
-
