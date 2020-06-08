@@ -11,15 +11,12 @@ category: coursepage
   ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
 </div>  
 
-
-
 | Lectures | MTRF	11:00 am - 12:30 pm, RY 277 |
-| Instrutor| Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
-|**TA**| John Judge (`jjudge354` at `gmail` dot `com`)
-| **Office Hours**| TR 7-9PM |
-| **TA Office Hours**| MW 7-9PM |
-| **Textbook**| 1. _Numbers, Shape, & Symmetry_ by Herrmann and Sally, Jr. <br>2. _Calculus - One Variable_ by Salas, Hille, Etgen |
-
+| Instrutor | Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
+| TA | John Judge (`jjudge354` at `gmail` dot `com`)
+| Office Hours | TR 7-9PM |
+| TA Office Hours | MW 7-9PM |
+| Textbook | 1. _Numbers, Shape, & Symmetry_ by Herrmann and Sally, Jr. <br>2. _Calculus - One Variable_ by Salas, Hille, Etgen |
 
 ---
 ## Syllabus and Policies 
