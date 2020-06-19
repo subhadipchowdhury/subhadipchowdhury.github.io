@@ -6,11 +6,10 @@ category: coursepage
 
 # Proof-Based Methods in Calculus
 ## Summer 2018
-<div class="backlink">
- 
-  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
-</div>  
 
+<div class="backlink">
+  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
+</div>  
 | Lectures | MTRF	11:00 am - 12:30 pm, RY 277 |
 | Instrutor | Subhadip Chowdhury (`subhadip` at `math` dot `uchicago` dot `edu`)|
 | TA | John Judge (`jjudge354` at `gmail` dot `com`)

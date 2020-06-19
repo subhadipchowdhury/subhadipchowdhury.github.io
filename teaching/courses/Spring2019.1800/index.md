@@ -6,9 +6,9 @@ category: coursepage
 
 # Multivariable Calculus
 ## Spring 2019
+
 <div class="backlink">
- 
-  ![Back](/resources/back.png){:#backicon} [Back to Teaching Page](/teaching/courses) 
+  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
 </div>  
 
 
