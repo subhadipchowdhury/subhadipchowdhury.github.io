@@ -40,7 +40,7 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently a Visiting Assistant Professor in the [Mathematical & Computational Sciences Department](https://www.wooster.edu/departments/math-computation/) at [The College of Wooster](https://www.wooster.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
+I am currently a Visiting Assistant Professor in the [Mathematical & Computational Sciences Department](https://www.wooster.edu/departments/math-computation/) at [The College of Wooster](https://www.wooster.edu/) as of Fall 2020. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
 
 <div class='experience'>
 
