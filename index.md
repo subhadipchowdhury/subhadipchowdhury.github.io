@@ -13,7 +13,7 @@ navigation_weight: 1
 <div class="mail">
 
 |        | Visiting Assistant Professor |
-|        | [Bowdoin College](http://www.bowdoin.edu/)  |
+|        | [The College of Wooster](https://www.wooster.edu/)  |
 |        |    |
 | Office: | Searles Science Building - 103 |
 | Phone: | 207-725-3572 |
@@ -24,10 +24,11 @@ navigation_weight: 1
 <div class="shield">
   <div class="current">
      
-   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum")
+   ![The College of Wooster](assets/wooster_seal.png "Ex Uno Fonte")
   </div>
   <div class="old">
   
+   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum")
    ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur")
    ![Indian Statistical Institute](assets/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्")
   </div>
@@ -39,7 +40,7 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently a Visiting Assistant Professor in the [Department of Mathematics](https://www.bowdoin.edu/math/) at [Bowdoin College](https://www.bowdoin.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
+I am currently a Visiting Assistant Professor in the [Mathematical & Computational Sciences Department](https://www.wooster.edu/departments/math-computation/) at [The College of Wooster](https://www.wooster.edu/) as of Fall 2018. I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
 
 <div class='experience'>
 
