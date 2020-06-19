@@ -17,8 +17,9 @@ navigation_weight: 1
 |        |    |
 | Office: | Taylor 307 |
 | Phone: | 773-490-5763 |
+| Email: | `schowdhury` at `wooster` dot `edu` |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2019)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
