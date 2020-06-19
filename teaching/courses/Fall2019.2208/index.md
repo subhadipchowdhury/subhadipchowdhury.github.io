@@ -6,9 +6,10 @@ category: coursepage
 
 # Ordinary Differential Equations
 ## Fall 2019
+
+
 <div class="backlink">
- 
-  <i class="fas fa-arrow-circle-left"></i> [Back to Teaching Page](/teaching/courses) 
+  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
 </div>  
 
 |  Lectures  | MW	1:15 pm - 2:40 pm, Searles 213 |
