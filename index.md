@@ -15,8 +15,8 @@ navigation_weight: 1
 |        | Visiting Assistant Professor |
 |        | [The College of Wooster](https://www.wooster.edu/)  |
 |        |    |
-| Office: | Searles Science Building - 103 |
-| Phone: | 207-725-3572 |
+| Office: | Taylor 307 |
+| Phone: | 773-490-5763 |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf](assets/CV.pdf) |
 
@@ -47,7 +47,9 @@ I am currently a Visiting Assistant Professor in the [Mathematical & Computation
 ### Experience ###
 
 * Visiting Assistant Professor <br> 
-  _Bowdoin College, Aug 2018 - Present_
+  _The College of Wooster, 2020 - Present_
+* Visiting Assistant Professor <br> 
+  _Bowdoin College, 2018 - 2020_
 * Instructor of Record<br> 
   _University of Chicago, 2014 - 2018_
 
