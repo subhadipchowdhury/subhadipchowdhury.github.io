@@ -108,12 +108,12 @@ header {
 	align-items: center;
 
 	width: min(960px,80%);
-	padding-top: 0.25rem;
-	padding-bottom: 0.2em;
+	margin: 0.25rem auto 0.2rem auto; 
+	
 
 	h1 {
 		text-align: center;
-		padding: 0.5em;
+		padding: 0.25rem;
 		font-size:2rem; 
 	}
 	a:hover{
