@@ -107,28 +107,24 @@ header {
 	justify-content: space-between;
 	align-items: center;
 
-	margin: 0px 20% 0px 20%; 
-	padding-top: 0.5em;
+	width: min(960px,80%);
+	padding-top: 0.25rem;
 	padding-bottom: 0.2em;
 
 	h1 {
 		text-align: center;
 		padding: 0.5em;
+		font-size:2rem; 
 	}
 	a:hover{
 		text-decoration: none;
 	}
 }
-@media all and (max-width: 900px){
+@media all and (max-width: 1000px){
 	header{
-		/* On small screens, menu is on the side, flex in row direction. */
-		flex-direction: row;
-		justify-content: space-around;
-		margin-left: 10px;
-		margin-right: 10px;
-		margin-bottom: 1em;	
+		/* On small screens, smaller h1 size */
 		h1{
-			font-size:1.5em;
+			font-size:1.5rem;
 		}
 	}
 }
