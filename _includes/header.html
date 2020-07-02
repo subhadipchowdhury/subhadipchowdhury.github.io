@@ -1,6 +1,11 @@
 <header>
-    {% if page.category != "coursepage" %} 
-    <h1><a href="/">Subhadip Chowdhury</a></h1>
-    {% include navigation.html %} 
+    {% if page.category = "coursepage" %}
+        <h1><a href="/">Subhadip Chowdhury</a></h1>
+        <div class="backlink">
+            [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
+        </div>
+    {% else %} 
+        <h1><a href="/">Subhadip Chowdhury</a></h1>
+        {% include navigation.html %} 
     {% endif %}
 </header>
