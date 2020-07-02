@@ -7,9 +7,6 @@ category: coursepage
 # Multivariable Calculus
 ## Spring 2019
 
-<div class="backlink">
-  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
-</div>  
 
 
 |  Lectures  | MWF	10:40 am - 11:35 am, Searles 213 |

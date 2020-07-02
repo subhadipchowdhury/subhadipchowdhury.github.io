@@ -7,9 +7,6 @@ category: coursepage
 # Multivariable Calculus
 ## Fall 2018
 
-<div class="backlink">
-  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
-</div>   
 
 |  Lectures  | TR	10:05 am - 11:30 am, Searles 215 |
 |  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|

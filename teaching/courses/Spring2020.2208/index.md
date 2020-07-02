@@ -7,9 +7,6 @@ category: coursepage
 # Ordinary Differential Equations
 ## Spring 2020
 
-<div class="backlink">
-  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
-</div>   
 
 |  Lectures  | MW	1:15 pm - 2:40 pm, Searles 213 |
 |  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|

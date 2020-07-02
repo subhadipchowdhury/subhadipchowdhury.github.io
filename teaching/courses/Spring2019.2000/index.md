@@ -7,10 +7,7 @@ category: coursepage
 # Linear Algebra
 ## Spring 2019
 
-
-<div class="backlink">
-  [<i class="fas fa-arrow-circle-left"></i> Back to Teaching Page](/teaching/courses) 
-</div>    
+  
 
 |  Lectures  | MWF	11:45 am - 12:40 am, Searles 213 |
 |  Instrutor | Subhadip Chowdhury (`schowdhu` at `bowdoin` dot `edu`)|
