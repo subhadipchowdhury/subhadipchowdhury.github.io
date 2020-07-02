@@ -127,13 +127,8 @@ header {
 	}
 }
 
-@media all and (max-width: 980px){
-	header{
-		nav{
-			font-size:1rem;
-		}
-	}
-}
+
+
 
 
 /***********************************************/
@@ -238,6 +233,14 @@ nav#nav-main ul{
 		}
 	}
 	}
+
+@media all and (max-width: 980px){
+	nav#nav-main ul li a{
+			font-size:1rem;
+			padding: 0.4em 0.5em;
+		}
+	}
+
 /* Small screens */
 @media all and (max-width: 900px) {
 	nav#nav-main{
