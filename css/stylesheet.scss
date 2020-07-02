@@ -118,15 +118,8 @@ header {
 		text-decoration: none;
 	}
 }
-@media all and (max-width: 1035px){
-	header{
-		/* On small screens, smaller h1 size */
-		h1{
-			font-size:1.5rem;
-		}
-	}
-}
 
+	
 
 
 
@@ -234,7 +227,13 @@ nav#nav-main ul{
 	}
 	}
 
-@media all and (max-width: 980px){
+@media all and (max-width: 1080px){
+	header{
+		/* On small screens, smaller h1 size */
+		h1{
+			font-size:1.5rem;
+		}
+	}
 	nav#nav-main ul li a{
 			font-size:1rem;
 			padding: 0.4em 0.5em;
