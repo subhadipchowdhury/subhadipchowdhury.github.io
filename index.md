@@ -16,7 +16,7 @@ navigation_weight: 1
 |        | [The College of Wooster](https://www.wooster.edu/)  |
 |        |    |
 | Office: | Taylor 307 |
-| Phone: | 773-490-5763 |
+| Phone: | 330-263-2473 |
 | Email: | `schowdhury` at `wooster` dot `edu` |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2019)](assets/CV.pdf) |
