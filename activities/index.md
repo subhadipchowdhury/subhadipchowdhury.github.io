@@ -7,18 +7,12 @@ navigation_weight: 4
 
 ## {{ page.title }}
 
-### Invited Talks
-
-- *April 2018*: Special Session on Quantization for Probability Distributions and Dynamical Systems, American Mathematical Society Spring Southeastern Sectional Meeting, Vanderbilt University, Nashville, TN, USA
-- *January 2018*: AMS Special Session on Dynamical Systems: Smooth, Symbolic, and Measurable, Joint Mathematical Meetings, San Diego, California, USA
-- *September 2017*: Special Session on Geometric Group Theory, American Mathematical Society Fall Eastern Sectional Meeting, SUNY, Buffalo, USA
-- *December 2016*: Session on Geometric Group Theory and Topology in Low Dimensions, Canadian Mathematical Society Winter Meeting, ON, Canada
-
 
 ### Expository Talks in Student Seminars
 
+- *February 2020*: [Rotation Number and Dynamics on the Circle](), Invited Talk, The College of Wooster
 - *November 2018*: [The Illumination Problem and Rational Billiards](/assets/talks/illu_prob_rat_bil.pptx), Student Seminar, Bowdoin College
-- *April 2018*: [Rotation Number and Dynamics on the Circle](/assets/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College (Updated source code of this talk is available [here](https://github.com/subhadipchowdhury/math_presentation).)
+- *April 2018*: [Rotation Number and Dynamics on the Circle](/assets/talks/circle_dynamics.pdf), Invited Talk, Bowdoin College
 - *April 2018*: [Explorations in Circle Packings](/assets/talks/circle_packings.pptx), Pizza Seminar, University of Chicago
 - *April 2017*: [Hilbert's 3rd Problem and the Dehn Invariant](/assets/talks/hilbert3rd.pdf), Pizza Seminar, University of Chicago 
 - *December 2015*: [Combinatorics of chessboard puzzles about domination, independence and tours](/assets/talks/domination.pptx), Pizza Seminar, University of Chicago
