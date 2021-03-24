@@ -30,7 +30,7 @@ Below is a list of courses I have taught in the past and their syllabi.
 
 {% for course in site.data.courses_uchicago %}
 <div class="course">
-**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {% if coursepage.Link %} [{{ coursepage.Duration }}]({{coursepage.Link}}) {% else %}  {{ coursepage.Duration }} {% endfor %}
 </div>
 {% endfor %}
   
