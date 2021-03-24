@@ -38,7 +38,7 @@ Below is a list of courses I have taught in the past and their syllabi.
 
 {% for course in site.data.nonteaching_courses_uchicago %}
 <div class="course">
-**{{ course.Duration }}**: {{ course.Role }} for {{ course.Name }} (Math {% if course.Link %} [{{ course.Code }}]({{ course.Link }})) {% else %} {{ course.Code }} {% endif %} , taught by Professor [{{ course.Instructor }}]({{ course:Homepage }})
+**{{ course.Duration }}**: {{ course.Role }} for {{ course.Name }} (Math {% if course.Link %} [{{ course.Code }}]({{ course.Link }})) {% else %} {{ course.Code }}) {% endif %}, taught by Professor [{{ course.Instructor }}]({{ course:Homepage }})
 </div>
 {% endfor %}
 ---
