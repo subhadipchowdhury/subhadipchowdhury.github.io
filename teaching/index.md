@@ -9,12 +9,12 @@ has_subnav: 1
 
 ### Current Schedule (Spring 2021)
 
-#### [Math 112: Calculus & Analytical Geometry II](https://subhadipchowdhury.github.io/teaching/courses/Spring2021.112/)
+#### [Math 112: Calculus & Analytical Geometry II](https://subhadipchowdhury.github.io/teaching/courses/Spring2021_112.pdf)
 
 * __Time:__ MWF 8:00-8:50 AM, MWF 9:15-10:05 AM
 * __Lab:__ T 8:00-9:20 AM, T 9:45-11:05AM
 
-#### [Math 215: Transition to Advanced Mathematics](https://subhadipchowdhury.github.io/teaching/courses/Spring2021.215/)
+#### [Math 215: Transition to Advanced Mathematics](https://subhadipchowdhury.github.io/teaching/courses/Spring2021_215.pdf)
 
 * __Time:__ MWF 10:40-11:45 AM
 
