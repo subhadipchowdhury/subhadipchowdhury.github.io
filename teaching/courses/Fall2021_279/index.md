@@ -5,7 +5,7 @@ title: Math 279 (Putnam Seminar)
 
 ## {{ page.title }}
 
-__Contents of this page will move to Moodle when the semester begins__
+__Contents of this page will move to Moodle when the semester begins.__
 
 
 ### Course Time
