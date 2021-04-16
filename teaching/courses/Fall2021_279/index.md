@@ -49,7 +49,7 @@ __Sample problem:__ Find all pairs of prime numbers p and q such that p^2 = 2 q^
   * __Combinatorics leading to questions involving probability__ – This will involve some easy counting techniques.
 
 ### Course components
-There are no exams or projects in this course. There might be occasional short reading exercises. The only expectation is that you will take the Putnam exam in December. Your grade (S/NC) will depend entirely on in-class attendance and participation.
+There are no exams or projects in this course. There might be occasional short reading exercises or puzzles to think about at home. The only expectation is that you will take the Putnam exam in December. Your grade (S/NC) will depend entirely on in-class attendance and participation.
  
 ### What's next?
 Finally, even though the Putnam happens at the of Fall semester, I plan to continue having an unofficial “virtual problem solving seminar” in some form in spring semester. This wouldn’t be for credit, only for fun! This will probably devolve to something like one interesting problem posted online bi-weekly, with only online recognition as the prize! We will think about that over the semester as I gauge student interest.
