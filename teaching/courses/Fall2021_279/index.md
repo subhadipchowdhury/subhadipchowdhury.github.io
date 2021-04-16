@@ -29,17 +29,22 @@ Besides the Putnam Archive, we will be also using various problem-solving resour
   * __The invariance principle__ – problems where a proof depends on finding a mathematical quantity (e.g. an algebraic expression) or a property (e.g. monotonicity, concavity, parity etc.)  that remains unchanged. 
 
 __Sample problem:__ Start with an 8 × 8 chessboard with the usual coloring. In each move, you may repaint all squares of a 2 × 2 square (to the same color). The goal is to attain just one black square. Can you reach the goal?
+
   * __The Extremal principle__ – problems (usually a proof by contradiction) that utilizes the smallest or largest number (or element of a set) that has certain properties.
 
 __Sample problem:__ Is there a smallest positive real number?
+
   * __Pigeon hole principle__ – A simple version can be stated as “if we put (n+1) pigeons into n holes, then at least 1 hole will have more than 1 pigeon”.
 
 __Sample problem:__ What is the minimum number of student you need to ensure that at least three of them have birthday on the same day of the week?
   * __Popular Sequences and series__ – We are not proving convergence/divergence here. We will instead look at some famous sequence such as Fibonacci sequence, Chebyshev polynomials, etc. and learn how to utilize Mathematical Induction.
+
   * __Inequalities and Optimization__ – Inequalities show up in all fields of Math, both pure and applied, whenever we try to optimize a quantity. We will talk about AM-GM-HM, Cauchy-Schwartz, inequalities utilizing convex functions etc. Students who have taken multivariable will also be able to recognize optimizations using Lagrange multiplier.
+
   * __Modular arithmetic and Solving Diophantine equations__ – Existence problems which ask you to find some integers a,b,c (or prove that they can’t be found) satisfying a given equation. This often involves looking at the remainder of the terms when divided by some other number! 
 
 __Sample problem:__ Do there exist two integers a and b such that a^2 = b^2 +1 ?
+
   * __Combinatorics leading to questions involving probability__ – This will involve some easy counting techniques.
  
 ### What's next?
