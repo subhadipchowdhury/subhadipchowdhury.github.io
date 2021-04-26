@@ -44,7 +44,7 @@ __Sample problem:__ What is the minimum number of student you need to ensure tha
 
   * __Modular arithmetic and Solving Diophantine equations__ – Existence problems which ask you to find some integers a,b,c (or prove that they can’t be found) satisfying a given equation. This often involves looking at the remainder of the terms when divided by some other number! 
 
-__Sample problem:__ Find all pairs of prime numbers p and q such that p^2 = 2 q^2 + 1.
+__Sample problem:__ Find all pairs of prime numbers p and q such that p^2^ = 2 q^2 + 1.
 
   * __Combinatorics leading to questions involving probability__ – This will involve some easy counting techniques.
 
