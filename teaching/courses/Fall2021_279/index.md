@@ -19,7 +19,7 @@ Unofficially, I like to think of this class as a “Problem Solving Seminar”. 
 
   * To practice how to persevere with a difficult question, even when no goal might immediately be within your sights. This is the quintessential aspect of Mathematical scholarship. Whether you plan to go to grad school or industry after college, you will always face problems that are unknown to you. Your success will depend on whether, and how long you "stick with it"!
 
-At this point, I will link two videos on two interesting problems from one of my favorite Math youtube channels below, which give perfect examples of how to “start” thinking about a hard problem. 
+I will link two videos on two interesting problems from one of my favorite Math youtube channels below, which give perfect examples of how to “start” thinking about a hard problem. 
   * [The hardest problem on the hardest test](https://www.youtube.com/watch?v=OkmNXy7er84)
   * [The unexpectedly hard windmill question](https://www.youtube.com/watch?v=M64HUIJFTZM)
 
@@ -49,7 +49,7 @@ __Sample problem:__ Find all pairs of prime numbers p and q such that p^2 = 2 q^
   * __Combinatorics leading to questions involving probability__ – This will involve some easy counting techniques.
 
 ### Course components
-There are no exams or projects in this course. There might be occasional short reading exercises or puzzles to think about at home. The only expectation is that you will take the Putnam exam in December. Your grade (S/NC) will depend entirely on in-class attendance and participation.
+There are no exams or projects in this course. There might be occasional short reading exercises or puzzles to think about at home. __The only expectation is that you will take the Putnam exam in December.__ Your grade (S/NC) will depend entirely on in-class attendance and participation.
  
 ### What's next?
 Finally, even though the Putnam happens at the of Fall semester, I plan to continue having an unofficial “virtual problem solving seminar” in some form in spring semester. This wouldn’t be for credit, only for fun! This will probably devolve to something like one interesting problem posted online bi-weekly, with only online recognition as the prize! We will think about that over the semester as I gauge student interest.
