@@ -2,7 +2,7 @@
 layout: default
 title: Teaching Statement
 parentnav: Teaching
-subnav_weight: 30
+subnav_weight: 31
 ---
 
 ## {{ page.title }}
