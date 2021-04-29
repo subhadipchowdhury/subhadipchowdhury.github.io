@@ -2,7 +2,7 @@
 layout: default
 title: List of Courses Taught
 parentnav: Teaching
-subnav_weight: 32
+subnav_weight: 30
 ---
 
 ## {{ page.title }}
