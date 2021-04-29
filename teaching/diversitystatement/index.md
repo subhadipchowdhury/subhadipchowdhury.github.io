@@ -2,7 +2,7 @@
 layout: default
 title: Diversity Statement
 parentnav: Teaching
-subnav_weight: 31
+subnav_weight: 32
 ---
 
 ## {{ page.title }}
