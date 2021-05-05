@@ -8,8 +8,11 @@ title: Math 279 (Putnam Seminar)
 __Contents of this page will move to Moodle when the semester begins.__
 
 
+### Course Credit
+Normally this course can be taken for a quarter credit. However, if you wish to just *‘show up’* occasionally for the meetings with no stakes, send me an email. I will expect regular attendance only from the students taking it for credit. 
+
 ### Course Time
-Note that the course can be taken for a quarter credit. However, if you wish to just *‘show up’* for the meetings with no stakes, send me an email. I will only expect regular attendance from the students taking it for credit. The timing of the course is listed as Monday 3:00-3:50PM. However since it’s once a week, I am pretty flexible with the time as long as all the registered students agree on it.
+The timing of the course is listed as Monday 3:00-3:50PM. Since it’s only once a week, I am pretty flexible with the time as long as all the registered students agree on it.
  
 ### Course Goals
 Officially the Math 27901 course is titled the Putnam Seminar. The Putnam is a challenging math competition administered to about 4000 undergraduates each year. The problems in the competition do not necessarily fall into typical categories covered by standard Math courses in college, and often challenge the students to think in innovative and creative ways. The course description for Math 279 in the college catalog can be paraphrased as “preparation for the William Lowell Putnam Mathematical Competition”. However, I am here to tell you that it is much more than that. 
