@@ -18,10 +18,10 @@ has_subnav: 1
 Office hours will be be online on MS Teams. The booking link can be found on Moodle.
 
 
+
 <div class='anchor'>
 
 ## Past Courses
-
 
 
 ### The College of Wooster
@@ -56,7 +56,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 </div>
 {% endfor %}
 
-
+</div>
 
 <div class='anchor'>
 
@@ -65,6 +65,6 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 * [Documents](/teaching/statements): You can find pdf version of my teaching statement, diversity statement, and teaching portfolio here.
 * [Student Evaluations](/teaching/evaluations): This page contains a selection of students evaluations for courses taught at Bowdoin College from 2018-2019 and at University of Chicago from 2014-2018.
 
-
+</div>
 
 ---
