@@ -7,31 +7,63 @@ has_subnav: 1
 
 ## {{ page.title }}
 
-### Current Schedule (Spring 2021)
+### Current Schedule (2021 Fall)
 
-#### [Math 112: Calculus & Analytical Geometry II](https://subhadipchowdhury.github.io/teaching/courses/Spring2021_112.pdf)
+#### [Math 111: Calculus & Analytical Geometry I]()
 
-* __Time:__ MWF 8:00-8:50 AM, MWF 9:15-10:05 AM
-* __Lab:__ T 8:00-9:20 AM, T 9:45-11:05AM
-
-#### [Math 215: Transition to Advanced Mathematics](https://subhadipchowdhury.github.io/teaching/courses/Spring2021_215.pdf)
-
-* __Time:__ MWF 10:40-11:45 AM
-
+#### [Math 215: Transition to Advanced Mathematics]()
 
 #### Office Hours
 
 Office hours will be be online on MS Teams. The booking link can be found on Moodle.
 
 
+<div class='anchor'>
+
+## Past Courses
+
+
+
+### The College of Wooster
+
+{% for course in site.data.courses_wooster %}
+<div class="course">
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+</div>
+{% endfor %}
+
+### Bowdoin College
+
+{% for course in site.data.courses_bowdoin %}
+<div class="course">
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+</div>
+{% endfor %}
+
+### University of Chicago
+
+{% for course in site.data.courses_uchicago %}
+<div class="course">
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {{ coursepage.Duration }} {% endfor %}
+</div>
+{% endfor %}
+  
+### Others
+
+{% for course in site.data.nonteaching_courses_uchicago %}
+<div class="course">
+**{{ course.Duration }}**: {{ course.Role }} for {{ course.Name }} (Math {% if course.Link %} [{{ course.Code }}]({{ course.Link }})) {% else %} {{ course.Code }}) {% endif %}, taught by Professor [{{ course.Instructor }}]({{ course:Homepage }})
+</div>
+{% endfor %}
+
+
+
+<div class='anchor'>
 
 ### Teaching Experience
 
-* [Teaching Philosophy and Methodology](/teaching/teachingstatement): You can find pdf version of the statement here.
-* [Diversity and Inclusion Statement](/teaching/diversitystatement): You can find pdf version of the statement here.
-* [Past Courses](/teaching/courses): Here you can see the courses I have taught in the past and find my teaching portfolio.
+* [Documents](/teaching/statements): You can find pdf version of my teaching statement, diversity statement, and teaching portfolio here.
 * [Student Evaluations](/teaching/evaluations): This page contains a selection of students evaluations for courses taught at Bowdoin College from 2018-2019 and at University of Chicago from 2014-2018.
-
 
 
 
