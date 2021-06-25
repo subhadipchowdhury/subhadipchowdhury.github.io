@@ -9,11 +9,23 @@ navigation_weight: 5
 
 </div>
 
-### Custom Beamer Template
+### Calculus Notes
 
-+ [math_presentation repository](https://github.com/subhadipchowdhury/math_presentation)
++ [github repository](https://github.com/subhadipchowdhury/Notes_Calculus)
 
-### Custom In-class Worksheet Template
+### Linear Algebra Notes
+
++ [github repository](https://github.com/subhadipchowdhury/Notes_LinAlg)
+
+### Differential Equation Notes
+
++ [github repository](https://github.com/subhadipchowdhury/Notes_DiffEq)
+
+### Transition to Advanced Math Notes
+
++ [github repository](https://github.com/subhadipchowdhury/Notes_Transition)
+
+### Custom Worksheet Template
 
 + [worksheet repository](https://github.com/subhadipchowdhury/worksheet)
 
