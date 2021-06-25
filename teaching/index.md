@@ -15,7 +15,7 @@ has_subnav: 1
 
 ### Current Schedule (2021 Fall)
 
-#### [Math 111: Calculus & Analytical Geometry I]()
+#### [Math 115: Theoretical Differential Calculus]()
 
 #### [Math 215: Transition to Advanced Mathematics]()
 
