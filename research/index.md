@@ -4,7 +4,11 @@ title: Research
 navigation_weight: 2
 ---
 
+<div style="border-bottom: 2px  solid #800000;">
+
 ## {{ page.title }}
+
+</div>
 
 A pdf copy of my Research Statement as of Fall 2019 can be found [HERE](Research_Statement.pdf).
 

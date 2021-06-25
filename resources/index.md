@@ -3,7 +3,11 @@ layout: default
 title: Resources
 navigation_weight: 5
 ---
+<div style="border-bottom: 2px  solid #800000;">
+
 ## {{ page.title }}
+
+</div>
 
 ### Custom Beamer Template
 
