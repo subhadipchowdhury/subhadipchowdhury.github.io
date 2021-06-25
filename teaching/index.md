@@ -76,7 +76,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 
 
 
-### Teaching Experience
+## Teaching Experience
 
 
 * [Documents](/teaching/statements): You can find pdf version of my teaching statement, diversity statement, and teaching portfolio here.
