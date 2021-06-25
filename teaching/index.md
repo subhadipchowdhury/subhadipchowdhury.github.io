@@ -8,7 +8,7 @@ has_subnav: 1
 ## {{ page.title }}
 
 
-<div class='anchor'>
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Current Schedule (2021 Fall)
 
@@ -24,7 +24,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 </div>
 
 
-<div class='anchor'>
+<div style="border-bottom: 2px  solid #800000;">
 
 ## Past Courses
 
@@ -74,7 +74,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 </div>
 
 
-<div class='anchor'>
+<div style="border-bottom: 2px  solid #800000;">
 
 
 ### Teaching Experience
