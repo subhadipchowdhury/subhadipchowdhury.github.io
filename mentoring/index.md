@@ -4,8 +4,11 @@ title: Mentoring
 navigation_weight: 4
 ---
 
+<div style="border-bottom: 2px  solid #800000;">
 
 ## {{ page.title }}
+
+</div>
 
 
 ### Independent Study (Bachelor's Thesis)
@@ -49,6 +52,29 @@ __University of Chicago__
 * *Discrete Group actions on Topological Spaces* - 	Weston Ungemach, 2014 Spring
 * *Lie groups* - Michael Oliver, 2014 Winter
 * *Geometry* - Jordan Hisel, 2013 Fall
+
+
+
+### Others
+
+__College of Wooster__
+
+* [Putnam Seminar](/teaching/courses/Fall2021_279/) - Math 279, 2021 Fall 
+
+__Bowdoin College__
+
+* *Problem Solving Session* - 2018-2020 
+
+__University of Chicao__
+
+* [Gaussian Curvature and the Gauss-Bonnet Theorem](/assets/problemsets/2016WOMP.pdf) - WOMP, 2016 
+* [Covering Spaces and the Fundamental Group](/assets/problemsets/2015WOMP.pdf) - WOMP, 2015, with Oishee Banerjee
+* [Covering Spaces and the Fundamental Group](/assets/problemsets/2014WOMP.pdf) - WOMP, 2014, with Nick Salter 
+
+
+__Math Olympiad__
+
+* *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
 
 
 

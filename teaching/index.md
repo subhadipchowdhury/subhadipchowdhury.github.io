@@ -5,8 +5,11 @@ navigation_weight: 3
 has_subnav: 1
 ---
 
+<div style="border-bottom: 2px  solid #800000;">
+
 ## {{ page.title }}
 
+</div>
 
 <div style="border-bottom: 2px  solid #800000;">
 
