@@ -47,7 +47,7 @@ __University of Chicago__
 
 ### Directed Reading
 
-This is a list of semester(or quarter) long directed independent reading courses I have supervised.
+This is a list of semester (or quarter) long directed independent reading courses I have supervised.
 
 __Bowdoin College__
 
