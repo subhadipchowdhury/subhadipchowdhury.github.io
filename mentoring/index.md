@@ -10,8 +10,11 @@ navigation_weight: 4
 
 </div>
 
+<!--
 
 ### Independent Study (Bachelor's Thesis)
+
+This is a list of IS thesis by students I have advised.
 
 __The College of Wooster__
 
@@ -25,8 +28,11 @@ __The College of Wooster__
 
 * TBA - 2021 Summer
 
+-->
 
 ### Summer Research Experience for Undergrads
+
+This is a list of student projects I have (sometimes jointly) supervised.
 
 __University of Chicago__
 
@@ -40,6 +46,8 @@ __University of Chicago__
 
 
 ### Directed Reading
+
+This is a list of semester(or quarter) long directed independent reading courses I have supervised.
 
 __Bowdoin College__
 
@@ -57,6 +65,7 @@ __University of Chicago__
 
 ### Others
 
+
 __College of Wooster__
 
 * [Putnam Seminar](/teaching/courses/Fall2021_279/) - Math 279, 2021 Fall 
@@ -67,6 +76,8 @@ __Bowdoin College__
 
 __University of Chicao__
 
+These are notes from Math review sessions for incoming grad students at UChicago.
+
 * [Gaussian Curvature and the Gauss-Bonnet Theorem](/assets/problemsets/2016WOMP.pdf) - WOMP, 2016 
 * [Covering Spaces and the Fundamental Group](/assets/problemsets/2015WOMP.pdf) - WOMP, 2015, with Oishee Banerjee
 * [Covering Spaces and the Fundamental Group](/assets/problemsets/2014WOMP.pdf) - WOMP, 2014, with Nick Salter 
@@ -74,7 +85,10 @@ __University of Chicao__
 
 __Math Olympiad__
 
+These are old problem sets from Math olympiad training camps for high school students in Karnataka, India.
+
 * *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
+
 
 
 
