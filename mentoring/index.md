@@ -45,7 +45,7 @@ __University of Chicago__
 
 
 
-### Directed Reading
+### Directed Reading Courses
 
 This is a list of semester (or quarter) long directed independent reading courses I have supervised.
 
