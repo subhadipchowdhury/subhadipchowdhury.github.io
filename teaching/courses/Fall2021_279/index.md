@@ -9,7 +9,7 @@ __Contents of this page will move to Moodle when the semester begins.__
 
 ### Course Credit
 
-Normally this course can be taken for a quarter credit. However, if you wish to just *‘show up’* occasionally for the meetings with no stakes (i.e. 'audit' the course), send me an email. I will expect regular attendance only from the students taking it for credit.
+Normally, you can register for Math 279 as a quarter credit course. However, if you wish to 'audit' the course (or alternately, just *‘show up’* for some the meetings with no stakes), send me an email. Similarly, if you are unsure whether or not you are prepared for to take this course, come talk to me. I will expect regular attendance only from the students taking it for credit.
 
 ### Course Time
 
