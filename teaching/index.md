@@ -29,10 +29,10 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 
 <div style="border-bottom: 2px  solid #800000;">
 
-## Past Courses
+### Past Courses
 
 
-### The College of Wooster
+#### The College of Wooster
 
 
 {% for course in site.data.courses_wooster %}
@@ -42,7 +42,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 {% endfor %}
 
 
-### Bowdoin College
+#### Bowdoin College
 
 
 {% for course in site.data.courses_bowdoin %}
@@ -52,7 +52,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 {% endfor %}
 
 
-### University of Chicago
+#### University of Chicago
 
 
 {% for course in site.data.courses_uchicago %}
@@ -62,7 +62,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 {% endfor %}
   
 
-### Others
+#### Others
 
 
 {% for course in site.data.nonteaching_courses_uchicago %}
@@ -79,7 +79,7 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 
 
 
-## Teaching Experience
+### Teaching Experience
 
 
 * [Documents](/teaching/statements): You can find pdf version of my teaching statement, diversity statement, and teaching portfolio here.
