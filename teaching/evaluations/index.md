@@ -2,7 +2,7 @@
 layout: default
 title: Student Evaluations
 parentnav: Teaching
-subnav_weight: 35
+subnav_weight: 32
 ---
 
 <div style="border-bottom: 2px  solid #800000;">
