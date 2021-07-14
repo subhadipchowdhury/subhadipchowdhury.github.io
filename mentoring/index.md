@@ -29,6 +29,7 @@ __The College of Wooster__
 * TBA - 2021 Summer
 
 -->
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Summer Research Experience for Undergrads
 
@@ -42,8 +43,10 @@ __University of Chicago__
 * [An introduction to knot theory and the knot group](http://math.uchicago.edu/~may/REU2014/REUPapers/Linov.pdf) - Larsen linov, 2014 Summer
 * [The Jordan-Chevalley decomposition](http://math.uchicago.edu/~may/REU2014/REUPapers/Yoo.pdf) - Joo Heon Yoo, 2014 Summer
 
+</div>
 
 
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Directed Reading Courses
 
@@ -61,7 +64,9 @@ __University of Chicago__
 * *Lie groups* - Michael Oliver, 2014 Winter
 * *Geometry* - Jordan Hisel, 2013 Fall
 
+</div>
 
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Others
 
@@ -89,8 +94,9 @@ These are old problem sets from Math olympiad training camps for high school stu
 
 * *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
 
+</div>
 
-
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Expository Talks in Student Seminars
 
@@ -106,3 +112,4 @@ These are old problem sets from Math olympiad training camps for high school stu
 
 Note that some of the talks are very much of an outline in nature.
 
+</div>
