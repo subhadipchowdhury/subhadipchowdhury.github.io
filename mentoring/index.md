@@ -96,7 +96,6 @@ These are old problem sets from Math olympiad training camps for high school stu
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
 
 ### Expository Talks in Student Seminars
 
@@ -112,4 +111,3 @@ These are old problem sets from Math olympiad training camps for high school stu
 
 Note that some of the talks are very much of an outline in nature.
 
-</div>
