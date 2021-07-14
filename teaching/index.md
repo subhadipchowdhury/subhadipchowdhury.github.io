@@ -27,8 +27,6 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 </div>
 
 
-<div style="border-bottom: 2px  solid #800000;">
-
 ### Past Courses
 
 
@@ -74,16 +72,4 @@ Office hours will be be online on MS Teams. The booking link can be found on Moo
 {% endfor %}
 
 <p></p>
-</div>
-
-
-
-
-### Teaching Experience
-
-
-* [Documents](/teaching/statements): You can find pdf version of my teaching statement, diversity statement, and teaching portfolio here.
-* [Student Evaluations](/teaching/evaluations): This page contains a selection of students evaluations for courses taught at Bowdoin College from 2018-2019 and at University of Chicago from 2014-2018.
-
-
 

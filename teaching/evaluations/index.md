@@ -5,7 +5,12 @@ parentnav: Teaching
 subnav_weight: 35
 ---
 
+<div style="border-bottom: 2px  solid #800000;">
+
 ## {{ page.title }}
+
+</div>
+
 
 My past evaluations in full are available on request. Below you can find _numerical summeries_ for individual terms.
 
@@ -18,7 +23,3 @@ My past evaluations in full are available on request. Below you can find _numeri
 ### University of Chicago
 
 - [2014-2018](UChicago_2014_2018.pdf)
-
-
-
----

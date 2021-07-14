@@ -5,7 +5,12 @@ parentnav: Teaching
 subnav_weight: 31
 ---
 
+<div style="border-bottom: 2px  solid #800000;">
+
 ## {{ page.title }}
+
+</div>
+
 
 
 
@@ -15,4 +20,3 @@ subnav_weight: 31
   
 * To download a pdf copy of my teaching portfolio as of Fall 2019, please [CLICK HERE](Teaching_Portfolio.pdf). 
   
----
