@@ -5,23 +5,23 @@ title: Math 279 (Putnam Seminar)
 
 ## {{ page.title }}
 
-__Contents of this page will move to Moodle when the semester begins.__
+__Contents of this page has moved to Moodle. This page will be deleted at the end of August.__
 
 ### Course Credit
 
-Normally, you can register for Math 279 as a quarter credit course. However, if you wish to 'audit' the course (or alternately, just *‘show up’* for some the meetings with no stakes), send me an email. Similarly, if you are unsure whether or not you are prepared for to take this course, come talk to me. I will expect regular attendance only from the students taking it for credit.
+You can register for Math 279 as a quarter credit course. However, if you wish to just *'show up'* for some the meetings with no stakes, and want to decide later whether you want to register, send me an email. Similarly, if you are unsure whether or not you are prepared for to take this course, come talk to me. I will expect regular attendance only from the students taking it for credit.
 
-### Course Time
+### Course Time and Location
 
-The timing of the course is listed as Monday 3:00-3:50PM. Since it’s only once a week, I am pretty flexible with the time as long as all the registered students agree on it.
+Monday 3:00-3:50PM in Taylor 209.
 
 ### Course Goals
 
-Officially the Math 27901 course is titled the Putnam Seminar. The Putnam is a challenging math competition administered to about 4000 undergraduates each year. The problems in the competition do not necessarily fall into typical categories covered by standard Math courses in college, and often challenge the students to think in innovative and creative ways. The course description for Math 279 in the college catalog can be paraphrased as “preparation for the William Lowell Putnam Mathematical Competition”. However, I am here to tell you that it is much more than that.
+Officially the Math 27901 course is titled the Putnam Seminar. The Putnam is a challenging math competition administered to about 4000 undergraduates each year. The problems in the competition do not necessarily fall into typical categories covered by standard Math courses in college, and often challenge the students to think in innovative and creative ways. The course description for Math 279 in the college catalog can be paraphrased as "preparation for the William Lowell Putnam Mathematical Competition". However, I would like to clarify that this course is much more than that.
 
-Unofficially, I like to think of this class as a “Problem Solving Seminar”. What kind of problems, you might ask? Anything that qualifies as a ‘logic’ or ‘math’ puzzle or question. So while we will use problems from previous Putnam exams as examples, we will also talk about how to set the correct mindset for solving ‘hard’ math problems in general. My aim is two-fold:
+Unofficially, I like to think of this class as a "Problem Solving Seminar". What kind of problems, you might ask? Anything that qualifies as a ‘logic’ or ‘math’ puzzle or question. So while we will use problems from previous Putnam exams as examples, we will also talk about how to set the correct mindset for solving ‘hard’ math problems in general. My aim is two-fold:
 
-* To make you realize that ‘solving a problem’ is not the same as ‘understanding the solution of a problem’. This in particular is important for both a student and a teacher, as you may often feel a disconnect between us regarding this very issue. After working out a solution (or if you know it beforehand), it may seem doable/easy in retrospect; but the hardest part often is how to start the solution. In fact, for a problem that usually appears in a competition such as Putnam (or the IMO), it isn’t often clear what, if any, theorem you learn during college is going to be needed. *So our aim during our meetings wouldn’t be trying to prove/list a bunch of theorems; but rather to discuss some strategies which would help us decide what part of Mathematics to use to “start” solving a problem* (for example, ‘trying the result in simpler cases’ or ‘drawing a picture’ or ‘shifting your perspective’ etc.)
+* To make you realize that ‘solving a problem’ is not the same as ‘understanding the solution of a problem’. This in particular is important for both a student and a teacher, as you may often feel a disconnect between us regarding this very issue. After working out a solution (or if you know it beforehand), it may seem doable/easy in retrospect; but the hardest part often is how to start the solution. In fact, for a problem that usually appears in a competition such as Putnam (or the IMO), it isn’t often clear what, if any, theorem you learn during college is going to be needed. *So our aim during our meetings wouldn’t be trying to prove/list a bunch of theorems; but rather to discuss some strategies which would help us decide what part of Mathematics to use to "start" solving a problem* (for example, 'trying the result in simpler cases' or 'drawing a picture' or 'shifting your perspective' etc.)
 
 * To practice how to persevere with a difficult question, even when no goal might immediately be within your sights. This is the quintessential aspect of Mathematical scholarship. Whether you plan to go to grad school or industry after college, you will always face problems that are unknown to you. Your success will depend on whether, and how long you "stick with it"!
 
@@ -44,7 +44,7 @@ __Sample problem:__ Start with an 8 × 8 chessboard with the usual coloring. In 
 
 __Sample problem:__ Is there a smallest positive real number?
 
-* __Pigeon hole principle__ – A simple version can be stated as “if we put (n+1) pigeons into n holes, then at least 1 hole will have more than 1 pigeon”.
+* __Pigeon hole principle__ – A simple version can be stated as "if we put (n+1) pigeons into n holes, then at least 1 hole will have more than 1 pigeon".
 
 __Sample problem:__ What is the minimum number of student you need to ensure that at least three of them have birthday on the same day of the week?
 
@@ -60,8 +60,4 @@ __Sample problem:__ Find all pairs of prime numbers p and q such that p<sup>2</s
 
 ### Course components
 
-There are no exams or projects in this course. There might be occasional short reading exercises or puzzles to think about at home. __The only expectation is that you will take the Putnam exam in December.__ Your grade (S/NC) will depend entirely on in-class attendance and participation.
-
-### What's next?
-
-Finally, even though the Putnam happens at the of Fall semester, I plan to continue having an unofficial “virtual problem solving seminar” in some form in spring semester. This wouldn’t be for credit, only for fun! This will probably devolve to something like one interesting problem posted online bi-weekly, with only online recognition as the prize! We will think about that over the semester as I gauge student interest.
+There are no exams or projects in this course. There might be occasional short reading exercises or puzzles to think about at home. __The only expectation is that you will take the Putnam exam in December.__ Notice that I only said 'take', there is no 'minimum' passing grade that you must score. Your course grade (S/NC) will depend entirely on in-class attendance and participation.
