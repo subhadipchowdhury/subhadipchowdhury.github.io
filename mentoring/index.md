@@ -9,7 +9,6 @@ navigation_weight: 4
 ## {{ page.title }}
 
 </div>
-
 <!--
 
 ### Independent Study (Bachelor's Thesis)
@@ -18,17 +17,18 @@ This is a list of IS thesis by students I have advised.
 
 __The College of Wooster__
 
-* TBD - 2021-22
+* *TBA* by Molly Likins, 2021-22
+* *TBA* by Sabrina Helck, 2021-22
 
-
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Applied Methods and Research Experience
 
 __The College of Wooster__
 
 * TBA - 2021 Summer
-
 -->
+
 <div style="border-bottom: 2px  solid #800000;">
 
 ### Summer Research Experience for Undergrads
