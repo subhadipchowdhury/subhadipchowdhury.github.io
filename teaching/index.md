@@ -15,13 +15,13 @@ has_subnav: 1
 
 ### Current Schedule (2021 Fall)
 
-#### Math 115: Theory of Differential Calculus (starts Oct 20)
+* Math 115: Theory of Differential Calculus (starts Oct 20)
 
-#### Math 215: Transition to Advanced Mathematics
+* Math 215: Transition to Advanced Mathematics
   
-#### Math 279: Putnam Seminar
+* Math 279: Putnam Seminar
   
-#### Math 330: Introduction to Topology
+* Math 330: Introduction to Topology
 
 #### Office Hours
 
