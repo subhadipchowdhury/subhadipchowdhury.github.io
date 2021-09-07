@@ -14,8 +14,6 @@ has_subnav: 1
 <div style="border-bottom: 2px  solid #800000;">
 
 ### Current Schedule (2021 Fall)
-  
-Syllabi and course material can be found in Moodle.
 
 #### Math 115: Theory of Differential Calculus (starts Oct 20)
 
@@ -27,7 +25,7 @@ Syllabi and course material can be found in Moodle.
 
 #### Office Hours
 
-Office hours will be be both in -person and online on MS Teams. The booking link can be found on Moodle.
+Office hours will be be available both in-person and online on MS Teams. The booking link can be found on Moodle.
 
 
 </div>
