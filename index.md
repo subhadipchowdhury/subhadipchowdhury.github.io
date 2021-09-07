@@ -25,7 +25,7 @@ navigation_weight: 1
 <div class="shield">
   <div class="current">
      
-   ![The College of Wooster](assets/wooster_seal.png "Ex Uno Fonte")
+   ![The College of Wooster](assets/wooster_seal_new.png "Ex Uno Fonte")
   </div>
   <div class="old">
   
