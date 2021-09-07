@@ -85,6 +85,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Spring 2021, I am teaching Math 215 and Math 112. The course webpages are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Fall 2021, I am teaching _Transition to Advanced Mathematics_, a tutorial on _Introduction to Topology_, a _Putnam Seminar_ on problem solving, and half semester courses on _Theory of Differential Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>
