@@ -14,14 +14,20 @@ has_subnav: 1
 <div style="border-bottom: 2px  solid #800000;">
 
 ### Current Schedule (2021 Fall)
+  
+Syllabi and course material can be found in Moodle.
 
-#### [Math 115: Theoretical Differential Calculus]()
+#### Math 115: Theory of Differential Calculus (starts Oct 20)
 
-#### [Math 215: Transition to Advanced Mathematics]()
+#### Math 215: Transition to Advanced Mathematics
+  
+#### Math 279: Putnam Seminar
+  
+#### Math 330: Introduction to Topology
 
 #### Office Hours
 
-Office hours will be be online on MS Teams. The booking link can be found on Moodle.
+Office hours will be be both in -person and online on MS Teams. The booking link can be found on Moodle.
 
 
 </div>
