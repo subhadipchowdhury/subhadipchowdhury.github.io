@@ -1,3 +1,15 @@
+- Code: 330
+  Name: Introduction to Topology
+  Coursepages:
+    - Duration: Fall 2021
+      Link: /assets/syllabi/2020FA_330.pdf
+
+- Code: 279
+  Name: Putnam Seminar
+  Coursepages:
+    - Duration: Fall 2021
+      Link: /assets/syllabi/2020FA_279.pdf
+
 - Code: 221
   Name: Differential Equations
   Coursepages:
@@ -14,16 +26,10 @@
   Name: Calculus & Analytical geometry II
   Coursepages:
     - Duration: Spring 2021
-      Link: /assets/syllabi/2021SP_112/index.md
+      Link: /assets/syllabi/2021SP_112/
 
 - Code: 111
   Name: Calculus & Analytical geometry I
   Coursepages:
     - Duration: Fall 2020
       Link: /assets/syllabi/2020FA_111.pdf
-
-- Code: 279
-  Name: Putnam Seminar
-  Coursepages:
-    - Duration: Fall 2021
-      Link: /teaching/courses/2021FA_279/
