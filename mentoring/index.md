@@ -11,6 +11,8 @@ navigation_weight: 4
 </div>
 
 
+<div style="border-bottom: 2px  solid #800000;">
+
 ### Independent Study 
 
 This is a list of senior IS (bachelor's thesis) by students I have advised.
@@ -24,6 +26,9 @@ __Bowdoin College__
 
 * *Machine Learning* - Theo de Quillacq, 2020 Spring
 
+</div>
+
+
 <div style="border-bottom: 2px  solid #800000;">
 
 ### Applied Methods and Research Experience
@@ -31,6 +36,8 @@ __Bowdoin College__
 __The College of Wooster__
 
 *  Summer Internship by Abigail Breitenbucher, Luke Pritchard, Maya Vasta, Kweku Yamoah - 2021, supervised jointly with Prof. Marian Frazier
+
+</div>  
 
 
 <div style="border-bottom: 2px  solid #800000;">
