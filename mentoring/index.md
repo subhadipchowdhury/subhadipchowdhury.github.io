@@ -9,16 +9,20 @@ navigation_weight: 4
 ## {{ page.title }}
 
 </div>
-<!--
 
-### Independent Study (Bachelor's Thesis)
 
-This is a list of IS thesis by students I have advised.
+### Independent Study 
+
+This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* *TBA* by Molly Likins, 2021-22
-* *TBA* by Sabrina Helck, 2021-22
+* *TBA, ongoing* - Molly Likins, 2021-22
+* *TBA, ongoing* - Sabrina Helck, 2021-22
+
+__Bowdoin College__
+
+* *Machine Learning* - Theo de Quillacq, 2020 Spring
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -26,8 +30,8 @@ __The College of Wooster__
 
 __The College of Wooster__
 
-* TBA - 2021 Summer
--->
+*  Summer Internship by Abigail Breitenbucher, Luke Pritchard, Maya Vasta, Kweku Yamoah - 2021, supervised jointly with Prof. Marian Frazier
+
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -50,11 +54,8 @@ __University of Chicago__
 
 ### Directed Reading Courses
 
-This is a list of semester (or quarter) long directed independent reading courses I have supervised.
+This is a list of quarter-long directed independent reading courses I have supervised.
 
-__Bowdoin College__
-
-* *Machine Learning* - Theo de Quillacq, 2020 Spring
 
 __University of Chicago__
 
