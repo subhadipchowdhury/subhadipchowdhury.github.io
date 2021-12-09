@@ -13,7 +13,7 @@ subnav_weight: 33
 
 This page contains course notes created and used by me in past courses.
 
-+ __Transition to Advanced Math Notes__: [github repository](https://github.com/subhadipchowdhury/Notes_Intro_To_Proof)
++ __Transition to Advanced Math Notes__: [Lecture Workbook](/assets/teachingresources/TranstitionLectureNotes.pdf), [github repository](https://github.com/subhadipchowdhury/Notes_Intro_To_Proof)
 
 + __Differential Equation Notes__: [github repository](https://github.com/subhadipchowdhury/Notes_DiffEq)
 
