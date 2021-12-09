@@ -19,13 +19,13 @@ This page contains course notes created and used by me in past courses.
 
 + __Multivariable Calculus Notes__: [[Lecture Workbook]](), [[Other Course Documents]](https://github.com/subhadipchowdhury/Notes_Multivariable_Calculus)
 
-+ __One Variable Calculus Notes__: [github repository](https://github.com/subhadipchowdhury/Notes_One_Variable_Calculus)
++ __One Variable Calculus Notes__: [[github repository]](https://github.com/subhadipchowdhury/Notes_One_Variable_Calculus)
 
 + __Linear Algebra Notes__: [[Projects and Handouts]](https://github.com/subhadipchowdhury/Notes_Linear_Algebra)
 
 ---
 
-+ __Custom Worksheet Template__: [worksheet repository](https://github.com/subhadipchowdhury/math_worksheet_template)
++ __Custom Math Worksheet Template__: [[github repository]](https://github.com/subhadipchowdhury/math_worksheet_template)
 
 ---
 
