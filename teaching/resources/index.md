@@ -23,4 +23,9 @@ This page contains course notes created and used by me in past courses.
 
 + __Linear Algebra Notes__: [[Projects and Handouts]](https://github.com/subhadipchowdhury/Notes_Linear_Algebra)
 
+---
+
 + __Custom Worksheet Template__: [worksheet repository](https://github.com/subhadipchowdhury/math_worksheet_template)
+
+---
+
