@@ -11,6 +11,12 @@ subnav_weight: 33
 
 </div>
 
+### Syllabi and List of Courses Taught in the Past
+
+See [here](/teaching/).
+
+### Lecture Notes Repositories
+
 This page contains course notes created and used by me in past courses.
 
 + __Transition to Advanced Math Notes__: [[Lecture Workbook]](/assets/teachingresources/TranstitionLectureNotes.pdf), [[Proof Portfolio, Expository Paper Topics, and Other Course Material]](https://github.com/subhadipchowdhury/Notes_Intro_To_Proof)
