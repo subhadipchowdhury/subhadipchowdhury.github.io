@@ -19,8 +19,8 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* *TBA, ongoing* - Molly Likins, 2021-22
-* *TBA, ongoing* - Sabrina Helck, 2021-22
+* *Using Differential Equations to Model the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22 (ongoing)
+* *Cardinality, Infinity, and the Continuum Hypothesis* -  Sabrina Helck, 2021-22 (ongoing) 
 
 __Bowdoin College__
 
@@ -35,7 +35,7 @@ __Bowdoin College__
 
 __The College of Wooster__
 
-*  Summer Internship by Abigail Breitenbucher, Luke Pritchard, Maya Vasta, Kweku Yamoah - 2021, supervised jointly with Prof. Marian Frazier
+*  Client funded research internship by Abigail Breitenbucher, Luke Pritchard, Maya Vasta, Kweku Yamoah - 2021, supervised jointly with Prof. Marian Frazier
 
 </div>  
 
