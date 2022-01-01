@@ -19,7 +19,7 @@ navigation_weight: 1
 | Phone: | 330-263-2473 |
 | Email: | `schowdhury` at `wooster` dot `edu` |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2019)](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2021)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
