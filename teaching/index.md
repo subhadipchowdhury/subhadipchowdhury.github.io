@@ -13,15 +13,13 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Current Schedule (2021 Fall)
+### Current Schedule (2022 Spring)
 
-* Math 115: Theory of Differential Calculus (starts Oct 20)
+* Math 327: Numerical Analysis
 
-* Math 215: Transition to Advanced Mathematics
+* Math 212: Multivariable Calculus
   
-* Math 279: Putnam Seminar
-  
-* Math 330: Introduction to Topology
+* Math 130: Foundation of Mathematical Computing
 
 #### Office Hours
 

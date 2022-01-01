@@ -14,9 +14,9 @@ subnav_weight: 31
 
 
 
-* To download a pdf copy of my teaching statement as of Fall 2019, please [CLICK HERE](Teaching_Statement.pdf). 
+* To download a pdf copy of my teaching statement as of Fall 2021, please [CLICK HERE](Teaching_Statement.pdf). 
 
-* To download a pdf copy of my diversity statement as of Fall 2019, please [CLICK HERE](Diversity_Statement.pdf). 
+* To download a pdf copy of my diversity statement as of Fall 2021, please [CLICK HERE](Diversity_Statement.pdf). 
   
-* To download a pdf copy of my teaching portfolio as of Fall 2019, please [CLICK HERE](Teaching_Portfolio.pdf). 
+* To download a pdf copy of my teaching portfolio as of Fall 2021, please [CLICK HERE](Teaching_Portfolio.pdf). 
   

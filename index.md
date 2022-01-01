@@ -75,7 +75,7 @@ I am currently a Visiting Assistant Professor in the [Mathematical & Computation
 
 ## Research Interests
 
-My research area is low-dimensional dynamics and topology, specifically nonabelian actions of free groups on the circle via orientation preserving homeomorphisms. I am also interested in application of algebraic topology to formal language theory. I am broadly interested in Geometric Group Theory topics like stable commutator length and quasimorphisms as well.
+My primary research area is low dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory and  applied nonlinear dynamical systems and chaos theory related topics as well.
 
 My papers and preprints are on my [research page](research).
 
@@ -85,6 +85,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Fall 2021, I am teaching _Transition to Advanced Mathematics_, a tutorial on _Introduction to Topology_, a _Putnam Seminar_ on problem solving, and half semester courses on _Theory of Differential Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Spring 2022, I am teaching _Numerical Analysis_, _Multivariable Calculus__, and  _Foundation of Mathematical Computing_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>

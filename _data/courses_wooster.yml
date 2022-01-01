@@ -4,11 +4,17 @@
     - Duration: Fall 2021
       Link: /assets/syllabi/2020FA_330.pdf
 
+- Code: 327
+  Name: Numerical Analysis
+  Coursepages:
+    - Duration: Spring 2022
+      Link: /assets/syllabi/2022SP_327.pdf
+
 - Code: 279
   Name: Putnam Seminar
   Coursepages:
     - Duration: Fall 2021
-      Link: /assets/syllabi/2020FA_279.pdf
+      Link: /assets/syllabi/2021FA_279.pdf
 
 - Code: 221
   Name: Differential Equations
@@ -23,6 +29,18 @@
       Link: /assets/syllabi/2021SP_215.pdf
     - Duration: Fall 2021
       Link: /assets/syllabi/2021FA_215/
+
+- Code: 130
+  Name: Foundation of Mathematical Computing
+  Coursepages:
+    - Duration: Spring 2022
+      Link: /assets/syllabi/2022SP_130.pdf
+
+- Code: 115
+  Name: Theory of Differential Calculus
+  Coursepages:
+    - Duration: Fall 2021
+      Link: /assets/syllabi/2022FA_115/
  
 - Code: 112
   Name: Calculus & Analytical geometry II
