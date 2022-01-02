@@ -19,7 +19,7 @@ has_subnav: 1
 
 * Math 212: Multivariable Calculus
   
-* Math 130: Foundation of Mathematical Computing
+* Math 130: Mathematical Foundations of Computing
 
 #### Office Hours
 
