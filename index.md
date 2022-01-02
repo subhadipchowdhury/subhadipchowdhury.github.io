@@ -85,6 +85,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Spring 2022, I am teaching _Numerical Analysis_, _Multivariable Calculus_, and  _Mathematical Foundations of Computing_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Spring 2022, I am teaching _Numerical Analysis_, _Multivariable Calculus_, and  _Mathematical Foundations of Computing_ (Dicrete math). The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>
