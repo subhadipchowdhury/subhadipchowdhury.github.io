@@ -12,7 +12,12 @@ subnav_weight: 32
 </div>
 
 
-My past evaluations in full are available on request. Below you can find _numerical summeries_ for individual terms.
+My past evaluations in full are available on request. Below you can find _numerical summeries_ for individual semesters.
+
+### College of Wooster
+
+- [Fall 2021](Wooster_Fall2021.pdf)
+- [Spring 2021](Wooster_Spring2021.pdf) 
 
 ### Bowdoin College
 
