@@ -2,7 +2,7 @@
 layout: default
 title: Resources
 parentnav: Teaching
-subnav_weight: 33
+subnav_weight: 31
 ---
 
 <div style="border-bottom: 2px  solid #800000;">

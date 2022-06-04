@@ -9,6 +9,7 @@ has_subnav: 1
 
 ## {{ page.title }}
 
+
 </div>
 
 <div style="border-bottom: 2px  solid #800000;">
@@ -25,6 +26,16 @@ has_subnav: 1
 
 Office hours will be be available both in-person and online on MS Teams. The booking link can be found on Moodle.
 
+
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
+
+* [LLink to sample syllabi, lecture notes, and other resources]
+
+* [Link to past course evaluations]
+
+* [Link to statements]
 
 </div>
 
