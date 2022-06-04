@@ -19,7 +19,7 @@ See [here](/teaching/).
 
 This page contains course notes created and used by me in past courses.
 
-+ __Numerical Analysis Notes__: [[Lecture Notes (WIP)]](https://github.com/subhadipchowdhury/Notes_Numerical_Analysis)
++ __Numerical Analysis Notes__: [[Lecture Notes]](https://github.com/subhadipchowdhury/Notes_Numerical_Analysis)
 
 + __Transition to Advanced Math Notes__: [[Lecture Workbook]](https://github.com/subhadipchowdhury/Notes_Intro_To_Proof/blob/cb9086eb9197ae2a4988c90308d77a00f624ed0f/2021FA/Lecture%20Notes/TranstitionLectureNotes.pdf), [[Proof Portfolio, Expository Paper Topics, and Other Course Material]](https://github.com/subhadipchowdhury/Notes_Intro_To_Proof)
 
