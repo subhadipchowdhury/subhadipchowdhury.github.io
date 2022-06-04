@@ -25,7 +25,7 @@ This page contains course notes created and used by me in past courses.
 
 + __Differential Equation Notes__: [[Lecture Worksheets and Projects]](https://github.com/subhadipchowdhury/Notes_DiffEq)
 
-+ __Multivariable Calculus Notes__: [[Lecture Workbook (WIP)]](https://github.com/subhadipchowdhury/Notes_Multivariable_Calculus), [[Other Course Documents]](https://github.com/subhadipchowdhury/Notes_Multivariable_Calculus)
++ __Multivariable Calculus Notes__: [[Lecture Workbook and other Course Documents]](https://github.com/subhadipchowdhury/Notes_Multivariable_Calculus)
 
 + __One Variable Calculus Notes__: [[github repository]](https://github.com/subhadipchowdhury/Notes_One_Variable_Calculus)
 
