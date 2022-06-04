@@ -19,8 +19,8 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* *Using Differential Equations to Model the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22 (ongoing)
-* *Cardinality, Infinity, and the Continuum Hypothesis* -  Sabrina Helck, 2021-22 (ongoing) 
+* *In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22
+* *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck, 2021-22
 
 __Bowdoin College__
 
