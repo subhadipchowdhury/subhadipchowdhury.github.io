@@ -19,7 +19,7 @@ navigation_weight: 1
 | Phone: | 330-263-2473 |
 | Email: | `schowdhury` at `wooster` dot `edu` |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2021)](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Summer 2022)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
@@ -75,7 +75,7 @@ I am currently a Visiting Assistant Professor in the [Mathematical & Computation
 
 ## Research Interests
 
-My primary research area is low dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory and  applied nonlinear dynamical systems and chaos theory related topics as well.
+My primary research area is low dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory, complex dynamics, and big mapping class group related topics as well.
 
 My papers and preprints are on my [research page](research).
 
