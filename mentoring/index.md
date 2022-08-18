@@ -13,7 +13,7 @@ navigation_weight: 4
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Independent Study 
+### Independent Study Advising
 
 This is a list of senior IS (bachelor's thesis) by students I have advised.
 
