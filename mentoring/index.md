@@ -5,8 +5,7 @@ navigation_weight: 4
 ---
 
 <script>
-    var nutshell_links = document.getElementById("nutshell_links");
-    Nutshell.start(nutshell_links);
+    Nutshell.start("nutshell_links");
 </script>
 
 <div style="border-bottom: 2px  solid #800000;">
