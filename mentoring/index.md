@@ -15,7 +15,7 @@ navigation_weight: 4
 
 </div>
 
-<div id="nutshell_links">
+<div id="nutshell_links"> <!-- Nutshell div starts -->
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -51,7 +51,7 @@ __The College of Wooster__
 
 </div>  
 
-</div>
+
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -157,3 +157,5 @@ __Abstract__:  Using several methods, the team analyzed a large data set to eval
 ## :x The Goodyear Tire & Rubber Company - Non Pneumatic Tire Divison
 
 __Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
+
+</div> <!-- Nutshell div ends -->
