@@ -43,7 +43,7 @@ __The College of Wooster__
 
 * Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
     * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
-    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tires-division)
+    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-divison)
 
 * Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
     * Client - ACME Fresh Market
