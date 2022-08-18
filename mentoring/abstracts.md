@@ -1,0 +1,5 @@
+## In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes 
+
+*By Molly Likins, 2021-22*
+
+__Abstract__:  Our Great Lakes have been suffering from the unstable weather since the 1950’s. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analyzation to show the drastic changes on the Great Lakes. We observed Lake Superior’s water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.

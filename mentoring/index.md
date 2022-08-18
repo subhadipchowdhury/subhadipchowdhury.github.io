@@ -19,7 +19,7 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* *In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22
+* [:*In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22](./abstracts.md/#in-hot-water-using-numerical-analysis-to-show-the-effects-of-climate-change-on-the-great-lakes)
 * *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck, 2021-22
 
 __Bowdoin College__
