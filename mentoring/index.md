@@ -19,8 +19,8 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* [:*In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins, 2021-22](./abstracts.md/#in-hot-water-using-numerical-analysis-to-show-the-effects-of-climate-change-on-the-great-lakes)
-* *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck, 2021-22
+* [:*In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins '22 (Mathematics)](#x-in-hot-water-using-numerical-analysis-to-show-the-effects-of-climate-change-on-the-great-lakes)
+* [:*The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)](#x-the-infinity-conundrum-understanding-topics-in-set-theory-and-the-continuum-hypothesis)
 
 __Bowdoin College__
 
@@ -31,11 +31,17 @@ __Bowdoin College__
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Applied Methods and Research Experience
+### Applied Methods and Research Experience Advising
 
 __The College of Wooster__
 
-*  Client funded research internship by Abigail Breitenbucher, Luke Pritchard, Maya Vasta, Kweku Yamoah - 2021, supervised jointly with Prof. Marian Frazier
+* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
+    * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
+    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tires-division)
+
+* Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
+    * Client - ACME Fresh Market
+    * [:Project Description](#x-acme-fresh-market-amre-project)
 
 </div>  
 
@@ -81,13 +87,13 @@ __University of Chicago__
 
 __College of Wooster__
 
-* [Putnam Seminar](/teaching/courses/Fall2021_279/) - Math 279, 2021 Fall 
+* Putnam Seminar (Math 279) - [Fall 2021](/teaching/courses/Fall2021_279/), Fall 2022
 
 __Bowdoin College__
 
-* *Problem Solving Session* - 2018-2020 
+* *Problem Solving Seminar* - 2018-2020 
 
-__University of Chicao__
+__University of Chicago__
 
 These are notes from Math review sessions for incoming grad students at UChicago.
 
@@ -96,7 +102,7 @@ These are notes from Math review sessions for incoming grad students at UChicago
 * [Covering Spaces and the Fundamental Group](/assets/problemsets/2014WOMP.pdf) - WOMP, 2014, with Nick Salter 
 
 
-__Math Olympiad__
+__Math Olympiad Training__
 
 These are old problem sets from Math olympiad training camps for high school students in Karnataka, India.
 
@@ -119,3 +125,28 @@ These are old problem sets from Math olympiad training camps for high school stu
 
 Note that some of the talks are very much of an outline in nature.
 
+
+<!-- The hidden nutshells -->
+
+
+## :x In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes 
+
+*By Molly Likins, 2021-22*
+
+__Abstract__:  Our Great Lakes have been suffering from the unstable weather since the 1950’s. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analyzation to show the drastic changes on the Great Lakes. We observed Lake Superior’s water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.
+
+
+## :x The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis
+
+*By Sabrina Helck, 2021-22*
+
+__Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension to those properties. The next chapter is concerned with Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
+
+
+## :x ACME Fresh Market AMRE Project
+
+__Abstract__:  Using several methods, the team analyzed a large data set to evaluate customer behavior and determine strategies for increasing sales. Based on the analysis of customer buying trends and behavior, the team created several targeted programs to increase basket size.
+
+## :x The Goodyear Tire & Rubber Company - Non Pneumatic Tire Divison
+
+__Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
