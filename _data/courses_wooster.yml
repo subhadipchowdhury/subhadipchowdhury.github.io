@@ -13,6 +13,8 @@
 - Code: 279
   Name: Putnam Seminar
   Coursepages:
+    - Duration: Fall 2022
+      Link: /assets/syllabi/2022FA_279.pdf
     - Duration: Fall 2021
       Link: /assets/syllabi/2021FA_279.pdf
 
@@ -25,6 +27,8 @@
 - Code: 215
   Name: Transition to Advanced Mathematics
   Coursepages:
+    - Duration: Fall 2022
+      Link: /assets/syllabi/2022FA_215.pdf
     - Duration: Spring 2021
       Link: /assets/syllabi/2021SP_215.pdf
     - Duration: Fall 2021
@@ -33,6 +37,8 @@
 - Code: 212
   Name: Multivariable Calculus
   Coursepages:
+    - Duration: Fall 2022
+      Link: /assets/syllabi/2022FA_212.pdf
     - Duration: Spring 2022
       Link: /assets/syllabi/2022SP_212.pdf
       
@@ -41,6 +47,12 @@
   Coursepages:
     - Duration: Spring 2022
       Link: /assets/syllabi/2022SP_130.pdf
+
+- Code: 125
+  Name: Theory of Integral Calculus
+  Coursepages:
+    - Duration: Fall 2022
+      Link: /assets/syllabi/2022FA_125/
 
 - Code: 115
   Name: Theory of Differential Calculus

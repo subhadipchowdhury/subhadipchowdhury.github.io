@@ -4,12 +4,18 @@ title: Mentoring
 navigation_weight: 4
 ---
 
+<script>
+    var nutshell_links = document.getElementById("nutshell_links");
+    Nutshell.start(nutshell_links);
+</script>
+
 <div style="border-bottom: 2px  solid #800000;">
 
 ## {{ page.title }}
 
 </div>
 
+<div id="nutshell_links">
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -45,6 +51,7 @@ __The College of Wooster__
 
 </div>  
 
+</div>
 
 <div style="border-bottom: 2px  solid #800000;">
 
