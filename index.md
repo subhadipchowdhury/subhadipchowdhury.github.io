@@ -19,7 +19,7 @@ navigation_weight: 1
 | Phone: | 330-263-2473 |
 | Email: | `schowdhury` at `wooster` dot `edu` |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Summer 2022)](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Fall 2022)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
@@ -85,6 +85,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Spring 2022, I am teaching _Numerical Analysis_, _Multivariable Calculus_, and  _Mathematical Foundations of Computing_ (Discrete math). The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Fall 2022, I am teaching _Transition to Advanced Mathematics_, _Multivariable Calculus_, and  _Theory of Integral Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>
