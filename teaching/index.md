@@ -16,15 +16,15 @@ has_subnav: 1
 
 ### Current Schedule (2022 Spring)
 
-* Math 327: Numerical Analysis
+* Math 215: Transition to Advanced Mathematics
 
 * Math 212: Multivariable Calculus
   
-* Math 130: Mathematical Foundations of Computing
+* Math 125: Theory of Integral Calculus
 
 #### Office Hours
 
-Office hours will be be available both in-person and online on MS Teams. The booking link can be found on Moodle.
+Office hours will be available in-person only. The times can be found on Moodle.
 
 
 </div>
