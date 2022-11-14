@@ -10,7 +10,7 @@ navigation_weight: 2
 
 </div>
 
-A pdf copy of my Research Statement as of Fall 2021 can be found [HERE](Research_Statement.pdf).
+A pdf copy of my Research Statement as of Fall 2021 can be found here: [[Short](Research_Statement_v2022_short.pdf)], [[Long](Research_Statement.pdf)].
 
 
 ### Papers/Preprints
