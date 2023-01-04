@@ -16,9 +16,10 @@ My past evaluations in full are available on request. Below you can find _numeri
 
 ### College of Wooster
 
-- [Spring 2022](Wooster_Spring2022.pdf)
-- [Fall 2021](Wooster_Fall2021.pdf)
-- [Spring 2021](Wooster_Spring2021.pdf) 
+- [Fall 2022](Fall2022.pdf)
+- [Spring 2022](Spring2022.pdf)
+- [Fall 2021](Fall2021.pdf)
+- [Spring 2021](Spring2021.pdf) 
 
 ### Bowdoin College
 
