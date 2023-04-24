@@ -26,14 +26,15 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 
 __The College of Wooster__
 
-* [:*Tile Invariants and an Exploration of Tilings with Ribbon Pentominoes and L-Pentominoes* - Lucy Wickham '23 (Mathematics)](#x-lucy-23)
+* *Tile Invariants and an Exploration of Tilings with Ribbon Pentominoes and L-Pentominoes* - Lucy Wickham '23 (Mathematics) [:Abstract](#x-lucy-23)
 
-* [:*Isometric Immersion: Hilbert's Theorem and the Case of the Hyperbolic Plane* - Michael Curran '22 (Mathematics)]()
+* *Isometric Immersion: Hilbert's Theorem and the Case of the Hyperbolic Plane* - Michael Curran '22 (Mathematics)
 
-* [:*Exploring the Power of Generative Architectures such as GANs, Transformers, and VQGAN+CLIP through the Construction of an Illustrated Storybook Generator* - Ussama Mustafa '23 (Mathematics & Coputer Science)](#x-ussama-23)
+* *Exploring the Power of Generative Architectures such as GANs, Transformers, and VQGAN+CLIP through the Construction of an Illustrated Storybook Generator* - Ussama Mustafa '23 (Mathematics & Coputer Science) [:Abstract](#x-ussama-23)
 
-* [:*In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins '22 (Mathematics)](#x-molly-22)
-* [:*The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)](#x-sabrina-22)
+* *In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins '22 (Mathematics)  [:Abstract](#x-molly-22)
+
+* *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)  [:Abstract](#x-sabrina-22)
 
 __Bowdoin College__
 
