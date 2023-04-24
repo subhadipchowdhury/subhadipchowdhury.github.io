@@ -85,6 +85,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Fall 2022, I am teaching _Transition to Advanced Mathematics_, _Multivariable Calculus_, and  _Theory of Integral Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+In Spring 2023, I am teaching _Chaotic Dynamical Systems_, _Mathematical Foundations of Computing_, and  _Applied Differential Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>

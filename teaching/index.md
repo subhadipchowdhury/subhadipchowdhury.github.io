@@ -14,13 +14,14 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Current Schedule (2022 Spring)
+### Current Schedule (2023 Spring)
 
-* Math 215: Transition to Advanced Mathematics
+* Math 299: Chaotic Dynamical Systems
 
-* Math 212: Multivariable Calculus
+* Math 130: Mathematical Foundations of Computing
+
+* Math 110: Applied Differential Calculus
   
-* Math 125: Theory of Integral Calculus
 
 #### Office Hours
 

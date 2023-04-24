@@ -10,6 +10,12 @@
     - Duration: Spring 2022
       Link: /assets/syllabi/2022SP_327.pdf
 
+- Code: 29904
+  Name: Chaotic Dynamical Systems
+  Coursepages:
+    - Duration: Spring 2023
+      Link: /assets/syllabi/2023SP_299.pdf
+
 - Code: 279
   Name: Putnam Seminar
   Coursepages:
@@ -47,6 +53,8 @@
   Coursepages:
     - Duration: Spring 2022
       Link: /assets/syllabi/2022SP_130.pdf
+    - Duration: Spring 2023
+      Link: /assets/syllabi/2023SP_130.pdf
 
 - Code: 125
   Name: Theory of Integral Calculus
@@ -59,6 +67,12 @@
   Coursepages:
     - Duration: Fall 2021
       Link: /assets/syllabi/2021FA_115/
+
+- Code: 110
+  Name: Applied Differential Calculus
+  Coursepages:
+    - Duration: Spring 2023
+      Link: /assets/syllabi/2023SP_110/
  
 - Code: 112
   Name: Calculus & Analytical geometry II
@@ -71,3 +85,4 @@
   Coursepages:
     - Duration: Fall 2020
       Link: /assets/syllabi/2020FA_111.pdf
+
