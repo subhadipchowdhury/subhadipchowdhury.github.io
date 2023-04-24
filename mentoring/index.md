@@ -30,7 +30,7 @@ __The College of Wooster__
 
 * *Isometric Immersion: Hilbert's Theorem and the Case of the Hyperbolic Plane* - Michael Curran '22 (Mathematics)
 
-* *Exploring the Power of Generative Architectures such as GANs, Transformers, and VQGAN+CLIP through the Construction of an Illustrated Storybook Generator* - Ussama Mustafa '23 (Mathematics & Coputer Science) [:Abstract](#x-ussama-23)
+* *Exploring the Power of Generative Architectures such as GANs, Transformers, and VQGAN+CLIP through the Construction of an Illustrated Storybook Generator* - Ussama Mustafa '23 (Mathematics & Computer Science) [:Abstract](#x-ussama-23)
 
 * *In Hot Water! Using Numerical Analysis to show the Effects of Climate Change on the Great Lakes* - Molly Likins '22 (Mathematics)  [:Abstract](#x-molly-22)
 
