@@ -16,6 +16,7 @@ My past evaluations in full are available on request. Below you can find _numeri
 
 ### College of Wooster
 
+- [Spring 2023](Spring2023.pdf)
 - [Fall 2022](Fall2022.pdf)
 - [Spring 2022](Spring2022.pdf)
 - [Fall 2021](Fall2021.pdf)
