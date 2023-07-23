@@ -134,7 +134,7 @@ __University of Chicago__
 
 __College of Wooster__
 
-* Putnam Seminar (Math 279) - [Fall 2021](/assets/syllabi/2021FA_279/), [Fall 2022](/assets/syllabi/2022FA_279/)
+* Putnam Seminar (Math 279) - [Fall 2021](/assets/syllabi/2021FA_279.pdf), [Fall 2022](/assets/syllabi/2022FA_279.pdf)
 
 __Bowdoin College__
 
