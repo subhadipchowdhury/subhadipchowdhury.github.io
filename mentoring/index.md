@@ -70,24 +70,24 @@ __Abstract__: In this Independent Study, we survey the mathematics of tiling 2-d
 
 ## :x ussama 23
 
-__Abstract__: Generative machine learning models have achieved unprecedented feats in recent years and look primed to reach even more impressive heights. By learning data distributions through unsupervised training and by leveraging the power of neural networks, these models are responsible for breakthroughs in various domains. The aim of this paper is to cover some of the prominent generative model architectures through the bottom-up construction of an illustrated storybook generating interface that uses transfer learning on a transformer-based text generator, and the Vector Quantized Generative Adversarial network (VQGAN) coupled with Contrastive Language–Image Pre-training (CLIP) for prompt-driven image generation.
+__Abstract__: Generative machine learning models have achieved unprecedented feats in recent years and look primed to reach even more impressive heights. By learning data distributions through unsupervised training and by leveraging the power of neural networks, these models are responsible for breakthroughs in various domains. The aim of this paper is to cover some of the prominent generative model architectures through the bottom-up construction of an illustrated storybook generating interface that uses transfer learning on a transformer-based text generator, and the Vector Quantized Generative Adversarial Network (VQGAN) coupled with Contrastive Language–Image Pre-training (CLIP) for prompt-driven image generation.
 
 ## :x molly 22
 
-__Abstract__:  Our Great Lakes have been suffering from the unstable weather since the 1950’s. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analyzation to show the drastic changes on the Great Lakes. We observed Lake Superior’s water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.
+__Abstract__:  Our Great Lakes have been suffering from unstable weather since the 1950’s. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analysis to show the drastic changes in the Great Lakes. We observed Lake Superior’s water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.
 
 ## :x sabrina 22
 
-__Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension to those properties. The next chapter is concerned with Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
+__Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension of those properties. The next chapter is concerned with the Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set-theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
 
 
 ## :x ACME Fresh Market AMRE Project
 
 __Abstract__:  Using several methods, the team analyzed a large data set to evaluate customer behavior and determine strategies for increasing sales. Based on the analysis of customer buying trends and behavior, the team created several targeted programs to increase basket size.
 
-## :x The Goodyear Tire & Rubber Company - Non Pneumatic Tire Divison
+## :x The Goodyear Tire & Rubber Company - Non-Pneumatic Tire Divison
 
-__Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
+__Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive Python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
 
 </div> <!-- Nutshell div ends -->
 
@@ -134,7 +134,7 @@ __University of Chicago__
 
 __College of Wooster__
 
-* Putnam Seminar (Math 279) - [Fall 2021](/teaching/courses/Fall2021_279/), Fall 2022
+* Putnam Seminar (Math 279) - [Fall 2021](/assets/syllabi/2021FA_279/), [Fall 2022](/assets/syllabi/2022FA_279/)
 
 __Bowdoin College__
 
@@ -151,7 +151,7 @@ These are notes from Math review sessions for incoming grad students at UChicago
 
 __Math Olympiad Training__
 
-These are old problem sets from Math olympiad training camps for high school students in Karnataka, India.
+These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
 
 * *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
 
@@ -165,7 +165,7 @@ These are old problem sets from Math olympiad training camps for high school stu
 - *April 2018*: [Rotation Number and Dynamics on the Circle](), Math Colloquium, Bowdoin College
 - *April 2018*: [Explorations in Circle Packings](/assets/talks/circle_packings.pptx), Pizza Seminar, University of Chicago
 - *April 2017*: [Hilbert's 3rd Problem and the Dehn Invariant](/assets/talks/hilbert3rd.pdf), Pizza Seminar, University of Chicago 
-- *December 2015*: [Combinatorics of chessboard puzzles about domination, independence and tours](), Pizza Seminar, University of Chicago
+- *December 2015*: [Combinatorics of chessboard puzzles about domination, independence, and tours](), Pizza Seminar, University of Chicago
 - *November 2013*: [Cut-Copy-Paste — Algebra and Tiling](), Pizza Seminar, University of Chicago
 - *Summer 2013*: [Gromov's Proof of Mostow Rigidity](/assets/talks/rig_sem_notes.pdf), Rigidity Seminar, student reading group, University of Chicago
 - *February 2013*: Farb and Friends Student Seminar, University of Chicago
