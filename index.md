@@ -12,12 +12,12 @@ navigation_weight: 1
 
 <div class="mail">
 
-|        | Visiting Assistant Professor |
-|        | [The College of Wooster](https://www.wooster.edu/)  |
+|        | Assistant Instructional Professor |
+|        | [The University of Chicago]()  |
 |        |    |
-| Office: | Taylor 307 |
-| Phone: | 330-263-2473 |
-| Email: | `schowdhury` at `wooster` dot `edu` |
+| Office: |  |
+| Phone: |  |
+| Email: |  |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf (Spring 2023)](assets/CV.pdf) |
 
@@ -25,7 +25,7 @@ navigation_weight: 1
 <div class="shield">
   <div class="current">
   
-  ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur")
+  ![The University of Chicago](assets/UChicago_seal.svg "Crescat scientia; vita excolatur")
   </div>
   <div class="old">
   
