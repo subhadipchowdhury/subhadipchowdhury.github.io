@@ -85,7 +85,7 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-
+<br>
 The course syllabi are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>
