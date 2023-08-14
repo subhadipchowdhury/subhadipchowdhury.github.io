@@ -53,8 +53,6 @@ I am currently an Assistant Instructional Professor in the [Physical Sciences Co
   _The College of Wooster, 2020 - 2023_
 * Visiting Assistant Professor <br> 
   _Bowdoin College, 2018 - 2020_
-* Instructor of Record<br> 
-  _University of Chicago, 2014 - 2018_
 
 </div>
 
