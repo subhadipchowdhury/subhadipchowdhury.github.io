@@ -17,7 +17,7 @@ navigation_weight: 1
 |        |    |
 | Office: |  |
 | Phone: |  |
-| Email: |  |
+| Email: | subhadip`at`uchicago`dot`edu |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf (Spring 2023)](assets/CV.pdf) |
 
