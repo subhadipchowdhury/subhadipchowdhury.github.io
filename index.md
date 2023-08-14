@@ -25,7 +25,7 @@ navigation_weight: 1
 <div class="shield">
   <div class="current">
    
-    ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur")
+  ![The University of Chicago](assets/uchicago_shield.png "Crescat scientia; vita excolatur")
   </div>
   <div class="old">
   
@@ -41,14 +41,16 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently a Visiting Assistant Professor in the [Mathematical & Computational Sciences Department](https://wooster.edu/area/mathematics/) at [The College of Wooster](https://wooster.edu/). I received my Ph.D. from University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). 
+I am currently an Assistant Instructional Professor in the [Physical Sciences Collegiate Division](https://college.uchicago.edu/academics/physical-sciences-collegiate-division) and the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/). I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
 
 <div class='experience'>
 
 ### Experience ###
 
+* Assistant Instructional Professor <br> 
+  _The University of Chicago, 2023 - Present_
 * Visiting Assistant Professor <br> 
-  _The College of Wooster, 2020 - Present_
+  _The College of Wooster, 2020 - 2023_
 * Visiting Assistant Professor <br> 
   _Bowdoin College, 2018 - 2020_
 * Instructor of Record<br> 
@@ -75,7 +77,7 @@ I am currently a Visiting Assistant Professor in the [Mathematical & Computation
 
 ## Research Interests
 
-My primary research area is low dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory, complex dynamics, and big mapping class group related topics as well.
+My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory, complex dynamics, and big mapping class group related topics as well.
 
 My papers and preprints are on my [research page](research).
 
@@ -85,6 +87,6 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-In Spring 2023, I am teaching _Chaotic Dynamical Systems_, _Mathematical Foundations of Computing_, and  _Applied Differential Calculus_. The course syllabis are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+The course syllabi are accessible through the [teaching page](teaching). Older teaching is listed there as well.
 
 </div>
