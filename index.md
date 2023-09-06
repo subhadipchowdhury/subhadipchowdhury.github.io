@@ -15,8 +15,8 @@ navigation_weight: 1
 |        | Assistant Instructional Professor |
 |        | [The University of Chicago]()  |
 |        |    |
-| Office: |  |
-| Phone: |  |
+| Office: | Eckhart 120B |
+| Phone: | 773-702-7398 |
 | Email: | subhadip `at` uchicago `dot` edu |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf (Spring 2023)](assets/CV.pdf) |
