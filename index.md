@@ -19,7 +19,7 @@ navigation_weight: 1
 | Phone: | 773-702-7398 |
 | Email: | subhadip `at` uchicago `dot` edu |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Spring 2023)](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Autumn 2023)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
