@@ -41,7 +41,7 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently an Assistant Instructional Professor in the [Physical Sciences Collegiate Division](https://college.uchicago.edu/academics/physical-sciences-collegiate-division) and the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/). I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
+I am currently an Assistant Instructional Professor in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and a faculty member of [The College](https://college.uchicago.edu/)'s [Phoenix STEM Scholars Program](https://college.uchicago.edu/phoenix-stem) . I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
 
 <div class='experience'>
 
