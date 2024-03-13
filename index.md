@@ -45,7 +45,7 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 <div class='experience'>
 
-### Experience ###
+### Appointments ###
 
 * Assistant Instructional Professor <br> 
   _The University of Chicago, 2023 - Present_
@@ -75,7 +75,7 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 ## Research Interests
 
-My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also made contributions to the theory of formal languages, with an aim to solve combinatorial group theory problems using topological methods. I am broadly interested in geometric group theory, complex dynamics, and big mapping class group related topics as well.
+My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups.
 
 My papers and preprints are on my [research page](research).
 
@@ -85,7 +85,8 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-<br>
-The course syllabi are accessible through the [teaching page](teaching). Older teaching is listed there as well.
+My current pedagogical interests revolve around developing inquiry-based, collaborative, and active learning for students that engages students effectively. I also like creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
+
+The course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
 
 </div>
