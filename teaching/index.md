@@ -14,18 +14,14 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Current Schedule (2023 Spring)
+### Current Schedule (2024 Spring)
 
-* Math 299: Chaotic Dynamical Systems
-
-* Math 130: Mathematical Foundations of Computing
-
-* Math 110: Applied Differential Calculus
+* Math 133: Elementary Functions and Calculus III
   
 
 #### Office Hours
 
-Office hours will be available in-person only. The times can be found on Moodle.
+Office hours will be available in-person and over Zoom. The times can be found on Canvas.
 
 
 </div>
@@ -42,6 +38,15 @@ Office hours will be available in-person only. The times can be found on Moodle.
 
 
 ### Past Courses
+
+#### University of Chicago
+
+
+{% for course in site.data.courses_uchicago %}
+<div class="course">
+**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+</div>
+{% endfor %}
 
 
 #### The College of Wooster
@@ -64,10 +69,10 @@ Office hours will be available in-person only. The times can be found on Moodle.
 {% endfor %}
 
 
-#### University of Chicago
+#### University of Chicago (GSL)
 
 
-{% for course in site.data.courses_uchicago %}
+{% for course in site.data.courses_uchicago_gsl %}
 <div class="course">
 **{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {{ coursepage.Duration }} {% endfor %}
 </div>
