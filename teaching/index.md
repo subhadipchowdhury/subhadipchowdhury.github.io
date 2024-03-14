@@ -7,7 +7,7 @@ has_subnav: 1
 
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
-        Nutshell.start("nutshell_links_talks");
+        Nutshell.start(document.getElementById("nutshell_links_talks"));
     });
 </script>
 

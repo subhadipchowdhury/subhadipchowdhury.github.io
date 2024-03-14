@@ -6,8 +6,8 @@ navigation_weight: 3
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
         // var element = document.getElementById("")
-        Nutshell.start("nutshell_links_IS");
-        Nutshell.start("nutshell_links_AMRE");
+        Nutshell.start(document.getElementById("nutshell_links_IS"));
+        Nutshell.start(document.getElementById("nutshell_links_AMRE"));
     });
 </script>
 
