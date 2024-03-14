@@ -79,9 +79,8 @@ Office hours will be available in-person and over Zoom. The times can be found o
 **{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {{ coursepage.Duration }} {% endfor %}
 </div>
 {% endfor %}
-  
 
-
+<p></p>  
 </div>
 
 
