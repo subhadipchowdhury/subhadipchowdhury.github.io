@@ -5,11 +5,6 @@ navigation_weight: 2
 has_subnav: 1
 ---
 
-<script>
-    window.addEventListener('DOMContentLoaded', ()=>{
-        Nutshell.start(document.getElementById("nutshell_links_talks"));
-    });
-</script>
 
 <div style="border-bottom: 2px  solid #800000;">
 
@@ -96,19 +91,16 @@ Office hours will be available in-person and over Zoom. The times can be found o
 
 #### Pedagogy Seminar
 
-<div id="nutshell_links_talks">
-
 These are talks I have given in [UChicago Math Pedagogy Seminar](https://math.uchicago.edu/~pedagogyseminar/).
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
 **{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [:Abstract](#x-collab-learning)
 
-## :x collab learning
+#### :x collab learning
 
 __Abstract__: {{talk.Abstract}}
 
-</div>
 {% endfor %}
 
 </div>
