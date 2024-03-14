@@ -83,13 +83,16 @@ ol {
 
 .main-wrapper
 {
-	width: min(960px,75%);
+	width: 75%;
+	max-width: 960px;
 	margin: 20px auto 0px; 
 	padding-left: 11%;
 	padding-right: 11%;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
+
 	background-color:#F7F6EE; 
+
 	-webkit-box-shadow: 0 0 15px 2px #000; 
 	-moz-box-shadow: 0 0 15px 2px #000;     
 	box-shadow: 0 0 15px 2px #000;
