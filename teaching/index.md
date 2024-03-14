@@ -7,8 +7,7 @@ has_subnav: 1
 
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
-        var element = document.getElementById("nutshell_links")
-        Nutshell.start(element);
+        Nutshell.start("nutshell_links_talks");
     });
 </script>
 
@@ -97,7 +96,7 @@ Office hours will be available in-person and over Zoom. The times can be found o
 
 #### Pedagogy Seminar
 
-<div id="nutshell_links">
+<div id="nutshell_links_talks">
 
 These are talks I have given in [UChicago Math Pedagogy Seminar](https://math.uchicago.edu/~pedagogyseminar/).
 
