@@ -117,9 +117,16 @@ __Abstract__: {{talk.Abstract}}
 
 These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for incoming grad students at UChicago.
 
-* **Gaussian Curvature and the Gauss-Bonnet Theorem** - [WOMP 2016](/assets/problemsets/2016WOMP.pdf) 
-* **Covering Spaces and the Fundamental Group** - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
-* **Covering Spaces and the Fundamental Group** - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter 
+<div class="course">
+**Gaussian Curvature and the Gauss-Bonnet Theorem** - [WOMP 2016](/assets/problemsets/2016WOMP.pdf) 
+</div>
+<div class="course">
+**Covering Spaces and the Fundamental Group** - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
+</div>
+<div class="course">
+**Covering Spaces and the Fundamental Group** - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter 
+</div>
+ 
 
 
 #### Math Olympiad Training
