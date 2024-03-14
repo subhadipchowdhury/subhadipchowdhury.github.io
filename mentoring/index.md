@@ -6,19 +6,18 @@ navigation_weight: 3
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
         // var element = document.getElementById("")
-        Nutshell.start(document.getElementById("nutshell_links_IS"));
-        Nutshell.start(document.getElementById("nutshell_links_AMRE"));
+        Nutshell.start(document.getElementById("nutshell_links"));
     });
 </script>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div  id="nutshell_links" style="border-bottom: 2px  solid #800000;">
 
 ## {{ page.title }}
 
 </div>
 
 
-<div id="nutshell_links_IS" style="border-bottom: 2px  solid #800000;">
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Independent Study Advising
 
@@ -61,7 +60,7 @@ __Bowdoin College__
 </div>
 
 
-<div id="nutshell_links_AMRE" style="border-bottom: 2px  solid #800000;">
+<div style="border-bottom: 2px  solid #800000;">
 
 ### Applied Methods and Research Experience Advising
 
