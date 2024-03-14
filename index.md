@@ -85,9 +85,7 @@ Course syllabi and lecture notes for my past courses are accessible through the 
 
 ## Research Interests
 
-My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups.
-
-My papers and preprints are on my [research page](research).
+My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. My papers and preprints are linked on my [research page](research).
 
 </div>
 
