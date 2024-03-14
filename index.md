@@ -73,6 +73,16 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 <div class='anchor'>
 
+## Teaching and Pedagogy
+
+My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
+
+Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
+
+</div>
+
+<div class='anchor'>
+
 ## Research Interests
 
 My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups.
@@ -81,12 +91,4 @@ My papers and preprints are on my [research page](research).
 
 </div>
 
-<div class='anchor'>
 
-## Teaching
-
-My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
-
-Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
-
-</div>
