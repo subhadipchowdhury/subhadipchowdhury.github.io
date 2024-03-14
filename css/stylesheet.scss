@@ -34,7 +34,7 @@ a {
 	text-decoration: none;
 	font-family: $base-font;
 	font-optical-sizing: auto;
-	font-weight: 400;
+	font-weight: 550;
 	color: #155F83;
 	transition:0.5s all;
 	
@@ -44,31 +44,25 @@ a {
 
 }
 
-h1 { 
-	font-family: $heading-font; 
-	font-weight: 700; 
-	font-variant: small-caps;
-}
 
 h2 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
 	font-weight: 700; 
-	font-variant: small-caps;
 	font-size: 1.5rem;
 }
 h3 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
 	font-weight: 600; 
-	font-size: 1.25rem;
+	font-size: 1.3rem;
 }
 
 h4 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
 	font-weight: 500;
-	font-size: 1.1rem;
+	font-size: 1.2rem;
 }
 
 ul {
