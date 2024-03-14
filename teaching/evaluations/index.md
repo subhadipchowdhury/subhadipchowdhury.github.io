@@ -14,6 +14,10 @@ subnav_weight: 32
 
 My past evaluations in full are available on request. Below you can find _numerical summeries_ for individual semesters.
 
+### University of Chicago 
+
+- [Autumn 2023](Autumn2023.pdf)
+
 ### College of Wooster
 
 - [Spring 2023](Spring2023.pdf)
@@ -28,6 +32,6 @@ My past evaluations in full are available on request. Below you can find _numeri
 - [Spring 2019](BCQ_Spring2019.pdf) 
 - [Fall 2018](BCQ_Fall2018.pdf)
 
-### University of Chicago
+### University of Chicago (GSL)
 
 - [2014-2018](UChicago_2014-2018.pdf)
