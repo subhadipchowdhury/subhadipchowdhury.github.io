@@ -103,11 +103,12 @@ These are talks I have given in [UChicago Math Pedagogy Seminar](https://math.uc
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [Abstract](#x-collab-learning)
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [:Abstract](#x-collab-learning)
 
 ## :x collab learning
 
 __Abstract__: {{talk.Abstract}}
+
 </div>
 {% endfor %}
 
