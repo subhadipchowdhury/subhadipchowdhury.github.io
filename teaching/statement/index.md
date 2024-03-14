@@ -2,7 +2,7 @@
 layout: default
 title: Statements and Portfolios
 parentnav: Teaching
-subnav_weight: 33
+subnav_weight: 23
 ---
 
 <div style="border-bottom: 2px  solid #800000;">
