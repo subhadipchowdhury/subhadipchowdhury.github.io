@@ -85,8 +85,8 @@ My papers and preprints are on my [research page](research).
 
 ## Teaching
 
-My current pedagogical interests revolve around developing inquiry-based, collaborative, and active learning for students that engages students effectively. I also like creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
+My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
 
-The course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
+Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
 
 </div>
