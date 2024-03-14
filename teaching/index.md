@@ -133,7 +133,9 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
 
 These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
 
-* *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
+<div class="course">
+**Indian National Math Olympiad Training Camp** - [2010](/assets/problemsets/2010kinmotc.pdf) - [2011](/assets/problemsets/2011kinmotc.pdf) - [2012](/assets/problemsets/2012kinmotc.pdf)
+</div>
 
 </div>
 
