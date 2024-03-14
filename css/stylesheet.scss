@@ -53,21 +53,23 @@ h1 {
 h2 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
-	font-weight: 600; 
+	font-weight: 700; 
 	font-variant: small-caps;
 	font-size: 1.5rem;
 }
 h3 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
-	font-weight: 500; 
+	font-weight: 600; 
 	font-size: 1.25rem;
 }
 
 h4 { 
 	COLOR: #155F83; 
 	font-family: $heading-font; 
-	font-weight: 400; }
+	font-weight: 500;
+	font-size: 1.1rem;
+}
 
 ul {
 	padding-left: 1em;
