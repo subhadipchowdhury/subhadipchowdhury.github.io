@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Mentoring
-navigation_weight: 4
+navigation_weight: 3
 ---
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
