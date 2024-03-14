@@ -26,8 +26,8 @@ A pdf copy of my Research Statement as of Fall 2022 can be found here: [[Short](
 {% endif %}
 {% endfor %}
 
+</div>
 
-<div style="border-bottom: 2px  solid #800000;">
 
 ### Expository Notes
 
@@ -40,3 +40,5 @@ A pdf copy of my Research Statement as of Fall 2022 can be found here: [[Short](
 </div>
 {% endif %}
 {% endfor %}
+
+<p></p>

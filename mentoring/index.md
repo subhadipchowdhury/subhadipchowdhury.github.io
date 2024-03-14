@@ -16,9 +16,8 @@ navigation_weight: 3
 
 </div>
 
-<div id="nutshell_links"> <!-- Nutshell div starts -->
 
-<div style="border-bottom: 2px  solid #800000;">
+<div id="nutshell_links" style="border-bottom: 2px  solid #800000;">
 
 ### Independent Study Advising
 
@@ -36,33 +35,6 @@ __The College of Wooster__
 
 * *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)  [:Abstract](#x-sabrina-22)
 
-__Bowdoin College__
-
-* *Machine Learning* - Theo de Quillacq, 2020 Spring
-
-</div>
-
-
-<div style="border-bottom: 2px  solid #800000;">
-
-### Applied Methods and Research Experience Advising
-
-__The College of Wooster__
-
-* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
-    * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
-    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-divison)
-
-* Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
-    * Client - ACME Fresh Market
-    * [:Project Description](#x-acme-fresh-market-amre-project)
-
-</div>  
-
-
-
-
-<!-- The hidden nutshells -->
 
 ## :x lucy 23
 
@@ -79,6 +51,28 @@ __Abstract__:  Our Great Lakes have been suffering from unstable weather since t
 ## :x sabrina 22
 
 __Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension of those properties. The next chapter is concerned with the Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set-theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
+
+
+__Bowdoin College__
+
+* *Machine Learning* - Theo de Quillacq, 2020 Spring
+
+</div>
+
+
+<div id="nutshell_links" style="border-bottom: 2px  solid #800000;">
+
+### Applied Methods and Research Experience Advising
+
+__The College of Wooster__
+
+* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
+    * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
+    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-divison)
+
+* Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
+    * Client - ACME Fresh Market
+    * [:Project Description](#x-acme-fresh-market-amre-project)
 
 
 ## :x ACME Fresh Market AMRE Project
@@ -126,49 +120,4 @@ __University of Chicago__
 * *Geometry* - Jordan Hisel, 2013 Fall
 
 </div>
-
-<div style="border-bottom: 2px  solid #800000;">
-
-### Others
-
-
-__College of Wooster__
-
-* Putnam Seminar (Math 279) - [Fall 2021](/assets/syllabi/2021FA_279.pdf), [Fall 2022](/assets/syllabi/2022FA_279.pdf)
-
-__Bowdoin College__
-
-* *Problem Solving Seminar* - 2018-2020 
-
-__University of Chicago__
-
-These are notes from Math review sessions for incoming grad students at UChicago.
-
-* [Gaussian Curvature and the Gauss-Bonnet Theorem](/assets/problemsets/2016WOMP.pdf) - WOMP, 2016 
-* [Covering Spaces and the Fundamental Group](/assets/problemsets/2015WOMP.pdf) - WOMP, 2015, with Oishee Banerjee
-* [Covering Spaces and the Fundamental Group](/assets/problemsets/2014WOMP.pdf) - WOMP, 2014, with Nick Salter 
-
-
-__Math Olympiad Training__
-
-These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
-
-* *Indian National Math Olympiad Training Camp* - [2010](/assets/problemsets/2010kinmotc.pdf), [2011](/assets/problemsets/2011kinmotc.pdf), [2012](/assets/problemsets/2012kinmotc.pdf)
-
-</div>
-
-
-### Expository Talks in Student Seminars
-
-- *February 2020*: [Rotation Number and Dynamics on the Circle](), Math Colloquium, The College of Wooster
-- *November 2018*: [The Illumination Problem and Rational Billiards](/assets/talks/illu_prob_rat_bil.pptx), Student Seminar, Bowdoin College
-- *April 2018*: [Rotation Number and Dynamics on the Circle](), Math Colloquium, Bowdoin College
-- *April 2018*: [Explorations in Circle Packings](/assets/talks/circle_packings.pptx), Pizza Seminar, University of Chicago
-- *April 2017*: [Hilbert's 3rd Problem and the Dehn Invariant](/assets/talks/hilbert3rd.pdf), Pizza Seminar, University of Chicago 
-- *December 2015*: [Combinatorics of chessboard puzzles about domination, independence, and tours](), Pizza Seminar, University of Chicago
-- *November 2013*: [Cut-Copy-Paste — Algebra and Tiling](), Pizza Seminar, University of Chicago
-- *Summer 2013*: [Gromov's Proof of Mostow Rigidity](/assets/talks/rig_sem_notes.pdf), Rigidity Seminar, student reading group, University of Chicago
-- *February 2013*: Farb and Friends Student Seminar, University of Chicago
-
-Note that some of the talks are very much of an outline in nature.
 
