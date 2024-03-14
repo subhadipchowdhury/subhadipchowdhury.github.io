@@ -25,13 +25,13 @@ navigation_weight: 1
 <div class="shield">
   <div class="current">
   
-  ![The University of Chicago](assets/UChicago_seal.svg "Crescat scientia; vita excolatur")
+  ![The University of Chicago](assets/logos/UChicago_seal.svg "Crescat scientia; vita excolatur")
   </div>
   <div class="old">
   
-   ![The College of Wooster](assets/Wooster_seal.png "Ex Uno Fonte")
-   ![Bowdoin College](assets/bowdoin_seal.png "Ut Aquila Versus Coelum")
-   ![Indian Statistical Institute](assets/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्")
+   ![The College of Wooster](assets/logos/Wooster_seal.png "Ex Uno Fonte")
+   ![Bowdoin College](assets/logos/bowdoin_seal.png "Ut Aquila Versus Coelum")
+   ![Indian Statistical Institute](assets/logos/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्")
   </div>
 </div>
 
