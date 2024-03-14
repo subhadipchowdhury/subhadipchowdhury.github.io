@@ -100,10 +100,9 @@ These are talks I have given in [UChicago Math Pedagogy Seminar](https://math.uc
 #### :x collab learning
 
 __Abstract__: {{talk.Abstract}}
-
+</div>
 {% endfor %}
 
-</div>
 
 #### Teaching Assistant
 
