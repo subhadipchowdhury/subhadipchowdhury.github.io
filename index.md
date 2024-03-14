@@ -13,7 +13,7 @@ navigation_weight: 1
 <div class="mail">
 
 |        | Assistant Instructional Professor |
-|        | [The University of Chicago]()  |
+|        | [The University of Chicago](https://www.uchicago.edu)  |
 |        |    |
 | Office: | Eckhart 120B |
 | Phone: | 773-702-7398 |
