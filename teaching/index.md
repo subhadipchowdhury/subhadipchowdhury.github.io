@@ -111,6 +111,8 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endfor %}
 
+</div>
+
 #### Teaching Assistant
 
 {% for course in site.data.nonteaching_courses_uchicago %}
