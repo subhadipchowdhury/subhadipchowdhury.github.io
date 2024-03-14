@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Others
-navigation_weight: 5
 ---
+<!--navigation_weight: 5-->
 <div style="border-bottom: 2px  solid #800000;">
 
 ## {{ page.title }}
