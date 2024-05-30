@@ -15,14 +15,14 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Current Schedule (2024 Spring)
+### Current Schedule (2024 Summer)
 
-* Math 133: Elementary Functions and Calculus III
+* Summer break.
   
 
 #### Office Hours
 
-Office hours will be available in-person and over Zoom. The times can be found on Canvas.
+Summer break.
 
 
 </div>
