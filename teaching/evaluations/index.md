@@ -16,6 +16,7 @@ My past evaluations in full are available on request. Below you can find _numeri
 
 ### University of Chicago 
 
+- [Winter 2024](Winter2024.pdf)
 - [Autumn 2023](Autumn2023.pdf)
 
 ### College of Wooster
