@@ -43,8 +43,6 @@ navigation_weight: 1
 
 I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and a faculty member in [The College](https://college.uchicago.edu/)'s [Neubauer Phoenix STEM Scholars Program](https://college.uchicago.edu/phoenix-stem). 
 
-During June 2024 - May 2025, I am supported by a UChicago College Curricular Innovation Fund grant.
-
 <div class='experience'>
 
 ### Appointments ###
@@ -78,6 +76,8 @@ During June 2024 - May 2025, I am supported by a UChicago College Curricular Inn
 ## Teaching and Pedagogy
 
 My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
+
+During June 2024 - May 2025, I am supported by a <i>UChicago College Curricular Innovation Fund grant</i> to implement Collaborative Learning in Mathematics and Biology department.
 
 Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
 
