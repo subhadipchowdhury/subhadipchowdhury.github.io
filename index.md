@@ -41,7 +41,9 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and a faculty member in [The College](https://college.uchicago.edu/)'s [Neubauer Phoenix STEM Scholars Program](https://college.uchicago.edu/phoenix-stem). I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
+I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and a faculty member in [The College](https://college.uchicago.edu/)'s [Neubauer Phoenix STEM Scholars Program](https://college.uchicago.edu/phoenix-stem). 
+
+During June 2024 - May 2025, I am supported by a UChicago College Curricular Innovation Fund grant.
 
 <div class='experience'>
 
@@ -86,6 +88,8 @@ Course syllabi and lecture notes for my past courses are accessible through the 
 ## Research Interests
 
 My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. My papers and preprints are linked on my [research page](research).
+
+I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/).
 
 </div>
 
