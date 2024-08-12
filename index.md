@@ -77,7 +77,7 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
 
-During June 2024 - May 2025, I am supported by a <i>UChicago College Curricular Innovation Fund grant</i> to implement Collaborative Learning in Mathematics and Biology department.
+During June 2024 - May 2025, I am supported by a <i>UChicago College Curricular Innovation Fund grant</i> to implement Collaborative Learning in the Mathematics department.
 
 Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
 
