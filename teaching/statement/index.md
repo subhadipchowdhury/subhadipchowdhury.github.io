@@ -14,9 +14,9 @@ subnav_weight: 23
 
 
 
-* To download a pdf copy of my teaching statement as of Fall 2022, please [CLICK HERE](Teaching_Statement.pdf). 
+* To download a pdf copy of my teaching statement as of Winter 2024, please [CLICK HERE](Teaching_Statement.pdf). 
 
-* To download a pdf copy of my diversity statement as of Fall 2022, please [CLICK HERE](Diversity_Statement.pdf). 
+* To download a pdf copy of my diversity statement as of Winter 2024, please [CLICK HERE](Diversity_Statement.pdf). 
   
-* To download a pdf copy of my teaching portfolio as of Fall 2022, please [CLICK HERE](Teaching_Portfolio.pdf). 
+* To download a pdf copy of my teaching portfolio as of Winter 2024, please [CLICK HERE](Teaching_Portfolio.pdf). 
   

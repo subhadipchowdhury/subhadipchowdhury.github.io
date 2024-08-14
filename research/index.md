@@ -10,7 +10,7 @@ navigation_weight: 4
 
 </div>
 
-A pdf copy of my Research Statement as of Fall 2022 can be found here: [[Short](Research_Statement.pdf)], [[Long](Research_Statement_long.pdf)].
+A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short](Research_Statement.pdf)], [[Long](Research_Statement_long.pdf)].
 
 <div style="border-bottom: 2px  solid #800000;">
 
