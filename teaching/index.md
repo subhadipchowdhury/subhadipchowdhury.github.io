@@ -15,20 +15,6 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Current Schedule (2024 Summer)
-
-* Summer break.
-  
-
-#### Office Hours
-
-Summer break.
-
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
-
 * [Link to sample syllabi, lecture notes, and other resources](/teaching/resources/)
 
 * [Link to past course evaluations](/teaching/evaluations/)
