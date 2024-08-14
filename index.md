@@ -18,7 +18,7 @@ navigation_weight: 1
 | Office: | Eckhart 120B |
 | Phone: | 773-702-7398 |
 | Email (Academic): | subhadip `at` uchicago `dot` edu |
-| Email (Non-academic): | subhadip.alt `at` gmail `dot` com |
+| Email (Non-academic): | 20empyrwy `at` mozmail `dot` com |
 |        |    |
 | CV: | <i class="far fa-file-pdf"></i> [pdf (Winter 2024)](assets/CV.pdf) |
 
