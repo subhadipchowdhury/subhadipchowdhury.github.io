@@ -11,9 +11,6 @@ subnav_weight: 21
 
 </div>
 
-### Syllabi and List of Courses Taught in the Past
-
-See [here](/teaching/).
 
 ### Lecture Notes Repositories
 
