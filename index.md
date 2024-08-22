@@ -20,7 +20,7 @@ navigation_weight: 1
 | Email (Academic): | subhadip `at` uchicago `dot` edu |
 | Email (Non-academic): | 20empyrwy `at` mozmail `dot` com |
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Winter 2024)](assets/CV.pdf) |
+| CV: | <i class="far fa-file-pdf"></i> [pdf (Summer 2024)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
