@@ -42,7 +42,7 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and a faculty member in [The College](https://college.uchicago.edu/)'s [Neubauer Phoenix STEM Scholars Program](https://college.uchicago.edu/phoenix-stem). 
+I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at the [The University of Chicago](https://www.uchicago.edu/) and in the [Neubauer Phoenix STEM Scholars program](https://college.uchicago.edu/phoenix-stem) at the [Office of Research and Teaching Innovations](https://college.uchicago.edu/academics/office-research-and-teaching-innovations).
 
 <div class='experience'>
 
