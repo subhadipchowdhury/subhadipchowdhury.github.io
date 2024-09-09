@@ -36,6 +36,10 @@ __The College of Wooster__
 * *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)  [:Abstract](#x-sabrina-22)
 
 
+__Bowdoin College__
+
+* *Machine Learning* - Theo de Quillacq, 2020 Spring
+
 #### :x lucy 23
 
 __Abstract__: In this Independent Study, we survey the mathematics of tiling 2-dimensional regions with polyomino shapes of varying sizes. We investigate tile invariants to prove tileability and examine specific tile invariants, such as the Conway/Lagarias invariant. Using "Tile Invariants for Tackling Tiling Questions" by Dr. Michael Hitchman as a guide for exploration, we survey different techniques for finding tile invariants, such as coloring, boundary words, height, and group theoretic techniques. After this background is established, we answer an open problem posed by Hitchman in the affirmative - we prove the requirements for a modified rectangle to be tileable by area 5 ribbon tiles. In the final part of this project, we consider L-pentominoes and conjecture the requirements for a rectangle to be tileable by this tile set. We prove the conjecture in certain cases.
@@ -52,10 +56,6 @@ __Abstract__:  Our Great Lakes have been suffering from unstable weather since t
 
 __Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension of those properties. The next chapter is concerned with the Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set-theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
 
-
-__Bowdoin College__
-
-* *Machine Learning* - Theo de Quillacq, 2020 Spring
 
 </div>
 
