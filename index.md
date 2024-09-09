@@ -15,12 +15,12 @@ navigation_weight: 1
 |        | Assistant Instructional Professor |
 |        | [The University of Chicago](https://www.uchicago.edu)  |
 |        |    |
-| Office: | Eckhart 120B |
-| Phone: | 773-702-7398 |
-| Email (Academic): | subhadip `at` uchicago `dot` edu |
-| Email (Non-academic): | 20empyrwy `at` mozmail `dot` com |
+| <i class="fa-solid fa-map-location-dot"></i> | Eckhart 120B |
+| <i class="fa-solid fa-phone-volume"></i> | 773-702-7398 |
+| <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu (Academic)|
+| <i class="fa-regular fa-envelope"></i> | 20empyrwy `at` mozmail `dot` com (Non-academic)|
 |        |    |
-| CV: | <i class="far fa-file-pdf"></i> [pdf (Summer 2024)](assets/CV.pdf) |
+| <i class="fa-solid fa-file-pdf"></i> | [CV(Summer 2024)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
