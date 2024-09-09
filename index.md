@@ -12,15 +12,15 @@ navigation_weight: 1
 
 <div class="mail">
 
-|        | Assistant Instructional Professor |
-|        | [The University of Chicago](https://www.uchicago.edu)  |
+| <i class="fa-solid fa-user-tie"></i> | Assistant Instructional Professor |
+| <i class="fa-solid fa-briefcase"></i> | [The University of Chicago](https://www.uchicago.edu)  |
 |        |    |
 | <i class="fa-solid fa-map-location-dot"></i> | Eckhart 120B |
 | <i class="fa-solid fa-phone-volume"></i> | 773-702-7398 |
 | <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu (Academic)|
 | <i class="fa-regular fa-envelope"></i> | 20empyrwy `at` mozmail `dot` com (Non-academic)|
 |        |    |
-| <i class="fa-solid fa-file-pdf"></i> | [CV(Summer 2024)](assets/CV.pdf) |
+| <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2024)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
