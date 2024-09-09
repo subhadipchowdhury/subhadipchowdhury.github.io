@@ -66,36 +66,60 @@ ol li {
 
 /***********************************************/
 
-.main-wrapper {
-  width: 75%;
-  max-width: 960px;
-  margin: 10px auto 0px;
-  padding: 2rem 11%;
-  background-color: #F7F6EE;
-  box-shadow: 0 0 15px 2px #000;
-  overflow: auto;
+
+
+
+
+
+.main-wrapper
+{
+	width: 75%;
+	max-width: 960px;
+	margin: 10px auto 0px; 
+	padding-left: 11%;
+	padding-right: 11%;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+
+	background-color:#F7F6EE; 
+
+	-webkit-box-shadow: 0 0 15px 2px #000; 
+	-moz-box-shadow: 0 0 15px 2px #000;     
+	box-shadow: 0 0 15px 2px #000;
+
+	overflow: auto;
 }
+
+
+
+
 
 /***********************************************/
 
 header {
-  font-family: $heading-font;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: min(960px, 80%);
-  margin: 0.25rem auto 0.2rem;
+  	font-family: $heading-font; 
 
-  h1 {
-    text-align: center;
-    font-size: 1.75rem;
-  }
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 
-  a:hover {
-    text-decoration: none;
-  }
+	width: min(960px,80%);
+	margin: 0.25rem auto 0.2rem auto; 
+	
+	h1 {
+		text-align: center;
+		font-size:1.75rem;
+	}
+	a:hover{
+		text-decoration: none;
+	}
 }
+
+	
+
+
+
 
 /***********************************************/
 
@@ -535,13 +559,15 @@ footer {
 
 
 .anchor {
-  @extend .about;
-  align-items: flex-start;
-  border-bottom: 2px solid #800000;
+	@extend .about;
 
-  h2 {
-    text-align: center;
-  }
+	align-items: flex-start;
+
+	h2 {
+		text-align:center;
+		}
+	
+	border-bottom: 2px  solid #800000;
 }
 
 
