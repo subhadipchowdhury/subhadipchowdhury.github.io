@@ -190,8 +190,8 @@ nav#nav-main ul{
 			&:hover:after{
 				z-index: -10;
 				animation: fill 0.5s forwards;
-				-webkit-animation: fill 0.5s forwards;
-				-moz-animation: fill 0.5s forwards;
+				-webkit-animation: fill 0.25s forwards;
+				-moz-animation: fill 0.25s forwards;
 				opacity: 1;
 			}
 
