@@ -34,7 +34,6 @@ __Abstract__: {{talk.Abstract}}
 
 <div style="border-bottom: 2px  solid #800000;">
 
-
 #### Papers/Preprints
 
 {% for paper in site.data.papers %}
@@ -47,9 +46,6 @@ __Abstract__: {{talk.Abstract}}
 {% endif %}
 {% endfor %}
 
-
-
-
 #### Expository Notes
 
 {% for paper in site.data.papers %}
@@ -61,8 +57,6 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endif %}
 {% endfor %}
-
-
 
 
 #### Seminar and Conferences
