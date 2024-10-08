@@ -65,7 +65,7 @@ __Abstract__: {{talk.Abstract}}
 
 {% for talk in site.data.talks_math %}
 <div class="course">
-{{ talk.Duration }} - {{ talk.Location }}
+**{{ talk.Location }}** - {{ talk.Duration }}
 </div>
 {% endfor %}
 
