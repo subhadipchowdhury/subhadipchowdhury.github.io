@@ -21,9 +21,9 @@ navigation_weight: 4
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [:Abstract](#x-collab-learning)
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}] ({{ talk.Website }}), [:Abstract](#x-collab-learning)
 
-#### :x collab learning
+#### :x-collab-learning
 
 __Abstract__: {{talk.Abstract}}
 </div>
@@ -33,6 +33,8 @@ __Abstract__: {{talk.Abstract}}
 </div>
 
 <div style="border-bottom: 2px  solid #800000;">
+
+### Mathematics
 
 #### Papers/Preprints
 
