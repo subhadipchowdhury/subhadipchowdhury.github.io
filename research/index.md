@@ -63,4 +63,10 @@ __Abstract__: {{talk.Abstract}}
 
 #### Seminar and Conferences
 
+{% for talk in site.data.talks_math %}
+<div class="course">
+{{ talk.Duration }} - {{ talk.Location }}
+</div>
+{% endfor %}
+
 </div>
