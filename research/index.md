@@ -21,9 +21,9 @@ navigation_weight: 4
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}] ({{ talk.Website }}), [:Abstract](#x-collab-learning)
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}), [:Abstract](#{{ talk.Nutshell }})
 
-#### :x-collab-learning
+#### :{{ talk.Nutshell }}
 
 __Abstract__: {{talk.Abstract}}
 </div>
