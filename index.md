@@ -78,7 +78,7 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 My current pedagogical interests revolve around developing inquiry-based, collaborative, inclusive, and active learning in classroom that engages students from diverse backgrounds effectively. I also work on creating and implementing formative assessments and alternate grading techniques that reward growth and persistence.
 
-During June 2024 - May 2025, I am supported by a <i>UChicago College Curricular Innovation Fund grant</i> to implement Collaborative Learning in the Mathematics department.
+During academic year 2024-2025, I will be a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program) at the Chicago Center for Teaching and Learning and supported by a CCTL Grant to co-lead an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups).
 
 Course syllabi and lecture notes for my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
 
@@ -88,7 +88,7 @@ Course syllabi and lecture notes for my past courses are accessible through the 
 
 ## Research Interests
 
-My primary research area is low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
+My background training is in low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
 
 I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). My papers and preprints are linked on my [research page](research).
 
