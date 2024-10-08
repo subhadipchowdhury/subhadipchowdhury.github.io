@@ -10,11 +10,32 @@ navigation_weight: 4
 
 </div>
 
-A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short](Research_Statement.pdf)], [[Long](Research_Statement_long.pdf)].
+<!--A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short](Research_Statement.pdf)], [[Long](Research_Statement_long.pdf)].-->
+
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Papers/Preprints
+### Pedagogy
+
+#### Seminar and Conferences
+
+{% for talk in site.data.talks_pedagogy %}
+<div class="course">
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [:Abstract](#x-collab-learning)
+
+#### :x collab learning
+
+__Abstract__: {{talk.Abstract}}
+</div>
+{% endfor %}
+
+
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
+
+
+#### Papers/Preprints
 
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
@@ -26,10 +47,10 @@ A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short
 {% endif %}
 {% endfor %}
 
-</div>
 
 
-### Expository Notes
+
+#### Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type == "expository" %}
@@ -41,4 +62,9 @@ A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short
 {% endif %}
 {% endfor %}
 
-<p></p>
+
+
+
+#### Seminar and Conferences
+
+</div>

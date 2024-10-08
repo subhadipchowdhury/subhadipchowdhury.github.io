@@ -74,20 +74,6 @@ has_subnav: 1
 
 ### Others
 
-#### Pedagogy Seminar
-
-These are talks I have given in [UChicago Math Pedagogy Seminar](https://math.uchicago.edu/~pedagogyseminar/).
-
-{% for talk in site.data.talks_pedagogy %}
-<div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}, [:Abstract](#x-collab-learning)
-
-#### :x collab learning
-
-__Abstract__: {{talk.Abstract}}
-</div>
-{% endfor %}
-
 
 #### Teaching Assistant
 
@@ -126,14 +112,4 @@ These are old problem sets from Math Olympiad training camps for high school stu
 <p></p>
 </div>
 
-
-### Expository Talks in Student Seminars
-
-Note that some of the talks are very much of an outline in nature.
-
-{% for talk in site.data.talks_expository %}
-<div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}
-</div>
-{% endfor %}
 

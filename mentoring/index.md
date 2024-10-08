@@ -121,3 +121,18 @@ __University of Chicago__
 
 </div>
 
+
+
+<div style="border-bottom: 2px  solid #800000;">
+
+### Expository Talks in Student Seminars
+
+Note that some of the talks are very much of an outline in nature.
+
+{% for talk in site.data.talks_expository %}
+<div class="course">
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}
+</div>
+{% endfor %}
+
+</div>
