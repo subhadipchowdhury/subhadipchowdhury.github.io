@@ -8,7 +8,7 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-## {{ page.title }}
+# {{ page.title }}
 
 
 </div>
@@ -25,9 +25,9 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Past Courses
+## Past Courses
 
-#### University of Chicago
+### University of Chicago
 
 
 {% for course in site.data.courses_uchicago %}
@@ -37,7 +37,7 @@ has_subnav: 1
 {% endfor %}
 
 
-#### The College of Wooster
+### The College of Wooster
 
 
 {% for course in site.data.courses_wooster %}
@@ -47,7 +47,7 @@ has_subnav: 1
 {% endfor %}
 
 
-#### Bowdoin College
+### Bowdoin College
 
 
 {% for course in site.data.courses_bowdoin %}
@@ -57,7 +57,7 @@ has_subnav: 1
 {% endfor %}
 
 
-#### University of Chicago (GSL)
+### University of Chicago (GSL)
 
 
 {% for course in site.data.courses_uchicago_gsl %}
@@ -72,10 +72,10 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Others
+## Others
 
 
-#### Teaching Assistant
+### Teaching Assistant
 
 {% for course in site.data.nonteaching_courses_uchicago %}
 <div class="course">
@@ -85,7 +85,7 @@ has_subnav: 1
 {% endfor %}
 
 
-#### UChicago Warmup Program
+### UChicago Warmup Program
 
 These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for incoming grad students at UChicago.
 
@@ -101,7 +101,7 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
  
 
 
-#### Math Olympiad Training
+### Math Olympiad Training
 
 These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
 
