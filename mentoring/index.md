@@ -23,7 +23,7 @@ navigation_weight: 3
 
 This is a list of senior IS (bachelor's thesis) by students I have advised.
 
-__The College of Wooster__
+### The College of Wooster
 
 * *Tile Invariants and an Exploration of Tilings with Ribbon Pentominoes and L-Pentominoes* - Lucy Wickham '23 (Mathematics) [:Abstract](#x-lucy-23)
 
@@ -36,7 +36,7 @@ __The College of Wooster__
 * *The Infinity Conundrum: Understanding Topics in Set Theory and the Continuum Hypothesis* -  Sabrina Helck '22 (Mathematics)  [:Abstract](#x-sabrina-22)
 
 
-__Bowdoin College__
+### Bowdoin College
 
 * *Machine Learning* - Theo de Quillacq, 2020 Spring
 
@@ -64,7 +64,7 @@ __Abstract__:  This project is concerned with articulating the necessary backgro
 
 ## Applied Methods and Research Experience Advising
 
-__The College of Wooster__
+### The College of Wooster
 
 * Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
     * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
@@ -93,7 +93,7 @@ __Abstract__:  Our project goal was to translate and package a multi-software an
 
 This is a list of student projects I have (sometimes jointly) supervised.
 
-__University of Chicago__
+### University of Chicago
 
 * [Scissors Congruence](http://math.uchicago.edu/~may/REU2016/REUPapers/Welsh.pdf) - Maeve Coates Welsh, 2016 Summer
 * [Rationality of zeta functions over finite fields](http://math.uchicago.edu/~may/REU2016/REUPapers/Park.pdf) - Sun Woo Park, 2016 Summer
@@ -111,7 +111,7 @@ __University of Chicago__
 This is a list of quarter-long directed independent reading courses I have supervised.
 
 
-__University of Chicago__
+### University of Chicago
 
 * *Topology* - Dan Su, 2016 Winter
 * *The Dynamics of Circle Homeomorphisms* - Wenyu Chen, 2015 Fall
