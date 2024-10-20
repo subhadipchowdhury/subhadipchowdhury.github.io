@@ -6,7 +6,7 @@ navigation_weight: 4
 
 <div style="border-bottom: 2px  solid #800000;">
 
-## {{ page.title }}
+# {{ page.title }}
 
 </div>
 
@@ -15,15 +15,15 @@ navigation_weight: 4
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Pedagogy
+## Pedagogy
 
-#### Seminar and Conferences
+### Seminar and Conferences
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
 **{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}), [:Abstract](#{{ talk.Nutshell }})
 
-#### :{{ talk.Nutshell }}
+### :{{ talk.Nutshell }}
 
 __Abstract__: {{talk.Abstract}}
 </div>
@@ -34,9 +34,9 @@ __Abstract__: {{talk.Abstract}}
 
 <div style="border-bottom: 2px  solid #800000;">
 
-### Mathematics
+## Mathematics
 
-#### Papers/Preprints
+### Papers/Preprints/Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
@@ -47,8 +47,6 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endif %}
 {% endfor %}
-
-#### Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type == "expository" %}
@@ -61,7 +59,7 @@ __Abstract__: {{talk.Abstract}}
 {% endfor %}
 
 
-#### Seminar and Conferences
+### Seminar and Conferences
 
 {% for talk in site.data.talks_math %}
 <div class="course">
