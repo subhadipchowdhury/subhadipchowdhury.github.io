@@ -36,7 +36,7 @@ __Abstract__: {{talk.Abstract}}
 
 ## Mathematics
 
-### Papers/Preprints/Expository Notes
+### Publications/Preprints/Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
