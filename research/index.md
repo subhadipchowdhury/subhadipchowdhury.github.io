@@ -29,6 +29,7 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endfor %}
 
+<p></p>
 
 </div>
 
@@ -67,4 +68,5 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endfor %}
 
+<p></p>
 </div>
