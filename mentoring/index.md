@@ -1,14 +1,9 @@
 ---
 layout: default
 title: Mentoring
-navigation_weight: 3
+navigation_weight: 4
 ---
-<!--<script>
-    window.addEventListener('DOMContentLoaded', ()=>{
-        // var element = document.getElementById("")
-        Nutshell.start(document.getElementById("nutshell_links"));
-    });
-</script>-->
+
 
 <div style="border-bottom: 2px  solid #800000;">
 

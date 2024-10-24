@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Teaching
-navigation_weight: 2
+title: Courses
+navigation_weight: 3
 has_subnav: 1
 ---
 

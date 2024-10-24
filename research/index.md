@@ -10,34 +10,12 @@ navigation_weight: 4
 
 </div>
 
-<!--A pdf copy of my Research Statement as of Winter 2024 can be found here: [[Short](Research_Statement.pdf)], [[Long](Research_Statement_long.pdf)].-->
-
-
 <div style="border-bottom: 2px  solid #800000;">
 
-## Pedagogy
+Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.pdf)
 
-### Seminar and Conferences
 
-{% for talk in site.data.talks_pedagogy %}
-<div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}), [:Abstract](#{{ talk.Nutshell }})
-
-### :{{ talk.Nutshell }}
-
-__Abstract__: {{talk.Abstract}}
-</div>
-{% endfor %}
-
-<p></p>
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
-
-## Mathematics
-
-### Publications/Preprints/Expository Notes
+## Publications/Preprints/Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
@@ -60,7 +38,7 @@ __Abstract__: {{talk.Abstract}}
 {% endfor %}
 
 
-### Seminar and Conferences
+## Seminar and Conferences
 
 {% for talk in site.data.talks_math %}
 <div class="course">
