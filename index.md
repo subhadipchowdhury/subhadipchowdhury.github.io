@@ -18,7 +18,6 @@ navigation_weight: 1
 | <i class="fa-solid fa-map-location-dot"></i> | Eckhart 120B |
 | <i class="fa-solid fa-phone-volume"></i> | 773-702-7398 |
 | <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu (Academic)|
-| <i class="fa-regular fa-envelope"></i> | 20empyrwy `at` mozmail `dot` com (Non-academic)|
 |        |    |
 | <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2024)](assets/CV.pdf) |
 
