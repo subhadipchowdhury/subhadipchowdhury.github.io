@@ -17,7 +17,7 @@ navigation_weight: 1
 |        |    |
 | <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu|
 | <i class="fa-solid fa-location-dot"></i> | Eckhart 120B |
-| <i class="fa-solid fa-map"></i> | 5734 S. University Ave|
+| <i class="fa-solid fa-signs-post"></i> | 5734 S. University Ave|
 |        |Chicago, IL - 60637|
 |        |    |
 | <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2024)](assets/CV.pdf) |
