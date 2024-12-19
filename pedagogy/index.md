@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Pedagogy
-navigation_weight: 2
+navigation_weight: 3
 ---
 
 
