@@ -15,8 +15,10 @@ navigation_weight: 1
 | <i class="fa-solid fa-user-tie"></i> | Assistant Instructional Professor |
 | <i class="fa-solid fa-building-columns"></i> | [The University of Chicago](https://www.uchicago.edu)  |
 |        |    |
-| <i class="fa-solid fa-map-location-dot"></i> | Eckhart 120B |
 | <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu|
+| <i class="fa-solid fa-location-dot"></i> | Eckhart 120B |
+| <i class="fa-solid fa-map"></i> | 5734 S. University Ave|
+|        |Chicago, IL - 60637|
 |        |    |
 | <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2024)](assets/CV.pdf) |
 
@@ -49,9 +51,9 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 * Assistant Instructional Professor <br> 
   _The University of Chicago, 2023 - Present_
 * Visiting Assistant Professor <br> 
-  _The College of Wooster, 2020 - 2023_
+  _[The College of Wooster](https://wooster.edu/), 2020 - 2023_
 * Visiting Assistant Professor <br> 
-  _Bowdoin College, 2018 - 2020_
+  _[Bowdoin College](https://www.bowdoin.edu/), 2018 - 2020_
 
 </div>
 
@@ -64,7 +66,7 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 * M.S. in Mathematics, 2014<br>
   _University of Chicago_
 * B.Math.(Hons.), 2012<br>
-  _Indian Statistical Institute_
+  _[Indian Statistical Institute](https://www.isibang.ac.in/)_
 
 </div>
 
