@@ -40,7 +40,7 @@ navigation_weight: 3
 
 ## Exploratory Teaching Group for Instructional Faculty
 
-**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/))
+**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/)
 
 ## Seminar and Conferences
 
