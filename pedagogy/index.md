@@ -25,10 +25,10 @@ navigation_weight: 3
 
 ## Professional Development Training for Graduate Student Lecturers
 
-### co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/)
+### co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/), The University of Chicago
 
 <div class="course">
-**Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024](), , 
+**Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024]() 
 </div>
 
 <div class="course">
