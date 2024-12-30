@@ -19,15 +19,26 @@ navigation_weight: 3
 <div style="border-bottom: 2px  solid #800000;">
 
 
-## Collaborative Learning Pedagogy Training for Undergraduate TAs
+## Training in Collaborative Learning for Undergraduate TAs
 
-**Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024]()
+**Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024]() - [Winter 2025]()
 
 ## Professional Development Training for Graduate Student Lecturers
 
-**Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024]()
+### co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/)
 
-<!--## Exploratory Teaching Group: Discussion on Implementing Alternate Grading and Redesigning Assessment in Math-->
+<div class="course">
+**Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024](), , 
+</div>
+
+<div class="course">
+**Designing Exam Standards and Questions in Alignment** - [Autumn 2024]()
+</div>
+<!--## : -->
+
+## Exploratory Teaching Group for Instructional Faculty
+
+**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - AY2024-25, co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/)), [Description]()
 
 ## Seminar and Conferences
 
