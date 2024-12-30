@@ -15,11 +15,11 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-* Go to this [link](/teaching/resources/) to access my past lecture notes and LaTeX templates
+* [Go to this link](/teaching/resources/) to access my past lecture notes and LaTeX templates.
 
-* Go to this [Link](/teaching/evaluations/) to see my past course evaluations
+* [Go to this Link](/teaching/evaluations/) to see my past course evaluations.
 
-* Go to this [link](/teaching/recommendations/) if you are considering asking me to be reference or for a letter of recommendation
+* [Go to this link](/teaching/recommendations/) if you are considering asking me to be reference or for a letter of recommendation.
 
 </div>
 
