@@ -35,7 +35,7 @@ If you are considering asking me for a letter, please read the following informa
     - How would you describe yourself and what are your strengths?
     - What are your long term goals and how will this internship/position/award help you achieve them?
     - What makes you particularly qualified for this internship/position/award? 
-    - If this is an REU, please provide information about the project/program you are applying to and why you are a great fit for it.
+        - If this is an REU, please provide information about the project/program you are applying to and why you are a great fit for it.
 
 4. Please send me a single email containing all of the above documents and include a list of due dates or links to upload the letter/reference.
 
