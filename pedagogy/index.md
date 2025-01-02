@@ -23,9 +23,14 @@ navigation_weight: 3
 
 **Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024]() - [Winter 2025]()
 
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
+
 ## Professional Development Training for Graduate Student Lecturers
 
 ### The University of Chicago, co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/)
+
 
 <div class="course">
 **Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024]() 
@@ -36,9 +41,17 @@ navigation_weight: 3
 </div>
 <!--## : -->
 
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
+
 ## Exploratory Teaching Group for Instructional Faculty
 
 **Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/)
+
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
 
 ## Seminar and Conferences
 
