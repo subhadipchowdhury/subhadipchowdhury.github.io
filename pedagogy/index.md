@@ -39,7 +39,7 @@ navigation_weight: 3
 <div class="course">
 **Designing Exam Standards and Questions in Alignment** - [Autumn 2024]()
 </div>
-<!--## : -->
+<p></p>
 
 </div>
 
