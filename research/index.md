@@ -14,6 +14,10 @@ navigation_weight: 4
 
 Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.pdf)
 
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
+
 
 ## Publications/Preprints/Expository Notes
 
@@ -37,6 +41,9 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% endif %}
 {% endfor %}
 
+</div>
+
+<div style="border-bottom: 2px  solid #800000;">
 
 ## Seminar and Conferences
 
