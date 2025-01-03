@@ -33,11 +33,11 @@ navigation_weight: 3
 
 
 <div class="course">
-**Selecting and Creating Rich Mathematical Tasks** - [Autumn 2024]() 
+**Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]() 
 </div>
 
 <div class="course">
-**Designing Exam Standards and Questions in Alignment** - [Autumn 2024]()
+** Selecting and designing exam questions that align with learning goals** - [Autumn 2024]()
 </div>
 <p></p>
 
