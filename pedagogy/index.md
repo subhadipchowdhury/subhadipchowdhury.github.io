@@ -37,7 +37,7 @@ navigation_weight: 3
 </div>
 
 <div class="course">
-** Selecting and designing exam questions that align with learning goals** - [Autumn 2024]()
+**Selecting and designing exam questions that align with learning goals** - [Autumn 2024]()
 </div>
 <p></p>
 
