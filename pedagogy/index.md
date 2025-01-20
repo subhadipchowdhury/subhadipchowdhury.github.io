@@ -21,7 +21,7 @@ navigation_weight: 3
 
 ## Training in Collaborative Learning for Undergraduate TAs
 
-**Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024]() - [Winter 2025]()
+**Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024]() - [Winter 2025](/assets/syllabi/2025SP_CLT.pdf)
 
 </div>
 
