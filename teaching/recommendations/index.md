@@ -30,10 +30,10 @@ If you are considering asking me for a letter, please read the following informa
 
     Do not feel like you need to be modest in your letter. Also, realize that I am not ``testing'' you with this task. You do not need to labor over your draft to impress me. You just need to write something honest that might be helpful as I write about you. 
 
-    - What is your name, year/status in school, and field of study?
+    - What is your name, pronouns, year/status in school, and field of study?
     - How long have I known you, and what is my relationship(s) to you? (instructor, advisor, colleague, etc.)
     - How would you describe yourself and what are your strengths?
-    - What are your long term goals and how will this internship/position/award help you achieve them?
+    - What are your long-term goals, and how will this internship/position/award help you achieve them?
     - What makes you particularly qualified for this internship/position/award? 
         - If this is an REU, please provide information about the project/program you are applying to and why you are a great fit for it.
 
