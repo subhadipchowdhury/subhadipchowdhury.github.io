@@ -15,7 +15,7 @@ has_subnav: 1
 
 <div style="border-bottom: 2px  solid #800000;">
 
-* [Go to this link](/teaching/resources/) to access my past lecture notes and LaTeX templates.
+<!-- * [Go to this link](/teaching/resources/) to access my past lecture notes and LaTeX templates.-->
 
 * [Go to this Link](/teaching/evaluations/) to see my past course evaluations.
 
