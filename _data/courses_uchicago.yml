@@ -1,20 +1,38 @@
+-   Code: 163
+    Name: Honors Calculus III
+    Coursepages:
+        - Duration: Spring 2025
+
+-   Code: 185
+    Name: Mathemtical Methods for Physical Sciences III (Differential Equations)
+    Coursepages:
+        - Duration: Autumn 2025
+
+-   Code: 184
+    Name: Mathemtical Methods for Physical Sciences II (Multivariavle and Vector Calculus)
+    Coursepages:
+        - Duration: Summer 2025
+          Link: /assets/syllabi/2025SU_184.pdf  
+
 -   Code: 133
     Name: Elementary Functions and Calculus III
     Coursepages:
-        - Duration: Spring 2024
         - Duration: Spring 2025
+          Link: /assets/syllabi/2025SP_133.pdf
+        - Duration: Spring 2024
 
 -   Code: 132
     Name: Elementary Functions and Calculus II
     Coursepages:
-        - Duration: Winter 2024
         - Duration: Winter 2025
-          Link: /assets/syllabi/2025SP_132.pdf
+          Link: /assets/syllabi/2025WI_132.pdf
+        - Duration: Winter 2024
          
 -   Code: 131
     Name: Elementary Functions and Calculus I
     Coursepages:
-        - Duration: Autumn 2023
-          Link: /assets/syllabi/2023AU_131.pdf
         - Duration: Autumn 2024
           Link: /assets/syllabi/2024AU_131.pdf
+        - Duration: Autumn 2023
+          Link: /assets/syllabi/2023AU_131.pdf
+        

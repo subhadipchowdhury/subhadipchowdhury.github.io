@@ -79,7 +79,7 @@ has_subnav: 1
 
 {% for course in site.data.nonteaching_courses_uchicago %}
 <div class="course">
-**{{ course.Duration }}**: {{ course.Role }} for {{ course.Name }} (Math {% if course.Link %} [{{ course.Code }}]({{ course.Link }})) {% else %} {{ course.Code }}) {% endif %}, taught by Professor [{{ course.Instructor }}]({{ course:Homepage }})
+{{ course.Role }} for **{{ course.Name }} (Math {{ course.Code }})**, taught by Professor [{{ course.Instructor }}]({{ course.Homepage }}) - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }})) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}
