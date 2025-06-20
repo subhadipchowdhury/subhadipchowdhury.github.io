@@ -78,9 +78,9 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 My pedagogical interests revolve around developing discovery-based, active, and inclusive learning environments that effectively engage students from diverse backgrounds and promote constructivist learning with a growth mindset. In my current role, I also advise the Neubauer Phoenix STEM scholars and train math undergraduate and graduate teaching assistants in the pedagogy and practice of collaborative learning. 
 
-During academic year 2024-2025, I will be a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program) at the Chicago Center for Teaching and Learning, and I will be supported by a CCTL Grant to co-lead an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups) titled "Discussion on Implementing Alternate Grading and Redesigning Assessment in Math".
+During academic year 2024-2025, I was a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program) at the Chicago Center for Teaching and Learning, and supported by a CCTL Grant to co-lead an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups) titled "Discussion on Implementing Alternate Grading and Redesigning Assessment in Math".
 
-Material from my past courses are accessible through the [teaching page](teaching). The page also links to my philosophy statements and portfolio.
+Material from my current and past courses are accessible through the [teaching page](teaching).
 
 </div>
 
