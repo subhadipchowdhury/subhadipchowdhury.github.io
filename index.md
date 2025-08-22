@@ -20,7 +20,7 @@ navigation_weight: 1
 | <i class="fa-solid fa-signs-post"></i> | 5734 S. University Ave|
 |        |Chicago, IL - 60637|
 |        |    |
-| <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2024)](assets/CV.pdf) |
+| <i class="fa-solid fa-file-pdf"></i> | [CV (Summer 2025)](assets/CV.pdf) |
 
 </div>
 <div class="shield">
