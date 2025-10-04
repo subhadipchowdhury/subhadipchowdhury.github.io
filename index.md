@@ -42,7 +42,7 @@ navigation_weight: 1
 
 ## Biography
 
-I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/) and in the [Neubauer Phoenix STEM Scholars program](https://college.uchicago.edu/phoenix-stem) at the [Office of Research and Teaching Innovations](https://college.uchicago.edu/academics/office-research-and-teaching-innovations).
+I am currently an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/) and in the [Neubauer Phoenix STEM Scholars program](https://college.uchicago.edu/phoenix-stem) at the [Dean of Students Office](https://college.uchicago.edu/student-services/college-dean-students).
 
 <div class='experience'>
 
@@ -76,9 +76,9 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 ## Teaching and Pedagogy
 
-My pedagogical interests revolve around developing discovery-based, active, and inclusive learning environments that effectively engage students from diverse backgrounds and promote constructivist learning with a growth mindset. In my current role, I also advise the Neubauer Phoenix STEM scholars and train math undergraduate and graduate teaching assistants in the pedagogy and practice of collaborative learning. 
+My pedagogical interests revolve around designing discovery-based, active, and inclusive learning environments that engage diverse students effectively. My course design emphasizes constructivist project-based learning, and alternative grading systems with clear feedback loops for iterative improvement. I’m currently updating my courses and assignments to be more AI-aware and to promote responsible use of technology. I lead our department’s Collaborative Learning program and train graduate TAs and undergraduate Lead Junior Tutors. I also advise the Neubauer Phoenix STEM Scholars.
 
-During academic year 2024-2025, I was a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program) at the Chicago Center for Teaching and Learning, and supported by a CCTL Grant to co-lead an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups) titled "Discussion on Implementing Alternate Grading and Redesigning Assessment in Math".
+During academic year 2025-2026, I will be a [Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows) at the Chicago Center for Teaching and Learning. Last year, I was a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program) and was supported by a CCTL Grant to co-lead an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups) titled "Discussion on Implementing Alternate Grading and Redesigning Assessment in Math".
 
 Material from my current and past courses are accessible through the [teaching page](teaching).
 
