@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Equation Simulation: Problem B</title>
+    <style>
+        /* Tailwind-like CSS Reset and Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6; /* gray-100 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            color: #1f2937; /* gray-800 */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 42rem; /* max-w-2xl */
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: #4b5563; /* gray-600 */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.25rem;
+            background-color: #f9fafb; /* gray-50 */
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .legend {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .line-sample {
+            width: 1rem;
+            height: 2px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        button {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            color: #374151; /* gray-700 */
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: #f3f4f6;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 0.5rem;
+            background: #e5e7eb;
+            border-radius: 0.5rem;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            background: #3b82f6; /* blue-500 */
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .time-display {
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 0.875rem;
+            color: #4b5563;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .analysis {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: #eff6ff; /* blue-50 */
+            color: #1e40af; /* blue-800 */
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Wave Equation Simulation</h2>
+        <div class="subtitle">
+            Problem B: Forced Wave Equation <br/>
+            <span class="mono">u_tt = u_xx + sin(2πx)</span>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="simCanvas" width="600" height="300"></canvas>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="line-sample" style="background-color: #2563eb;"></div>
+                    <span>u(x,t) Current</span>
+                </div>
+                <div class="legend-item">
+                    <div class="line-sample" style="border-top: 2px dashed #ef4444;"></div>
+                    <span>v(x) Steady State</span>
+                </div>
+                <div class="legend-item">
+                    <div class="line-sample" style="background-color: #d1d5db;"></div>
+                    <span>F(x) Force</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="btn-group">
+                <button id="playPauseBtn" title="Pause">
+                    <!-- Pause Icon -->
+                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    <!-- Play Icon (Hidden by default) -->
+                    <svg id="playIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+                <button id="resetBtn" title="Reset">
+                    <!-- Rotate CCW Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                </button>
+            </div>
+
+            <div class="slider-group">
+                <span id="speedLabel" style="font-size: 0.875rem; color: #4b5563; white-space: nowrap;">Speed: 1.0x</span>
+                <input type="range" id="speedSlider" min="0.1" max="2.0" step="0.1" value="1.0">
+            </div>
+
+            <div class="time-display" id="timeDisplay">t = 0.00s</div>
+        </div>
+
+        <div class="analysis">
+            <strong>Analysis:</strong> The string oscillates entirely on one side of the initial position (u=0). 
+            The constant force <span class="mono">sin(2πx)</span> pushes it towards the red steady-state line. 
+            The string "overshoots" the steady state, reaches a maximum deformation of <span class="mono">2*v(x)</span>, 
+            and then swings back to the flat initial position.
+        </div>
+    </div>
+
+    <script>
+        // --- Constants & State ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Problem Constants
+        // u(x,t) = A * sin(2*pi*x) * (1 - cos(2*pi*t))
+        // A = 1 / (4 * pi^2) ≈ 0.02533
+        const WAVE_AMP_A = 1 / (4 * Math.PI * Math.PI);
+        const AMPLITUDE_SCALE = 10;
+
+        // Animation State
+        let isPlaying = true;
+        let time = 0;
+        let speed = 1.0;
+        let lastTime = performance.now();
+        let animationId;
+
+        // --- DOM Elements ---
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const resetBtn = document.getElementById('resetBtn');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedLabel = document.getElementById('speedLabel');
+        const timeDisplay = document.getElementById('timeDisplay');
+
+        // --- Logic ---
+
+        const calculateU = (x, t) => {
+            return WAVE_AMP_A * Math.sin(2 * Math.PI * x) * (1 - Math.cos(2 * Math.PI * t));
+        };
+
+        const calculateV = (x) => {
+            return WAVE_AMP_A * Math.sin(2 * Math.PI * x);
+        };
+
+        const draw = (width, height, t) => {
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            const padding = 40;
+            const plotWidth = width - padding * 2;
+            const plotHeight = height - padding * 2;
+            const centerY = height / 2;
+
+            // 1. Draw Axes
+            ctx.beginPath();
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            // X-axis
+            ctx.moveTo(padding, centerY);
+            ctx.lineTo(width - padding, centerY);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#666';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('x=0', padding, centerY + 20);
+            ctx.fillText('x=1', width - padding - 20, centerY + 20);
+            ctx.fillText('u=0', padding - 30, centerY + 4);
+
+            // 2. Draw Forcing Function F(x) Arrows
+            ctx.save();
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.fillStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            for (let i = 0; i <= 20; i++) {
+                const xVal = i / 20;
+                const xPx = padding + xVal * plotWidth;
+                const force = Math.sin(2 * Math.PI * xVal);
+                const arrowScale = 30;
+                
+                if (Math.abs(force) > 0.1) {
+                    const yStart = centerY;
+                    const yEnd = centerY - force * arrowScale;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(xPx, yStart);
+                    ctx.lineTo(xPx, yEnd);
+                    ctx.stroke();
+                    
+                    // Arrowhead
+                    ctx.beginPath();
+                    ctx.moveTo(xPx - 3, yEnd + (force > 0 ? 3 : -3));
+                    ctx.lineTo(xPx, yEnd);
+                    ctx.lineTo(xPx + 3, yEnd + (force > 0 ? 3 : -3));
+                    ctx.stroke();
+                }
+            }
+            ctx.restore();
+
+            // 3. Draw Steady State v(x) (Dashed Red)
+            ctx.beginPath();
+            ctx.strokeStyle = '#ff4444';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            for (let px = 0; px <= plotWidth; px++) {
+                const xVal = px / plotWidth;
+                const uVal = calculateV(xVal);
+                const yPx = centerY - (uVal * AMPLITUDE_SCALE * (plotHeight / 2));
+                if (px === 0) ctx.moveTo(padding + px, yPx);
+                else ctx.lineTo(padding + px, yPx);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // 4. Draw Current Solution u(x,t) (Solid Blue)
+            ctx.beginPath();
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 4;
+            for (let px = 0; px <= plotWidth; px++) {
+                const xVal = px / plotWidth;
+                const uVal = calculateU(xVal, t);
+                const yPx = centerY - (uVal * AMPLITUDE_SCALE * (plotHeight / 2));
+                if (px === 0) ctx.moveTo(padding + px, yPx);
+                else ctx.lineTo(padding + px, yPx);
+            }
+            ctx.stroke();
+
+            // 5. Draw Nodes
+            ctx.fillStyle = 'black';
+            [0, 0.5, 1].forEach(xNode => {
+                const xPx = padding + xNode * plotWidth;
+                ctx.beginPath();
+                ctx.arc(xPx, centerY, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+        };
+
+        const loop = (now) => {
+            if (isPlaying) {
+                const deltaTime = (now - lastTime) / 1000; // seconds
+                time += deltaTime * speed;
+                timeDisplay.textContent = `t = ${time.toFixed(2)}s`;
+            }
+            lastTime = now;
+            draw(canvas.width, canvas.height, time);
+            animationId = requestAnimationFrame(loop);
+        };
+
+        // --- Event Listeners ---
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            // Toggle Icons
+            if (isPlaying) {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                playPauseBtn.title = "Pause";
+            } else {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                playPauseBtn.title = "Play";
+                // Reset lastTime so we don't jump when resuming
+                lastTime = performance.now();
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            time = 0;
+            timeDisplay.textContent = `t = 0.00s`;
+            if (!isPlaying) {
+                // If paused, draw immediately to show reset state
+                draw(canvas.width, canvas.height, time);
+                lastTime = performance.now(); // ensure smooth resume if clicked
+            } else {
+                // If playing, just reset time; loop handles draw
+            }
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            speed = parseFloat(e.target.value);
+            speedLabel.textContent = `Speed: ${speed.toFixed(1)}x`;
+        });
+
+        // Start Loop
+        loop(performance.now());
+
+    </script>
+</body>
+</html>
