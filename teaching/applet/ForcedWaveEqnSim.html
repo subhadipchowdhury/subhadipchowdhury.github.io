@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave Equation Simulation: Problem B</title>
+    <title>Wave Equation Simulation: Variable c and k</title>
     <style>
         /* Tailwind-like CSS Reset and Styles */
         body {
@@ -20,9 +20,9 @@
 
         .container {
             width: 100%;
-            max-width: 42rem; /* max-w-2xl */
+            max-width: 48rem; /* max-w-3xl */
             background-color: white;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             display: flex;
@@ -31,21 +31,26 @@
         }
 
         h2 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #1f2937;
         }
 
         .subtitle {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #4b5563; /* gray-600 */
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            background-color: #f3f4f6;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
         }
 
         .mono {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 600;
+            color: #2563eb;
         }
 
         .canvas-wrapper {
@@ -54,8 +59,9 @@
             border: 1px solid #e5e7eb; /* gray-200 */
             border-radius: 0.25rem;
             background-color: #f9fafb; /* gray-50 */
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
         }
 
         canvas {
@@ -66,13 +72,13 @@
 
         .legend {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 0.5rem;
-            border-radius: 0.25rem;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem;
+            border-radius: 0.375rem;
             font-size: 0.75rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
             border: 1px solid #e5e7eb;
         }
 
@@ -88,17 +94,45 @@
         }
 
         .line-sample {
-            width: 1rem;
+            width: 1.5rem;
             height: 2px;
         }
 
-        .controls {
+        /* Controls Grid */
+        .controls-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .playback-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-top: 0.5rem;
         }
 
         .btn-group {
@@ -107,33 +141,33 @@
         }
 
         button {
-            background: none;
-            border: none;
+            background: white;
+            border: 1px solid #d1d5db;
             padding: 0.5rem;
             border-radius: 9999px;
             cursor: pointer;
-            color: #374151; /* gray-700 */
-            transition: background-color 0.2s;
+            color: #374151;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
 
         button:hover {
             background-color: #f3f4f6;
+            border-color: #9ca3af;
         }
 
-        .slider-group {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex: 1;
+        button:active {
+            background-color: #e5e7eb;
+            transform: translateY(1px);
         }
 
         input[type=range] {
             width: 100%;
-            height: 0.5rem;
-            background: #e5e7eb;
+            height: 0.375rem;
+            background: #d1d5db;
             border-radius: 0.5rem;
             appearance: none;
             outline: none;
@@ -144,9 +178,11 @@
             appearance: none;
             width: 1rem;
             height: 1rem;
-            background: #3b82f6; /* blue-500 */
+            background: #2563eb; /* blue-600 */
             border-radius: 50%;
             cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .time-display {
@@ -155,17 +191,10 @@
             color: #4b5563;
             min-width: 80px;
             text-align: right;
-        }
-
-        .analysis {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background-color: #eff6ff; /* blue-50 */
-            color: #1e40af; /* blue-800 */
-            font-size: 0.875rem;
+            background: white;
+            padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
-            width: 100%;
-            box-sizing: border-box;
+            border: 1px solid #e5e7eb;
         }
 
     </style>
@@ -175,20 +204,19 @@
     <div class="container">
         <h2>Wave Equation Simulation</h2>
         <div class="subtitle">
-            Problem B: Forced Wave Equation <br/>
-            <span class="mono">u_tt = u_xx + sin(2πx)</span>
+            Equation: <span class="mono">u_tt = c²u_xx + sin(2πxk)</span>
         </div>
 
         <div class="canvas-wrapper">
-            <canvas id="simCanvas" width="600" height="300"></canvas>
+            <canvas id="simCanvas" width="800" height="400"></canvas>
             <div class="legend">
                 <div class="legend-item">
-                    <div class="line-sample" style="background-color: #2563eb;"></div>
-                    <span>u(x,t) Current</span>
+                    <div class="line-sample" style="background-color: #2563eb; height: 3px;"></div>
+                    <span>u(x,t) String</span>
                 </div>
                 <div class="legend-item">
                     <div class="line-sample" style="border-top: 2px dashed #ef4444;"></div>
-                    <span>v(x) Steady State</span>
+                    <span>v(x) Equilibrium</span>
                 </div>
                 <div class="legend-item">
                     <div class="line-sample" style="background-color: #d1d5db;"></div>
@@ -197,115 +225,193 @@
             </div>
         </div>
 
-        <div class="controls">
-            <div class="btn-group">
-                <button id="playPauseBtn" title="Pause">
-                    <!-- Pause Icon -->
-                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                    <!-- Play Icon (Hidden by default) -->
-                    <svg id="playIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </button>
-                <button id="resetBtn" title="Reset">
-                    <!-- Rotate CCW Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-                </button>
+        <div class="controls-container">
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="cSlider">Wave Speed (c)</label>
+                    <span id="cValue" class="mono">1.00</span>
+                </div>
+                <!-- c: 0.1 to 2.0 (Changed from 1.0) -->
+                <input type="range" id="cSlider" min="0.1" max="2.0" step="0.01" value="1.0">
             </div>
 
-            <div class="slider-group">
-                <span id="speedLabel" style="font-size: 0.875rem; color: #4b5563; white-space: nowrap;">Speed: 1.0x</span>
-                <input type="range" id="speedSlider" min="0.1" max="2.0" step="0.1" value="1.0">
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="kSlider">Forcing Mode (k)</label>
+                    <span id="kValue" class="mono">1</span>
+                </div>
+                <!-- k: Integers 1 to 5 -->
+                <input type="range" id="kSlider" min="1" max="5" step="1" value="1">
             </div>
-
-            <div class="time-display" id="timeDisplay">t = 0.00s</div>
         </div>
 
-        <div class="analysis">
-            <strong>Analysis:</strong> The string oscillates entirely on one side of the initial position (u=0). 
-            The constant force <span class="mono">sin(2πx)</span> pushes it towards the red steady-state line. 
-            The string "overshoots" the steady state, reaches a maximum deformation of <span class="mono">2*v(x)</span>, 
-            and then swings back to the flat initial position.
+        <div class="playback-controls">
+            <div class="btn-group">
+                <button id="playPauseBtn" title="Pause">
+                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    <svg id="playIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+                <button id="resetBtn" title="Reset Simulation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                </button>
+            </div>
+            <div class="time-display" id="timeDisplay">t = 0.00s</div>
         </div>
     </div>
 
     <script>
-        // --- Constants & State ---
-        const canvas = document.getElementById('simCanvas');
-        const ctx = canvas.getContext('2d');
+        // --- Physics Configuration ---
+        const NUM_POINTS = 200;        // Number of spatial points
+        const DOMAIN_L = 1.0;        // Length of domain
+        const dx = DOMAIN_L / NUM_POINTS;     // Spatial step size
+        const dt = 0.002;     // Time step (kept small for stability)
+        const VISUAL_SCALE = 50; // Scale factor for drawing amplitude
+
+        // --- State Variables ---
+        let c = 1.0; // Default
+        let k = 1;   // Default integer
         
-        // Problem Constants
-        // u(x,t) = A * sin(2*pi*x) * (1 - cos(2*pi*t))
-        // A = 1 / (4 * pi^2) ≈ 0.02533
-        const WAVE_AMP_A = 1 / (4 * Math.PI * Math.PI);
-        const AMPLITUDE_SCALE = 10;
+        // Arrays for Finite Difference Method
+        let u_curr = new Float64Array(NUM_POINTS + 1);
+        let u_prev = new Float64Array(NUM_POINTS + 1);
+        let u_next = new Float64Array(NUM_POINTS + 1);
+        
+        let forcingArr = new Float64Array(NUM_POINTS + 1); // Precomputed spatial forcing
+        let steadyStateArr = new Float64Array(NUM_POINTS + 1); // Precomputed steady state
 
         // Animation State
         let isPlaying = true;
-        let time = 0;
-        let speed = 1.0;
-        let lastTime = performance.now();
+        let simTime = 0;
         let animationId;
 
         // --- DOM Elements ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const cSlider = document.getElementById('cSlider');
+        const kSlider = document.getElementById('kSlider');
+        const cValueDisplay = document.getElementById('cValue');
+        const kValueDisplay = document.getElementById('kValue');
+        const timeDisplay = document.getElementById('timeDisplay');
         const playPauseBtn = document.getElementById('playPauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const playIcon = document.getElementById('playIcon');
         const pauseIcon = document.getElementById('pauseIcon');
-        const resetBtn = document.getElementById('resetBtn');
-        const speedSlider = document.getElementById('speedSlider');
-        const speedLabel = document.getElementById('speedLabel');
-        const timeDisplay = document.getElementById('timeDisplay');
 
-        // --- Logic ---
+        // --- Initialization & Physics ---
 
-        const calculateU = (x, t) => {
-            return WAVE_AMP_A * Math.sin(2 * Math.PI * x) * (1 - Math.cos(2 * Math.PI * t));
-        };
-
-        const calculateV = (x) => {
-            return WAVE_AMP_A * Math.sin(2 * Math.PI * x);
-        };
-
-        const draw = (width, height, t) => {
-            // Clear canvas
-            ctx.clearRect(0, 0, width, height);
+        function initSimulation() {
+            // Reset arrays to 0 (Initial Conditions: u(x,0)=0, u_t(x,0)=0)
+            u_curr.fill(0);
+            u_prev.fill(0);
+            u_next.fill(0);
+            simTime = 0;
             
-            const padding = 40;
-            const plotWidth = width - padding * 2;
-            const plotHeight = height - padding * 2;
-            const centerY = height / 2;
+            precomputeSteadyStateAndForcing();
+        }
 
-            // 1. Draw Axes
+        function precomputeSteadyStateAndForcing() {
+            // Calculate Constants for Steady State Formula
+            // v'' = -1/c^2 * sin(Bx), where B = 2*pi*k (changed from 2*pi/k)
+            // v(x) = (1 / (c*B)^2) * [ sin(Bx) - x*sin(B) ]
+            
+            const B = 2 * Math.PI * k; // UPDATED: Proportional to k
+            const factor = 1.0 / Math.pow(c * B, 2);
+            const sinB = Math.sin(B);
+
+            for (let i = 0; i <= NUM_POINTS; i++) {
+                const x = i * dx;
+                // 1. Forcing F(x) = sin(2*pi*x*k)
+                forcingArr[i] = Math.sin(B * x);
+
+                // 2. Steady State v(x)
+                // Since k is integer, sin(B) = sin(2*pi*k) = 0, so linear term vanishes naturally.
+                steadyStateArr[i] = factor * (Math.sin(B * x) - x * sinB);
+            }
+        }
+
+        function physicsStep() {
+            // Finite Difference Method for Wave Equation with Forcing
+            
+            const r = (c * dt) / dx;
+            const r2 = r * r;
+            const dt2 = dt * dt;
+
+            // Stability check: For this explicit scheme, we typically want r <= 1.
+            // c <= 2, dt=0.002, dx=0.005. r = 2*0.002/0.005 = 0.8. Stable.
+
+            for (let i = 1; i < NUM_POINTS; i++) {
+                // Wave Laplacian part: c^2 * u_xx
+                const laplacian = r2 * (u_curr[i+1] - 2*u_curr[i] + u_curr[i-1]);
+                
+                // Forcing part: F(x) * dt^2
+                const forcingTerm = forcingArr[i] * dt2;
+                
+                // Time stepping
+                u_next[i] = 2*u_curr[i] - u_prev[i] + laplacian + forcingTerm;
+                
+                // Minimal numerical damping to prevent long-term instability in float32/64
+                u_next[i] *= 0.99995; 
+            }
+
+            // Boundary Conditions (Dirichlet u=0)
+            u_next[0] = 0;
+            u_next[NUM_POINTS] = 0;
+
+            // Rotate arrays
+            let temp = u_prev;
+            u_prev = u_curr;
+            u_curr = u_next;
+            u_next = temp;
+
+            simTime += dt;
+        }
+
+        // --- Rendering ---
+
+        function draw() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const centerY = h / 2;
+            const padding = 50;
+            const plotW = w - padding * 2;
+            const plotH = h - padding * 2;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // 1. Axes
             ctx.beginPath();
-            ctx.strokeStyle = '#ccc';
+            ctx.strokeStyle = '#9ca3af';
             ctx.lineWidth = 1;
             // X-axis
             ctx.moveTo(padding, centerY);
-            ctx.lineTo(width - padding, centerY);
+            ctx.lineTo(w - padding, centerY);
             // Y-axis
             ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(padding, h - padding);
             ctx.stroke();
-
+            
             // Labels
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#6b7280';
             ctx.font = '12px sans-serif';
             ctx.fillText('x=0', padding, centerY + 20);
-            ctx.fillText('x=1', width - padding - 20, centerY + 20);
-            ctx.fillText('u=0', padding - 30, centerY + 4);
+            ctx.fillText('x=1', w - padding - 20, centerY + 20);
 
-            // 2. Draw Forcing Function F(x) Arrows
+            // 2. Forcing Arrows (Gray)
             ctx.save();
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.fillStyle = '#e0e0e0';
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.fillStyle = '#e5e7eb';
             ctx.lineWidth = 2;
-            for (let i = 0; i <= 20; i++) {
-                const xVal = i / 20;
-                const xPx = padding + xVal * plotWidth;
-                const force = Math.sin(2 * Math.PI * xVal);
-                const arrowScale = 30;
+            // Draw fewer arrows than NUM_POINTS for clarity
+            const arrowStep = 10; 
+            for (let i = 0; i <= NUM_POINTS; i += arrowStep) {
+                const xPx = padding + (i / NUM_POINTS) * plotW;
+                const force = forcingArr[i];
+                // Force visualization scale
+                const fScale = 40; 
                 
-                if (Math.abs(force) > 0.1) {
+                if (Math.abs(force) > 0.05) {
                     const yStart = centerY;
-                    const yEnd = centerY - force * arrowScale;
+                    const yEnd = centerY - force * fScale;
                     
                     ctx.beginPath();
                     ctx.moveTo(xPx, yStart);
@@ -313,101 +419,95 @@
                     ctx.stroke();
                     
                     // Arrowhead
+                    const headSize = 3;
                     ctx.beginPath();
-                    ctx.moveTo(xPx - 3, yEnd + (force > 0 ? 3 : -3));
+                    ctx.moveTo(xPx - headSize, yEnd + (force > 0 ? headSize : -headSize));
                     ctx.lineTo(xPx, yEnd);
-                    ctx.lineTo(xPx + 3, yEnd + (force > 0 ? 3 : -3));
+                    ctx.lineTo(xPx + headSize, yEnd + (force > 0 ? headSize : -headSize));
                     ctx.stroke();
                 }
             }
             ctx.restore();
 
-            // 3. Draw Steady State v(x) (Dashed Red)
+            // 3. Steady State (Red Dashed)
             ctx.beginPath();
-            ctx.strokeStyle = '#ff4444';
+            ctx.strokeStyle = '#ef4444';
             ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
-            for (let px = 0; px <= plotWidth; px++) {
-                const xVal = px / plotWidth;
-                const uVal = calculateV(xVal);
-                const yPx = centerY - (uVal * AMPLITUDE_SCALE * (plotHeight / 2));
-                if (px === 0) ctx.moveTo(padding + px, yPx);
-                else ctx.lineTo(padding + px, yPx);
+            ctx.setLineDash([6, 4]);
+            for (let i = 0; i <= NUM_POINTS; i++) {
+                const xPx = padding + (i / NUM_POINTS) * plotW;
+                const yVal = steadyStateArr[i];
+                const yPx = centerY - yVal * VISUAL_SCALE * (plotH/2);
+                if (i === 0) ctx.moveTo(xPx, yPx);
+                else ctx.lineTo(xPx, yPx);
             }
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // 4. Draw Current Solution u(x,t) (Solid Blue)
+            // 4. Current String Position (Blue)
             ctx.beginPath();
             ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 4;
-            for (let px = 0; px <= plotWidth; px++) {
-                const xVal = px / plotWidth;
-                const uVal = calculateU(xVal, t);
-                const yPx = centerY - (uVal * AMPLITUDE_SCALE * (plotHeight / 2));
-                if (px === 0) ctx.moveTo(padding + px, yPx);
-                else ctx.lineTo(padding + px, yPx);
+            ctx.lineWidth = 3;
+            for (let i = 0; i <= NUM_POINTS; i++) {
+                const xPx = padding + (i / NUM_POINTS) * plotW;
+                const yVal = u_curr[i];
+                const yPx = centerY - yVal * VISUAL_SCALE * (plotH/2);
+                if (i === 0) ctx.moveTo(xPx, yPx);
+                else ctx.lineTo(xPx, yPx);
             }
             ctx.stroke();
 
-            // 5. Draw Nodes
+            // 5. Nodes (Black dots at ends)
             ctx.fillStyle = 'black';
-            [0, 0.5, 1].forEach(xNode => {
-                const xPx = padding + xNode * plotWidth;
-                ctx.beginPath();
-                ctx.arc(xPx, centerY, 4, 0, 2 * Math.PI);
-                ctx.fill();
-            });
-        };
+            ctx.beginPath(); ctx.arc(padding, centerY, 4, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(w - padding, centerY, 4, 0, Math.PI*2); ctx.fill();
+        }
 
-        const loop = (now) => {
+        function loop() {
             if (isPlaying) {
-                const deltaTime = (now - lastTime) / 1000; // seconds
-                time += deltaTime * speed;
-                timeDisplay.textContent = `t = ${time.toFixed(2)}s`;
+                // Multiple physics steps per frame for speed
+                for(let k=0; k<4; k++) physicsStep();
+                timeDisplay.textContent = `t = ${simTime.toFixed(2)}s`;
             }
-            lastTime = now;
-            draw(canvas.width, canvas.height, time);
+            draw();
             animationId = requestAnimationFrame(loop);
-        };
+        }
 
-        // --- Event Listeners ---
+        // --- Interaction ---
+
+        cSlider.addEventListener('input', (e) => {
+            c = parseFloat(e.target.value);
+            cValueDisplay.textContent = c.toFixed(2);
+            // Need to recompute steady state when c changes
+            precomputeSteadyStateAndForcing();
+        });
+
+        kSlider.addEventListener('input', (e) => {
+            k = parseInt(e.target.value); // Integers only
+            kValueDisplay.textContent = k;
+            // Need to recompute steady state and forcing when k changes
+            precomputeSteadyStateAndForcing();
+        });
 
         playPauseBtn.addEventListener('click', () => {
             isPlaying = !isPlaying;
-            // Toggle Icons
-            if (isPlaying) {
+            if(isPlaying) {
                 playIcon.style.display = 'none';
                 pauseIcon.style.display = 'block';
-                playPauseBtn.title = "Pause";
             } else {
                 playIcon.style.display = 'block';
                 pauseIcon.style.display = 'none';
-                playPauseBtn.title = "Play";
-                // Reset lastTime so we don't jump when resuming
-                lastTime = performance.now();
             }
         });
 
         resetBtn.addEventListener('click', () => {
-            time = 0;
-            timeDisplay.textContent = `t = 0.00s`;
-            if (!isPlaying) {
-                // If paused, draw immediately to show reset state
-                draw(canvas.width, canvas.height, time);
-                lastTime = performance.now(); // ensure smooth resume if clicked
-            } else {
-                // If playing, just reset time; loop handles draw
-            }
+            initSimulation();
+            draw(); // force redraw immediately
         });
 
-        speedSlider.addEventListener('input', (e) => {
-            speed = parseFloat(e.target.value);
-            speedLabel.textContent = `Speed: ${speed.toFixed(1)}x`;
-        });
-
-        // Start Loop
-        loop(performance.now());
+        // Start
+        initSimulation();
+        loop();
 
     </script>
 </body>
