@@ -294,9 +294,16 @@
             },
             '6': {
                 u: (x, m) => 0,
-                v: (x, m) => 10 * x * Math.exp(-5 * x),
-                desc: "String struck sharply near x=0.",
-                tex: "u=0, \\; u_t = 10xe^{-5x}"
+                v: (x, m) => {
+                    // Gaussian approximation of delta(x - PI/4)
+                    // Area = 1.
+                    const sigma = 0.15; 
+                    const center = PI / 4;
+                    const amp = 1.0 / (sigma * Math.sqrt(2 * PI));
+                    return amp * Math.exp(-Math.pow(x - center, 2) / (2 * sigma * sigma));
+                },
+                desc: "Sharp impulse at x=π/4 (Approximating delta(x-π/4)).",
+                tex: "u=0, \\; u_t = \\delta(x-\\pi/4)"
             },
             '7': {
                 u: (x, m) => getCustomValue(x),
