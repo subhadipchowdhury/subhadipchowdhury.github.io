@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Forced Heat Equation Simulation</title>
+    
+    <!-- Configure MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            // Use CommonHTML output for stability with Plotly
+            chtml: {
+                fontCache: 'global'
+            },
+            startup: {
+                typeset: true
+            }
+        };
+    </script>
+    
+    <!-- Load MathJax for LaTeX rendering (CommonHTML version) -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Load Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
+    <style>
+        /* Tailwind-like CSS */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 1rem;
+            color: #1f2937;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: #111827;
+            text-align: center;
+        }
+
+        .math-block {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 1.25rem;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        input[type="number"], select {
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: white;
+            font-size: 0.9rem;
+        }
+
+        .formula-display {
+            font-size: 0.9rem;
+            color: #2563eb;
+            margin-top: 0.25rem;
+            min-height: 2em;
+            display: flex;
+            align-items: center;
+        }
+
+        .ic-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-toggle-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            background-color: #6366f1; /* Indigo */
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        .btn-toggle-sm:hover { background-color: #4f46e5; }
+
+        .btn-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        button.main-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .btn-start { background-color: #2563eb; }
+        .btn-start:hover { background-color: #1d4ed8; }
+        
+        .btn-stop { background-color: #dc2626; }
+        .btn-stop:hover { background-color: #b91c1c; }
+
+        .btn-reset { background-color: #4b5563; }
+        .btn-reset:hover { background-color: #374151; }
+
+        #heatWarningBox {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            display: none;
+            font-size: 0.9rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 800px; /* Increased height */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Loading Overlay */
+        #plotOverlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            font-weight: bold;
+            color: #666;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Forced Heat Equation Solver (3D)</h1>
+        
+        <div class="math-block">
+            $$ \frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} + f(x), \quad x \in [0, 1] $$
+        </div>
+
+        <div id="heatWarningBox"></div>
+
+        <div class="controls-grid">
+            <!-- Boundary Conditions -->
+            <div class="control-group">
+                <label>Boundary Conditions (Dirichlet)</label>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <label style="font-weight: normal; min-width: 60px;">Left $u(0,t)$:</label>
+                    <input type="number" id="heatInputA" value="0" step="0.1">
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <label style="font-weight: normal; min-width: 60px;">Right $u(1,t)$:</label>
+                    <input type="number" id="heatInputB" value="0" step="0.1">
+                </div>
+            </div>
+
+            <!-- Forcing Function -->
+            <div class="control-group">
+                <label for="heatSelectF">Forcing Function $f(x)$</label>
+                <select id="heatSelectF">
+                    <option value="none">No Forcing (0)</option>
+                    <option value="constant_pos">Constant Heat (+100)</option>
+                    <option value="constant_neg">Constant Cooling (-100)</option>
+                    <option value="gradient">Linear Gradient (Cool Left, Hot Right)</option>
+                    <option value="multi">Multi-Peak Waves (3 bumps)</option>
+                    <option value="localized">Localized Source (Center)</option>
+                    <option value="step_source">Step Source (Left Half)</option>
+                    <option value="dipole">Dipole (Heat Left, Cool Right)</option>
+                </select>
+                <div id="forcingFormula" class="formula-display"></div>
+            </div>
+
+            <!-- Initial Condition -->
+            <div class="control-group">
+                <div class="ic-header-row">
+                    <label for="heatSelectIC">Initial Condition $u(x,0)$</label>
+                    <button id="btnToggleICMode" class="btn-toggle-sm">Switch Mode</button>
+                </div>
+                <select id="heatSelectIC">
+                    <!-- Options populated by JS -->
+                </select>
+                <div id="icFormula" class="formula-display"></div>
+                <div id="icModeLabel" style="font-size: 0.8rem; color: #6b7280; margin-top: 2px;">
+                    Mode: Standard
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="main-btn btn-start" id="heatBtnStart">Start Simulation</button>
+            <button class="main-btn btn-stop" id="heatBtnStop" disabled>Pause</button>
+            <button class="main-btn btn-reset" id="heatBtnReset">Reset</button>
+        </div>
+
+        <div class="chart-container">
+            <div id="heatPlotDiv"></div>
+            <div id="plotOverlay">Simulating...</div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const HEAT_N = 30; // Number of spatial points
+        const HEAT_DX = 1.0 / (HEAT_N - 1);
+        const HEAT_DT = 0.0005; // Time step
+        
+        // --- State ---
+        let heat_u = new Float64Array(HEAT_N);
+        let heat_xArr = new Float64Array(HEAT_N);
+        let heat_t = 0;
+        let heat_isRunning = false;
+        let heat_animationId;
+        
+        // Mode State
+        let isInterpolatedMode = false;
+        
+        // History for 3D plot
+        let heat_zData = []; 
+        let heat_yData = [];
+
+        // DOM Elements
+        const domInputA = document.getElementById('heatInputA');
+        const domInputB = document.getElementById('heatInputB');
+        const domSelectF = document.getElementById('heatSelectF');
+        const domSelectIC = document.getElementById('heatSelectIC');
+        const domBtnToggleIC = document.getElementById('btnToggleICMode');
+        const domICModeLabel = document.getElementById('icModeLabel');
+        const domWarningBox = document.getElementById('heatWarningBox');
+        const domBtnStart = document.getElementById('heatBtnStart');
+        const domBtnStop = document.getElementById('heatBtnStop');
+        const domBtnReset = document.getElementById('heatBtnReset');
+        const domFormulaDisplay = document.getElementById('forcingFormula');
+        const domICFormulaDisplay = document.getElementById('icFormula');
+
+        // --- Physics Helpers ---
+
+        // Initialize X grid
+        for(let i=0; i<HEAT_N; i++) heat_xArr[i] = i * HEAT_DX;
+
+        function getHeatForcing(x) {
+            const type = domSelectF.value;
+            switch(type) {
+                case 'none': return 0;
+                case 'constant_pos': return 100;
+                case 'constant_neg': return -100;
+                case 'gradient': return 300 * (x - 0.5);
+                case 'multi': return 200 * Math.sin(3 * Math.PI * x);
+                case 'localized': return 500 * Math.exp(-100 * Math.pow(x - 0.5, 2));
+                case 'step_source': return (x < 0.5) ? 100 : 0;
+                case 'dipole': 
+                    return 500 * Math.exp(-100 * Math.pow(x - 0.3, 2)) - 500 * Math.exp(-100 * Math.pow(x - 0.7, 2));
+                default: return 0;
+            }
+        }
+
+        function getForcingLaTeX(type) {
+            switch(type) {
+                case 'none': return "$f(x) = 0$";
+                case 'constant_pos': return "$f(x) = 100$";
+                case 'constant_neg': return "$f(x) = -100$";
+                case 'gradient': return "$f(x) = 300(x - 0.5)$";
+                case 'multi': return "$f(x) = 200 \\sin(3\\pi x)$";
+                case 'localized': return "$f(x) = 500 e^{-100(x - 0.5)^2}$";
+                case 'step_source': return "$f(x) = 100 \\text{ if } x < 0.5, \\text{ else } 0$";
+                case 'dipole': return "$f(x) \\approx \\delta(x-0.3) - \\delta(x-0.7)$";
+                default: return "$f(x) = 0$";
+            }
+        }
+
+        function getICLaTeX(type) {
+            if (isInterpolatedMode) {
+                const base = "(1-x)a + xb";
+                switch(type) {
+                    case 'interp_linear': return `$u(x,0) = ${base}$`;
+                    case 'interp_quadratic': return `$u(x,0) = ${base} + 40x(1-x)$`;
+                    case 'interp_sine': return `$u(x,0) = ${base} + 20\\sin(\\pi x)$`;
+                    case 'interp_dip': return `$u(x,0) = ${base} - 20\\sin(\\pi x)$`;
+                    default: return `$u(x,0) = ${base}$`;
+                }
+            } else {
+                switch(type) {
+                    case 'zero': return "$u(x,0) = 0$";
+                    case 'constant': return "$u(x,0) = 10$";
+                    case 'linear': return "$u(x,0) = 10x$";
+                    case 'quadratic': return "$u(x,0) = 40x(1-x)$";
+                    case 'sine': return "$u(x,0) = 10\\sin(\\pi x)$";
+                    case 'step': return "$u(x,0) = 10 \\text{ if } x < 0.5, 0 \\text{ else}$";
+                    case 'triangle': return "$u(x,0) = 20x \\text{ or } 20(1-x)$";
+                    case 'random': return "$u(x,0) = \\text{Rand}(0,10)$";
+                    default: return "$u(x,0) = 0$";
+                }
+            }
+        }
+
+        function getHeatIC(x) {
+            const type = domSelectIC.value;
+            
+            if (isInterpolatedMode) {
+                // Interpolated Mode: Always satisfies BCs
+                const a = parseFloat(domInputA.value) || 0;
+                const b = parseFloat(domInputB.value) || 0;
+                
+                // Base linear interpolation
+                const linearBase = a * (1 - x) + b * x;
+                
+                switch(type) {
+                    case 'interp_linear': 
+                        return linearBase;
+                    case 'interp_quadratic': 
+                        // Add a quadratic bump: 40 * x * (1-x)
+                        return linearBase + 40 * x * (1 - x);
+                    case 'interp_sine': 
+                        // Add a sine arch: 20 * sin(pi*x)
+                        return linearBase + 20 * Math.sin(Math.PI * x);
+                    case 'interp_dip':
+                        // Subtract a sine arch
+                        return linearBase - 20 * Math.sin(Math.PI * x);
+                    default: return linearBase;
+                }
+            } else {
+                // Standard Mode: Predefined absolute functions
+                switch(type) {
+                    case 'zero': return 0;
+                    case 'constant': return 10;
+                    case 'linear': return 10 * x;
+                    case 'quadratic': return 40 * x * (1 - x);
+                    case 'sine': return 10 * Math.sin(Math.PI * x);
+                    case 'step': return (x < 0.5) ? 10 : 0;
+                    case 'triangle': return (x < 0.5) ? 20 * x : 20 * (1 - x);
+                    case 'random': return Math.random() * 10;
+                    default: return 0;
+                }
+            }
+        }
+
+        // --- UI Updates ---
+
+        function updateICOptions() {
+            domSelectIC.innerHTML = ''; // Clear existing
+            
+            if (isInterpolatedMode) {
+                domSelectIC.innerHTML = `
+                    <option value="interp_linear">Linear Connect (Line a to b)</option>
+                    <option value="interp_quadratic">Quadratic Arch (Line + Bump)</option>
+                    <option value="interp_sine">Sine Arch (Line + Sine)</option>
+                    <option value="interp_dip">Sine Dip (Line - Sine)</option>
+                `;
+                domICModeLabel.textContent = "Mode: Interpolated (Connects to BCs automatically)";
+                domBtnToggleIC.textContent = "Switch to Standard";
+            } else {
+                domSelectIC.innerHTML = `
+                    <option value="zero">Zero (0)</option>
+                    <option value="constant">Constant (10)</option>
+                    <option value="linear">Linear Ramp (10x)</option>
+                    <option value="quadratic">Quadratic Arch (40x(1-x))</option>
+                    <option value="sine">Sine Wave (10 sin(πx))</option>
+                    <option value="step">Step Function (Half 10, Half 0)</option>
+                    <option value="triangle">Triangle Wave (Peak 10)</option>
+                    <option value="random">Random Noise (0 to 10)</option>
+                `;
+                domICModeLabel.textContent = "Mode: Standard (Predefined functions)";
+                domBtnToggleIC.textContent = "Switch to Interpolated";
+            }
+            updateICFormula(); // Update display
+            // Reset Simulation on mode switch
+            initHeatSimulation();
+        }
+
+        function updateForcingFormula() {
+            const type = domSelectF.value;
+            const latex = getForcingLaTeX(type);
+            domFormulaDisplay.innerHTML = latex;
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([domFormulaDisplay]);
+            }
+        }
+
+        function updateICFormula() {
+            const type = domSelectIC.value;
+            const latex = getICLaTeX(type);
+            domICFormulaDisplay.innerHTML = latex;
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([domICFormulaDisplay]);
+            }
+        }
+
+        // --- Core Logic ---
+
+        function checkHeatConsistency() {
+            // No warning needed in Interpolated mode, as it forces consistency
+            if (isInterpolatedMode) {
+                domWarningBox.style.display = 'none';
+                return;
+            }
+
+            const a = parseFloat(domInputA.value);
+            const b = parseFloat(domInputB.value);
+            
+            const uStart = getHeatIC(0);
+            const uEnd = getHeatIC(1);
+            
+            const tol = 0.1;
+            const leftMismatch = Math.abs(uStart - a) > tol;
+            const rightMismatch = Math.abs(uEnd - b) > tol;
+
+            if (leftMismatch || rightMismatch) {
+                domWarningBox.style.display = 'flex';
+                let msg = "⚠️ <strong>Consistency Warning:</strong> ";
+                // Use standard HTML Entities &ne; instead of MathJax inside this dynamic box
+                if (leftMismatch) msg += `Left IC (${uStart.toFixed(1)}) &ne; BC (${a}). `;
+                if (rightMismatch) msg += `Right IC (${uEnd.toFixed(1)}) &ne; BC (${b}). `;
+                msg += " Expect a jump at t=0.";
+                domWarningBox.innerHTML = msg;
+            } else {
+                domWarningBox.style.display = 'none';
+            }
+        }
+
+        function initHeatSimulation() {
+            checkHeatConsistency();
+            updateForcingFormula();
+            updateICFormula();
+            heat_t = 0;
+            heat_zData = [];
+            heat_yData = [];
+
+            // Initialize u with IC
+            for(let i=0; i<HEAT_N; i++) {
+                heat_u[i] = getHeatIC(heat_xArr[i]);
+            }
+
+            // Force BCs immediately
+            heat_u[0] = parseFloat(domInputA.value);
+            heat_u[HEAT_N-1] = parseFloat(domInputB.value);
+
+            pushHeatHistory();
+            plotHeat();
+        }
+
+        function physicsHeatStep() {
+            const a = parseFloat(domInputA.value);
+            const b = parseFloat(domInputB.value);
+            const r = HEAT_DT / (HEAT_DX * HEAT_DX);
+
+            let u_next = new Float64Array(HEAT_N);
+
+            for (let i = 1; i < HEAT_N - 1; i++) {
+                const diffusion = r * (heat_u[i+1] - 2*heat_u[i] + heat_u[i-1]);
+                const forcing = HEAT_DT * getHeatForcing(heat_xArr[i]);
+                u_next[i] = heat_u[i] + diffusion + forcing;
+            }
+
+            u_next[0] = a;
+            u_next[HEAT_N-1] = b;
+
+            heat_u = u_next;
+            heat_t += HEAT_DT;
+        }
+
+        function pushHeatHistory() {
+            heat_zData.push(Array.from(heat_u));
+            heat_yData.push(heat_t);
+        }
+
+        // --- Rendering ---
+
+        function plotHeat() {
+            const data = [{
+                z: heat_zData,
+                x: heat_xArr,
+                y: heat_yData,
+                type: 'surface',
+                colorscale: 'Viridis',
+                showscale: false,
+                contours: {
+                    z: {
+                        show: true,
+                        usecolormap: true,
+                        highlightcolor: "#42f462",
+                        project: { z: true }
+                    }
+                }
+            }];
+
+            const layout = {
+                title: 'Temperature Evolution u(x,t)',
+                autosize: true,
+                scene: {
+                    xaxis: { title: 'Position x' },
+                    yaxis: { title: 'Time t' },
+                    zaxis: { title: 'Temp u' },
+                    camera: {
+                        eye: { x: 1.5, y: 1.5, z: 1.5 }
+                    }
+                },
+                margin: { l: 0, r: 0, b: 0, t: 30 }
+            };
+
+            Plotly.newPlot('heatPlotDiv', data, layout);
+        }
+
+        function updateHeatPlot() {
+            const graphDiv = document.getElementById('heatPlotDiv');
+            graphDiv.data[0].z = heat_zData;
+            graphDiv.data[0].y = heat_yData;
+            Plotly.redraw(graphDiv);
+        }
+
+        function heatLoop() {
+            if (!heat_isRunning) return;
+
+            const stepsPerFrame = 10;
+            const recordInterval = 2; 
+
+            for(let k=0; k<stepsPerFrame; k++) {
+                physicsHeatStep();
+                if (k % recordInterval === 0) {
+                    pushHeatHistory();
+                }
+            }
+
+            updateHeatPlot();
+            heat_animationId = requestAnimationFrame(heatLoop);
+        }
+
+        // --- Interactions ---
+
+        domBtnStart.addEventListener('click', () => {
+            if (heat_isRunning) return;
+            heat_isRunning = true;
+            domBtnStart.disabled = true;
+            domBtnStop.disabled = false;
+            
+            domInputA.disabled = true;
+            domInputB.disabled = true;
+            domSelectF.disabled = false; 
+            domSelectIC.disabled = true;
+            domBtnToggleIC.disabled = true;
+
+            heatLoop();
+        });
+
+        domBtnStop.addEventListener('click', () => {
+            heat_isRunning = false;
+            domBtnStart.disabled = false;
+            domBtnStop.disabled = true;
+            cancelAnimationFrame(heat_animationId);
+        });
+
+        domBtnReset.addEventListener('click', () => {
+            heat_isRunning = false;
+            domBtnStart.disabled = false;
+            domBtnStop.disabled = true;
+            cancelAnimationFrame(heat_animationId);
+            
+            domInputA.disabled = false;
+            domInputB.disabled = false;
+            domSelectF.disabled = false;
+            domSelectIC.disabled = false;
+            domBtnToggleIC.disabled = false;
+
+            initHeatSimulation();
+        });
+
+        // Toggle Mode logic
+        domBtnToggleIC.addEventListener('click', () => {
+            isInterpolatedMode = !isInterpolatedMode;
+            updateICOptions();
+        });
+
+        // Instant feedback for warnings while typing
+        domInputA.addEventListener('input', checkHeatConsistency);
+        domInputB.addEventListener('input', checkHeatConsistency);
+
+        // Full reset (re-plot) only on committed changes (Enter or click away)
+        domInputA.addEventListener('change', initHeatSimulation);
+        domInputB.addEventListener('change', initHeatSimulation);
+        
+        // Dropdowns always trigger reset on change
+        domSelectIC.addEventListener('change', initHeatSimulation);
+        domSelectF.addEventListener('change', initHeatSimulation);
+
+        window.addEventListener('resize', () => {
+            Plotly.Plots.resize(document.getElementById('heatPlotDiv'));
+        });
+
+        // Initialize Options
+        updateICOptions(); // This will call initHeatSimulation
+
+        // Ensure MathJax is ready before initial render
+        setTimeout(initHeatSimulation, 100);
+
+    </script>
+</body>
+</html>
