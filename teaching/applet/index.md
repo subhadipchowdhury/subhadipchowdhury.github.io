@@ -10,6 +10,7 @@ title: Applets created with AI
 </div>
 
 
-- [ForcedWaveEqnSim.html](ForcedWaveEqnSim.html) — Forced wave equation simulation
+
 - [HeatEquation3D.html](HeatEquation3D.html) — 3D heat equation simulation
 - [WaveEquationSimulation.html](WaveEquationSimulation.html) — Wave equation simulation
+- [ForcedWaveEqnSim.html](ForcedWaveEqnSim.html) — Forced wave equation simulation
