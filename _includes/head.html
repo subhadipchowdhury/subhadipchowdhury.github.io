@@ -19,10 +19,9 @@
         <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/favicon_192.png">
         <link rel="apple-touch-icon" href="/assets/icons/favicon_apple.png" />
 
-	<link rel="stylesheet" href="/css/stylesheet.css">
+        <link rel="stylesheet" href="/css/stylesheet.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/javascript/navigation.js"></script>
+        <script src="/javascript/navigation.js" defer></script>
 	
 	<script src="https://cdn.jsdelivr.net/gh/ncase/nutshell/nutshell.js"></script>
 	<script>
@@ -35,6 +34,15 @@
 
         {% assign page_description = page.description | default: "My personal webpage." %}
         <meta name="description" content="{{ page_description }}">
+        <meta property="og:title" content="{% if page.title != "Home" %}{{ page.title }} | {% endif %}Subhadip Chowdhury">
+        <meta property="og:description" content="{{ page_description }}">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="{{ site.url }}/assets/photos/me_small.jpg">
+        <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{% if page.title != "Home" %}{{ page.title }} | {% endif %}Subhadip Chowdhury">
+        <meta name="twitter:description" content="{{ page_description }}">
+        <meta name="twitter:image" content="{{ site.url }}/assets/photos/me_small.jpg">
 
         <title>{% if page.title != "Home" %} {{ page.title }} | {% endif %}Subhadip Chowdhury</title>
 	

@@ -4,20 +4,16 @@ layout: compress
 
 <!DOCTYPE html>
 <html lang="en">
-	
-	{% include head.html %}
+  {% include head.html %}
+  <body>
+    <header>
+      <h1><a href="/">Subhadip Chowdhury</a></h1>
+      {% include navigation.html %}
+    </header>
 
-	<header>
-		<h1><a href="/">Subhadip Chowdhury</a></h1>
-        {% include navigation.html %} 
-	</header>
-
-	<body>
-		
-		<div class="main-wrapper">
-		{{ content }}
-		</div>
-		{% include footer.html %}
-	</body>
-
+    <div class="main-wrapper">
+      {{ content }}
+    </div>
+    {% include footer.html %}
+  </body>
 </html>
