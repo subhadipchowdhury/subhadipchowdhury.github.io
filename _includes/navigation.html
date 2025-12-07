@@ -4,49 +4,48 @@
         {% for p in navigation_pages %}
         {% if p.navigation_weight %}
         <li>
-            <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+            <a href="{{ p.url }}" {% if p.url == page.url %}class="active" aria-current="page"{% endif %}>
                 {{ p.title }}
             </a>
-			{% if p.has_subnav %}
-					<ul id="subnav">
-					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
-					{% for q in subnav_pages %}
-					<li>
-						<a href="{{ q.url }}">
-							{{ q.title }}
-						</a>
-					</li>
-					{% endfor %}
-					</ul>
-			{% endif %}
+                        {% if p.has_subnav %}
+                                        <ul id="subnav">
+                                        {% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
+                                        {% for q in subnav_pages %}
+                                        <li>
+                                                <a href="{{ q.url }}">
+                                                        {{ q.title }}
+                                                </a>
+                                        </li>
+                                        {% endfor %}
+                                        </ul>
+                        {% endif %}
         </li>
         {% endif %}
         {% endfor %}
     </ul>
 </nav>
 
-<nav id="nav-mobile">
+<button id="nav-trigger-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-mobile">
+    <span class="wrapper-menu" aria-hidden="true">
+        <span class="line-menu half start"></span>
+        <span class="line-menu"></span>
+        <span class="line-menu half end"></span>
+    </span>
+</button>
+
+<nav id="nav-mobile" aria-label="Mobile navigation">
         <ul>
             {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
             {% for p in navigation_pages %}
             {% if p.navigation_weight %}
             <li>
-                <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                <a href="{{ p.url }}" {% if p.url == page.url %}class="active" aria-current="page"{% endif %}>
                     {{ p.title }}
                 </a>
             </li>
             {% endif %}
             {% endfor %}
-        </ul>        
+        </ul>
 </nav>
 
-<div id="nav-trigger"> 
-    <span>
-        <div class="wrapper-menu">
-            <div class="line-menu half start"></div>
-            <div class="line-menu"></div>
-            <div class="line-menu half end"></div>
-        </div>
-    </span>
-</div>
 
