@@ -7,7 +7,7 @@ navigation_weight: 1
 <div class="about">
 <div class="picture">
 
-[![Subhadip Chowdhury](assets/photos/me_small.jpg)](assets/photos/)
+[![Subhadip Chowdhury](assets/photos/me_small.jpg){:alt="Portrait of Subhadip Chowdhury" loading="lazy"}](assets/photos/)
 </div>
 
 <div class="mail">
@@ -25,14 +25,14 @@ navigation_weight: 1
 </div>
 <div class="shield">
   <div class="current">
-  
-  ![The University of Chicago](assets/logos/UChicago_seal.svg "Crescat scientia; vita excolatur")
+
+  ![The University of Chicago seal with the motto Crescat scientia; vita excolatur](assets/logos/UChicago_seal.svg){:loading="lazy"}
   </div>
   <div class="old">
-  
-   [![The College of Wooster](assets/logos/Wooster_seal.png "Ex Uno Fonte")](https://wooster.edu/)
-   [![Bowdoin College](assets/logos/bowdoin_seal.png "Ut Aquila Versus Coelum")](https://www.bowdoin.edu/)
-   [![Indian Statistical Institute](assets/logos/isi_logo.png "भिन्नेष्वैक्यस्य दर्शनम्")](https://www.isibang.ac.in/)
+
+   [![The College of Wooster seal featuring the motto Ex Uno Fonte](assets/logos/Wooster_seal.png){:loading="lazy"}](https://wooster.edu/)
+   [![Bowdoin College seal with the motto Ut Aquila Versus Coelum](assets/logos/bowdoin_seal.png){:loading="lazy"}](https://www.bowdoin.edu/)
+   [![Indian Statistical Institute emblem with Sanskrit motto](assets/logos/isi_logo.png){:loading="lazy"}](https://www.isibang.ac.in/)
   </div>
 </div>
 
@@ -48,11 +48,11 @@ I am currently an [Assistant Instructional Professor](https://mathematics.uchica
 
 ### Appointments ###
 
-* Assistant Instructional Professor <br> 
+* Assistant Instructional Professor <br>
   _The University of Chicago, 2023 - Present_
-* Visiting Assistant Professor <br> 
+* Visiting Assistant Professor <br>
   _[The College of Wooster](https://wooster.edu/), 2020 - 2023_
-* Visiting Assistant Professor <br> 
+* Visiting Assistant Professor <br>
   _[Bowdoin College](https://www.bowdoin.edu/), 2018 - 2020_
 
 </div>
@@ -88,10 +88,9 @@ Material from my current and past courses are accessible through the [teaching p
 
 ## Research Interests
 
-My background training is in low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
+My background training is in low-dimensional topological dynamics, especially the theory of nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods. I am broadly interested in topics related to geometric group theory, complex dynamics, and big mapping class groups.
 
 I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). My papers and preprints are linked on my [research page](research).
 
 </div>
-
 
