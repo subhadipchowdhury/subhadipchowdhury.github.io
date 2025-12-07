@@ -16,11 +16,12 @@ html {
 
 body {
   background-color: #fff;
-  color: #800000;
-  font-size: 1rem;
+  color: #6b2f2f;
+  font-size: 1.125rem;
   font-family: $base-font;
   font-optical-sizing: auto;
   font-weight: 500;
+  line-height: 1.6;
 }
 
 a {
@@ -43,13 +44,14 @@ h2, h3, h4 {
 
 h2 {
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  line-height: 1.3;
 }
 
 h3 {
   font-weight: 700;
-  font-size: 1.3rem;
-  text-align: right;
+  font-size: 1.35rem;
+  line-height: 1.35;
 }
 
 h4 {
@@ -58,11 +60,11 @@ h4 {
 }
 
 ul, ol {
-  padding-left: 1em;
+  padding-left: 1.25em;
 }
 
 ol li {
-  padding-left: 0.5em;
+  padding-left: 0.75em;
 }
 
 /***********************************************/
@@ -75,6 +77,22 @@ ol li {
   background-color: #F7F6EE;
   box-shadow: 0 0 15px 2px #000;
   overflow: auto;
+}
+
+.main-wrapper p,
+.main-wrapper ul,
+.main-wrapper ol,
+.main-wrapper li {
+  max-width: 72ch;
+}
+
+.main-wrapper p {
+  margin: 0 auto 1.2rem auto;
+}
+
+.main-wrapper ul li,
+.main-wrapper ol li {
+  margin-bottom: 0.9rem;
 }
 
 /***********************************************/
@@ -461,16 +479,16 @@ footer {
 
 /***********************************************/
 .about {
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: -webkit-flex;
-  	display: flex;
-  	flex-flow: row wrap;
-  	justify-content: space-evenly;
-	align-items: center;
-	  
-	border-bottom: 4px  solid #800000;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        align-items: center;
+
+        border-bottom: 4px  solid #800000;
   }
 
 @media all and (max-width: 500px) {
@@ -538,6 +556,12 @@ footer {
   @extend .about;
   align-items: flex-start;
   border-bottom: 2px solid #800000;
+  padding: 2.5rem 0 2.5rem;
+  row-gap: 1.5rem;
+
+  p, ul, ol {
+    max-width: 70ch;
+  }
 
   h2 {
     text-align: center;
