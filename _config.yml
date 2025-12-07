@@ -4,7 +4,7 @@ kramdown:
 
 permalink: pretty
 
-url: "https://subhadipchowdhury.github.io/"
+url: "https://subhadipchowdhury.github.io"
   
 exclude: ['deploy', 'stylesheet.scss']
 
