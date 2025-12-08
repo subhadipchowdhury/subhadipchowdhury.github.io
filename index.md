@@ -96,7 +96,7 @@ Some ongoing teaching-related work includes:
 
 ## Research Interests
 
-My research background is in low-dimensional topological dynamics. I am especially interested in nonabelian group actions on the circle, rigidity phenomena, and self-similar structures that arise in dynamical invariants. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods.
+My research background is in low-dimensional topological dynamics. I am especially interested in rigidity phenomena and self-similar structures that arise from nonabelian group actions on the circle. I have also contributed to the theory of formal languages, aiming to solve combinatorial group theory problems using topological methods.
 
 More broadly, I am interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
 
