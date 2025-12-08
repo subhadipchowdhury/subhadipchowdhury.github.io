@@ -117,7 +117,8 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: min(960px, 80%);
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto 0.2rem;
   padding: 0.75rem 0 0.5rem;
   background-color: $uchicago-white;
@@ -439,9 +440,10 @@ nav#nav-mobile ul{
 footer {
 	font-weight: 300;
 	font-size: 0.8em;
-	width: min(960px, 80%);
+	width: 100%;
+  	max-width: 960px;
 	margin: 0 auto 0.2rem;
-	padding: 0.75rem 0 0.5rem;
+	padding: 2.5rem 2rem 3rem;
 	background-color: $uchicago-dark-greystone;
 	color: $uchicago-white;
 }
