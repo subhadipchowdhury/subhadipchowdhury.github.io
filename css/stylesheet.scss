@@ -46,14 +46,14 @@ body {
   font-family: $base-font;
   font-optical-sizing: auto;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 
 a {
   text-decoration: none;
   font-family: $base-font;
   font-optical-sizing: auto;
-  font-weight: 550;
+  font-weight: 600;
   color: $uchicago-maroon;
   transition: 0.5s all;
 
@@ -63,7 +63,7 @@ a {
 }
 
 h2, h3, h4 {
-  color: #155F83;
+  color: $uchicago-maroon;
   font-family: $heading-font;
 }
 
@@ -168,16 +168,6 @@ nav#nav-main ul{
 			
 			transition: all 1s;
 
-			.nav_effect{
-				border-radius: 50%;
-				display: block;
-				height: 0;
-				position: absolute;
-				transition: width 0.2s ease-in, height 0.4s ease-in;
-				transform: translate(-50%, -50%);
-				width: 0;
-				z-index: -1;
-			}
 			
 			&:after{
 				position: absolute;
@@ -198,10 +188,6 @@ nav#nav-main ul{
 				color: $uchicago-lightlake;
 				text-decoration: none;
 				z-index: 1;
-				.nav_effect{
-					height: 600px;
-					width:600px;
-				}
 			}
 			
 			&:hover:after{
@@ -288,56 +274,6 @@ nav#nav-main ul{
 	}
 }
 
-@-webkit-keyframes navfill{
-	0% {
-	  width: 0%;
-	  height: 1px;
-	}
-	50% {
-	  width: 100%;
-	  height: 1px;
-	}
-	100% {
-	  width: 100%;
-	  height: 100%;
-	  background:$uchicago-darklake;
-	}
-}
-
-
-
-  @-moz-keyframes fill {
-	0% {
-	  width: 0%;
-	  height: 1px;
-	}
-	50% {
-	  width: 100%;
-	  height: 1px;
-	}
-	100% {
-	  width: 100%;
-	  height: 100%;
-	  background:#3A494C;
-	}
-}
-
-@-o-keyframes fill {
-	0% {
-	  width: 0%;
-	  height: 1px;
-	}
-	50% {
-	  width: 100%;
-	  height: 1px;
-	}
-	100% {
-	  width: 100%;
-	  height: 100%;
-	  background:#3A494C;
-	}
-}
-
 
 /*************************************/
 
@@ -365,8 +301,6 @@ nav#nav-main ul{
     display:inline-block;
     cursor:pointer;
 }
-
-
 
 
 
@@ -505,7 +439,7 @@ nav#nav-mobile ul{
 footer {
 	font-weight: 300;
 	font-size: 0.8em;
-	border-top: 0.1em dotted #FFF;
+	border-top: 0.5em dotted $uchicago-white;
 	padding-top:1em;
 	margin: 0px 20% 0px 20%;
 }
@@ -533,8 +467,6 @@ footer {
 
 
 
-
-
 .picture{
 	order: 1;
 	float:left;
@@ -543,6 +475,11 @@ footer {
 		@media screen and (min-width: 960px) {
 			width: 15em;
 		}
+		display: block;
+		height: auto;
+		border-radius: 999px;
+		//border: 4px solid $uchicago-white;
+		box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
 	}
 	
 }
