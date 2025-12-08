@@ -439,9 +439,11 @@ nav#nav-mobile ul{
 footer {
 	font-weight: 300;
 	font-size: 0.8em;
-	border-top: 0.5em dotted $uchicago-white;
-	padding-top:1em;
-	margin: 0px 20% 0px 20%;
+	width: min(960px, 80%);
+	margin: 0 auto 0.2rem;
+	padding: 0.75rem 0 0.5rem;
+	background-color: $uchicago-dark-greystone;
+	color: $uchicago-white;
 }
 
 
@@ -472,13 +474,10 @@ footer {
 	float:left;
 	img{
 		width:10em;
-		@media screen and (min-width: 960px) {
-			width: 15em;
-		}
 		display: block;
 		height: auto;
 		border-radius: 999px;
-		//border: 4px solid $uchicago-white;
+		border: 4px solid $uchicago-white;
 		box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
 	}
 	
