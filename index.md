@@ -76,14 +76,14 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 
 ## Teaching and Pedagogy
 
-My pedagogical interests center on designing discovery-based, active, and inclusive learning environments that engage a diverse student body. My courses emphasize constructivist, project-based learning and collaborative problem solving. A central focus of my recent work has been revising courses so that curriculum and assessment align with mastery-based and other alternate grading approaches, built around clear learning targets, carefully structured feedback loops, and meaningful opportunities for students to revise and improve their work.
+My pedagogical interests center on designing active, discovery-based, and inclusive learning environments that engage a diverse student body. My courses emphasize constructivist, project-based learning, and collaborative problem solving. A central focus of my recent work has been revising courses so that curriculum and assessment align with mastery-based and other alternate grading approaches, built around clear learning targets, carefully structured feedback loops, and meaningful opportunities for students to revise and improve their work.
 
 Some ongoing teaching-related work includes:
 
-- Coordinating our department’s Collaborative Learning tutorial program, including training and mentoring graduate TAs and undergraduate Lead Junior Tutors.
-- Designing and facilitating professional development in teaching workshops for first-time Graduate Student Lecturers in mathematics.
-- Using backward design to revise curricula in calculus and proof-based courses so that they align with alternate grading schemes.
-- Designing materials and norms that support responsible and transparent use of generative AI in mathematics courses.
+- Coordinating our department’s Collaborative Learning tutorial program. This includes training and mentoring graduate TAs and undergraduate Lead Junior Tutors.
+- Designing and facilitating professional development workshops for first-time Graduate Student Lecturers in mathematics.
+- Using backward design to revise curricula in calculus and proof-based courses to align with alternate grading schemes.
+- Designing materials and establishing norms for the responsible and transparent use of generative AI in mathematics courses.
 
 **Pedagogy fellowships and grants.** During the 2025–2026 academic year, I will be an [Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/) at the Chicago Center for Teaching and Learning. Previously, I served as a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows/) and co-led an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups/) titled “Discussion on Implementing Alternate Grading and Redesigning Assessment in Math.”
 
