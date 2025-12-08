@@ -16,6 +16,8 @@ My past evaluations in full are available on request. Below you can find _numeri
 
 ### University of Chicago 
 
+- [Autumn 2025]()
+- [Summer 2025](Summer2025.pdf)
 - [Winter 2025](Winter2025.pdf)
 - [Autumn 2024](Autumn2024.pdf)
 - [Spring 2024](Spring2024.pdf)
