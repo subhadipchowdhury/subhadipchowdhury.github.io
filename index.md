@@ -12,7 +12,7 @@ navigation_weight: 1
 
 <div class="mail">
 
-| <i class="fa-solid fa-user-tie"></i> | Neubauer Phoenix STEM Assistant Instructional Professor |
+| <i class="fa-solid fa-user-tie"></i> | Assistant Instructional Professor |
 | <i class="fa-solid fa-building-columns"></i> | [The University of Chicago](https://www.uchicago.edu)  |
 |        |    |
 | <i class="fa-solid fa-envelope"></i> | subhadip `at` uchicago `dot` edu|
