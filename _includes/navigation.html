@@ -6,7 +6,9 @@
         <li>
             <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
                 {{ p.title }}
+                <span class="nav_effect"></span>
             </a>
+            
 			{% if p.has_subnav %}
 					<ul id="subnav">
 					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
