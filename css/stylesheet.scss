@@ -444,6 +444,7 @@ footer {
   	max-width: 960px;
 	margin: 0 auto 0.2rem;
 	padding: 2.5rem 2rem 3rem;
+	box-sizing: border-box;
 	background-color: $uchicago-dark-greystone;
 	color: $uchicago-white;
 }
