@@ -34,7 +34,7 @@ navigation_weight: 1
 </section>
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Biography
 
@@ -42,7 +42,7 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 
 </div>
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Career
 
@@ -51,7 +51,7 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 </div>
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Teaching and Pedagogy
 
@@ -68,10 +68,9 @@ Some ongoing teaching-related work includes:
 
 **Materials from my current and past courses** are accessible through the [teaching page]({{ '/teaching/' | relative_url }}). Write-ups, slides, and resources related to collaborative learning, mastery-based grading, and AI-aware pedagogy will be posted on the [pedagogy page]({{ '/pedagogy/' | relative_url }}).
 
-
 </div>
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Research Interests
 

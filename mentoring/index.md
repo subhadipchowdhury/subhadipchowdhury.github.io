@@ -5,14 +5,14 @@ navigation_weight: 4
 ---
 
 
-<div class="section">
+<div class="section" markdown="1">
 
 # {{ page.title }}
 
 </div>
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Independent Study Advising
 
@@ -55,7 +55,7 @@ __Abstract__:  This project is concerned with articulating the necessary backgro
 </div>
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Applied Methods and Research Experience Advising
 
@@ -82,7 +82,7 @@ __Abstract__:  Our project goal was to translate and package a multi-software an
 
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Summer Research Experience for Undergrads
 
@@ -99,7 +99,7 @@ This is a list of student projects I have (sometimes jointly) supervised.
 </div>
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Directed Reading Courses
 
@@ -118,14 +118,14 @@ This is a list of quarter-long directed independent reading courses I have super
 
 
 
-<div class="section reveal">
+<div class="section reveal" markdown="1">
 
 ## Expository Talks in Student Seminars
 
 Note that some of the talks are very much of an outline in nature.
 
 {% for talk in site.data.talks_expository %}
-<div class="course">
+<div class="course" markdown="1">
 **{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}
 </div>
 {% endfor %}
