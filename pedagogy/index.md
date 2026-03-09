@@ -5,19 +5,14 @@ navigation_weight: 3
 ---
 
 
-
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section">
 
 # {{ page.title }}
 
 </div>
 
 
-
-
-
-<div style="border-bottom: 2px  solid #800000;">
-
+<div class="section reveal">
 
 ## Training in Collaborative Learning for Undergraduate TAs
 
@@ -25,7 +20,7 @@ navigation_weight: 3
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Professional Development Training for Graduate Student Lecturers
 
@@ -33,7 +28,7 @@ navigation_weight: 3
 
 
 <div class="course">
-**Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]() 
+**Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]()
 </div>
 
 <div class="course">
@@ -47,11 +42,10 @@ navigation_weight: 3
 <div class="course">
 **How to write a syllabus and why** - [Winter 2025]()
 </div>
-<p></p>
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Exploratory Teaching Group for Instructional Faculty
 
@@ -59,7 +53,7 @@ navigation_weight: 3
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Seminar and Conferences
 
@@ -73,7 +67,5 @@ __Abstract__: {{talk.Abstract}}
 </div>
 {% endif %}
 {% endfor %}
-
-<p></p>
 
 </div>

@@ -6,7 +6,7 @@ layout: compress
 <html lang="en">
   {% include head.html %}
   <body class="page-{{ page.title | downcase | replace: ' ', '-' }}">
-    <header>
+    <header id="site-header">
       <h1><a href="/">Subhadip Chowdhury</a></h1>
       {% include navigation.html %}
     </header>
@@ -16,5 +16,14 @@ layout: compress
     </main>
 
     {% include footer.html %}
+
+    <!-- Page-specific scripts -->
+    {% if page.title == "Home" %}
+    <script src="/javascript/animations.js" defer></script>
+    {% endif %}
+{% if page.title == "Teaching" %}
+    <script src="/javascript/tabs.js" defer></script>
+    {% endif %}
+    <script src="/javascript/scroll-animations.js" defer></script>
   </body>
 </html>

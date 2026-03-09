@@ -5,14 +5,14 @@ navigation_weight: 4
 ---
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section">
 
 # {{ page.title }}
 
 </div>
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Independent Study Advising
 
@@ -45,7 +45,7 @@ __Abstract__: Generative machine learning models have achieved unprecedented fea
 
 ### :x molly 22
 
-__Abstract__:  Our Great Lakes have been suffering from unstable weather since the 1950’s. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analysis to show the drastic changes in the Great Lakes. We observed Lake Superior’s water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.
+__Abstract__:  Our Great Lakes have been suffering from unstable weather since the 1950's. The suffering is from climate change, which also affects the people who live in the Midwest. The Midwest heavily relies on the Great Lakes for their source of water and energy. In this study, we used Ordinary Differential Equations and numerical analysis to show the drastic changes in the Great Lakes. We observed Lake Superior's water temperatures and air temperatures over the years 1995-2010, by month. We dove into some hydrology ideas and all of the different variables and coefficients used. We expanded many hydrology equations using a method of the Taylor series. Then we used the Fourth Order and Fehlberg Runge-Kutta method to numerically analyze the primary ODE we obtained from the Net Heat Equation. We applied the method to our datasets using Python coding. We described the effects of climate change on the Great Lakes.
 
 ### :x sabrina 22
 
@@ -55,17 +55,17 @@ __Abstract__:  This project is concerned with articulating the necessary backgro
 </div>
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Applied Methods and Research Experience Advising
 
 ### The College of Wooster
 
-* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
+* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar '23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
     * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
     * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-divison)
 
-* Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
+* Summer 2021 - Abigail Breitenbucher '22 (Mathematics), Luke Pritchard '22 (Statistical & Data Sciences), Maya Vasta '22 (Statistical & Data Sciences), Kweku Andoh Yamoah '22 (Computer Science), supervised jointly with Dr. Marian Frazier
     * Client - ACME Fresh Market
     * [:Project Description](#x-acme-fresh-market-amre-project)
 
@@ -76,13 +76,13 @@ __Abstract__:  Using several methods, the team analyzed a large data set to eval
 
 ### :x The Goodyear Tire & Rubber Company - Non-Pneumatic Tire Divison
 
-__Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive Python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
+__Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive Python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client's original program.
 
 </div>
 
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Summer Research Experience for Undergrads
 
@@ -99,7 +99,7 @@ This is a list of student projects I have (sometimes jointly) supervised.
 </div>
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Directed Reading Courses
 
@@ -118,7 +118,7 @@ This is a list of quarter-long directed independent reading courses I have super
 
 
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Expository Talks in Student Seminars
 

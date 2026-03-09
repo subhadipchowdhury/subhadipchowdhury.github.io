@@ -4,20 +4,19 @@ title: Research
 navigation_weight: 4
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section">
 
 # {{ page.title }}
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.pdf)
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
-
+<div class="section reveal">
 
 ## Publications/Preprints/Expository Notes
 
@@ -43,7 +42,7 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 
 </div>
 
-<div style="border-bottom: 2px  solid #800000;">
+<div class="section reveal">
 
 ## Seminar and Conferences
 
@@ -53,5 +52,4 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 </div>
 {% endfor %}
 
-<p></p>
 </div>

@@ -1,0 +1,12 @@
+<div class="timeline">
+  {% for item in site.data.career %}
+  <div class="timeline-item {% if item.type == 'education' %}education-item{% endif %} reveal">
+    <div class="timeline-year">{{ item.start }}–{{ item.end }}</div>
+    <div class="timeline-position">{{ item.position }}</div>
+    <div class="timeline-institution">
+      <a href="{{ item.url }}">{{ item.institution }}</a>
+    </div>
+    <img class="timeline-logo" src="{{ item.logo }}" alt="" aria-hidden="true">
+  </div>
+  {% endfor %}
+</div>
