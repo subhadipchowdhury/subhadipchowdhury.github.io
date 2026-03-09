@@ -4,7 +4,7 @@ title: Home
 navigation_weight: 1
 ---
 
-<section class="hero">
+<div class="hero">
   <canvas class="hero-bg" id="hero-canvas"></canvas>
   <div class="hero-photo">
     <img src="assets/photos/me_small.jpg" alt="Subhadip Chowdhury">
@@ -17,7 +17,7 @@ navigation_weight: 1
     </div>
     <ul class="hero-contact">
       <li><i class="fa-solid fa-envelope"></i> subhadip <code style="background:transparent;color:#ccc;padding:0;">at</code> uchicago <code style="background:transparent;color:#ccc;padding:0;">dot</code> edu</li>
-      <li><i class="fa-solid fa-location-dot"></i> Eckhart 120B · 5734 S. University Ave, Chicago, IL 60637</li>
+      <li><i class="fa-solid fa-location-dot"></i> Eckhart 120B &middot; 5734 S. University Ave, Chicago, IL 60637</li>
       <li><i class="fa-solid fa-file-pdf"></i> <a href="assets/CV.pdf">CV (Autumn 2025)</a></li>
     </ul>
   </div>
@@ -31,10 +31,10 @@ navigation_weight: 1
       <a href="https://www.isibang.ac.in/"><img src="assets/logos/isi_logo.png" alt="Indian Statistical Institute" title="भिन्नेष्वैक्यस्य दर्शनम्"></a>
     </div>
   </div>
-</section>
+</div>
 
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Biography
 
@@ -42,7 +42,7 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 
 </div>
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Career
 
@@ -51,7 +51,7 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 </div>
 
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Teaching and Pedagogy
 
@@ -70,7 +70,7 @@ Some ongoing teaching-related work includes:
 
 </div>
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Research Interests
 

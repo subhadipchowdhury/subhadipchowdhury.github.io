@@ -5,14 +5,14 @@ navigation_weight: 3
 ---
 
 
-<div class="section" markdown="1">
+<div class="section">
 
 # {{ page.title }}
 
 </div>
 
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Training in Collaborative Learning for Undergraduate TAs
 
@@ -20,31 +20,31 @@ navigation_weight: 3
 
 </div>
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Professional Development Training for Graduate Student Lecturers
 
 ### The University of Chicago, co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/)
 
-<div class="course" markdown="1">
+<div class="course">
 **Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]()
 </div>
 
-<div class="course" markdown="1">
+<div class="course">
 **Selecting and designing exam questions that align with learning goals** - [Autumn 2024]()
 </div>
 
-<div class="course" markdown="1">
+<div class="course">
 **How to interpret and act on student evaluation feedback** - [Winter 2025]()
 </div>
 
-<div class="course" markdown="1">
+<div class="course">
 **How to write a syllabus and why** - [Winter 2025]()
 </div>
 
 </div>
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Exploratory Teaching Group for Instructional Faculty
 
@@ -52,12 +52,12 @@ navigation_weight: 3
 
 </div>
 
-<div class="section reveal" markdown="1">
+<div class="section reveal">
 
 ## Seminar and Conferences
 
 {% for talk in site.data.talks_pedagogy %}
-<div class="course" markdown="1">
+<div class="course">
 **{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% if talk.Abstract %}, [:Abstract](#{{ talk.Nutshell }})
 
 ### :{{ talk.Nutshell }}
