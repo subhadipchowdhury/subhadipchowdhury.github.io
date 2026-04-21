@@ -12,6 +12,13 @@
   Nutshell: x-ppc_2026_flash_forum
   Abstract: In this session, I will share a compact method I use to design weekly calculus tasks for collaborative learning in a POGIL-informed, TA-led tutorial setting. Using a single familiar calculus prompt, I will show how I adapt a standard exercise into a guided-inquiry team activity built around a conceptual--procedural--conceptual loop. Students begin with a conceptual exploration that surfaces patterns and questions, move into a short procedural phase that generates useful structure, and then return to concept-building and interpretation before a brief application step. Throughout, I embed mindset prompts informed by the KEEN entrepreneurial mindset framework (Curiosity, Connections, Creating Value) to support explanation, connection-making, and clear mathematical communication. Participants will leave with a simple adaptation template, example prompt stems, and a quick checklist to revise their own tasks.
 
+- Title: (Upcoming) Teaching Your AI How You Teach
+  Location: AI in the Classroom
+  Website: https://maa.org/resource/virtual-programming/
+  Duration: Summer 2026
+  Nutshell: x-maa_virtual_2026_ai
+  Abstract: I will describe a methodology for using LLMs in course development, based on my experience redesigning courses (Calculus, DE, Numerical, Real Analysis) and collaborative learning workshops with guided discovery, mastery grading, and structured group activities. The central piece is a “Style and Pedagogical Specification” document, synthesized with AI assistance from my existing materials across several years, that codifies my design patterns, prose voice, proof style, and audience assumptions. The living document ensured coherence inside projects, helped me design rubrics, mastery standards, tentative time limits, alignment of proposed assessments with learning goals, evolved as it was applied to new courses, and served double duty as a teaching philosophy statement, forcing me to clearly articulate design choices I have made intuitively for years. The talk presents the extraction-to-production workflow, time commitment involved, and concrete examples of how it shaped output quality.
+
 - Title: Implementing Collaborative Learning through POGIL
   Location: Indiana University Bloomington Instructor Lunch Series
   Duration: Winter 2026
