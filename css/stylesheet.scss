@@ -692,6 +692,73 @@ code{
 	}
 }
 
+.mentoring-page {
+	.section-block {
+		padding-bottom: 0.75rem;
+		margin-bottom: 0.9rem;
+	}
+
+	h3 {
+		text-align: left;
+		margin: 0.2rem 0 0.55rem;
+	}
+
+	.section-intro {
+		margin: 0.15rem 0 0.85rem;
+		line-height: 1.4;
+		color: $uchicago-darkgreystone;
+	}
+}
+
+.editorial-list {
+	list-style: none;
+	padding-left: 0;
+	margin: 0.45rem 0 0;
+	border-top: 1px dotted rgba($uchicago-maroon, 0.35);
+
+	> li {
+		margin: 0;
+		padding: 0.78rem 0 0.85rem 1rem;
+		line-height: 1.45;
+		border-bottom: 1px dotted rgba($uchicago-maroon, 0.2);
+		position: relative;
+	}
+
+	> li::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 1rem;
+		width: 0.38rem;
+		height: 0.38rem;
+		border-radius: 50%;
+		background: rgba($uchicago-maroon, 0.65);
+	}
+}
+
+.editorial-sublist {
+	list-style: none;
+	padding-left: 0;
+	margin: 0.5rem 0 0;
+
+	li {
+		margin: 0.3rem 0;
+		padding-left: 0.95rem;
+		position: relative;
+	}
+
+	li::before {
+		content: "-";
+		position: absolute;
+		left: 0;
+		color: rgba($uchicago-maroon, 0.7);
+	}
+}
+
+.entry-main {
+	display: block;
+}
+
 .abstract-list {
 	padding-left: 1.25rem;
 	margin: 0.5rem 0 0;
@@ -794,6 +861,14 @@ code{
 }
 
 @media all and (max-width: 640px) {
+	.editorial-list > li {
+		padding: 0.72rem 0 0.78rem 0.9rem;
+	}
+
+	.editorial-sublist li {
+		padding-left: 0.8rem;
+	}
+
 	.abstract-list {
 		padding-left: 1rem;
 	}
