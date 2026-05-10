@@ -2,21 +2,21 @@
   Location: POGIL Practitioner Collaborative 2026 virtual conference
   Website: https://pogil.org/pogil-practitioner-collaborative-2026
   Duration: Summer 2026
-  Nutshell: x-ppc_2026_dynamic_dialogues
+  AbstractId: x-ppc_2026_dynamic_dialogues
   Abstract: Since Autumn 2024, I have implemented and refined a POGIL-informed collaborative learning model in undergraduate TA-led tutorials for a high-enrollment calculus course at the University of Chicago. Two design pillars make the model scalable in a TA-led setting. First, we built a structured, year-long TA training sequence that develops facilitation skills (questioning without lecturing, time management, and navigating group dynamics) through weekly pedagogy meetings, content analysis of upcoming tasks, and reflective journaling aligned with backward design and course learning goals. Second, I design weekly guided-inquiry activities using a concept-procedure-concept loop and explicit mindset prompts, framed by Curiosity, Connections, and Creating Value, so teams practice sense-making and mathematical communication rather than a divide-and-conquer approach. I will briefly share the training structure and task-design approach, then shift to a guided discussion on how others develop facilitators, embed low-stakes formative checks (including targeted minute papers), and calibrate tasks for pacing while preserving cognitive demand in TA-led contexts.
 
 - Title: (Upcoming) Mindset Driven Task Design for Collaborative Learning in Calculus
   Location: POGIL Practitioner Collaborative 2026 virtual conference
   Website: https://pogil.org/pogil-practitioner-collaborative-2026
   Duration: Summer 2026
-  Nutshell: x-ppc_2026_flash_forum
+  AbstractId: x-ppc_2026_flash_forum
   Abstract: In this session, I will share a compact method I use to design weekly calculus tasks for collaborative learning in a POGIL-informed, TA-led tutorial setting. Using a single familiar calculus prompt, I will show how I adapt a standard exercise into a guided-inquiry team activity built around a conceptual--procedural--conceptual loop. Students begin with a conceptual exploration that surfaces patterns and questions, move into a short procedural phase that generates useful structure, and then return to concept-building and interpretation before a brief application step. Throughout, I embed mindset prompts informed by the KEEN entrepreneurial mindset framework (Curiosity, Connections, Creating Value) to support explanation, connection-making, and clear mathematical communication. Participants will leave with a simple adaptation template, example prompt stems, and a quick checklist to revise their own tasks.
 
 - Title: (Upcoming) Teaching Your AI How You Teach
   Location: MAA Virtual Programming - AI in the Classroom
   Website: https://maa.org/resource/virtual-programming/
   Duration: Summer 2026
-  Nutshell: x-maa_virtual_2026_ai
+  AbstractId: x-maa_virtual_2026_ai
   Abstract: I will describe a methodology for using LLMs in course development, based on my experience redesigning courses (Calculus, DE, Numerical, Real Analysis) and collaborative learning workshops with guided discovery, mastery grading, and structured group activities. The central piece is a “Style and Pedagogical Specification” document, synthesized with AI assistance from my existing materials across several years, that codifies my design patterns, prose voice, proof style, and audience assumptions. The living document ensured coherence inside projects, helped me design rubrics, mastery standards, tentative time limits, alignment of proposed assessments with learning goals, evolved as it was applied to new courses, and served double duty as a teaching philosophy statement, forcing me to clearly articulate design choices I have made intuitively for years. The talk presents the extraction-to-production workflow, time commitment involved, and concrete examples of how it shaped output quality.
 
 - Title: Implementing Collaborative Learning through POGIL
@@ -28,7 +28,7 @@
   Location: University of Chicago Math Pedagogy Seminar
   Website: https://math.uchicago.edu/~pedagogyseminar/
   Duration: Winter 2026
-  Nutshell: x-pedagogy_seminar_active_learning_template
+  AbstractId: x-pedagogy_seminar_active_learning_template
   Abstract: In this pedagogy seminar, I will share a practical workflow for designing and adapting active learning activities in service math courses, with examples drawn primarily from the calculus sequence. I’ve found it useful to move beyond "conceptual" versus "procedural" labels and instead design activities that help students move between sense-making and technique, especially for non-math majors. We will highlight a few research-informed task-writing approaches, apply them with the POGIL learning cycle and KEEN-style prompts, and workshop a couple of examples by adapting textbook exercises with a simple template. This may be especially helpful for Graduate Student Lecturers planning problem sessions or tutorials, and for leading in-class group work.
   Link: /assets/talks/active_learning_template.pdf
 
@@ -40,7 +40,7 @@
   Location: Session on Inquiry-Based Learning, MAA MathFest 2025
   Website: https://maa.org/event/mathfest/
   Duration: Summer 2025
-  Nutshell: x-CL_mathfest_25
+  AbstractId: x-CL_mathfest_25
   Abstract: During this academic year, we implemented a Collaborative Learning model in undergraduate TA-led tutorials for a high-enrollment Calculus course at UChicago, utilizing principles from POGIL. The new format emphasizes structured team roles, peer discussion, and guided inquiry, supported by problem sets crafted to promote active exploration and conceptual reasoning. To support this shift, we created a year-long training program that equips TAs with tools to facilitate this model effectively. Weekly pedagogy sessions addressed strategies for motivating students, managing time, navigating group dynamics, and guiding discussions without lecturing. Weekly content analysis and journal reflections explored the use of backward design. In this talk, I’ll share how we adapted POGIL ideas to fit our context, what we learned from this first implementation and student survey data, and strategies for supporting a sustainable, scalable model for collaborative inquiry in large mathematics courses.
   Link: /assets/talks/MAA_MathFest_2025.pdf
 
@@ -48,7 +48,7 @@
   Location: University of Chicago Math Pedagogy Seminar
   Website: https://math.uchicago.edu/~pedagogyseminar/
   Duration: Autumn 2024
-  Nutshell: x-perry
+  AbstractId: x-perry
   Abstract: As educators, we understand that guiding students' intellectual growth goes beyond delivering content—it involves nurturing their ability to reflect on how they learn. Yet, metacognition doesn’t come naturally for many students, especially when they hold unspoken beliefs about knowledge and their roles in the classroom that limit their engagement. Perry’s scheme of intellectual development offers a framework for identifying these beliefs, which helps us pinpoint students’ positions in their learning journey. In this seminar, we will discuss how recognizing these stages can inform our teaching strategies and enable us to foster metacognitive growth more effectively. We’ll conclude with an interactive classification of effective classroom practices, aligning them with different levels of Perry's scheme!
   Link: /assets/talks/perry.pdf
 
@@ -56,7 +56,7 @@
   Location: University of Chicago Math Pedagogy Seminar
   Website: https://math.uchicago.edu/~pedagogyseminar/
   Duration: Winter 2024
-  Nutshell: x-collab-learning
+  AbstractId: x-collab-learning
   Abstract: We will be discussing the five vital elements for productive cooperation in the classroom (following Johnson & Johnson, '98), obstacles for their practical implementation, and concrete strategies that work. Besides implementation, we will also talk about how to assess the success of a chosen strategy. I will be soliciting ideas from the attendees to personalize the suggestions in the context of undergraduate Math courses at UChicago.
   Link: /assets/talks/collab_learning.pdf
 
@@ -64,6 +64,6 @@
   Location: Project NExT session on Re-Imagining Grading - The Whys and Hows
   Website: 
   Duration: Mar 2022 (rescheduled from Joint Mathematics Meetings 2022)
-  Nutshell: x-project_next
+  AbstractId: x-project_next
   Abstract: In this session, I will talk about my reasoning, implementation, and experiences with using Techniques grading - a variant of MBG where (proof) techniques replace standards or specifications - in my Introduction to Proofs course. I will discuss my attempts at combining the system with an IBL course, how different types of assignments were assessed, and how I believe it helped to facilitate students’ transition into the correct mindset for future proofs-intensive courses.
   Link: /assets/talks/ProjectNExT_Talk_2022_slides.pdf
