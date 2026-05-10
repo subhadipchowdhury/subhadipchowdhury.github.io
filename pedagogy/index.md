@@ -59,6 +59,7 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% endfor %}
+**"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }})
 </div>
+{% endfor %}
 {% include section_close.html %}
