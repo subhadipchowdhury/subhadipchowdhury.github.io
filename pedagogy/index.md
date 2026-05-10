@@ -2,30 +2,24 @@
 layout: default
 title: Pedagogy
 navigation_weight: 3
+description: Pedagogy talks, collaborative learning materials, and faculty development work.
 ---
 
-
-
-<div style="border-bottom: 2px  solid #800000;">
-
-# {{ page.title }}
-
-</div>
+{% include page_title.html title=page.title %}
 
 
 
 
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 
 ## Training in Collaborative Learning for Undergraduate TAs
 
 **Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024](/assets/syllabi/2024AU_CL1.pdf) - [Winter 2025](/assets/syllabi/2025WI_CL2.pdf) - [Spring 2025](/assets/syllabi/2025SP_CL3.pdf)
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Professional Development Training for Graduate Student Lecturers
 
@@ -49,17 +43,17 @@ navigation_weight: 3
 </div>
 <p></p>
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Exploratory Teaching Group for Instructional Faculty
 
 **Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/)
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Invited Presentations
 
@@ -67,3 +61,4 @@ navigation_weight: 3
 <div class="course">
 **"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% endfor %}
 </div>
+{% include section_close.html %}

@@ -1,18 +1,14 @@
 ---
 layout: default
 title: Mentoring
-navigation_weight: 4
+navigation_weight: 5
+description: Independent studies, REU mentoring, applied research advising, and expository talks.
 ---
 
-
-<div style="border-bottom: 2px  solid #800000;">
-
-# {{ page.title }}
-
-</div>
+{% include page_title.html title=page.title %}
 
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Independent Study Advising
 
@@ -52,18 +48,18 @@ __Abstract__:  Our Great Lakes have been suffering from unstable weather since t
 __Abstract__:  This project is concerned with articulating the necessary background in order to understand the famous result of the undecidability of the continuum hypothesis. The first chapter of this independent study discusses the foundations of set theory, stating fundamental definitions and theorems that will be used throughout the remainder of the project. The second chapter focuses on ordinal and cardinal numbers which will directly relate to the final chapter. First, there is a clear explanation of the notion of order and what it means for a set to be well-ordered. Then ordinal numbers are defined and some properties are listed and proved. The second half of this chapter discusses cardinal numbers. Similarly, they are defined and some of their properties are stated. Some arithmetic rules surrounding cardinal numbers are discussed as an extension of those properties. The next chapter is concerned with the Zermelo-Fraenkel set theory and the axiom of choice (ZFC) which introduces the idea of set-theoretic systems and models. All nine axioms are listed and expanded upon. Additional focus is put on the axiom of choice and its equivalent statements. The final chapter states the continuum hypothesis, as well as the weak continuum hypothesis and the generalized continuum hypothesis. Some additional background of inner models is discussed for subsequent proof. Kurt Gödel proved that the continuum hypothesis could not be proven false within ZFC. The outline for this proof is discussed to reflect its main points. Paul Cohen proved that the continuum hypothesis could not be proven true within ZFC, although this is not discussed as extensively. With this last chapter, the end result becomes clear that the continuum hypothesis is independent of ZFC.
 
 
-</div>
+{% include section_close.html %}
 
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Applied Methods and Research Experience Advising
 
 ### The College of Wooster
 
-* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), superrvised jointly with Brian Ramsay
+* Summer 2022 - Kevin Yuan '23 (Computer Science), Ussama Mustafa '23 (Computer Science & Mathematics), Praneel Panchigar ’23​ (Statistical & Data Sciences & Mathematics), supervised jointly with Brian Ramsay
     * Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division
-    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-divison)
+    * [:Project Description](#x-the-goodyear-tire--rubber-company---non-pneumatic-tire-division)
 
 * Summer 2021 - Abigail Breitenbucher ’22 (Mathematics), Luke Pritchard ’22 (Statistical & Data Sciences), Maya Vasta ’22 (Statistical & Data Sciences), Kweku Andoh Yamoah ’22 (Computer Science), supervised jointly with Dr. Marian Frazier 
     * Client - ACME Fresh Market
@@ -74,15 +70,15 @@ __Abstract__:  This project is concerned with articulating the necessary backgro
 
 __Abstract__:  Using several methods, the team analyzed a large data set to evaluate customer behavior and determine strategies for increasing sales. Based on the analysis of customer buying trends and behavior, the team created several targeted programs to increase basket size.
 
-### :x The Goodyear Tire & Rubber Company - Non-Pneumatic Tire Divison
+### :x The Goodyear Tire & Rubber Company - Non-Pneumatic Tire Division
 
 __Abstract__:  Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive Python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client’s original program.
 
-</div>
+{% include section_close.html %}
 
 
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Summer Research Experience for Undergrads
 
@@ -90,16 +86,16 @@ This is a list of student projects I have (sometimes jointly) supervised.
 
 ### University of Chicago
 
-* [Scissors Congruence](http://math.uchicago.edu/~may/REU2016/REUPapers/Welsh.pdf) - Maeve Coates Welsh, 2016 Summer
-* [Rationality of zeta functions over finite fields](http://math.uchicago.edu/~may/REU2016/REUPapers/Park.pdf) - Sun Woo Park, 2016 Summer
-* [Canonical energy and black hole stability](http://math.uchicago.edu/~may/REU2016/REUPapers/Hsiao.pdf) - Enya Hsiao, 2016 Summer
-* [An introduction to knot theory and the knot group](http://math.uchicago.edu/~may/REU2014/REUPapers/Linov.pdf) - Larsen linov, 2014 Summer
-* [The Jordan-Chevalley decomposition](http://math.uchicago.edu/~may/REU2014/REUPapers/Yoo.pdf) - Joo Heon Yoo, 2014 Summer
+* [Scissors Congruence](https://math.uchicago.edu/~may/REU2016/REUPapers/Welsh.pdf) - Maeve Coates Welsh, 2016 Summer
+* [Rationality of zeta functions over finite fields](https://math.uchicago.edu/~may/REU2016/REUPapers/Park.pdf) - Sun Woo Park, 2016 Summer
+* [Canonical energy and black hole stability](https://math.uchicago.edu/~may/REU2016/REUPapers/Hsiao.pdf) - Enya Hsiao, 2016 Summer
+* [An introduction to knot theory and the knot group](https://math.uchicago.edu/~may/REU2014/REUPapers/Linov.pdf) - Larsen Linov, 2014 Summer
+* [The Jordan-Chevalley decomposition](https://math.uchicago.edu/~may/REU2014/REUPapers/Yoo.pdf) - Joo Heon Yoo, 2014 Summer
 
-</div>
+{% include section_close.html %}
 
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Directed Reading Courses
 
@@ -114,11 +110,11 @@ This is a list of quarter-long directed independent reading courses I have super
 * *Lie groups* - Michael Oliver, 2014 Winter
 * *Geometry* - Jordan Hisel, 2013 Fall
 
-</div>
+{% include section_close.html %}
 
 
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Expository Talks in Student Seminars
 
@@ -130,4 +126,4 @@ Note that some of the talks are very much of an outline in nature.
 </div>
 {% endfor %}
 
-</div>
+{% include section_close.html %}

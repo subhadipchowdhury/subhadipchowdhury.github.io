@@ -2,7 +2,10 @@
 layout: default
 title: Home
 navigation_weight: 1
+description: Assistant Instructional Professor at the University of Chicago. Teaching, pedagogy, research, and mentoring resources.
 ---
+
+<h1 class="visually-hidden">Home</h1>
 
 <div class="about">
 <div class="picture">
@@ -100,7 +103,7 @@ My research background is in low-dimensional topological dynamics. I am especial
 
 More broadly, I am interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
 
-I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](http://math.uchicago.edu/~dannyc/). My papers and preprints are linked on my [research page](research).
+I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](https://math.uchicago.edu/~dannyc/). My papers and preprints are linked on my [research page]({{ '/research/' | relative_url }}).
 
 </div>
 

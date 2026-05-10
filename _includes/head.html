@@ -1,8 +1,22 @@
 <head>
+	<meta charset="utf-8">
 
-	<script type="text/javascript" async
-		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+	{% assign meta_description = page.description | default: site.description | default: "Personal academic website of Subhadip Chowdhury." %}
+	{% assign canonical_url = page.url | absolute_url %}
+	{% assign og_image = page.og_image | default: '/assets/photos/me_small.jpg' | absolute_url %}
+
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']],
+				displayMath: [['$$', '$$'], ['\\[', '\\]']]
+			},
+			options: {
+				skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			}
+		};
 	</script>
+	<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 		
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,27 +25,41 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon_32.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/icons/favicon_32.png' | relative_url }}">
 
-	<link rel="icon" href="/assets/icons/favicon_192.png" sizes="192x192" />
+	<link rel="icon" href="{{ '/assets/icons/favicon_192.png' | relative_url }}" sizes="192x192" />
 	
-	<link rel="apple-touch-icon" href="assets/icons/favicon_apple.png" />	
+	<link rel="apple-touch-icon" href="{{ '/assets/icons/favicon_apple.png' | relative_url }}" />	
 
-	<link rel="stylesheet" href="/css/stylesheet.css">
+	<link rel="stylesheet" href="{{ '/css/stylesheet.css' | relative_url }}">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/javascript/navigation.js"></script>
+	<script defer src="{{ '/javascript/navigation.js' | relative_url }}"></script>
 	
-	<script src="https://cdn.jsdelivr.net/gh/ncase/nutshell/nutshell.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/gh/ncase/nutshell/nutshell.js"></script>
 	<script>
-		Nutshell.setOptions({
-			dontEmbedHeadings: true,
+		window.addEventListener("load", function () {
+			if (window.Nutshell) {
+				Nutshell.setOptions({
+					dontEmbedHeadings: true,
+				});
+			}
 		});
 	</script>
 	
 	<meta name="viewport" content="width=device-width, height=device-height">
 	
-	<meta name="description" content="My personal webpage.">
+	<meta name="description" content="{{ meta_description | escape }}">
+	<link rel="canonical" href="{{ canonical_url }}">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="{% if page.title != 'Home' %}{{ page.title }} | {% endif %}Subhadip Chowdhury">
+	<meta property="og:description" content="{{ meta_description | escape }}">
+	<meta property="og:url" content="{{ canonical_url }}">
+	<meta property="og:image" content="{{ og_image }}">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="{% if page.title != 'Home' %}{{ page.title }} | {% endif %}Subhadip Chowdhury">
+	<meta name="twitter:description" content="{{ meta_description | escape }}">
+	<meta name="twitter:image" content="{{ og_image }}">
 
 	<title>{% if page.title != "Home" %} {{ page.title }} | {% endif %}Subhadip Chowdhury</title>
 	

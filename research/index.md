@@ -2,21 +2,18 @@
 layout: default
 title: Research
 navigation_weight: 4
+description: Publications, preprints, expository writing, and research talks.
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include page_title.html title=page.title %}
 
-# {{ page.title }}
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.pdf)
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 
 ## Publications/Preprints/Expository Notes
@@ -41,9 +38,9 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% endif %}
 {% endfor %}
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Seminar and Conferences
 
@@ -54,4 +51,4 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% endfor %}
 
 <p></p>
-</div>
+{% include section_close.html %}

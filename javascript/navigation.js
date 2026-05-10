@@ -1,14 +1,17 @@
-/*Toggles the navigation menu for small devices*/
+/* Toggles the mobile navigation menu without jQuery. */
 
-$(document).ready(function () {
-    $("#nav-trigger span").click(function () {
-      if ($("nav#nav-mobile ul").hasClass("expanded")) {
-          $("nav#nav-mobile ul.expanded").removeClass("expanded").slideUp(250);
-          $(".wrapper-menu").removeClass("open");
-      } 
-      else {
-        $("nav#nav-mobile ul").addClass("expanded").slideDown(250);
-        $(".wrapper-menu").addClass("open");
-      }
-    });
+document.addEventListener("DOMContentLoaded", function () {
+  var triggerButton = document.querySelector("#nav-trigger button");
+  var mobileNavList = document.querySelector("nav#nav-mobile ul");
+  var menuIcon = document.querySelector(".wrapper-menu");
+
+  if (!triggerButton || !mobileNavList || !menuIcon) {
+    return;
+  }
+
+  triggerButton.addEventListener("click", function () {
+    var isExpanded = mobileNavList.classList.toggle("expanded");
+    menuIcon.classList.toggle("open", isExpanded);
+    triggerButton.setAttribute("aria-expanded", String(isExpanded));
+  });
 });

@@ -1,13 +1,16 @@
 ---
 layout: default
 title: Applets created with AI
+parentnav: Teaching
+subnav_weight: 24
+description: Interactive math applets created to support teaching and exploration.
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## {{ page.title }}
 
-</div>
+{% include section_close.html %}
 
 
 

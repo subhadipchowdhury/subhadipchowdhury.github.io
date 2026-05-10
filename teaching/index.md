@@ -3,27 +3,22 @@ layout: default
 title: Teaching
 navigation_weight: 2
 has_subnav: 1
+description: Courses taught, syllabi, evaluations, and selected teaching resources.
 ---
 
+{% include page_title.html title=page.title %}
 
-<div style="border-bottom: 2px  solid #800000;">
-
-# {{ page.title }}
-
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 <!-- * [Go to this link](/teaching/resources/) to access my past lecture notes and LaTeX templates.-->
 
 * [Go to this Link](/teaching/evaluations/) to see my past course evaluations.
 
-* [Go to this link](/teaching/recommendations/) if you are considering asking me to be reference or for a letter of recommendation.
+* [Go to this link](/teaching/recommendations/) if you are considering asking me to be a reference or for a letter of recommendation.
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Past Courses
 
@@ -67,10 +62,9 @@ has_subnav: 1
 {% endfor %}
 
 <p></p>  
-</div>
+{% include section_close.html %}
 
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Others
 
@@ -110,6 +104,6 @@ These are old problem sets from Math Olympiad training camps for high school stu
 </div>
 
 <p></p>
-</div>
+{% include section_close.html %}
 
 

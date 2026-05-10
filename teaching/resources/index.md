@@ -1,15 +1,16 @@
 ---
 layout: default
 title: Resources
+parentnav: Teaching
+subnav_weight: 21
+description: Notes repositories, worksheets, and teaching resource links.
 ---
-<!--parentnav: Teaching
-subnav_weight: 21-->
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## {{ page.title }}
 
-</div>
+{% include section_close.html %}
 
 
 ### Lecture Notes Repositories
