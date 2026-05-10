@@ -9,7 +9,7 @@ description: Publications, preprints, expository writing, and research talks.
 
 {% include section_open.html %}
 
-Link to my Research Statement (Winter 2024): <a class="abstract-toggle" href="/research/Research_Statement.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/research/Research_Statement.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
 
 {% include section_close.html %}
 
