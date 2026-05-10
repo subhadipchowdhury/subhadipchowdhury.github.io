@@ -791,6 +791,17 @@ body.style-variant-a.page-research .papers {
 	color: $uchicago-maroon;
 }
 
+.research-link-row {
+	margin-top: 0.55rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.research-link-row .abstract-toggle {
+	margin-left: 0;
+}
+
 .abstract-panel {
 	margin: 0.75rem 0 0.35rem;
 	padding: 1rem 1.1rem;
