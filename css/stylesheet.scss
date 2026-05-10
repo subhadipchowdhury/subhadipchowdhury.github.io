@@ -716,42 +716,33 @@ code{
 }
 
 .abstract-toggle {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.45rem;
+	display: inline-block;
 	margin-left: 0.5rem;
-	padding: 0.2rem 0.7rem 0.25rem;
-	background: rgba(128, 0, 0, 0.08);
-	border: 1px solid rgba(128, 0, 0, 0.2);
-	border-radius: 999px;
-	box-shadow: 0 1px 0 rgba(128, 0, 0, 0.08);
+	padding: 0.625rem 1rem 0.5rem;
+	background: transparent;
+	border: 1px solid $uchicago-maroon;
+	border-radius: 0;
 	color: $uchicago-maroon;
 	cursor: pointer;
 	font-family: $base-font;
-	font-size: 0.82rem;
+	font-size: 0.875rem;
 	font-optical-sizing: auto;
-	font-weight: 700;
+	font-weight: 600;
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
-	transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+	line-height: 1rem;
+	transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, color 0.5s ease-in-out;
 
 	&:hover {
-		background: rgba(128, 0, 0, 0.14);
-		border-color: rgba(128, 0, 0, 0.35);
+		background: $uchicago-maroon;
+		border-color: $uchicago-maroon;
+		color: $uchicago-white;
 		text-decoration: none;
-		transform: translateY(-1px);
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 	}
 
 	&:focus-visible {
 		outline: 2px solid $uchicago-lightlake;
 		outline-offset: 2px;
-	}
-
-	&::after {
-		content: "+";
-		font-size: 1rem;
-		line-height: 1;
 	}
 }
 
@@ -759,10 +750,6 @@ code{
 	background: $uchicago-maroon;
 	border-color: $uchicago-maroon;
 	color: $uchicago-white;
-}
-
-.abstract-toggle[aria-expanded="true"]::after {
-	content: "-";
 }
 
 .abstract-panel {
