@@ -11,6 +11,18 @@ layout: compress
       {% include navigation.html %}
     </header>
 
+    {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring" | split: "|" %}
+    {% if style_preview_pages contains page.title %}
+    <aside class="style-preview-switcher" aria-label="Style preview switcher">
+      <p class="style-preview-title">Style Preview</p>
+      <div class="style-preview-options" role="group" aria-label="Choose a style variant">
+        <button class="style-preview-option" type="button" data-style-variant="base" aria-pressed="true">Current</button>
+        <button class="style-preview-option" type="button" data-style-variant="a" aria-pressed="false">Mockup A</button>
+        <button class="style-preview-option" type="button" data-style-variant="b" aria-pressed="false">Mockup B</button>
+      </div>
+    </aside>
+    {% endif %}
+
     <main class="main-wrapper">
       {{ content }}
     </main>
