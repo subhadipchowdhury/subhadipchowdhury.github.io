@@ -5,7 +5,7 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring" | split: "|" %}
+  {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring|Research" | split: "|" %}
   <body class="page-{{ page.title | downcase | replace: ' ', '-' }}{% if style_preview_pages contains page.title %} style-variant-a{% endif %}">
     <header>
       <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
