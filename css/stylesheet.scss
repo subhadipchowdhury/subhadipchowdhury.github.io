@@ -49,21 +49,6 @@ body {
   line-height: 1.25;
 }
 
-.skip-link {
-	position: absolute;
-	left: -9999px;
-	top: 0;
-	background: $uchicago-maroon;
-	color: $uchicago-white;
-	padding: 0.5rem 0.75rem;
-	z-index: 1000;
-
-	&:focus {
-		left: 1rem;
-		top: 1rem;
-	}
-}
-
 .visually-hidden {
 	position: absolute;
 	width: 1px;

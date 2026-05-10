@@ -6,13 +6,12 @@ layout: compress
 <html lang="en">
   {% include head.html %}
   <body class="page-{{ page.title | downcase | replace: ' ', '-' }}">
-    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header>
       <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
       {% include navigation.html %}
     </header>
 
-    <main id="main-content" class="main-wrapper">
+    <main class="main-wrapper">
       {{ content }}
     </main>
 
