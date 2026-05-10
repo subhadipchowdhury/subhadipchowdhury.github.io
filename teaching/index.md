@@ -61,7 +61,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 </div>
 {% endfor %}
 
-<p></p>  
+<p></p>
 {% include section_close.html %}
 
 {% include section_open.html %}
@@ -73,7 +73,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% for course in site.data.nonteaching_courses_uchicago %}
 <div class="course">
-{{ course.Role }} for **{{ course.Name }} (Math {{ course.Code }})**, taught by Professor [{{ course.Instructor }}]({{ course.Homepage }}) - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
+<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor [{{ course.Instructor }}]({{ course.Homepage }}) - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}
@@ -84,13 +84,13 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for incoming grad students at UChicago.
 
 <div class="course">
-**Gaussian Curvature and the Gauss-Bonnet Theorem** - [WOMP 2016](/assets/problemsets/2016WOMP.pdf) 
+<strong>Gaussian Curvature and the Gauss-Bonnet Theorem</strong> - [WOMP 2016](/assets/problemsets/2016WOMP.pdf)
 </div>
 <div class="course">
-**Covering Spaces and the Fundamental Group** - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
 </div>
 <div class="course">
-**Covering Spaces and the Fundamental Group** - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter 
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter
 </div>
  
 
@@ -100,7 +100,7 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
 These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
 
 <div class="course">
-**Indian National Math Olympiad Training Camp** - [2010](/assets/problemsets/2010kinmotc.pdf) - [2011](/assets/problemsets/2011kinmotc.pdf) - [2012](/assets/problemsets/2012kinmotc.pdf)
+<strong>Indian National Math Olympiad Training Camp</strong> - [2010](/assets/problemsets/2010kinmotc.pdf) - [2011](/assets/problemsets/2011kinmotc.pdf) - [2012](/assets/problemsets/2012kinmotc.pdf)
 </div>
 
 <p></p>
