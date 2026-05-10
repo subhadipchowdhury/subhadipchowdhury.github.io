@@ -18,4 +18,4 @@ description: Interactive math applets created to support teaching and exploratio
 - [WaveEquationSimulation.html](WaveEquationSimulation.html) — Wave equation simulation
 - [ForcedWaveEqnSim.html](ForcedWaveEqnSim.html) — Forced wave equation simulation
 
-- [Concept Mapper](https://github.com/subhadipchowdhury/concept-mapper) — Browser-based study and authoring tool for concept maps
+- [Concept Mapper](https://subhadipchowdhury.github.io/concept-mapper/) — Browser-based study and authoring tool for concept maps
