@@ -17,3 +17,5 @@ description: Interactive math applets created to support teaching and exploratio
 - [HeatEquation3D.html](HeatEquation3D.html) — 3D heat equation simulation
 - [WaveEquationSimulation.html](WaveEquationSimulation.html) — Wave equation simulation
 - [ForcedWaveEqnSim.html](ForcedWaveEqnSim.html) — Forced wave equation simulation
+
+- [Concept Mapper](https://github.com/subhadipchowdhury/concept-mapper) — Browser-based study and authoring tool for concept maps
