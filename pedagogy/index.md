@@ -61,19 +61,9 @@ navigation_weight: 3
 
 <div style="border-bottom: 2px  solid #800000;">
 
-## Seminar and Conferences
+## Invited Presentations
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% if talk.Abstract %}, [:Abstract](#{{ talk.Nutshell }})
-
-### :{{ talk.Nutshell }}
-
-__Abstract__: {{talk.Abstract}}
-</div>
-{% endif %}
-{% endfor %}
-
-<p></p>
-
+**"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% endfor %}
 </div>
