@@ -72,8 +72,9 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 ### Teaching Assistant
 
 {% for course in site.data.nonteaching_courses_uchicago %}
+{% assign instructor_parts = course.Instructor | split: ' ' %}
 <div class="course">
-<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor [{{ course.Instructor }}]({{ course.Homepage }}) - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
+<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor <a href="{{ course.Homepage }}">{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}</a> - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}
@@ -87,10 +88,10 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
 <strong>Gaussian Curvature and the Gauss-Bonnet Theorem</strong> - [WOMP 2016](/assets/problemsets/2016WOMP.pdf)
 </div>
 <div class="course">
-<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee <span class="lastname">Banerjee</span>
 </div>
 <div class="course">
-<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick <span class="lastname">Salter</span>
 </div>
  
 

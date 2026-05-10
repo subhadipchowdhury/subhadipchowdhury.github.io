@@ -21,7 +21,7 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
 <div class="papers">
-**{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
+**{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
 {% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
 </div>
@@ -31,7 +31,7 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% for paper in site.data.papers %}
 {% if paper.type == "expository" %}
 <div class="papers">
-**{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
+**{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
 {% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
 </div>

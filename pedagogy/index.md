@@ -23,7 +23,7 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 ## Professional Development Training for Graduate Student Lecturers
 
-### The University of Chicago, co-led with Prof. [Sarah Ziesler](https://mathematics.uchicago.edu/people/profile/sarah-ziesler/)
+### The University of Chicago, co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/sarah-ziesler/">Sarah <span class="lastname">Ziesler</span></a>
 
 
 <div class="course">
@@ -49,7 +49,7 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 ## Exploratory Teaching Group for Instructional Faculty
 
-**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. [Kale Davies](https://mathematics.uchicago.edu/people/profile/kale-davies/)
+**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/kale-davies/">Kale <span class="lastname">Davies</span></a>
 
 {% include section_close.html %}
 
@@ -59,7 +59,7 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }})
+**{{ talk.Title }}** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }})
 </div>
 {% endfor %}
 {% include section_close.html %}

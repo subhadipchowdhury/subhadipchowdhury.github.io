@@ -103,7 +103,7 @@ My research background is in low-dimensional topological dynamics. I am especial
 
 More broadly, I am interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
 
-I received my Ph.D. from the University of Chicago under the direction of Prof. [Danny Calegari](https://math.uchicago.edu/~dannyc/). My papers and preprints are linked on my [research page]({{ '/research/' | relative_url }}).
+I received my Ph.D. from the University of Chicago under the direction of Prof. <a href="https://math.uchicago.edu/~dannyc/">Danny <span class="lastname">Calegari</span></a>. My papers and preprints are linked on my [research page]({{ '/research/' | relative_url }}).
 
 </div>
 

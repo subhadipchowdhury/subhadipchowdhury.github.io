@@ -664,6 +664,11 @@ code{
 	font-family: $code-font;
 }
 
+.lastname {
+	font-variant-caps: small-caps;
+	letter-spacing: 0.04em;
+}
+
 #backicon{ 
 	width:1em; 
 }
