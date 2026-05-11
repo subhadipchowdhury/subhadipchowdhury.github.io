@@ -74,19 +74,19 @@ body.is-scrolled {
 	}
 
 	.site-header__inner {
-		min-height: 4rem;
-		padding-top: 0.45rem;
-		padding-bottom: 0.35rem;
+		min-height: 3.45rem;
+		padding-top: 0.2rem;
+		padding-bottom: 0.15rem;
 	}
 
 	.site-header h1 {
-		font-size: 1.45rem;
-		padding-bottom: 0.1rem;
+		font-size: 1.25rem;
+		padding-bottom: 0;
 	}
 
 	nav#nav-main ul li a {
-		padding-top: 0.25em;
-		padding-bottom: 0.25em;
+		padding-top: 0.15em;
+		padding-bottom: 0.15em;
 	}
 }
 
@@ -335,11 +335,22 @@ nav#nav-main ul{
 
 @media all and (max-width: 900px) {
 	.site-header__inner {
-		min-height: 4.4rem;
+		min-height: 3.9rem;
+		padding-top: 0.55rem;
+		padding-bottom: 0.35rem;
+	}
+
+	.site-header h1 {
+		font-size: 1.3rem;
+		padding-bottom: 0;
 	}
 
 	nav#nav-main{
 		display: none;
+	}
+
+	nav#nav-mobile {
+		margin-right: 0;
 	}
 }
 
@@ -460,7 +471,7 @@ nav#nav-mobile{
 nav#nav-mobile ul{
     list-style-type: none;
     position: absolute;      // Position below header
-	top: calc(100% - 0.1rem);
+	top: 100%;
     left: 0;
     right: 0;
 	z-index: 1;              // Appear above other content
@@ -469,9 +480,10 @@ nav#nav-mobile ul{
     text-align: center;
     background-color: #FFF;
     border-bottom: 3px solid #800000; // Maroon border
-    margin-top: 1em;
+	margin-top: 0;
 	max-height: 0;           // Start collapsed
 	overflow: hidden;        // Hide overflow text
+	box-shadow: 0 12px 22px rgba(0, 0, 0, 0.1);
 	transition: max-height 0.25s ease; // Smooth expand/collapse animation
 
     li{
@@ -538,6 +550,29 @@ nav#nav-mobile ul.expanded {
 	.site-header__inner {
 		padding-left: 1rem;
 		padding-right: 1rem;
+		min-height: 3.5rem;
+	}
+
+	.site-header h1 {
+		font-size: 1.15rem;
+	}
+
+	#nav-trigger button {
+		padding: 0.1rem 0;
+	}
+
+	.wrapper-menu {
+		width: 26px;
+		height: 26px;
+	}
+
+	.line-menu {
+		height: 3px;
+	}
+
+	nav#nav-mobile ul {
+		left: -1rem;
+		right: -1rem;
 	}
 
 	.site-footer__inner {
@@ -545,8 +580,14 @@ nav#nav-mobile ul.expanded {
 		padding-right: 1rem;
 	}
 
+	body.is-scrolled .site-header__inner {
+		min-height: 3rem;
+		padding-top: 0.1rem;
+		padding-bottom: 0.05rem;
+	}
+
 	body.is-scrolled .site-header h1 {
-		font-size: 1.3rem;
+		font-size: 1rem;
 	}
 }
 
