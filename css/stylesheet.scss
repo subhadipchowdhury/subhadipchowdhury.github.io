@@ -318,6 +318,8 @@ nav#nav-main ul{
 		width: 100%;
 		height: 100%;
 		background: $uchicago-darklake; // Expand height and change color
+	}
+}
 
 /* Navigation trigger button */
 #nav-trigger{
@@ -513,10 +515,6 @@ footer {
 		flex-flow: column wrap;
 	}
 }
-
-
-
-.picture{
 
 // Profile picture - positioned first in about section
 .picture{
@@ -736,25 +734,22 @@ body.style-variant-a.page-mentoring .section-block,
 body.style-variant-a.page-research .section-block {
 	padding: 0.75rem 0.8rem 0.95rem;
 	margin-bottom: 1rem;
-	border-bottom: 1px solid rgba($uchicago-maroon, 0.2);
-	border-left: 5px solid rgba($uchicago-maroon, 0.7);
-		border-bottom: 1px solid rgba($uchicago-maroon, 0.2); // Light maroon line
-		border-left: 5px solid rgba($uchicago-maroon, 0.7);   // Dark maroon accent stripe
-		background: linear-gradient(180deg, rgba(217, 217, 217, 0.16), rgba(217, 217, 217, 0.04)); // Subtle gray gradient
+	border-bottom: 1px solid rgba($uchicago-maroon, 0.2); // Light maroon line
+	border-left: 5px solid rgba($uchicago-maroon, 0.7);   // Dark maroon accent stripe
+	background: linear-gradient(180deg, rgba(217, 217, 217, 0.16), rgba(217, 217, 217, 0.04)); // Subtle gray gradient
+	border-radius: 0.15rem 0.55rem 0.55rem 0.15rem;
+}
+
+/* ========================================================================
+   STYLE VARIANT A - Special styling for Teaching, Pedagogy, Mentoring,
+   and Research pages
+
+   These selectors target specific body classes to give certain pages a more
+   card-like section treatment with accent borders and soft gradients.
+   ======================================================================== */
 
 body.style-variant-a.page-home h2,
 body.style-variant-a.page-teaching h2,
-	/* ========================================================================
-	   STYLE VARIANT A - Special styling for Teaching, Pedagogy, Research pages
-	   
-	   These selectors target specific page body classes to apply different
-	   styling. For example:
-	   - body.page-home applies styling only on the home page
-	   - body.page-teaching applies styling only on the teaching page
-	   
-	   The .section-block styling creates a card-like appearance with background
-	   gradients, colored borders, and rounded corners for visual interest.
-	   ======================================================================== */
 body.style-variant-a.page-pedagogy h2,
 body.style-variant-a.page-mentoring h2,
 body.style-variant-a.page-research h2 {
@@ -772,11 +767,17 @@ body.style-variant-a.page-research .papers {
 	border-top: 0;
 	padding: 0.55rem 0.75rem;
 	margin: 0.35rem 0;
-	background: rgba($uchicago-white, 0.82);
-	border: 1px dashed rgba($uchicago-maroon, 0.22);
+	background: rgba($uchicago-white, 0.82);          // Slightly transparent white
+	border: 1px dashed rgba($uchicago-maroon, 0.22); // Subtle dashed maroon border
 	border-radius: 0.35rem;
-	background: rgba($uchicago-white, 0.82);            // Slightly transparent white
-	border: 1px dashed rgba($uchicago-maroon, 0.22);   // Subtle dashed maroon border
+}
+
+/* ========================================================================
+   RESEARCH ABSTRACTS - Lists, toggle buttons, and expandable panels
+
+   These styles power the expandable abstract UI used on the research page.
+   ======================================================================== */
+
 .abstract-list {
 	padding-left: 1.25rem;
 	margin: 0.5rem 0 0;
@@ -787,15 +788,7 @@ body.style-variant-a.page-research .papers {
 	}
 
 	li::marker {
-		/* ========================================================================
-		   RESEARCH ABSTRACTS - Collapsible content with toggle buttons
-	   
-		   Research papers and conference talks can have expandable abstracts that
-		   show/hide when the user clicks the "Abstract" button. This section styles
-		   the list items, the toggle buttons, and the expandable panels.
-		   ======================================================================== */
-
-		color: $uchicago-maroon;
+		color: $uchicago-maroon; // Bullet point color
 	}
 
 	ul {
@@ -803,27 +796,28 @@ body.style-variant-a.page-research .papers {
 		padding-left: 1.25rem;
 	}
 
-		li::marker {             // Bullet point color
+	ul li {
 		margin-bottom: 0.5rem;
 	}
+
 }
 
+// Button used to toggle each abstract open and closed.
 .abstract-toggle {
 	display: inline-block;
 	margin-left: 0.35rem;
 	padding: 0.3rem 0.55rem 0.25rem;
-	background: transparent;
-	border: 1px solid rgba($uchicago-maroon, 0.5);
+	background: transparent;                        // Start with no fill
+	border: 1px solid rgba($uchicago-maroon, 0.5); // Maroon outline
 	border-radius: 0;
 	color: $uchicago-maroon;
 	cursor: pointer;
-	// Button to toggle abstract visibility
 	font-family: $base-font;
 	font-size: 0.75rem;
 	font-optical-sizing: auto;
 	font-weight: 500;
-		background: transparent;                            // Start with no background
-		border: 1px solid rgba($uchicago-maroon, 0.5);     // Maroon border
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
 	line-height: 1;
 	transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, color 0.25s ease-in-out;
 
@@ -834,80 +828,77 @@ body.style-variant-a.page-research .papers {
 		text-decoration: none;
 	}
 
-		outline: 2px solid $uchicago-lightlake;
-		// Smooth transitions when hovering
-		transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, color 0.25s ease-in-out;
+	&:focus-visible {
+		outline: 2px solid $uchicago-lightlake; // Visible keyboard focus
 		outline-offset: 2px;
 	}
 }
 
+// Visual state for an already-expanded abstract button.
 .abstract-toggle[aria-expanded="true"] {
 	background: rgba($uchicago-maroon, 0.1);
 	border-color: rgba($uchicago-maroon, 0.75);
 	color: $uchicago-maroon;
-		&:focus-visible {                                    // Accessibility: focus indicator
+}
 
+// Container that holds multiple paper/resource links in one row.
 .research-link-row {
 	margin-top: 0.55rem;
 	display: flex;
 	flex-wrap: wrap;
-	// Style when abstract is expanded (aria-expanded="true")
 	gap: 0.4rem;
 }
 
 .research-link-row .abstract-toggle {
 	margin-left: 0;
 }
-	// Layout for multiple research links per item
 
+// Expandable panel that contains the abstract text itself.
 .abstract-panel {
 	margin: 0.75rem 0 0.35rem;
 	padding: 1rem 1.1rem;
 	background: linear-gradient(135deg, rgba(217, 217, 217, 0.18), rgba(217, 217, 217, 0.42));
 	border: 1px solid rgba($uchicago-maroon, 0.12);
-	border-left: 4px solid $uchicago-maroon;
-	// Remove extra margin for research links
+	border-left: 4px solid $uchicago-maroon; // Strong left accent
 	border-radius: 0.2rem 0.65rem 0.65rem 0.2rem;
 	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
-	scroll-margin-top: 1.5rem;
+	scroll-margin-top: 1.5rem; // Helps when linking/jumping to panels
 	overflow: hidden;
-	// The expandable abstract content panel
-	opacity: 0;
+	opacity: 0;                // Start invisible
 	transform: translateY(-0.35rem);
-	max-height: 0;
-		background: linear-gradient(135deg, rgba(217, 217, 217, 0.18), rgba(217, 217, 217, 0.42)); // Subtle gray gradient
+	max-height: 0;             // Start collapsed
+	transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.28s ease, margin-top 0.28s ease;
 	will-change: max-height, opacity, transform;
-		border-left: 4px solid $uchicago-maroon;           // Bold left accent
+
 	p {
 		margin: 0;
-		scroll-margin-top: 1.5rem;                          // Space when scrolling to panel
+		line-height: 1.55;
 	}
 }
-		opacity: 0;                                          // Start invisible
-		transform: translateY(-0.35rem);                    // Start slightly above
-		max-height: 0;                                      // Start collapsed
-		// Animate all properties when opening/closing
-		transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.28s ease, margin-top 0.28s ease;
-		will-change: max-height, opacity, transform;       // Optimize for animation
+
+// Open state applied by JavaScript.
+.abstract-panel.is-open {
+	opacity: 1;
+	transform: translateY(0);
+}
 
 .abstract-panel[hidden] {
 	display: none;
 }
 
+// Accessibility: reduce animation for users who request less motion.
 @media (prefers-reduced-motion: reduce) {
 	.abstract-panel {
-	// Panel is visible and expanded
 		transition: none;
 	}
 
 	.abstract-toggle {
 		transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
-	// Hide panel when [hidden] attribute is set
 	}
 }
 
+// Mobile adjustments so buttons and panels fit more comfortably.
 @media all and (max-width: 640px) {
-	// Accessibility: reduce motion for users who prefer it
 	.abstract-list {
 		padding-left: 1rem;
 	}
@@ -918,11 +909,8 @@ body.style-variant-a.page-research .papers {
 
 	.abstract-panel {
 		padding: 0.9rem 0.95rem;
-	// Mobile adjustments for abstracts
 	}
 }
-
-/******************************************************/
 
 
 
