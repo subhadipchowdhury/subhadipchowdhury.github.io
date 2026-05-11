@@ -1,106 +1,149 @@
 --- 
 ---
 
-$heading-font: "EB Garamond", serif;
-$base-font: "Raleway", sans-serif;
-$nav-font: "Alegreya Sans SC", sans-serif;
-$code-font: "Encode Sans Condensed", sans-serif;
+/* ========================================================================
+   FONT DEFINITIONS
+   
+   SCSS Variables store reusable values. Here we define fonts that will be
+   used throughout the site. Using variables makes it easy to change fonts
+   globally - just update them here instead of searching the entire file.
+   ======================================================================== */
+
+$heading-font: "EB Garamond", serif;      // Serif font for h1, h2, h3, etc.
+$base-font: "Raleway", sans-serif;        // Default font for body text
+$nav-font: "Alegreya Sans SC", sans-serif; // Special font for navigation
+$code-font: "Encode Sans Condensed", sans-serif; // Monospace-style font for code blocks
 
 
-/* ==========================================================================
-   UChicago color palette
-   ========================================================================== */
+/* ========================================================================
+   COLOR PALETTE - University of Chicago Branding
+   
+   These colors are part of the University of Chicago's official brand.
+   They are stored as SCSS variables so we can:
+   - Reuse them throughout the file (just use $variable-name)
+   - Change brand colors in one place if needed
+   - Use transparency with them (e.g., rgba($uchicago-maroon, 0.5))
+   ======================================================================== */
 
-// Primary colors
-$uchicago-maroon: #800000;          // Pantone 202C
-$uchicago-light-greystone: #D9D9D9; // light greystone
-$uchicago-greystone: #A6A6A6;       // greystone
-$uchicago-dark-greystone: #737373;  // dark greystone
-$uchicago-webfont: #333;
+// Primary colors - main brand colors used for headings, borders, etc.
+$uchicago-maroon: #800000;          // Pantone 202C - deep red/maroon (main color)
+$uchicago-light-greystone: #D9D9D9; // Light gray - used for page background
+$uchicago-greystone: #A6A6A6;       // Medium gray
+$uchicago-dark-greystone: #737373;  // Dark gray - used for footer background
+$uchicago-webfont: #333;            // Dark gray for body text
 
-// Secondary colors
-$uchicago-lake: #007396;
-$uchicago-lightlake: #3EB1C8;
-$uchicago-darklake: #002A3A;
+// Secondary colors - used for accents and hover states
+$uchicago-lake: #007396;      // Blue - used for secondary accents
+$uchicago-lightlake: #3EB1C8; // Light blue - used for hover effects
+$uchicago-darklake: #002A3A;  // Dark blue - used for navigation hover
 
-// Neutrals
+// Neutrals - pure black and white
 $uchicago-black: #111111;
 $uchicago-white: #ffffff;
 
+/* ========================================================================
+   GLOBAL STYLES - Base styles applied to all elements
+   ======================================================================== */
+
 html,
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0;  // Remove default browser margins
+  padding: 0; // Remove default browser padding
 }
 
 html {
   width: 100%;
   height: 100%;
+  // Fill the entire viewport with the light gray background color
   background-color: $uchicago-light-greystone;
 }
 
 body {
   background-color: $uchicago-light-greystone;
-  color: $uchicago-webfont;
-  font-size: 1rem;
-  font-family: $base-font;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  line-height: 1.25;
+  color: $uchicago-webfont;          // Default text color (dark gray)
+  font-size: 1rem;                    // Base font size (16px)
+  font-family: $base-font;            // Use the Raleway font we defined above
+  font-optical-sizing: auto;          // Let the browser optimize font rendering
+  font-weight: 500;                   // Medium font weight (not bold, not thin)
+  line-height: 1.25;                  // Space between lines - helps readability
 }
 
+/* ========================================================================
+   ACCESSIBILITY CLASS
+   
+   .visually-hidden hides content from the visible page but keeps it
+   available to screen readers. This is useful for accessibility when
+   you need content that's not visually displayed but important for users
+   with assistive technologies.
+   ======================================================================== */
 .visually-hidden {
-	position: absolute;
+	position: absolute;      // Remove from document flow
 	width: 1px;
 	height: 1px;
 	padding: 0;
 	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
+	overflow: hidden;        // Hide anything that doesn't fit
+	clip: rect(0, 0, 0, 0); // Clip to zero-size rectangle
+	white-space: nowrap;     // Prevent text wrapping
 	border: 0;
 }
 
+/* ========================================================================
+   LINK STYLES
+   
+   Defines how links (anchors) look on the page. The '&' symbol refers to
+   the current selector, so '&:hover' means "when a link is hovered over".
+   ======================================================================== */
 a {
-  text-decoration: none;
+  text-decoration: none;         // Remove default underline
   font-family: $base-font;
   font-optical-sizing: auto;
-  font-weight: 600;
-  color: $uchicago-maroon;
-  transition: 0.5s all;
+  font-weight: 600;              // Make links bold
+  color: $uchicago-maroon;       // Use brand maroon color
+  transition: 0.5s all;          // Smooth animation over 0.5 seconds
 
   &:hover {
-    text-decoration:underline dotted;
+    // When user hovers over a link, add a dotted underline
+    text-decoration: underline dotted;
   }
 }
 
+/* ========================================================================
+   HEADING STYLES (h2, h3, h4)
+   
+   Headings use the special serif font and brand color. Different heading
+   levels have different sizes to create visual hierarchy.
+   ======================================================================== */
 h2, h3, h4 {
   color: $uchicago-maroon;
-  font-family: $heading-font;
+  font-family: $heading-font;  // Use fancy serif font for headings
 }
 
 h2 {
-  font-weight: 800;
-  font-size: 1.5rem;
+  font-weight: 800;    // Very bold
+  font-size: 1.5rem;   // 1.5 times the base font size
 }
 
 h3 {
-  font-weight: 700;
+  font-weight: 700;    // Bold
   font-size: 1.3rem;
-  text-align: right;
+  text-align: right;   // Right-align h3 headings
 }
 
 h4 {
-  font-weight: 600;
+  font-weight: 600;    // Semi-bold
   font-size: 1.2rem;
 }
 
+/* ========================================================================
+   LIST STYLES
+   ======================================================================== */
 ul, ol {
-  padding-left: 1em;
+  padding-left: 1em;   // Indent lists from the left
 }
 
 ol li {
-  padding-left: 0.5em;
+  padding-left: 0.5em; // Additional padding for ordered list items
 }
 
 /* ==========================================================================
@@ -149,7 +192,12 @@ header {
 }
 
 
-/***********************************************/
+/* ==========================================================================
+   NAVIGATION - Main horizontal menu (desktop only)
+   
+   The main navigation appears as a horizontal menu on desktop browsers.
+   It includes a dropdown submenu feature that appears on hover.
+   ========================================================================== */
 
 nav{
 	margin-right: 2rem;
@@ -157,16 +205,11 @@ nav{
 
 nav#nav-main ul{
 	padding-left: 0em;
-
-	list-style: none;
-	margin: 0; 
-
-	display:-webkit-box;
-    display:-ms-flexbox;
-	display:flex;
-	flex-flow: row nowrap;
-	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
-	justify-content: flex-evenly;
+	list-style: none;          // Remove bullet points
+	margin: 0;
+	display: flex;             // Use flexbox for horizontal layout
+	flex-flow: row nowrap;     // Items flow horizontally, don't wrap
+	justify-content: flex-evenly; // Space items evenly across menu
 
 	li{
 		display: inline-block;
@@ -206,30 +249,29 @@ nav#nav-main ul{
 				z-index: 1;
 			}
 			
+			// When hovering, animate the underline
 			&:hover:after{
 				z-index: -10;
-				animation: navfill 0.25s forwards;
-				-webkit-animation: navfill 0.25s forwards;
-				-moz-animation: navfill 0.25s forwards;
-				opacity: 1;
+				animation: navfill 0.25s forwards; // Trigger animation
+				opacity: 1;                        // Make visible
 			}
 
+			// Show active page with maroon border
 			&.active{
-				border-bottom:1.5px solid $uchicago-maroon;
+				border-bottom: 1.5px solid $uchicago-maroon;
 			}
 			
 			
 		}
 		
+		// Show dropdown menu when parent <li> is hovered
 		&:hover > ul{
-			visibility:visible;
-			opacity:1;
+			visibility: visible;   // Make submenu visible
+			opacity: 1;            // Fade it in
 		}
 		
 		ul{
-			display:-webkit-box;
-			display:-ms-flexbox;
-			display:flex;
+			display: flex;
 			flex-flow: column nowrap;
 			justify-content: flex-start;
 			word-spacing: 0.15em;
@@ -238,262 +280,235 @@ nav#nav-main ul{
 			margin: 0;
 			padding: 0;
 			
-			visibility:hidden;
-			opacity:0;
+			visibility: hidden;
+			opacity: 0;
 			position: absolute;
 			z-index: 999;
-			-webkit-transition:opacity 0.2s linear, visibility 0.2s linear;
-			-moz-transition:opacity 0.2s linear, visibility 0.2s linear;
-			-o-transition:opacity 0.2s linear, visibility 0.2s linear;
-			transition:opacity 0.2s linear, visibility 0.2s linear;	
+			transition: opacity 0.2s linear, visibility 0.2s linear;	
 			
 			background-color:#FFF;
-			border-left:3px solid #800000;
-			border-bottom:3px solid #800000;
-			
+			border-left: 3px solid #800000;
+			border-bottom: 3px solid #800000;
 		}
 	}
-	}
-
-@media all and (max-width: 1280px){
-	header h1{
-			font-size:1.5rem;
-		}
 }
 
-/* Small screens */
+@media all and (max-width: 1280px) {
+	header h1{
+		font-size: 1.5rem;
+	}
+}
+
 @media all and (max-width: 900px) {
 	nav#nav-main{
-		display:none;
+		display: none;
 	}
 }
-
-/* Keyframes */
 
 @keyframes navfill {
 	0% {
-	  width: 0%;
-	  height: 1px;
+		width: 0%;   // Start with no width
+		height: 1px;
 	}
 	50% {
-	  width: 100%;
-	  height: 1px;
+		width: 100%; // Expand to full width
+		height: 1px;
 	}
 	100% {
-	  width: 100%;
-	  height: 100%;
-	  background:$uchicago-darklake;
-	}
-}
+		width: 100%;
+		height: 100%;
+		background: $uchicago-darklake; // Expand height and change color
 
-
-/*************************************/
-
-
+/* Navigation trigger button */
 #nav-trigger{
-	display:none; 
-	text-align:center;
+	display: none;   // Hidden on desktop, shown on mobile
+	text-align: center;
 }
+
 @media all and (max-width: 900px) {
+    // On mobile, show the hamburger menu trigger
     #nav-trigger{
-        display:-webkit-box;
-        display:-ms-flexbox;
-        display:flex;
-        -webkit-box-pack:end;
-        -ms-flex-pack:end;
-        justify-content:flex-end;
-        -webkit-box-align:center;
-        -ms-flex-align:center;
-        align-items:center;
-        padding:0 2em 0 0;
+        display: flex;
+        justify-content: flex-end; // Push to right side
+        align-items: center;
+        padding: 0 2em 0 0;
     }
 }
 
 #nav-trigger button{
-	background: transparent;
+	background: transparent;  // Remove default button styling
 	border: 0;
 	padding: 0;
 	margin: 0;
 	display: inline-block;
-	cursor: pointer;
+	cursor: pointer;           // Show it's clickable
 }
 
-
-
-/************************************/
-
-
+/* ========================================================================
+   HAMBURGER MENU - Mobile navigation toggle
+   
+   This creates the animated three-line "hamburger" menu icon that appears
+   on mobile devices. When clicked, it toggles the mobile navigation menu.
+   ========================================================================== */
 
 .wrapper-menu{
-    width:30px;
-    height:30px;
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-    -webkit-box-orient:vertical;
-    -webkit-box-direction:normal;
-    -ms-flex-direction:column;
-    flex-direction:column;
-    -webkit-box-pack:justify;
-    -ms-flex-pack:justify;
-	justify-content:space-between;
-	cursor:pointer;
-    -webkit-transition:-webkit-transform .33s ease-out;
-    transition:-webkit-transform .33s ease-out;
-    transition:transform .33s ease-out;
-    transition:transform .33s ease-out,-webkit-transform .33s ease-out;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;    // Stack the lines vertically
+    justify-content: space-between; // Space the lines evenly
+    cursor: pointer;           // Show it's clickable
+    transition: transform 0.33s ease-out; // Smooth rotation animation
 }
+
 .wrapper-menu.open{
-    -webkit-transform:rotate(-45deg);
-    transform:rotate(-45deg);
+    transform: rotate(-45deg); // Rotate when menu is open
 }
 
-/**********************Hamburger Menu******************************************************/
+/**********************Hamburger Menu Lines*****/
 .line-menu{
-    background-color:#800000;
-    border-radius:5px;
-    width:100%;
-	height:4px;
+    background-color: #800000; // Maroon color
+    border-radius: 5px;
+    width: 100%;
+	height: 4px;               // Thickness of each line
 }
-
 
 .line-menu.half{
-	width:50%;
+	width: 50%;                // Some lines are half-width
 }
 
-	
+// Top line of hamburger menu
 .line-menu.start{
-	-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	-webkit-transform-origin:right;
-	transform-origin:right;
+	transition: transform 0.33s cubic-bezier(0.54, -0.81, 0.57, 0.57);
+	transform-origin: right;   // Rotate around the right edge
 }
 
 .open .line-menu.start {
-	-webkit-transform:rotate(-90deg) translateX(3px);
-	transform:rotate(-90deg) translateX(3px)	
-
+	transform: rotate(-90deg) translateX(3px); // Rotate 90 degrees
 }
+
+// Bottom line of hamburger menu
 .line-menu.end {
-	-ms-flex-item-align:end;
-	align-self:flex-end;
-	-webkit-transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:transform .33s cubic-bezier(.54,-.81,.57,.57);
-	transition:transform .33s cubic-bezier(.54,-.81,.57,.57),-webkit-transform .33s cubic-bezier(.54,-.81,.57,.57);
-	-webkit-transform-origin:left;
-	transform-origin:left;
+	align-self: flex-end;      // Align to the right
+	transition: transform 0.33s cubic-bezier(0.54, -0.81, 0.57, 0.57);
+	transform-origin: left;    // Rotate around the left edge
 }
 
 .open .line-menu.end{
-	-webkit-transform:rotate(-90deg) translateX(-3px);
-	transform:rotate(-90deg) translateX(-3px)
+	transform: rotate(-90deg) translateX(-3px); // Rotate 90 degrees opposite direction
 }
 
 
-
-/**********************************************************************************************************/
-
+/* ========================================================================
+   MOBILE NAVIGATION - Dropdown menu for small screens
+   
+   This menu is hidden on desktop and only appears on mobile/tablet devices
+   (screens 900px or smaller). It expands when the hamburger menu is clicked.
+   ========================================================================== */
 
 nav#nav-mobile{
-    display:none;
+    display: none;           // Hidden on desktop
 }
 
 @media all and (max-width: 900px) {
+    // Show mobile menu on small screens
     nav#nav-mobile {
-		display:block;
+		display: block;
 	}
 }
 
 nav#nav-mobile ul{
-    list-style-type:none;
-    position:absolute;
-    top:76px;
-    left:0;
-    right:0;
-	z-index: 1;
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center;
-    background-color:#FFF;
-    border-bottom:3px solid #800000;
-    margin-top:1em;
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.25s ease;
+    list-style-type: none;
+    position: absolute;      // Position below header
+    top: 76px;               // Height of header
+    left: 0;
+    right: 0;
+	z-index: 1;              // Appear above other content
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #FFF;
+    border-bottom: 3px solid #800000; // Maroon border
+    margin-top: 1em;
+	max-height: 0;           // Start collapsed
+	overflow: hidden;        // Hide overflow text
+	transition: max-height 0.25s ease; // Smooth expand/collapse animation
 
     li{
-        display:block;
-        padding:.5em;
+        display: block;
+        padding: 0.5em;
 
         a{
 			font-family: $nav-font;
 			font-weight: 700;
-			font-size:1em;
-			color:#3A494C;
+			font-size: 1em;
+			color: #3A494C;      // Dark gray text
 			padding: 10px 30px;
-            display:block;
-            z-index:999;
-            text-decoration:none;
+            display: block;
+            z-index: 999;
+            text-decoration: none;
             
-
+            // Hover effect: swap text and background colors
             &:hover{
-                color: #A5D3DB;
-				background:#3A494C;
+                color: #A5D3DB;         // Light blue text
+				background: #3A494C;    // Dark gray background
 				text-decoration: none;
             }
         }
-		
-    }
-
+	}
 }
 
+// When menu is expanded, increase max-height to show all items
 nav#nav-mobile ul.expanded {
-	max-height: 30rem;
+	max-height: 30rem;  // 30rem = 480px (enough for many menu items)
 }
 
 
 
-/***********************************************/
+/* ========================================================================
+   FOOTER - Site footer with contact and metadata
+   
+   Appears at the bottom of every page with a dark background.
+   ========================================================================== */
 
 footer {
-	font-weight: 300;
-	font-size: 0.8em;
+	font-weight: 300;          // Light text
+	font-size: 0.8em;          // Smaller than body text
 	width: 100%;
   	max-width: 960px;
 	margin: 0 auto 0.2rem;
 	padding: 2.5rem 2rem 1rem;
 	box-sizing: border-box;
-	background-color: $uchicago-dark-greystone;
-	color: $uchicago-white;
+	background-color: $uchicago-dark-greystone; // Dark gray background
+	color: $uchicago-white;    // White text
 
 	a{
-		color: $uchicago-white;
+		color: $uchicago-white; // Keep links white in footer
 	}
 
 	p {
-		margin: 0 0 0.75rem;
+		margin: 0 0 0.75rem;    // Space between paragraphs
 	}
 }
 
 
-/***********************************************/
+/* ========================================================================
+   ABOUT SECTION - Home page intro with profile picture and info
+   
+   Uses flexbox to arrange three main sections side-by-side with wrapping
+   on smaller screens. The order property controls arrangement.
+   ========================================================================== */
+
 .about {
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: -webkit-flex;
-  	display: flex;
-  	flex-flow: row wrap;
-  	justify-content: space-evenly;
-	align-items: center;
-	  
-	border-bottom: 4px  solid #800000;
-  }
+	display: flex;
+	flex-flow: row wrap;       // Items in row, can wrap to next line
+	justify-content: space-evenly; // Distribute items evenly
+	align-items: center;       // Vertically center items
+	border-bottom: 4px solid #800000; // Maroon divider line
+}
 
 @media all and (max-width: 500px) {
+	// On very small screens, stack items vertically instead of horizontally
 	.about{
 		flex-flow: column wrap;
 	}
@@ -502,57 +517,67 @@ footer {
 
 
 .picture{
-	order: 1;
-	float:left;
+
+// Profile picture - positioned first in about section
+.picture{
+	order: 1;                  // Controls flex ordering
+	float: left;
 	img{
-		width:12em;
+		width: 12em;
 		display: block;
-		height: auto;
-		border-radius: 999px;
-		border: 4px solid $uchicago-white;
-		box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+		height: auto;          // Maintain aspect ratio
+		border-radius: 999px;  // Make circular (999px = full circle for square images)
+		border: 4px solid $uchicago-white; // White border around image
+		box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18); // Subtle shadow
 	}
-	
 }
 
-
+// Contact info section - positioned second
 .mail{
-	order:2;
+	order: 2;
 	padding: 1em;
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: -webkit-flex;
-	display:flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	display: flex;
+	flex-direction: column;    // Stack content vertically
+	justify-content: space-evenly; // Space items evenly
 }
 
+// University logos - positioned third
 .shield{
 	order: 3;
-	float:right;
-	display:flex;
+	float: right;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items:center;
+	align-items: center;
 	
+	// Previous institution logos
 	.old{
-		display:flex;
-		flex-direction: row;
+		display: flex;
+		flex-direction: row;   // Display logos horizontally
 		justify-content: space-evenly;
-		align-items:center;
+		align-items: center;
 		
 		img{
-			height:3.5em;
+			height: 3.5em;     // Smaller size for old logos
 		}		
 	}
 	
+	// Current institution logo
 	.current img{
-		height:10em;
+		height: 10em;          // Larger size for current affiliation
 	}
-	
 }
 
+
+
+
+/* ========================================================================
+	SECTION CONTAINERS - Organize page content into visual blocks
+   
+	These classes create styled containers for different content sections
+	(about, experience, education, courses, papers, etc.). They give visual
+	hierarchy and organization to the page.
+	======================================================================== */
 
 .anchor {
   @extend .about;
@@ -563,12 +588,14 @@ footer {
     text-align: center;
   }
 }
+// Basic section container with divider
 
 .section-block {
 	border-bottom: 2px solid $uchicago-maroon;
 	padding-bottom: 0.5rem;
 	margin-bottom: 0.5rem;
 }
+// Title container within a section
 
 .section-title-block {
 	h1 {
@@ -579,6 +606,13 @@ footer {
 	}
 }
 
+
+/* ========================================================================
+   EXPERIENCE & EDUCATION - Two-column layout with Font Awesome icons
+   
+   These use Font Awesome icon fonts to add professional icons before
+   each list item. The :before pseudo-element is used to inject the icons.
+   ======================================================================== */
 
 
 
@@ -593,6 +627,7 @@ footer {
 		list-style: none;
 		padding-left: 1.3em;
 		padding-bottom: 1em;
+	// Inject a briefcase icon before each item
 	}
 
 	ul li:before {    
@@ -615,6 +650,7 @@ footer {
 		list-style: none;
 		padding-left: 1.5em;
 		padding-bottom: 1em;
+	// Inject a graduation cap icon before each item
 	}
 
 	ul li:before {    
@@ -626,8 +662,10 @@ footer {
 	}
 }
 
-/***********************************************/
 
+/* ========================================================================
+   TABLES - Styling for data tables
+   ======================================================================== */
 
 table {
 	padding-top: 0.5em;
@@ -640,23 +678,14 @@ table {
 		text-align: center;
 	}
 
-tr:nth-child(odd) {
+	// Alternate row colors for readability
+	tr:nth-child(odd) {
 		background-color: #eee;
-}	
+	}
 }
 
 
-.schedule {
-overflow-x:auto;
-text-align: center;
-table{
-	margin-left:auto; 
-		margin-right:auto;
-}
-}	
-
-
-
+// Inline code styling
 code{
 	background-color: #ddd;
 	border-radius: 5px;
@@ -664,17 +693,19 @@ code{
 	font-family: $code-font;
 }
 
+// Small caps for surnames in author lists
 .lastname {
 	font-variant-caps: small-caps;
 	letter-spacing: 0.04em;
 }
 
-#backicon{ 
-	width:1em; 
-}
 
-/***********************************************/
-
+/* ========================================================================
+   PAPERS & COURSES - Content card styling
+   
+   These classes style research papers, course listings, and other content.
+   The @extend rule reuses styles from .papers in .course.
+   ======================================================================== */
 
 .papers {
     padding: 0em;
@@ -689,6 +720,7 @@ code{
     }
 }
 
+// Courses use the same styling as papers, with slightly tighter margins
 .course {
 	@extend .papers;
 	p{
@@ -706,12 +738,23 @@ body.style-variant-a.page-research .section-block {
 	margin-bottom: 1rem;
 	border-bottom: 1px solid rgba($uchicago-maroon, 0.2);
 	border-left: 5px solid rgba($uchicago-maroon, 0.7);
-	background: linear-gradient(180deg, rgba(217, 217, 217, 0.16), rgba(217, 217, 217, 0.04));
-	border-radius: 0.15rem 0.55rem 0.55rem 0.15rem;
-}
+		border-bottom: 1px solid rgba($uchicago-maroon, 0.2); // Light maroon line
+		border-left: 5px solid rgba($uchicago-maroon, 0.7);   // Dark maroon accent stripe
+		background: linear-gradient(180deg, rgba(217, 217, 217, 0.16), rgba(217, 217, 217, 0.04)); // Subtle gray gradient
 
 body.style-variant-a.page-home h2,
 body.style-variant-a.page-teaching h2,
+	/* ========================================================================
+	   STYLE VARIANT A - Special styling for Teaching, Pedagogy, Research pages
+	   
+	   These selectors target specific page body classes to apply different
+	   styling. For example:
+	   - body.page-home applies styling only on the home page
+	   - body.page-teaching applies styling only on the teaching page
+	   
+	   The .section-block styling creates a card-like appearance with background
+	   gradients, colored borders, and rounded corners for visual interest.
+	   ======================================================================== */
 body.style-variant-a.page-pedagogy h2,
 body.style-variant-a.page-mentoring h2,
 body.style-variant-a.page-research h2 {
@@ -732,8 +775,8 @@ body.style-variant-a.page-research .papers {
 	background: rgba($uchicago-white, 0.82);
 	border: 1px dashed rgba($uchicago-maroon, 0.22);
 	border-radius: 0.35rem;
-}
-
+	background: rgba($uchicago-white, 0.82);            // Slightly transparent white
+	border: 1px dashed rgba($uchicago-maroon, 0.22);   // Subtle dashed maroon border
 .abstract-list {
 	padding-left: 1.25rem;
 	margin: 0.5rem 0 0;
@@ -744,6 +787,14 @@ body.style-variant-a.page-research .papers {
 	}
 
 	li::marker {
+		/* ========================================================================
+		   RESEARCH ABSTRACTS - Collapsible content with toggle buttons
+	   
+		   Research papers and conference talks can have expandable abstracts that
+		   show/hide when the user clicks the "Abstract" button. This section styles
+		   the list items, the toggle buttons, and the expandable panels.
+		   ======================================================================== */
+
 		color: $uchicago-maroon;
 	}
 
@@ -752,7 +803,7 @@ body.style-variant-a.page-research .papers {
 		padding-left: 1.25rem;
 	}
 
-	ul li {
+		li::marker {             // Bullet point color
 		margin-bottom: 0.5rem;
 	}
 }
@@ -766,12 +817,13 @@ body.style-variant-a.page-research .papers {
 	border-radius: 0;
 	color: $uchicago-maroon;
 	cursor: pointer;
+	// Button to toggle abstract visibility
 	font-family: $base-font;
 	font-size: 0.75rem;
 	font-optical-sizing: auto;
 	font-weight: 500;
-	letter-spacing: 0.02em;
-	text-transform: uppercase;
+		background: transparent;                            // Start with no background
+		border: 1px solid rgba($uchicago-maroon, 0.5);     // Maroon border
 	line-height: 1;
 	transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, color 0.25s ease-in-out;
 
@@ -782,8 +834,9 @@ body.style-variant-a.page-research .papers {
 		text-decoration: none;
 	}
 
-	&:focus-visible {
 		outline: 2px solid $uchicago-lightlake;
+		// Smooth transitions when hovering
+		transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, color 0.25s ease-in-out;
 		outline-offset: 2px;
 	}
 }
@@ -792,18 +845,20 @@ body.style-variant-a.page-research .papers {
 	background: rgba($uchicago-maroon, 0.1);
 	border-color: rgba($uchicago-maroon, 0.75);
 	color: $uchicago-maroon;
-}
+		&:focus-visible {                                    // Accessibility: focus indicator
 
 .research-link-row {
 	margin-top: 0.55rem;
 	display: flex;
 	flex-wrap: wrap;
+	// Style when abstract is expanded (aria-expanded="true")
 	gap: 0.4rem;
 }
 
 .research-link-row .abstract-toggle {
 	margin-left: 0;
 }
+	// Layout for multiple research links per item
 
 .abstract-panel {
 	margin: 0.75rem 0 0.35rem;
@@ -811,26 +866,29 @@ body.style-variant-a.page-research .papers {
 	background: linear-gradient(135deg, rgba(217, 217, 217, 0.18), rgba(217, 217, 217, 0.42));
 	border: 1px solid rgba($uchicago-maroon, 0.12);
 	border-left: 4px solid $uchicago-maroon;
+	// Remove extra margin for research links
 	border-radius: 0.2rem 0.65rem 0.65rem 0.2rem;
 	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
 	scroll-margin-top: 1.5rem;
 	overflow: hidden;
+	// The expandable abstract content panel
 	opacity: 0;
 	transform: translateY(-0.35rem);
 	max-height: 0;
-	transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.28s ease, margin-top 0.28s ease;
+		background: linear-gradient(135deg, rgba(217, 217, 217, 0.18), rgba(217, 217, 217, 0.42)); // Subtle gray gradient
 	will-change: max-height, opacity, transform;
-
+		border-left: 4px solid $uchicago-maroon;           // Bold left accent
 	p {
 		margin: 0;
-		line-height: 1.55;
+		scroll-margin-top: 1.5rem;                          // Space when scrolling to panel
 	}
 }
-
-.abstract-panel.is-open {
-	opacity: 1;
-	transform: translateY(0);
-}
+		opacity: 0;                                          // Start invisible
+		transform: translateY(-0.35rem);                    // Start slightly above
+		max-height: 0;                                      // Start collapsed
+		// Animate all properties when opening/closing
+		transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.28s ease, margin-top 0.28s ease;
+		will-change: max-height, opacity, transform;       // Optimize for animation
 
 .abstract-panel[hidden] {
 	display: none;
@@ -838,15 +896,18 @@ body.style-variant-a.page-research .papers {
 
 @media (prefers-reduced-motion: reduce) {
 	.abstract-panel {
+	// Panel is visible and expanded
 		transition: none;
 	}
 
 	.abstract-toggle {
 		transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+	// Hide panel when [hidden] attribute is set
 	}
 }
 
 @media all and (max-width: 640px) {
+	// Accessibility: reduce motion for users who prefer it
 	.abstract-list {
 		padding-left: 1rem;
 	}
@@ -857,6 +918,7 @@ body.style-variant-a.page-research .papers {
 
 	.abstract-panel {
 		padding: 0.9rem 0.95rem;
+	// Mobile adjustments for abstracts
 	}
 }
 
