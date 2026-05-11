@@ -7,9 +7,11 @@ layout: compress
   {% include head.html %}
   {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring|Research" | split: "|" %}
   <body class="page-{{ page.title | downcase | replace: ' ', '-' }}{% if style_preview_pages contains page.title %} style-variant-a{% endif %}">
-    <header>
-      <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
-      {% include navigation.html %}
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
+        {% include navigation.html %}
+      </div>
     </header>
 
     <main class="main-wrapper">

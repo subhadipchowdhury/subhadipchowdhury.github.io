@@ -68,6 +68,28 @@ body {
   line-height: 1.25;                  // Space between lines - helps readability
 }
 
+body.is-scrolled {
+	.site-header {
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+	}
+
+	.site-header__inner {
+		min-height: 4rem;
+		padding-top: 0.45rem;
+		padding-bottom: 0.35rem;
+	}
+
+	.site-header h1 {
+		font-size: 1.45rem;
+		padding-bottom: 0.1rem;
+	}
+
+	nav#nav-main ul li a {
+		padding-top: 0.25em;
+		padding-bottom: 0.25em;
+	}
+}
+
 /* ========================================================================
    ACCESSIBILITY CLASS
    
@@ -166,24 +188,37 @@ ol li {
    Header & site title 
    ========================================================================== */
 
-header {
+.site-header {
   font-family: $heading-font;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
-  max-width: 960px;
-  margin: 0 auto 0.2rem;
-  padding: 0.75rem 0 0.5rem;
   background-color: $uchicago-white;
+	position: sticky;
+	top: 0;
+	z-index: 20;
+	border-bottom: 1px solid rgba($uchicago-darklake, 0.12);
+	transition: box-shadow 0.3s ease, background-color 0.3s ease;
+
+	.site-header__inner {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		max-width: 960px;
+		margin: 0 auto;
+		min-height: 5.1rem;
+		padding: 0.75rem 2rem 0.5rem;
+		box-sizing: border-box;
+		transition: min-height 0.3s ease, padding 0.3s ease;
+		position: relative;
+	}
 
   h1 {
     font-size: 1.75rem;
-	margin: 0 auto 0 2rem;
-	max-width: 960px;
+	margin: 0;
 	padding: 0 0 0.25rem 0;
 	font-weight: 600;
+	transition: font-size 0.3s ease, padding 0.3s ease;
   }
 
   a:hover {
@@ -224,8 +259,7 @@ nav#nav-main ul{
 			padding: 0.4em 1em;
 			display: block;
 			position: relative;
-			
-			transition: all 1s;
+			transition: color 0.25s ease, padding 0.3s ease;
 
 			
 			&:after{
@@ -294,12 +328,16 @@ nav#nav-main ul{
 }
 
 @media all and (max-width: 1280px) {
-	header h1{
+	.site-header h1{
 		font-size: 1.5rem;
 	}
 }
 
 @media all and (max-width: 900px) {
+	.site-header__inner {
+		min-height: 4.4rem;
+	}
+
 	nav#nav-main{
 		display: none;
 	}
@@ -333,7 +371,7 @@ nav#nav-main ul{
         display: flex;
         justify-content: flex-end; // Push to right side
         align-items: center;
-        padding: 0 2em 0 0;
+		padding: 0;
     }
 }
 
@@ -422,7 +460,7 @@ nav#nav-mobile{
 nav#nav-mobile ul{
     list-style-type: none;
     position: absolute;      // Position below header
-    top: 76px;               // Height of header
+	top: calc(100% - 0.1rem);
     left: 0;
     right: 0;
 	z-index: 1;              // Appear above other content
@@ -473,16 +511,19 @@ nav#nav-mobile ul.expanded {
    Appears at the bottom of every page with a dark background.
    ========================================================================== */
 
-footer {
+.site-footer {
+	width: 100%;
+	background-color: $uchicago-dark-greystone; // Dark gray background
+	color: $uchicago-white;    // White text
+
+	.site-footer__inner {
 	font-weight: 300;          // Light text
 	font-size: 0.8em;          // Smaller than body text
-	width: 100%;
   	max-width: 960px;
 	margin: 0 auto 0.2rem;
 	padding: 2.5rem 2rem 1rem;
 	box-sizing: border-box;
-	background-color: $uchicago-dark-greystone; // Dark gray background
-	color: $uchicago-white;    // White text
+	}
 
 	a{
 		color: $uchicago-white; // Keep links white in footer
@@ -490,6 +531,22 @@ footer {
 
 	p {
 		margin: 0 0 0.75rem;    // Space between paragraphs
+	}
+}
+
+@media all and (max-width: 700px) {
+	.site-header__inner {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.site-footer__inner {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	body.is-scrolled .site-header h1 {
+		font-size: 1.3rem;
 	}
 }
 
