@@ -1,0 +1,50 @@
+{% assign navigation_pages = site.html_pages | where_exp: "p", "p.navigation_weight" | sort_natural: "title" | sort: 'navigation_weight' %}
+
+<nav id="nav-main" aria-label="Main navigation">
+    <ul>
+        {% for p in navigation_pages %}
+        <li>
+            <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                {{ p.title }}
+                <span class="nav_effect"></span>
+            </a>
+            
+			{% if p.has_subnav %}
+					<ul class="subnav" aria-label="{{ p.title }} subnavigation">
+					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
+					{% for q in subnav_pages %}
+					<li>
+                        <a href="{{ q.url | relative_url }}">
+							{{ q.title }}
+						</a>
+					</li>
+					{% endfor %}
+					</ul>
+			{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+
+<nav id="nav-mobile" aria-label="Mobile navigation">
+        <ul id="nav-mobile-menu">
+            {% for p in navigation_pages %}
+            <li>
+                <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                    {{ p.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>        
+</nav>
+
+<div id="nav-trigger"> 
+    <button type="button" aria-controls="nav-mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
+        <div class="wrapper-menu">
+            <div class="line-menu half start"></div>
+            <div class="line-menu"></div>
+            <div class="line-menu half end"></div>
+        </div>
+    </button>
+</div>
+
