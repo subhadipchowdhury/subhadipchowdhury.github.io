@@ -222,6 +222,8 @@ ol li {
 	padding: 0 0 0.25rem 0;
 	font-weight: 600;
 	transition: font-size 0.3s ease, padding 0.3s ease;
+	white-space: nowrap;       // Keep name on one line
+	flex-shrink: 0;            // Don't let flexbox compress the name
   }
 
   a:hover {
@@ -238,7 +240,7 @@ ol li {
    ========================================================================== */
 
 nav{
-	margin-right: 2rem;
+	margin-right: 0;           // Header padding handles right gutter; no extra margin needed
 }
 
 nav#nav-main ul{
@@ -247,7 +249,7 @@ nav#nav-main ul{
 	margin: 0;
 	display: flex;             // Use flexbox for horizontal layout
 	flex-flow: row nowrap;     // Items flow horizontally, don't wrap
-	justify-content: space-evenly; // Space items evenly across menu
+	justify-content: flex-end;     // Cluster nav items to the right
 
 	li{
 		display: inline-block;
