@@ -5,10 +5,9 @@ kramdown:
 permalink: pretty
 
 url: "https://subhadipchowdhury.github.io/"
+description: "Personal academic website of Subhadip Chowdhury: teaching, pedagogy, research, and mentoring."
   
 exclude: ['deploy', 'stylesheet.scss']
-
-analytics_id: "UA-36444201-2"
 
 defaults:
 

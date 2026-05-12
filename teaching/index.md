@@ -3,27 +3,22 @@ layout: default
 title: Teaching
 navigation_weight: 2
 has_subnav: 1
+description: Courses taught, syllabi, evaluations, and selected teaching resources.
 ---
 
+{% include page_title.html title=page.title %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
-# {{ page.title }}
-
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
-
-<!-- * [Go to this link](/teaching/resources/) to access my past lecture notes and LaTeX templates.-->
+* [Custom Math Worksheet Template](https://github.com/subhadipchowdhury/math_worksheet_template).
 
 * [Go to this Link](/teaching/evaluations/) to see my past course evaluations.
 
-* [Go to this link](/teaching/recommendations/) if you are considering asking me to be reference or for a letter of recommendation.
+* [Go to this link](/teaching/recommendations/) if you are considering asking me to be a reference or for a letter of recommendation.
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Past Courses
 
@@ -66,11 +61,10 @@ has_subnav: 1
 </div>
 {% endfor %}
 
-<p></p>  
-</div>
+<p></p>
+{% include section_close.html %}
 
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Others
 
@@ -78,8 +72,9 @@ has_subnav: 1
 ### Teaching Assistant
 
 {% for course in site.data.nonteaching_courses_uchicago %}
+{% assign instructor_parts = course.Instructor | split: ' ' %}
 <div class="course">
-{{ course.Role }} for **{{ course.Name }} (Math {{ course.Code }})**, taught by Professor [{{ course.Instructor }}]({{ course.Homepage }}) - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
+<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor <a href="{{ course.Homepage }}">{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}</a> - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}
@@ -90,13 +85,13 @@ has_subnav: 1
 These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for incoming grad students at UChicago.
 
 <div class="course">
-**Gaussian Curvature and the Gauss-Bonnet Theorem** - [WOMP 2016](/assets/problemsets/2016WOMP.pdf) 
+<strong>Gaussian Curvature and the Gauss-Bonnet Theorem</strong> - [WOMP 2016](/assets/problemsets/2016WOMP.pdf)
 </div>
 <div class="course">
-**Covering Spaces and the Fundamental Group** - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee Banerjee
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2015](/assets/problemsets/2015WOMP.pdf), with Oishee <span class="lastname">Banerjee</span>
 </div>
 <div class="course">
-**Covering Spaces and the Fundamental Group** - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick Salter 
+<strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick <span class="lastname">Salter</span>
 </div>
  
 
@@ -106,10 +101,10 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
 These are old problem sets from Math Olympiad training camps for high school students in Karnataka, India.
 
 <div class="course">
-**Indian National Math Olympiad Training Camp** - [2010](/assets/problemsets/2010kinmotc.pdf) - [2011](/assets/problemsets/2011kinmotc.pdf) - [2012](/assets/problemsets/2012kinmotc.pdf)
+<strong>Indian National Math Olympiad Training Camp</strong> - [2010](/assets/problemsets/2010kinmotc.pdf) - [2011](/assets/problemsets/2011kinmotc.pdf) - [2012](/assets/problemsets/2012kinmotc.pdf)
 </div>
 
 <p></p>
-</div>
+{% include section_close.html %}
 
 

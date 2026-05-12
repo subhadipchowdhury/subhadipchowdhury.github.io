@@ -1,8 +1,30 @@
-<footer>
-Page generated using <a href="http://jekyllrb.com/">Jekyll</a>, <a href="https://yaml.org/">YAML</a>, and <a href="http://sass-lang.com">Sass</a> via Github Pages. The source code can be found <a href="https://github.com/subhadipchowdhury/subhadipchowdhury.github.io">here</a>. 
-<script language="Javascript">
-	document.write("This page was last modified on: " + document.lastModified +".");
-</script>
-
-Contents of this webpage by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Subhadip Chowdhury</span> are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+<footer class="site-footer">
+<div class="site-footer__inner">
+<p>Page generated using <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://yaml.org/">YAML</a>, and <a href="https://sass-lang.com">Sass</a> via GitHub Pages. The source code can be found <a href="https://github.com/subhadipchowdhury/subhadipchowdhury.github.io">here</a>.</p>
+<p class="last-modified">This page was last modified on: <time id="last-modified" datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: "%B %d, %Y" }}</time>.</p>
+<p>Contents of this webpage by <span xmlns:cc="https://creativecommons.org/ns#" property="cc:attributionName">Subhadip Chowdhury</span> are licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+</div>
 </footer>
+
+<script>
+	(function () {
+		var modifiedElement = document.getElementById("last-modified");
+
+		if (!modifiedElement || !document.lastModified) {
+			return;
+		}
+
+		var lastModified = new Date(document.lastModified);
+
+		if (Number.isNaN(lastModified.getTime())) {
+			return;
+		}
+
+		modifiedElement.dateTime = lastModified.toISOString();
+		modifiedElement.textContent = lastModified.toLocaleDateString("en-US", {
+			year: "numeric",
+			month: "long",
+			day: "numeric"
+		});
+	})();
+</script>

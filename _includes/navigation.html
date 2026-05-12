@@ -1,20 +1,20 @@
-<nav id="nav-main">
+{% assign navigation_pages = site.html_pages | where_exp: "p", "p.navigation_weight" | sort_natural: "title" | sort: 'navigation_weight' %}
+
+<nav id="nav-main" aria-label="Main navigation">
     <ul>
-        {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
         {% for p in navigation_pages %}
-        {% if p.navigation_weight %}
         <li>
-            <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+            <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>
                 {{ p.title }}
                 <span class="nav_effect"></span>
             </a>
             
 			{% if p.has_subnav %}
-					<ul id="subnav">
+					<ul class="subnav" aria-label="{{ p.title }} subnavigation">
 					{% assign subnav_pages = site.html_pages | where:"parentnav",p.title | sort: 'subnav_weight' %}
 					{% for q in subnav_pages %}
 					<li>
-						<a href="{{ q.url }}">
+                        <a href="{{ q.url | relative_url }}">
 							{{ q.title }}
 						</a>
 					</li>
@@ -22,33 +22,29 @@
 					</ul>
 			{% endif %}
         </li>
-        {% endif %}
         {% endfor %}
     </ul>
 </nav>
 
-<nav id="nav-mobile">
+<nav id="nav-mobile" aria-label="Mobile navigation">
         <ul>
-            {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
             {% for p in navigation_pages %}
-            {% if p.navigation_weight %}
             <li>
-                <a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>
                     {{ p.title }}
                 </a>
             </li>
-            {% endif %}
             {% endfor %}
         </ul>        
 </nav>
 
 <div id="nav-trigger"> 
-    <span>
+    <button type="button" aria-controls="nav-mobile" aria-expanded="false" aria-label="Toggle navigation menu">
         <div class="wrapper-menu">
             <div class="line-menu half start"></div>
             <div class="line-menu"></div>
             <div class="line-menu half end"></div>
         </div>
-    </span>
+    </button>
 </div>
 

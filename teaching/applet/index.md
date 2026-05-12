@@ -1,16 +1,18 @@
 ---
 layout: default
 title: Applets created with AI
+parentnav: Teaching
+subnav_weight: 24
+description: Interactive math applets created to support teaching and exploration.
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## {{ page.title }}
 
-</div>
-
-
+{% include section_close.html %}
 
 - [HeatEquation3D.html](HeatEquation3D.html) — 3D heat equation simulation
 - [WaveEquationSimulation.html](WaveEquationSimulation.html) — Wave equation simulation
 - [ForcedWaveEqnSim.html](ForcedWaveEqnSim.html) — Forced wave equation simulation
+- [Concept Mapper](https://subhadipchowdhury.github.io/concept-mapper/) — Browser-based study and authoring tool for concept maps
