@@ -65,5 +65,6 @@ navigation_weight: 3
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**"{{ talk.Title }}"** - [{{ talk.Duration }}]({{ talk.Link }}), [{{ talk.Location }}]({{ talk.Website }}){% endfor %}
+**{{ talk.Title }}** - {% if talk.Link %}[{{ talk.Duration }}]({{ talk.Link }}){% else %}{{ talk.Duration }}{% endif %}, {% if talk.Website %}[{{ talk.Location }}]({{ talk.Website }}){% else %}{{ talk.Location }}{% endif %}
 </div>
+{% endfor %}

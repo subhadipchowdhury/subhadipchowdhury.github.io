@@ -154,7 +154,7 @@ nav#nav-main ul{
 	display:flex;
 	flex-flow: row nowrap;
 	/*  items are distributed so that the spacing between any two items (and the space to the edges) is equal. */
-	justify-content: flex-evenly;
+	justify-content: space-evenly;
 
 	li{
 		display: inline-block;
@@ -297,9 +297,12 @@ nav#nav-main ul{
     }
 }
 
-#nav-trigger span{
-    display:inline-block;
-    cursor:pointer;
+#nav-trigger button{
+	display:inline-block;
+	cursor:pointer;
+	background: transparent;
+	border: 0;
+	padding: 0;
 }
 
 
@@ -392,7 +395,7 @@ nav#nav-mobile{
 }
 
 nav#nav-mobile ul{
-    display:none;
+	display:block;
     list-style-type:none;
     position:absolute;
     top:76px;
@@ -430,6 +433,10 @@ nav#nav-mobile ul{
 		
     }
 
+}
+
+nav#nav-mobile ul[hidden]{
+	display:none;
 }
 
 

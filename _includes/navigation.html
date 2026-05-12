@@ -27,8 +27,8 @@
     </ul>
 </nav>
 
-<nav id="nav-mobile">
-        <ul>
+<nav id="nav-mobile" aria-label="Mobile navigation">
+    <ul id="nav-mobile-list" hidden>
             {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
             {% for p in navigation_pages %}
             {% if p.navigation_weight %}
@@ -43,12 +43,12 @@
 </nav>
 
 <div id="nav-trigger"> 
-    <span>
+    <button type="button" aria-controls="nav-mobile-list" aria-expanded="false" aria-label="Toggle navigation menu">
         <div class="wrapper-menu">
             <div class="line-menu half start"></div>
             <div class="line-menu"></div>
             <div class="line-menu half end"></div>
         </div>
-    </span>
+    </button>
 </div>
 
