@@ -9,10 +9,13 @@
    globally - just update them here instead of searching the entire file.
    ======================================================================== */
 
-$heading-font: "UChicago Serif", serif;         // Serif font for h1, h2, h3, etc.
-$base-font: "UChicago Sans Serif", sans-serif;  // Default font for body text
-$nav-font: "UChicago Sans Serif", sans-serif;   // Navigation font
-$code-font: "UChicago Sans Serif", sans-serif;  // Code/monospace-style font
+$heading-font: "UChicagoSerif", serif;                      // Serif font for h1, h2, h3, etc.
+$base-font: "UChicagoSansSerif-Regular", sans-serif;        // Default font for body text
+$base-font-light: "UChicagoSansSerif-Light", sans-serif;    // Light weight variant
+$base-font-semibold: "UChicagoSansSerif-SemiBold", sans-serif; // SemiBold variant
+$base-font-bold: "UChicagoSansSerif-Bold", sans-serif;      // Bold variant
+$nav-font: "UChicagoSansSerif-Bold", sans-serif;            // Navigation font (bold)
+$code-font: "UChicagoSansSerif-Regular", sans-serif;        // Code/monospace-style font
 
 
 /* ========================================================================
@@ -62,9 +65,9 @@ body {
   background-color: $uchicago-light-greystone;
   color: $uchicago-webfont;          // Default text color (dark gray)
   font-size: 1rem;                    // Base font size (16px)
-  font-family: $base-font;            // Use the Raleway font we defined above
+  font-family: $base-font;            // Use UChicago Sans Serif Regular
   font-optical-sizing: auto;          // Let the browser optimize font rendering
-  font-weight: 500;                   // Medium font weight (not bold, not thin)
+  font-weight: normal;                // Weight handled by font-family name
   line-height: 1.25;                  // Space between lines - helps readability
 }
 
@@ -118,9 +121,9 @@ body.is-scrolled {
    ======================================================================== */
 a {
   text-decoration: none;         // Remove default underline
-  font-family: $base-font;
+  font-family: $base-font-semibold;
   font-optical-sizing: auto;
-  font-weight: 600;              // Make links bold
+  font-weight: normal;           // Weight handled by font-family name
   color: $uchicago-maroon;       // Use brand maroon color
   transition: 0.5s all;          // Smooth animation over 0.5 seconds
 
@@ -253,7 +256,7 @@ nav#nav-main ul{
 		list-style-type:none;
 		a{
 			font-family: $nav-font;
-			font-weight: 700;
+			font-weight: normal; // Weight handled by font-family name (Bold)
 			font-size: 1.1em;
 			color: $uchicago-darklake;
 			padding: 0.4em 1em;
@@ -494,7 +497,7 @@ nav#nav-mobile ul{
 
         a{
 			font-family: $nav-font;
-			font-weight: 700;
+			font-weight: normal; // Weight handled by font-family name (Bold)
 			font-size: 1em;
 			color: #3A494C;      // Dark gray text
 			padding: 10px 30px;
@@ -533,7 +536,8 @@ nav#nav-mobile ul.expanded {
 	color: $uchicago-white;    // White text
 
 	.site-footer__inner {
-	font-weight: 300;          // Light text
+	font-family: $base-font-light; // Light text
+	font-weight: normal;
 	font-size: 0.8em;          // Smaller than body text
   	max-width: 960px;
 	margin: 0 auto 0.2rem;
@@ -917,7 +921,7 @@ body.style-variant-a.page-research .papers {
 	font-family: $base-font;
 	font-size: 0.75rem;
 	font-optical-sizing: auto;
-	font-weight: 500;
+	font-weight: normal;
 	letter-spacing: 0.02em;
 	text-transform: uppercase;
 	line-height: 1;
