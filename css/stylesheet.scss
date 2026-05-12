@@ -240,7 +240,15 @@ ol li {
    ========================================================================== */
 
 nav{
-	margin-right: 0;           // Header padding handles right gutter; no extra margin needed
+	margin-right: 0;
+}
+
+nav#nav-main {
+	margin-right: 0;
+}
+
+nav#nav-main ul li:last-child a {
+	padding-right: 0;          // Flush the rightmost nav item's hover box with the container edge
 }
 
 nav#nav-main ul{
