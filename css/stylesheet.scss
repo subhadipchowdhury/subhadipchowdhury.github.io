@@ -244,7 +244,7 @@ nav#nav-main ul{
 	margin: 0;
 	display: flex;             // Use flexbox for horizontal layout
 	flex-flow: row nowrap;     // Items flow horizontally, don't wrap
-	justify-content: flex-evenly; // Space items evenly across menu
+	justify-content: space-evenly; // Space items evenly across menu
 
 	li{
 		display: inline-block;
@@ -483,8 +483,10 @@ nav#nav-mobile ul{
 	margin-top: 0;
 	max-height: 0;           // Start collapsed
 	overflow: hidden;        // Hide overflow text
+	visibility: hidden;      // Hide from screen readers when collapsed
+	pointer-events: none;    // Disable keyboard/mouse interaction when collapsed
 	box-shadow: 0 12px 22px rgba(0, 0, 0, 0.1);
-	transition: max-height 0.25s ease; // Smooth expand/collapse animation
+	transition: max-height 0.25s ease, visibility 0.25s ease; // Smooth expand/collapse animation
 
     li{
         display: block;
@@ -513,6 +515,8 @@ nav#nav-mobile ul{
 // When menu is expanded, increase max-height to show all items
 nav#nav-mobile ul.expanded {
 	max-height: 30rem;  // 30rem = 480px (enough for many menu items)
+	visibility: visible;   // Make visible to screen readers and interactive
+	pointer-events: auto;  // Re-enable keyboard/mouse interaction
 }
 
 

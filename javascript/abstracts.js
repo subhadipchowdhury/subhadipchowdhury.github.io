@@ -119,6 +119,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     openPanel(panelId, true);
+    
+    // Scroll the panel into view for deep links
+    var panel = document.getElementById(panelId);
+    if (panel && panel.scrollIntoView) {
+      var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      panel.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+    }
   }
 
   if (!toggles.length) {

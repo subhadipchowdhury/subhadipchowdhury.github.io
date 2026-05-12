@@ -74,7 +74,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 {% for course in site.data.nonteaching_courses_uchicago %}
 {% assign instructor_parts = course.Instructor | split: ' ' %}
 <div class="course">
-<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor <a href="{{ course.Homepage }}">{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}</a> - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
+<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor {% if course.Homepage %}<a href="{{ course.Homepage }}">{% endif %}{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% if course.Homepage %}</a>{% endif %} - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}

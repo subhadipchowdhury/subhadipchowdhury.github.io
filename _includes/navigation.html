@@ -27,7 +27,7 @@
 </nav>
 
 <nav id="nav-mobile" aria-label="Mobile navigation">
-        <ul>
+        <ul id="nav-mobile-menu">
             {% for p in navigation_pages %}
             <li>
                 <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>
@@ -39,7 +39,7 @@
 </nav>
 
 <div id="nav-trigger"> 
-    <button type="button" aria-controls="nav-mobile" aria-expanded="false" aria-label="Toggle navigation menu">
+    <button type="button" aria-controls="nav-mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
         <div class="wrapper-menu">
             <div class="line-menu half start"></div>
             <div class="line-menu"></div>
