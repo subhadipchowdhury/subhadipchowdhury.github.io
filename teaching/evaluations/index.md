@@ -3,16 +3,17 @@ layout: default
 title: Student Evaluations
 parentnav: Teaching
 subnav_weight: 22
+description: Semester-by-semester teaching evaluation summaries.
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## {{ page.title }}
 
-</div>
+{% include section_close.html %}
 
 
-My past evaluations in full are available on request. Below you can find _numerical summeries_ for individual semesters.
+My past evaluations in full are available on request. Below you can find _numerical summaries_ for individual semesters.
 
 ### University of Chicago 
 

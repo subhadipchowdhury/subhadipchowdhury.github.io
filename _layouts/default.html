@@ -5,10 +5,13 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  <body class="page-{{ page.title | downcase | replace: ' ', '-' }}">
-    <header>
-      <h1><a href="/">Subhadip Chowdhury</a></h1>
-      {% include navigation.html %}
+  {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring|Research" | split: "|" %}
+  <body class="page-{{ page.title | downcase | replace: ' ', '-' }}{% if style_preview_pages contains page.title %} style-variant-a{% endif %}">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
+        {% include navigation.html %}
+      </div>
     </header>
 
     <main class="main-wrapper">

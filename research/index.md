@@ -2,21 +2,18 @@
 layout: default
 title: Research
 navigation_weight: 4
+description: Publications, preprints, expository writing, and research talks.
 ---
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include page_title.html title=page.title %}
 
-# {{ page.title }}
+{% include section_open.html %}
 
-</div>
+Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/research/Research_Statement.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_close.html %}
 
-Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.pdf)
-
-</div>
-
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 
 ## Publications/Preprints/Expository Notes
@@ -24,9 +21,11 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}
 <div class="papers">
-**{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
+**{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
-{% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
+<div class="research-link-row">
+{% for link in paper.links %}<a class="abstract-toggle" href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endfor %}
+</div>
 </div>
 {% endif %}
 {% endfor %}
@@ -34,16 +33,18 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% for paper in site.data.papers %}
 {% if paper.type == "expository" %}
 <div class="papers">
-**{{ paper.title }}**{% if paper.with %} (with {{ paper.with }}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
+**{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
-{% for link in paper.links %} [\[{{ link[0] }}\]]({{ link[1] }}) {% endfor %}
+<div class="research-link-row">
+{% for link in paper.links %}<a class="abstract-toggle" href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endfor %}
+</div>
 </div>
 {% endif %}
 {% endfor %}
 
-</div>
+{% include section_close.html %}
 
-<div style="border-bottom: 2px  solid #800000;">
+{% include section_open.html %}
 
 ## Seminar and Conferences
 
@@ -54,4 +55,4 @@ Link to my Research Statement (Winter 2024): [PDF](/research/Research_Statement.
 {% endfor %}
 
 <p></p>
-</div>
+{% include section_close.html %}
