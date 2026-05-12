@@ -352,8 +352,9 @@ nav#nav-main ul{
 	nav#nav-mobile {
 		margin-right: 0;
 	}
-}
-
+		left: 0;
+		right: 0;
+		box-sizing: border-box;
 @keyframes navfill {
 	0% {
 		width: 0%;   // Start with no width
