@@ -243,14 +243,6 @@ nav{
 	margin-right: 0;
 }
 
-nav#nav-main {
-	margin-right: 0;
-}
-
-nav#nav-main ul li:last-child a {
-	padding-right: 0;          // Flush the rightmost nav item's hover box with the container edge
-}
-
 nav#nav-main ul{
 	padding-left: 0em;
 	list-style: none;          // Remove bullet points
@@ -267,9 +259,9 @@ nav#nav-main ul{
 		a{
 			font-family: $nav-font;
 			font-weight: normal; // Weight handled by font-family name (Bold)
-			font-size: 1.1em;
+			font-size: 1em;
 			color: $uchicago-darklake;
-			padding: 0.4em 1em;
+			padding: 0.4em 0.75em;
 			display: block;
 			position: relative;
 			transition: color 0.25s ease, padding 0.3s ease;
