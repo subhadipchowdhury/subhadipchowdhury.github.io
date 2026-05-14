@@ -7,14 +7,23 @@ document.addEventListener("DOMContentLoaded", function () {
   var mobileMenu = document.getElementById("nav-mobile-menu");
   var mobileNav = document.getElementById("nav-mobile");
 
+
+  // Add hysteresis to prevent jitter at the scroll threshold
+  var lastScrolledState = null;
+  var SCROLL_ADD_THRESHOLD = 30;    // Add class above this
+  var SCROLL_REMOVE_THRESHOLD = 10; // Remove class below this
+
   function applyScrolledState() {
     if (!body) {
       return;
     }
 
-    if (window.scrollY > 20) {
+    var isScrolled = body.classList.contains("is-scrolled");
+    var y = window.scrollY;
+
+    if (!isScrolled && y > SCROLL_ADD_THRESHOLD) {
       body.classList.add("is-scrolled");
-    } else {
+    } else if (isScrolled && y < SCROLL_REMOVE_THRESHOLD) {
       body.classList.remove("is-scrolled");
     }
   }
