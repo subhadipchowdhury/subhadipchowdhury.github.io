@@ -52,11 +52,11 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 ### Appointments ###
 
 * Assistant Instructional Professor <br> 
-  _The University of Chicago, 2023 - Present_
+  The University of Chicago, 2023 - Present
 * Visiting Assistant Professor <br> 
-  _[The College of Wooster](https://wooster.edu/), 2020 - 2023_
+  [The College of Wooster](https://wooster.edu/), 2020 - 2023
 * Visiting Assistant Professor <br> 
-  _[Bowdoin College](https://www.bowdoin.edu/), 2018 - 2020_
+  [Bowdoin College](https://www.bowdoin.edu/), 2018 - 2020
 
 </div>
 
@@ -65,11 +65,11 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 ### Education ###
 
 * Ph.D. in Mathematics, 2018<br>
-  _University of Chicago_
+  University of Chicago
 * M.S. in Mathematics, 2014<br>
-  _University of Chicago_
+  University of Chicago
 * B.Math.(Hons.), 2012<br>
-  _[Indian Statistical Institute](https://www.isibang.ac.in/)_
+  [Indian Statistical Institute](https://www.isibang.ac.in/)
 
 </div>
 
