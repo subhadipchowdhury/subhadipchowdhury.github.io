@@ -902,7 +902,8 @@ body.style-variant-a.page-research .papers {
 .course-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 0;
+	column-gap: 0.4rem;
+	row-gap: 0;
 
 	@media (max-width: 680px) {
 		grid-template-columns: 1fr;
