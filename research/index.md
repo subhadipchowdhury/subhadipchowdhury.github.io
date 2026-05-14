@@ -9,7 +9,7 @@ description: Publications, preprints, expository writing, and research talks.
 
 {% include section_open.html %}
 
-Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/research/Research_Statement.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+Link to my Research Statement (Winter 2024) <a class="uchicago-cta-btn" href="/research/Research_Statement.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
 
 {% include section_close.html %}
 
@@ -24,7 +24,7 @@ Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/re
 **{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
 <div class="research-link-row">
-{% for link in paper.links %}<a class="abstract-toggle" href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endfor %}
+{% for link in paper.links %}<a class="uchicago-cta-btn" href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endfor %}
 </div>
 </div>
 {% endif %}
