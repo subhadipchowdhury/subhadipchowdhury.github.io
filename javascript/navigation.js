@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add hysteresis to prevent jitter at the scroll threshold
   var lastScrolledState = null;
-  var SCROLL_ADD_THRESHOLD = 30;    // Add class above this
-  var SCROLL_REMOVE_THRESHOLD = 10; // Remove class below this
+  var SCROLL_ADD_THRESHOLD = 40;    // Add class above this
+  var SCROLL_REMOVE_THRESHOLD = 5;  // Remove class below this
 
   function applyScrolledState() {
     if (!body) {
