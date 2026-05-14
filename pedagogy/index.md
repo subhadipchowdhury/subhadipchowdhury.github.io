@@ -59,7 +59,11 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 {% for talk in site.data.talks_pedagogy %}
 <div class="course">
-**{{ talk.Title }}** - {{ talk.Duration }}, {% if talk.Website %}[{{ talk.Location }}]({{ talk.Website }}){% else %}{{ talk.Location }}{% endif %}
+**{{ talk.Title }}** - {{ talk.Duration }}, {% if talk.Website %}[{{ talk.Location }}]({{ talk.Website }}){% else %}{{ talk.Location }}{% endif %}{% if talk.Link %} - [Slides]({{ talk.Link }}){% endif %}
+{% if talk.AbstractId %}<button class="abstract-toggle" type="button" data-target="{{ talk.AbstractId }}" aria-expanded="false">Abstract</button>
+<div class="abstract-panel" id="{{ talk.AbstractId }}" hidden>
+<p><strong>Abstract.</strong> {{ talk.Abstract }}</p>
+</div>{% endif %}
 </div>
 {% endfor %}
 {% include section_close.html %}
