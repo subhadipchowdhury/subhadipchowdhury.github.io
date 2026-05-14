@@ -47,35 +47,7 @@ description: Assistant Instructional Professor at the University of Chicago. Tea
 
 I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/) and in the [Neubauer Phoenix STEM Scholars program](https://college.uchicago.edu/academics/neubauer-phoenix-stem-scholars-program) in the [Dean of Students Office](https://college.uchicago.edu/).
 
-<div class=”bio-columns”>
-
-<div class=’experience’>
-
-### Appointments ###
-
-* Assistant Instructional Professor <br> 
-  The University of Chicago, 2023 - Present
-* Visiting Assistant Professor <br> 
-  [The College of Wooster](https://wooster.edu/), 2020 - 2023
-* Visiting Assistant Professor <br> 
-  [Bowdoin College](https://www.bowdoin.edu/), 2018 - 2020
-
-</div>
-
-<div class=’education’>
-
-### Education ###
-
-* Ph.D. in Mathematics, 2018<br>
-  University of Chicago
-* M.S. in Mathematics, 2014<br>
-  University of Chicago
-* B.Math.(Hons.), 2012<br>
-  [Indian Statistical Institute](https://www.isibang.ac.in/)
-
-</div>
-
-</div>
+{% include bio_columns.html %}
 
 {% include section_close.html %}
 
