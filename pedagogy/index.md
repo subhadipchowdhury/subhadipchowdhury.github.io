@@ -23,7 +23,7 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 ## Professional Development Training for Graduate Student Lecturers
 
-### The University of Chicago, co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/sarah-ziesler/">Sarah <span class="lastname">Ziesler</span></a>
+These sessions were co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/sarah-ziesler/">Sarah <span class="lastname">Ziesler</span></a> at the University of Chicago.
 
 
 <div class="course">
