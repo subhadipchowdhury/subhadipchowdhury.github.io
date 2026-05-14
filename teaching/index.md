@@ -18,7 +18,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% include section_close.html %}
 
-{% include section_open.html %}
+{% include section_open.html accent=true %}
 
 ## Past Courses
 
@@ -34,32 +34,33 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 ### The College of Wooster
 
-
+<div class="course-grid">
 {% for course in site.data.courses_wooster %}
 <div class="course">
 **{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
-
+</div>
 
 ### Bowdoin College
 
-
+<div class="course-grid">
 {% for course in site.data.courses_bowdoin %}
 <div class="course">
 **{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
-
+</div>
 
 ### University of Chicago (GSL)
 
-
+<div class="course-grid">
 {% for course in site.data.courses_uchicago_gsl %}
 <div class="course">
 **{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {{ coursepage.Duration }} {% endfor %}
 </div>
 {% endfor %}
+</div>
 
 <p></p>
 {% include section_close.html %}
@@ -71,6 +72,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 ### Teaching Assistant
 
+<div class="course-grid">
 {% for course in site.data.nonteaching_courses_uchicago %}
 {% assign instructor_parts = course.Instructor | split: ' ' %}
 <div class="course">
@@ -78,12 +80,13 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 </div>
 {% endfor %}
-
+</div>
 
 ### UChicago Warmup Program
 
 These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for incoming grad students at UChicago.
 
+<div class="course-grid">
 <div class="course">
 <strong>Gaussian Curvature and the Gauss-Bonnet Theorem</strong> - [WOMP 2016](/assets/problemsets/2016WOMP.pdf)
 </div>
@@ -93,8 +96,7 @@ These are notes from [Math review sessions](https://math.uchicago.edu/womp/) for
 <div class="course">
 <strong>Covering Spaces and the Fundamental Group</strong> - [WOMP 2014](/assets/problemsets/2014WOMP.pdf), with Nick <span class="lastname">Salter</span>
 </div>
- 
-
+</div>
 
 ### Math Olympiad Training
 

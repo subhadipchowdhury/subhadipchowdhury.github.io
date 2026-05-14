@@ -7,7 +7,7 @@ description: Independent studies, REU mentoring, applied research advising, and 
 
 {% include page_title.html title=page.title %}
 
-{% include section_open.html %}
+{% include section_open.html accent=true %}
 
 ## Independent Study Advising
 
@@ -100,6 +100,7 @@ This is a list of student projects I have (sometimes jointly) supervised.
 
 ### University of Chicago
 
+<div class="course-grid">
 <div class="course">
 <strong><a href="https://math.uchicago.edu/~may/REU2016/REUPapers/Welsh.pdf">Scissors Congruence</a></strong> - Maeve Coates <span class="lastname">Welsh</span>, 2016 Summer
 </div>
@@ -119,6 +120,7 @@ This is a list of student projects I have (sometimes jointly) supervised.
 <div class="course">
 <strong><a href="https://math.uchicago.edu/~may/REU2014/REUPapers/Yoo.pdf">The Jordan-Chevalley decomposition</a></strong> - Joo Heon <span class="lastname">Yoo</span>, 2014 Summer
 </div>
+</div>
 
 {% include section_close.html %}
 
@@ -132,6 +134,7 @@ This is a list of quarter-long directed independent reading courses I have super
 
 ### University of Chicago
 
+<div class="course-grid">
 <div class="course">
 <strong>Topology</strong> - Dan <span class="lastname">Su</span>, 2016 Winter
 </div>
@@ -151,6 +154,7 @@ This is a list of quarter-long directed independent reading courses I have super
 <div class="course">
 <strong>Geometry</strong> - Jordan <span class="lastname">Hisel</span>, 2013 Fall
 </div>
+</div>
 
 {% include section_close.html %}
 
@@ -162,10 +166,12 @@ This is a list of quarter-long directed independent reading courses I have super
 
 Note that some of the talks are very much of an outline in nature.
 
+<div class="course-grid">
 {% for talk in site.data.talks_expository %}
 <div class="course">
 <strong>{{ talk.Title }}</strong> - [{{ talk.Duration }}]({{ talk.Link }}), {{ talk.Location }}
 </div>
 {% endfor %}
+</div>
 
 {% include section_close.html %}

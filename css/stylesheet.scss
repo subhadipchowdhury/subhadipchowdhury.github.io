@@ -842,8 +842,17 @@ body.style-variant-a.page-research .section-block {
 	padding: 0.75rem 0.8rem 0.95rem;
 	margin-bottom: 1rem;
 	border-bottom: 1px solid rgba($uchicago-maroon, 0.2); // Light maroon line
-	border-left: 5px solid rgba($uchicago-maroon, 0.7);   // Dark maroon accent stripe
 	background: linear-gradient(180deg, rgba(217, 217, 217, 0.16), rgba(217, 217, 217, 0.04)); // Subtle gray gradient
+	border-radius: 0.35rem;
+}
+
+// Accent stripe variant: apply to at most 1-2 sections per page for genuine emphasis.
+// Use {% include section_open.html accent=true %} in the markdown to activate.
+body.style-variant-a.page-teaching .section-block--accent,
+body.style-variant-a.page-pedagogy .section-block--accent,
+body.style-variant-a.page-mentoring .section-block--accent,
+body.style-variant-a.page-research .section-block--accent {
+	border-left: 5px solid rgba($uchicago-maroon, 0.7);
 	border-radius: 0.15rem 0.55rem 0.55rem 0.15rem;
 }
 
@@ -859,9 +868,20 @@ body.style-variant-a.page-teaching h2,
 body.style-variant-a.page-pedagogy h2,
 body.style-variant-a.page-mentoring h2,
 body.style-variant-a.page-research h2 {
-	font-size: 1.34rem;
+	font-size: 1.8rem;
 	letter-spacing: 0.01em;
-	margin-bottom: 0.6rem;
+	margin-bottom: 0.75rem;
+}
+
+body.style-variant-a.page-teaching h3,
+body.style-variant-a.page-pedagogy h3,
+body.style-variant-a.page-mentoring h3,
+body.style-variant-a.page-research h3 {
+	font-size: 1.15rem;
+	color: #4D4D4D; // Type Grey from UChicago palette — clearly subordinate to maroon h2
+	letter-spacing: 0.02em;
+	margin-top: 1.1rem;
+	margin-bottom: 0.45rem;
 }
 
 body.style-variant-a.page-teaching .course,
@@ -875,6 +895,18 @@ body.style-variant-a.page-research .papers {
 	background: rgba($uchicago-white, 0.82);          // Slightly transparent white
 	border: 1px dashed rgba($uchicago-maroon, 0.22); // Subtle dashed maroon border
 	border-radius: 0.35rem;
+}
+
+// Two-column grid wrapper for dense list sections.
+// Wrap .course items in <div class="course-grid"> in the markdown to activate.
+.course-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0;
+
+	@media (max-width: 680px) {
+		grid-template-columns: 1fr;
+	}
 }
 
 /* ========================================================================
@@ -939,11 +971,24 @@ body.style-variant-a.page-research .papers {
 	}
 }
 
+// Rotating chevron appended after the button label.
+.abstract-toggle::after {
+	content: ' ›';
+	display: inline-block;
+	margin-left: 0.15em;
+	transition: transform 0.25s ease;
+	line-height: 1;
+}
+
 // Visual state for an already-expanded abstract button.
 .abstract-toggle[aria-expanded="true"] {
 	background: rgba($uchicago-maroon, 0.1);
 	border-color: rgba($uchicago-maroon, 0.75);
 	color: $uchicago-maroon;
+}
+
+.abstract-toggle[aria-expanded="true"]::after {
+	transform: rotate(90deg);
 }
 
 // Container that holds multiple paper/resource links in one row.
@@ -962,7 +1007,7 @@ body.style-variant-a.page-research .papers {
 .abstract-panel {
 	margin: 0.75rem 0 0.35rem;
 	padding: 1rem 1.1rem;
-	background: linear-gradient(135deg, rgba(217, 217, 217, 0.18), rgba(217, 217, 217, 0.42));
+	background: linear-gradient(135deg, rgba($uchicago-maroon, 0.04), rgba($uchicago-light-greystone, 0.38)); // Warmer than static text areas
 	border: 1px solid rgba($uchicago-maroon, 0.12);
 	border-left: 4px solid $uchicago-maroon; // Strong left accent
 	border-radius: 0.2rem 0.65rem 0.65rem 0.2rem;

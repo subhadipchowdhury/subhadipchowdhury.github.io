@@ -57,7 +57,7 @@ Exploratory Teaching Groups are year-long faculty learning communities supported
 
 {% include section_close.html %}
 
-{% include section_open.html %}
+{% include section_open.html accent=true %}
 
 ## Invited Presentations
 
