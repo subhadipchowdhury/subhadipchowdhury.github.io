@@ -23,10 +23,10 @@ Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/re
 <div class="papers">
 **{{ paper.title }}**{% if paper.with %} (with {% assign collaborators = paper.with | split: ', ' %}{% for collaborator in collaborators %}{% assign parts = collaborator | split: ' ' %}{% for part in parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% unless forloop.last %}, {% endunless %}{% endfor %}){% endif %}{% if paper.comment %}<br/> *{{ paper.comment }}.*{% endif %}
 
-</div>
+
 <div class="research-link-row">
 {% for link in paper.links %}<a class="abstract-toggle" href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>{% endfor %}
-</div>
+
 </div>
 </div>
 {% endif %}
