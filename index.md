@@ -41,13 +41,15 @@ description: Assistant Instructional Professor at the University of Chicago. Tea
 
 </div>
 
-<div class='anchor'>
+{% include section_open.html %}
 
 ## Biography
 
 I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/people/profile/subhadip-chowdhury/) in the [Department of Mathematics](https://mathematics.uchicago.edu/) at [The University of Chicago](https://www.uchicago.edu/) and in the [Neubauer Phoenix STEM Scholars program](https://college.uchicago.edu/academics/neubauer-phoenix-stem-scholars-program) in the [Dean of Students Office](https://college.uchicago.edu/).
 
-<div class='experience'>
+<div class=”bio-columns”>
+
+<div class=’experience’>
 
 ### Appointments ###
 
@@ -60,7 +62,7 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 
 </div>
 
-<div class='education'>
+<div class=’education’>
 
 ### Education ###
 
@@ -75,7 +77,9 @@ I am an [Assistant Instructional Professor](https://mathematics.uchicago.edu/peo
 
 </div>
 
-<div class='anchor'>
+{% include section_close.html %}
+
+{% include section_open.html %}
 
 ## Teaching and Pedagogy
 
@@ -90,12 +94,11 @@ Some ongoing teaching-related work includes:
 
 **Pedagogy fellowships and grants.** During the 2025–2026 academic year, I will be an [Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/) at the Chicago Center for Teaching and Learning. Previously, I served as a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows/) and co-led an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups/) titled “Discussion on Implementing Alternate Grading and Redesigning Assessment in Math.”
 
-**Materials from my current and past courses** are accessible through the [teaching page]({{ '/teaching/' | relative_url }}). Write-ups, slides, and resources related to collaborative learning, mastery-based grading, and AI-aware pedagogy will be posted on the [pedagogy page]({{ '/pedagogy/' | relative_url }}).
+**Materials from my current and past courses** are accessible through the [teaching page]({{ ‘/teaching/’ | relative_url }}). Write-ups, slides, and resources related to collaborative learning, mastery-based grading, and AI-aware pedagogy will be posted on the [pedagogy page]({{ ‘/pedagogy/’ | relative_url }}).
 
+{% include section_close.html %}
 
-</div>
-
-<div class='anchor'>
+{% include section_open.html %}
 
 ## Research Interests
 
@@ -103,8 +106,8 @@ My research background is in low-dimensional topological dynamics. I am especial
 
 More broadly, I am interested in topics related to geometric group theory, complex dynamics, and big mapping class groups. 
 
-I received my Ph.D. from the University of Chicago under the direction of Prof. <a href="https://math.uchicago.edu/~dannyc/">Danny <span class="lastname">Calegari</span></a>. My papers and preprints are linked on my [research page]({{ '/research/' | relative_url }}).
+I received my Ph.D. from the University of Chicago under the direction of Prof. <a href=”https://math.uchicago.edu/~dannyc/”>Danny <span class=”lastname”>Calegari</span></a>. My papers and preprints are linked on my [research page]({{ ‘/research/’ | relative_url }}).
 
-</div>
+{% include section_close.html %}
 
 

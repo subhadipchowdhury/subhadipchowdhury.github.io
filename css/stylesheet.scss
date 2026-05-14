@@ -685,15 +685,15 @@ nav#nav-mobile ul.expanded {
 	hierarchy and organization to the page.
 	======================================================================== */
 
-.anchor {
-  @extend .about;
-  align-items: flex-start;
-  border-bottom: 2px solid #800000;
-
-  h2 {
-    text-align: center;
-  }
+// Two-column flex wrapper for the Biography block (Appointments + Education)
+.bio-columns {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5rem 3rem;
+  margin-top: 0.75rem;
+  width: 100%;
 }
+
 // Basic section container with divider
 
 .section-block {
@@ -723,8 +723,6 @@ nav#nav-mobile ul.expanded {
 
 
 .experience {
-	order:1;
-	float:left;
 	h3 {
 		text-align: center;
 	}
@@ -746,8 +744,6 @@ nav#nav-mobile ul.expanded {
 }
 
 .education {
-	order:2;
-	float:right;
 	h3 {
 		text-align: center;
 	}
