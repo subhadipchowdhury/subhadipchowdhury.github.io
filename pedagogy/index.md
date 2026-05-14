@@ -49,7 +49,11 @@ These sessions were co-led with Prof. <a href="https://mathematics.uchicago.edu/
 
 ## Exploratory Teaching Group for Instructional Faculty
 
-**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - [AY2024-25](https://teaching.uchicago.edu/programs/exploratory-teaching-groups), co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/kale-davies/">Kale <span class="lastname">Davies</span></a>
+Exploratory Teaching Groups are year-long faculty learning communities supported by the [Chicago Center for Teaching and Learning](https://teaching.uchicago.edu/past-exploratory-teaching-groups).
+
+<div class="course">
+**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - AY2024-25, co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/kale-davies/">Kale <span class="lastname">Davies</span></a>
+</div>
 
 {% include section_close.html %}
 
