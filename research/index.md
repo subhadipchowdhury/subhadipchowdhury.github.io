@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Research
-navigation_weight: 5
+navigation_weight: 4
 description: Publications, preprints, expository writing, and research talks.
 ---
 
