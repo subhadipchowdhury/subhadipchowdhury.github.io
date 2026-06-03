@@ -71,6 +71,12 @@ body {
   line-height: 1.25;                  // Space between lines - helps readability
 }
 
+strong,
+b {
+	font-family: $base-font-bold;
+	font-weight: normal;
+}
+
 body.is-scrolled {
 	.site-header {
 		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
