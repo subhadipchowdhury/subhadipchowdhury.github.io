@@ -14,7 +14,9 @@ If you are considering asking me for a letter, please read the following informa
 
 #### Follow the procedures below:
 
-1. **Consider if I am the best choice to write this letter for you.** Do we know each other well enough for me to write something beyond "so-and-so got a good grade in my class"? Letters that say only that can actually do more harm than good. I can usually write a strong, specific letter if we have worked together in a sustained way: a course where we interacted regularly (in office hours or through your written work), collaborative learning training, a directed reading, an independent study, an REU, or a thesis. If none of these apply, I am still happy to talk, but someone who knows your work more closely may serve you better.
+1. **Consider if I am the best choice to write this letter for you.** Do we know each other well enough for me to write something beyond "so-and-so got a good grade in my class"? Letters that say only that can actually do more harm than good. 
+
+    I can usually write a strong, specific letter if we have worked together in a sustained way: a course where we interacted regularly (in office hours or through your written work), collaborative learning training, a directed reading, an independent study, an REU, or a thesis. If none of these apply, I am still happy to talk, but someone who knows your work more closely may serve you better.
 
 2. **Give me Information.** If you do still want me to write you a letter, you should know that the key to effective recommendation letters is making them as detailed and specific as possible. I will write as many honest, specific, positive things as I possibly can based on my interactions with you. Nonetheless, you should consider giving me any other information that you think will help me write an even more detailed letter.
 
