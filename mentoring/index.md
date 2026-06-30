@@ -94,7 +94,7 @@ Summer 2021 - Abigail <span class="lastname">Breitenbucher</span> '22 (Mathemati
 
 {% include section_open.html %}
 
-## Summer Research Experience for Undergrads
+## Summer Research Experiences for Undergraduates
 
 This is a list of student projects I have (sometimes jointly) supervised.
 

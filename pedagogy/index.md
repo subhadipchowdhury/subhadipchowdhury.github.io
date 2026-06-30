@@ -13,9 +13,13 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 {% include section_open.html %}
 
 
-## Training in Collaborative Learning for Undergraduate TAs
+## Collaborative Learning Pedagogy and Content Analysis Training
 
-**Collaborative Learning Pedagogy and Content Analysis Training** - [Autumn 2024](/assets/syllabi/2024AU_CL1.pdf) - [Winter 2025](/assets/syllabi/2025WI_CL2.pdf) - [Spring 2025](/assets/syllabi/2025SP_CL3.pdf)
+Training sessions for undergraduate TAs.
+
+**2024-25** - [Autumn 2024](/assets/syllabi/2024AU_CL1.pdf) - [Winter 2025](/assets/syllabi/2025WI_CL2.pdf) - [Spring 2025](/assets/syllabi/2025SP_CL3.pdf)
+
+**2025-26** - [Autumn 2025](/assets/syllabi/2025AU_CL1.pdf) - [Winter 2026](/assets/syllabi/2026WI_CL2.pdf) - [Spring 2026](/assets/syllabi/2026SP_CL3.pdf)
 
 {% include section_close.html %}
 

@@ -16,7 +16,7 @@ Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/re
 {% include section_open.html %}
 
 
-## Publications/Preprints/Expository Notes
+## Publications, Preprints, and Expository Notes
 
 {% for paper in site.data.papers %}
 {% if paper.type != "expository" %}

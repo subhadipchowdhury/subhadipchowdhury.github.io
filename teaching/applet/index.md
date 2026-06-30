@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Applets created with AI
+title: Applets Created with AI
 parentnav: Teaching
 subnav_weight: 24
 description: Interactive math applets created to support teaching and exploration.
