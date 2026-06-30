@@ -44,7 +44,6 @@ If you are considering asking me for a letter, please read the following informa
     | Program or position | Deadline | How to submit | Link or email address |
     | --- | --- | --- | --- |
     |  |  | portal or email |  |
-    |  |  | portal or email |  |
 
 Most applications ask whether you waive your right to view the letter. Please waive it. Confidential letters carry far more weight with admissions and selection committees, and I am only able to write on that basis.
 
