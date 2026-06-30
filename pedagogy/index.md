@@ -31,19 +31,27 @@ These sessions were co-led with Prof. <a href="https://mathematics.uchicago.edu/
 
 
 <div class="course">
-**Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]() 
+**Understanding Student Feedback** - [Winter 2026]() - [Winter 2025]()
+</div>
+
+<div class="course">
+**Writing Your Own Syllabus** - [Winter 2026]() - [Winter 2025]()
+</div>
+
+<div class="course">
+**Backward Design** - [Autumn 2025]()
+</div>
+
+<div class="course">
+**Handling Unexpected Situations in the Classroom** - [Autumn 2025]()
+</div>
+
+<div class="course">
+**Understanding cognitive demand - selecting appropriate mathematical tasks to foster student engagement** - [Autumn 2024]()
 </div>
 
 <div class="course">
 **Selecting and designing exam questions that align with learning goals** - [Autumn 2024]()
-</div>
-
-<div class="course">
-**How to interpret and act on student evaluation feedback** - [Winter 2025]()
-</div>
-
-<div class="course">
-**How to write a syllabus and why** - [Winter 2025]()
 </div>
 <p></p>
 
