@@ -48,7 +48,7 @@ Link to my Research Statement (Winter 2024) <a class="abstract-toggle" href="/re
 
 {% include section_open.html %}
 
-## Seminar and Conferences
+## Conference and Workshop Talks
 
 {% for talk in site.data.talks_math %}
 <div class="course">
