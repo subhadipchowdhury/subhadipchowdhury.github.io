@@ -10,7 +10,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% include section_open.html %}
 
-* [Custom Math Worksheet Template](https://github.com/subhadipchowdhury/math_worksheet_template).
+* [Go to this Link](/teaching/worksheet/) for my LaTeX workbook and worksheet template.
 
 * [Go to this Link](/teaching/evaluations/) to see my past course evaluations.
 
