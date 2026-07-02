@@ -10,7 +10,7 @@ description: Request guidelines and process for recommendation letters.
 
 {% include section_open.html %}
 
-If you are considering asking me for a letter, please read the following information carefully, and in its entirety. I want to encourage students to pursue further academic study, apply for scholarships, REUs, or summer internships, and find jobs, so I am happy to help by being a reference or writing a letter if you can follow the procedures below. Please provide me with these materials at least 4 weeks before your first recommendation is due. You can still ask for a letter if it is within 4 weeks, but I may not be able to honor requests that come at the last minute.
+If you are considering asking me for a letter, please read the following information carefully, and in its entirety. I want to encourage students to pursue further academic study, apply for scholarships, REUs, or summer internships, and find jobs, so I am happy to help by being a reference or writing a letter if you can follow the procedures below. Please provide me with these materials at least 2 weeks before your first recommendation is due. You can still ask for a letter if it is within 2 weeks, but I may not be able to honor requests that come at the last minute.
 
 #### Follow the procedures below:
 
