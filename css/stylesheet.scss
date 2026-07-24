@@ -777,7 +777,12 @@ nav#nav-mobile ul.expanded {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	
+	gap: 0.5rem;
+
+	// Kramdown wraps each seal image in a <p>; drop its default margins so the
+	// gap between the current seal and the trio is controlled by the flex gap.
+	p { margin: 0; }
+
 	// Previous institution logos
 	.old{
 		display: flex;
@@ -794,8 +799,8 @@ nav#nav-mobile ul.expanded {
 			// and stays white: invisible on the white light-mode card, legible on
 			// the dark card.
 			background: #ffffff;
-			padding: 0.3em;
-			border-radius: 0.4em;
+			padding: 0.2em;
+			border-radius: 0.3em;
 		}
 	}
 
