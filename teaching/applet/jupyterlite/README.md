@@ -22,13 +22,16 @@ From a shell with the Python launcher available (Windows `py`, or `python3`):
 py -3.14 -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt      # POSIX: .venv/bin/python
 
-# 2. build content/ into ../lite/  (run from this folder)
+# 2. inject the ipywidgets install cell into widget notebooks (idempotent)
+.venv/Scripts/python prepare_content.py
+
+# 3. build content/ into ../lite/  (run from this folder)
 .venv/Scripts/jupyter lite build --contents content --output-dir ../lite
 
-# 3. strip source maps (~50 MB of debug-only .map files the site never needs)
+# 4. strip source maps (~50 MB of debug-only .map files the site never needs)
 find ../lite -name '*.map' -delete            # PowerShell: gci ../lite -r -filter *.map | rm
 
-# 4. commit the changed files under ../lite/ and ./content/
+# 5. commit the changed files under ../lite/ and ./content/
 ```
 
 The first Launch in a browser downloads the Pyodide runtime (~20 s), then it is
