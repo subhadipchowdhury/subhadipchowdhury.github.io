@@ -27,7 +27,7 @@ def cell_text(cell):
 
 def main():
     changed = []
-    for nb_path in sorted(CONTENT.glob("*.ipynb")):
+    for nb_path in sorted(CONTENT.rglob("*.ipynb")):
         nb = json.loads(nb_path.read_text(encoding="utf-8"))
         cells = nb.get("cells", [])
         code = [c for c in cells if c.get("cell_type") == "code"]

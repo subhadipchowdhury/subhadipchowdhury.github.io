@@ -1,0 +1,29 @@
+{
+  "content": [
+    {
+      "content": null,
+      "created": "2026-07-24T17:10:02.651294Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2026-07-24T15:55:07.487836Z",
+      "mimetype": null,
+      "name": "python_coding_tutorial.ipynb",
+      "path": "intro/python_coding_tutorial.ipynb",
+      "size": 15767,
+      "type": "notebook",
+      "writable": true
+    }
+  ],
+  "created": "2026-07-24T17:10:02.651294Z",
+  "format": "json",
+  "hash": null,
+  "hash_algorithm": null,
+  "last_modified": "2026-07-24T17:10:02.651294Z",
+  "mimetype": null,
+  "name": "intro",
+  "path": "intro",
+  "size": null,
+  "type": "directory",
+  "writable": true
+}
