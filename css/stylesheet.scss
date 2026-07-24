@@ -739,6 +739,13 @@ nav#nav-mobile ul.expanded {
 	border-bottom: 4px solid var(--accent); // Maroon divider line
 }
 
+// Give the intro block breathing room above its divider so it matches the
+// spacing the text sections have before their lines. The :not(.anchor) guard
+// keeps this off the .anchor sections, which share styles via @extend .about.
+.about:not(.anchor) {
+	padding-bottom: 1.5rem;
+}
+
 @media all and (max-width: 500px) {
 	// On very small screens, stack items vertically instead of horizontally
 	.about{
