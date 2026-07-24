@@ -1,0 +1,7 @@
+# Build-time dependencies for the JupyterLite site (not installed on the server).
+# Install into a throwaway venv, then run the build (see README.md in this folder).
+jupyterlite-core==0.8.1
+jupyterlite-pyodide-kernel==0.8.2
+jupyter-server
+jupyterlab-widgets
+ipywidgets==8.1.8
