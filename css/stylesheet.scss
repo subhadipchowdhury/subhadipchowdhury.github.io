@@ -21,27 +21,23 @@ $code-font: "UChicagoSansSerif-Regular", sans-serif;        // Code/monospace-st
 /* ========================================================================
    COLOR PALETTE - University of Chicago Branding
    
-   These colors are part of the University of Chicago's official brand.
-   They are stored as SCSS variables so we can:
-   - Reuse them throughout the file (just use $variable-name)
-   - Change brand colors in one place if needed
-   - Use transparency with them (e.g., rgba(var(--accent-rgb), 0.5))
+   These colors are part of the University of Chicago's official brand,
+   stored as SCSS variables. They feed the runtime THEME TOKENS below (the
+   CSS custom properties), which are what the rest of the file actually uses.
+   Update a brand color here and it flows through both light and dark modes.
    ======================================================================== */
 
 // Primary colors - main brand colors used for headings, borders, etc.
 $uchicago-maroon: #800000;          // Pantone 202C - deep red/maroon (main color)
 $uchicago-light-greystone: #D9D9D9; // Light gray - used for page background
-$uchicago-greystone: #A6A6A6;       // Medium gray
 $uchicago-dark-greystone: #737373;  // Dark gray - used for footer background
 $uchicago-webfont: #333;            // Dark gray for body text
 
 // Secondary colors - used for accents and hover states
-$uchicago-lake: #007396;      // Blue - used for secondary accents
 $uchicago-lightlake: #3EB1C8; // Light blue - used for hover effects
 $uchicago-darklake: #002A3A;  // Dark blue - used for navigation hover
 
-// Neutrals - pure black and white
-$uchicago-black: #111111;
+// Neutrals
 $uchicago-white: #ffffff;
 
 /* ========================================================================
@@ -184,7 +180,7 @@ a {
   font-family: $base-font-semibold;
   font-optical-sizing: auto;
   font-weight: normal;           // Weight handled by font-family name
-  color: var(--accent);       // Use brand maroon color
+  color: var(--accent);       // Brand accent color
   transition: 0.5s all;          // Smooth animation over 0.5 seconds
 
   &:hover {
@@ -416,7 +412,7 @@ nav#nav-main ul{
 				opacity: 1;                        // Make visible
 			}
 
-			// Show active page with maroon border
+			// Show active page with accent border
 			&.active{
 				border-bottom: 1.5px solid var(--accent);
 			}
@@ -473,10 +469,6 @@ nav#nav-main ul{
 
 	nav#nav-main{
 		display: none;
-	}
-
-	nav#nav-mobile {
-		margin-right: 0;
 	}
 }
 
@@ -544,7 +536,7 @@ nav#nav-main ul{
 
 /**********************Hamburger Menu Lines*****/
 .line-menu{
-    background-color: var(--accent); // Maroon color
+    background-color: var(--accent); // Accent color
     border-radius: 5px;
     width: 100%;
 	height: 4px;               // Thickness of each line
@@ -736,7 +728,7 @@ nav#nav-mobile ul.expanded {
 	flex-flow: row wrap;       // Items in row, can wrap to next line
 	justify-content: space-evenly; // Distribute items evenly
 	align-items: center;       // Vertically center items
-	border-bottom: 4px solid var(--accent); // Maroon divider line
+	border-bottom: 4px solid var(--accent); // Accent divider line
 }
 
 // Give the intro block breathing room above its divider so it matches the
@@ -979,23 +971,17 @@ code{
 	}
 }
 
-body.style-variant-a.page-teaching .section-block,
-body.style-variant-a.page-pedagogy .section-block,
-body.style-variant-a.page-mentoring .section-block,
-body.style-variant-a.page-research .section-block {
+body.style-variant-a .section-block {
 	padding: 0.75rem 0.8rem 0.95rem;
 	margin-bottom: 1rem;
-	border-bottom: 1px solid rgba(var(--accent-rgb), 0.2); // Light maroon line
+	border-bottom: 1px solid rgba(var(--accent-rgb), 0.2); // Light accent line
 	background: linear-gradient(180deg, rgba(var(--tint-rgb), 0.16), rgba(var(--tint-rgb), 0.04)); // Subtle wash
 	border-radius: 0.35rem;
 }
 
 // Accent stripe variant: apply to at most 1-2 sections per page for genuine emphasis.
 // Use {% include section_open.html accent=true %} in the markdown to activate.
-body.style-variant-a.page-teaching .section-block--accent,
-body.style-variant-a.page-pedagogy .section-block--accent,
-body.style-variant-a.page-mentoring .section-block--accent,
-body.style-variant-a.page-research .section-block--accent {
+body.style-variant-a .section-block--accent {
 	border-left: 5px solid rgba(var(--accent-rgb), 0.7);
 	border-radius: 0.15rem 0.55rem 0.55rem 0.15rem;
 }
@@ -1008,19 +994,13 @@ body.style-variant-a.page-research .section-block--accent {
    card-like section treatment with accent borders and soft gradients.
    ======================================================================== */
 
-body.style-variant-a.page-teaching h2,
-body.style-variant-a.page-pedagogy h2,
-body.style-variant-a.page-mentoring h2,
-body.style-variant-a.page-research h2 {
+body.style-variant-a h2 {
 	font-size: 1.8rem;
 	letter-spacing: 0.01em;
 	margin-bottom: 0.75rem;
 }
 
-body.style-variant-a.page-teaching h3,
-body.style-variant-a.page-pedagogy h3,
-body.style-variant-a.page-mentoring h3,
-body.style-variant-a.page-research h3 {
+body.style-variant-a h3 {
 	font-size: 1.15rem;
 	color: var(--color-muted); // Subordinate to the accent-colored h2
 	letter-spacing: 0.02em;
@@ -1028,16 +1008,13 @@ body.style-variant-a.page-research h3 {
 	margin-bottom: 0.45rem;
 }
 
-body.style-variant-a.page-teaching .course,
-body.style-variant-a.page-pedagogy .course,
-body.style-variant-a.page-mentoring .course,
-body.style-variant-a.page-research .course,
-body.style-variant-a.page-research .papers {
+body.style-variant-a .course,
+body.style-variant-a .papers {
 	border-top: 0;
 	padding: 0.55rem 0.75rem;
 	margin: 0.35rem 0;
 	background: var(--color-card);          // Slightly translucent card
-	border: 1px dashed rgba(var(--accent-rgb), 0.22); // Subtle dashed maroon border
+	border: 1px dashed rgba(var(--accent-rgb), 0.22); // Subtle dashed accent border
 	border-radius: 0.35rem;
 }
 
@@ -1090,7 +1067,7 @@ body.style-variant-a.page-research .papers {
 	margin-left: 0.35rem;
 	padding: 0.3rem 0.55rem 0.25rem;
 	background: transparent;                        // Start with no fill
-	border: 1px solid rgba(var(--accent-rgb), 0.5); // Maroon outline
+	border: 1px solid rgba(var(--accent-rgb), 0.5); // Accent outline
 	border-radius: 0;
 	color: var(--accent);
 	cursor: pointer;
