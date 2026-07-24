@@ -787,23 +787,22 @@ nav#nav-mobile ul.expanded {
 		
 		img{
 			height: 3.5em;     // Smaller size for old logos
-		}		
+			// The Bowdoin and ISI seals are black line-art on transparent and
+			// vanish against the dark card. Bowdoin's guidelines forbid recoloring
+			// the seal, so instead we sit each old logo on a small white chip. The
+			// chip is applied in both themes (so spacing never shifts when toggling)
+			// and stays white: invisible on the white light-mode card, legible on
+			// the dark card.
+			background: #ffffff;
+			padding: 0.3em;
+			border-radius: 0.4em;
+		}
 	}
-	
+
 	// Current institution logo
 	.current img{
 		height: 10em;          // Larger size for current affiliation
 	}
-}
-
-// In dark mode the Bowdoin and ISI seals are black line-art on transparent and
-// vanish against the dark card. Bowdoin's brand guidelines forbid recoloring the
-// seal, so instead of altering the artwork we sit each old logo on a small white
-// chip so it reads as designed (black on light). Applied to all three for consistency.
-html[data-theme="dark"] .shield .old img {
-	background: #ffffff;
-	padding: 0.3em;
-	border-radius: 0.4em;
 }
 
 
