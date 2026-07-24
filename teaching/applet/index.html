@@ -104,6 +104,7 @@ description: Interactive Python math applets that run live in your browser. No i
   "use strict";
 
   var COURSES = [
+    { key:'intro', name:'Getting Started',     jvariant:'graphite', accent:'#5B6672', accentSoft:'#EEF0F2' },
     { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentSoft:'#E6F5EF' },
     { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentSoft:'#EAF0FD' },
     { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentSoft:'#F8EFDD' },
@@ -119,6 +120,7 @@ description: Interactive Python math applets that run live in your browser. No i
   // Add launchUrl / sourceUrl to wire a card's buttons. The three existing HTML
   // applets are live; notebook launches await the JupyterLite deployment.
   var ACT = [
+    { id:'00', course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', thumb:'python_coding_tutorial.ipynb', launchUrl:'lite/notebooks/index.html?path=python_coding_tutorial.ipynb', sourceUrl:'lite/files/python_coding_tutorial.ipynb' },
     { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'interpolation_runge_chebyshev.ipynb', launchUrl:'lite/notebooks/index.html?path=interpolation_runge_chebyshev.ipynb', sourceUrl:'lite/files/interpolation_runge_chebyshev.ipynb' },
     { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','sympy'], status:'drafted', thumb:'newton_divided_differences.ipynb', launchUrl:'lite/notebooks/index.html?path=newton_divided_differences.ipynb', sourceUrl:'lite/files/newton_divided_differences.ipynb' },
     { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'cubic_splines.ipynb', launchUrl:'lite/notebooks/index.html?path=cubic_splines.ipynb', sourceUrl:'lite/files/cubic_splines.ipynb' },

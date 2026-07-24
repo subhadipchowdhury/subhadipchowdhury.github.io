@@ -2,7 +2,7 @@
   "content": [
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.052723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -16,7 +16,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.053723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -30,7 +30,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.054724Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -44,7 +44,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.055724Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -58,7 +58,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.055724Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -72,7 +72,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.056723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -86,7 +86,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.056723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -100,7 +100,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.057723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -114,7 +114,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.784047Z",
+      "created": "2026-07-24T16:29:06.057723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -128,7 +128,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.058723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -142,7 +142,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.059723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -156,7 +156,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.059723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -170,7 +170,21 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.060723Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2026-07-24T15:55:07.487836Z",
+      "mimetype": null,
+      "name": "python_coding_tutorial.ipynb",
+      "path": "python_coding_tutorial.ipynb",
+      "size": 15767,
+      "type": "notebook",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2026-07-24T16:29:06.068723Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -184,7 +198,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.069726Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -198,7 +212,7 @@
     },
     {
       "content": null,
-      "created": "2026-07-24T15:58:51.789799Z",
+      "created": "2026-07-24T16:29:06.069726Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -211,11 +225,11 @@
       "writable": true
     }
   ],
-  "created": "2026-07-24T15:58:51.784047Z",
+  "created": "2026-07-24T16:29:06.052723Z",
   "format": "json",
   "hash": null,
   "hash_algorithm": null,
-  "last_modified": "2026-07-24T15:58:51.789799Z",
+  "last_modified": "2026-07-24T16:29:06.069726Z",
   "mimetype": null,
   "name": "",
   "path": "",
