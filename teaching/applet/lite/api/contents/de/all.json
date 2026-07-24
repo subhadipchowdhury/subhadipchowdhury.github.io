@@ -2,7 +2,7 @@
   "content": [
     {
       "content": null,
-      "created": "2026-07-24T17:32:11.217934Z",
+      "created": "2026-07-24T19:41:04.702673Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
@@ -13,13 +13,41 @@
       "size": 11352,
       "type": "notebook",
       "writable": true
+    },
+    {
+      "content": null,
+      "created": "2026-07-24T19:41:04.704179Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2026-07-24T19:40:24.767185Z",
+      "mimetype": null,
+      "name": "wave_equation_forced.ipynb",
+      "path": "de/wave_equation_forced.ipynb",
+      "size": 6963,
+      "type": "notebook",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2026-07-24T19:41:04.704179Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2026-07-24T19:40:24.766182Z",
+      "mimetype": null,
+      "name": "wave_equation_fourier.ipynb",
+      "path": "de/wave_equation_fourier.ipynb",
+      "size": 10170,
+      "type": "notebook",
+      "writable": true
     }
   ],
-  "created": "2026-07-24T17:32:11.217934Z",
+  "created": "2026-07-24T19:41:04.702673Z",
   "format": "json",
   "hash": null,
   "hash_algorithm": null,
-  "last_modified": "2026-07-24T17:32:11.217934Z",
+  "last_modified": "2026-07-24T19:41:04.705183Z",
   "mimetype": null,
   "name": "de",
   "path": "de",
