@@ -1,6 +1,17 @@
 <head>
 	<meta charset="utf-8">
 
+	<script>
+		// Apply the saved theme before first paint to avoid a flash of light mode.
+		(function () {
+			try {
+				if (localStorage.getItem('theme') === 'dark') {
+					document.documentElement.setAttribute('data-theme', 'dark');
+				}
+			} catch (e) {}
+		})();
+	</script>
+
 	{% assign meta_description = page.description | default: site.description | default: "Personal academic website of Subhadip Chowdhury." %}
 	{% assign canonical_url = page.url | absolute_url %}
 	{% assign og_image = page.og_image | default: '/assets/photos/me_small.jpg' | absolute_url %}
@@ -34,6 +45,7 @@
 
 	<script defer src="{{ '/javascript/navigation.js' | relative_url }}"></script>
 	<script defer src="{{ '/javascript/abstracts.js' | relative_url }}"></script>
+	<script defer src="{{ '/javascript/theme.js' | relative_url }}"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	

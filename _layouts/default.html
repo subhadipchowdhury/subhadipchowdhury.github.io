@@ -10,7 +10,13 @@ layout: compress
     <header class="site-header">
       <div class="site-header__inner">
         <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
-        {% include navigation.html %}
+        <div class="header-actions">
+          {% include navigation.html %}
+          <button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle dark mode">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            <i class="fa-solid fa-sun" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </header>
 
