@@ -57,7 +57,7 @@ description: Interactive Python math applets that run live in your browser. No i
     <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5vw,52px);line-height:0.98;letter-spacing:-.03em;margin:12px 0 0;color:#161512;">The Applet Library</h1>
     <p style="margin:16px 0 0;color:#000000a6;font-size:16px;line-height:1.55;max-width:600px;text-wrap:pretty;">Interactive Python activities for the courses I teach: interpolation, quadrature, differential equations, and more. Each one runs live in your browser. Nothing to install, no account.</p>
     <div style="display:flex;align-items:center;gap:12px;margin-top:24px;max-width:600px;">
-      <div style="flex:1;"><jelly-input id="al-search" type="search" placeholder="Search by topic, method, or library…"></jelly-input></div>
+      <div style="flex:1;"><jelly-input id="al-search" size="small" type="search" placeholder="Search by topic, method, or library…"></jelly-input></div>
       <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000073;white-space:nowrap;">press <jelly-kbd>/</jelly-kbd></span>
     </div>
   </header>
@@ -70,13 +70,13 @@ description: Interactive Python math applets that run live in your browser. No i
       <div style="display:flex;align-items:center;gap:18px;">
         <div style="display:flex;align-items:center;gap:9px;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000080;">Sort</span>
-          <jelly-select id="al-sort">
+          <jelly-select id="al-sort" size="small">
             <jelly-option value="module">Default order</jelly-option>
             <jelly-option value="az">Title A–Z</jelly-option>
             <jelly-option value="course">By course</jelly-option>
           </jelly-select>
         </div>
-        <jelly-switch id="al-ready">Ready only</jelly-switch>
+        <jelly-switch id="al-ready" size="small">Ready only</jelly-switch>
       </div>
     </div>
   </div>
@@ -155,13 +155,16 @@ description: Interactive Python math applets that run live in your browser. No i
 
   function enrich(a) {
     var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
-    var st = STATUS[a.status];
     var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
+    var launchUrl = a.launchUrl || null;
+    // A card is only "Ready" once its Launch actually works; otherwise it's a Draft.
+    var ready = !!launchUrl;
+    var st = STATUS[ready ? 'finalized' : 'drafted'];
     return {
       raw:a, topic:topic, courseName:c.name, accent:c.accent, accentSoft:c.accentSoft,
-      statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+      ready:ready, statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
       isNotebook: /\.ipynb$/.test(a.thumb),
-      launchUrl: a.launchUrl || null, sourceUrl: a.sourceUrl || null
+      launchUrl: launchUrl, sourceUrl: a.sourceUrl || null
     };
   }
 
@@ -169,7 +172,7 @@ description: Interactive Python math applets that run live in your browser. No i
     var q = state.query.trim().toLowerCase();
     var list = ACT.map(enrich);
     if (state.courseFilter !== 'all') list = list.filter(function (a) { return a.raw.course === state.courseFilter; });
-    if (state.finalizedOnly) list = list.filter(function (a) { return a.raw.status === 'finalized'; });
+    if (state.finalizedOnly) list = list.filter(function (a) { return a.ready; });
     if (q) list = list.filter(function (a) {
       var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' + a.raw.libs.join(' ')).toLowerCase();
       return hay.indexOf(q) !== -1;
@@ -228,7 +231,7 @@ description: Interactive Python math applets that run live in your browser. No i
     });
     var html = defs.map(function (c) {
       var variant = state.courseFilter === c.key ? c.jvariant : 'white';
-      return '<jelly-button data-course="' + c.key + '" variant="' + variant + '">' + c.name +
+      return '<jelly-button data-course="' + c.key + '" size="small" variant="' + variant + '">' + c.name +
         ' <span style="opacity:.5;font-variant-numeric:tabular-nums;">' + c.count + '</span></jelly-button>';
     }).join('');
     document.getElementById('al-chips').innerHTML = html;
@@ -244,7 +247,7 @@ description: Interactive Python math applets that run live in your browser. No i
         '<div style="text-align:center;padding:72px 20px;color:#00000080;">' +
           '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:22px;color:#161512;">No activities match that.</div>' +
           '<p style="margin:8px 0 20px;font-size:14px;">Try a broader term, or clear the filters.</p>' +
-          '<jelly-button id="al-clear" variant="graphite">Clear filters</jelly-button>' +
+          '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
       var clr = document.getElementById('al-clear');
       if (clr) clr.addEventListener('click', resetFilters);
