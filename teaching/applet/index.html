@@ -1,0 +1,328 @@
+---
+layout: default
+title: Applet Library
+parentnav: Teaching
+subnav_weight: 24
+description: Interactive Python math applets that run live in your browser. No install, no account.
+---
+
+{% raw %}
+<!-- Fonts for the applet library (design spec: Bricolage Grotesque + IBM Plex) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Jelly UI (self-hosted, see vendor/jelly/) -->
+<script type="module" src="vendor/jelly/dist/jelly.js"></script>
+
+<style>
+  /* This page fills the site content card edge-to-edge with the design's own
+     light surface, so it stays visually consistent in both light and dark themes. */
+  body.page-applet-library .main-wrapper {
+    padding: 0;
+    background: #FBF9F6;
+    overflow: hidden;
+  }
+
+  .applet-library {
+    --jelly-font-display: 'Bricolage Grotesque', sans-serif;
+    --jelly-font-text: 'IBM Plex Sans', sans-serif;
+    --jelly-font-mono: 'IBM Plex Mono', monospace;
+    padding: 8px 34px 60px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #161512;
+    -webkit-font-smoothing: antialiased;
+  }
+  .applet-library *,
+  .applet-library *::before,
+  .applet-library *::after { box-sizing: border-box; }
+
+  /* Neutralize the site's global link styling inside the applet;
+     the design manages colors, weight and hover per element. */
+  .applet-library a { font-family: inherit; font-weight: inherit; transition: none; }
+  .applet-library a:hover { text-decoration: none; }
+
+  .al-card { transition: transform .18s ease, box-shadow .18s ease; }
+  .al-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -22px #00000073;
+  }
+</style>
+
+<div class="applet-library">
+
+  <!-- ===== HEADER ===== -->
+  <header style="padding:36px 0 8px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#4F7FE0;font-weight:500;">UChicago &middot; Department of Mathematics</div>
+    <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5vw,52px);line-height:0.98;letter-spacing:-.03em;margin:12px 0 0;color:#161512;">The Applet Library</h1>
+    <p style="margin:16px 0 0;color:#000000a6;font-size:16px;line-height:1.55;max-width:600px;text-wrap:pretty;">Interactive Python activities for the courses I teach: interpolation, quadrature, differential equations, and more. Each one runs live in your browser. Nothing to install, no account.</p>
+    <div style="display:flex;align-items:center;gap:12px;margin-top:24px;max-width:600px;">
+      <div style="flex:1;"><jelly-input id="al-search" type="search" placeholder="Search by topic, method, or library…"></jelly-input></div>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000073;white-space:nowrap;">press <jelly-kbd>/</jelly-kbd></span>
+    </div>
+  </header>
+
+  <!-- ===== STICKY CONTROLS ===== -->
+  <div style="position:sticky;top:4.9rem;z-index:5;background:#FBF9F6f2;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:22px 0 0;padding:16px 0;border-bottom:1px solid #00000012;">
+    <div id="al-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#000000a6;">Showing <strong id="al-shown" style="color:#161512;">0</strong> of <span id="al-total">0</span> activities</div>
+      <div style="display:flex;align-items:center;gap:18px;">
+        <div style="display:flex;align-items:center;gap:9px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000080;">Sort</span>
+          <jelly-select id="al-sort">
+            <jelly-option value="module">Default order</jelly-option>
+            <jelly-option value="az">Title A–Z</jelly-option>
+            <jelly-option value="course">By course</jelly-option>
+          </jelly-select>
+        </div>
+        <jelly-switch id="al-ready">Ready only</jelly-switch>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RESULTS ===== -->
+  <div id="al-results" style="margin-top:26px;"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="margin-top:56px;padding-top:28px;border-top:1px solid #00000012;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;">
+    <div style="max-width:520px;">
+      <div style="display:flex;align-items:center;gap:9px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;color:#161512;"><span>🐍</span> How the activities run</div>
+      <p style="margin:8px 0 0;font-size:13px;line-height:1.6;color:#000000a6;">Each activity opens in <strong>JupyterLite</strong>, which runs Python (numpy, matplotlib, sympy, mpmath, ipywidgets) entirely in your browser via Pyodide/WebAssembly. The first launch downloads the runtime (~20&nbsp;s); after that it's instant, and everything stays on your machine: no server, no login.</p>
+    </div>
+    <div style="font-size:12px;line-height:1.7;color:#00000080;max-width:300px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#00000066;">SUBHADIP CHOWDHURY</div>
+      <div style="margin-top:6px;">Assistant Instructional Professor,<br>The University of Chicago</div>
+      <div style="margin-top:10px;">Content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style="color:#4F7FE0;">CC BY-NC-SA 4.0</a>.</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var COURSES = [
+    { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentSoft:'#E6F5EF' },
+    { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentSoft:'#EAF0FD' },
+    { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentSoft:'#F8EFDD' },
+    { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentSoft:'#FBE9EF' }
+  ];
+
+  var STATUS = {
+    finalized: { label:'Ready',   bg:'#DFF3EA', fg:'#1E7A57' },
+    drafted:   { label:'Draft',   bg:'#FBEFD6', fg:'#9A6B15' },
+    planned:   { label:'Planned', bg:'#ECEAE6', fg:'#6B6B6B' }
+  };
+
+  // Add launchUrl / sourceUrl to wire a card's buttons. The three existing HTML
+  // applets are live; notebook launches await the JupyterLite deployment.
+  var ACT = [
+    { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'runge_chebyshev.ipynb' },
+    { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','sympy'], status:'drafted', thumb:'newton_divdiff.ipynb' },
+    { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'cubic_splines.ipynb' },
+    { id:'04', course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['mpmath','numpy','matplotlib'], status:'finalized', thumb:'optimal_h.ipynb' },
+    { id:'13', course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['mpmath','numpy'], status:'finalized', thumb:'fp_cancellation.ipynb' },
+    { id:'05', course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','sympy','matplotlib'], status:'drafted', thumb:'least_squares.ipynb' },
+    { id:'06', course:'na', module:'M4 · Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'quadrature_adaptive.ipynb' },
+    { id:'07', course:'na', module:'M4 · Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['sympy','mpmath','numpy'], status:'finalized', thumb:'gauss_quadrature.ipynb' },
+    { id:'08', course:'na', module:'M5 · ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'euler_rk.ipynb' },
+    { id:'09', course:'na', module:'M6 · Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'conditioning.ipynb' },
+    { id:'10', course:'na', module:'M6 · Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib'], status:'drafted', thumb:'jacobi_gauss_seidel.ipynb' },
+    { id:'12', course:'na', module:'M6 · Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy'], status:'drafted', thumb:'lu_pivoting.ipynb' },
+    { id:'14', course:'na', module:'M6 · Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'power_iteration.ipynb' },
+    { id:'11', course:'na', module:'M7 · Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'root_finding.ipynb' },
+    { id:'15', course:'na', module:'M8 · Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'stability_stiffness.ipynb' },
+
+    { id:'d1', course:'de', module:'PDE Simulations', title:'Heat equation in 3D', blurb:'Diffuse an initial temperature profile across a plate and watch it relax to equilibrium.', libs:['numpy','plotly'], status:'finalized', thumb:'HeatEquation3D.html', launchUrl:'HeatEquation3D.html' },
+    { id:'d2', course:'de', module:'PDE Simulations', title:'Wave equation simulation', blurb:'Send waves across a string and see reflection at the fixed boundaries.', libs:['numpy','matplotlib'], status:'finalized', thumb:'WaveEquationSimulation.html', launchUrl:'WaveEquationSimulation.html' },
+    { id:'d3', course:'de', module:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a vibrating string and explore resonance near its natural frequencies.', libs:['numpy','matplotlib'], status:'finalized', thumb:'ForcedWaveEqnSim.html', launchUrl:'ForcedWaveEqnSim.html' },
+    { id:'d4', course:'de', module:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'phase_portraits.ipynb' },
+    { id:'d5', course:'de', module:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'direction_fields.ipynb' },
+
+    { id:'c1', course:'calc', module:'Integration & Series', title:'Riemann sums', blurb:'Slide from left sums toward the definite integral as the panels multiply.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'riemann_sums.ipynb' },
+    { id:'c2', course:'calc', module:'Integration & Series', title:'Taylor polynomial approximations', blurb:'Add Taylor terms and watch the approximation hug the curve.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'taylor_polys.ipynb' },
+    { id:'c3', course:'calc', module:'Limits & Rates', title:'Epsilon–delta limit explorer', blurb:'Pick ε, find δ, and see the limit definition made visual.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'epsilon_delta.ipynb' },
+    { id:'c4', course:'calc', module:'Limits & Rates', title:'Related rates visualizer', blurb:'Animate a geometric setup and read off how the quantities co-vary.', libs:['numpy','matplotlib'], status:'planned', thumb:'related_rates.ipynb' },
+
+    { id:'a1', course:'analysis', module:'Sequences & Convergence', title:'Cauchy sequences', blurb:'Test whether a sequence bunches up and converges.', libs:['numpy','matplotlib'], status:'planned', thumb:'cauchy_sequences.ipynb' },
+    { id:'a2', course:'analysis', module:'Sequences & Convergence', title:'Uniform vs pointwise convergence', blurb:'Compare fₙ→f pointwise against uniform convergence on an interval.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'convergence_modes.ipynb' },
+    { id:'a3', course:'analysis', module:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', libs:['numpy','matplotlib'], status:'planned', thumb:'cantor_set.ipynb' }
+  ];
+
+  var state = { courseFilter:'all', query:'', finalizedOnly:false, sort:'module' };
+
+  function enrich(a) {
+    var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
+    var st = STATUS[a.status];
+    var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
+    return {
+      raw:a, topic:topic, courseName:c.name, accent:c.accent, accentSoft:c.accentSoft,
+      statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+      isNotebook: /\.ipynb$/.test(a.thumb),
+      launchUrl: a.launchUrl || null, sourceUrl: a.sourceUrl || null
+    };
+  }
+
+  function filteredList() {
+    var q = state.query.trim().toLowerCase();
+    var list = ACT.map(enrich);
+    if (state.courseFilter !== 'all') list = list.filter(function (a) { return a.raw.course === state.courseFilter; });
+    if (state.finalizedOnly) list = list.filter(function (a) { return a.raw.status === 'finalized'; });
+    if (q) list = list.filter(function (a) {
+      var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' + a.raw.libs.join(' ')).toLowerCase();
+      return hay.indexOf(q) !== -1;
+    });
+    if (state.sort === 'az') list = list.slice().sort(function (x, y) { return x.raw.title.localeCompare(y.raw.title); });
+    else if (state.sort === 'course') list = list.slice().sort(function (x, y) { return x.courseName.localeCompare(y.courseName); });
+    return list;
+  }
+
+  function cardHTML(a) {
+    var libs = a.raw.libs.map(function (lib) {
+      return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:#00000073;background:#00000008;border:1px solid #0000000f;padding:3px 8px;border-radius:999px;">' + lib + '</span>';
+    }).join('');
+
+    var launch;
+    if (a.launchUrl) {
+      launch = '<a href="' + a.launchUrl + '" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;background:' + a.accent + ';color:#ffffff;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;">▶ Launch</a>';
+    } else {
+      launch = '<span title="Available once the JupyterLite notebook is deployed" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#00000008;color:#00000047;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;cursor:default;">▶ Launch</span>';
+    }
+
+    var notebook = '';
+    if (a.isNotebook) {
+      if (a.sourceUrl) {
+        notebook = '<a href="' + a.sourceUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:#00000099;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;border:1px solid #00000016;">Notebook</a>';
+      } else {
+        notebook = '<span title="Notebook source not yet published" style="display:inline-flex;align-items:center;justify-content:center;color:#00000038;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;border:1px solid #0000000f;cursor:default;">Notebook</span>';
+      }
+    }
+
+    return '' +
+      '<div class="al-card" style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #00000010;border-radius:20px;box-shadow:0 14px 32px -22px #00000066;overflow:hidden;height:100%;">' +
+        '<div style="height:126px;position:relative;background:repeating-linear-gradient(135deg,#0000 0 13px,#0000000a 13px 14px), linear-gradient(135deg,#F5F2EC,#ECE8E1);display:flex;align-items:flex-end;padding:12px;">' +
+          '<span style="position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;background:#ffffffec;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:600;color:#2c2a26;">' +
+            '<span style="width:8px;height:8px;border-radius:50%;background:' + a.accent + ';"></span>' + a.courseName +
+          '</span>' +
+          '<span style="position:absolute;top:12px;right:12px;background:' + a.statusBg + ';color:' + a.statusFg + ';font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;">' + a.statusLabel + '</span>' +
+          '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10.5px;color:#00000066;background:#ffffffd6;padding:3px 8px;border-radius:7px;">' + a.raw.thumb + '</span>' +
+        '</div>' +
+        '<div style="padding:15px 16px 18px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
+          '<div style="display:flex;">' +
+            '<span style="display:inline-flex;align-items:center;font-family:\'IBM Plex Mono\',monospace;font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:' + a.accent + ';background:' + a.accentSoft + ';padding:3px 9px;border-radius:999px;">' + a.topic + '</span>' +
+          '</div>' +
+          '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:16.5px;line-height:1.2;letter-spacing:-.01em;color:#161512;text-wrap:pretty;">' + a.raw.title + '</div>' +
+          '<div style="font-size:12.5px;line-height:1.5;color:#00000099;flex:1;text-wrap:pretty;">' + a.raw.blurb + '</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
+          '<div style="display:flex;gap:8px;align-items:stretch;margin-top:6px;">' + launch + notebook + '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderChips() {
+    var defs = [{ key:'all', name:'All', jvariant:'graphite', count:ACT.length }];
+    COURSES.forEach(function (c) {
+      defs.push({ key:c.key, name:c.name, jvariant:c.jvariant, count:ACT.filter(function (a) { return a.course === c.key; }).length });
+    });
+    var html = defs.map(function (c) {
+      var variant = state.courseFilter === c.key ? c.jvariant : 'white';
+      return '<jelly-button data-course="' + c.key + '" variant="' + variant + '">' + c.name +
+        ' <span style="opacity:.5;font-variant-numeric:tabular-nums;">' + c.count + '</span></jelly-button>';
+    }).join('');
+    document.getElementById('al-chips').innerHTML = html;
+  }
+
+  function renderResults() {
+    var list = filteredList();
+    document.getElementById('al-shown').textContent = list.length;
+    document.getElementById('al-total').textContent = ACT.length;
+    var results = document.getElementById('al-results');
+    if (list.length === 0) {
+      results.innerHTML =
+        '<div style="text-align:center;padding:72px 20px;color:#00000080;">' +
+          '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:22px;color:#161512;">No activities match that.</div>' +
+          '<p style="margin:8px 0 20px;font-size:14px;">Try a broader term, or clear the filters.</p>' +
+          '<jelly-button id="al-clear" variant="graphite">Clear filters</jelly-button>' +
+        '</div>';
+      var clr = document.getElementById('al-clear');
+      if (clr) clr.addEventListener('click', resetFilters);
+    } else {
+      results.innerHTML =
+        '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(266px,1fr));gap:20px;">' +
+          list.map(cardHTML).join('') +
+        '</div>';
+    }
+  }
+
+  function render() { renderChips(); renderResults(); }
+
+  function resetFilters() {
+    state.courseFilter = 'all'; state.query = ''; state.finalizedOnly = false;
+    var s = document.getElementById('al-search'); if (s) s.value = '';
+    var sw = document.getElementById('al-ready'); if (sw && 'checked' in sw) sw.checked = false;
+    render();
+  }
+
+  function readVal(e) {
+    if (e && e.target && e.target.value != null) return e.target.value;
+    if (e && e.detail && e.detail.value != null) return e.detail.value;
+    return '';
+  }
+
+  function init() {
+    render();
+
+    // Course chips (event delegation; jelly-button click bubbles to the container).
+    document.getElementById('al-chips').addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('[data-course]') : null;
+      if (!btn) return;
+      state.courseFilter = btn.getAttribute('data-course');
+      render();
+    });
+
+    var search = document.getElementById('al-search');
+    if (search) {
+      var onSearch = function (e) { state.query = readVal(e); renderResults(); };
+      search.addEventListener('input', onSearch);
+      search.addEventListener('change', onSearch);
+    }
+
+    var sort = document.getElementById('al-sort');
+    if (sort) sort.addEventListener('change', function (e) { state.sort = readVal(e) || 'module'; renderResults(); });
+
+    var ready = document.getElementById('al-ready');
+    if (ready) ready.addEventListener('change', function (e) {
+      var el = e && e.target;
+      var on = el && ('checked' in el ? el.checked : el.getAttribute('checked') != null);
+      state.finalizedOnly = !!on;
+      renderResults();
+    });
+
+    // Keyboard: "/" focuses search, Esc clears a non-empty query.
+    document.addEventListener('keydown', function (e) {
+      var tag = (e.target && e.target.tagName) || '';
+      var typing = /INPUT|TEXTAREA|SELECT/.test(tag) || (e.target && e.target.isContentEditable);
+      if (e.key === '/' && !typing) {
+        e.preventDefault();
+        var el = document.getElementById('al-search');
+        if (el) {
+          if (el.focus) el.focus();
+          var inner = el.shadowRoot && el.shadowRoot.querySelector('input');
+          if (inner) inner.focus();
+        }
+      }
+      if (e.key === 'Escape' && state.query) {
+        state.query = '';
+        var s = document.getElementById('al-search'); if (s) s.value = '';
+        renderResults();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+{% endraw %}
