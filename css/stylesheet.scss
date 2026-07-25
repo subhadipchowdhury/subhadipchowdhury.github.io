@@ -953,7 +953,8 @@ pre, kbd, samp {
    as lighter than their surroundings.
    ------------------------------------------------------------------------ */
 
-// Course catalog numbers, e.g. the "212" in "Advanced Numerical Analysis (Math 212)"
+// Course catalog codes. The subject prefix is part of the identifier, so the
+// span covers "Math 212", not just the number.
 .course-code {
 	font-family: $code-font;
 	font-weight: 500;
