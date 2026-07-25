@@ -15,7 +15,8 @@ $base-font-light: "UChicagoSansSerif-Light", sans-serif;    // Light weight vari
 $base-font-semibold: "UChicagoSansSerif-SemiBold", sans-serif; // SemiBold variant
 $base-font-bold: "UChicagoSansSerif-Bold", sans-serif;      // Bold variant
 $nav-font: "UChicagoSansSerif-Bold", sans-serif;            // Navigation font (bold)
-$code-font: "UChicagoSansSerif-Regular", sans-serif;        // Code/monospace-style font
+$code-font: "IBM Plex Mono", ui-monospace, monospace;       // Monospace for code, filenames, figures
+                                                            // (the brand has no mono; loaded in _includes/head.html)
 
 
 /* ========================================================================
@@ -932,6 +933,11 @@ code{
 	background-color: var(--code-bg);
 	border-radius: 5px;
 	display: inline-block;
+	font-family: $code-font;
+}
+
+// Fenced code blocks (Rouge wraps them in pre; a bare pre needs the font too)
+pre, kbd, samp {
 	font-family: $code-font;
 }
 
