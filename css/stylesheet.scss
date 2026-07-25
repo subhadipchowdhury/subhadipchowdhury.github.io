@@ -944,25 +944,10 @@ pre, kbd, samp {
 	font-family: $code-font;
 }
 
-/* ------------------------------------------------------------------------
-   MONO IDENTIFIERS
-
-   The mono face also carries values that are identifiers rather than prose:
-   catalog numbers and generated timestamps. Both sit inside text set in a
-   heavier face, so weight 500 (loaded alongside 400) keeps them from reading
-   as lighter than their surroundings.
-   ------------------------------------------------------------------------ */
-
-// Course catalog codes. The subject prefix is part of the identifier, so the
-// span covers "Math 212", not just the number.
-.course-code {
-	font-family: $code-font;
-	font-weight: 500;
-	font-variant-numeric: tabular-nums;
-}
-
 // Footer "last modified" stamp, rewritten by JS on load; tabular figures keep
-// the minutes from changing the line width as the value updates.
+// the minutes from changing the line width as the value updates. Course codes
+// were tried in the mono face too and reverted: it read as too much emphasis
+// on a number repeated down the whole teaching page.
 .last-modified time {
 	font-family: $code-font;
 	font-variant-numeric: tabular-nums;
