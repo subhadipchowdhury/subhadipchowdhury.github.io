@@ -945,9 +945,7 @@ pre, kbd, samp {
 }
 
 // Footer "last modified" stamp, rewritten by JS on load; tabular figures keep
-// the minutes from changing the line width as the value updates. Course codes
-// were tried in the mono face too and reverted: it read as too much emphasis
-// on a number repeated down the whole teaching page.
+// the minutes from changing the line width as the value updates.
 .last-modified time {
 	font-family: $code-font;
 	font-variant-numeric: tabular-nums;
