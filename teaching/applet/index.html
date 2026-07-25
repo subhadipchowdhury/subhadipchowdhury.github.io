@@ -13,13 +13,100 @@ description: Interactive Python math applets that run live in your browser. No i
 <!-- Jelly UI (self-hosted, see vendor/jelly/) -->
 <script type="module" src="vendor/jelly/dist/jelly.js"></script>
 
+<script>
+  // Jelly carries its own light and dark token sets, selected by
+  // html[data-jelly-mode]; left unset it follows the OS preference, which
+  // would go dark while the site is still light. Pin it to the site's own
+  // theme instead and keep it in sync when the header toggle flips.
+  (function () {
+    var root = document.documentElement;
+    function sync() {
+      root.setAttribute('data-jelly-mode', root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+    }
+    sync();
+    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  })();
+</script>
+
 <style>
-  /* This page fills the site content card edge-to-edge with the design's own
-     light surface, so it stays visually consistent in both light and dark themes. */
+  /* This page fills the site content card edge-to-edge with its own paper
+     surface rather than the site background. Every themeable color is a token
+     below, so the site's dark-mode toggle re-skins the whole page at once. */
   body.page-applet-library .main-wrapper {
     padding: 0;
-    background: #FBF9F6;
+    background: var(--al-page);
     overflow: hidden;
+  }
+
+  /* Light palette. The tokens live on the body (not .applet-library) because
+     .main-wrapper above sits outside the library container. */
+  body.page-applet-library {
+    --al-maroon: #800000;
+    --al-ink: #161512;
+
+    --al-page: #FBF9F6;
+    --al-sticky: #FBF9F6f2;          /* sticky bar: page color, semi-opaque */
+    --al-text: #000000b3;            /* body copy */
+    --al-soft: #00000099;            /* blurbs */
+    --al-faint: #00000073;           /* filenames, labels */
+    --al-fainter: #00000047;         /* disabled launch text */
+
+    --al-card-bg: #ffffff;
+    --al-card-border: #00000010;
+    --al-card-shadow: 0 14px 32px -22px #00000066;
+    --al-card-shadow-hover: 0 24px 48px -22px #00000073;
+    --al-banner-from: #F5F2EC;       /* card header wash */
+    --al-banner-to: #ECE8E1;
+    --al-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
+    --al-pill-bg: #ffffffec;         /* course pill floating on the banner */
+    --al-file-bg: #ffffffd6;         /* filename chip on the banner */
+    --al-course-fg: #2c2a26;
+
+    --al-chip-bg: #00000008;         /* library pills, disabled launch */
+    --al-chip-border: #0000000f;
+    --al-hairline: #00000012;        /* sticky bar + footer rules */
+    --al-launch-fg: #ffffff;
+
+    --al-ready-bg: #DFF3EA;  --al-ready-fg: #1E7A57;
+    --al-draft-bg: #FBEFD6;  --al-draft-fg: #9A6B15;
+    --al-plan-bg: #ECEAE6;   --al-plan-fg: #6B6B6B;
+  }
+
+  /* Dark palette. Warm charcoals rather than the site's neutral greys, so the
+     page keeps the warm-paper character it has in light mode. */
+  html[data-theme="dark"] body.page-applet-library {
+    /* Maroon goes near-black on a dark ground; this is the same hue lifted
+       into a legible range (the site swaps to lake blue, which fights the
+       warm surfaces here). */
+    --al-maroon: #E08A84;
+    --al-ink: #EDE9E3;
+
+    --al-page: #191816;
+    --al-sticky: #191816f0;
+    --al-text: #ffffffb3;
+    --al-soft: #ffffff99;
+    --al-faint: #ffffff73;
+    --al-fainter: #ffffff47;
+
+    --al-card-bg: #232120;
+    --al-card-border: #ffffff14;
+    --al-card-shadow: 0 14px 32px -20px #000000b3;
+    --al-card-shadow-hover: 0 24px 48px -20px #000000cc;
+    --al-banner-from: #2A2724;
+    --al-banner-to: #211E1B;
+    --al-banner-hatch: #ffffff0a;
+    --al-pill-bg: #232120eb;
+    --al-file-bg: #1A1917d6;
+    --al-course-fg: #D8D3CB;
+
+    --al-chip-bg: #ffffff0d;
+    --al-chip-border: #ffffff1a;
+    --al-hairline: #ffffff14;
+    --al-launch-fg: #141210;
+
+    --al-ready-bg: #2FA97D2e;  --al-ready-fg: #6FD3AC;
+    --al-draft-bg: #CE8A2C2e;  --al-draft-fg: #E5B36A;
+    --al-plan-bg: #ffffff12;   --al-plan-fg: #A9A6A0;
   }
 
   .applet-library {
@@ -31,9 +118,6 @@ description: Interactive Python math applets that run live in your browser. No i
     --al-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
     --al-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
     --al-mono:  "IBM Plex Mono", ui-monospace, monospace;
-
-    --al-maroon: #800000;
-    --al-ink: #161512;
 
     --jelly-font-display: var(--al-serif);
     --jelly-font-text: var(--al-sans);
@@ -84,12 +168,23 @@ description: Interactive Python math applets that run live in your browser. No i
     max-width: 600px;
     font-size: 16.5px;
     line-height: 1.6;
-    color: #000000b3;
+    color: var(--al-text);
     text-wrap: pretty;
   }
 
   /* ---------- sticky controls ---------- */
-  .al-count { font-size: 13px; letter-spacing: .005em; color: #000000b3; }
+  .al-sticky {
+    position: sticky;
+    top: 4.9rem;
+    z-index: 5;
+    background: var(--al-sticky);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 22px 0 0;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--al-hairline);
+  }
+  .al-count { font-size: 13px; letter-spacing: .005em; color: var(--al-text); }
   .al-count strong,
   .al-count span { font-family: var(--al-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
   .al-count strong { color: var(--al-ink); }
@@ -98,23 +193,99 @@ description: Interactive Python math applets that run live in your browser. No i
     font-size: 12px;
     letter-spacing: .04em;
     text-transform: uppercase;
-    color: #00000073;
+    color: var(--al-faint);
   }
 
-  /* ---------- cards ---------- */
-  .al-card { transition: transform .18s ease, box-shadow .18s ease; }
+  /* ---------- cards ----------
+     Each card carries its course accent inline as --al-accent-light /
+     --al-accent-dark; the theme picks one so a toggle needs no re-render. */
+  .al-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--al-card-bg);
+    border: 1px solid var(--al-card-border);
+    border-radius: 18px;
+    box-shadow: var(--al-card-shadow);
+    transition: transform .18s ease, box-shadow .18s ease;
+    --al-accent: var(--al-accent-light);
+    --al-accent-tint: var(--al-accent-soft);
+  }
+  html[data-theme="dark"] .al-card {
+    --al-accent: var(--al-accent-dark);
+    --al-accent-tint: color-mix(in srgb, var(--al-accent-dark) 20%, transparent);
+  }
   .al-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 48px -22px #00000073;
+    box-shadow: var(--al-card-shadow-hover);
   }
-  .al-course { font-family: var(--al-semi); font-size: 11px; color: #2c2a26; }
+  .al-banner {
+    height: 72px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 11px;
+    background:
+      repeating-linear-gradient(135deg, #0000 0 13px, var(--al-banner-hatch) 13px 14px),
+      linear-gradient(135deg, var(--al-banner-from), var(--al-banner-to));
+  }
+  .al-course {
+    font-family: var(--al-semi);
+    font-size: 11px;
+    color: var(--al-course-fg);
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--al-pill-bg);
+    padding: 5px 10px;
+    border-radius: 999px;
+  }
+  .al-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--al-accent); }
   .al-status,
   .al-topic {
     font-family: var(--al-semi);
     letter-spacing: .07em;
     text-transform: uppercase;
   }
-  .al-file, .al-lib { font-family: var(--al-mono); font-size: 10.5px; color: #00000073; }
+  .al-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 10px;
+    padding: 5px 9px;
+    border-radius: 999px;
+  }
+  .al-status-finalized { background: var(--al-ready-bg); color: var(--al-ready-fg); }
+  .al-status-drafted   { background: var(--al-draft-bg); color: var(--al-draft-fg); }
+  .al-status-planned   { background: var(--al-plan-bg);  color: var(--al-plan-fg); }
+  .al-topic {
+    align-self: flex-start;
+    font-size: 10.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: var(--al-accent);
+    background: var(--al-accent-tint);
+  }
+  .al-file, .al-lib { font-family: var(--al-mono); font-size: 10.5px; color: var(--al-faint); }
+  .al-file {
+    background: var(--al-file-bg);
+    padding: 4px 9px;
+    border-radius: 7px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .al-lib {
+    background: var(--al-chip-bg);
+    border: 1px solid var(--al-chip-border);
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
   .al-card-title {
     font-family: var(--al-serif);
     font-weight: 700;
@@ -128,7 +299,7 @@ description: Interactive Python math applets that run live in your browser. No i
     font-family: var(--al-light);
     font-size: 13.5px;
     line-height: 1.55;
-    color: #00000099;
+    color: var(--al-soft);
     flex: 1;
     text-wrap: pretty;
   }
@@ -141,14 +312,16 @@ description: Interactive Python math applets that run live in your browser. No i
     font-family: var(--al-semi);
     font-size: 13px;
     line-height: 1;
-    color: #ffffff;
+    background: var(--al-accent);
+    color: var(--al-launch-fg);
     padding: 11px 12px;
     border-radius: 12px;
     text-decoration: none;
   }
-  .al-launch.is-off { background: #00000008; color: #00000047; cursor: default; }
+  .al-launch.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
 
   /* ---------- empty state + footer ---------- */
+  .al-empty { text-align: center; padding: 72px 20px; color: var(--al-faint); }
   .al-empty-title {
     font-family: var(--al-serif);
     font-weight: 700;
@@ -169,9 +342,19 @@ description: Interactive Python math applets that run live in your browser. No i
     margin: 9px 0 0;
     font-size: 13.5px;
     line-height: 1.65;
-    color: #000000b3;
+    color: var(--al-text);
   }
   .al-footnote strong { font-family: var(--al-semi); font-weight: normal; color: var(--al-ink); }
+
+  .al-foot {
+    margin-top: 52px;
+    padding-top: 26px;
+    border-top: 1px solid var(--al-hairline);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: space-between;
+  }
 
   @media (max-width: 760px) {
     .applet-library { padding: 4px 20px 44px; }
@@ -198,7 +381,7 @@ description: Interactive Python math applets that run live in your browser. No i
   </header>
 
   <!-- ===== STICKY CONTROLS ===== -->
-  <div style="position:sticky;top:4.9rem;z-index:5;background:#FBF9F6f2;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:22px 0 0;padding:16px 0;border-bottom:1px solid #00000012;">
+  <div class="al-sticky">
     <div id="al-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
       <div class="al-count">Showing <strong id="al-shown">0</strong> of <span id="al-total">0</span> activities</div>
@@ -220,7 +403,7 @@ description: Interactive Python math applets that run live in your browser. No i
   <div id="al-results" style="margin-top:26px;"></div>
 
   <!-- ===== FOOTER ===== -->
-  <footer style="margin-top:52px;padding-top:26px;border-top:1px solid #00000012;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;">
+  <footer class="al-foot">
     <div style="max-width:560px;">
       <div class="al-footer-head"><span>🐍</span> Running the activities</div>
       <p class="al-footnote">The Python activities run in <strong>JupyterLite</strong>, executing NumPy, Matplotlib, SymPy, and related libraries directly in the browser through Pyodide and WebAssembly. The first launch downloads the runtime (about 20&nbsp;seconds); afterward it is cached and opens immediately. Nothing is installed, and no account is required.</p>
@@ -233,18 +416,22 @@ description: Interactive Python math applets that run live in your browser. No i
 (function () {
   "use strict";
 
+  // accentDark is the same hue lifted for the dark theme; the card CSS picks
+  // between the two, and accentSoft (the light topic-pill wash) is replaced in
+  // dark mode by a color-mix of the accent.
   var COURSES = [
-    { key:'intro', name:'Getting Started',     jvariant:'graphite', accent:'#5B6672', accentSoft:'#EEF0F2' },
-    { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentSoft:'#E6F5EF' },
-    { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentSoft:'#EAF0FD' },
-    { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentSoft:'#F8EFDD' },
-    { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentSoft:'#FBE9EF' }
+    { key:'intro', name:'Getting Started',     jvariant:'graphite', accent:'#5B6672', accentDark:'#98A3B0', accentSoft:'#EEF0F2' },
+    { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentDark:'#4CC796', accentSoft:'#E6F5EF' },
+    { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentDark:'#7BA4F0', accentSoft:'#EAF0FD' },
+    { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentDark:'#E0A44E', accentSoft:'#F8EFDD' },
+    { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentDark:'#EC7C9E', accentSoft:'#FBE9EF' }
   ];
 
+  // Status colors are themed in CSS (.al-status-<key>); only the label lives here.
   var STATUS = {
-    finalized: { label:'Ready',   bg:'#DFF3EA', fg:'#1E7A57' },
-    drafted:   { label:'Draft',   bg:'#FBEFD6', fg:'#9A6B15' },
-    planned:   { label:'Planned', bg:'#ECEAE6', fg:'#6B6B6B' }
+    finalized: { label:'Ready' },
+    drafted:   { label:'Draft' },
+    planned:   { label:'Planned' }
   };
 
   // Add a launchUrl to wire a card's Launch button. Cards without one are
@@ -293,11 +480,12 @@ description: Interactive Python math applets that run live in your browser. No i
     // The status tag is the master switch: an activity is launchable only when it
     // is tagged 'finalized' (Ready) AND has a notebook. Flip a card to 'drafted'
     // to keep its notebook deployed but paused for students.
-    var st = STATUS[a.status] || STATUS.planned;
+    var statusKey = STATUS[a.status] ? a.status : 'planned';
     var ready = a.status === 'finalized' && !!launchUrl;
     return {
-      raw:a, topic:topic, courseName:c.name, accent:c.accent, accentSoft:c.accentSoft,
-      ready:ready, statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
+      raw:a, topic:topic, courseName:c.name,
+      accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
+      ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
       launchUrl: launchUrl
     };
   }
@@ -318,27 +506,33 @@ description: Interactive Python math applets that run live in your browser. No i
 
   function cardHTML(a) {
     var libs = a.raw.libs.map(function (lib) {
-      return '<span class="al-lib" style="background:#00000008;border:1px solid #0000000f;padding:4px 9px;border-radius:999px;">' + lib + '</span>';
+      return '<span class="al-lib">' + lib + '</span>';
     }).join('');
 
     var launch;
     if (a.ready) {
-      launch = '<a class="al-launch" href="' + a.launchUrl + '" style="background:' + a.accent + ';">▶ Launch</a>';
+      launch = '<a class="al-launch" href="' + a.launchUrl + '">▶ Launch</a>';
     } else {
       launch = '<span class="al-launch is-off" title="' + (a.launchUrl ? 'Deployed but not yet released to students' : 'Coming soon') + '">▶ Launch</span>';
     }
 
+    // The course accent is handed to CSS as custom properties so the theme,
+    // not this markup, decides which variant is shown.
+    var accentVars = '--al-accent-light:' + a.accent +
+                     ';--al-accent-dark:' + a.accentDark +
+                     ';--al-accent-soft:' + a.accentSoft + ';';
+
     return '' +
-      '<div class="al-card" style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #00000010;border-radius:18px;box-shadow:0 14px 32px -22px #00000066;overflow:hidden;height:100%;">' +
-        '<div style="height:72px;position:relative;background:repeating-linear-gradient(135deg,#0000 0 13px,#0000000a 13px 14px), linear-gradient(135deg,#F5F2EC,#ECE8E1);display:flex;align-items:flex-end;padding:11px;">' +
-          '<span class="al-course" style="position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;background:#ffffffec;padding:5px 10px;border-radius:999px;">' +
-            '<span style="width:8px;height:8px;border-radius:50%;background:' + a.accent + ';"></span>' + a.courseName +
+      '<div class="al-card" style="' + accentVars + '">' +
+        '<div class="al-banner">' +
+          '<span class="al-course">' +
+            '<span class="al-dot"></span>' + a.courseName +
           '</span>' +
-          '<span class="al-status" style="position:absolute;top:12px;right:12px;background:' + a.statusBg + ';color:' + a.statusFg + ';font-size:10px;padding:5px 9px;border-radius:999px;">' + a.statusLabel + '</span>' +
-          '<span class="al-file" style="background:#ffffffd6;padding:4px 9px;border-radius:7px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + a.raw.thumb + '</span>' +
+          '<span class="al-status al-status-' + a.statusKey + '">' + a.statusLabel + '</span>' +
+          '<span class="al-file">' + a.raw.thumb + '</span>' +
         '</div>' +
         '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
-          '<span class="al-topic" style="align-self:flex-start;font-size:10.5px;color:' + a.accent + ';background:' + a.accentSoft + ';padding:4px 10px;border-radius:999px;">' + a.topic + '</span>' +
+          '<span class="al-topic">' + a.topic + '</span>' +
           '<div class="al-card-title">' + a.raw.title + '</div>' +
           '<div class="al-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
@@ -367,7 +561,7 @@ description: Interactive Python math applets that run live in your browser. No i
     var results = document.getElementById('al-results');
     if (list.length === 0) {
       results.innerHTML =
-        '<div style="text-align:center;padding:72px 20px;color:#00000080;">' +
+        '<div class="al-empty">' +
           '<div class="al-empty-title">No activities match your filters.</div>' +
           '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">Try a broader search, or clear the filters.</p>' +
           '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
