@@ -915,6 +915,8 @@ table {
 	border-collapse:collapse;
 	th, td {
 		padding:0.1em 0.5em;
+		// Equal-width digits so figures in adjacent rows line up vertically
+		font-variant-numeric: tabular-nums;
 	}
 	td:first-child {
 		font-weight: bold;
@@ -933,12 +935,36 @@ code{
 	background-color: var(--code-bg);
 	border-radius: 5px;
 	display: inline-block;
+	padding: 0.05em 0.35em;
 	font-family: $code-font;
 }
 
 // Fenced code blocks (Rouge wraps them in pre; a bare pre needs the font too)
 pre, kbd, samp {
 	font-family: $code-font;
+}
+
+/* ------------------------------------------------------------------------
+   MONO IDENTIFIERS
+
+   The mono face also carries values that are identifiers rather than prose:
+   catalog numbers and generated timestamps. Both sit inside text set in a
+   heavier face, so weight 500 (loaded alongside 400) keeps them from reading
+   as lighter than their surroundings.
+   ------------------------------------------------------------------------ */
+
+// Course catalog numbers, e.g. the "212" in "Advanced Numerical Analysis (Math 212)"
+.course-code {
+	font-family: $code-font;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+}
+
+// Footer "last modified" stamp, rewritten by JS on load; tabular figures keep
+// the minutes from changing the line width as the value updates.
+.last-modified time {
+	font-family: $code-font;
+	font-variant-numeric: tabular-nums;
 }
 
 // Small caps for surnames in author lists

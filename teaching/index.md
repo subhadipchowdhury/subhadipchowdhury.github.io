@@ -27,7 +27,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% for course in site.data.courses_uchicago %}
 <div class="course">
-**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+**{{ course.Name }} (Math <span class="course-code">{{ course.Code }}</span>)** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
 
@@ -37,7 +37,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 <div class="course-grid">
 {% for course in site.data.courses_wooster %}
 <div class="course">
-**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+**{{ course.Name }} (Math <span class="course-code">{{ course.Code }}</span>)** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
 </div>
@@ -47,7 +47,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 <div class="course-grid">
 {% for course in site.data.courses_bowdoin %}
 <div class="course">
-**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
+**{{ course.Name }} (Math <span class="course-code">{{ course.Code }}</span>)** {% for coursepage in course.Coursepages %}- [{{ coursepage.Duration }}]({{coursepage.Link}}) {% endfor %}
 </div>
 {% endfor %}
 </div>
@@ -55,9 +55,11 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 ### University of Chicago (GSL)
 
 <div class="course-grid">
+{% comment %}Codes here are Math catalog numbers except for CAAP, which sets
+CodePrefix to '' in the data to suppress the "Math " label.{% endcomment %}
 {% for course in site.data.courses_uchicago_gsl %}
 <div class="course">
-**{{ course.Name }} (Math {{ course.Code }})** {% for coursepage in course.Coursepages %}- {{ coursepage.Duration }} {% endfor %}
+**{{ course.Name }} ({% if course.CodePrefix == nil %}Math {% else %}{{ course.CodePrefix }}{% endif %}<span class="course-code">{{ course.Code }}</span>)** {% for coursepage in course.Coursepages %}- {% if coursepage.Link %}[{{ coursepage.Duration }}]({{ coursepage.Link }}){% else %}{{ coursepage.Duration }}{% endif %} {% endfor %}
 </div>
 {% endfor %}
 </div>
@@ -76,7 +78,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 {% for course in site.data.nonteaching_courses_uchicago %}
 {% assign instructor_parts = course.Instructor | split: ' ' %}
 <div class="course">
-<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math {{ course.Code }})</strong>, taught by Professor {% if course.Homepage %}<a href="{{ course.Homepage }}">{% endif %}{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% if course.Homepage %}</a>{% endif %} - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
+<strong>{{ course.Role }}</strong> for <strong>{{ course.Name }} (Math <span class="course-code">{{ course.Code }}</span>)</strong>, taught by Professor {% if course.Homepage %}<a href="{{ course.Homepage }}">{% endif %}{% for part in instructor_parts %}{% if forloop.last %}<span class="lastname">{{ part }}</span>{% else %}{{ part }} {% endif %}{% endfor %}{% if course.Homepage %}</a>{% endif %} - {% if course.Link %} [{{ course.Duration }}]({{ course.Link }}) {% else %} {{ course.Duration }} {% endif %}
 
 </div>
 {% endfor %}

@@ -1,8 +1,11 @@
--   Code: Summer Academy, CAAP
+# A program code rather than a Math catalog number, so CodePrefix drops the
+# "Math " that the template puts in front of every other code here.
+-   Code: CAAP
+    CodePrefix: ''
     Name: Proof-Based Methods in Calculus
     Coursepages:
         - Duration: Summer 2018
-          Link: /assets/syllabi/2018SU_CAAP.pdf
+          Link: https://college.uchicago.edu/student-services/chicago-academic-achievement-program
           
 -   Code: 196
     Name: Linear Algebra
