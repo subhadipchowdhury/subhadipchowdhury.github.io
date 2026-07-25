@@ -7,10 +7,8 @@ description: Interactive Python math applets that run live in your browser. No i
 ---
 
 {% raw %}
-<!-- Fonts for the applet library (design spec: Bricolage Grotesque + IBM Plex) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Type is the site's own: UChicagoSerif headings, UChicagoSansSerif text, IBM
+     Plex Mono for code. All three load site-wide from _includes/head.html. -->
 
 <!-- Jelly UI (self-hosted, see vendor/jelly/) -->
 <script type="module" src="vendor/jelly/dist/jelly.js"></script>
@@ -25,12 +23,24 @@ description: Interactive Python math applets that run live in your browser. No i
   }
 
   .applet-library {
-    --jelly-font-display: 'Bricolage Grotesque', sans-serif;
-    --jelly-font-text: 'IBM Plex Sans', sans-serif;
-    --jelly-font-mono: 'IBM Plex Mono', monospace;
+    /* Each brand sans weight is its own family name, as everywhere else on the
+       site, so weight is selected by family and font-weight stays normal. The
+       serif does carry real weight axes (400/600/700) on one family name. */
+    --al-serif: "UChicagoSerif", Georgia, serif;
+    --al-sans:  "UChicagoSansSerif-Regular", system-ui, sans-serif;
+    --al-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
+    --al-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
+    --al-mono:  "IBM Plex Mono", ui-monospace, monospace;
+
+    --al-maroon: #800000;
+    --al-ink: #161512;
+
+    --jelly-font-display: var(--al-serif);
+    --jelly-font-text: var(--al-sans);
+    --jelly-font-mono: var(--al-mono);
     padding: 8px 34px 60px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: #161512;
+    font-family: var(--al-sans);
+    color: var(--al-ink);
     -webkit-font-smoothing: antialiased;
   }
   .applet-library *,
@@ -42,22 +52,148 @@ description: Interactive Python math applets that run live in your browser. No i
   .applet-library a { font-family: inherit; font-weight: inherit; transition: none; }
   .applet-library a:hover { text-decoration: none; }
 
+  /* Header: title block on the left, search on the right; stacks under 760px. */
+  .al-head {
+    padding: 34px 0 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .al-head-text { flex: 1 1 auto; min-width: 0; }
+  .al-head-search { flex: 0 0 300px; padding-bottom: 5px; }
+  /* jelly-input[size=small] hardcodes width:220px on its host, which clips the
+     placeholder; let it fill the slot instead (and the viewport on mobile). */
+  .al-head-search jelly-input { width: 100%; }
+
+  /* The brand serif is a Garamond, x-height 0.400 em against the sans's 0.525,
+     so serif sizes run ~25% larger than their sans equivalents would; otherwise
+     headings read as the same optical size as the body text. */
+  .al-title {
+    font-family: var(--al-serif);
+    font-weight: 700;
+    font-size: clamp(38px, 5.6vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -.008em;
+    margin: 8px 0 0;
+    color: var(--al-maroon);
+  }
+  .al-sub {
+    font-family: var(--al-light);
+    margin: 14px 0 0;
+    max-width: 600px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: #000000b3;
+    text-wrap: pretty;
+  }
+
+  /* ---------- sticky controls ---------- */
+  .al-count { font-size: 13px; letter-spacing: .005em; color: #000000b3; }
+  .al-count strong,
+  .al-count span { font-family: var(--al-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .al-count strong { color: var(--al-ink); }
+  .al-tool-label {
+    font-family: var(--al-semi);
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #00000073;
+  }
+
+  /* ---------- cards ---------- */
   .al-card { transition: transform .18s ease, box-shadow .18s ease; }
   .al-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 24px 48px -22px #00000073;
+  }
+  .al-course { font-family: var(--al-semi); font-size: 11px; color: #2c2a26; }
+  .al-status,
+  .al-topic {
+    font-family: var(--al-semi);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  .al-file, .al-lib { font-family: var(--al-mono); font-size: 10.5px; color: #00000073; }
+  .al-card-title {
+    font-family: var(--al-serif);
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 1.18;
+    letter-spacing: -.005em;
+    color: var(--al-ink);
+    text-wrap: pretty;
+  }
+  .al-blurb {
+    font-family: var(--al-light);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #00000099;
+    flex: 1;
+    text-wrap: pretty;
+  }
+  .al-launch {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: var(--al-semi);
+    font-size: 13px;
+    line-height: 1;
+    color: #ffffff;
+    padding: 11px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+  }
+  .al-launch.is-off { background: #00000008; color: #00000047; cursor: default; }
+
+  /* ---------- empty state + footer ---------- */
+  .al-empty-title {
+    font-family: var(--al-serif);
+    font-weight: 700;
+    font-size: 29px;
+    color: var(--al-maroon);
+  }
+  .al-footer-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--al-serif);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--al-maroon);
+  }
+  .al-footnote {
+    font-family: var(--al-light);
+    margin: 9px 0 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #000000b3;
+  }
+  .al-footnote strong { font-family: var(--al-semi); font-weight: normal; color: var(--al-ink); }
+
+  @media (max-width: 760px) {
+    .applet-library { padding: 4px 20px 44px; }
+    .al-head {
+      display: block;
+      padding-top: 26px;
+    }
+    .al-head-search { margin-top: 20px; padding-bottom: 0; }
+    .al-sub { font-size: 15.5px; }
   }
 </style>
 
 <div class="applet-library">
 
   <!-- ===== HEADER ===== -->
-  <header style="padding:36px 0 8px;">
-    <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5vw,52px);line-height:0.98;letter-spacing:-.03em;margin:12px 0 0;color:#161512;">The Applet Library</h1>
-    <p style="margin:16px 0 0;color:#000000a6;font-size:16px;line-height:1.55;max-width:620px;text-wrap:pretty;">Interactive notebooks for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
-    <div style="display:flex;align-items:center;gap:12px;margin-top:24px;max-width:600px;">
-      <div style="flex:1;"><jelly-input id="al-search" size="small" type="search" placeholder="Search by topic, method, or library…"></jelly-input></div>
-      <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000073;white-space:nowrap;">press <jelly-kbd>/</jelly-kbd></span>
+  <header class="al-head">
+    <div class="al-head-text">
+      <h1 class="al-title">The Applet Library</h1>
+      <p class="al-sub">Interactive notebooks for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
+    </div>
+    <div class="al-head-search">
+      <jelly-input id="al-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
     </div>
   </header>
 
@@ -65,10 +201,10 @@ description: Interactive Python math applets that run live in your browser. No i
   <div style="position:sticky;top:4.9rem;z-index:5;background:#FBF9F6f2;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:22px 0 0;padding:16px 0;border-bottom:1px solid #00000012;">
     <div id="al-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#000000a6;">Showing <strong id="al-shown" style="color:#161512;">0</strong> of <span id="al-total">0</span> activities</div>
+      <div class="al-count">Showing <strong id="al-shown">0</strong> of <span id="al-total">0</span> activities</div>
       <div style="display:flex;align-items:center;gap:18px;">
         <div style="display:flex;align-items:center;gap:9px;">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#00000080;">Sort</span>
+          <span class="al-tool-label">Sort</span>
           <jelly-select id="al-sort" size="small">
             <jelly-option value="module">Default order</jelly-option>
             <jelly-option value="az">Title A–Z</jelly-option>
@@ -84,10 +220,10 @@ description: Interactive Python math applets that run live in your browser. No i
   <div id="al-results" style="margin-top:26px;"></div>
 
   <!-- ===== FOOTER ===== -->
-  <footer style="margin-top:56px;padding-top:28px;border-top:1px solid #00000012;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;">
-    <div style="max-width:520px;">
-      <div style="display:flex;align-items:center;gap:9px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;color:#161512;"><span>🐍</span> Running the activities</div>
-      <p style="margin:8px 0 0;font-size:13px;line-height:1.6;color:#000000a6;">The Python activities run in <strong>JupyterLite</strong>, executing NumPy, Matplotlib, SymPy, and related libraries directly in the browser through Pyodide and WebAssembly. The first launch downloads the runtime (about 20&nbsp;seconds); afterward it is cached and opens immediately. Nothing is installed, and no account is required.</p>
+  <footer style="margin-top:52px;padding-top:26px;border-top:1px solid #00000012;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;">
+    <div style="max-width:560px;">
+      <div class="al-footer-head"><span>🐍</span> Running the activities</div>
+      <p class="al-footnote">The Python activities run in <strong>JupyterLite</strong>, executing NumPy, Matplotlib, SymPy, and related libraries directly in the browser through Pyodide and WebAssembly. The first launch downloads the runtime (about 20&nbsp;seconds); afterward it is cached and opens immediately. Nothing is installed, and no account is required.</p>
     </div>
   </footer>
 
@@ -111,29 +247,30 @@ description: Interactive Python math applets that run live in your browser. No i
     planned:   { label:'Planned', bg:'#ECEAE6', fg:'#6B6B6B' }
   };
 
-  // Add launchUrl / sourceUrl to wire a card's buttons. The three existing HTML
-  // applets are live; notebook launches await the JupyterLite deployment.
+  // Add a launchUrl to wire a card's Launch button. Cards without one are
+  // 'planned' (no notebook yet); the notebook itself is downloadable from
+  // inside JupyterLite, so cards carry no separate source link.
   var ACT = [
-    { id:'00', course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', thumb:'python_coding_tutorial.ipynb', launchUrl:'lite/notebooks/index.html?path=intro/python_coding_tutorial.ipynb', sourceUrl:'lite/files/intro/python_coding_tutorial.ipynb' },
-    { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'interpolation_runge_chebyshev.ipynb', launchUrl:'lite/notebooks/index.html?path=na/interpolation_runge_chebyshev.ipynb', sourceUrl:'lite/files/na/interpolation_runge_chebyshev.ipynb' },
-    { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'newton_divided_differences.ipynb', launchUrl:'lite/notebooks/index.html?path=na/newton_divided_differences.ipynb', sourceUrl:'lite/files/na/newton_divided_differences.ipynb' },
-    { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'cubic_splines.ipynb', launchUrl:'lite/notebooks/index.html?path=na/cubic_splines.ipynb', sourceUrl:'lite/files/na/cubic_splines.ipynb' },
-    { id:'04', course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'numerical_differentiation_optimal_h.ipynb', launchUrl:'lite/notebooks/index.html?path=na/numerical_differentiation_optimal_h.ipynb', sourceUrl:'lite/files/na/numerical_differentiation_optimal_h.ipynb' },
-    { id:'13', course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'floating_point_cancellation.ipynb', launchUrl:'lite/notebooks/index.html?path=na/floating_point_cancellation.ipynb', sourceUrl:'lite/files/na/floating_point_cancellation.ipynb' },
-    { id:'05', course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', thumb:'least_squares_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/least_squares_orthogonal_polys.ipynb', sourceUrl:'lite/files/na/least_squares_orthogonal_polys.ipynb' },
-    { id:'06', course:'na', module:'M4 · Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'quadrature_newton_cotes_adaptive.ipynb', launchUrl:'lite/notebooks/index.html?path=na/quadrature_newton_cotes_adaptive.ipynb', sourceUrl:'lite/files/na/quadrature_newton_cotes_adaptive.ipynb' },
-    { id:'07', course:'na', module:'M4 · Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', thumb:'gaussian_quadrature_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_quadrature_orthogonal_polys.ipynb', sourceUrl:'lite/files/na/gaussian_quadrature_orthogonal_polys.ipynb' },
-    { id:'08', course:'na', module:'M5 · ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'euler_rungekutta_convergence_order.ipynb', launchUrl:'lite/notebooks/index.html?path=na/euler_rungekutta_convergence_order.ipynb', sourceUrl:'lite/files/na/euler_rungekutta_convergence_order.ipynb' },
-    { id:'09', course:'na', module:'M6 · Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'conditioning_ellipse.ipynb', launchUrl:'lite/notebooks/index.html?path=na/conditioning_ellipse.ipynb', sourceUrl:'lite/files/na/conditioning_ellipse.ipynb' },
-    { id:'10', course:'na', module:'M6 · Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'jacobi_gauss_seidel.ipynb', launchUrl:'lite/notebooks/index.html?path=na/jacobi_gauss_seidel.ipynb', sourceUrl:'lite/files/na/jacobi_gauss_seidel.ipynb' },
-    { id:'12', course:'na', module:'M6 · Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'gaussian_elimination_lu.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_elimination_lu.ipynb', sourceUrl:'lite/files/na/gaussian_elimination_lu.ipynb' },
-    { id:'14', course:'na', module:'M6 · Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'power_inverse_iteration.ipynb', launchUrl:'lite/notebooks/index.html?path=na/power_inverse_iteration.ipynb', sourceUrl:'lite/files/na/power_inverse_iteration.ipynb' },
-    { id:'11', course:'na', module:'M7 · Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'rootfinding_cobweb.ipynb', launchUrl:'lite/notebooks/index.html?path=na/rootfinding_cobweb.ipynb', sourceUrl:'lite/files/na/rootfinding_cobweb.ipynb' },
-    { id:'15', course:'na', module:'M8 · Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'stability_regions_stiffness.ipynb', launchUrl:'lite/notebooks/index.html?path=na/stability_regions_stiffness.ipynb', sourceUrl:'lite/files/na/stability_regions_stiffness.ipynb' },
+    { id:'00', course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', thumb:'python_coding_tutorial.ipynb', launchUrl:'lite/notebooks/index.html?path=intro/python_coding_tutorial.ipynb' },
+    { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'interpolation_runge_chebyshev.ipynb', launchUrl:'lite/notebooks/index.html?path=na/interpolation_runge_chebyshev.ipynb' },
+    { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'newton_divided_differences.ipynb', launchUrl:'lite/notebooks/index.html?path=na/newton_divided_differences.ipynb' },
+    { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'cubic_splines.ipynb', launchUrl:'lite/notebooks/index.html?path=na/cubic_splines.ipynb' },
+    { id:'04', course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'numerical_differentiation_optimal_h.ipynb', launchUrl:'lite/notebooks/index.html?path=na/numerical_differentiation_optimal_h.ipynb' },
+    { id:'13', course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'floating_point_cancellation.ipynb', launchUrl:'lite/notebooks/index.html?path=na/floating_point_cancellation.ipynb' },
+    { id:'05', course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', thumb:'least_squares_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/least_squares_orthogonal_polys.ipynb' },
+    { id:'06', course:'na', module:'M4 · Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'quadrature_newton_cotes_adaptive.ipynb', launchUrl:'lite/notebooks/index.html?path=na/quadrature_newton_cotes_adaptive.ipynb' },
+    { id:'07', course:'na', module:'M4 · Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', thumb:'gaussian_quadrature_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_quadrature_orthogonal_polys.ipynb' },
+    { id:'08', course:'na', module:'M5 · ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'euler_rungekutta_convergence_order.ipynb', launchUrl:'lite/notebooks/index.html?path=na/euler_rungekutta_convergence_order.ipynb' },
+    { id:'09', course:'na', module:'M6 · Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'conditioning_ellipse.ipynb', launchUrl:'lite/notebooks/index.html?path=na/conditioning_ellipse.ipynb' },
+    { id:'10', course:'na', module:'M6 · Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'jacobi_gauss_seidel.ipynb', launchUrl:'lite/notebooks/index.html?path=na/jacobi_gauss_seidel.ipynb' },
+    { id:'12', course:'na', module:'M6 · Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'gaussian_elimination_lu.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_elimination_lu.ipynb' },
+    { id:'14', course:'na', module:'M6 · Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'power_inverse_iteration.ipynb', launchUrl:'lite/notebooks/index.html?path=na/power_inverse_iteration.ipynb' },
+    { id:'11', course:'na', module:'M7 · Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'rootfinding_cobweb.ipynb', launchUrl:'lite/notebooks/index.html?path=na/rootfinding_cobweb.ipynb' },
+    { id:'15', course:'na', module:'M8 · Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'stability_regions_stiffness.ipynb', launchUrl:'lite/notebooks/index.html?path=na/stability_regions_stiffness.ipynb' },
 
-    { id:'d1', course:'de', module:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'heat_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/heat_equation_forced.ipynb', sourceUrl:'lite/files/de/heat_equation_forced.ipynb' },
-    { id:'d2', course:'de', module:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_fourier.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_fourier.ipynb', sourceUrl:'lite/files/de/wave_equation_fourier.ipynb' },
-    { id:'d3', course:'de', module:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a fixed string with a steady force and watch it oscillate about the steady shape.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_forced.ipynb', sourceUrl:'lite/files/de/wave_equation_forced.ipynb' },
+    { id:'d1', course:'de', module:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'heat_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/heat_equation_forced.ipynb' },
+    { id:'d2', course:'de', module:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_fourier.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_fourier.ipynb' },
+    { id:'d3', course:'de', module:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a fixed string with a steady force and watch it oscillate about the steady shape.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_forced.ipynb' },
     { id:'d4', course:'de', module:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'phase_portraits.ipynb' },
     { id:'d5', course:'de', module:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'direction_fields.ipynb' },
 
@@ -161,8 +298,7 @@ description: Interactive Python math applets that run live in your browser. No i
     return {
       raw:a, topic:topic, courseName:c.name, accent:c.accent, accentSoft:c.accentSoft,
       ready:ready, statusLabel:st.label, statusBg:st.bg, statusFg:st.fg,
-      isNotebook: /\.ipynb$/.test(a.thumb),
-      launchUrl: launchUrl, sourceUrl: a.sourceUrl || null
+      launchUrl: launchUrl
     };
   }
 
@@ -182,38 +318,31 @@ description: Interactive Python math applets that run live in your browser. No i
 
   function cardHTML(a) {
     var libs = a.raw.libs.map(function (lib) {
-      return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:#00000073;background:#00000008;border:1px solid #0000000f;padding:3px 8px;border-radius:999px;">' + lib + '</span>';
+      return '<span class="al-lib" style="background:#00000008;border:1px solid #0000000f;padding:4px 9px;border-radius:999px;">' + lib + '</span>';
     }).join('');
 
     var launch;
     if (a.ready) {
-      launch = '<a href="' + a.launchUrl + '" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;background:' + a.accent + ';color:#ffffff;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;">▶ Launch</a>';
+      launch = '<a class="al-launch" href="' + a.launchUrl + '" style="background:' + a.accent + ';">▶ Launch</a>';
     } else {
-      launch = '<span title="' + (a.launchUrl ? 'Deployed but not yet released to students' : 'Coming soon') + '" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#00000008;color:#00000047;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;cursor:default;">▶ Launch</span>';
-    }
-
-    var notebook = '';
-    if (a.isNotebook && a.ready && a.sourceUrl) {
-      notebook = '<a href="' + a.sourceUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:#00000099;font-weight:600;font-size:12.5px;padding:9px 12px;border-radius:12px;border:1px solid #00000016;">Notebook</a>';
+      launch = '<span class="al-launch is-off" title="' + (a.launchUrl ? 'Deployed but not yet released to students' : 'Coming soon') + '">▶ Launch</span>';
     }
 
     return '' +
-      '<div class="al-card" style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #00000010;border-radius:20px;box-shadow:0 14px 32px -22px #00000066;overflow:hidden;height:100%;">' +
+      '<div class="al-card" style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #00000010;border-radius:18px;box-shadow:0 14px 32px -22px #00000066;overflow:hidden;height:100%;">' +
         '<div style="height:72px;position:relative;background:repeating-linear-gradient(135deg,#0000 0 13px,#0000000a 13px 14px), linear-gradient(135deg,#F5F2EC,#ECE8E1);display:flex;align-items:flex-end;padding:11px;">' +
-          '<span style="position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;background:#ffffffec;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:600;color:#2c2a26;">' +
+          '<span class="al-course" style="position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;background:#ffffffec;padding:5px 10px;border-radius:999px;">' +
             '<span style="width:8px;height:8px;border-radius:50%;background:' + a.accent + ';"></span>' + a.courseName +
           '</span>' +
-          '<span style="position:absolute;top:12px;right:12px;background:' + a.statusBg + ';color:' + a.statusFg + ';font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;">' + a.statusLabel + '</span>' +
-          '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10.5px;color:#00000066;background:#ffffffd6;padding:3px 8px;border-radius:7px;">' + a.raw.thumb + '</span>' +
+          '<span class="al-status" style="position:absolute;top:12px;right:12px;background:' + a.statusBg + ';color:' + a.statusFg + ';font-size:10px;padding:5px 9px;border-radius:999px;">' + a.statusLabel + '</span>' +
+          '<span class="al-file" style="background:#ffffffd6;padding:4px 9px;border-radius:7px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + a.raw.thumb + '</span>' +
         '</div>' +
-        '<div style="padding:15px 16px 18px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
-          '<div style="display:flex;">' +
-            '<span style="display:inline-flex;align-items:center;font-family:\'IBM Plex Mono\',monospace;font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:' + a.accent + ';background:' + a.accentSoft + ';padding:3px 9px;border-radius:999px;">' + a.topic + '</span>' +
-          '</div>' +
-          '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:16.5px;line-height:1.2;letter-spacing:-.01em;color:#161512;text-wrap:pretty;">' + a.raw.title + '</div>' +
-          '<div style="font-size:12.5px;line-height:1.5;color:#00000099;flex:1;text-wrap:pretty;">' + a.raw.blurb + '</div>' +
+        '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
+          '<span class="al-topic" style="align-self:flex-start;font-size:10.5px;color:' + a.accent + ';background:' + a.accentSoft + ';padding:4px 10px;border-radius:999px;">' + a.topic + '</span>' +
+          '<div class="al-card-title">' + a.raw.title + '</div>' +
+          '<div class="al-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
-          '<div style="display:flex;gap:8px;align-items:stretch;margin-top:6px;">' + launch + notebook + '</div>' +
+          launch +
         '</div>' +
       '</div>';
   }
@@ -239,8 +368,8 @@ description: Interactive Python math applets that run live in your browser. No i
     if (list.length === 0) {
       results.innerHTML =
         '<div style="text-align:center;padding:72px 20px;color:#00000080;">' +
-          '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:22px;color:#161512;">No activities match your filters.</div>' +
-          '<p style="margin:8px 0 20px;font-size:14px;">Try a broader search, or clear the filters.</p>' +
+          '<div class="al-empty-title">No activities match your filters.</div>' +
+          '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">Try a broader search, or clear the filters.</p>' +
           '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
       var clr = document.getElementById('al-clear');
