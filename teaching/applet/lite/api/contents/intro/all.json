@@ -2,11 +2,11 @@
   "content": [
     {
       "content": null,
-      "created": "2026-07-25T13:25:32.985667Z",
+      "created": "2026-07-24T22:46:53Z",
       "format": null,
       "hash": null,
       "hash_algorithm": null,
-      "last_modified": "2026-07-24T22:46:53.596484Z",
+      "last_modified": "2026-07-24T22:46:53Z",
       "mimetype": null,
       "name": "python_coding_tutorial.ipynb",
       "path": "intro/python_coding_tutorial.ipynb",
@@ -15,11 +15,11 @@
       "writable": true
     }
   ],
-  "created": "2026-07-25T13:25:32.985667Z",
+  "created": "2026-07-27T17:16:43.380479Z",
   "format": "json",
   "hash": null,
   "hash_algorithm": null,
-  "last_modified": "2026-07-25T13:25:32.985667Z",
+  "last_modified": "2026-07-27T17:16:43.380581Z",
   "mimetype": null,
   "name": "intro",
   "path": "intro",
