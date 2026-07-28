@@ -3,7 +3,7 @@ layout: default
 title: Applet Library
 parentnav: Teaching
 subnav_weight: 24
-description: Interactive Python math applets that run live in your browser. No install, no account.
+description: Interactive Python notebooks for undergraduate mathematics, launched in Google Colab. Nothing to install.
 ---
 
 {% raw %}
@@ -303,8 +303,11 @@ description: Interactive Python math applets that run live in your browser. No i
     flex: 1;
     text-wrap: pretty;
   }
+  /* Launch sits beside an optional source download. The row owns the top margin
+     so the buttons line up whether or not the download is there. */
+  .al-actions { margin-top: 6px; display: flex; gap: 7px; }
   .al-launch {
-    margin-top: 6px;
+    flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -319,6 +322,21 @@ description: Interactive Python math applets that run live in your browser. No i
     text-decoration: none;
   }
   .al-launch.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
+  .al-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--al-mono);
+    font-size: 11px;
+    line-height: 1;
+    background: var(--al-chip-bg);
+    border: 1px solid var(--al-chip-border);
+    color: var(--al-faint);
+    padding: 0 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
 
   /* ---------- empty state + footer ---------- */
   .al-empty { text-align: center; padding: 72px 20px; color: var(--al-faint); }
@@ -406,7 +424,7 @@ description: Interactive Python math applets that run live in your browser. No i
   <footer class="al-foot">
     <div style="max-width:560px;">
       <div class="al-footer-head"><span>🐍</span> Running the activities</div>
-      <p class="al-footnote">The Python activities run in <strong>JupyterLite</strong>, executing NumPy, Matplotlib, SymPy, and related libraries directly in the browser through Pyodide and WebAssembly. The first launch downloads the runtime (about 20&nbsp;seconds); afterward it is cached and opens immediately. Nothing is installed, and no account is required.</p>
+      <p class="al-footnote">Launch opens the notebook in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy, and related libraries on Google's machines. Nothing is installed, but you do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes are not saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work. The .ipynb link downloads the source if you would rather run it in Jupyter locally.</p>
     </div>
   </footer>
 
@@ -434,30 +452,36 @@ description: Interactive Python math applets that run live in your browser. No i
     planned:   { label:'Planned' }
   };
 
-  // Add a launchUrl to wire a card's Launch button. Cards without one are
-  // 'planned' (no notebook yet); the notebook itself is downloadable from
-  // inside JupyterLite, so cards carry no separate source link.
-  var ACT = [
-    { id:'00', course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', thumb:'python_coding_tutorial.ipynb', launchUrl:'lite/notebooks/index.html?path=intro/python_coding_tutorial.ipynb' },
-    { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'interpolation_runge_chebyshev.ipynb', launchUrl:'lite/notebooks/index.html?path=na/interpolation_runge_chebyshev.ipynb' },
-    { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'newton_divided_differences.ipynb', launchUrl:'lite/notebooks/index.html?path=na/newton_divided_differences.ipynb' },
-    { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'cubic_splines.ipynb', launchUrl:'lite/notebooks/index.html?path=na/cubic_splines.ipynb' },
-    { id:'04', course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'numerical_differentiation_optimal_h.ipynb', launchUrl:'lite/notebooks/index.html?path=na/numerical_differentiation_optimal_h.ipynb' },
-    { id:'13', course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'floating_point_cancellation.ipynb', launchUrl:'lite/notebooks/index.html?path=na/floating_point_cancellation.ipynb' },
-    { id:'05', course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', thumb:'least_squares_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/least_squares_orthogonal_polys.ipynb' },
-    { id:'06', course:'na', module:'M4 · Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'quadrature_newton_cotes_adaptive.ipynb', launchUrl:'lite/notebooks/index.html?path=na/quadrature_newton_cotes_adaptive.ipynb' },
-    { id:'07', course:'na', module:'M4 · Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', thumb:'gaussian_quadrature_orthogonal_polys.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_quadrature_orthogonal_polys.ipynb' },
-    { id:'08', course:'na', module:'M5 · ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'euler_rungekutta_convergence_order.ipynb', launchUrl:'lite/notebooks/index.html?path=na/euler_rungekutta_convergence_order.ipynb' },
-    { id:'09', course:'na', module:'M6 · Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'conditioning_ellipse.ipynb', launchUrl:'lite/notebooks/index.html?path=na/conditioning_ellipse.ipynb' },
-    { id:'10', course:'na', module:'M6 · Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'jacobi_gauss_seidel.ipynb', launchUrl:'lite/notebooks/index.html?path=na/jacobi_gauss_seidel.ipynb' },
-    { id:'12', course:'na', module:'M6 · Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'gaussian_elimination_lu.ipynb', launchUrl:'lite/notebooks/index.html?path=na/gaussian_elimination_lu.ipynb' },
-    { id:'14', course:'na', module:'M6 · Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'power_inverse_iteration.ipynb', launchUrl:'lite/notebooks/index.html?path=na/power_inverse_iteration.ipynb' },
-    { id:'11', course:'na', module:'M7 · Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'rootfinding_cobweb.ipynb', launchUrl:'lite/notebooks/index.html?path=na/rootfinding_cobweb.ipynb' },
-    { id:'15', course:'na', module:'M8 · Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'stability_regions_stiffness.ipynb', launchUrl:'lite/notebooks/index.html?path=na/stability_regions_stiffness.ipynb' },
+  // Colab has no open-this-arbitrary-URL mode: it reads notebooks out of a
+  // public GitHub repo, so the launch URL points back at this one. An edit can
+  // take a few minutes to clear Colab's fetch cache.
+  var COLAB_BASE = 'https://colab.research.google.com/github/subhadipchowdhury/' +
+                   'subhadipchowdhury.github.io/blob/master/teaching/applet/notebooks/';
 
-    { id:'d1', course:'de', module:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'heat_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/heat_equation_forced.ipynb' },
-    { id:'d2', course:'de', module:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_fourier.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_fourier.ipynb' },
-    { id:'d3', course:'de', module:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a fixed string with a steady force and watch it oscillate about the steady shape.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_forced.ipynb', launchUrl:'lite/notebooks/index.html?path=de/wave_equation_forced.ipynb' },
+  // `nb` is the notebook's path under notebooks/ and wires both the Colab
+  // launch and the source download. Cards without one are 'planned' (no
+  // notebook yet).
+  var ACT = [
+    { id:'00', course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', thumb:'python_coding_tutorial.ipynb', nb:'intro/python_coding_tutorial.ipynb' },
+    { id:'01', course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'interpolation_runge_chebyshev.ipynb', nb:'na/interpolation_runge_chebyshev.ipynb' },
+    { id:'02', course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'newton_divided_differences.ipynb', nb:'na/newton_divided_differences.ipynb' },
+    { id:'03', course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', thumb:'cubic_splines.ipynb', nb:'na/cubic_splines.ipynb' },
+    { id:'04', course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'numerical_differentiation_optimal_h.ipynb', nb:'na/numerical_differentiation_optimal_h.ipynb' },
+    { id:'13', course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', thumb:'floating_point_cancellation.ipynb', nb:'na/floating_point_cancellation.ipynb' },
+    { id:'05', course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', thumb:'least_squares_orthogonal_polys.ipynb', nb:'na/least_squares_orthogonal_polys.ipynb' },
+    { id:'06', course:'na', module:'M4 · Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'quadrature_newton_cotes_adaptive.ipynb', nb:'na/quadrature_newton_cotes_adaptive.ipynb' },
+    { id:'07', course:'na', module:'M4 · Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', thumb:'gaussian_quadrature_orthogonal_polys.ipynb', nb:'na/gaussian_quadrature_orthogonal_polys.ipynb' },
+    { id:'08', course:'na', module:'M5 · ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'euler_rungekutta_convergence_order.ipynb', nb:'na/euler_rungekutta_convergence_order.ipynb' },
+    { id:'09', course:'na', module:'M6 · Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'conditioning_ellipse.ipynb', nb:'na/conditioning_ellipse.ipynb' },
+    { id:'10', course:'na', module:'M6 · Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'jacobi_gauss_seidel.ipynb', nb:'na/jacobi_gauss_seidel.ipynb' },
+    { id:'12', course:'na', module:'M6 · Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'gaussian_elimination_lu.ipynb', nb:'na/gaussian_elimination_lu.ipynb' },
+    { id:'14', course:'na', module:'M6 · Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'power_inverse_iteration.ipynb', nb:'na/power_inverse_iteration.ipynb' },
+    { id:'11', course:'na', module:'M7 · Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'rootfinding_cobweb.ipynb', nb:'na/rootfinding_cobweb.ipynb' },
+    { id:'15', course:'na', module:'M8 · Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'stability_regions_stiffness.ipynb', nb:'na/stability_regions_stiffness.ipynb' },
+
+    { id:'d1', course:'de', module:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'heat_equation_forced.ipynb', nb:'de/heat_equation_forced.ipynb' },
+    { id:'d2', course:'de', module:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_fourier.ipynb', nb:'de/wave_equation_fourier.ipynb' },
+    { id:'d3', course:'de', module:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a fixed string with a steady force and watch it oscillate about the steady shape.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', thumb:'wave_equation_forced.ipynb', nb:'de/wave_equation_forced.ipynb' },
     { id:'d4', course:'de', module:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'phase_portraits.ipynb' },
     { id:'d5', course:'de', module:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", libs:['numpy','matplotlib','ipywidgets'], status:'planned', thumb:'direction_fields.ipynb' },
 
@@ -476,17 +500,18 @@ description: Interactive Python math applets that run live in your browser. No i
   function enrich(a) {
     var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
     var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
-    var launchUrl = a.launchUrl || null;
+    var launchUrl = a.nb ? COLAB_BASE + a.nb : null;
+    var srcUrl = a.nb ? 'notebooks/' + a.nb : null;
     // The status tag is the master switch: an activity is launchable only when it
     // is tagged 'finalized' (Ready) AND has a notebook. Flip a card to 'drafted'
-    // to keep its notebook deployed but paused for students.
+    // to hold it back from students.
     var statusKey = STATUS[a.status] ? a.status : 'planned';
     var ready = a.status === 'finalized' && !!launchUrl;
     return {
       raw:a, topic:topic, courseName:c.name,
       accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
       ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
-      launchUrl: launchUrl
+      launchUrl: launchUrl, srcUrl: srcUrl
     };
   }
 
@@ -509,11 +534,15 @@ description: Interactive Python math applets that run live in your browser. No i
       return '<span class="al-lib">' + lib + '</span>';
     }).join('');
 
-    var launch;
+    // Launch leaves the site for Colab, so it opens in a new tab; the download
+    // is same-origin, which is what lets `download` name the saved file.
+    var actions;
     if (a.ready) {
-      launch = '<a class="al-launch" href="' + a.launchUrl + '">▶ Launch</a>';
+      actions =
+        '<a class="al-launch" href="' + a.launchUrl + '" target="_blank" rel="noopener">▶ Launch</a>' +
+        '<a class="al-dl" href="' + a.srcUrl + '" download title="Download the notebook source">↓ .ipynb</a>';
     } else {
-      launch = '<span class="al-launch is-off" title="' + (a.launchUrl ? 'Deployed but not yet released to students' : 'Coming soon') + '">▶ Launch</span>';
+      actions = '<span class="al-launch is-off" title="' + (a.srcUrl ? 'Not yet released to students' : 'Coming soon') + '">▶ Launch</span>';
     }
 
     // The course accent is handed to CSS as custom properties so the theme,
@@ -536,7 +565,7 @@ description: Interactive Python math applets that run live in your browser. No i
           '<div class="al-card-title">' + a.raw.title + '</div>' +
           '<div class="al-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
-          launch +
+          '<div class="al-actions">' + actions + '</div>' +
         '</div>' +
       '</div>';
   }
