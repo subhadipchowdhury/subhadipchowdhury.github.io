@@ -7,7 +7,7 @@ permalink: pretty
 url: "https://subhadipchowdhury.github.io/"
 description: "Personal academic website of Subhadip Chowdhury: teaching, pedagogy, research, and mentoring."
   
-exclude: ['deploy', 'stylesheet.scss', 'teaching/applet/README.md']
+exclude: ['deploy', 'stylesheet.scss']
 
 defaults:
 
