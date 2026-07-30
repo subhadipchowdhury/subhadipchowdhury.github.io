@@ -1,22 +1,34 @@
-// Smoke tests for the lab page, against the generated m1-newton spec.
+// Smoke tests for the lab page.
 //
-// These run on a DOM stub: no layout, no cascade, so they say nothing about how
-// anything looks. What they cover is the part that cannot be clicked through
-// here: that the page builds at all, that puzzles open in order, that a wrong
-// answer shows the student's own working and never the reference, and that
-// progress survives a reload. A blank page is the failure these exist to catch.
+// The first half runs against every built lab, so a new one is covered the
+// moment it exists: the page builds, puzzles open in order, the notebook stays
+// shut until they are done, and progress survives a reload. The second half is
+// specific to m1-newton, where the exact wording and the exact wrong answers
+// are worth pinning.
+//
+// These run on a DOM stub, so nothing here says how anything looks. Editorial
+// rules about the writing live in tools/validate.mjs, where they fail the build
+// of any lab rather than only the one this file names.
 
 import { installDom, walk, textOf } from './dom-stub.mjs';
 
 const teardown = installDom();
 
-const spec = JSON.parse(
-  typeof read === 'function'
-    ? read('teaching/applet/lab/specs/m1-newton.json')
-    : (await import('node:fs')).readFileSync('teaching/applet/lab/specs/m1-newton.json', 'utf8'),
+const readText = typeof read === 'function'
+  ? (p) => read(p)
+  : (await import('node:fs')).readFileSync;
+
+const slurp = (p) => JSON.parse(String(readText(p, 'utf8')));
+
+const index = slurp('teaching/applet/lab/specs/index.json');
+const specs = new Map(
+  index.map((entry) => [entry.lab_id, slurp(`teaching/applet/lab/specs/${entry.lab_id}.json`)]),
 );
 
-globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => spec });
+let served = null;
+globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => served });
+
+const spec = specs.get('m1-newton');
 
 const { mountLab } = await import('../../teaching/applet/lab/engine/lab.js');
 
@@ -43,14 +55,29 @@ function has(text, needle, msg) {
 const SPEC_URL = '/teaching/applet/lab/specs/m1-newton.json';
 const ids = spec.puzzles.map((p) => p.cell_id);
 
-async function freshLab() {
-  localStorage.clear();
+async function open(labSpec, { fresh = true } = {}) {
+  served = labSpec;
+  if (fresh) localStorage.clear();
   const root = document.createElement('div');
-  const lab = await mountLab(root, SPEC_URL);
+  const lab = await mountLab(root, `/teaching/applet/lab/specs/${labSpec.lab_id}.json`);
   return { root, lab };
 }
 
+async function freshLab() { return open(spec); }
+
 function gateOf(id) { return spec.puzzles.find((p) => p.cell_id === id); }
+
+function solveIn(lab, labSpec, id) {
+  const gate = labSpec.puzzles.find((p) => p.cell_id === id);
+  const view = lab.views.get(id);
+  if (!view) fail(`puzzle ${id} has no live view; it is ${lab.status.get(id)}`);
+  view.placements = gate.solution.map((s) => ({ ...s }));
+  view.blanks = Object.fromEntries(
+    Object.entries(gate.blanks || {}).map(([name, b]) => [name, b.answer]),
+  );
+  view.render();
+  view.submit();
+}
 
 function solve(lab, id) {
   const gate = gateOf(id);
@@ -63,6 +90,74 @@ function solve(lab, id) {
   view.render();
   view.submit();
 }
+
+// ---------------------------------------------------------------------------
+// Every built lab
+// ---------------------------------------------------------------------------
+
+for (const entry of index) {
+  const labSpec = specs.get(entry.lab_id);
+  group = `every lab :: ${entry.lab_id}`;
+
+  await it('builds a page with a header, its puzzles, and the notebook card', async () => {
+    const { root } = await open(labSpec);
+    assert(root.querySelector('.lab-head'), 'no header');
+    assert(root.querySelector('.lab-finale'), 'no notebook card');
+    eq(root.querySelectorAll('.lab-puzzle-block').length, labSpec.puzzles.length);
+    assert(walk(root).length > 30, 'the tree is suspiciously small');
+  });
+
+  await it('opens the first puzzle and shuts the rest', async () => {
+    const { root, lab } = await open(labSpec);
+    const order = labSpec.puzzles.map((p) => p.cell_id);
+    eq(lab.status.get(order[0]), 'open');
+    for (const id of order.slice(1)) eq(lab.status.get(id), 'locked', `${id} should be shut`);
+    eq(root.querySelectorAll('.lab-locked').length, order.length - 1);
+  });
+
+  await it('every puzzle can be solved, in order, and each opens the next', async () => {
+    const { lab } = await open(labSpec);
+    for (const gate of labSpec.puzzles) {
+      eq(lab.status.get(gate.cell_id), 'open', `${gate.cell_id} should be open by now`);
+      solveIn(lab, labSpec, gate.cell_id);
+      eq(lab.status.get(gate.cell_id), 'solved', `${gate.cell_id} did not accept its own solution`);
+    }
+    eq(lab.allDone(), true);
+  });
+
+  await it('keeps the notebook shut until the puzzles are done', async () => {
+    const { root, lab } = await open(labSpec);
+    eq(root.querySelector('.lab-launch').getAttribute('aria-disabled'), 'true');
+    for (const gate of labSpec.puzzles) solveIn(lab, labSpec, gate.cell_id);
+    const launch = root.querySelector('.lab-launch');
+    assert(!launch.getAttribute('aria-disabled'), 'the notebook should be open now');
+    has(launch.getAttribute('href'), 'colab.research.google.com');
+  });
+
+  await it('remembers a solved puzzle across a reload', async () => {
+    const first = await open(labSpec);
+    const firstId = labSpec.puzzles[0].cell_id;
+    solveIn(first.lab, labSpec, firstId);
+    const again = await open(labSpec, { fresh: false });
+    eq(again.lab.status.get(firstId), 'solved');
+  });
+
+  await it('shows every puzzle a brief before asking anything', async () => {
+    const { root, lab } = await open(labSpec);
+    for (const gate of labSpec.puzzles) {
+      if (!lab.views.get(gate.cell_id)) solveIn(lab, labSpec, [...lab.views.keys()][0]);
+      const section = root.querySelector(`.lab-puzzle-block[data-gate="${gate.cell_id}"]`);
+      if (section.querySelector('.lab-locked')) continue;
+      assert(section.querySelector('.lab-brief'), `${gate.cell_id} has no brief on the page`);
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// m1-newton in particular
+// ---------------------------------------------------------------------------
+
+served = spec;
 
 group = 'the page builds';
 await it('renders without throwing', async () => {

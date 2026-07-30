@@ -437,7 +437,31 @@ def main():
             print(f'  FAILED: {err}\n')
     if failures:
         sys.exit(f'{failures} lab(s) failed to build')
+
+    write_index()
     print('\nall labs built')
+
+
+def write_index():
+    """List the built specs, so the page tests can run over all of them.
+
+    A JS shell cannot read a directory, so the list has to be a file.
+    """
+    entries = []
+    for path in sorted(SPEC_DIR.glob('*.json')):
+        if path.name == 'index.json':
+            continue
+        spec = json.loads(path.read_text())
+        entries.append({
+            'lab_id': spec['lab_id'],
+            'title': spec['title'],
+            'module': spec.get('module'),
+            'order': spec.get('order'),
+            'puzzles': len(spec.get('puzzles', [])),
+        })
+    entries.sort(key=lambda e: (e.get('module') or '', e.get('order') or 0))
+    (SPEC_DIR / 'index.json').write_text(json.dumps(entries, indent=1) + '\n')
+    print(f'  index lists {len(entries)} lab(s)')
 
 
 if __name__ == '__main__':

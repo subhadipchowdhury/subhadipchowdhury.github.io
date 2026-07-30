@@ -39,6 +39,95 @@ const notes = [];
 function bad(where, message) { problems.push(`${where}: ${message}`); }
 
 // ---------------------------------------------------------------------------
+// Editorial rules
+// ---------------------------------------------------------------------------
+//
+// These are the rules a lab kept breaking while the first one was written: a
+// puzzle that asked for work it had not given the student enough to do, output
+// that arrived with no account of where it came from, and copy that invented
+// facts about the course. They run against every lab, so a new one cannot be
+// built without them.
+
+const PRESUMED = [
+  'this week', 'last week', 'on the board', 'in class', 'in lecture',
+  'as we saw', 'as discussed', 'last lab', 'next lab', 'homework', 'problem set',
+  'we covered', 'you learned',
+];
+
+function textOf(html) {
+  return String(html || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function everyString(spec) {
+  const out = [['intro', spec.intro_html], ['blurb', spec.blurb]];
+  for (const gate of spec.puzzles || []) {
+    out.push([`${gate.cell_id} brief`, gate.brief_html]);
+    out.push([`${gate.cell_id} title`, gate.title]);
+    if (gate.setup) {
+      out.push([`${gate.cell_id} setup intro`, gate.setup.intro_html]);
+      out.push([`${gate.cell_id} setup caption`, gate.setup.caption_html]);
+    }
+    for (const message of Object.values(gate.feedback || {})) {
+      out.push([`${gate.cell_id} feedback`, message]);
+    }
+  }
+  return out;
+}
+
+function checkEditorial(spec) {
+  const where = spec.lab_id;
+
+  const intro = textOf(spec.intro_html);
+  if (intro.length < 200) {
+    bad(where, 'the lab has no real intro. Say what the puzzles build and name '
+      + 'the worked example their output comes from');
+  }
+
+  // Nothing may assume when the lab is set, what order it is done in, or what
+  // was said in a room.
+  for (const [what, html] of everyString(spec)) {
+    const text = textOf(html).toLowerCase();
+    for (const phrase of PRESUMED) {
+      if (text.includes(phrase)) {
+        bad(where, `${what} says "${phrase}", which assumes something about the course around the lab`);
+      }
+    }
+  }
+
+  for (const gate of spec.puzzles || []) {
+    const at = `${where}/${gate.cell_id}`;
+    const brief = textOf(gate.brief_html);
+
+    if (brief.length < 300) {
+      bad(at, 'the brief is too thin to solve from. State the mathematics the '
+        + 'puzzle turns on, then what is being asked');
+    }
+    if (brief && !/your job|your task|what to do|write the|fill in/i.test(brief)) {
+      bad(at, 'the brief never says plainly what the student has to do');
+    }
+    if (!gate.title || gate.title.length < 8) {
+      bad(at, 'no usable title');
+    }
+
+    // Output with nothing to say what it is, is the thing this rule exists for.
+    const setup = gate.setup;
+    if (setup && (setup.stdout || (setup.figures || []).length)) {
+      if (!textOf(setup.intro_html)) {
+        bad(at, 'the setup shows output with no sentence saying what it is or '
+          + 'where it came from');
+      }
+    }
+    if (setup && !setup.stdout && !(setup.figures || []).length) {
+      notes.push(`${at}: the setup produced no output; is its code doing anything?`);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Checks
 // ---------------------------------------------------------------------------
 
@@ -220,6 +309,8 @@ const gates = spec.puzzles ?? [];
 
 if (!gates.length) notes.push(`${spec.lab_id}: no puzzles`);
 
+checkEditorial(spec);
+
 let checked = 0;
 for (const gate of gates) {
   const where = `${spec.lab_id}/${gate.cell_id}`;
@@ -262,4 +353,4 @@ if (problems.length) {
   if (isNode) process.exit(1); else quit();
 }
 
-say(`  validated ${checked} gate${checked === 1 ? '' : 's'}`);
+say(`  validated ${checked} puzzle${checked === 1 ? '' : 's'}, editorial rules included`);
