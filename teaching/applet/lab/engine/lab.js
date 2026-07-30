@@ -247,10 +247,11 @@ class LabController {
       return wrap;
     }
 
-    // A demo cell prints the answer to the puzzle it demonstrates.
-    if (cell.demo_for && !this.done(cell.demo_for)) {
+    // A demo cell prints the answer to the puzzles it demonstrates, so it waits
+    // for all of them.
+    if (cell.demo_for && !demoReady(cell, (id) => this.done(id))) {
       wrap.hidden = true;
-      wrap.dataset.demoFor = cell.demo_for;
+      wrap.dataset.demoFor = demoGates(cell).join(' ');
       return wrap;
     }
 
@@ -431,6 +432,7 @@ class LabController {
     this.progress.write(id, cell.gate.hash, { status: 'parked', ...view.getState() });
     this.relock();
     this.openDeferred(id);
+    this.showDemo(id);
     this.openNextGate();
     this.updateProgressLabel();
     view.setFeedback(null);
@@ -458,7 +460,8 @@ class LabController {
 
   showDemo(gateId) {
     this.spec.cells.forEach((cell, index) => {
-      if (cell.demo_for !== gateId) return;
+      if (!demoGates(cell).includes(gateId)) return;
+      if (!demoReady(cell, (id) => this.done(id))) return;
       const node = this.cellNodes[index];
       if (!node || !node.hidden) return;
       node.hidden = false;
@@ -693,6 +696,15 @@ function el(tag, className) {
   const n = document.createElement(tag);
   if (className) n.className = className;
   return n;
+}
+
+function demoGates(cell) {
+  if (!cell.demo_for) return [];
+  return Array.isArray(cell.demo_for) ? cell.demo_for : [cell.demo_for];
+}
+
+function demoReady(cell, isDone) {
+  return demoGates(cell).every(isDone);
 }
 
 function fillBlanks(text, blanks) {

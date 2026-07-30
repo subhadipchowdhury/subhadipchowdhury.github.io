@@ -127,8 +127,17 @@ await it('solving the first gate unlocks the second and opens its prose', async 
   has(textOf(root.querySelector('.lab-progress')), '1 of 3');
   has(textOf(root), 'the top row of the triangular table',
     'the deferred prose should now be open');
+});
+
+await it('the printed triangle waits for the puzzle that asks about its rows', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  assert(!textOf(root).includes('Newton coefficients c0..c3'),
+    'the demo prints a triangle with n−i entries per row, which is the answer '
+    + 'to the next puzzle; it must not appear until that one is done too');
+  solve(lab, 'ddprint');
   has(textOf(root), 'Newton coefficients c0..c3',
-    'the demo output should now be visible');
+    'once both are done the demo appears');
 });
 
 await it('the reveal pairs every pseudocode row with a Python line', async () => {

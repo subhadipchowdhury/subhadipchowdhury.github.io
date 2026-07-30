@@ -300,7 +300,10 @@ CELLS = {
     2: {'mode': 'defer', 'until': 'divdiff', 'heading': 'Divided differences'},
     3: DIVDIFF,
     4: DDPRINT,
-    5: {'mode': 'shown', 'demo_for': 'divdiff'},   # the table for the small data set
+    # This prints the table using print_dd_table, so its output is a triangle
+    # with n−i entries on row i: exactly what the second puzzle asks for. It
+    # waits for both.
+    5: {'mode': 'shown', 'demo_for': ['divdiff', 'ddprint']},
     6: {'mode': 'defer', 'until': 'neweval', 'heading': 'Evaluating the Newton form'},
     7: NEWEVAL,
     8: {'mode': 'shown', 'demo_for': 'neweval'},
