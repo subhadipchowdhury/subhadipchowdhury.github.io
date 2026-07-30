@@ -1,0 +1,1312 @@
+{
+ "lab_id": "m1-newton",
+ "module": "M1",
+ "order": 2,
+ "title": "Newton form and divided differences",
+ "blurb": "Build the divided-difference table and the nested evaluation, then watch the coefficients reused as nodes are appended.",
+ "series": [
+  "m1-runge",
+  "m1-newton",
+  "m1-splines"
+ ],
+ "source": "notebooks/na/newton_divided_differences.ipynb",
+ "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/applet/notebooks/na/newton_divided_differences.ipynb",
+ "cells": [
+  {
+   "kind": "markdown",
+   "mode": "shown",
+   "html": "<h1>Newton's Form and the Divided-Difference Table</h1>\n<p>The polynomial through a given set of points is unique, but there is more than one way to write it down. The Runge notebook used the Lagrange form. This one builds the same polynomial in Newton's form, where the coefficients come out of a divided-difference table and adding a data point costs one extra term.</p>"
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# --- Colab / Jupyter setup ------------------------------------------------\n# Enable interactive ipywidgets sliders. try/except so the notebook also runs\n# in plain Jupyter (outside Colab) without error.\ntry:\n    from google.colab import output\n    output.enable_custom_widget_manager()\nexcept Exception:\n    pass\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom ipywidgets import interact, IntSlider, Dropdown, Checkbox\n\n%matplotlib inline\nplt.rcParams[\"figure.figsize\"] = (9, 5)",
+   "stdout": "",
+   "quiet": true
+  },
+  {
+   "kind": "markdown",
+   "mode": "defer",
+   "html": "<h2>Divided differences</h2>\n<p>$$ p_n(x) = \\sum_{k=0}^{n} f[x_0,\\dots,x_k]\\prod_{j=0}^{k-1}(x - x_j), \\qquad f[x_i,\\dots,x_{i+j}] = \\frac{f[x_{i+1},\\dots,x_{i+j}] - f[x_i,\\dots,x_{i+j-1}]}{x_{i+j}-x_i}. $$</p>\n<p>The coefficients $f[x_0,\\dots,x_k]$ are the top row of the triangular table. Add a node and the table gains one anti-diagonal while every coefficient already computed stays where it was. That is what makes Newton's form convenient for data that arrive a point at a time.</p>",
+   "until": "divdiff",
+   "heading": "Divided differences"
+  },
+  {
+   "kind": "code",
+   "mode": "gated",
+   "python": "# ---------------------------------------------------------------------------\n# The divided-difference table\n# ---------------------------------------------------------------------------\n# Newton's form writes the interpolating polynomial as\n#\n#   p(x) = c0 + c1 (x-x0) + c2 (x-x0)(x-x1) + ... + cn (x-x0)...(x-x_{n-1})\n#\n# and the coefficients c_k come out of the triangular table built here.\n\ndef divided_differences(x, y):\n    \"\"\"Build the divided-difference table for data (x[i], y[i]).\n\n    Parameters\n    ----------\n    x : array (n,)  distinct nodes\n    y : array (n,)  values, y[i] = f(x[i])\n\n    Returns\n    -------\n    coeffs : array (n,)   Newton coefficients c_0 .. c_{n-1}\n    table  : array (n,n)  the triangular table; unwritten entries stay zero\n    \"\"\"\n    x = np.asarray(x, dtype=float)\n    y = np.asarray(y, dtype=float)\n    n = len(x)\n    table = np.zeros((n, n))\n    table[:, 0] = y\n    for j in range(1, n):\n        for i in range(n - j):\n            table[i, j] = (table[i + 1, j - 1] - table[i, j - 1]) / (x[i + j] - x[i])\n    coeffs = table[0, :].copy()\n    return coeffs, table",
+   "stdout": "",
+   "gate": {
+    "cell_id": "divdiff",
+    "concept": "divided_differences",
+    "title": "Build the divided-difference table",
+    "intro": "Assemble the algorithm that fills the table. Order and indentation both count, and two blocks have blanks to fill in.",
+    "blocks": [
+     {
+      "id": "def",
+      "lines": [
+       {
+        "text": "function divided_differences(x, y):",
+        "indent": 0
+       }
+      ],
+      "py": [
+       10,
+       10
+      ],
+      "py_match": "def divided_differences"
+     },
+     {
+      "id": "n",
+      "lines": [
+       {
+        "text": "n ← length(x)",
+        "indent": 0
+       }
+      ],
+      "py": [
+       25,
+       25
+      ],
+      "py_match": "n = len"
+     },
+     {
+      "id": "tab",
+      "lines": [
+       {
+        "text": "T ← zeros(n, n)",
+        "indent": 0
+       }
+      ],
+      "py": [
+       26,
+       26
+      ],
+      "py_match": "np.zeros"
+     },
+     {
+      "id": "col0",
+      "lines": [
+       {
+        "text": "T[0..n−1, 0] ← y",
+        "indent": 0
+       }
+      ],
+      "py": [
+       27,
+       27
+      ],
+      "py_match": "table[:, 0]"
+     },
+     {
+      "id": "loopj",
+      "lines": [
+       {
+        "text": "for j ← 1 to n−1:",
+        "indent": 0
+       }
+      ],
+      "py": [
+       28,
+       28
+      ],
+      "py_match": "for j in range(1, n)"
+     },
+     {
+      "id": "loopi",
+      "lines": [
+       {
+        "text": "for i ← 0 to ⟨?bound⟩:",
+        "indent": 0
+       }
+      ],
+      "py": [
+       29,
+       29
+      ],
+      "py_match": "for i in range(n - j)"
+     },
+     {
+      "id": "rec",
+      "lines": [
+       {
+        "text": "T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩",
+        "indent": 0
+       }
+      ],
+      "py": [
+       30,
+       30
+      ],
+      "py_match": "table[i, j]"
+     },
+     {
+      "id": "coef",
+      "lines": [
+       {
+        "text": "c ← T[0, 0..n−1]",
+        "indent": 0
+       }
+      ],
+      "py": [
+       31,
+       31
+      ],
+      "py_match": "coeffs = table[0"
+     },
+     {
+      "id": "ret",
+      "lines": [
+       {
+        "text": "return c, T",
+        "indent": 0
+       }
+      ],
+      "py": [
+       32,
+       32
+      ],
+      "py_match": "return coeffs"
+     }
+    ],
+    "solution": [
+     {
+      "id": "def",
+      "indent": 0
+     },
+     {
+      "id": "n",
+      "indent": 1
+     },
+     {
+      "id": "tab",
+      "indent": 1
+     },
+     {
+      "id": "col0",
+      "indent": 1
+     },
+     {
+      "id": "loopj",
+      "indent": 1
+     },
+     {
+      "id": "loopi",
+      "indent": 2
+     },
+     {
+      "id": "rec",
+      "indent": 3
+     },
+     {
+      "id": "coef",
+      "indent": 1
+     },
+     {
+      "id": "ret",
+      "indent": 1
+     }
+    ],
+    "blanks": {
+     "bound": {
+      "kind": "range_end",
+      "answer": "n−j−1",
+      "env": [
+       "n",
+       "i",
+       "j"
+      ],
+      "width": 8
+     },
+     "den": {
+      "kind": "expr",
+      "answer": "x[i+j] − x[i]",
+      "env": [
+       "x",
+       "i",
+       "j"
+      ],
+      "width": 14
+     }
+    },
+    "distractors": [
+     {
+      "id": "d_num",
+      "lines": [
+       {
+        "text": "T[i, j] ← (T[i, j−1] − T[i+1, j−1]) / ⟨?den⟩",
+        "indent": 0
+       }
+      ],
+      "near": "rec",
+      "why": "num_reversed"
+     },
+     {
+      "id": "d_swap",
+      "lines": [
+       {
+        "text": "for i ← 0 to n−1:",
+        "indent": 0
+       },
+       {
+        "text": "for j ← 1 to n−i−1:",
+        "indent": 1
+       }
+      ],
+      "near": "loopj",
+      "why": "loops_swapped"
+     },
+     {
+      "id": "d_colc",
+      "lines": [
+       {
+        "text": "c ← T[0..n−1, 0]",
+        "indent": 0
+       }
+      ],
+      "near": "coef",
+      "why": "col_not_row"
+     }
+    ],
+    "wrong_blanks": {
+     "den": [
+      {
+       "text": "x[j] − x[i]",
+       "why": "den_j_not_ij"
+      },
+      {
+       "text": "x[i+1] − x[i]",
+       "why": "den_neighbour"
+      }
+     ],
+     "bound": [
+      {
+       "text": "n−1",
+       "why": "bound_full"
+      },
+      {
+       "text": "n−j",
+       "why": "bound_off_by_one"
+      }
+     ]
+    },
+    "probes": [
+     {
+      "env": {
+       "x": [
+        0.0,
+        1.0,
+        3.0,
+        6.0
+       ],
+       "y": [
+        1.0,
+        4.0,
+        2.0,
+        8.0
+       ]
+      },
+      "call": "divided_differences(x, y)"
+     }
+    ],
+    "trace": [
+     "T"
+    ],
+    "compare": "value",
+    "py_head": [
+     1,
+     9
+    ],
+    "py_doc": [
+     11,
+     22
+    ],
+    "py_glue": [
+     23,
+     24
+    ],
+    "annotations": [
+     {
+      "blocks": [
+       "loopj",
+       "loopi"
+      ],
+      "text": "A convention shift worth noticing: \"to n−1\" in the notation is inclusive, while Python's range(1, n) stops before n. Same iterations, different fence."
+     },
+     {
+      "blocks": [
+       "coef"
+      ],
+      "text": "The .copy() is there so the returned coefficients do not alias the table's top row. Housekeeping, not algorithm."
+     }
+    ],
+    "feedback": {
+     "num_reversed": "Your table's off-diagonal columns have the right magnitudes and the wrong signs, alternating by column. A divided difference is built from the later value minus the earlier one. Re-read your numerator.",
+     "loops_swapped": "Your loops visit the (i, j) pairs in a different pattern. Ask which direction the table fills: one full column at a time, or one row at a time? Which entries does T[i, j] need to already exist?",
+     "col_not_row": "You returned n values, but they are not the Newton coefficients. The coefficients are the top entry of each column. Which subscript varies along that?",
+     "den_j_not_ij": "Your denominator uses the wrong pair of nodes. The entry T[i, j] is the divided difference over the nodes x_i through x_{i+j}, so the spread you divide by should span exactly those two.",
+     "den_neighbour": "Your denominator is the gap between two adjacent nodes. That is right for the first column and wrong after it: a higher-order difference spans more than one interval.",
+     "bound_full": "Your inner loop runs over every row of the table. Column j only has entries where both of the neighbours it reads exist, and that is one fewer row each time j grows.",
+     "bound_off_by_one": "Your inner loop runs one row too far. Ask which two entries of the previous column T[i, j] reads, and which row is the last one where both of them exist."
+    },
+    "reveal": [
+     {
+      "n": 1,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 2,
+      "text": "# The divided-difference table",
+      "role": "head"
+     },
+     {
+      "n": 3,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 4,
+      "text": "# Newton's form writes the interpolating polynomial as",
+      "role": "head"
+     },
+     {
+      "n": 5,
+      "text": "#",
+      "role": "head"
+     },
+     {
+      "n": 6,
+      "text": "#   p(x) = c0 + c1 (x-x0) + c2 (x-x0)(x-x1) + ... + cn (x-x0)...(x-x_{n-1})",
+      "role": "head"
+     },
+     {
+      "n": 7,
+      "text": "#",
+      "role": "head"
+     },
+     {
+      "n": 8,
+      "text": "# and the coefficients c_k come out of the triangular table built here.",
+      "role": "head"
+     },
+     {
+      "n": 9,
+      "text": "",
+      "role": "head"
+     },
+     {
+      "n": 10,
+      "text": "def divided_differences(x, y):",
+      "role": "block",
+      "blockId": "def",
+      "num": 1
+     },
+     {
+      "n": 11,
+      "text": "    \"\"\"Build the divided-difference table for data (x[i], y[i]).",
+      "role": "doc"
+     },
+     {
+      "n": 12,
+      "text": "",
+      "role": "doc"
+     },
+     {
+      "n": 13,
+      "text": "    Parameters",
+      "role": "doc"
+     },
+     {
+      "n": 14,
+      "text": "    ----------",
+      "role": "doc"
+     },
+     {
+      "n": 15,
+      "text": "    x : array (n,)  distinct nodes",
+      "role": "doc"
+     },
+     {
+      "n": 16,
+      "text": "    y : array (n,)  values, y[i] = f(x[i])",
+      "role": "doc"
+     },
+     {
+      "n": 17,
+      "text": "",
+      "role": "doc"
+     },
+     {
+      "n": 18,
+      "text": "    Returns",
+      "role": "doc"
+     },
+     {
+      "n": 19,
+      "text": "    -------",
+      "role": "doc"
+     },
+     {
+      "n": 20,
+      "text": "    coeffs : array (n,)   Newton coefficients c_0 .. c_{n-1}",
+      "role": "doc"
+     },
+     {
+      "n": 21,
+      "text": "    table  : array (n,n)  the triangular table; unwritten entries stay zero",
+      "role": "doc"
+     },
+     {
+      "n": 22,
+      "text": "    \"\"\"",
+      "role": "doc"
+     },
+     {
+      "n": 23,
+      "text": "    x = np.asarray(x, dtype=float)",
+      "role": "glue"
+     },
+     {
+      "n": 24,
+      "text": "    y = np.asarray(y, dtype=float)",
+      "role": "glue"
+     },
+     {
+      "n": 25,
+      "text": "    n = len(x)",
+      "role": "block",
+      "blockId": "n",
+      "num": 2
+     },
+     {
+      "n": 26,
+      "text": "    table = np.zeros((n, n))",
+      "role": "block",
+      "blockId": "tab",
+      "num": 3
+     },
+     {
+      "n": 27,
+      "text": "    table[:, 0] = y",
+      "role": "block",
+      "blockId": "col0",
+      "num": 4
+     },
+     {
+      "n": 28,
+      "text": "    for j in range(1, n):",
+      "role": "block",
+      "blockId": "loopj",
+      "num": 5
+     },
+     {
+      "n": 29,
+      "text": "        for i in range(n - j):",
+      "role": "block",
+      "blockId": "loopi",
+      "num": 6
+     },
+     {
+      "n": 30,
+      "text": "            table[i, j] = (table[i + 1, j - 1] - table[i, j - 1]) / (x[i + j] - x[i])",
+      "role": "block",
+      "blockId": "rec",
+      "num": 7
+     },
+     {
+      "n": 31,
+      "text": "    coeffs = table[0, :].copy()",
+      "role": "block",
+      "blockId": "coef",
+      "num": 8
+     },
+     {
+      "n": 32,
+      "text": "    return coeffs, table",
+      "role": "block",
+      "blockId": "ret",
+      "num": 9
+     }
+    ],
+    "hash": "ddfcb24c546fc0c4"
+   }
+  },
+  {
+   "kind": "code",
+   "mode": "gated",
+   "python": "# ---------------------------------------------------------------------------\n# A readable printout of the triangular table\n# ---------------------------------------------------------------------------\ndef print_dd_table(x, table):\n    \"\"\"Pretty-print the divided-difference table as a triangle.\n\n    Row i, column j holds f[x_i, ..., x_{i+j}].\n    \"\"\"\n    n = len(x)\n    print(\"  x_i   |  f[.] (order increases left -> right)\")\n    print(\"-\" * 60)\n    for i in range(n):\n        row = f\"{x[i]:6.3f} |\"\n        for j in range(n - i):\n            row += f\" {table[i, j]:10.4f}\"\n        print(row)",
+   "stdout": "",
+   "gate": {
+    "cell_id": "ddprint",
+    "concept": "print_dd_table",
+    "title": "Print the table as a triangle",
+    "intro": "A short one. Row i of the triangle holds the differences that start at node i, and there are fewer of them the further down you go.",
+    "blocks": [
+     {
+      "id": "def",
+      "lines": [
+       {
+        "text": "function print_dd_table(x, T):",
+        "indent": 0
+       }
+      ],
+      "py": [
+       4,
+       4
+      ],
+      "py_match": "def print_dd_table"
+     },
+     {
+      "id": "n",
+      "lines": [
+       {
+        "text": "n ← length(x)",
+        "indent": 0
+       }
+      ],
+      "py": [
+       9,
+       9
+      ],
+      "py_match": "n = len(x)"
+     },
+     {
+      "id": "loopi",
+      "lines": [
+       {
+        "text": "for i ← 0 to n−1:",
+        "indent": 0
+       }
+      ],
+      "py": [
+       12,
+       12
+      ],
+      "py_match": "for i in range(n)"
+     },
+     {
+      "id": "loopj",
+      "lines": [
+       {
+        "text": "for j ← 0 to ⟨?rowlen⟩:",
+        "indent": 0
+       }
+      ],
+      "py": [
+       14,
+       14
+      ],
+      "py_match": "for j in range(n - i)"
+     },
+     {
+      "id": "pr",
+      "lines": [
+       {
+        "text": "print T[i, j]",
+        "indent": 0
+       }
+      ],
+      "py": [
+       15,
+       15
+      ],
+      "py_match": "row +="
+     }
+    ],
+    "solution": [
+     {
+      "id": "def",
+      "indent": 0
+     },
+     {
+      "id": "n",
+      "indent": 1
+     },
+     {
+      "id": "loopi",
+      "indent": 1
+     },
+     {
+      "id": "loopj",
+      "indent": 2
+     },
+     {
+      "id": "pr",
+      "indent": 3
+     }
+    ],
+    "blanks": {
+     "rowlen": {
+      "kind": "range_end",
+      "answer": "n−i−1",
+      "env": [
+       "n",
+       "i",
+       "j"
+      ],
+      "width": 8
+     }
+    },
+    "distractors": [
+     {
+      "id": "d_swap",
+      "lines": [
+       {
+        "text": "for j ← 0 to n−1:",
+        "indent": 0
+       },
+       {
+        "text": "for i ← 0 to n−j−1:",
+        "indent": 1
+       }
+      ],
+      "near": "loopi",
+      "why": "print_transposed"
+     }
+    ],
+    "wrong_blanks": {
+     "rowlen": [
+      {
+       "text": "n−1",
+       "why": "rowlen_square"
+      },
+      {
+       "text": "n−j−1",
+       "why": "rowlen_uses_j"
+      }
+     ]
+    },
+    "probes": [
+     {
+      "env": {
+       "x": [
+        0.0,
+        1.0,
+        3.0,
+        6.0
+       ],
+       "T": [
+        [
+         1.0,
+         3.0,
+         -1.3333333333333333,
+         0.3222222222222222
+        ],
+        [
+         4.0,
+         -1.0,
+         0.6,
+         0.0
+        ],
+        [
+         2.0,
+         2.0,
+         0.0,
+         0.0
+        ],
+        [
+         8.0,
+         0.0,
+         0.0,
+         0.0
+        ]
+       ]
+      },
+      "call": "print_dd_table(x, T)"
+     }
+    ],
+    "trace": [],
+    "compare": "prints",
+    "py_head": [
+     1,
+     3
+    ],
+    "py_doc": [
+     5,
+     8
+    ],
+    "py_glue": [
+     10,
+     11,
+     13,
+     16
+    ],
+    "annotations": [
+     {
+      "blocks": [
+       "pr"
+      ],
+      "text": "The Python builds one row as a string and prints it at the end of the row, rather than printing each entry as it goes. Same entries, same order."
+     }
+    ],
+    "feedback": {
+     "print_transposed": "You printed the table by columns. The triangle you want has row i holding n−i entries, one for each order of difference that starts at node i.",
+     "rowlen_square": "You printed the whole square, including entries that no column ever wrote to. Those zeros are not part of the table.",
+     "rowlen_uses_j": "j is the variable this loop is about to bind, so it cannot appear in its own bound. Which index tells you how far along the row you started?"
+    },
+    "reveal": [
+     {
+      "n": 1,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 2,
+      "text": "# A readable printout of the triangular table",
+      "role": "head"
+     },
+     {
+      "n": 3,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 4,
+      "text": "def print_dd_table(x, table):",
+      "role": "block",
+      "blockId": "def",
+      "num": 1
+     },
+     {
+      "n": 5,
+      "text": "    \"\"\"Pretty-print the divided-difference table as a triangle.",
+      "role": "doc"
+     },
+     {
+      "n": 6,
+      "text": "",
+      "role": "doc"
+     },
+     {
+      "n": 7,
+      "text": "    Row i, column j holds f[x_i, ..., x_{i+j}].",
+      "role": "doc"
+     },
+     {
+      "n": 8,
+      "text": "    \"\"\"",
+      "role": "doc"
+     },
+     {
+      "n": 9,
+      "text": "    n = len(x)",
+      "role": "block",
+      "blockId": "n",
+      "num": 2
+     },
+     {
+      "n": 10,
+      "text": "    print(\"  x_i   |  f[.] (order increases left -> right)\")",
+      "role": "glue"
+     },
+     {
+      "n": 11,
+      "text": "    print(\"-\" * 60)",
+      "role": "glue"
+     },
+     {
+      "n": 12,
+      "text": "    for i in range(n):",
+      "role": "block",
+      "blockId": "loopi",
+      "num": 3
+     },
+     {
+      "n": 13,
+      "text": "        row = f\"{x[i]:6.3f} |\"",
+      "role": "glue"
+     },
+     {
+      "n": 14,
+      "text": "        for j in range(n - i):",
+      "role": "block",
+      "blockId": "loopj",
+      "num": 4
+     },
+     {
+      "n": 15,
+      "text": "            row += f\" {table[i, j]:10.4f}\"",
+      "role": "block",
+      "blockId": "pr",
+      "num": 5
+     },
+     {
+      "n": 16,
+      "text": "        print(row)",
+      "role": "glue"
+     }
+    ],
+    "hash": "d9c0c7554e66f1cb"
+   }
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# ---------------------------------------------------------------------------\n# The table for a small data set\n# ---------------------------------------------------------------------------\nx_data = [0.0, 1.0, 3.0, 6.0]\ny_data = [1.0, 4.0, 2.0, 8.0]\n\ncoeffs, table = divided_differences(x_data, y_data)\nprint_dd_table(x_data, table)\nprint()\nprint(\"Newton coefficients c0..c3:\", np.array2string(coeffs, precision=4))",
+   "stdout": "  x_i   |  f[.] (order increases left -> right)\n------------------------------------------------------------\n 0.000 |     1.0000     3.0000    -1.3333     0.3222\n 1.000 |     4.0000    -1.0000     0.6000\n 3.000 |     2.0000     2.0000\n 6.000 |     8.0000\n\nNewton coefficients c0..c3: [ 1.      3.     -1.3333  0.3222]",
+   "demo_for": "divdiff"
+  },
+  {
+   "kind": "markdown",
+   "mode": "defer",
+   "html": "<h2>Evaluating the Newton form</h2>\n<p>Expanding the products would cost $\\mathcal{O}(n^2)$ per point. Nesting them does not:</p>\n<p>$$ p(x) = c_0 + (x-x_0)\\Bigl(c_1 + (x-x_1)\\bigl(c_2 + \\cdots + (x-x_{n-2})\\,c_{n-1}\\bigr)\\Bigr). $$</p>\n<p>Read it from the inside out: start from the last coefficient, then repeatedly multiply by $(x - x_k)$ and add $c_k$, for $k = n-2$ down to $0$. This Horner-like sweep costs $\\mathcal{O}(n)$ per point and is numerically steadier than expanding the products.</p>",
+   "until": "neweval",
+   "heading": "Evaluating the Newton form"
+  },
+  {
+   "kind": "code",
+   "mode": "gated",
+   "python": "# ---------------------------------------------------------------------------\n# Nested evaluation\n# ---------------------------------------------------------------------------\ndef newton_eval(x_nodes, coeffs, xq):\n    \"\"\"Evaluate the Newton-form polynomial at the query points xq.\n\n    Parameters\n    ----------\n    x_nodes : array (n,)  interpolation nodes, in the order used to build coeffs\n    coeffs  : array (n,)  Newton coefficients from divided_differences\n    xq      : array       query points\n\n    Returns\n    -------\n    array   the interpolant evaluated at xq\n    \"\"\"\n    xq = np.asarray(xq, dtype=float)\n    n = len(coeffs)\n    result = np.full_like(xq, coeffs[n - 1])\n    for k in range(n - 2, -1, -1):\n        result = result * (xq - x_nodes[k]) + coeffs[k]\n    return result",
+   "stdout": "",
+   "gate": {
+    "cell_id": "neweval",
+    "concept": "newton_eval",
+    "title": "Evaluate the Newton form by nesting",
+    "intro": "Build the nested evaluation at a single point t. Read the nesting from the inside out and it will tell you which coefficient to start from.",
+    "blocks": [
+     {
+      "id": "def",
+      "lines": [
+       {
+        "text": "function newton_eval(xn, c, t):",
+        "indent": 0
+       }
+      ],
+      "py": [
+       4,
+       4
+      ],
+      "py_match": "def newton_eval"
+     },
+     {
+      "id": "n",
+      "lines": [
+       {
+        "text": "n ← length(c)",
+        "indent": 0
+       }
+      ],
+      "py": [
+       18,
+       18
+      ],
+      "py_match": "n = len(coeffs)"
+     },
+     {
+      "id": "init",
+      "lines": [
+       {
+        "text": "p ← c[⟨?init⟩]",
+        "indent": 0
+       }
+      ],
+      "py": [
+       19,
+       19
+      ],
+      "py_match": "np.full_like"
+     },
+     {
+      "id": "loop",
+      "lines": [
+       {
+        "text": "for k ← n−2 down to 0:",
+        "indent": 0
+       }
+      ],
+      "py": [
+       20,
+       20
+      ],
+      "py_match": "for k in range(n - 2"
+     },
+     {
+      "id": "upd",
+      "lines": [
+       {
+        "text": "p ← p · (t − xn[k]) + c[k]",
+        "indent": 0
+       }
+      ],
+      "py": [
+       21,
+       21
+      ],
+      "py_match": "result = result *"
+     },
+     {
+      "id": "ret",
+      "lines": [
+       {
+        "text": "return p",
+        "indent": 0
+       }
+      ],
+      "py": [
+       22,
+       22
+      ],
+      "py_match": "return result"
+     }
+    ],
+    "solution": [
+     {
+      "id": "def",
+      "indent": 0
+     },
+     {
+      "id": "n",
+      "indent": 1
+     },
+     {
+      "id": "init",
+      "indent": 1
+     },
+     {
+      "id": "loop",
+      "indent": 1
+     },
+     {
+      "id": "upd",
+      "indent": 2
+     },
+     {
+      "id": "ret",
+      "indent": 1
+     }
+    ],
+    "blanks": {
+     "init": {
+      "kind": "index",
+      "answer": "n−1",
+      "env": [
+       "n"
+      ],
+      "width": 6
+     }
+    },
+    "distractors": [
+     {
+      "id": "d_fwd",
+      "lines": [
+       {
+        "text": "for k ← 1 to n−1:",
+        "indent": 0
+       }
+      ],
+      "near": "loop",
+      "why": "sweep_forward"
+     },
+     {
+      "id": "d_node",
+      "lines": [
+       {
+        "text": "p ← p · (t − c[k]) + c[k]",
+        "indent": 0
+       }
+      ],
+      "near": "upd",
+      "why": "shift_by_coeff"
+     }
+    ],
+    "wrong_blanks": {
+     "init": [
+      {
+       "text": "0",
+       "why": "init_first"
+      },
+      {
+       "text": "n",
+       "why": "init_past_end"
+      }
+     ]
+    },
+    "probes": [
+     {
+      "env": {
+       "xn": [
+        0.0,
+        1.0,
+        3.0,
+        6.0
+       ],
+       "c": [
+        1.0,
+        3.0,
+        -1.3333333333333333,
+        0.3222222222222222
+       ],
+       "t": 0.5
+      },
+      "call": "newton_eval(xn, c, t)"
+     },
+     {
+      "env": {
+       "xn": [
+        0.0,
+        1.0,
+        3.0,
+        6.0
+       ],
+       "c": [
+        1.0,
+        3.0,
+        -1.3333333333333333,
+        0.3222222222222222
+       ],
+       "t": 2.0
+      },
+      "call": "newton_eval(xn, c, t)"
+     },
+     {
+      "env": {
+       "xn": [
+        0.0,
+        1.0,
+        3.0,
+        6.0
+       ],
+       "c": [
+        1.0,
+        3.0,
+        -1.3333333333333333,
+        0.3222222222222222
+       ],
+       "t": 5.0
+      },
+      "call": "newton_eval(xn, c, t)"
+     }
+    ],
+    "trace": [],
+    "compare": "value",
+    "py_head": [
+     1,
+     3
+    ],
+    "py_doc": [
+     5,
+     16
+    ],
+    "py_glue": [
+     17
+    ],
+    "annotations": [
+     {
+      "blocks": [
+       "init",
+       "upd"
+      ],
+      "text": "The Python evaluates at a whole array of query points at once, so np.full_like is the vectorized twin of p ← c[n−1] and the update runs on every point in parallel. Your pseudocode is the same arithmetic at one t."
+     }
+    ],
+    "feedback": {
+     "sweep_forward": "A forward sweep pairs with starting from the first coefficient. This nesting is read from the innermost parenthesis outward, and the innermost one holds the last coefficient.",
+     "shift_by_coeff": "The factors (t − x_k) shift by the nodes. You are shifting by the coefficients, which are values of the function, not places on the axis.",
+     "init_first": "Starting from c[0] pairs with a forward sweep. This loop runs backward, so ask which coefficient the innermost parenthesis holds.",
+     "init_past_end": "There is no coefficient at that index. The array holds n of them, and the subscripts run from 0."
+    },
+    "reveal": [
+     {
+      "n": 1,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 2,
+      "text": "# Nested evaluation",
+      "role": "head"
+     },
+     {
+      "n": 3,
+      "text": "# ---------------------------------------------------------------------------",
+      "role": "head"
+     },
+     {
+      "n": 4,
+      "text": "def newton_eval(x_nodes, coeffs, xq):",
+      "role": "block",
+      "blockId": "def",
+      "num": 1
+     },
+     {
+      "n": 5,
+      "text": "    \"\"\"Evaluate the Newton-form polynomial at the query points xq.",
+      "role": "doc"
+     },
+     {
+      "n": 6,
+      "text": "",
+      "role": "doc"
+     },
+     {
+      "n": 7,
+      "text": "    Parameters",
+      "role": "doc"
+     },
+     {
+      "n": 8,
+      "text": "    ----------",
+      "role": "doc"
+     },
+     {
+      "n": 9,
+      "text": "    x_nodes : array (n,)  interpolation nodes, in the order used to build coeffs",
+      "role": "doc"
+     },
+     {
+      "n": 10,
+      "text": "    coeffs  : array (n,)  Newton coefficients from divided_differences",
+      "role": "doc"
+     },
+     {
+      "n": 11,
+      "text": "    xq      : array       query points",
+      "role": "doc"
+     },
+     {
+      "n": 12,
+      "text": "",
+      "role": "doc"
+     },
+     {
+      "n": 13,
+      "text": "    Returns",
+      "role": "doc"
+     },
+     {
+      "n": 14,
+      "text": "    -------",
+      "role": "doc"
+     },
+     {
+      "n": 15,
+      "text": "    array   the interpolant evaluated at xq",
+      "role": "doc"
+     },
+     {
+      "n": 16,
+      "text": "    \"\"\"",
+      "role": "doc"
+     },
+     {
+      "n": 17,
+      "text": "    xq = np.asarray(xq, dtype=float)",
+      "role": "glue"
+     },
+     {
+      "n": 18,
+      "text": "    n = len(coeffs)",
+      "role": "block",
+      "blockId": "n",
+      "num": 2
+     },
+     {
+      "n": 19,
+      "text": "    result = np.full_like(xq, coeffs[n - 1])",
+      "role": "block",
+      "blockId": "init",
+      "num": 3
+     },
+     {
+      "n": 20,
+      "text": "    for k in range(n - 2, -1, -1):",
+      "role": "block",
+      "blockId": "loop",
+      "num": 4
+     },
+     {
+      "n": 21,
+      "text": "        result = result * (xq - x_nodes[k]) + coeffs[k]",
+      "role": "block",
+      "blockId": "upd",
+      "num": 5
+     },
+     {
+      "n": 22,
+      "text": "    return result",
+      "role": "block",
+      "blockId": "ret",
+      "num": 6
+     }
+    ],
+    "hash": "9b661b7f313105c5"
+   }
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# ---------------------------------------------------------------------------\n# The interpolant through the data, and a check that it interpolates\n# ---------------------------------------------------------------------------\nfor t in [0.5, 2.0, 5.0]:\n    print(f\"p({t}) = {newton_eval(x_data, coeffs, t):.6f}\")\n\nprint()\nprint(\"at the nodes, p reproduces the data:\")\nprint(\"p(x_i) =\", np.array2string(newton_eval(x_data, coeffs, np.array(x_data)), precision=4))\nprint(\"y_i    =\", np.array2string(np.asarray(y_data), precision=4))",
+   "stdout": "p(0.5) = 3.034722\np(2.0) = 3.688889\np(5.0) = 2.222222\n\nat the nodes, p reproduces the data:\np(x_i) = [1. 4. 2. 8.]\ny_i    = [1. 4. 2. 8.]",
+   "demo_for": "neweval"
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# ---------------------------------------------------------------------------\n# Incremental construction\n# ---------------------------------------------------------------------------\n# Append one more node to the end of the list and only one new coefficient\n# appears; the earlier ones are unchanged, since c_k depends only on x_0..x_k.\n# (Lagrange, by contrast, must rebuild every basis polynomial from scratch.)\n# The reuse needs the old nodes to survive in the same order. Rebuilding an\n# equally spaced set at each size moves every node, and then every coefficient\n# changes. The cell after this one shows both cases side by side.\n\ndef f_demo(x):\n    \"\"\"Sample function, smooth and oscillatory.\"\"\"\n    return np.sin(2 * x) + 0.5 * x\n\ndef show_newton(n_nodes=5, show_table=True, a=0.0, b=5.0):\n    \"\"\"Sample f_demo at n_nodes equally spaced points, build the Newton\n    interpolant, plot it against f, and optionally print the table + coeffs.\"\"\"\n    x = np.linspace(a, b, n_nodes)           # nodes\n    y = f_demo(x)                            # data values\n    coeffs, table = divided_differences(x, y)\n\n    xx = np.linspace(a, b, 400)\n    p = newton_eval(x, coeffs, xx)\n\n    plt.figure()\n    plt.plot(xx, f_demo(xx), \"k-\", lw=2, label=\"f(x)\")\n    plt.plot(xx, p, \"r--\", lw=2, label=f\"Newton interpolant (n={n_nodes})\")\n    plt.plot(x, y, \"bo\", ms=7, label=\"data\")\n    plt.legend(); plt.xlabel(\"x\"); plt.title(\"Newton-form interpolation\")\n    plt.show()\n\n    if show_table:\n        print_dd_table(x, table)\n        print(\"\\nNewton coefficients c0..c{}:\".format(n_nodes - 1))\n        print(np.array2string(coeffs, precision=4))\n        print(\"\\nNote. These nodes are rebuilt as an equally spaced set at every \"\n              \"size, so\\nevery coefficient moves when n changes. See the next cell \"\n              \"for the appended case.\")\n\nshow_newton(5)",
+   "stdout": "  x_i   |  f[.] (order increases left -> right)\n------------------------------------------------------------\n 0.000 |     0.0000     0.9788    -0.6899     0.4787    -0.2124\n 1.250 |     1.2235    -0.7459     1.1054    -0.5831\n 2.500 |     0.2911     2.0175    -1.0813\n 3.750 |     2.8130    -0.6856\n 5.000 |     1.9560\n\nNewton coefficients c0..c4:\n[ 0.      0.9788 -0.6899  0.4787 -0.2124]\n\nNote. These nodes are rebuilt as an equally spaced set at every size, so\nevery coefficient moves when n changes. See the next cell for the appended case.",
+   "figures": [
+    {
+     "src": "out/m1-newton/cell09-0.png",
+     "caption": ""
+    }
+   ]
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# ---------------------------------------------------------------------------\n# Interactive: slide the number of nodes; toggle the table\n# ---------------------------------------------------------------------------\ninteract(\n    show_newton,\n    n_nodes=IntSlider(min=2, max=12, step=1, value=5, description=\"# nodes\"),\n    show_table=Checkbox(value=True, description=\"show table\"),\n    a=(-1.0, 2.0, 0.5), b=(3.0, 8.0, 0.5),\n);",
+   "stdout": "  x_i   |  f[.] (order increases left -> right)\n------------------------------------------------------------\n 0.000 |     0.0000     0.9788    -0.6899     0.4787    -0.2124\n 1.250 |     1.2235    -0.7459     1.1054    -0.5831\n 2.500 |     0.2911     2.0175    -1.0813\n 3.750 |     2.8130    -0.6856\n 5.000 |     1.9560\n\nNewton coefficients c0..c4:\n[ 0.      0.9788 -0.6899  0.4787 -0.2124]\n\nNote. These nodes are rebuilt as an equally spaced set at every size, so\nevery coefficient moves when n changes. See the next cell for the appended case.\n  x_i   |  f[.] (order increases left -> right)\n------------------------------------------------------------\n 0.000 |     0.0000     2.2357    -1.4722    -0.2471     0.5627    -0.1448    -0.0291     0.0199    -0.0023    -0.0006     0.0002    -0.0000\n 0.455 |     1.0162     0.8973    -1.8092     0.7759     0.2336    -0.2240     0.0343     0.0116    -0.0047     0.0003     0.0001\n 0.909 |     1.4241    -0.7474    -0.7512     1.2006    -0.2756    -0.1305     0.0712    -0.0057    -0.0035     0.0010\n 1.364 |     1.0844    -1.4303     0.8860     0.6996    -0.5723     0.0636     0.0532    -0.0185     0.0004\n 1.818 |     0.4343    -0.6248     1.8401    -0.3408    -0.4277     0.2087    -0.0058    -0.0171\n 2.273 |     0.1503     1.0480     1.3753    -1.1185     0.0466     0.1929    -0.0603\n 2.727 |     0.6266     2.2982    -0.1500    -1.0337     0.4850     0.0283\n 3.182 |     1.6713     2.1619    -1.5596    -0.1518     0.5494\n 3.636 |     2.6540     0.7441    -1.7666     0.8471\n 4.091 |     2.9922    -0.8619    -0.6115\n 4.545 |     2.6004    -1.4178\n 5.000 |     1.9560\n\nNewton coefficients c0..c11:\n[ 0.0000e+00  2.2357e+00 -1.4722e+00 -2.4715e-01  5.6266e-01 -1.4478e-01\n -2.9062e-02  1.9907e-02 -2.2845e-03 -6.0128e-04  1.9673e-04 -9.9385e-06]\n\nNote. These nodes are rebuilt as an equally spaced set at every size, so\nevery coefficient moves when n changes. See the next cell for the appended case.",
+   "figures": [
+    {
+     "src": "out/m1-newton/cell09-0.png",
+     "caption": "five nodes"
+    },
+    {
+     "src": "out/m1-newton/cell10-1.png",
+     "caption": "twelve nodes: Runge's phenomenon arrives, indifferent to which representation of the polynomial you chose"
+    }
+   ],
+   "static_frames": true
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "# ---------------------------------------------------------------------------\n# Appended nodes versus a rebuilt equally spaced set\n# ---------------------------------------------------------------------------\ndef coeffs_for(nodes):\n    \"\"\"Newton coefficients for f_demo sampled at these nodes, in this order.\"\"\"\n    nodes = np.asarray(nodes, dtype=float)\n    c, _ = divided_differences(nodes, f_demo(nodes))\n    return c\n\nappended = [0.0, 2.5, 5.0, 1.25, 3.75, 0.625, 1.875, 3.125, 4.375]\nprint(\"each new node appended to the end of the list\")\nfor m in [3, 5, 9]:\n    print(f\"  m = {m}  {np.array2string(coeffs_for(appended[:m]), precision=4)}\")\n\nprint(\"\\nan equally spaced set rebuilt from scratch at each size\")\nfor m in [3, 5, 9]:\n    print(f\"  m = {m}  {np.array2string(coeffs_for(np.linspace(0, 5, m)), precision=4)}\")",
+   "stdout": "each new node appended to the end of the list\n  m = 3  [0.     0.1164 0.1099]\n  m = 5  [ 0.      0.1164  0.1099  0.2133 -0.2124]\n  m = 9  [ 0.      0.1164  0.1099  0.2133 -0.2124 -0.0456  0.0399  0.0031 -0.0036]\n\nan equally spaced set rebuilt from scratch at each size\n  m = 3  [0.     0.1164 0.1099]\n  m = 5  [ 0.      0.9788 -0.6899  0.4787 -0.2124]\n  m = 9  [ 0.      2.0184 -1.6634  0.3277  0.3064 -0.1917  0.0342  0.0053 -0.0036]"
+  },
+  {
+   "kind": "markdown",
+   "mode": "shown",
+   "html": "<h2>Divided differences and derivatives</h2>\n<p>A first divided difference is a difference quotient, so the Mean Value Theorem gives $f[x_0,x_1] = f'(\\eta)$ for some $\\eta$ between the nodes. Higher orders behave the same way. Let all $k+1$ nodes run together at $x_0$ and $f[x_0,\\dots,x_k]$ tends to $f^{(k)}(x_0)/k!$, the $k$th Taylor coefficient. The cell below checks that for $k = 1, 2, 3$.</p>"
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "x0  = 1.0\nfp  = 2 * np.cos(2 * x0) + 0.5          # first derivative of f_demo at x0\nfpp = -4 * np.sin(2 * x0)               # second derivative\nf3  = -8 * np.cos(2 * x0)               # third derivative\n\nprint(f\"{'h':>9} {'order 1':>14} {'order 2':>14} {'order 3':>14}\")\nfor h in [1e-1, 1e-2, 1e-3, 1e-4]:\n    row = f\"{h:9.0e}\"\n    for k in [1, 2, 3]:\n        xs = x0 + h * np.arange(k + 1)      # k+1 nodes collapsing onto x0\n        ck, _ = divided_differences(xs, f_demo(xs))\n        row += f\" {ck[k]:14.8f}\"\n    print(row)\n\nprint(\"\\nTaylor coefficients of f at x0\")\nprint(f\"  first  derivative      = {fp:.8f}\")\nprint(f\"  second derivative / 2  = {fpp / 2:.8f}\")\nprint(f\"  third  derivative / 6  = {f3 / 6:.8f}\")",
+   "stdout": "        h        order 1        order 2        order 3\n    1e-01    -0.50801023    -1.61161001     0.88393580\n    1e-02    -0.35042353    -1.80152633     0.59094967\n    1e-03    -0.33411171    -1.81692602     0.55849685\n    1e-04    -0.33247553    -1.81842834     0.55518553\n\nTaylor coefficients of f at x0\n  first  derivative      = -0.33229367\n  second derivative / 2  = -1.81859485\n  third  derivative / 6  = 0.55486245"
+  },
+  {
+   "kind": "markdown",
+   "mode": "shown",
+   "html": "<h2>Coincident nodes and roundoff</h2>\n<p>The recurrence divides by $x_{i+j}-x_i$. Bring two nodes close together and you are dividing a difference of nearly equal numbers by a nearly zero spacing, and both operations cost digits. In the sweep below the error follows the truncation term while $h$ is large, then turns and follows $\\varepsilon/h$ once cancellation takes over ($\\varepsilon$ is the unit roundoff). The interpolating polynomial itself is perfectly well behaved for these data, so the damage belongs to the algorithm and not to the mathematics. The same trade-off returns in numerical differentiation, where it fixes an optimal step size.</p>"
+  },
+  {
+   "kind": "code",
+   "mode": "shown",
+   "python": "eps = np.finfo(float).eps\n\nprint(f\"exact f'(x0) = {fp:.12f}   unit roundoff = {eps:.2e}\\n\")\nprint(f\"{'h':>9} {'f[x0,x0+h]':>18} {'error':>12} {'eps/h':>12}\")\nfor h in [1e-1, 1e-4, 1e-8, 1e-11, 1e-13, 1e-15]:\n    xs = np.array([x0, x0 + h])\n    c, _ = divided_differences(xs, f_demo(xs))\n    print(f\"{h:9.0e} {c[1]:18.10f} {abs(c[1] - fp):12.2e} {eps / h:12.2e}\")",
+   "stdout": "exact f'(x0) = -0.332293673094   unit roundoff = 2.22e-16\n\n        h         f[x0,x0+h]        error        eps/h\n    1e-01      -0.5080102301     1.76e-01     2.22e-15\n    1e-04      -0.3324755270     1.82e-04     2.22e-12\n    1e-08      -0.3322936835     1.04e-08     2.22e-08\n    1e-11      -0.3322897238     3.95e-06     2.22e-05\n    1e-13      -0.3311111111     1.18e-03     2.22e-03\n    1e-15      -0.2000000000     1.32e-01     2.22e-01"
+  },
+  {
+   "kind": "markdown",
+   "mode": "shown",
+   "html": "<h2>Summary</h2>\n<p>Newton and Lagrange are two representations of the same unique polynomial. Building the divided-difference table costs $\\mathcal{O}(n^2)$, and evaluating by nested multiplication costs $\\mathcal{O}(n)$. Appending a node at the end of the list adds exactly one coefficient and reuses every earlier one, though reordering or replacing nodes does not. As nodes coalesce the divided differences approach Taylor coefficients, but in floating point the recurrence gives out well before they get there.</p>"
+  },
+  {
+   "kind": "markdown",
+   "mode": "shown",
+   "html": "<h2>Things to try</h2>\n<ul>\n<li>Raise the node count one step at a time. The slider rebuilds an equally spaced set, so every coefficient moves; the appended-node cell above is the case where the earlier entries stay put.</li>\n<li>Edit the node array to put two nodes almost on top of each other, then watch the high-order columns of the table.</li>\n<li>Push the node count to 12 and Runge's phenomenon shows up. It does not care which representation of the polynomial you chose.</li>\n</ul>",
+   "finale": true
+  }
+ ]
+}
