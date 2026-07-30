@@ -322,6 +322,25 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     text-decoration: none;
   }
   .al-launch.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
+  /* A gated lab sits on its own row under Launch: the same notebook, with its
+     algorithms behind pseudocode puzzles, and hosted here rather than in Colab. */
+  .al-lab {
+    margin-top: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: var(--al-semi);
+    font-size: 12.5px;
+    line-height: 1;
+    background: transparent;
+    border: 1px solid var(--al-accent);
+    color: var(--al-accent);
+    padding: 10px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+  }
+  .al-lab:hover { background: var(--al-chip-bg); }
   .al-dl {
     display: inline-flex;
     align-items: center;
@@ -464,7 +483,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   var ACT = [
     { course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', nb:'intro/python_coding_tutorial.ipynb' },
     { course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
-    { course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/newton_divided_differences.ipynb' },
+    { course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', lab:'m1-newton', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/newton_divided_differences.ipynb' },
     { course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/cubic_splines.ipynb' },
     { course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
     { course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
@@ -502,6 +521,9 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
     var launchUrl = a.nb ? COLAB_BASE + a.nb : null;
     var srcUrl = a.nb ? 'notebooks/' + a.nb : null;
+    // A lab is the same notebook with its algorithms gated behind pseudocode
+    // puzzles; it lives on this site rather than in Colab.
+    var labUrl = a.lab && a.status === 'finalized' ? 'lab/' + a.lab + '/' : null;
     var file = a.nb ? a.nb.split('/').pop() : a.file;
     // The status tag is the master switch: an activity is launchable only when it
     // is tagged 'finalized' (Ready) AND has a notebook. Flip a card to 'drafted'
@@ -512,7 +534,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
       raw:a, topic:topic, courseName:c.name, file:file,
       accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
       ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
-      launchUrl: launchUrl, srcUrl: srcUrl
+      launchUrl: launchUrl, srcUrl: srcUrl, labUrl: labUrl
     };
   }
 
@@ -522,7 +544,8 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     if (state.courseFilter !== 'all') list = list.filter(function (a) { return a.raw.course === state.courseFilter; });
     if (state.finalizedOnly) list = list.filter(function (a) { return a.ready; });
     if (q) list = list.filter(function (a) {
-      var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' + a.raw.libs.join(' ')).toLowerCase();
+      var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' +
+                 a.raw.libs.join(' ') + (a.labUrl ? ' lab puzzle pseudocode' : '')).toLowerCase();
       return hay.indexOf(q) !== -1;
     });
     if (state.sort === 'az') list = list.slice().sort(function (x, y) { return x.raw.title.localeCompare(y.raw.title); });
@@ -567,6 +590,10 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
           '<div class="al-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
           '<div class="al-actions">' + actions + '</div>' +
+          (a.labUrl
+            ? '<a class="al-lab" href="' + a.labUrl + '" title="The same notebook with its algorithms behind pseudocode puzzles">' +
+              '◆ Start the guided lab</a>'
+            : '') +
         '</div>' +
       '</div>';
   }
