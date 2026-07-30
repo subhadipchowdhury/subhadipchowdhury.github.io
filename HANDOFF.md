@@ -242,6 +242,7 @@ Commits, oldest first:
 | `c2ccdeb` | Move the labs off `teaching/applet/` and flatten `lab/` |
 | `aa5d748` | Record the move and the footer fix in the handoff |
 | `2644da2` | Rename the library page's prefix from `al-` to `cl-` |
+| `6195dd8` | Move the theme toggle out of the congested header |
 
 Bugs worth remembering because they will recur:
 
@@ -259,6 +260,10 @@ Bugs worth remembering because they will recur:
 - `demo_for` on a setup leaked an answer: the printed triangle is the *answer* to
   the printing puzzle, and showing it as soon as the previous puzzle was solved
   gave it away. `demo_for` now takes a list and waits for all of them.
+- The site stylesheet sets `ul, ol { padding-left: 1em }` globally, and it leaks
+  into any list that is doing layout rather than prose. It had been holding the
+  centred mobile menu 8px right of centre for as long as that menu has existed.
+  Zero it explicitly on layout lists.
 
 ---
 
