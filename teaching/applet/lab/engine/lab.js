@@ -469,13 +469,16 @@ class LabController {
     const notes = el('div', 'lab-reveal__notes');
     if (gate.reveal.some((l) => l.role === 'glue')) {
       const p = el('p');
-      p.textContent = 'The greyed lines are housekeeping rather than algorithm, so they were not part of the puzzle.';
+      p.textContent = 'The greyed lines are housekeeping rather than algorithm, so they were not part of the puzzle. Comments and the docstring are in the notebook.';
       notes.appendChild(p);
     }
     for (const note of gate.annotations || []) {
       const p = el('p');
       const rows = (note.blocks || []).map((bid) => rowOf.get(bid)).filter(Boolean);
-      p.textContent = (rows.length ? `Lines ${rows.join(' and ')}. ` : '') + note.text;
+      const label = rows.length
+        ? `Line${rows.length > 1 ? 's' : ''} ${rows.join(' and ')}. `
+        : '';
+      p.textContent = label + note.text;
       notes.appendChild(p);
     }
     if (notes.children.length) grid.appendChild(notes);
@@ -487,15 +490,15 @@ class LabController {
 
   buildPythonPane(gate) {
     const pane = el('div');
-    let docShown = false;
     for (const line of gate.reveal) {
-      if (line.role === 'doc') {
-        if (!docShown) { docShown = true; pane.appendChild(this.buildDocStub(gate)); }
-        continue;
-      }
+      // Comments and the docstring stay in the notebook. Here they would
+      // restate the brief and push the algorithm off the screen.
+      if (line.role === 'head' || line.role === 'doc') continue;
+      if (line.role === 'space') continue;
+
       const row = el('span', 'lab-pair');
       if (line.role === 'block') row.dataset.pair = String(line.num);
-      else if (line.role === 'glue' || line.role === 'head') row.classList.add('lab-pair--glue');
+      else if (line.role === 'glue') row.classList.add('lab-pair--glue');
       const num = el('span', 'lab-pair__num');
       num.textContent = line.role === 'block' ? String(line.num) : '';
       row.appendChild(num);
@@ -503,31 +506,6 @@ class LabController {
       pane.appendChild(row);
     }
     return pane;
-  }
-
-  buildDocStub(gate) {
-    const wrap = el('span', 'lab-pair lab-pair--doc');
-    wrap.appendChild(el('span', 'lab-pair__num'));
-    const toggle = el('button', 'lab-doc-toggle');
-    toggle.type = 'button';
-    toggle.textContent = 'show the docstring';
-    const body = el('div');
-    body.hidden = true;
-    for (const line of gate.reveal.filter((l) => l.role === 'doc')) {
-      const row = el('span', 'lab-pair lab-pair--doc');
-      row.appendChild(el('span', 'lab-pair__num'));
-      row.appendChild(document.createTextNode(line.text || ' '));
-      body.appendChild(row);
-    }
-    toggle.addEventListener('click', () => {
-      body.hidden = !body.hidden;
-      toggle.textContent = body.hidden ? 'show the docstring' : 'hide the docstring';
-    });
-    wrap.appendChild(toggle);
-    const frag = document.createDocumentFragment();
-    frag.appendChild(wrap);
-    frag.appendChild(body);
-    return frag;
   }
 
   buildSolvedBar(gate, saved) {

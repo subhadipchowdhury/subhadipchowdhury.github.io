@@ -292,6 +292,25 @@ await it('pairs each row you built with a line of the Python', async () => {
   }
 });
 
+await it('shows the algorithm only, with no comments or docstring', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const python = textOf(root.querySelectorAll('.lab-reveal__col')[1]);
+  has(python, 'def divided_differences');
+  has(python, 'table[i, j] =', 'the recurrence has to be there');
+  assert(!python.includes('#'), 'no comment lines belong in the reveal');
+  assert(!python.includes('Parameters'), 'the docstring belongs in the notebook');
+  assert(!python.includes(String.fromCharCode(34, 34, 34)), 'not even the docstring quotes');
+});
+
+await it('numbers a single annotated line in the singular', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const notes = textOf(root.querySelector('.lab-reveal__notes'));
+  has(notes, 'Line 8.', 'one line is a Line, not Lines');
+  has(notes, 'Lines 5 and 6.', 'two are Lines');
+});
+
 await it('quotes the blanks the student typed, not the model answer', async () => {
   const { root, lab } = await freshLab();
   const view = lab.views.get('divdiff');
