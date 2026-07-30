@@ -222,7 +222,7 @@ export function verify(gate, submission, reference) {
         ok: false,
         stage: 'run',
         message: runtimeMessage(err, probe),
-        detail: err.kind === 'index' ? 'A subscript outside the array is an error here; it does not wrap around.' : null,
+        detail: err.kind === 'index' ? 'A subscript outside the array is an error here, it does not wrap around.' : null,
         blockId: err.blockId ?? null,
         blank: err.blank ?? null,
         why: `runtime_${err.kind}`,
@@ -449,7 +449,7 @@ function classifyValues(got, ref, traceNames) {
     if (traced && valuesEqual(got.trace?.[traced], ref.trace[traced], 1e-9)) {
       return {
         why: 'right_table_wrong_return',
-        message: 'The table you built is correct, but the values you pulled out of it are not the coefficients.',
+        message: 'The table you built is correct, but the values you pulled out of it aren\u2019t the coefficients.',
         detail: 'Which subscript varies along the entries you picked out?',
       };
     }

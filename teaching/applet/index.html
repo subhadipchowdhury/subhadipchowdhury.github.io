@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Applet Library
+title: Computational Labs
 parentnav: Teaching
 subnav_weight: 24
-description: Interactive Python notebooks for undergraduate mathematics, launched in Google Colab. Nothing to install.
+description: Notebooks and guided labs for undergraduate mathematics, run in Google Colab.
 ---
 
 {% raw %}
@@ -32,15 +32,16 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   /* This page fills the site content card edge-to-edge with its own paper
      surface rather than the site background. Every themeable color is a token
      below, so the site's dark-mode toggle re-skins the whole page at once. */
-  body.page-applet-library .main-wrapper {
+  body.page-computational-labs .main-wrapper {
     padding: 0;
     background: var(--al-page);
     overflow: hidden;
   }
 
-  /* Light palette. The tokens live on the body (not .applet-library) because
-     .main-wrapper above sits outside the library container. */
-  body.page-applet-library {
+  /* Light palette. The tokens live on the body (not .lab-library) because
+     .main-wrapper above sits outside the library container. The body class is
+     built from page.title in _layouts/default.html, so it tracks the page name. */
+  body.page-computational-labs {
     --al-maroon: #800000;
     --al-ink: #161512;
 
@@ -74,7 +75,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
 
   /* Dark palette. Warm charcoals rather than the site's neutral greys, so the
      page keeps the warm-paper character it has in light mode. */
-  html[data-theme="dark"] body.page-applet-library {
+  html[data-theme="dark"] body.page-computational-labs {
     /* Maroon goes near-black on a dark ground; this is the same hue lifted
        into a legible range (the site swaps to lake blue, which fights the
        warm surfaces here). */
@@ -109,7 +110,9 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     --al-plan-bg: #ffffff12;   --al-plan-fg: #A9A6A0;
   }
 
-  .applet-library {
+  /* `al-` throughout is this page's private prefix; it predates the rename and
+     no reader ever sees it. */
+  .lab-library {
     /* Each brand sans weight is its own family name, as everywhere else on the
        site, so weight is selected by family and font-weight stays normal. The
        serif does carry real weight axes (400/600/700) on one family name. */
@@ -127,14 +130,14 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     color: var(--al-ink);
     -webkit-font-smoothing: antialiased;
   }
-  .applet-library *,
-  .applet-library *::before,
-  .applet-library *::after { box-sizing: border-box; }
+  .lab-library *,
+  .lab-library *::before,
+  .lab-library *::after { box-sizing: border-box; }
 
-  /* Neutralize the site's global link styling inside the applet;
+  /* Neutralize the site's global link styling inside the library;
      the design manages colors, weight and hover per element. */
-  .applet-library a { font-family: inherit; font-weight: inherit; transition: none; }
-  .applet-library a:hover { text-decoration: none; }
+  .lab-library a { font-family: inherit; font-weight: inherit; transition: none; }
+  .lab-library a:hover { text-decoration: none; }
 
   /* Header: title block on the left, search on the right; stacks under 760px. */
   .al-head {
@@ -392,7 +395,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   }
 
   @media (max-width: 760px) {
-    .applet-library { padding: 4px 20px 44px; }
+    .lab-library { padding: 4px 20px 44px; }
     .al-head {
       display: block;
       padding-top: 26px;
@@ -402,13 +405,13 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   }
 </style>
 
-<div class="applet-library">
+<div class="lab-library">
 
   <!-- ===== HEADER ===== -->
   <header class="al-head">
     <div class="al-head-text">
-      <h1 class="al-title">The Applet Library</h1>
-      <p class="al-sub">Interactive notebooks for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
+      <h1 class="al-title">Computational Labs</h1>
+      <p class="al-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
     </div>
     <div class="al-head-search">
       <jelly-input id="al-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
@@ -419,7 +422,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   <div class="al-sticky">
     <div id="al-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
-      <div class="al-count">Showing <strong id="al-shown">0</strong> of <span id="al-total">0</span> activities</div>
+      <div class="al-count">Showing <strong id="al-shown">0</strong> of <span id="al-total">0</span> labs</div>
       <div style="display:flex;align-items:center;gap:18px;">
         <div style="display:flex;align-items:center;gap:9px;">
           <span class="al-tool-label">Sort</span>
@@ -440,8 +443,9 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
   <!-- ===== FOOTER ===== -->
   <footer class="al-foot">
     <div style="max-width:560px;">
-      <div class="al-footer-head"><span>🐍</span> Running the activities</div>
-      <p class="al-footnote">Launch opens the notebook in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy, and related libraries on Google's machines. Nothing is installed, but you do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes are not saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work. The .ipynb link downloads the source if you would rather run it in Jupyter locally.</p>
+      <div class="al-footer-head"><span>🐍</span> Running these</div>
+      <p class="al-footnote">Every card here is a Jupyter notebook. <strong>Launch</strong> opens it in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work. The .ipynb link downloads the source if you would rather run it in Jupyter locally.</p>
+      <p class="al-footnote">A few cards say <strong>Start the lab</strong> instead. Those open a page on this site that asks you to rebuild the notebook's algorithms out of scrambled pseudocode first, and the notebook opens once you are through.</p>
     </div>
   </footer>
 
@@ -617,7 +621,7 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     if (list.length === 0) {
       results.innerHTML =
         '<div class="al-empty">' +
-          '<div class="al-empty-title">No activities match your filters.</div>' +
+          '<div class="al-empty-title">No labs match your filters.</div>' +
           '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">Try a broader search, or clear the filters.</p>' +
           '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';

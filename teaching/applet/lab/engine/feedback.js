@@ -36,11 +36,11 @@ export function applyLadder(view, verdict, attempts) {
   }
   if (stage === 3) {
     const removed = view.removeDecoy();
-    if (removed) return 'One block that is not part of the answer has been removed from the tray.';
+    if (removed) return 'One block that isn\u2019t part of the answer has been taken out of the tray.';
   }
   if (stage === 4) {
     const ejected = view.ejectDecoy();
-    if (ejected) return 'A block that is not part of the answer has been sent back to the tray.';
+    if (ejected) return 'A block that isn\u2019t part of the answer has been sent back to the tray.';
     const fixed = view.fixIndents();
     if (fixed) return 'The indentation has been set for you. The order is still yours to work out.';
   }
@@ -144,7 +144,7 @@ function buildStageFive(ctx) {
   park.type = 'button';
   park.className = 'lp-action';
   park.textContent = 'Set this one aside and carry on';
-  park.title = 'Opens the rest of the lab. This puzzle stays here for later.';
+  park.title = 'Opens the rest of the lab. This puzzle stays here for whenever you want it.';
   park.addEventListener('click', () => ctx.onPark?.());
   wrap.appendChild(park);
 

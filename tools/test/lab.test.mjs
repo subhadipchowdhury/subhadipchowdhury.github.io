@@ -222,7 +222,7 @@ await it('introduces its data before any output refers to it', async () => {
   const intro = textOf(root.querySelector('.lab-intro'));
   // Every number a puzzle shows comes from one worked example, and a student
   // meeting a table of numbers with no provenance is the failure this catches.
-  assert(/example/i.test(intro), 'the lab must say what data it is working with');
+  assert(/four points/i.test(intro), 'the lab must name the data it is working with');
   for (const value of ['0', '1', '3', '6']) has(intro, value);
 });
 
@@ -361,7 +361,7 @@ await it('is answered by the blank alone, and rejects the bound from above', asy
   view.blanks = { rowlen: 'n−j−1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'open');
-  has(textOf(root.querySelector('.lp-feedback')), 'cannot appear in its own upper bound');
+  has(textOf(root.querySelector('.lp-feedback')), 'in its own upper bound');
   view.blanks = { rowlen: 'n−i−1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'solved');

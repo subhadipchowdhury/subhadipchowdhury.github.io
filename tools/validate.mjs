@@ -135,13 +135,13 @@ function everyString(spec) {
 
 // "Housekeeping, not algorithm." "Same iterations, different fence." A very
 // short sentence built round a comma is almost always a verbless aphorism
-// standing where a clause belonged. Five words is low enough that ordinary
-// prose does not trip it.
+// standing where a clause belonged. Four words catches every one of those and
+// leaves room for a real short sentence like "There's a trap here, though."
 function checkFragments(where, what, html) {
   for (const sentence of sentencesOf(html)) {
     if (!sentence.includes(',')) continue;
     const words = wordsOf(sentence);
-    if (words.length && words.length <= 5) {
+    if (words.length && words.length <= 4) {
       bad(where, `${what} has the fragment "${sentence}"; write it as a full sentence`);
     }
   }
