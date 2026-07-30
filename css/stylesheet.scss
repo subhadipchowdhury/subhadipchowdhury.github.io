@@ -291,7 +291,7 @@ ol li {
 
 
 /* ==========================================================================
-   HEADER ACTIONS - Wrapper holding the nav and the dark-mode toggle
+   HEADER ACTIONS - Wrapper holding the nav and the mobile menu trigger
    ========================================================================== */
 
 .header-actions {
@@ -301,52 +301,97 @@ ol li {
 	gap: 0.5rem;
 }
 
-// Dark-mode toggle button. Shows a moon in light mode (tap to go dark) and a
-// sun in dark mode. Icon visibility is driven by the html[data-theme] attribute.
-#theme-toggle {
+
+/* ==========================================================================
+   THEME TOGGLE
+
+   Kept out of the header, which had no room for it beside five nav items.
+   _includes/theme_toggle.html renders the button twice: as a pill in the
+   footer and as the last item of the mobile menu. The footer pill hides at
+   900px, exactly where the mobile menu takes over, so only one of the two is
+   on the page (and in the tab order) at a time.
+
+   Icon and label both name the theme you are switching to, and both swap on
+   html[data-theme], which the inline script in head.html sets before first
+   paint. No flash, and no dependence on javascript/theme.js to draw the
+   correct state.
+   ========================================================================== */
+
+.theme-toggle {
 	-webkit-appearance: none;
 	appearance: none;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	flex-shrink: 0;
-	width: 2.2rem;
-	height: 2.2rem;
-	padding: 0;
+	gap: 0.5em;
 	cursor: pointer;
-	color: var(--nav-link);
-	background: transparent;
-	border: 1px solid var(--border-color);
-	border-radius: 999px;
-	font-size: 1rem;
+	font-family: $nav-font;
+	font-weight: normal; // Weight handled by font-family name (Bold)
 	line-height: 1;
-	transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+	background: transparent;
+	border: 0;
 
-	&:hover {
-		color: var(--nav-hover);
-		border-color: var(--nav-hover);
-	}
+	.fa-sun,
+	.theme-toggle__label--to-light { display: none; }
+
+	.fa-moon,
+	.theme-toggle__label--to-dark { display: inline-block; }
 
 	&:focus-visible {
 		outline: 2px solid var(--focus-ring);
 		outline-offset: 2px;
 	}
-
-	.fa-sun { display: none; }
-	.fa-moon { display: inline-block; }
 }
 
-html[data-theme="dark"] #theme-toggle {
-	.fa-moon { display: none; }
-	.fa-sun { display: inline-block; }
+html[data-theme="dark"] .theme-toggle {
+	.fa-moon,
+	.theme-toggle__label--to-dark { display: none; }
+
+	.fa-sun,
+	.theme-toggle__label--to-light { display: inline-block; }
+}
+
+// Footer pill. The footer is dark in both themes, so the border and the hover
+// wash are white-alpha rather than the usual tokens, which would invert.
+.theme-toggle--footer {
+	flex-shrink: 0;
+	padding: 0.55em 1.1em;
+	font-size: 0.85rem;
+	color: var(--footer-text);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 999px;
+	transition: background-color 0.25s ease, border-color 0.25s ease;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.55);
+	}
 }
 
 @media all and (max-width: 900px) {
-	// Shrink slightly so it sits comfortably next to the hamburger.
-	#theme-toggle {
-		width: 2rem;
-		height: 2rem;
-		font-size: 0.9rem;
+	// Below 900px the copy in the mobile menu takes over.
+	.theme-toggle--footer {
+		display: none;
+	}
+}
+
+// Mobile-menu item. nav#nav-mobile is display:none above 900px, so this
+// variant needs no breakpoint of its own. It matches the menu links it sits
+// under, including their hover swap.
+.nav-mobile__theme {
+	border-top: 1px solid var(--border-color);
+}
+
+.theme-toggle--menu {
+	width: 100%;
+	padding: 10px 30px;
+	box-sizing: border-box;
+	font-size: 1em;
+	color: var(--nav-link);
+
+	&:hover {
+		color: #A5D3DB;      // Light blue text
+		background: #3A494C; // Dark gray background
 	}
 }
 
@@ -589,6 +634,8 @@ nav#nav-mobile{
 
 nav#nav-mobile ul{
     list-style-type: none;
+	padding-left: 0;         // Override the global list indent so the centered
+	                         // items, and the theme item's rule, sit true
     position: absolute;      // Position below header
 	top: 100%;
     left: 0;
@@ -660,6 +707,17 @@ nav#nav-mobile ul.expanded {
 	margin: 0 auto 0.2rem;
 	padding: 2.5rem 2rem 1rem;
 	box-sizing: border-box;
+	// Site meta on the left, theme pill on the right. The pill is hidden
+	// below 900px, where this collapses back to a single column.
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 2rem;
+	}
+
+	.site-footer__text {
+		min-width: 0; // Let the paragraphs wrap instead of pushing the pill out
 	}
 
 	a{

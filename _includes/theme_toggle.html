@@ -1,0 +1,18 @@
+{% comment %}
+Dark-mode toggle. Rendered twice: as a pill in the site footer (desktop) and as
+the last item of the mobile menu below 900px. Only one is visible, and so only
+one is focusable, at any width.
+
+The icon and the label both name the theme you are switching to, and both are
+swapped by CSS off html[data-theme], which the inline script in head.html sets
+before first paint. Nothing here waits on javascript/theme.js.
+
+Pass a variant: {% include theme_toggle.html variant="footer" %}
+{% endcomment %}
+
+<button type="button" class="theme-toggle theme-toggle--{{ include.variant }}">
+	<i class="fa-solid fa-moon" aria-hidden="true"></i>
+	<i class="fa-solid fa-sun" aria-hidden="true"></i>
+	<span class="theme-toggle__label theme-toggle__label--to-dark">Dark mode</span>
+	<span class="theme-toggle__label theme-toggle__label--to-light">Light mode</span>
+</button>

@@ -34,7 +34,10 @@
                 </a>
             </li>
             {% endfor %}
-        </ul>        
+            <li class="nav-mobile__theme">
+                {% include theme_toggle.html variant="menu" %}
+            </li>
+        </ul>
 </nav>
 
 <div id="nav-trigger"> 
