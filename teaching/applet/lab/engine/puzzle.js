@@ -84,10 +84,12 @@ export class PuzzleView {
     const wsWrap = el('div', 'lp-workspace-wrap');
     const guides = el('div', 'lp-guides');
     guides.setAttribute('aria-hidden', 'true');
+    this.guideEls = [];
     for (let i = 0; i <= this.maxIndent; i++) {
       const guide = el('span', 'lp-guide');
       guide.style.left = `calc(var(--lp-indent) * ${i})`;
       guides.appendChild(guide);
+      this.guideEls.push(guide);
     }
     wsWrap.appendChild(guides);
 
@@ -450,7 +452,7 @@ export class PuzzleView {
     // Indent follows the block's own left edge, not the pointer, so what the
     // ghost shows is where the block lands.
     const leadingX = e.clientX - d.grabDX;
-    const target = this.hitTest(leadingX, e.clientY);
+    const target = this.hitTest(leadingX, e.clientY, this.flying.indent);
 
     if (target.list === 'tray') {
       this.flying.overTray = true;
@@ -511,6 +513,7 @@ export class PuzzleView {
     const box = source?.getBoundingClientRect();
     this.drag.grabDX = box ? event.clientX - box.left : 0;
     this.drag.grabDY = box ? event.clientY - box.top : 0;
+    this.drag.step = this.measureIndentStep();
 
     const origin = this.detach(id);
     this.flying = {
@@ -546,7 +549,7 @@ export class PuzzleView {
     }
   }
 
-  hitTest(x, y) {
+  hitTest(x, y, currentIndent) {
     const trayBox = this.trayList.getBoundingClientRect();
     if (x >= trayBox.left && x <= trayBox.right && y >= trayBox.top - 8 && y <= trayBox.bottom + 8) {
       return { list: 'tray' };
@@ -559,14 +562,31 @@ export class PuzzleView {
     }
     const wsBox = this.workspace.getBoundingClientRect();
     const step = this.indentStep();
-    const indent = clamp(Math.round((x - wsBox.left - step * 0.4) / step), 0, this.maxIndent);
-    return { list: 'workspace', index, indent };
+    const raw = (x - wsBox.left) / step;
+    return {
+      list: 'workspace',
+      index,
+      indent: snapIndent(raw, currentIndent, this.maxIndent),
+    };
   }
 
   indentStep() {
+    if (this.drag?.step) return this.drag.step;
+    return this.measureIndentStep();
+  }
+
+  measureIndentStep() {
+    const guides = this.guideEls;
+    if (guides && guides.length > 1) {
+      const step = guides[1].getBoundingClientRect().left - guides[0].getBoundingClientRect().left;
+      if (step > 1) return step;
+    }
+    // Fallback for a single-level puzzle, where there is no pair to measure.
     const raw = getComputedStyle(this.root).getPropertyValue('--lp-indent').trim();
     const n = parseFloat(raw);
-    return Number.isFinite(n) && n > 0 ? n : 28;
+    if (!Number.isFinite(n) || n <= 0) return 30;
+    const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    return /rem|em/.test(raw) ? n * rootPx : n;
   }
 
   startGhost(id, box) {
@@ -843,6 +863,28 @@ function el(tag, className) {
 }
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+// How far past a level, as a fraction of one level's width, the block has to
+// travel before the level changes. At 0.5 this is plain rounding and the middle
+// levels are as twitchy as a coin edge; above that each level gets a dead zone
+// it holds on to, which is what makes a level in the middle parkable.
+export const INDENT_STICK = 0.72;
+
+/**
+ * Snap a fractional indent position to a level, holding the current level
+ * until the block is clearly past it.
+ *
+ * @param {number} raw      position in levels, measured from the left guide
+ * @param {number|null|undefined} current  the level the block is at now
+ * @param {number} max
+ */
+export function snapIndent(raw, current, max) {
+  const nearest = clamp(Math.round(raw), 0, max);
+  if (current === null || current === undefined) return nearest;
+  const held = clamp(current, 0, max);
+  if (raw > held + INDENT_STICK || raw < held - INDENT_STICK) return nearest;
+  return held;
+}
 
 function opensBlock(text) { return /:\s*$/.test(text.replace(/\s*#.*$/, '')); }
 
