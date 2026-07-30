@@ -174,7 +174,26 @@ class LabController {
     }
     this.progressLabel = el('p', 'lab-progress');
     head.appendChild(this.progressLabel);
+    head.appendChild(this.buildHowTo());
     return head;
+  }
+
+  buildHowTo() {
+    const box = el('details', 'lab-howto');
+    const summary = el('summary');
+    summary.textContent = 'What this page is';
+    box.appendChild(summary);
+    const n = this.gates.length;
+    for (const text of [
+      `This is the notebook with its algorithms taken apart. ${n === 1 ? 'Once' : `${n} times`} on the way down, a panel asks you to rebuild one from scrambled pseudocode before it will show you the Python that implements it.`,
+      'The puzzles are about the algorithm, not about Python: you arrange steps in the notation used on the board, and the indentation says what sits inside which loop. Nothing here runs Python, so the plots and printouts are the ones the notebook produced when this page was built.',
+      'Everything that is not a puzzle you can read straight through. The whole notebook, sliders live and every cell yours to edit, opens in Colab at the bottom.',
+    ]) {
+      const p = el('p');
+      p.textContent = text;
+      box.appendChild(p);
+    }
+    return box;
   }
 
   updateProgressLabel() {
@@ -241,18 +260,40 @@ class LabController {
 
   buildCode(cell) {
     const frag = document.createDocumentFragment();
-    const pre = el('pre', 'lab-code');
-    const code = el('code');
-    code.textContent = cell.python;
-    pre.appendChild(code);
-    frag.appendChild(pre);
+
+    // A cell whose output is a widget in the notebook cannot be one here, and
+    // saying so before the pictures is the difference between a caption and an
+    // explanation for why the slider did not appear.
+    if (cell.static_frames) {
+      const note = el('p', 'lab-static-note');
+      note.textContent = 'Still frames. This cell builds a slider in the notebook, and nothing on this page runs Python, so here are two of the pictures it makes.';
+      frag.appendChild(note);
+    }
+
     if (cell.stdout) {
       const out = el('pre', 'lab-out');
       out.textContent = cell.stdout;
       frag.appendChild(out);
     }
     if (cell.figures?.length) frag.appendChild(this.buildFigures(cell));
+
+    frag.appendChild(this.buildCodeFold(cell));
     return frag;
+  }
+
+  buildCodeFold(cell) {
+    const box = el('details', 'lab-codebox');
+    const summary = el('summary');
+    summary.textContent = cell.static_frames
+      ? 'Show the Python behind these frames'
+      : (cell.stdout || cell.figures?.length ? 'Show the Python that produced this' : 'Show the Python');
+    box.appendChild(summary);
+    const pre = el('pre', 'lab-code');
+    const code = el('code');
+    code.textContent = cell.python;
+    pre.appendChild(code);
+    box.appendChild(pre);
+    return box;
   }
 
   buildFigures(cell) {
@@ -264,11 +305,11 @@ class LabController {
       img.loading = 'lazy';
       img.alt = fig.caption || 'Figure from this cell';
       figure.appendChild(img);
-      const caption = el('figcaption');
-      caption.textContent = cell.static_frames && fig === cell.figures[cell.figures.length - 1]
-        ? `${fig.caption}${fig.caption ? '. ' : ''}These are static frames; the sliders are in the notebook you open at the end.`
-        : fig.caption;
-      if (caption.textContent) figure.appendChild(caption);
+      if (fig.caption) {
+        const caption = el('figcaption');
+        caption.textContent = fig.caption;
+        figure.appendChild(caption);
+      }
       strip.appendChild(figure);
     }
     return strip;
@@ -295,6 +336,11 @@ class LabController {
       host.appendChild(this.buildSolvedBar(cell, saved));
       return host;
     }
+
+    const position = this.gates.findIndex(({ cell: c }) => c.gate.cell_id === id) + 1;
+    const eyebrow = el('p', 'lab-gate__eyebrow');
+    eyebrow.textContent = `Puzzle ${position} of ${this.gates.length}`;
+    host.appendChild(eyebrow);
 
     const mount = el('div');
     host.appendChild(mount);
@@ -330,8 +376,9 @@ class LabController {
   }
 
   buildLocked(gate) {
+    const position = this.gates.findIndex(({ cell: c }) => c.gate.cell_id === gate.cell_id) + 1;
     const box = el('div', 'lab-locked');
-    box.textContent = `${gate.title} — opens when the puzzle above is done.`;
+    box.textContent = `Puzzle ${position} of ${this.gates.length}: ${gate.title}. Opens once the puzzle above is done or parked.`;
     return box;
   }
 

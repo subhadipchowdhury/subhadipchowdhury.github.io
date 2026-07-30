@@ -118,9 +118,77 @@ html[data-theme="dark"] .lab {
 
 .lab-defer__glyph { font-size: 0.85em; }
 
+/* An expandable strip at the top saying what the page is. Collapsed by default
+   once, expanded on a first visit, is tempting but needs state nobody asked
+   for; open by default and one click to fold is enough. */
+.lab-howto {
+  margin: 0.7rem 0 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--lab-sunken);
+  font-family: var(--lab-sans);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+.lab-howto > summary {
+  cursor: pointer;
+  font-family: var(--lab-semi), var(--lab-sans);
+  color: var(--accent);
+}
+
+.lab-howto p { margin: 0.55rem 0 0; color: var(--color-text); }
+
 /* --------------------------------------------------------------------------
  * Code and captured output
  * ----------------------------------------------------------------------- */
+
+/* Python for an ungated cell is scaffolding, so the output leads and the source
+   folds away behind it. The reveal is where reading Python is the point. */
+.lab-codebox {
+  margin-top: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--lab-sunken);
+}
+
+.lab-codebox > summary {
+  cursor: pointer;
+  padding: 0.45rem 0.8rem;
+  font-family: var(--lab-sans);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.lab-codebox > summary:hover { color: var(--accent); }
+
+.lab-codebox .lab-code {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 6px 6px;
+  background: transparent;
+}
+
+.lab-static-note {
+  font-family: var(--lab-sans);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin: 0 0 0.5rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--border-color);
+}
+
+.lab-gate__eyebrow {
+  font-family: var(--lab-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
 
 .lab-code {
   font-family: var(--lab-mono);
