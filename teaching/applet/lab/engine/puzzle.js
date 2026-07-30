@@ -33,14 +33,7 @@ export class PuzzleView {
 
     this.maxIndent = Math.max(...gate.solution.map((s) => s.indent));
 
-    const restored = opts.state;
-    this.placements = restored?.placements?.map((p) => ({ ...p })) ?? [];
-    this.blanks = { ...(restored?.blanks ?? {}) };
-    this.removed = new Set(restored?.removed ?? []); // decoys taken away by a hint
-
-    const placedIds = new Set(this.placements.map((p) => p.id));
-    this.tray = (opts.shuffle ?? defaultOrder(gate))
-      .filter((id) => this.blocks.has(id) && !placedIds.has(id) && !this.removed.has(id));
+    this.seed(opts.state ?? initialState(gate));
 
     this.selected = null; // { list, id } for tap-to-place
     this.flying = null;   // { id, index, indent, origin } while grabbed
@@ -49,6 +42,17 @@ export class PuzzleView {
 
     this.build();
     this.render();
+  }
+
+  // Load an arrangement, whether restored from storage or freshly seeded, and
+  // put whatever it does not place into the tray.
+  seed(state) {
+    this.placements = state?.placements?.map((p) => ({ ...p })) ?? [];
+    this.blanks = { ...(state?.blanks ?? {}) };
+    this.removed = new Set(state?.removed ?? []); // decoys taken away by a hint
+    const placed = new Set(this.placements.map((p) => p.id));
+    this.tray = (this.opts.shuffle ?? defaultOrder(this.gate))
+      .filter((id) => this.blocks.has(id) && !placed.has(id) && !this.removed.has(id));
   }
 
   // -------------------------------------------------------------------------
@@ -75,6 +79,11 @@ export class PuzzleView {
       note.textContent = decoyCount === 1
         ? 'One block in the tray is not part of the answer.'
         : `${decoyCount} blocks in the tray are not part of the answer.`;
+      head.appendChild(note);
+    }
+    if (g.prefill === 'all') {
+      const note = el('p', 'lp-decoy-note');
+      note.textContent = 'The lines are already in order. Fill in what is missing.';
       head.appendChild(note);
     }
     this.root.appendChild(head);
@@ -398,10 +407,9 @@ export class PuzzleView {
 
   reset() {
     if (this.frozen) return;
-    this.placements = [];
-    this.blanks = {};
-    this.removed = new Set();
-    this.tray = (this.opts.shuffle ?? defaultOrder(this.gate)).filter((id) => this.blocks.has(id));
+    // Back to the seeded arrangement, which for a pre-placed puzzle is the
+    // blocks in position with the blanks empty, not an empty workspace.
+    this.seed(initialState(this.gate));
     this.selected = null;
     this.flying = null;
     this.attempts = 0;
@@ -887,6 +895,21 @@ export function snapIndent(raw, current, max) {
 }
 
 function opensBlock(text) { return /:\s*$/.test(text.replace(/\s*#.*$/, '')); }
+
+/**
+ * The arrangement a puzzle starts from.
+ *
+ * `prefill` puts the first n solution blocks in place, or all of them with
+ * "all". A fully pre-placed puzzle is one whose content is in its blanks: the
+ * arranging would be busywork, and the reduced rebuild of a concept met in an
+ * earlier lab uses the same mechanism with a single anchor block.
+ */
+export function initialState(gate) {
+  const prefill = gate.prefill;
+  if (!prefill) return { placements: [], blanks: {} };
+  const count = prefill === 'all' ? gate.solution.length : Number(prefill) || 0;
+  return { placements: gate.solution.slice(0, count).map((s) => ({ ...s })), blanks: {} };
+}
 
 // A stable pseudo-shuffle: the tray order must not change between visits, and
 // must not be the solution order. Derived from the ids so it needs no RNG.

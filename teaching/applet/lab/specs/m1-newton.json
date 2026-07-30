@@ -540,8 +540,9 @@
    "gate": {
     "cell_id": "ddprint",
     "concept": "print_dd_table",
-    "title": "Print the table as a triangle",
-    "intro": "A short one. Row i of the triangle holds the differences that start at node i, and there are fewer of them the further down you go.",
+    "title": "How long is each row of the triangle?",
+    "intro": "The lines are already in order; only the inner bound is missing. Row i holds the differences that start at node i, and there are fewer of them the further down the table you go.",
+    "prefill": "all",
     "blocks": [
      {
       "id": "def",
@@ -648,23 +649,7 @@
       "width": 8
      }
     },
-    "distractors": [
-     {
-      "id": "d_swap",
-      "lines": [
-       {
-        "text": "for j ← 0 to n−1:",
-        "indent": 0
-       },
-       {
-        "text": "for i ← 0 to n−j−1:",
-        "indent": 1
-       }
-      ],
-      "near": "loopi",
-      "why": "print_transposed"
-     }
-    ],
+    "distractors": [],
     "wrong_blanks": {
      "rowlen": [
       {
@@ -674,6 +659,10 @@
       {
        "text": "n−j−1",
        "why": "rowlen_uses_j"
+      },
+      {
+       "text": "n−i",
+       "why": "rowlen_off_by_one"
       }
      ]
     },
@@ -737,13 +726,13 @@
       "blocks": [
        "pr"
       ],
-      "text": "The Python builds one row as a string and prints it at the end of the row, rather than printing each entry as it goes. Same entries, same order."
+      "text": "The Python collects a row into a string and prints it once at the end of the row, rather than printing each entry as it goes. Same entries, same order."
      }
     ],
     "feedback": {
-     "print_transposed": "You printed the table by columns. The triangle you want has row i holding n−i entries, one for each order of difference that starts at node i.",
      "rowlen_square": "You printed the whole square, including entries that no column ever wrote to. Those zeros are not part of the table.",
-     "rowlen_uses_j": "j is the variable this loop is about to bind, so it cannot appear in its own bound. Which index tells you how far along the row you started?"
+     "rowlen_uses_j": "j is the variable this loop is about to bind, so it cannot appear in its own bound. Which index tells you how far down the table this row starts?",
+     "rowlen_off_by_one": "One entry too many on every row. Count the differences that start at node i: the first is the value there, and the last is the one that reaches the final node."
     },
     "reveal": [
      {
@@ -837,7 +826,7 @@
       "role": "glue"
      }
     ],
-    "hash": "d9c0c7554e66f1cb"
+    "hash": "b278b493de7fc916"
    }
   },
   {

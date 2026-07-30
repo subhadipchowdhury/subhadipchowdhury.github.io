@@ -170,6 +170,46 @@ await it('solving all three enables the Colab launch', async () => {
   has(launch.getAttribute('href'), 'colab.research.google.com');
 });
 
+group = 'a pre-placed puzzle';
+await it('arrives with its lines already in order and an empty tray', async () => {
+  const { lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddprint');
+  assert(view, 'the second gate should be live once the first is solved');
+  eq(view.placements.map((p) => p.id), ['def', 'n', 'loopi', 'loopj', 'pr']);
+  eq(view.tray.length, 0, 'nothing left to arrange');
+  eq(view.blanks, {}, 'the blank starts empty; that is the whole question');
+});
+
+await it('is solved by the blank alone', async () => {
+  const { lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddprint');
+  view.blanks = { rowlen: 'n−i−1' };
+  view.submit();
+  eq(lab.status.get('ddprint'), 'solved');
+});
+
+await it('rejects the bound copied from the puzzle above, by name', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddprint');
+  view.blanks = { rowlen: 'n−j−1' };
+  view.submit();
+  eq(lab.status.get('ddprint'), 'open');
+  has(textOf(root.querySelector('.lp-feedback')), 'cannot appear in its own bound');
+});
+
+await it('resetting puts the lines back rather than emptying the workspace', async () => {
+  const { lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddprint');
+  view.blanks = { rowlen: 'nonsense(' };
+  view.reset();
+  eq(view.placements.length, 5, 'the pre-placed lines survive a reset');
+  eq(view.blanks, {}, 'the blank is cleared');
+});
+
 group = 'wrong answers';
 await it('a decoy is rejected with the message written for it', async () => {
   const { root, lab } = await freshLab();

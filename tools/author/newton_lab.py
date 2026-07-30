@@ -147,16 +147,21 @@ DIVDIFF = {
 # Gate 2: printing the triangle
 # ---------------------------------------------------------------------------
 #
-# This gate exists for one contrast. The cell above bounds the shrinking
-# dimension by n−j−1 over columns; this one bounds it by n−i−1 over rows, and a
-# student who pattern-matched the first bound writes the wrong one here.
+# Pre-placed on purpose. The whole reason this gate exists is one contrast: the
+# cell above bounds the shrinking dimension by n−j−1 over columns, this one
+# bounds it by n−i−1 over rows, and a student who pattern-matched the first
+# bound writes the wrong one here. Arranging five obvious lines around that adds
+# nothing, and the Python is string building, so most of the reveal would be
+# dimmed bookkeeping. The transposed-nest decoy is gone too: it teaches the same
+# which-loop-is-outer lesson the previous puzzle just finished teaching.
 
 DDPRINT = {
     'mode': 'gated',
     'cell_id': 'ddprint',
     'concept': 'print_dd_table',
-    'title': 'Print the table as a triangle',
-    'intro': 'A short one. Row i of the triangle holds the differences that start at node i, and there are fewer of them the further down you go.',
+    'title': 'How long is each row of the triangle?',
+    'intro': 'The lines are already in order; only the inner bound is missing. Row i holds the differences that start at node i, and there are fewer of them the further down the table you go.',
+    'prefill': 'all',
 
     'blocks': [
         block('def', 'function print_dd_table(x, T):', [4, 4], 'def print_dd_table'),
@@ -178,14 +183,13 @@ DDPRINT = {
         'rowlen': {'kind': 'range_end', 'answer': 'n−i−1', 'env': ['n', 'i', 'j'], 'width': 8},
     },
 
-    'distractors': [
-        fused('d_swap', ['for j ← 0 to n−1:', 'for i ← 0 to n−j−1:'], 'loopi', 'print_transposed'),
-    ],
+    'distractors': [],
 
     'wrong_blanks': {
         'rowlen': [
             {'text': 'n−1', 'why': 'rowlen_square'},
             {'text': 'n−j−1', 'why': 'rowlen_uses_j'},
+            {'text': 'n−i', 'why': 'rowlen_off_by_one'},
         ],
     },
 
@@ -201,14 +205,14 @@ DDPRINT = {
     'annotations': [
         {
             'blocks': ['pr'],
-            'text': 'The Python builds one row as a string and prints it at the end of the row, rather than printing each entry as it goes. Same entries, same order.',
+            'text': 'The Python collects a row into a string and prints it once at the end of the row, rather than printing each entry as it goes. Same entries, same order.',
         },
     ],
 
     'feedback': {
-        'print_transposed': 'You printed the table by columns. The triangle you want has row i holding n−i entries, one for each order of difference that starts at node i.',
         'rowlen_square': 'You printed the whole square, including entries that no column ever wrote to. Those zeros are not part of the table.',
-        'rowlen_uses_j': 'j is the variable this loop is about to bind, so it cannot appear in its own bound. Which index tells you how far along the row you started?',
+        'rowlen_uses_j': 'j is the variable this loop is about to bind, so it cannot appear in its own bound. Which index tells you how far down the table this row starts?',
+        'rowlen_off_by_one': 'One entry too many on every row. Count the differences that start at node i: the first is the value there, and the last is the one that reaches the final node.',
     },
 }
 
