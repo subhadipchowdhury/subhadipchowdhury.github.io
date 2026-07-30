@@ -34,41 +34,41 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
      below, so the site's dark-mode toggle re-skins the whole page at once. */
   body.page-computational-labs .main-wrapper {
     padding: 0;
-    background: var(--al-page);
+    background: var(--cl-page);
     overflow: hidden;
   }
 
-  /* Light palette. The tokens live on the body (not .lab-library) because
+  /* Light palette. The tokens live on the body (not .cl-library) because
      .main-wrapper above sits outside the library container. The body class is
      built from page.title in _layouts/default.html, so it tracks the page name. */
   body.page-computational-labs {
-    --al-maroon: #800000;
-    --al-ink: #161512;
+    --cl-maroon: #800000;
+    --cl-ink: #161512;
 
-    --al-page: #FBF9F6;
-    --al-sticky: #FBF9F6f2;          /* sticky bar: page color, semi-opaque */
-    --al-text: #000000b3;            /* body copy */
-    --al-soft: #00000099;            /* blurbs */
-    --al-faint: #00000073;           /* filenames, labels */
-    --al-fainter: #00000047;         /* disabled launch text */
+    --cl-page: #FBF9F6;
+    --cl-sticky: #FBF9F6f2;          /* sticky bar: page color, semi-opaque */
+    --cl-text: #000000b3;            /* body copy */
+    --cl-soft: #00000099;            /* blurbs */
+    --cl-faint: #00000073;           /* filenames, labels */
+    --cl-fainter: #00000047;         /* ink on a disabled Start button */
 
-    --al-card-bg: #ffffff;
-    --al-card-border: #00000010;
-    --al-card-shadow: 0 14px 32px -22px #00000066;
-    --al-card-shadow-hover: 0 24px 48px -22px #00000073;
-    --al-banner-from: #F5F2EC;       /* card header wash */
-    --al-banner-to: #ECE8E1;
-    --al-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
-    --al-pill-bg: #ffffffec;         /* course pill floating on the banner */
-    --al-course-fg: #2c2a26;
+    --cl-card-bg: #ffffff;
+    --cl-card-border: #00000010;
+    --cl-card-shadow: 0 14px 32px -22px #00000066;
+    --cl-card-shadow-hover: 0 24px 48px -22px #00000073;
+    --cl-banner-from: #F5F2EC;       /* card header wash */
+    --cl-banner-to: #ECE8E1;
+    --cl-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
+    --cl-pill-bg: #ffffffec;         /* course pill floating on the banner */
+    --cl-course-fg: #2c2a26;
 
-    --al-chip-bg: #00000008;         /* library pills, disabled launch */
-    --al-chip-border: #0000000f;
-    --al-hairline: #00000012;        /* sticky bar + footer rules */
-    --al-launch-fg: #ffffff;          /* ink on the Start button */
+    --cl-chip-bg: #00000008;         /* library pills, disabled Start button */
+    --cl-chip-border: #0000000f;
+    --cl-hairline: #00000012;        /* sticky bar + footer rules */
+    --cl-start-fg: #ffffff;          /* ink on the Start button */
 
-    --al-draft-bg: #FBEFD6;  --al-draft-fg: #9A6B15;
-    --al-plan-bg: #ECEAE6;   --al-plan-fg: #6B6B6B;
+    --cl-draft-bg: #FBEFD6;  --cl-draft-fg: #9A6B15;
+    --cl-plan-bg: #ECEAE6;   --cl-plan-fg: #6B6B6B;
   }
 
   /* Dark palette. Warm charcoals rather than the site's neutral greys, so the
@@ -77,347 +77,349 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     /* Maroon goes near-black on a dark ground; this is the same hue lifted
        into a legible range (the site swaps to lake blue, which fights the
        warm surfaces here). */
-    --al-maroon: #E08A84;
-    --al-ink: #EDE9E3;
+    --cl-maroon: #E08A84;
+    --cl-ink: #EDE9E3;
 
-    --al-page: #191816;
-    --al-sticky: #191816f0;
-    --al-text: #ffffffb3;
-    --al-soft: #ffffff99;
-    --al-faint: #ffffff73;
-    --al-fainter: #ffffff47;
+    --cl-page: #191816;
+    --cl-sticky: #191816f0;
+    --cl-text: #ffffffb3;
+    --cl-soft: #ffffff99;
+    --cl-faint: #ffffff73;
+    --cl-fainter: #ffffff47;
 
-    --al-card-bg: #232120;
-    --al-card-border: #ffffff14;
-    --al-card-shadow: 0 14px 32px -20px #000000b3;
-    --al-card-shadow-hover: 0 24px 48px -20px #000000cc;
-    --al-banner-from: #2A2724;
-    --al-banner-to: #211E1B;
-    --al-banner-hatch: #ffffff0a;
-    --al-pill-bg: #232120eb;
-    --al-course-fg: #D8D3CB;
+    --cl-card-bg: #232120;
+    --cl-card-border: #ffffff14;
+    --cl-card-shadow: 0 14px 32px -20px #000000b3;
+    --cl-card-shadow-hover: 0 24px 48px -20px #000000cc;
+    --cl-banner-from: #2A2724;
+    --cl-banner-to: #211E1B;
+    --cl-banner-hatch: #ffffff0a;
+    --cl-pill-bg: #232120eb;
+    --cl-course-fg: #D8D3CB;
 
-    --al-chip-bg: #ffffff0d;
-    --al-chip-border: #ffffff1a;
-    --al-hairline: #ffffff14;
-    --al-launch-fg: #141210;
+    --cl-chip-bg: #ffffff0d;
+    --cl-chip-border: #ffffff1a;
+    --cl-hairline: #ffffff14;
+    --cl-start-fg: #141210;
 
-    --al-draft-bg: #CE8A2C2e;  --al-draft-fg: #E5B36A;
-    --al-plan-bg: #ffffff12;   --al-plan-fg: #A9A6A0;
+    --cl-draft-bg: #CE8A2C2e;  --cl-draft-fg: #E5B36A;
+    --cl-plan-bg: #ffffff12;   --cl-plan-fg: #A9A6A0;
   }
 
-  /* `al-` throughout is this page's private prefix; it predates the rename and
-     no reader ever sees it. */
-  .lab-library {
+  /* `cl-` throughout is this page's private prefix, for Computational Labs. It
+     is deliberately not `lab-`, which is what engine/lab.css uses for the lab
+     pages; the two namespaces would otherwise read as one. No reader ever sees
+     either. Renamed from `al-` ("applet library") on 2026-07-30. */
+  .cl-library {
     /* Each brand sans weight is its own family name, as everywhere else on the
        site, so weight is selected by family and font-weight stays normal. The
        serif does carry real weight axes (400/600/700) on one family name. */
-    --al-serif: "UChicagoSerif", Georgia, serif;
-    --al-sans:  "UChicagoSansSerif-Regular", system-ui, sans-serif;
-    --al-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
-    --al-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
-    --al-mono:  "IBM Plex Mono", ui-monospace, monospace;
+    --cl-serif: "UChicagoSerif", Georgia, serif;
+    --cl-sans:  "UChicagoSansSerif-Regular", system-ui, sans-serif;
+    --cl-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
+    --cl-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
+    --cl-mono:  "IBM Plex Mono", ui-monospace, monospace;
 
-    --jelly-font-display: var(--al-serif);
-    --jelly-font-text: var(--al-sans);
-    --jelly-font-mono: var(--al-mono);
+    --jelly-font-display: var(--cl-serif);
+    --jelly-font-text: var(--cl-sans);
+    --jelly-font-mono: var(--cl-mono);
     padding: 8px 34px 60px;
-    font-family: var(--al-sans);
-    color: var(--al-ink);
+    font-family: var(--cl-sans);
+    color: var(--cl-ink);
     -webkit-font-smoothing: antialiased;
   }
-  .lab-library *,
-  .lab-library *::before,
-  .lab-library *::after { box-sizing: border-box; }
+  .cl-library *,
+  .cl-library *::before,
+  .cl-library *::after { box-sizing: border-box; }
 
   /* Neutralize the site's global link styling inside the library;
      the design manages colors, weight and hover per element. */
-  .lab-library a { font-family: inherit; font-weight: inherit; transition: none; }
-  .lab-library a:hover { text-decoration: none; }
+  .cl-library a { font-family: inherit; font-weight: inherit; transition: none; }
+  .cl-library a:hover { text-decoration: none; }
 
   /* Header: title block on the left, search on the right; stacks under 760px. */
-  .al-head {
+  .cl-head {
     padding: 34px 0 6px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 32px;
   }
-  .al-head-text { flex: 1 1 auto; min-width: 0; }
-  .al-head-search { flex: 0 0 300px; padding-bottom: 5px; }
+  .cl-head-text { flex: 1 1 auto; min-width: 0; }
+  .cl-head-search { flex: 0 0 300px; padding-bottom: 5px; }
   /* jelly-input[size=small] hardcodes width:220px on its host, which clips the
      placeholder; let it fill the slot instead (and the viewport on mobile). */
-  .al-head-search jelly-input { width: 100%; }
+  .cl-head-search jelly-input { width: 100%; }
 
   /* The brand serif is a Garamond, x-height 0.400 em against the sans's 0.525,
      so serif sizes run ~25% larger than their sans equivalents would; otherwise
      headings read as the same optical size as the body text. */
-  .al-title {
-    font-family: var(--al-serif);
+  .cl-title {
+    font-family: var(--cl-serif);
     font-weight: 700;
     font-size: clamp(38px, 5.6vw, 56px);
     line-height: 1.04;
     letter-spacing: -.008em;
     margin: 8px 0 0;
-    color: var(--al-maroon);
+    color: var(--cl-maroon);
   }
-  .al-sub {
-    font-family: var(--al-light);
+  .cl-sub {
+    font-family: var(--cl-light);
     margin: 14px 0 0;
     max-width: 600px;
     font-size: 16.5px;
     line-height: 1.6;
-    color: var(--al-text);
+    color: var(--cl-text);
     text-wrap: pretty;
   }
 
   /* ---------- sticky controls ---------- */
-  .al-sticky {
+  .cl-sticky {
     position: sticky;
     top: 4.9rem;
     z-index: 5;
-    background: var(--al-sticky);
+    background: var(--cl-sticky);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     margin: 22px 0 0;
     padding: 16px 0;
-    border-bottom: 1px solid var(--al-hairline);
+    border-bottom: 1px solid var(--cl-hairline);
   }
-  .al-count { font-size: 13px; letter-spacing: .005em; color: var(--al-text); }
-  .al-count strong,
-  .al-count span { font-family: var(--al-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
-  .al-count strong { color: var(--al-ink); }
-  .al-tool-label {
-    font-family: var(--al-semi);
+  .cl-count { font-size: 13px; letter-spacing: .005em; color: var(--cl-text); }
+  .cl-count strong,
+  .cl-count span { font-family: var(--cl-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .cl-count strong { color: var(--cl-ink); }
+  .cl-tool-label {
+    font-family: var(--cl-semi);
     font-size: 12px;
     letter-spacing: .04em;
     text-transform: uppercase;
-    color: var(--al-faint);
+    color: var(--cl-faint);
   }
 
   /* ---------- cards ----------
-     Each card carries its course accent inline as --al-accent-light /
-     --al-accent-dark; the theme picks one so a toggle needs no re-render. */
-  .al-card {
+     Each card carries its course accent inline as --cl-accent-light /
+     --cl-accent-dark; the theme picks one so a toggle needs no re-render. */
+  .cl-card {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: var(--al-card-bg);
-    border: 1px solid var(--al-card-border);
+    background: var(--cl-card-bg);
+    border: 1px solid var(--cl-card-border);
     border-radius: 18px;
-    box-shadow: var(--al-card-shadow);
+    box-shadow: var(--cl-card-shadow);
     transition: transform .18s ease, box-shadow .18s ease;
-    --al-accent: var(--al-accent-light);
-    --al-accent-tint: var(--al-accent-soft);
+    --cl-accent: var(--cl-accent-light);
+    --cl-accent-tint: var(--cl-accent-soft);
   }
-  html[data-theme="dark"] .al-card {
-    --al-accent: var(--al-accent-dark);
-    --al-accent-tint: color-mix(in srgb, var(--al-accent-dark) 20%, transparent);
+  html[data-theme="dark"] .cl-card {
+    --cl-accent: var(--cl-accent-dark);
+    --cl-accent-tint: color-mix(in srgb, var(--cl-accent-dark) 20%, transparent);
   }
-  .al-card:hover {
+  .cl-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--al-card-shadow-hover);
+    box-shadow: var(--cl-card-shadow-hover);
   }
   /* One row, laid out by flex. The course pill and the status pill used to be
      absolutely positioned at opposite corners, which let a long course name run
      underneath the status pill on a narrow card. Now the course pill shrinks and
      ellipsises instead, and the status pill can never be overlapped. */
-  .al-banner {
+  .cl-banner {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 11px 12px;
     background:
-      repeating-linear-gradient(135deg, #0000 0 13px, var(--al-banner-hatch) 13px 14px),
-      linear-gradient(135deg, var(--al-banner-from), var(--al-banner-to));
+      repeating-linear-gradient(135deg, #0000 0 13px, var(--cl-banner-hatch) 13px 14px),
+      linear-gradient(135deg, var(--cl-banner-from), var(--cl-banner-to));
   }
-  .al-course {
-    font-family: var(--al-semi);
+  .cl-course {
+    font-family: var(--cl-semi);
     font-size: 11px;
-    color: var(--al-course-fg);
+    color: var(--cl-course-fg);
     display: inline-flex;
     align-items: center;
     gap: 6px;
     min-width: 0;
-    background: var(--al-pill-bg);
+    background: var(--cl-pill-bg);
     padding: 5px 10px;
     border-radius: 999px;
   }
-  .al-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .al-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--al-accent); }
-  .al-status,
-  .al-topic {
-    font-family: var(--al-semi);
+  .cl-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cl-accent); }
+  .cl-status,
+  .cl-topic {
+    font-family: var(--cl-semi);
     letter-spacing: .07em;
     text-transform: uppercase;
   }
   /* Only the unfinished cards carry a status pill. A ready card needs none:
      drafts are hidden unless you ask for them, so "Ready" would sit on every
      visible card saying nothing. */
-  .al-status {
+  .cl-status {
     margin-left: auto;
     flex: none;
     font-size: 10px;
     padding: 5px 9px;
     border-radius: 999px;
   }
-  .al-status-progress { background: var(--al-draft-bg); color: var(--al-draft-fg); }
-  .al-status-planned  { background: var(--al-plan-bg);  color: var(--al-plan-fg); }
-  .al-topic {
+  .cl-status-progress { background: var(--cl-draft-bg); color: var(--cl-draft-fg); }
+  .cl-status-planned  { background: var(--cl-plan-bg);  color: var(--cl-plan-fg); }
+  .cl-topic {
     align-self: flex-start;
     font-size: 10.5px;
     padding: 4px 10px;
     border-radius: 999px;
-    color: var(--al-accent);
-    background: var(--al-accent-tint);
+    color: var(--cl-accent);
+    background: var(--cl-accent-tint);
   }
-  .al-lib {
-    font-family: var(--al-mono);
+  .cl-lib {
+    font-family: var(--cl-mono);
     font-size: 10.5px;
-    color: var(--al-faint);
-    background: var(--al-chip-bg);
-    border: 1px solid var(--al-chip-border);
+    color: var(--cl-faint);
+    background: var(--cl-chip-bg);
+    border: 1px solid var(--cl-chip-border);
     padding: 4px 9px;
     border-radius: 999px;
   }
-  .al-card-title {
-    font-family: var(--al-serif);
+  .cl-card-title {
+    font-family: var(--cl-serif);
     font-weight: 700;
     font-size: 21px;
     line-height: 1.18;
     letter-spacing: -.005em;
-    color: var(--al-ink);
+    color: var(--cl-ink);
     text-wrap: pretty;
   }
-  .al-blurb {
-    font-family: var(--al-light);
+  .cl-blurb {
+    font-family: var(--cl-light);
     font-size: 13.5px;
     line-height: 1.55;
-    color: var(--al-soft);
+    color: var(--cl-soft);
     text-wrap: pretty;
   }
   /* Cards in a row are stretched to the tallest, and the slack used to go to
      the blurb, which opened a gap between the blurb and the libraries. Sending
      it here instead keeps the text block together and pins the button to the
      bottom edge of every card in the row. */
-  .al-actions { margin-top: auto; padding-top: 12px; display: flex; }
-  .al-lab {
+  .cl-actions { margin-top: auto; padding-top: 12px; display: flex; }
+  .cl-start {
     flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    font-family: var(--al-semi);
+    font-family: var(--cl-semi);
     font-size: 12.5px;
     line-height: 1;
-    background: var(--al-accent);
-    color: var(--al-launch-fg);
+    background: var(--cl-accent);
+    color: var(--cl-start-fg);
     padding: 11px 12px;
     border-radius: 12px;
     text-decoration: none;
   }
-  .al-lab.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
+  .cl-start.is-off { background: var(--cl-chip-bg); color: var(--cl-fainter); cursor: default; }
 
   /* ---------- empty state + footer ---------- */
-  .al-empty { text-align: center; padding: 72px 20px; color: var(--al-faint); }
-  .al-empty-title {
-    font-family: var(--al-serif);
+  .cl-empty { text-align: center; padding: 72px 20px; color: var(--cl-faint); }
+  .cl-empty-title {
+    font-family: var(--cl-serif);
     font-weight: 700;
     font-size: 29px;
-    color: var(--al-maroon);
+    color: var(--cl-maroon);
   }
-  .al-footer-head {
+  .cl-footer-head {
     display: flex;
     align-items: center;
     gap: 9px;
-    font-family: var(--al-serif);
+    font-family: var(--cl-serif);
     font-weight: 700;
     font-size: 20px;
-    color: var(--al-maroon);
+    color: var(--cl-maroon);
   }
-  .al-footnote {
-    font-family: var(--al-light);
+  .cl-footnote {
+    font-family: var(--cl-light);
     margin: 9px 0 0;
     font-size: 13.5px;
     line-height: 1.65;
-    color: var(--al-text);
+    color: var(--cl-text);
   }
-  .al-footnote strong { font-family: var(--al-semi); font-weight: normal; color: var(--al-ink); }
+  .cl-footnote strong { font-family: var(--cl-semi); font-weight: normal; color: var(--cl-ink); }
 
   /* Two columns, each an unforced reading measure at this width. auto-fit drops
      to one column when a 300px track stops fitting, so no media query. Grid
      children default to min-width:auto and would refuse to shrink below their
      longest word, hence the reset on the column. */
-  .al-foot {
+  .cl-foot {
     margin-top: 52px;
     padding-top: 26px;
-    border-top: 1px solid var(--al-hairline);
+    border-top: 1px solid var(--cl-hairline);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px 46px;
   }
-  .al-foot-col { min-width: 0; }
+  .cl-foot-col { min-width: 0; }
 
   @media (max-width: 760px) {
-    .lab-library { padding: 4px 20px 44px; }
-    .al-head {
+    .cl-library { padding: 4px 20px 44px; }
+    .cl-head {
       display: block;
       padding-top: 26px;
     }
-    .al-head-search { margin-top: 20px; padding-bottom: 0; }
-    .al-sub { font-size: 15.5px; }
+    .cl-head-search { margin-top: 20px; padding-bottom: 0; }
+    .cl-sub { font-size: 15.5px; }
   }
 </style>
 
-<div class="lab-library">
+<div class="cl-library">
 
   <!-- ===== HEADER ===== -->
-  <header class="al-head">
-    <div class="al-head-text">
-      <h1 class="al-title">Computational Labs</h1>
-      <p class="al-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
+  <header class="cl-head">
+    <div class="cl-head-text">
+      <h1 class="cl-title">Computational Labs</h1>
+      <p class="cl-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
     </div>
-    <div class="al-head-search">
-      <jelly-input id="al-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
+    <div class="cl-head-search">
+      <jelly-input id="cl-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
     </div>
   </header>
 
   <!-- ===== STICKY CONTROLS ===== -->
-  <div class="al-sticky">
-    <div id="al-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
+  <div class="cl-sticky">
+    <div id="cl-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
-      <div class="al-count">Showing <strong id="al-shown">0</strong> of <span id="al-total">0</span> labs</div>
+      <div class="cl-count">Showing <strong id="cl-shown">0</strong> of <span id="cl-total">0</span> labs</div>
       <div style="display:flex;align-items:center;gap:18px;">
         <div style="display:flex;align-items:center;gap:9px;">
-          <span class="al-tool-label">Sort</span>
-          <jelly-select id="al-sort" size="small">
+          <span class="cl-tool-label">Sort</span>
+          <jelly-select id="cl-sort" size="small">
             <jelly-option value="module">Default order</jelly-option>
             <jelly-option value="az">Title A–Z</jelly-option>
             <jelly-option value="course">By course</jelly-option>
           </jelly-select>
         </div>
-        <jelly-switch id="al-drafts" size="small">Show work in progress</jelly-switch>
+        <jelly-switch id="cl-drafts" size="small">Show work in progress</jelly-switch>
       </div>
     </div>
   </div>
 
   <!-- ===== RESULTS ===== -->
-  <div id="al-results" style="margin-top:26px;"></div>
+  <div id="cl-results" style="margin-top:26px;"></div>
 
   <!-- ===== FOOTER =====
        Left column is this site, right column is the notebook. The snake sits on
        the Colab heading, which is the half that actually runs Python. -->
-  <footer class="al-foot">
-    <div class="al-foot-col">
-      <div class="al-footer-head">How these work</div>
-      <p class="al-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
-      <p class="al-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
+  <footer class="cl-foot">
+    <div class="cl-foot-col">
+      <div class="cl-footer-head">How these work</div>
+      <p class="cl-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
+      <p class="cl-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
     </div>
-    <div class="al-foot-col">
-      <div class="al-footer-head"><span>🐍</span> Running the notebook</div>
-      <p class="al-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
-      <p class="al-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
+    <div class="cl-foot-col">
+      <div class="cl-footer-head"><span>🐍</span> Running the notebook</div>
+      <p class="cl-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
+      <p class="cl-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
     </div>
   </footer>
 
@@ -439,7 +441,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   ];
 
   // Shown only on the cards that are not ready; colors are themed in CSS
-  // (.al-status-<key>).
+  // (.cl-status-<key>).
   var STATUS = {
     progress: { label:'In progress' },
     planned:  { label:'Planned' }
@@ -529,39 +531,39 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   function cardHTML(a) {
     var libs = a.raw.libs.map(function (lib) {
-      return '<span class="al-lib">' + lib + '</span>';
+      return '<span class="cl-lib">' + lib + '</span>';
     }).join('');
 
     // Every card leads to a guided lab. There is deliberately no direct link to
     // the notebook and no source download: the lab is what opens the notebook,
     // and a way around it would be a way around the puzzles.
     var actions = a.ready
-      ? '<a class="al-lab" href="' + a.labUrl + '">Start the guided lab</a>'
-      : '<span class="al-lab is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
+      ? '<a class="cl-start" href="' + a.labUrl + '">Start the guided lab</a>'
+      : '<span class="cl-start is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
         '">Start the guided lab</span>';
 
     // The course accent is handed to CSS as custom properties so the theme,
     // not this markup, decides which variant is shown.
-    var accentVars = '--al-accent-light:' + a.accent +
-                     ';--al-accent-dark:' + a.accentDark +
-                     ';--al-accent-soft:' + a.accentSoft + ';';
+    var accentVars = '--cl-accent-light:' + a.accent +
+                     ';--cl-accent-dark:' + a.accentDark +
+                     ';--cl-accent-soft:' + a.accentSoft + ';';
 
     return '' +
-      '<div class="al-card" style="' + accentVars + '">' +
-        '<div class="al-banner">' +
-          '<span class="al-course">' +
-            '<span class="al-dot"></span>' +
-            '<span class="al-course-name">' + a.courseName + '</span>' +
+      '<div class="cl-card" style="' + accentVars + '">' +
+        '<div class="cl-banner">' +
+          '<span class="cl-course">' +
+            '<span class="cl-dot"></span>' +
+            '<span class="cl-course-name">' + a.courseName + '</span>' +
           '</span>' +
           (a.ready ? '' :
-            '<span class="al-status al-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
+            '<span class="cl-status cl-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
         '</div>' +
         '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
-          '<span class="al-topic">' + a.topic + '</span>' +
-          '<div class="al-card-title">' + a.raw.title + '</div>' +
-          '<div class="al-blurb">' + a.raw.blurb + '</div>' +
+          '<span class="cl-topic">' + a.topic + '</span>' +
+          '<div class="cl-card-title">' + a.raw.title + '</div>' +
+          '<div class="cl-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
-          '<div class="al-actions">' + actions + '</div>' +
+          '<div class="cl-actions">' + actions + '</div>' +
         '</div>' +
       '</div>';
   }
@@ -577,25 +579,25 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       return '<jelly-button data-course="' + c.key + '" size="small" variant="' + variant + '">' + c.name +
         ' <span style="opacity:.5;font-variant-numeric:tabular-nums;">' + c.count + '</span></jelly-button>';
     }).join('');
-    document.getElementById('al-chips').innerHTML = html;
+    document.getElementById('cl-chips').innerHTML = html;
   }
 
   function renderResults() {
     var list = filteredList();
-    document.getElementById('al-shown').textContent = list.length;
-    document.getElementById('al-total').textContent = visibleUniverse().length;
-    var results = document.getElementById('al-results');
+    document.getElementById('cl-shown').textContent = list.length;
+    document.getElementById('cl-total').textContent = visibleUniverse().length;
+    var results = document.getElementById('cl-results');
     if (list.length === 0) {
       var hint = state.showDrafts
         ? 'Try a broader search, or clear the filters.'
         : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see the labs that are still being built.';
       results.innerHTML =
-        '<div class="al-empty">' +
-          '<div class="al-empty-title">No labs match your filters.</div>' +
-          '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
-          '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
+        '<div class="cl-empty">' +
+          '<div class="cl-empty-title">No labs match your filters.</div>' +
+          '<p class="cl-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
+          '<jelly-button id="cl-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
-      var clr = document.getElementById('al-clear');
+      var clr = document.getElementById('cl-clear');
       if (clr) clr.addEventListener('click', resetFilters);
     } else {
       results.innerHTML =
@@ -609,7 +611,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   function resetFilters() {
     state.courseFilter = 'all'; state.query = '';
-    var s = document.getElementById('al-search'); if (s) s.value = '';
+    var s = document.getElementById('cl-search'); if (s) s.value = '';
     render();
   }
 
@@ -623,24 +625,24 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     render();
 
     // Course chips (event delegation; jelly-button click bubbles to the container).
-    document.getElementById('al-chips').addEventListener('click', function (e) {
+    document.getElementById('cl-chips').addEventListener('click', function (e) {
       var btn = e.target && e.target.closest ? e.target.closest('[data-course]') : null;
       if (!btn) return;
       state.courseFilter = btn.getAttribute('data-course');
       render();
     });
 
-    var search = document.getElementById('al-search');
+    var search = document.getElementById('cl-search');
     if (search) {
       var onSearch = function (e) { state.query = readVal(e); renderResults(); };
       search.addEventListener('input', onSearch);
       search.addEventListener('change', onSearch);
     }
 
-    var sort = document.getElementById('al-sort');
+    var sort = document.getElementById('cl-sort');
     if (sort) sort.addEventListener('change', function (e) { state.sort = readVal(e) || 'module'; renderResults(); });
 
-    var drafts = document.getElementById('al-drafts');
+    var drafts = document.getElementById('cl-drafts');
     if (drafts) drafts.addEventListener('change', function (e) {
       var el = e && e.target;
       var on = el && ('checked' in el ? el.checked : el.getAttribute('checked') != null);
@@ -654,7 +656,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       var typing = /INPUT|TEXTAREA|SELECT/.test(tag) || (e.target && e.target.isContentEditable);
       if (e.key === '/' && !typing) {
         e.preventDefault();
-        var el = document.getElementById('al-search');
+        var el = document.getElementById('cl-search');
         if (el) {
           if (el.focus) el.focus();
           var inner = el.shadowRoot && el.shadowRoot.querySelector('input');
@@ -663,7 +665,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       }
       if (e.key === 'Escape' && state.query) {
         state.query = '';
-        var s = document.getElementById('al-search'); if (s) s.value = '';
+        var s = document.getElementById('cl-search'); if (s) s.value = '';
         renderResults();
       }
     });

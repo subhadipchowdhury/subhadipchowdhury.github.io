@@ -240,6 +240,8 @@ Commits, oldest first:
 | `2a020a4` | This file |
 | `219663b` | Split the library footer into the two columns it was built for |
 | `c2ccdeb` | Move the labs off `teaching/applet/` and flatten `lab/` |
+| `aa5d748` | Record the move and the footer fix in the handoff |
+| (below) | Rename the library page's prefix from `al-` to `cl-` |
 
 Bugs worth remembering because they will recur:
 
@@ -260,72 +262,39 @@ Bugs worth remembering because they will recur:
 
 ---
 
+## The library page's namespace
+
+Everything on `teaching/labs/index.html` is prefixed **`cl-`**, for Computational
+Labs: 73 names in one self-contained file, custom properties, classes and DOM ids
+alike. It is deliberately not `lab-`, because `engine/lab.css` uses `.lab-*` for
+the lab pages and the two would read as one namespace.
+
+Four names in that file are **not** `cl-` and must stay that way:
+
+- `--jelly-font-display`, `--jelly-font-text`, `--jelly-font-mono`. Jelly UI's
+  own API, set on the container so the web components inherit the site's type.
+  Renaming them silently breaks the fonts inside the components.
+- `body.page-computational-labs`. Generated in `_layouts/default.html:9` from
+  `page.title | downcase | replace: ' ', '-'`, so it tracks the page title, not
+  the prefix. If the title changes again, the three selectors using it have to
+  change with it. There is a comment in the file saying so.
+
+If the prefix ever moves again: one class is **built by concatenation**, so a
+rename driven off a list of whole names will miss it. `cardHTML` writes
+`'cl-status-' + a.statusKey`. Grep the bare prefix. Anchor on a word boundary
+(`\bcl-`), never a blind `sed`, because `page-computational-labs` and
+`optimal-h` both contain the letters. Count before and after:
+
+    grep -o '\bcl-[a-z-]*' teaching/labs/index.html | sort -u | wc -l    # 73
+
+Then re-run the harness at the bottom of this file and check it against the table
+under it.
+
+---
+
 ## Next up
 
-### 1. Rename the `al-` prefix  ← start here
-
-`al-` stands for "applet library". The page is **Computational Labs** and the
-directory is `teaching/labs/`, so nothing the prefix abbreviates is left. In a
-year it will mean nothing at all. Everything is in one self-contained file,
-`teaching/labs/index.html`.
-
-Rename `al-` to **`cl-`**. Not `lab-`: `teaching/labs/engine/lab.css` uses
-`.lab-*` for the lab page itself and the two would read as one namespace.
-
-Three families, all in that one file:
-
-- CSS custom properties: `--al-maroon`, `--al-ink`, `--al-page`, `--al-sticky`,
-  `--al-text`, `--al-soft`, `--al-faint`, `--al-fainter`, `--al-card-bg`,
-  `--al-card-border`, `--al-card-shadow`, `--al-card-shadow-hover`,
-  `--al-banner-from`, `--al-banner-to`, `--al-banner-hatch`, `--al-pill-bg`,
-  `--al-course-fg`, `--al-chip-bg`, `--al-chip-border`, `--al-hairline`,
-  `--al-launch-fg`, `--al-draft-bg`, `--al-draft-fg`, `--al-plan-bg`,
-  `--al-plan-fg`, `--al-accent`, `--al-accent-tint`, `--al-accent-light`,
-  `--al-accent-dark`, `--al-accent-soft`, `--al-serif`, `--al-sans`,
-  `--al-light`, `--al-semi`, `--al-mono`.
-- CSS classes: `.al-head`, `.al-head-text`, `.al-head-search`, `.al-title`,
-  `.al-sub`, `.al-sticky`, `.al-count`, `.al-tool-label`, `.al-card`,
-  `.al-banner`, `.al-course`, `.al-course-name`, `.al-dot`, `.al-status`,
-  `.al-status-progress`, `.al-status-planned`, `.al-topic`, `.al-lib`,
-  `.al-card-title`, `.al-blurb`, `.al-actions`, `.al-lab`, `.al-empty`,
-  `.al-empty-title`, `.al-footer-head`, `.al-footnote`, `.al-foot`.
-- DOM ids: `al-search`, `al-chips`, `al-shown`, `al-total`, `al-results`,
-  `al-sort`, `al-drafts`, `al-clear`.
-
-Two things that must **not** change:
-
-- `--jelly-font-display`, `--jelly-font-text`, `--jelly-font-mono`. Those are
-  Jelly UI's own API, set on the container so the web components inherit the
-  site's type. Renaming them silently breaks the fonts inside the components.
-- `body.page-computational-labs`. That class is generated in
-  `_layouts/default.html:9` from `page.title | downcase | replace: ' ', '-'`, so
-  it tracks the page name, not the prefix. If the page title ever changes again,
-  the two selectors that use it have to change with it. There is a comment in
-  the file saying so.
-
-Two names worth improving while renaming rather than transliterating:
-
-- `--al-launch-fg` → `--cl-start-fg`. There is no Launch button any more; it is
-  the ink on the Start button.
-- `.al-lab` → `.cl-start`. Every card is a lab now, so "lab" no longer
-  distinguishes this button from anything.
-
-One class name is **built by concatenation** and a class-list rename will miss
-it: `cardHTML` writes `'al-status-' + a.statusKey`. Grep for the bare prefix,
-not only for whole names.
-
-A blind `sed 's/al-/cl-/g'` is wrong. Anchor on a word boundary (`\bal-`) and
-count before and after:
-
-    grep -o '\bal-[a-z-]*' teaching/labs/index.html | sort -u | wc -l    # 70
-
-35 custom properties, 28 classes, 8 ids, plus the `al-status-` stem. Nothing
-outside this one file uses the prefix.
-
-Verify by re-running the harness below, which should give the same numbers as
-the table under it.
-
-### 2. Author the Runge/Chebyshev lab (`m1-runge`)
+### 1. Author the Runge/Chebyshev lab (`m1-runge`)  ← start here
 
 Notebook: `teaching/labs/notebooks/na/interpolation_runge_chebyshev.ipynb`.
 
@@ -349,13 +318,13 @@ Both algorithms already have tests in `tools/test/interp.test.mjs`. Before
 writing, dump the notebook cell by cell and confirm the line numbers and
 `py_match` substrings; the design doc's sketch refers to a restructured file.
 
-### 3. Author the cubic splines lab (`m1-splines`)
+### 2. Author the cubic splines lab (`m1-splines`)
 
 Notebook: `teaching/labs/notebooks/na/cubic_splines.ipynb`. The tridiagonal
 system arrives from nowhere unless the setup derives it. The spline tridiagonal
 system is already covered in `tools/test/interp.test.mjs`.
 
-### 4. Voice pass over the other notebooks
+### 3. Voice pass over the other notebooks
 
 The same tics are in the other notebook markdown, at volume, and it matters more
 now that all the prose lives there. Examples: "That climb is roundoff, not
@@ -364,7 +333,7 @@ bounds" (Runge), "Direct to express, though not the fastest" (Runge), "That is
 what makes Newton's form convenient" (was in Newton, now fixed). Fifteen
 notebooks in `na/`, plus `de/`, `intro/`.
 
-### 5. The remaining labs
+### 4. The remaining labs
 
 Twelve more numerical analysis notebooks, then the DE, calculus and analysis
 ones. Each needs a `tools/author/<name>_lab.py`, a
@@ -391,26 +360,39 @@ function el(id){ if(!NODES[id]) NODES[id]={id:id,innerHTML:'',textContent:'',
 var document = { getElementById: el, addEventListener: function(){}, readyState:'complete' };
 """ + body + """
 function report(tag) {
-  var cards = NODES['al-results'].innerHTML;
-  print(tag + '  shown/of ' + NODES['al-shown'].textContent + '/' + NODES['al-total'].textContent
-    + '  cards ' + (cards.match(/class="al-card"/g)||[]).length
-    + '  enabled ' + (cards.match(/<a class="al-lab"/g)||[]).length
-    + '  disabled ' + (cards.match(/al-lab is-off/g)||[]).length
-    + '  pills ' + (cards.match(/class="al-status /g)||[]).length);
+  var cards = NODES['cl-results'].innerHTML;
+  print(tag + '  shown/of ' + NODES['cl-shown'].textContent + '/' + NODES['cl-total'].textContent
+    + '  cards ' + (cards.match(/class="cl-card"/g)||[]).length
+    + '  enabled ' + (cards.match(/<a class="cl-start"/g)||[]).length
+    + '  disabled ' + (cards.match(/cl-start is-off/g)||[]).length
+    + '  pills ' + (cards.match(/class="cl-status /g)||[]).length);
+  print('   chips ' + NODES['cl-chips'].innerHTML.match(/>(\d+)<\/span>/g).join(' '));
+  print('   stems ' + (cards.match(/cl-status-[a-z]+/g)||[])
+    .filter(function (v, i, a) { return a.indexOf(v) === i; }).join(' '));
 }
 report('default');
 __probe.state.showDrafts = true; __probe.render();
 report('drafts on');
 """
-pathlib.Path('/tmp/al.js').write_text(harness)
+pathlib.Path('/tmp/cl.js').write_text(harness)
 ```
 
-Expected today (update the class names after the rename):
+Careful with the escaping when you write this out from a heredoc: the `\d` and
+`\/` inside the JavaScript regex have to survive both the shell and Python's
+string literal. Writing the Python to a file instead of piping it avoids the
+problem.
+
+Expected today:
 
 | | cards | enabled | disabled | status pills | chips |
 |---|---|---|---|---|---|
 | default | 1 | 1 | 0 | 0 | 1 · 0 · 1 · 0 · 0 · 0 |
 | drafts on | 28 | 1 | 27 | 27 | 28 · 1 · 15 · 5 · 4 · 3 |
+
+With drafts on, `stems` should print `cl-status-progress` and `cl-status-planned`
+and nothing else. That is the concatenated class name, and it is the one a
+prefix rename breaks silently: the pill keeps its shape from `.cl-status` and
+loses only its color.
 
 ---
 
@@ -426,8 +408,8 @@ Expected today (update the class names after the rename):
 - **The reveal panel** (side-by-side pseudocode and Python after a solve) is
   expanded by default. Whether it should collapse behind a toggle or go entirely
   was raised and never answered.
-- **`al-`/`cl-` in `wip/m1_lab_design.md`** does not need updating; the doc is
-  historical.
+- **`al-` and `applet` in `wip/m1_lab_design.md`** do not need updating; the doc
+  is historical and excluded from the build.
 - **Em dashes.** `CLAUDE.md` bans them and the validator enforces it. Dip's own
   lecture notes use a few. The ban stands for generated text; the discrepancy is
   recorded in `VOICE.md`.
