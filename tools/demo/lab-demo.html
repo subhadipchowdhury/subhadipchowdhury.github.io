@@ -92,7 +92,7 @@
   <strong>Lab page demo &middot; m1-newton</strong>
   <button id="theme">Toggle dark mode</button>
   <button id="wipe">Clear saved progress and reload</button>
-  <button id="solve1">Solve the first puzzle for me</button>
+
   <span id="status"></span>
 </div>
 
@@ -107,6 +107,11 @@ import { mountLab } from '../../teaching/applet/lab/engine/lab.js';
 
 const root = document.getElementById('lab-root');
 const status = document.getElementById('status');
+
+// Land in test mode so the Solve buttons are there without hunting for ?dev=1.
+if (!new URLSearchParams(location.search).has('dev')) {
+  try { localStorage.setItem('lab:dev', '1'); } catch { /* ignore */ }
+}
 
 const lab = await mountLab(root, '/teaching/applet/lab/specs/m1-newton.json').catch((err) => {
   root.innerHTML = '';
@@ -127,22 +132,7 @@ document.getElementById('wipe').addEventListener('click', () => {
   location.reload();
 });
 
-// Skips ahead so the reveal, the deferred prose and the next gate can be seen
-// without solving the puzzle by hand every reload.
-document.getElementById('solve1').addEventListener('click', () => {
-  if (!lab) return;
-  const open = lab.gates.find(({ cell }) => lab.status.get(cell.gate.cell_id) === 'open');
-  if (!open) { status.textContent = 'nothing left to solve'; return; }
-  const gate = open.cell.gate;
-  const view = lab.views.get(gate.cell_id);
-  view.placements = gate.solution.map((s) => ({ ...s }));
-  view.blanks = Object.fromEntries(
-    Object.entries(gate.blanks || {}).map(([name, b]) => [name, b.answer]),
-  );
-  view.render();
-  view.submit();
-  status.textContent = `solved ${gate.cell_id}`;
-});
+// The Solve buttons come from the page's own test mode now.
 </script>
 </body>
 </html>

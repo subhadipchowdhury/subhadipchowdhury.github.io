@@ -90,6 +90,43 @@ html[data-theme="dark"] .lab {
   color: var(--color-muted);
 }
 
+/* Test mode: a strip and a Solve button per puzzle, off unless ?dev=1. */
+.lab-dev {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px dashed var(--accent);
+  border-radius: 6px;
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
+.lab-dev__label {
+  font-family: var(--lab-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: auto;
+}
+
+.lab-dev__btn {
+  font-family: var(--lab-sans);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: var(--lab-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.lab-dev__btn:hover { border-color: var(--accent); }
+
+.lab-dev__btn--inline { margin-top: 0.5rem; }
+
 /* --------------------------------------------------------------------------
  * Prose: the lab intro, a puzzle's brief, the setup around a captured output
  * ----------------------------------------------------------------------- */

@@ -79,7 +79,6 @@ so column $j$ holds the differences of order $j$. Column $0$ is just the data, a
 
 **Your job.** Turn that definition into an algorithm: fill the table one column at a time, then read the coefficients off it. Two things are left blank. How far does the inner loop run, given that column $j$ is shorter than column $j-1$? And which two nodes does the denominator span?
 ''',
-    'intro': 'Order and indentation both count: a line one level further in runs once per pass of the loop above it.',
 
     'blocks': [
         block('def', 'function divided_differences(x, y):', [10, 10], 'def divided_differences'),
@@ -376,12 +375,13 @@ NOTEBOOK_LAB = {
     'series': ['m1-runge', 'm1-newton', 'm1-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
     'intro': (
-        'Three algorithms from this week, taken apart. Rebuild each one from the '
-        'scrambled steps and the notebook opens at the end, with the plots, the '
-        'sliders and the rest of the material in it.\n\n'
-        'The steps are written in the notation we use on the board, not in Python. '
-        'Where you put a step and how far you indent it are both part of the answer: '
-        'a line one level further in runs once for every pass of the loop above it.'
+        'Rebuild each algorithm from the scrambled steps. The notebook opens '
+        'once all three are done.\n\n'
+        'Where a step goes and how far it is indented are both part of the '
+        'answer: a line one level further in runs once for every pass of the '
+        'loop above it.\n\n'
+        'The steps are pseudocode. `←` assigns, `·` multiplies, subscripts '
+        'start at 0, and a range written `a to b` includes both ends.'
     ),
 }
 

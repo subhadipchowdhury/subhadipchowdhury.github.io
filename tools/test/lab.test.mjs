@@ -76,8 +76,17 @@ await it('renders without throwing', async () => {
 await it('carries the lab intro and the puzzle count', async () => {
   const { root } = await freshLab();
   has(textOf(root.querySelector('.lab-head')), 'Newton form and divided differences');
-  has(textOf(root.querySelector('.lab-intro')), 'notation we use on the board');
+  has(textOf(root.querySelector('.lab-intro')), 'Rebuild each algorithm');
+  has(textOf(root.querySelector('.lab-intro')), 'includes both ends');
   has(textOf(root.querySelector('.lab-progress')), `0 of ${ids.length} done`);
+});
+
+await it('assumes nothing about the course around it', async () => {
+  const { root } = await freshLab();
+  const text = textOf(root).toLowerCase();
+  for (const presumed of ['this week', 'on the board', 'in class', 'lecture', 'last lab', 'homework']) {
+    assert(!text.includes(presumed), `the page should not say "${presumed}"`);
+  }
 });
 
 await it('holds nothing but puzzles, their briefs, and the notebook', async () => {

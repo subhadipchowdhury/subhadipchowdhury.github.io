@@ -9,6 +9,26 @@ import { buildReference, verify } from './verify.js';
 import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
 
 const STORE_VERSION = 2;
+const DEV_KEY = 'lab:dev';
+
+// Test mode. Turn it on with ?dev=1 on the URL and off with ?dev=0, or with the
+// button in the bar it adds. It sticks in localStorage so it survives reloads,
+// and it puts a Solve button on each puzzle so the later ones can be reached
+// without doing the earlier ones by hand. Nothing about it is meant to be
+// student-proof; it is here while the labs are being written.
+function devMode() {
+  try {
+    const query = new URLSearchParams(window.location?.search || '');
+    if (query.has('dev')) {
+      const on = query.get('dev') !== '0';
+      localStorage.setItem(DEV_KEY, on ? '1' : '');
+      return on;
+    }
+    return localStorage.getItem(DEV_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
 
 export async function mountLab(root, specUrl) {
   const response = await fetch(specUrl, { cache: 'no-cache' });
@@ -79,6 +99,7 @@ class LabController {
     this.base = specUrl.replace(/specs\/[^/]*$/, '');
     this.progress = new Progress(spec.lab_id);
     this.puzzles = spec.puzzles || [];
+    this.dev = devMode();
 
     this.status = new Map();
     this.views = new Map();
@@ -122,6 +143,7 @@ class LabController {
 
   render() {
     this.root.innerHTML = '';
+    if (this.dev) this.root.appendChild(this.buildDevBar());
     this.root.appendChild(this.buildHeader());
     if (this.wasReset) {
       this.root.appendChild(notice(
@@ -140,6 +162,58 @@ class LabController {
     this.root.appendChild(this.buildFinale());
     this.typeset(this.root);
     this.updateProgressLabel();
+  }
+
+  buildDevBar() {
+    const bar = el('div', 'lab-dev');
+    const label = el('span', 'lab-dev__label');
+    label.textContent = 'Test mode';
+    bar.appendChild(label);
+
+    const solveAll = el('button', 'lab-dev__btn');
+    solveAll.type = 'button';
+    solveAll.textContent = 'Solve everything';
+    solveAll.addEventListener('click', () => {
+      for (const gate of this.puzzles) {
+        if (!this.done(gate.cell_id)) this.solveForTesting(gate.cell_id);
+      }
+    });
+    bar.appendChild(solveAll);
+
+    const wipe = el('button', 'lab-dev__btn');
+    wipe.type = 'button';
+    wipe.textContent = 'Clear progress';
+    wipe.addEventListener('click', () => {
+      for (const gate of this.puzzles) {
+        try { localStorage.removeItem(this.progress.key(gate.cell_id)); } catch { /* ignore */ }
+      }
+      window.location?.reload?.();
+    });
+    bar.appendChild(wipe);
+
+    const off = el('button', 'lab-dev__btn');
+    off.type = 'button';
+    off.textContent = 'Turn off';
+    off.addEventListener('click', () => {
+      try { localStorage.setItem(DEV_KEY, ''); } catch { /* ignore */ }
+      this.dev = false;
+      this.render();
+    });
+    bar.appendChild(off);
+    return bar;
+  }
+
+  /** Fill in a puzzle's own solution and submit it. Test mode only. */
+  solveForTesting(cellId) {
+    const gate = this.puzzles.find((g) => g.cell_id === cellId);
+    const view = this.views.get(cellId);
+    if (!gate || !view) return;
+    view.placements = gate.solution.map((s) => ({ ...s }));
+    view.blanks = Object.fromEntries(
+      Object.entries(gate.blanks || {}).map(([name, blank]) => [name, blank.answer]),
+    );
+    view.render();
+    view.submit();
   }
 
   buildHeader() {
@@ -271,6 +345,14 @@ class LabController {
     if (saved?.attempts) view.attempts = saved.attempts;
     view.render();
     this.views.set(id, view);
+
+    if (this.dev) {
+      const solve = el('button', 'lab-dev__btn lab-dev__btn--inline');
+      solve.type = 'button';
+      solve.textContent = 'Solve this one';
+      solve.addEventListener('click', () => this.solveForTesting(id));
+      host.appendChild(solve);
+    }
     return host;
   }
 
@@ -484,10 +566,9 @@ class LabController {
     h2.textContent = 'The notebook';
     card.appendChild(h2);
     const p = el('p');
-    p.textContent = 'The rest of this topic is in the notebook: the plots, the '
-      + 'sliders, the experiments to run and the code to change. It opens in Google '
-      + 'Colab, nothing gets installed, and your edits are not saved back here, so '
-      + 'use File then Save a copy in Drive to keep them.';
+    p.textContent = 'The notebook has the plots, the sliders and the code to '
+      + 'change. It opens in Google Colab. Edits there are not saved back here, '
+      + 'so use File then Save a copy in Drive to keep them.';
     card.appendChild(p);
     this.launch = el('a', 'lab-launch');
     this.launch.setAttribute('href', this.spec.colab);

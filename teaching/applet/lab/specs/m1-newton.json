@@ -4,7 +4,7 @@
  "order": 2,
  "title": "Newton form and divided differences",
  "blurb": "Build the divided-difference table, then the nested evaluation that uses it.",
- "intro_html": "<p>Three algorithms from this week, taken apart. Rebuild each one from the scrambled steps and the notebook opens at the end, with the plots, the sliders and the rest of the material in it.</p>\n<p>The steps are written in the notation we use on the board, not in Python. Where you put a step and how far you indent it are both part of the answer: a line one level further in runs once for every pass of the loop above it.</p>",
+ "intro_html": "<p>Rebuild each algorithm from the scrambled steps. The notebook opens once all three are done.</p>\n<p>Where a step goes and how far it is indented are both part of the answer: a line one level further in runs once for every pass of the loop above it.</p>\n<p>The steps are pseudocode. <code>←</code> assigns, <code>·</code> multiplies, subscripts start at 0, and a range written <code>a to b</code> includes both ends.</p>",
  "series": [
   "m1-runge",
   "m1-newton",
@@ -17,7 +17,6 @@
    "cell_id": "divdiff",
    "concept": "divided_differences",
    "title": "Build the divided-difference table",
-   "intro": "Order and indentation both count: a line one level further in runs once per pass of the loop above it.",
    "blocks": [
     {
      "id": "def",
