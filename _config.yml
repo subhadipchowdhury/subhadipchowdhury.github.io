@@ -10,7 +10,7 @@ description: "Personal academic website of Subhadip Chowdhury: teaching, pedagog
 # tools/ holds the lab build scripts, test suites and the mechanics demo, and
 # teaching/applet/wip/ the lab design document and its draft notebooks. Both
 # belong in the repo and neither should be served as part of the site.
-exclude: ['deploy', 'stylesheet.scss', 'tools', 'teaching/applet/wip']
+exclude: ['deploy', 'stylesheet.scss', 'tools', 'teaching/applet/wip', 'HANDOFF.md']
 
 defaults:
 
