@@ -8,6 +8,10 @@
  * that usually fails, so it is a deliberate token rather than an opacity.
  */
 
+.main-wrapper:has(.lab) {
+  max-width: 1140px;
+}
+
 .lab {
   --lab-serif: "UChicagoSerif", Georgia, serif;
   --lab-sans: "UChicagoSansSerif-Regular", system-ui, sans-serif;
@@ -70,6 +74,15 @@ html[data-theme="dark"] .lab {
   font-family: var(--lab-serif);
   margin: 0 0 0.25rem;
 }
+
+.lab-blurb {
+  font-family: var(--lab-sans);
+  color: var(--color-muted);
+  margin: 0 0 0.4rem;
+  line-height: 1.55;
+}
+
+.lab-reveal__output { padding: 0 0.9rem 0.9rem; }
 
 .lab-progress {
   font-family: var(--lab-sans);

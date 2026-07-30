@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab page demo</title>
+
+<!--
+  Stands in for _layouts/lab.html, which only exists once Jekyll builds on
+  GitHub's side. Same stylesheet, same module, same spec; the site chrome and
+  the theme toggle are faked here so both palettes can be looked at.
+-->
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSansSerif.css">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSerif.css">
+
+<style>
+  /* The site tokens lab.css consumes, copied from css/stylesheet.scss. */
+  :root {
+    --color-bg: #D9D9D9;
+    --color-surface: #FFFFFF;
+    --color-text: #262626;
+    --color-muted: #4D4D4D;
+    --accent: #800000;
+    --accent-rgb: 128, 0, 0;
+    --border-color: rgba(0, 42, 58, 0.12);
+    --focus-ring: #3EB1C8;
+    --code-bg: #ddd;
+  }
+  html[data-theme="dark"] {
+    --color-bg: #151515;
+    --color-surface: #232323;
+    --color-text: #e4e4e4;
+    --color-muted: #a8a8a8;
+    --accent: #3EB1C8;
+    --accent-rgb: 62, 177, 200;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --focus-ring: #6fcfe0;
+    --code-bg: #333333;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  }
+  .main-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 1.5rem auto 3rem;
+    padding: 1.5rem 2rem 3rem;
+    background: var(--color-surface);
+    border-radius: 0.75rem;
+  }
+  .demo-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+  }
+  .demo-bar button {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .demo-bar strong { font-weight: normal; color: var(--color-muted); }
+</style>
+<link rel="stylesheet" href="../../teaching/applet/lab/engine/lab.css">
+</head>
+<body>
+
+<div class="demo-bar">
+  <strong>Lab page demo &middot; m1-newton</strong>
+  <button id="theme">Toggle dark mode</button>
+  <button id="wipe">Clear saved progress and reload</button>
+  <button id="solve1">Solve the first puzzle for me</button>
+  <span id="status"></span>
+</div>
+
+<main class="main-wrapper">
+  <div class="lab" id="lab-root">
+    <p class="lab-progress">Loading the lab…</p>
+  </div>
+</main>
+
+<script type="module">
+import { mountLab } from '../../teaching/applet/lab/engine/lab.js';
+
+const root = document.getElementById('lab-root');
+const status = document.getElementById('status');
+
+const lab = await mountLab(root, '/teaching/applet/lab/specs/m1-newton.json').catch((err) => {
+  root.innerHTML = '';
+  const p = document.createElement('p');
+  p.className = 'lab-locked';
+  p.textContent = 'Failed to load: ' + err.message;
+  root.appendChild(p);
+  return null;
+});
+
+document.getElementById('theme').addEventListener('click', () => {
+  const el = document.documentElement;
+  el.setAttribute('data-theme', el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+document.getElementById('wipe').addEventListener('click', () => {
+  localStorage.clear();
+  location.reload();
+});
+
+// Skips ahead so the reveal, the deferred prose and the next gate can be seen
+// without solving the puzzle by hand every reload.
+document.getElementById('solve1').addEventListener('click', () => {
+  if (!lab) return;
+  const open = lab.gates.find(({ cell }) => lab.status.get(cell.gate.cell_id) === 'open');
+  if (!open) { status.textContent = 'nothing left to solve'; return; }
+  const gate = open.cell.gate;
+  const view = lab.views.get(gate.cell_id);
+  view.placements = gate.solution.map((s) => ({ ...s }));
+  view.blanks = Object.fromEntries(
+    Object.entries(gate.blanks || {}).map(([name, b]) => [name, b.answer]),
+  );
+  view.render();
+  view.submit();
+  status.textContent = `solved ${gate.cell_id}`;
+});
+</script>
+</body>
+</html>

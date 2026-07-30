@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+{% comment %}
+  A gated lab page. The page itself is front matter only: everything below the
+  header is built at runtime from the spec that tools/build_labs.py generates
+  out of the notebook's own cell metadata.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ '/teaching/applet/lab/engine/lab.css' | relative_url }}">
+
+<div class="lab" id="lab-root"
+     data-spec="{{ '/teaching/applet/lab/specs/' | append: page.lab_id | append: '.json' | relative_url }}">
+  <noscript>
+    <p>These labs assemble an algorithm from draggable blocks, so they need
+    JavaScript. The notebook itself does not:
+    <a href="{{ '/teaching/applet/' | relative_url }}">open it from the applet
+    library</a> and it will run in Google Colab.</p>
+  </noscript>
+  <p class="lab-progress" id="lab-loading">Loading the lab…</p>
+</div>
+
+<script type="module">
+  import { mountLab } from '{{ '/teaching/applet/lab/engine/lab.js' | relative_url }}';
+
+  const root = document.getElementById('lab-root');
+  mountLab(root, root.dataset.spec).catch((err) => {
+    root.innerHTML = '';
+    const p = document.createElement('p');
+    p.className = 'lab-locked';
+    p.textContent = 'The lab failed to load: ' + err.message;
+    root.appendChild(p);
+  });
+</script>

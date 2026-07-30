@@ -6,6 +6,8 @@
 
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
+root=$(cd "$here/../.." && pwd)
+cd "$root"   # suites read spec files by repo-relative path
 
 if command -v node >/dev/null 2>&1; then
   runner="node"
