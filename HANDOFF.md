@@ -239,7 +239,7 @@ Commits, oldest first:
 | `a4e4864` | Every card a guided lab; hide the unbuilt ones; fix the banner overlap |
 | `2a020a4` | This file |
 | `219663b` | Split the library footer into the two columns it was built for |
-| (below) | Move the labs off `teaching/applet/` and flatten `lab/` |
+| `c2ccdeb` | Move the labs off `teaching/applet/` and flatten `lab/` |
 
 Bugs worth remembering because they will recur:
 
