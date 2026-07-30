@@ -96,7 +96,7 @@ export class PuzzleView {
     wsWrap.appendChild(this.workspace);
 
     this.emptyHint = el('p', 'lp-empty');
-    this.emptyHint.textContent = 'Drag blocks here, or select one and press Enter.';
+    this.emptyHint.textContent = 'Drag blocks here, or tap one and then tap where it goes.';
     wsWrap.appendChild(this.emptyHint);
     body.appendChild(wsWrap);
 
@@ -169,9 +169,9 @@ export class PuzzleView {
       this.workspace.appendChild(this.buildRow(row.placement, index, 'workspace'));
     });
 
-    // Drop targets between rows appear only while something is selected or
-    // grabbed, so the resting state is not a field of empty slots.
-    if (this.selected || this.flying) this.decorateSlots();
+    // Drop targets between rows appear only while a block is selected for
+    // tap-to-place. A pointer drag shows its target with the placeholder row.
+    if (this.selected && !this.flying) this.decorateSlots();
   }
 
   rowsWithFlying() {
@@ -443,20 +443,40 @@ export class PuzzleView {
     if (!d.active) {
       if (Math.hypot(e.clientX - d.start.x, e.clientY - d.start.y) < MOVE_THRESHOLD) return;
       d.active = true;
-      this.beginDrag(d.id);
+      this.beginDrag(d.id, e);
     }
     e.preventDefault();
-    const target = this.hitTest(e.clientX, e.clientY);
+
+    // Indent follows the block's own left edge, not the pointer, so what the
+    // ghost shows is where the block lands.
+    const leadingX = e.clientX - d.grabDX;
+    const target = this.hitTest(leadingX, e.clientY);
+
     if (target.list === 'tray') {
       this.flying.overTray = true;
+      this.moveGhost(e.clientX - d.grabDX, e.clientY - d.grabDY);
     } else {
       this.flying.overTray = false;
       this.flying.index = target.index;
       this.flying.indent = target.indent;
+      this.updateFlying();
+      // Over the workspace the ghost snaps horizontally to the indent guide it
+      // would drop into, so the snap is visible rather than inferred.
+      const box = this.workspace.getBoundingClientRect();
+      this.moveGhost(box.left + this.indentStep() * target.indent, e.clientY - d.grabDY);
     }
     this.root.classList.toggle('lp-over-tray', !!this.flying.overTray);
-    this.moveGhost(e.clientX, e.clientY);
-    this.render();
+  }
+
+  // Light path used during a drag: move the placeholder, do not rebuild.
+  updateFlying() {
+    if (!this.flyingEl) return;
+    this.flyingEl.style.setProperty('--indent', String(this.flying.indent));
+    const rows = Array.from(this.workspace.querySelectorAll('.lp-row:not(.lp-row--flying)'));
+    const before = rows[this.flying.index] ?? null;
+    if (this.flyingEl.nextElementSibling !== before || this.flyingEl.parentElement !== this.workspace) {
+      this.workspace.insertBefore(this.flyingEl, before);
+    }
   }
 
   onPointerUp(e) {
@@ -470,6 +490,7 @@ export class PuzzleView {
     const flying = this.flying;
     this.endGhost();
     this.flying = null;
+    this.flyingEl = null;
     this.root.classList.remove('lp-over-tray');
     if (flying.overTray) {
       if (flying.origin.list === 'workspace') {
@@ -485,7 +506,12 @@ export class PuzzleView {
     this.place(flying.id, flying.index, flying.indent);
   }
 
-  beginDrag(id) {
+  beginDrag(id, event) {
+    const source = this.root.querySelector(`.lp-block[data-id="${id}"]`);
+    const box = source?.getBoundingClientRect();
+    this.drag.grabDX = box ? event.clientX - box.left : 0;
+    this.drag.grabDY = box ? event.clientY - box.top : 0;
+
     const origin = this.detach(id);
     this.flying = {
       id,
@@ -493,8 +519,9 @@ export class PuzzleView {
       indent: origin.indent ?? 0,
       origin,
     };
-    this.startGhost(id);
+    this.startGhost(id, box);
     this.render();
+    this.flyingEl = this.workspace.querySelector('.lp-row--flying');
   }
 
   detach(id) {
@@ -542,15 +569,21 @@ export class PuzzleView {
     return Number.isFinite(n) && n > 0 ? n : 28;
   }
 
-  startGhost(id) {
+  startGhost(id, box) {
     this.ghost = this.renderBlock(this.blocks.get(id), { interactive: false });
     this.ghost.classList.add('lp-ghost');
-    document.body.appendChild(this.ghost);
+    if (box) {
+      this.ghost.style.width = `${box.width}px`;
+      this.ghost.style.height = `${box.height}px`;
+    }
+    // Inside the puzzle, not on document.body: the lab colour tokens are scoped
+    // to .lab, and a ghost outside them renders as unstyled text.
+    this.root.appendChild(this.ghost);
   }
 
   moveGhost(x, y) {
     if (!this.ghost) return;
-    this.ghost.style.transform = `translate(${x + 12}px, ${y - 14}px)`;
+    this.ghost.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
   }
 
   endGhost() {

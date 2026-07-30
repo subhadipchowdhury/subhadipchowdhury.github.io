@@ -35,6 +35,12 @@
   padding: 1rem 1.25rem 4rem;
 }
 
+/* The ghost's width is copied from the source block's border box, so every
+   element in here has to measure the same way. */
+.lab *,
+.lab *::before,
+.lab *::after { box-sizing: border-box; }
+
 html[data-theme="dark"] .lab {
   --lab-sunken: rgba(255, 255, 255, 0.04);
   --lab-block: #2b2b2b;
@@ -221,7 +227,7 @@ html[data-theme="dark"] .lab {
   gap: 0.35rem;
   margin: 0.18rem 0;
   padding-left: calc(var(--lp-indent) * var(--indent, 0));
-  transition: padding-left 90ms ease-out;
+  transition: padding-left 70ms ease-out;
 }
 
 .lp-tray .lp-row { padding-left: 0; }
@@ -258,13 +264,22 @@ html[data-theme="dark"] .lab {
   box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.25);
 }
 
-.lp-block--grabbed,
-.lp-row--flying .lp-block {
+.lp-block--grabbed {
   border-style: dashed;
   border-color: var(--accent);
-  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.45);
   cursor: grabbing;
 }
+
+.lp-row--flying .lp-block {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--accent);
+  box-shadow: none;
+  color: transparent;
+  opacity: 0.75;
+}
+
+.lp-row--flying .lp-blank { visibility: hidden; }
 
 /* Status is never colour alone: the implicated region gets a rule as well. */
 .lp-block--implicated {
@@ -278,8 +293,12 @@ html[data-theme="dark"] .lab {
   left: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.92;
+  opacity: 0.95;
+  background: var(--lab-block);
+  border-color: var(--accent);
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.5);
   transform: translate(-9999px, -9999px);
+  will-change: transform;
 }
 
 .lp-slot {
