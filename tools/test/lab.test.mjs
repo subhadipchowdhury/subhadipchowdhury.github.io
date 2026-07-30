@@ -171,8 +171,13 @@ await it('renders without throwing', async () => {
 await it('carries the lab intro and the puzzle count', async () => {
   const { root } = await freshLab();
   has(textOf(root.querySelector('.lab-head')), 'Newton form and divided differences');
-  has(textOf(root.querySelector('.lab-intro')), 'Rebuild each algorithm');
-  has(textOf(root.querySelector('.lab-intro')), 'includes both ends');
+  // What the intro has to carry, not the words it carries it in. These used to
+  // quote the copy, so every rewording broke a green test for no reason.
+  const intro = textOf(root.querySelector('.lab-intro'));
+  has(intro, 'scrambled order', 'the intro must say what a puzzle is');
+  assert(/indentation/i.test(intro), 'the intro must say indentation counts');
+  assert(intro.includes('\u2190'), 'the intro must define the assignment arrow');
+  has(intro, 'includes both', 'and say that a to b is inclusive');
   has(textOf(root.querySelector('.lab-progress')), `0 of ${ids.length} done`);
 });
 
@@ -182,6 +187,24 @@ await it('assumes nothing about the course around it', async () => {
   for (const presumed of ['this week', 'on the board', 'in class', 'lecture', 'last lab', 'homework']) {
     assert(!text.includes(presumed), `the page should not say "${presumed}"`);
   }
+});
+
+// validate.mjs enforces this over the spec, which is where the briefs and the
+// feedback live. This covers the other half: the chrome lab.js and feedback.js
+// write themselves, which no spec check can see.
+await it('does not write like a machine', async () => {
+  const { root } = await freshLab();
+  const text = textOf(root).toLowerCase();
+  const tics = [
+    'your job', 'your task', 'worth noticing', 'worth asking', 'it is worth',
+    'that is what makes', 'the key insight', 'ask which', 'ask yourself',
+    'keep in mind', 'delve', 'crucial', 'powerful', 'elegant', 'straightforward',
+    'housekeeping rather than', 'rather than algorithm',
+  ];
+  for (const tic of tics) {
+    assert(!text.includes(tic), `the page should not say "${tic}"`);
+  }
+  assert(!textOf(root).includes('\u2014'), 'the page should have no em dashes');
 });
 
 await it('holds nothing but puzzles, their briefs, and the notebook', async () => {
@@ -199,7 +222,7 @@ await it('introduces its data before any output refers to it', async () => {
   const intro = textOf(root.querySelector('.lab-intro'));
   // Every number a puzzle shows comes from one worked example, and a student
   // meeting a table of numbers with no provenance is the failure this catches.
-  has(intro, 'worked example', 'the lab must say what data it is working with');
+  assert(/example/i.test(intro), 'the lab must say what data it is working with');
   for (const value of ['0', '1', '3', '6']) has(intro, value);
 });
 
@@ -210,7 +233,7 @@ await it('nothing refers to output the student has not been shown', async () => 
   const second = root.querySelector('.lab-puzzle-block[data-gate="ddprint"]');
   const setup = second.querySelector('.lab-setup');
   assert(setup, 'the printing puzzle has to show the table it is reacting to');
-  has(textOf(setup), 'the table it fills');
+  has(textOf(setup), 'algorithm you just built', 'and say where the numbers came from');
   has(textOf(setup), '0.3222', 'and the actual numbers in it');
 });
 
@@ -224,8 +247,9 @@ await it('every puzzle explains itself before asking anything', async () => {
 await it('the first brief gives the definition and the table it goes in', async () => {
   const { root } = await freshLab();
   const brief = textOf(root.querySelector('.lab-brief'));
-  has(brief, 'divided differences');
-  has(brief, 'Your job');
+  has(brief, 'divided differences', 'the brief has to define them');
+  has(brief, 'top row', 'and say where the coefficients are');
+  assert(/\bTurn\b|\bWrite\b|\bBuild\b/.test(brief), 'and give an instruction');
 });
 
 await it('the evaluation puzzle shows the coefficients that raise the question', async () => {
@@ -237,7 +261,7 @@ await it('the evaluation puzzle shows the coefficients that raise the question',
   assert(setup, 'the third puzzle should open with the output that motivates it');
   has(textOf(setup), 'top row of the triangle you just printed');
   has(textOf(setup), 'c = [');
-  has(textOf(setup), 'what $p(2.5)$ is');
+  has(textOf(setup), 'p(2.5)', 'and name the question the coefficients cannot answer');
 });
 
 group = 'progression';
@@ -337,7 +361,7 @@ await it('is answered by the blank alone, and rejects the bound from above', asy
   view.blanks = { rowlen: 'n−j−1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'open');
-  has(textOf(root.querySelector('.lp-feedback')), 'cannot appear in its own bound');
+  has(textOf(root.querySelector('.lp-feedback')), 'cannot appear in its own upper bound');
   view.blanks = { rowlen: 'n−i−1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'solved');
@@ -352,7 +376,7 @@ await it('a decoy gets the message written for it', async () => {
   view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
   view.submit();
   eq(lab.status.get('divdiff'), 'open');
-  has(textOf(root.querySelector('.lp-feedback')), 'alternating by column');
+  has(textOf(root.querySelector('.lp-feedback')), 'signs alternate');
   assert(!root.querySelector('.lab-solved'), 'no reveal on a wrong answer');
 });
 

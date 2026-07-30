@@ -280,7 +280,7 @@ class LabController {
 
   buildLocked() {
     const box = el('div', 'lab-locked');
-    box.textContent = 'Opens once the one above is done, or set aside.';
+    box.textContent = 'Opens once the puzzle above is solved or set aside.';
     return box;
   }
 
@@ -358,7 +358,7 @@ class LabController {
 
   parkedNote() {
     const note = el('p', 'lab-parked-note');
-    note.textContent = 'Set aside. The rest of the lab is open, and this one is still here whenever you want it.';
+    note.textContent = 'Set aside. The rest of the lab is open; come back to this one whenever you like.';
     return note;
   }
 
@@ -432,7 +432,7 @@ class LabController {
   buildReveal(gate, submission) {
     const box = el('div', 'lab-solved');
     const head = el('div', 'lab-solved__head');
-    head.textContent = 'Solved. Here is the same algorithm in the notebook\u2019s Python.';
+    head.textContent = 'Solved. The same algorithm as the notebook writes it:';
     box.appendChild(head);
 
     const grid = el('div', 'lab-reveal');
@@ -461,7 +461,7 @@ class LabController {
 
     const right = el('div', 'lab-reveal__col');
     const rightHead = el('h4');
-    rightHead.textContent = 'The Python';
+    rightHead.textContent = 'The notebook\u2019s Python';
     right.appendChild(rightHead);
     right.appendChild(this.buildPythonPane(gate));
     grid.appendChild(right);
@@ -469,7 +469,7 @@ class LabController {
     const notes = el('div', 'lab-reveal__notes');
     if (gate.reveal.some((l) => l.role === 'glue')) {
       const p = el('p');
-      p.textContent = 'The greyed lines are housekeeping rather than algorithm, so they were not part of the puzzle. Comments and the docstring are in the notebook.';
+      p.textContent = 'The greyed lines are bookkeeping and were not part of the puzzle. Comments and the docstring are in the notebook.';
       notes.appendChild(p);
     }
     for (const note of gate.annotations || []) {
@@ -544,9 +544,9 @@ class LabController {
     h2.textContent = 'The notebook';
     card.appendChild(h2);
     const p = el('p');
-    p.textContent = 'The notebook has the plots, the sliders and the code to '
-      + 'change. It opens in Google Colab. Edits there are not saved back here, '
-      + 'so use File then Save a copy in Drive to keep them.';
+    p.textContent = 'The notebook has the plots, the sliders, and code you can '
+      + 'edit. It opens in Google Colab. Changes you make there are not saved '
+      + 'back to this page, so use File then Save a copy in Drive to keep them.';
     card.appendChild(p);
     this.launch = el('a', 'lab-launch');
     this.launch.setAttribute('href', this.spec.colab);

@@ -54,12 +54,67 @@ const PRESUMED = [
   'we covered', 'you learned',
 ];
 
+// Phrasing that reads as machine-written. Most of these are filler that says
+// nothing ("worth noticing"), a flourish standing in for an explanation ("that
+// is what makes"), or a stock instruction repeated until it is wallpaper ("your
+// job"). The rhythm they belong to cannot be caught by a list, but the phrases
+// can, and every one below was in the first draft of this lab.
+const TICS = [
+  ['your job', 'a stock label in every brief; write the instruction as a sentence'],
+  ['your task', 'same'],
+  ['worth noticing', 'says nothing; either it matters or cut it'],
+  ['worth asking', 'same'],
+  ['it is worth', 'same'],
+  ['that is what makes', 'a flourish where an explanation should be'],
+  ['this is where', 'same'],
+  ['at its core', 'same'],
+  ['the beauty of', 'same'],
+  ['the key insight', 'same'],
+  ['ask which', 'say what to look at rather than telling the student to ask'],
+  ['ask yourself', 'same'],
+  ['keep in mind', 'filler'],
+  ['bear in mind', 'filler'],
+  ['it is important to', 'filler'],
+  ['simply ', 'tells a stuck student the thing they are stuck on is easy'],
+  ['straightforward', 'same'],
+  ['powerful', 'inflated'],
+  ['elegant', 'inflated'],
+  ['crucial', 'inflated'],
+  ['delve', 'nobody writes this'],
+];
+
+// Verbs a brief can open its instruction with. The rule below wants at least
+// one sentence that starts with one, which is what an instruction looks like.
+const IMPERATIVES = [
+  'write', 'build', 'turn', 'fill', 'print', 'arrange', 'complete', 'decide',
+  'evaluate', 'place', 'drag', 'find', 'state', 'rearrange', 'reconstruct',
+  'assemble', 'sort', 'give', 'compute', 'solve', 'derive', 'read', 'replace',
+];
+
 function textOf(html) {
   return String(html || '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&[a-z]+;/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// Sentences, roughly. Block tags end a sentence whether or not the author put a
+// full stop before the closing tag, and a decimal point does not start one.
+function sentencesOf(html) {
+  const flat = String(html || '')
+    .replace(/<\/(p|li|h[1-6]|pre|div|blockquote|td|th)>/gi, '  ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/g, ' ')
+    .replace(/\s+/g, ' ');
+  return flat
+    .split(/(?<=[.:?!])\s+(?=[^\d])/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function wordsOf(text) {
+  return text.toLowerCase().match(/[a-z][a-z'-]*/g) || [];
 }
 
 function everyString(spec) {
@@ -76,6 +131,70 @@ function everyString(spec) {
     }
   }
   return out;
+}
+
+// "Housekeeping, not algorithm." "Same iterations, different fence." A very
+// short sentence built round a comma is almost always a verbless aphorism
+// standing where a clause belonged. Five words is low enough that ordinary
+// prose does not trip it.
+function checkFragments(where, what, html) {
+  for (const sentence of sentencesOf(html)) {
+    if (!sentence.includes(',')) continue;
+    const words = wordsOf(sentence);
+    if (words.length && words.length <= 5) {
+      bad(where, `${what} has the fragment "${sentence}"; write it as a full sentence`);
+    }
+  }
+}
+
+// The same construction reused across every puzzle stops being phrasing and
+// becomes a template. Only a warning: some repetition is the house notation
+// doing its job.
+function checkFormula(where, spec) {
+  const counts = new Map();
+  for (const [what, html] of everyString(spec)) {
+    const words = wordsOf(textOf(html));
+    const local = new Set();
+    for (let i = 0; i + 4 <= words.length; i++) {
+      local.add(words.slice(i, i + 4).join(' '));
+    }
+    for (const gram of local) {
+      if (!counts.has(gram)) counts.set(gram, []);
+      counts.get(gram).push(what);
+    }
+  }
+  // A repeated seven-word phrase shows up as four overlapping four-grams.
+  // Chain them back into one before reporting, or one lapse reads as four.
+  const flagged = [...counts].filter(([, w]) => w.length >= 3);
+  const byPlaces = new Map();
+  for (const [gram, wheres] of flagged) {
+    const key = wheres.join('|');
+    if (!byPlaces.has(key)) byPlaces.set(key, { wheres, grams: new Set() });
+    byPlaces.get(key).grams.add(gram);
+  }
+  for (const { wheres, grams } of byPlaces.values()) {
+    // A gram whose first three words are some other gram's last three is the
+    // middle of a longer phrase; only the leftmost one is worth reporting.
+    const tails = new Set([...grams].map((g) => g.split(' ').slice(1).join(' ')));
+    for (const gram of grams) {
+      if (tails.has(gram.split(' ').slice(0, 3).join(' '))) continue;
+      let phrase = gram;
+      let grown = true;
+      while (grown) {
+        grown = false;
+        const suffix = phrase.split(' ').slice(-3).join(' ');
+        for (const other of grams) {
+          if (other.split(' ').slice(0, 3).join(' ') === suffix) {
+            phrase += ' ' + other.split(' ')[3];
+            grown = true;
+            break;
+          }
+        }
+      }
+      notes.push(`${where}: "${phrase}" appears in ${wheres.length} places (${wheres.join(', ')}); `
+        + 'check it is notation and not a formula you keep reaching for');
+    }
+  }
 }
 
 function checkEditorial(spec) {
@@ -96,7 +215,18 @@ function checkEditorial(spec) {
         bad(where, `${what} says "${phrase}", which assumes something about the course around the lab`);
       }
     }
+    for (const [phrase, why] of TICS) {
+      if (text.includes(phrase)) {
+        bad(where, `${what} says "${phrase.trim()}": ${why}`);
+      }
+    }
+    if (textOf(html).includes('—')) {
+      bad(where, `${what} has an em dash; use a comma, a full stop or brackets`);
+    }
+    checkFragments(where, what, html);
   }
+
+  checkFormula(where, spec);
 
   for (const gate of spec.puzzles || []) {
     const at = `${where}/${gate.cell_id}`;
@@ -106,8 +236,15 @@ function checkEditorial(spec) {
       bad(at, 'the brief is too thin to solve from. State the mathematics the '
         + 'puzzle turns on, then what is being asked');
     }
-    if (brief && !/your job|your task|what to do|write the|fill in/i.test(brief)) {
-      bad(at, 'the brief never says plainly what the student has to do');
+    // An instruction is a sentence that opens with a verb. Asking for that,
+    // rather than for a stock phrase, leaves the wording free.
+    const instructs = sentencesOf(gate.brief_html).some((s) => {
+      const first = (wordsOf(s)[0] || '');
+      return IMPERATIVES.includes(first);
+    });
+    if (brief && !instructs) {
+      bad(at, 'no sentence in the brief opens with an instruction, so it never '
+        + `says plainly what to do. Start one with ${IMPERATIVES.slice(0, 4).join(', ')} or similar`);
     }
     if (!gate.title || gate.title.length < 8) {
       bad(at, 'no usable title');

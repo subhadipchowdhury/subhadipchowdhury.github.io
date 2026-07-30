@@ -36,13 +36,13 @@ export function applyLadder(view, verdict, attempts) {
   }
   if (stage === 3) {
     const removed = view.removeDecoy();
-    if (removed) return 'One block that was never part of the answer has been taken out of the tray.';
+    if (removed) return 'One block that is not part of the answer has been removed from the tray.';
   }
   if (stage === 4) {
     const ejected = view.ejectDecoy();
     if (ejected) return 'A block that is not part of the answer has been sent back to the tray.';
     const fixed = view.fixIndents();
-    if (fixed) return 'The indentation of the blocks you have placed has been set for you. The order is still up to you.';
+    if (fixed) return 'The indentation has been set for you. The order is still yours to work out.';
   }
   return null;
 }
@@ -144,7 +144,7 @@ function buildStageFive(ctx) {
   park.type = 'button';
   park.className = 'lp-action';
   park.textContent = 'Set this one aside and carry on';
-  park.title = 'Opens the rest of the lab. This puzzle stays here to come back to.';
+  park.title = 'Opens the rest of the lab. This puzzle stays here for later.';
   park.addEventListener('click', () => ctx.onPark?.());
   wrap.appendChild(park);
 
@@ -152,7 +152,7 @@ function buildStageFive(ctx) {
   copy.type = 'button';
   copy.className = 'lp-action';
   copy.textContent = 'Copy my attempt';
-  copy.title = 'Copies your arrangement as plain text, for an email or office hours.';
+  copy.title = 'Copies your arrangement as plain text to paste into an email.';
   copy.addEventListener('click', async () => {
     const text = ctx.onCopy?.();
     if (!text) return;
