@@ -3,12 +3,12 @@
 //     node tools/validate.mjs teaching/applet/lab/specs/m1-newton.json
 //     jsc -m tools/validate.mjs -- teaching/applet/lab/specs/m1-newton.json
 //
-// build_labs.py runs this and refuses to ship a spec it rejects. The check that
-// earns its keep: every distractor and every authored wrong blank is pushed
-// through the real grader, and has to come back both rejected and carrying the
-// message written for it. A distractor the probes cannot separate from the
-// answer is a puzzle a student can pass while wrong, and a message that never
-// fires is a message that does not exist.
+// build_labs.py runs this and refuses to ship a spec it rejects. The main check
+// pushes every distractor and every wrong answer through the real grader, and
+// requires two things of each: that it is rejected, and that it comes back with
+// the message written for it. A distractor the probes cannot separate from the
+// answer lets a student pass while wrong, and a message nothing can reach may
+// as well not be written.
 
 import { buildReference, verify } from '../teaching/applet/lab/engine/verify.js';
 import { evalExpression } from '../teaching/applet/lab/engine/interp.js';
@@ -65,7 +65,7 @@ function checkStructure(gate, where) {
 
   if (!gate.probes?.length) bad(where, 'no probes, so nothing can be graded');
 
-  // A message nothing can reach is a message that does not exist.
+  // Every written message needs something that can reach it.
   const feedback = gate.feedback || {};
   for (const d of gate.distractors || []) {
     if (!d.why) bad(where, `distractor "${d.id}" has no why`);
@@ -103,8 +103,8 @@ function correctSubmission(gate) {
 }
 
 // A distractor with L lines stands in for its `near` block and the L−1 blocks
-// that follow it in the solution, which is what makes a fused two-line decoy a
-// drop-in for a pair of loop headers.
+// after it in the solution, so a fused two-line decoy replaces a pair of loop
+// headers.
 function substituteDistractor(gate, distractor) {
   const at = gate.solution.findIndex((s) => s.id === distractor.near);
   if (at < 0) return null;
@@ -216,9 +216,9 @@ if (!specPath) {
 }
 
 const spec = JSON.parse(await readText(specPath));
-const gates = spec.cells.filter((c) => c.gate).map((c) => c.gate);
+const gates = spec.puzzles ?? [];
 
-if (!gates.length) notes.push(`${spec.lab_id}: no gated cells`);
+if (!gates.length) notes.push(`${spec.lab_id}: no puzzles`);
 
 let checked = 0;
 for (const gate of gates) {
@@ -235,8 +235,8 @@ for (const gate of gates) {
     continue;
   }
 
-  // The solution must pass its own grader, which is not as tautological as it
-  // sounds: the reference and the submission take different paths through it.
+  // The solution has to pass its own grader. Less circular than it sounds: the
+  // reference and a submission take different paths through it.
   const self = verify(gate, correctSubmission(gate), reference);
   if (!self.ok) {
     bad(where, `the solution does not pass its own grader: ${self.message}`);

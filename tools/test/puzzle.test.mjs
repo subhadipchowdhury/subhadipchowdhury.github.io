@@ -58,7 +58,7 @@ describe('snapIndent', () => {
     eq(snapIndent(2 - INDENT_STICK - 0.05, 2, MAX), 1);
   });
 
-  it('the band is wider than plain rounding, which is the whole point', () => {
+  it('the band is wider than plain rounding', () => {
     assert(INDENT_STICK > 0.5, 'a stick of 0.5 or less is just rounding');
     // A block sitting at level 1 and nudged a third of a level right stays put.
     eq(snapIndent(1.33, 1, MAX), 1);

@@ -322,10 +322,10 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     text-decoration: none;
   }
   .al-launch.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
-  /* A gated lab sits on its own row under Launch: the same notebook, with its
-     algorithms behind pseudocode puzzles, and hosted here rather than in Colab. */
+  /* Where a lab exists it replaces Launch: the lab opens the notebook itself
+     once its puzzles are done. */
   .al-lab {
-    margin-top: 7px;
+    flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -333,14 +333,12 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     font-family: var(--al-semi);
     font-size: 12.5px;
     line-height: 1;
-    background: transparent;
-    border: 1px solid var(--al-accent);
-    color: var(--al-accent);
-    padding: 10px 12px;
+    background: var(--al-accent);
+    color: var(--al-launch-fg);
+    padding: 11px 12px;
     border-radius: 12px;
     text-decoration: none;
   }
-  .al-lab:hover { background: var(--al-chip-bg); }
   .al-dl {
     display: inline-flex;
     align-items: center;
@@ -561,7 +559,11 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
     // Launch leaves the site for Colab, so it opens in a new tab; the download
     // is same-origin, which is what lets `download` name the saved file.
     var actions;
-    if (a.ready) {
+    if (a.ready && a.labUrl) {
+      // The lab opens the notebook itself once its puzzles are done, so this
+      // card offers the lab and nothing that would go around it.
+      actions = '<a class="al-lab" href="' + a.labUrl + '">Start the lab</a>';
+    } else if (a.ready) {
       actions =
         '<a class="al-launch" href="' + a.launchUrl + '" target="_blank" rel="noopener">▶ Launch</a>' +
         '<a class="al-dl" href="' + a.srcUrl + '" download title="Download the notebook source">↓ .ipynb</a>';
@@ -590,10 +592,6 @@ description: Interactive Python notebooks for undergraduate mathematics, launche
           '<div class="al-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
           '<div class="al-actions">' + actions + '</div>' +
-          (a.labUrl
-            ? '<a class="al-lab" href="' + a.labUrl + '" title="The same notebook with its algorithms behind pseudocode puzzles">' +
-              '◆ Start the guided lab</a>'
-            : '') +
         '</div>' +
       '</div>';
   }

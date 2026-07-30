@@ -1,12 +1,11 @@
 // The failure card and the hint ladder.
 //
-// Ladder shape follows the intra-problem adaptation of adaptive Parsons
-// problems (Ericson, Margulieux and Rick, ICER 2017; Parsons and Haden 2006 for
-// the format; js-parsons, Karavirta, Helminen and Ihantola 2012 for the
-// mechanics). Their adaptation moves are removing a distractor, combining
-// blocks, and providing indentation. Diagnostic information comes first and
-// structural help second, and there is no stage at which the page shows the
-// answer.
+// The ladder follows the intra-problem adaptation of adaptive Parsons problems
+// (Ericson, Margulieux and Rick, ICER 2017; Parsons and Haden 2006 for the
+// format; js-parsons, Karavirta, Helminen and Ihantola 2012 for the mechanics).
+// Their adaptation moves are removing a distractor, combining blocks, and
+// providing indentation. Diagnostic information comes first, structural help
+// second, and no stage shows the answer.
 
 import { renderTriangle } from './verify.js';
 import { fmtNum, isArr2 } from './interp.js';
@@ -43,7 +42,7 @@ export function applyLadder(view, verdict, attempts) {
     const ejected = view.ejectDecoy();
     if (ejected) return 'A block that is not part of the answer has been sent back to the tray.';
     const fixed = view.fixIndents();
-    if (fixed) return 'The indentation of the blocks you have placed has been set for you. The order is still yours.';
+    if (fixed) return 'The indentation of the blocks you have placed has been set for you. The order is still up to you.';
   }
   return null;
 }
@@ -144,8 +143,8 @@ function buildStageFive(ctx) {
   const park = document.createElement('button');
   park.type = 'button';
   park.className = 'lp-action';
-  park.textContent = 'Park this puzzle and carry on';
-  park.title = 'Unlocks the rest of the lab. This puzzle stays open to come back to.';
+  park.textContent = 'Set this one aside and carry on';
+  park.title = 'Opens the rest of the lab. This puzzle stays here to come back to.';
   park.addEventListener('click', () => ctx.onPark?.());
   wrap.appendChild(park);
 
@@ -179,8 +178,8 @@ function buildStageFive(ctx) {
 }
 
 /**
- * The office-hours artifact: the assembly as placed, in the house notation,
- * with indentation preserved, plus the blanks and the last message.
+ * Plain text to bring to office hours: the arrangement as placed, indentation
+ * and all, plus the blanks and the last message.
  */
 export function attemptSnapshot({ lab, gate, view, verdict, attempts }) {
   const byId = new Map();

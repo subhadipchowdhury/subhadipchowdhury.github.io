@@ -1,21 +1,26 @@
-"""Turn an annotated notebook into a lab spec the page can serve.
+"""Turn an annotated notebook into a lab spec.
 
-    .venv/bin/python tools/build_labs.py                 # every annotated notebook
-    .venv/bin/python tools/build_labs.py m1-newton       # one lab
-    .venv/bin/python tools/build_labs.py --skip-execute  # reuse captured output
+    .venv/bin/python tools/build_labs.py                # every annotated notebook
+    .venv/bin/python tools/build_labs.py m1-newton      # one lab
+    .venv/bin/python tools/build_labs.py --no-run       # skip the notebook run
 
-Four steps per notebook.
+A lab page carries the puzzles and nothing else. Everything else the notebook
+holds stays in the notebook, which is what the student opens once the puzzles
+are done. The one exception is a puzzle's `setup`: where it is the output that
+raises the question, that output belongs beside the question. Those are run here
+and shipped with the puzzle they motivate.
 
-1. Read `metadata.lab` from the notebook and from every cell, and check each
-   gated block's `py` line range against its `py_match` substring, so an edit
-   that shifts line numbers fails here rather than mispointing the reveal.
-2. Execute with nbclient and capture stdout and figures. Cells whose metadata
-   carries `capture` get those calls run in the same kernel right after them,
-   because an ipywidgets interact emits a widget, not a picture.
-3. Hand the spec to tools/validate.mjs, which runs every distractor and every
-   authored wrong blank through the real interpreter and fails the build if any
-   of them produces the same answer as the solution on the probes.
-4. Write the spec JSON and the figures.
+So this script does four things:
+
+1. Reads `metadata.lab` from the notebook and from each gated cell, and checks
+   every block's line range against its py_match substring. An edit that shifts
+   line numbers fails here rather than mispointing the reveal.
+2. Runs the notebook, then runs each puzzle's setup code in the same kernel and
+   captures what it prints and draws. The run doubles as a check that the thing
+   the puzzles unlock still works.
+3. Hands the spec to tools/validate.mjs, which pushes every distractor and every
+   wrong answer through the grader.
+4. Writes the spec JSON and any setup figures.
 
 The notebook is the source of truth throughout. Nothing here edits it.
 """
@@ -26,6 +31,7 @@ import hashlib
 import json
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 
@@ -53,18 +59,18 @@ class BuildError(Exception):
 # ---------------------------------------------------------------------------
 
 MATH_PATTERNS = [
-    (re.compile(r'\$\$.*?\$\$', re.S), 'display'),
-    (re.compile(r'\\\[.*?\\\]', re.S), 'display'),
-    (re.compile(r'(?<!\\)\$(?!\s).*?(?<!\s)(?<!\\)\$', re.S), 'inline'),
-    (re.compile(r'\\\(.*?\\\)', re.S), 'inline'),
+    re.compile(r'\$\$.*?\$\$', re.S),
+    re.compile(r'\\\[.*?\\\]', re.S),
+    re.compile(r'(?<!\\)\$(?!\s).*?(?<!\s)(?<!\\)\$', re.S),
+    re.compile(r'\\\(.*?\\\)', re.S),
 ]
 
 
 def render_markdown(text):
-    """Markdown to HTML, with the maths left exactly as written.
+    """Markdown to HTML with the maths left exactly as written.
 
-    MathJax runs on the page, so the maths must survive untouched. A markdown
-    renderer would otherwise read the underscores in f[x_i, ..., x_{i+j}] as
+    MathJax runs on the page, so the maths has to survive untouched. Left alone,
+    a markdown renderer reads the underscores in f[x_i, ..., x_{i+j}] as
     emphasis, so every math span is lifted out first and put back after.
     """
     import markdown
@@ -76,13 +82,11 @@ def render_markdown(text):
         return f'\x00MATH{len(spans) - 1}\x00'
 
     protected = text
-    for pattern, _ in MATH_PATTERNS:
+    for pattern in MATH_PATTERNS:
         protected = pattern.sub(stash, protected)
 
     html = markdown.markdown(
-        protected,
-        extensions=['extra', 'sane_lists'],
-        output_format='html5',
+        protected, extensions=['extra', 'sane_lists'], output_format='html5',
     )
 
     for i, span in enumerate(spans):
@@ -90,16 +94,8 @@ def render_markdown(text):
     return html
 
 
-def first_heading(text):
-    for line in text.split('\n'):
-        stripped = line.strip()
-        if stripped.startswith('#'):
-            return stripped.lstrip('#').strip()
-    return None
-
-
 # ---------------------------------------------------------------------------
-# Reading and checking the notebook
+# Reading and checking
 # ---------------------------------------------------------------------------
 
 
@@ -108,9 +104,7 @@ def cell_source(cell):
     return ''.join(src) if isinstance(src, list) else src
 
 
-def check_py_refs(gate, source, cell_index):
-    """Every block names a line range and a substring that range must contain."""
-    lines = cell_source_lines(source)
+def check_py_refs(gate, lines, cell_index):
     for block in gate['blocks']:
         lo, hi = block['py']
         if lo < 1 or hi > len(lines):
@@ -122,24 +116,17 @@ def check_py_refs(gate, source, cell_index):
         if needle and needle not in lines[lo - 1]:
             raise BuildError(
                 f'cell {cell_index}, block "{block["id"]}": line {lo} should contain\n'
-                f'    {needle!r}\n'
-                f'  but it reads\n'
-                f'    {lines[lo - 1].strip()!r}\n'
+                f'    {needle!r}\n  but it reads\n    {lines[lo - 1].strip()!r}\n'
                 f'  The notebook was edited without updating the lab metadata.'
             )
 
 
-def cell_source_lines(source):
-    return source.split('\n')
+def build_reveal(gate, lines, cell_index):
+    """Pair every Python line with a pseudocode row, or a reason it has none.
 
-
-def build_reveal(gate, source, cell_index):
-    """Pair every Python line with a pseudocode row, or with a reason it has none.
-
-    The mapping has to be total. A line with no role is a line the reveal would
-    show unexplained, and that is the one thing the reveal is for.
+    The mapping has to be total: a line with no role is one the reveal would put
+    on screen unexplained.
     """
-    lines = cell_source_lines(source)
     roles = [None] * len(lines)
 
     def mark(lo, hi, role, **extra):
@@ -155,12 +142,10 @@ def build_reveal(gate, source, cell_index):
         if text.strip() == '':
             roles[n - 1] = {'role': 'space'}
 
-    head = gate.get('py_head')
-    if head:
-        mark(head[0], head[1], 'head')
-    doc = gate.get('py_doc')
-    if doc:
-        mark(doc[0], doc[1], 'doc')
+    if gate.get('py_head'):
+        mark(*gate['py_head'], 'head')
+    if gate.get('py_doc'):
+        mark(*gate['py_doc'], 'doc')
     for n in gate.get('py_glue', []):
         mark(n, n, 'glue')
 
@@ -172,9 +157,9 @@ def build_reveal(gate, source, cell_index):
     missing = [n for n, role in enumerate(roles, start=1) if role is None]
     if missing:
         raise BuildError(
-            f'cell {cell_index}: the reveal mapping is not total. '
-            f'Lines {missing} have no role. Add them to py_head, py_doc or '
-            f'py_glue, or give them a block.'
+            f'cell {cell_index}: the reveal mapping is not total. Lines {missing} '
+            f'have no role. Put them in py_head, py_doc or py_glue, or give them '
+            f'a block.'
         )
 
     return [
@@ -184,43 +169,48 @@ def build_reveal(gate, source, cell_index):
 
 
 def gate_hash(gate):
-    """Per-gate, so fixing a typo in one puzzle does not reset a student's
-    progress on the others in the same lab."""
+    """Per gate, so revising one puzzle does not reset a student's progress on
+    the others in the same lab."""
     payload = {
         key: gate.get(key)
         for key in ('blocks', 'solution', 'blanks', 'distractors', 'wrong_blanks', 'probes')
     }
-    text = json.dumps(payload, sort_keys=True, ensure_ascii=False)
-    return hashlib.sha256(text.encode()).hexdigest()[:16]
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()
+    ).hexdigest()[:16]
 
 
 # ---------------------------------------------------------------------------
-# Execution and capture
+# Notebook health check
 # ---------------------------------------------------------------------------
 
 
-def execute(nb_path, nb):
-    """Run the notebook once, with the capture calls spliced in after their cell.
+def setups(nb):
+    """(cell_id, setup) for every puzzle that ships a motivating output."""
+    found = []
+    for cell in nb['cells']:
+        meta = cell.get('metadata', {}).get('lab') or {}
+        if meta.get('mode') == 'gated' and meta.get('setup', {}).get('code'):
+            found.append((meta['cell_id'], meta['setup']))
+    return found
 
-    Splicing rather than appending keeps each capture in the state its own cell
-    left behind, which matters as soon as a later cell rebinds a name.
+
+def run_notebook(nb_path, nb):
+    """Execute the notebook, then each puzzle's setup code in the same kernel.
+
+    The notebook is what the puzzles unlock, so a broken notebook is worth
+    catching here. The setups run last, when everything the notebook defines is
+    in scope.
     """
     import nbformat
     from nbclient import NotebookClient
 
-    # Through the reader, not from_dict: an .ipynb stores `source` as a list of
-    # lines, and only the reader rejoins them into the string nbclient wants.
     work = nbformat.reads(json.dumps(nb), as_version=4)
-    spliced = []
-    for index, cell in enumerate(work.cells):
-        cell.metadata['_origin'] = index
-        spliced.append(cell)
-        for k, shot in enumerate(cell.metadata.get('lab', {}).get('capture', []) or []):
-            extra = nbformat.v4.new_code_cell(source=shot['code'])
-            extra.metadata['_origin'] = index
-            extra.metadata['_capture'] = k
-            spliced.append(extra)
-    work.cells = spliced
+    original = len(work.cells)
+    for cell_id, setup in setups(nb):
+        extra = nbformat.v4.new_code_cell(source=setup['code'])
+        extra.metadata['_setup_for'] = cell_id
+        work.cells.append(extra)
 
     client = NotebookClient(
         work,
@@ -232,62 +222,53 @@ def execute(nb_path, nb):
     client.execute()
 
     failures = []
-    for cell in work.cells:
+    for index, cell in enumerate(work.cells):
         for out in cell.get('outputs', []) or []:
             if out.get('output_type') == 'error':
-                failures.append(
-                    f'  cell {cell.metadata["_origin"]}: '
-                    f'{out["ename"]}: {out["evalue"]}'
-                )
+                where = (f'setup for {cell.metadata["_setup_for"]}'
+                         if index >= original else f'cell {index}')
+                failures.append(f'  {where}: {out["ename"]}: {out["evalue"]}')
     if failures:
         raise BuildError('the notebook raised while executing:\n' + '\n'.join(failures))
 
-    return work
+    captured = {}
+    for cell in work.cells[original:]:
+        captured[cell.metadata['_setup_for']] = collect(cell)
+    return captured
 
 
-def collect_outputs(work):
-    """Group the executed cells' outputs by the original cell index."""
-    grouped = {}
-    for cell in work.cells:
-        origin = cell.metadata['_origin']
-        entry = grouped.setdefault(origin, {'stdout': [], 'images': [], 'captures': []})
-        is_capture = '_capture' in cell.metadata
-        for out in cell.get('outputs', []) or []:
-            kind = out.get('output_type')
-            if kind == 'stream' and out.get('name') == 'stdout':
-                text = ''.join(out['text']) if isinstance(out['text'], list) else out['text']
-                entry['stdout'].append(text)
-            elif kind in ('display_data', 'execute_result'):
-                data = out.get('data', {})
-                if 'image/png' in data:
-                    png = data['image/png']
-                    png = ''.join(png) if isinstance(png, list) else png
-                    target = entry['captures'] if is_capture else entry['images']
-                    target.append({'png': png, 'capture': cell.metadata.get('_capture')})
-                elif 'text/plain' in data and not is_capture:
-                    # A bare expression at the end of a cell. Widgets land here
-                    # too, as a repr; those are dropped by the widget check.
-                    text = data['text/plain']
-                    text = ''.join(text) if isinstance(text, list) else text
-                    if 'Widget' not in text and 'interactive' not in text:
-                        entry['stdout'].append(text + '\n')
-    return grouped
+def collect(cell):
+    """Pull stdout and PNGs out of one executed cell."""
+    text = []
+    images = []
+    for out in cell.get('outputs', []) or []:
+        kind = out.get('output_type')
+        if kind == 'stream' and out.get('name') == 'stdout':
+            body = out['text']
+            text.append(''.join(body) if isinstance(body, list) else body)
+        elif kind in ('display_data', 'execute_result'):
+            data = out.get('data', {})
+            if 'image/png' in data:
+                png = data['image/png']
+                images.append(''.join(png) if isinstance(png, list) else png)
+            elif 'text/plain' in data:
+                body = data['text/plain']
+                body = ''.join(body) if isinstance(body, list) else body
+                if 'Widget' not in body and 'interactive' not in body:
+                    text.append(body + '\n')
+    return {'stdout': ''.join(text).rstrip('\n'), 'images': images}
 
 
-def write_images(lab_id, cell_index, entries, out_dir, seen):
-    """Write the figures, reusing a file when the bytes are identical.
-
-    A capture frame often repeats a plot the cell above already produced, and
-    shipping the same 37 KB twice is the kind of thing that turns into 566 files.
-    """
+def write_setup_images(lab_id, cell_id, images, out_dir):
     paths = []
-    for k, entry in enumerate(entries):
-        raw = base64.b64decode(entry['png'])
+    seen = {}
+    for k, png in enumerate(images):
+        raw = base64.b64decode(png)
         digest = hashlib.sha256(raw).hexdigest()
         if digest in seen:
             paths.append(seen[digest])
             continue
-        name = f'cell{cell_index:02d}-{k}.png'
+        name = f'{cell_id}-{k}.png'
         (out_dir / name).write_bytes(raw)
         rel = f'out/{lab_id}/{name}'
         seen[digest] = rel
@@ -300,63 +281,47 @@ def write_images(lab_id, cell_index, entries, out_dir, seen):
 # ---------------------------------------------------------------------------
 
 
-def build_spec(nb_path, nb, outputs, lab_id, out_dir):
+def build_spec(nb_path, nb, captured, carried):
     lab = nb['metadata']['lab']
-    cells = []
-    seen_images = {}
+    lab_id = lab['lab_id']
+    puzzles = []
+    out_dir = OUT_DIR / lab_id
+    if captured:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        for stale in out_dir.glob('*.png'):
+            stale.unlink()
 
     for index, cell in enumerate(nb['cells']):
-        meta = cell.get('metadata', {}).get('lab', {'mode': 'shown'})
-        mode = meta.get('mode', 'shown')
-        source = cell_source(cell)
-        captured = outputs.get(index, {'stdout': [], 'images': [], 'captures': []})
-
-        if cell['cell_type'] == 'markdown':
-            entry = {
-                'kind': 'markdown',
-                'mode': mode,
-                'html': render_markdown(source),
-            }
-            if mode == 'defer':
-                entry['until'] = meta['until']
-                entry['heading'] = meta.get('heading') or first_heading(source) or 'More'
-            if meta.get('finale'):
-                entry['finale'] = True
-            cells.append(entry)
+        meta = cell.get('metadata', {}).get('lab')
+        if not meta or meta.get('mode') != 'gated':
             continue
 
-        entry = {
-            'kind': 'code',
-            'mode': mode,
-            'python': source,
-            'stdout': ''.join(captured['stdout']).rstrip('\n'),
-        }
-        if meta.get('quiet'):
-            entry['quiet'] = True
-        if meta.get('demo_for'):
-            entry['demo_for'] = meta['demo_for']
+        source = cell_source(cell)
+        lines = source.split('\n')
+        gate = {k: v for k, v in meta.items() if k not in ('mode', 'brief')}
+        check_py_refs(gate, lines, index)
+        gate['reveal'] = build_reveal(gate, lines, index)
+        gate['hash'] = gate_hash(gate)
+        gate['python'] = source
+        if meta.get('brief'):
+            gate['brief_html'] = render_markdown(meta['brief'].strip())
 
-        shots = meta.get('capture') or []
-        if shots:
-            paths = write_images(lab_id, index, captured['captures'], out_dir, seen_images)
-            entry['figures'] = [
-                {'src': path, 'caption': shots[k]['caption'] if k < len(shots) else ''}
-                for k, path in enumerate(paths)
-            ]
-            entry['static_frames'] = True
-        else:
-            paths = write_images(lab_id, index, captured['images'], out_dir, seen_images)
-            if paths:
-                entry['figures'] = [{'src': p, 'caption': ''} for p in paths]
+        # An output that raises the question belongs beside the question.
+        setup = meta.get('setup')
+        if setup:
+            shot = captured.get(meta['cell_id'], {'stdout': '', 'images': []})
+            kept = carried.get(meta['cell_id'], {})
+            gate['setup'] = {
+                'intro_html': render_markdown(setup['intro'].strip()) if setup.get('intro') else '',
+                'caption_html': render_markdown(setup['caption'].strip()) if setup.get('caption') else '',
+                'stdout': shot['stdout'] if captured else kept.get('stdout', ''),
+                'figures': (write_setup_images(lab_id, meta['cell_id'], shot['images'], out_dir)
+                            if captured else kept.get('figures', [])),
+            }
+        puzzles.append(gate)
 
-        if mode == 'gated':
-            gate = {k: v for k, v in meta.items() if k not in ('mode',)}
-            check_py_refs(gate, source, index)
-            gate['reveal'] = build_reveal(gate, source, index)
-            gate['hash'] = gate_hash(gate)
-            entry['gate'] = gate
-
-        cells.append(entry)
+    if not puzzles:
+        raise BuildError('no cell carries a gated `lab` key')
 
     rel = nb_path.relative_to(NOTEBOOK_DIR).as_posix()
     return {
@@ -365,10 +330,11 @@ def build_spec(nb_path, nb, outputs, lab_id, out_dir):
         'order': lab.get('order'),
         'title': lab['title'],
         'blurb': lab.get('blurb', ''),
+        'intro_html': render_markdown(lab['intro'].strip()) if lab.get('intro') else '',
         'series': lab.get('series', []),
         'source': f'notebooks/{rel}',
         'colab': COLAB_BASE + rel,
-        'cells': cells,
+        'puzzles': puzzles,
     }
 
 
@@ -380,8 +346,6 @@ def build_spec(nb_path, nb, outputs, lab_id, out_dir):
 def run_validator(spec_path):
     if not VALIDATOR.exists():
         raise BuildError(f'missing {VALIDATOR}')
-
-    import shutil
 
     node = shutil.which('node')
     if node:
@@ -417,44 +381,30 @@ def annotated_notebooks():
     return found
 
 
-def build_one(nb_path, nb, skip_execute):
+def build_one(nb_path, nb, run):
     lab_id = nb['metadata']['lab']['lab_id']
     print(f'{lab_id}  ({nb_path.relative_to(ROOT)})')
+    previous = SPEC_DIR / f'{lab_id}.json'
+    carried = {}
+    if not run and previous.exists():
+        for gate in json.loads(previous.read_text()).get('puzzles', []):
+            if gate.get('setup'):
+                carried[gate['cell_id']] = gate['setup']
 
-    out_dir = OUT_DIR / lab_id
-    out_dir.mkdir(parents=True, exist_ok=True)
-    if not skip_execute:
-        for stale in out_dir.glob('*.png'):
-            stale.unlink()
+    captured = {}
+    if run:
+        print('  running the notebook')
+        captured = run_notebook(nb_path, nb)
+    elif setups(nb):
+        print('  --no-run: puzzle setups keep whatever was captured last time')
+
+    spec = build_spec(nb_path, nb, captured, carried)
     SPEC_DIR.mkdir(parents=True, exist_ok=True)
     spec_path = SPEC_DIR / f'{lab_id}.json'
-
-    if skip_execute and spec_path.exists():
-        print('  reusing the previous run\'s captured output')
-        previous = json.loads(spec_path.read_text())
-        outputs = {}
-        for index, cell in enumerate(previous['cells']):
-            outputs[index] = {
-                'stdout': [cell.get('stdout', '')],
-                'images': [],
-                'captures': [],
-            }
-    else:
-        print('  executing')
-        work = execute(nb_path, nb)
-        outputs = collect_outputs(work)
-
-    spec = build_spec(nb_path, nb, outputs, lab_id, out_dir)
-
-    gates = [c['gate'] for c in spec['cells'] if c.get('gate')]
-    figures = sum(len(c.get('figures', [])) for c in spec['cells'])
-    print(f'  {len(spec["cells"])} cells, {len(gates)} gates, {figures} figures')
-
     spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=1) + '\n')
-    print(f'  wrote {spec_path.relative_to(ROOT)}')
+    print(f'  {len(spec["puzzles"])} puzzles, wrote {spec_path.relative_to(ROOT)}')
 
-    report = run_validator(spec_path)
-    for line in report.split('\n'):
+    for line in run_validator(spec_path).split('\n'):
         if line.strip():
             print(f'  {line}')
     return spec
@@ -463,8 +413,8 @@ def build_one(nb_path, nb, skip_execute):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('lab_id', nargs='?', help='build only this lab')
-    parser.add_argument('--skip-execute', action='store_true',
-                        help='reuse the previous captured output; figures are not rewritten')
+    parser.add_argument('--no-run', action='store_true',
+                        help='skip executing the notebook')
     args = parser.parse_args()
 
     notebooks = annotated_notebooks()
@@ -475,14 +425,13 @@ def main():
         ]
         if not notebooks:
             sys.exit(f'no annotated notebook with lab_id {args.lab_id!r}')
-
     if not notebooks:
         sys.exit('no notebook carries a `lab` key in its metadata')
 
     failures = 0
     for nb_path, nb in notebooks:
         try:
-            build_one(nb_path, nb, args.skip_execute)
+            build_one(nb_path, nb, run=not args.no_run)
         except BuildError as err:
             failures += 1
             print(f'  FAILED: {err}\n')

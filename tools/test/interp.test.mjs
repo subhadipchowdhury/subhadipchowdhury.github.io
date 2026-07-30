@@ -556,7 +556,7 @@ describe('newton_eval', () => {
       if (prev === 0 || (prev < 0) !== (cur < 0)) crossings++;
       prev = cur;
     }
-    assert(crossings > 0, 'the two cubics must cross, else the point is moot');
+    assert(crossings > 0, 'the two cubics have to cross for this test to mean anything');
 
     for (const t of [0.5, 2.0, 5.0]) {
       assert(Math.abs(diff(t)) > 1e-3,

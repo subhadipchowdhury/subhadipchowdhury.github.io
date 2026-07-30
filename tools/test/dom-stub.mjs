@@ -1,10 +1,9 @@
 // A DOM small enough to smoke-test the lab page under a JS shell.
 //
-// This is not a browser and does not pretend to be one: no layout, no cascade,
-// no real events. What it does give is enough of the element API for lab.js and
-// puzzle.js to build their whole tree, so a typo or a missing method surfaces
-// here instead of as a blank page. Anything that depends on measurement or on
-// the cascade has to be checked in a browser; that is the honest boundary.
+// No layout, no cascade, no real events. It covers enough of the element API
+// for lab.js and puzzle.js to build their tree, so a typo or a missing method
+// shows up here rather than as a blank page. Anything that depends on
+// measurement or on the cascade still has to be checked in a browser.
 
 class ClassList {
   constructor(el) { this.el = el; }

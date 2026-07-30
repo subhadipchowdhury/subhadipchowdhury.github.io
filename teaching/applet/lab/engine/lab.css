@@ -84,6 +84,16 @@ html[data-theme="dark"] .lab {
   margin: 0 0 0.25rem;
 }
 
+.lab-progress {
+  font-family: var(--lab-sans);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* --------------------------------------------------------------------------
+ * Prose: the lab intro, a puzzle's brief, the setup around a captured output
+ * ----------------------------------------------------------------------- */
+
 .lab-blurb {
   font-family: var(--lab-sans);
   color: var(--color-muted);
@@ -91,127 +101,72 @@ html[data-theme="dark"] .lab {
   line-height: 1.55;
 }
 
-.lab-reveal__output { padding: 0 0.9rem 0.9rem; }
-
-.lab-progress {
+.lab-intro {
   font-family: var(--lab-sans);
-  font-size: 0.85rem;
-  color: var(--color-muted);
-}
-
-.lab-cell { margin: 0 0 1.75rem; }
-
-.lab-prose { font-family: var(--lab-sans); line-height: 1.6; }
-
-.lab-prose h2 {
-  font-family: var(--lab-serif);
-  font-size: 1.3rem;
-  margin-top: 1.5rem;
-}
-
-/* Deferred prose: a collapsed bar until the puzzle it answers is done. */
-.lab-defer {
-  border: 1px dashed var(--border-color);
-  border-radius: 6px;
-  padding: 0.6rem 0.9rem;
-  background: var(--lab-sunken);
-  font-family: var(--lab-sans);
-  font-size: 0.9rem;
-  color: var(--lab-lock);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.lab-defer[hidden] { display: none; }
-
-.lab-defer__glyph { font-size: 0.85em; }
-
-/* An expandable strip at the top saying what the page is. Collapsed by default
-   once, expanded on a first visit, is tempting but needs state nobody asked
-   for; open by default and one click to fold is enough. */
-.lab-howto {
-  margin: 0.7rem 0 0;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid var(--border-color);
-  border-left: 3px solid var(--accent);
-  border-radius: 6px;
-  background: var(--lab-sunken);
-  font-family: var(--lab-sans);
-  font-size: 0.87rem;
-  line-height: 1.55;
-}
-
-.lab-howto > summary {
-  cursor: pointer;
-  font-family: var(--lab-semi), var(--lab-sans);
-  color: var(--accent);
-}
-
-.lab-howto p { margin: 0.55rem 0 0; color: var(--color-text); }
-
-/* --------------------------------------------------------------------------
- * Code and captured output
- * ----------------------------------------------------------------------- */
-
-/* Python for an ungated cell is scaffolding, so the output leads and the source
-   folds away behind it. The reveal is where reading Python is the point. */
-.lab-codebox {
+  font-size: 0.92rem;
+  line-height: 1.6;
   margin-top: 0.6rem;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background: var(--lab-sunken);
 }
 
-.lab-codebox > summary {
-  cursor: pointer;
-  padding: 0.45rem 0.8rem;
+.lab-intro p { margin: 0 0 0.5rem; }
+
+.lab-puzzle-block { margin: 0 0 3rem; }
+
+.lab-puzzle-title {
+  font-family: var(--lab-serif);
+  font-size: 1.45rem;
+  margin: 0 0 0.7rem;
+}
+
+.lab-brief {
   font-family: var(--lab-sans);
-  font-size: 0.8rem;
-  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1rem;
 }
 
-.lab-codebox > summary:hover { color: var(--accent); }
+.lab-brief p { margin: 0 0 0.7rem; }
 
-.lab-codebox .lab-code {
-  border: 0;
-  border-top: 1px solid var(--border-color);
-  border-radius: 0 0 6px 6px;
-  background: transparent;
-}
-
-.lab-static-note {
-  font-family: var(--lab-sans);
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--color-muted);
-  margin: 0 0 0.5rem;
-  padding-left: 0.7rem;
-  border-left: 2px solid var(--border-color);
-}
-
-.lab-gate__eyebrow {
-  font-family: var(--lab-sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 0.4rem;
-}
-
-.lab-code {
+.lab-brief code {
   font-family: var(--lab-mono);
-  font-size: 0.82rem;
-  line-height: 1.55;
+  font-size: 0.85em;
+}
+
+.lab-brief pre {
+  font-family: var(--lab-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-x: auto;
   background: var(--lab-sunken);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 0.75rem 0.9rem;
-  overflow-x: auto;
-  margin: 0;
+  padding: 0.7rem 0.9rem;
 }
 
-.lab-code .lab-dim { color: var(--lab-dim); }
+.lab-brief pre code { font-size: inherit; }
+
+/* A captured output shown because it is what raises the question. */
+.lab-setup {
+  border-left: 3px solid var(--accent);
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  margin: 0 0 1.1rem;
+}
+
+.lab-setup__text {
+  font-family: var(--lab-sans);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.lab-setup__text p { margin: 0 0 0.5rem; }
+
+.lab-setup__figure {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 0.6rem 0;
+}
 
 .lab-out {
   font-family: var(--lab-mono);
@@ -219,28 +174,32 @@ html[data-theme="dark"] .lab {
   line-height: 1.5;
   white-space: pre;
   overflow-x: auto;
-  margin: 0.5rem 0 0;
+  margin: 0.5rem 0;
   padding: 0.6rem 0.9rem;
-  border-left: 3px solid var(--border-color);
+  background: var(--lab-sunken);
+  border-radius: 5px;
   color: var(--color-text);
 }
 
-.lab-figures { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
-
-.lab-figure { margin: 0; flex: 1 1 18rem; }
-
-.lab-figure img { width: 100%; height: auto; border-radius: 4px; }
-
-.lab-figure figcaption {
+.lab-parked-note {
   font-family: var(--lab-sans);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--color-muted);
-  margin-top: 0.35rem;
+  margin: 0 0 0.6rem;
 }
 
 /* --------------------------------------------------------------------------
  * The puzzle
  * ----------------------------------------------------------------------- */
+
+.lab-gate__eyebrow {
+  font-family: var(--lab-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.2rem;
+}
 
 .lab-puzzle {
   border: 1px solid var(--border-color);
@@ -618,6 +577,10 @@ html[data-theme="dark"] .lab {
   align-items: center;
   gap: 0.45rem;
 }
+
+.lab-solved__head--bar { border-radius: 8px; }
+
+.lab-solved__head--bar .lab-doc-toggle { margin-left: auto; }
 
 .lab-reveal {
   display: grid;

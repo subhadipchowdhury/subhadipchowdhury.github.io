@@ -1,11 +1,10 @@
 // The drag-and-drop puzzle: one workspace, one tray, indentation by position.
 //
-// Every action available by pointer is available by tap and by keyboard, which
-// is section 8's requirement and also the reason the internals are written
-// against an abstract "move this block to (list, index, indent)" operation
-// rather than against drag events.
+// Pointer, tap and keyboard all end up calling the same "move this block to
+// (list, index, indent)" operation, which is why the internals are written
+// against that rather than against drag events.
 //
-// The view owns the arrangement and nothing else. Grading lives in verify.js;
+// The view owns the arrangement and nothing else. Grading is in verify.js and
 // the page controller decides what a verdict means.
 
 const MOVE_THRESHOLD = 4; // px before a press becomes a drag
@@ -270,9 +269,9 @@ export class PuzzleView {
 
   renderBlock(block, { interactive, placed = false }) {
     const div = el('div', 'lp-block');
-    // Decoy status is deliberately not written to the DOM. The spec JSON gives
-    // everything away to anyone who looks, but a data attribute would hand it
-    // over to a casual right-click, which is a different order of temptation.
+    // Decoy status is kept out of the DOM. The spec JSON gives everything away
+    // to anyone who goes looking, but a data attribute would hand it to anyone
+    // who right-clicks.
     if (interactive) {
       div.tabIndex = -1;
       div.setAttribute('role', 'button');
@@ -872,10 +871,9 @@ function el(tag, className) {
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-// How far past a level, as a fraction of one level's width, the block has to
-// travel before the level changes. At 0.5 this is plain rounding and the middle
-// levels are as twitchy as a coin edge; above that each level gets a dead zone
-// it holds on to, which is what makes a level in the middle parkable.
+// How far past a level, as a fraction of one level's width, a block has to
+// travel before the level changes. At 0.5 this is plain rounding, which leaves
+// a knife edge at each midpoint; above it, every level keeps a band it holds.
 export const INDENT_STICK = 0.72;
 
 /**

@@ -1,21 +1,20 @@
-// The lab page: a notebook read top to bottom, with its algorithms gated.
+// The lab page: a short run of puzzles, then the notebook.
 //
-// Cells unlock in order. Prose stays readable ahead of the frontier, except
-// prose marked `defer`, which would answer the puzzle below it, and except a
-// demo cell, which would print the answer. Nothing here ever shows a solution:
-// a puzzle that will not come out can be parked, and the Python behind it is
-// then only in the notebook at the end.
+// Each puzzle gets the mathematics it needs to be solvable, and where the
+// output is what raises the question, that output sits above it. Everything
+// else the notebook holds stays in the notebook, which opens at the end.
 
 import { PuzzleView } from './puzzle.js';
 import { buildReference, verify } from './verify.js';
-import { buildFeedbackCard, applyLadder, attemptSnapshot, ladderStage } from './feedback.js';
+import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
 
-const STORE_VERSION = 1;
+const STORE_VERSION = 2;
 
 export async function mountLab(root, specUrl) {
   const response = await fetch(specUrl, { cache: 'no-cache' });
   if (!response.ok) {
-    root.appendChild(errorCard(`The lab could not be loaded (${response.status}).`, specUrl));
+    root.innerHTML = '';
+    root.appendChild(notice(`This lab could not be loaded (${response.status}).`));
     return null;
   }
   const spec = await response.json();
@@ -25,17 +24,14 @@ export async function mountLab(root, specUrl) {
 }
 
 // ---------------------------------------------------------------------------
-// Stored progress
+// Saved progress
 // ---------------------------------------------------------------------------
 //
-// Keyed per gate, not per lab, and stamped with that gate's hash. Fixing a typo
-// in one puzzle therefore resets that puzzle and leaves the rest of a student's
-// work alone.
+// Keyed per puzzle and stamped with that puzzle's hash, so revising one puzzle
+// resets that puzzle and leaves the rest of a student's work alone.
 
 class Progress {
-  constructor(labId) {
-    this.labId = labId;
-  }
+  constructor(labId) { this.labId = labId; }
 
   key(cellId) { return `lab:${STORE_VERSION}:${this.labId}:${cellId}`; }
 
@@ -62,16 +58,10 @@ class Progress {
     }
   }
 
-  clear(cellId) {
-    try { localStorage.removeItem(this.key(cellId)); } catch { /* ignore */ }
-  }
-
   markConcept(name) {
     if (!name) return;
     try {
-      localStorage.setItem(`concept:${STORE_VERSION}:${name}`, JSON.stringify({
-        lab: this.labId, at: new Date().toISOString().slice(0, 10),
-      }));
+      localStorage.setItem(`concept:${STORE_VERSION}:${name}`, this.labId);
     } catch { /* ignore */ }
   }
 
@@ -81,8 +71,6 @@ class Progress {
 }
 
 // ---------------------------------------------------------------------------
-// The page
-// ---------------------------------------------------------------------------
 
 class LabController {
   constructor(root, spec, specUrl) {
@@ -90,71 +78,63 @@ class LabController {
     this.spec = spec;
     this.base = specUrl.replace(/specs\/[^/]*$/, '');
     this.progress = new Progress(spec.lab_id);
+    this.puzzles = spec.puzzles || [];
 
-    this.gates = spec.cells
-      .map((cell, index) => ({ cell, index }))
-      .filter(({ cell }) => cell.gate);
-
-    this.status = new Map(); // cell_id -> 'locked' | 'open' | 'parked' | 'solved'
+    this.status = new Map();
     this.views = new Map();
     this.saved = new Map();
+    this.sections = new Map();
 
-    for (const { cell } of this.gates) {
-      const gate = cell.gate;
+    for (const gate of this.puzzles) {
       const saved = this.progress.read(gate.cell_id, gate.hash);
-      this.saved.set(gate.cell_id, saved && !saved.reset ? saved : null);
-      this.status.set(gate.cell_id, saved && !saved.reset ? (saved.status || 'open') : 'locked');
+      const usable = saved && !saved.reset ? saved : null;
+      this.saved.set(gate.cell_id, usable);
+      this.status.set(gate.cell_id, usable ? (usable.status || 'open') : 'locked');
       if (saved?.reset) this.wasReset = true;
     }
     this.relock();
   }
 
-  // The frontier is the first gate that is neither solved nor parked; every
-  // gate after it is locked, whatever the store says.
+  // The frontier is the first puzzle neither solved nor set aside. Everything
+  // past it is shut, whatever the store says.
   relock() {
-    let frontierPassed = false;
-    for (const { cell } of this.gates) {
-      const id = cell.gate.cell_id;
+    let past = false;
+    for (const gate of this.puzzles) {
+      const id = gate.cell_id;
       const status = this.status.get(id);
-      if (frontierPassed) {
+      if (past) {
         if (status !== 'solved' && status !== 'parked') this.status.set(id, 'locked');
       } else if (status !== 'solved' && status !== 'parked') {
         this.status.set(id, 'open');
-        frontierPassed = true;
+        past = true;
       }
     }
   }
 
-  done(cellId) {
-    const s = this.status.get(cellId);
+  done(id) {
+    const s = this.status.get(id);
     return s === 'solved' || s === 'parked';
   }
 
-  allDone() {
-    return this.gates.every(({ cell }) => this.done(cell.gate.cell_id));
-  }
+  allDone() { return this.puzzles.every((g) => this.done(g.cell_id)); }
 
-  // -------------------------------------------------------------------------
-  // Rendering
   // -------------------------------------------------------------------------
 
   render() {
     this.root.innerHTML = '';
     this.root.appendChild(this.buildHeader());
     if (this.wasReset) {
-      this.root.appendChild(errorCard(
-        'One of these puzzles changed since you were last here, so its saved progress was cleared. The others are as you left them.',
+      this.root.appendChild(notice(
+        'One of these puzzles has changed since you were last here, so it has '
+        + 'started over. The others are as you left them.',
       ));
       this.wasReset = false;
     }
 
-    this.cellNodes = [];
-    this.spec.cells.forEach((cell, index) => {
-      const node = this.buildCell(cell, index);
-      if (node) {
-        this.root.appendChild(node);
-        this.cellNodes[index] = node;
-      }
+    this.puzzles.forEach((gate, index) => {
+      const section = this.buildPuzzle(gate, index);
+      this.sections.set(gate.cell_id, section);
+      this.root.appendChild(section);
     });
 
     this.root.appendChild(this.buildFinale());
@@ -172,219 +152,135 @@ class LabController {
       p.textContent = this.spec.blurb;
       head.appendChild(p);
     }
+    if (this.spec.intro_html) {
+      const intro = el('div', 'lab-intro');
+      intro.innerHTML = this.spec.intro_html;
+      head.appendChild(intro);
+    }
     this.progressLabel = el('p', 'lab-progress');
     head.appendChild(this.progressLabel);
-    head.appendChild(this.buildHowTo());
     return head;
-  }
-
-  buildHowTo() {
-    const box = el('details', 'lab-howto');
-    const summary = el('summary');
-    summary.textContent = 'What this page is';
-    box.appendChild(summary);
-    const n = this.gates.length;
-    for (const text of [
-      `This is the notebook with its algorithms taken apart. ${n === 1 ? 'Once' : `${n} times`} on the way down, a panel asks you to rebuild one from scrambled pseudocode before it will show you the Python that implements it.`,
-      'The puzzles are about the algorithm, not about Python: you arrange steps in the notation used on the board, and the indentation says what sits inside which loop. Nothing here runs Python, so the plots and printouts are the ones the notebook produced when this page was built.',
-      'Everything that is not a puzzle you can read straight through. The whole notebook, sliders live and every cell yours to edit, opens in Colab at the bottom.',
-    ]) {
-      const p = el('p');
-      p.textContent = text;
-      box.appendChild(p);
-    }
-    return box;
   }
 
   updateProgressLabel() {
     if (!this.progressLabel) return;
-    const total = this.gates.length;
-    const solved = this.gates.filter(({ cell }) => this.status.get(cell.gate.cell_id) === 'solved').length;
-    const parked = this.gates.filter(({ cell }) => this.status.get(cell.gate.cell_id) === 'parked').length;
-    const bits = [`${solved} of ${total} puzzle${total === 1 ? '' : 's'} solved`];
-    if (parked) bits.push(`${parked} parked`);
+    const total = this.puzzles.length;
+    const solved = this.puzzles.filter((g) => this.status.get(g.cell_id) === 'solved').length;
+    const parked = this.puzzles.filter((g) => this.status.get(g.cell_id) === 'parked').length;
+    const bits = [`${solved} of ${total} done`];
+    if (parked) bits.push(`${parked} set aside`);
     this.progressLabel.textContent = bits.join(', ');
   }
 
-  buildCell(cell, index) {
-    if (cell.kind === 'markdown') return this.buildMarkdownCell(cell, index);
-    return this.buildCodeCell(cell, index);
+  // -------------------------------------------------------------------------
+  // One puzzle: what raised the question, what you need, then the puzzle
+  // -------------------------------------------------------------------------
+
+  buildPuzzle(gate, index) {
+    const section = el('section', 'lab-puzzle-block');
+    section.dataset.gate = gate.cell_id;
+
+    const eyebrow = el('p', 'lab-gate__eyebrow');
+    eyebrow.textContent = `${index + 1} of ${this.puzzles.length}`;
+    section.appendChild(eyebrow);
+
+    const heading = el('h2', 'lab-puzzle-title');
+    heading.textContent = gate.title;
+    section.appendChild(heading);
+
+    if (this.status.get(gate.cell_id) === 'locked') {
+      section.appendChild(this.buildLocked());
+      return section;
+    }
+
+    if (gate.setup) section.appendChild(this.buildSetup(gate));
+    if (gate.brief_html) {
+      const brief = el('div', 'lab-brief');
+      brief.innerHTML = gate.brief_html;
+      section.appendChild(brief);
+    }
+
+    section.appendChild(this.buildBoard(gate));
+    return section;
   }
 
-  buildMarkdownCell(cell, index) {
-    const wrap = el('section', 'lab-cell');
-
-    if (cell.mode === 'defer' && !this.done(cell.until)) {
-      const bar = el('div', 'lab-defer');
-      const glyph = el('span', 'lab-defer__glyph');
-      glyph.textContent = '▸';
-      glyph.setAttribute('aria-hidden', 'true');
-      bar.appendChild(glyph);
-      const text = el('span');
-      text.textContent = `${cell.heading} · opens with the puzzle below`;
-      bar.appendChild(text);
-      wrap.appendChild(bar);
-      wrap.dataset.deferUntil = cell.until;
-      return wrap;
-    }
-
-    const body = el('div', 'lab-prose');
-    body.innerHTML = cell.html;
-    wrap.appendChild(body);
-    if (cell.mode === 'defer') wrap.dataset.deferUntil = cell.until;
-    return wrap;
-  }
-
-  buildCodeCell(cell, index) {
-    // The setup cell has nothing to say to a reader.
-    if (cell.quiet) return null;
-
-    const wrap = el('section', 'lab-cell');
-    wrap.dataset.cell = String(index);
-
-    if (cell.mode === 'gated') {
-      wrap.appendChild(this.buildGate(cell, index));
-      return wrap;
-    }
-
-    // A demo cell prints the answer to the puzzles it demonstrates, so it waits
-    // for all of them.
-    if (cell.demo_for && !demoReady(cell, (id) => this.done(id))) {
-      wrap.hidden = true;
-      wrap.dataset.demoFor = demoGates(cell).join(' ');
-      return wrap;
-    }
-
-    wrap.appendChild(this.buildCode(cell));
-    return wrap;
-  }
-
-  buildCode(cell) {
-    const frag = document.createDocumentFragment();
-
-    // A cell whose output is a widget in the notebook cannot be one here, and
-    // saying so before the pictures is the difference between a caption and an
-    // explanation for why the slider did not appear.
-    if (cell.static_frames) {
-      const note = el('p', 'lab-static-note');
-      note.textContent = 'Still frames. This cell builds a slider in the notebook, and nothing on this page runs Python, so here are two of the pictures it makes.';
-      frag.appendChild(note);
-    }
-
-    if (cell.stdout) {
-      const out = el('pre', 'lab-out');
-      out.textContent = cell.stdout;
-      frag.appendChild(out);
-    }
-    if (cell.figures?.length) frag.appendChild(this.buildFigures(cell));
-
-    frag.appendChild(this.buildCodeFold(cell));
-    return frag;
-  }
-
-  buildCodeFold(cell) {
-    const box = el('details', 'lab-codebox');
-    const summary = el('summary');
-    summary.textContent = cell.static_frames
-      ? 'Show the Python behind these frames'
-      : (cell.stdout || cell.figures?.length ? 'Show the Python that produced this' : 'Show the Python');
-    box.appendChild(summary);
-    const pre = el('pre', 'lab-code');
-    const code = el('code');
-    code.textContent = cell.python;
-    pre.appendChild(code);
-    box.appendChild(pre);
+  buildLocked() {
+    const box = el('div', 'lab-locked');
+    box.textContent = 'Opens once the one above is done, or set aside.';
     return box;
   }
 
-  buildFigures(cell) {
-    const strip = el('div', 'lab-figures');
-    for (const fig of cell.figures) {
-      const figure = el('figure', 'lab-figure');
-      const img = el('img');
-      img.src = this.base + fig.src;
-      img.loading = 'lazy';
-      img.alt = fig.caption || 'Figure from this cell';
-      figure.appendChild(img);
-      if (fig.caption) {
-        const caption = el('figcaption');
-        caption.textContent = fig.caption;
-        figure.appendChild(caption);
-      }
-      strip.appendChild(figure);
+  // Where the output is what raises the question, it belongs above the question.
+  buildSetup(gate) {
+    const box = el('div', 'lab-setup');
+    if (gate.setup.intro_html) {
+      const intro = el('div', 'lab-setup__text');
+      intro.innerHTML = gate.setup.intro_html;
+      box.appendChild(intro);
     }
-    return strip;
+    if (gate.setup.stdout) {
+      const out = el('pre', 'lab-out');
+      out.textContent = gate.setup.stdout;
+      box.appendChild(out);
+    }
+    for (const src of gate.setup.figures || []) {
+      const img = el('img', 'lab-setup__figure');
+      img.src = this.base + src;
+      img.loading = 'lazy';
+      img.alt = 'Output from the notebook';
+      box.appendChild(img);
+    }
+    if (gate.setup.caption_html) {
+      const caption = el('div', 'lab-setup__text');
+      caption.innerHTML = gate.setup.caption_html;
+      box.appendChild(caption);
+    }
+    return box;
   }
 
-  // -------------------------------------------------------------------------
-  // Gates
-  // -------------------------------------------------------------------------
-
-  buildGate(cell, index) {
-    const gate = cell.gate;
+  buildBoard(gate) {
     const id = gate.cell_id;
-    const status = this.status.get(id);
     const host = el('div', 'lab-gate');
     host.dataset.gate = id;
 
-    if (status === 'locked') {
-      host.appendChild(this.buildLocked(gate));
+    if (this.status.get(id) === 'solved') {
+      host.appendChild(this.buildSolvedBar(gate, this.saved.get(id)));
       return host;
     }
-
-    if (status === 'solved') {
-      const saved = this.saved.get(id);
-      host.appendChild(this.buildSolvedBar(cell, saved));
-      return host;
-    }
-
-    const position = this.gates.findIndex(({ cell: c }) => c.gate.cell_id === id) + 1;
-    const eyebrow = el('p', 'lab-gate__eyebrow');
-    eyebrow.textContent = `Puzzle ${position} of ${this.gates.length}`;
-    host.appendChild(eyebrow);
-
-    const mount = el('div');
-    host.appendChild(mount);
 
     let reference;
     try {
       reference = buildReference(gate);
     } catch (err) {
-      host.appendChild(errorCard(`This puzzle could not be prepared: ${err.message}`));
+      host.appendChild(notice(`This puzzle could not be set up: ${err.message}`));
       return host;
     }
+
+    if (this.status.get(id) === 'parked') host.appendChild(this.parkedNote());
+
+    const mount = el('div');
+    host.appendChild(mount);
 
     const saved = this.saved.get(id);
     const view = new PuzzleView(mount, gate, {
       state: saved,
-      onChange: (state) => {
-        this.progress.write(id, gate.hash, { status: this.status.get(id), ...state });
-      },
-      onReset: () => {
-        this.progress.write(id, gate.hash, { status: 'open', attempts: 0 });
-      },
-      onSubmit: (submission) => this.onSubmit(cell, view, reference, submission),
+      onChange: (state) => this.progress.write(id, gate.hash, { status: this.status.get(id), ...state }),
+      onReset: () => this.progress.write(id, gate.hash, { status: 'open', attempts: 0 }),
+      onSubmit: (submission) => this.onSubmit(gate, view, reference, submission),
     });
     if (saved?.attempts) view.attempts = saved.attempts;
-    if (status === 'parked') {
-      const bar = el('p', 'lp-feedback__hint');
-      bar.textContent = 'Parked. The rest of the lab is open; this puzzle is still here whenever you want it.';
-      host.insertBefore(bar, mount);
-    }
     view.render();
     this.views.set(id, view);
     return host;
   }
 
-  buildLocked(gate) {
-    const position = this.gates.findIndex(({ cell: c }) => c.gate.cell_id === gate.cell_id) + 1;
-    const box = el('div', 'lab-locked');
-    box.textContent = `Puzzle ${position} of ${this.gates.length}: ${gate.title}. Opens once the puzzle above is done or parked.`;
-    return box;
+  parkedNote() {
+    const note = el('p', 'lab-parked-note');
+    note.textContent = 'Set aside. The rest of the lab is open, and this one is still here whenever you want it.';
+    return note;
   }
 
-  onSubmit(cell, view, reference, submission) {
-    const gate = cell.gate;
+  onSubmit(gate, view, reference, submission) {
     const id = gate.cell_id;
     const verdict = verify(gate, submission, reference);
 
@@ -393,21 +289,17 @@ class LabController {
       view.freeze();
       this.status.set(id, 'solved');
       this.progress.markConcept(gate.concept);
-      this.progress.write(id, gate.hash, {
-        status: 'solved', ...view.getState(),
-      });
+      this.progress.write(id, gate.hash, { status: 'solved', ...view.getState() });
       this.saved.set(id, view.getState());
       this.relock();
 
       const host = this.root.querySelector(`.lab-gate[data-gate="${id}"]`);
-      const reveal = this.buildReveal(cell, view.getSubmission());
+      const reveal = this.buildReveal(gate, view.getSubmission());
       host?.appendChild(reveal);
-      this.openDeferred(id);
-      this.showDemo(id);
-      this.openNextGate();
+      this.openNext();
       this.updateProgressLabel();
       this.typeset(reveal);
-      reveal.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      reveal.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
       return;
     }
 
@@ -417,71 +309,37 @@ class LabController {
       gate,
       attempts: view.attempts,
       ladderNote,
-      onPark: () => this.park(cell, view),
-      onCopy: () => attemptSnapshot({
-        lab: this.spec, gate, view, verdict, attempts: view.attempts,
-      }),
+      onPark: () => this.park(gate, view),
+      onCopy: () => attemptSnapshot({ lab: this.spec, gate, view, verdict, attempts: view.attempts }),
     }));
     view.render();
     this.progress.write(id, gate.hash, { status: 'open', ...view.getState() });
   }
 
-  park(cell, view) {
-    const id = cell.gate.cell_id;
+  park(gate, view) {
+    const id = gate.cell_id;
     this.status.set(id, 'parked');
-    this.progress.write(id, cell.gate.hash, { status: 'parked', ...view.getState() });
+    this.progress.write(id, gate.hash, { status: 'parked', ...view.getState() });
     this.relock();
-    this.openDeferred(id);
-    this.showDemo(id);
-    this.openNextGate();
+    this.openNext();
     this.updateProgressLabel();
     view.setFeedback(null);
     const host = this.root.querySelector(`.lab-gate[data-gate="${id}"]`);
-    if (host && !host.querySelector('.lab-parked-note')) {
-      const note = el('p', 'lp-feedback__hint lab-parked-note');
-      note.textContent = 'Parked. The rest of the lab is open, and this puzzle stays here for when you come back to it.';
-      host.prepend(note);
-    }
+    if (host && !host.querySelector('.lab-parked-note')) host.prepend(this.parkedNote());
   }
 
-  // A deferred markdown cell opens in place once the puzzle it answers is done.
-  openDeferred(gateId) {
-    this.spec.cells.forEach((cell, index) => {
-      if (cell.kind !== 'markdown' || cell.mode !== 'defer' || cell.until !== gateId) return;
-      const node = this.cellNodes[index];
-      if (!node) return;
-      node.innerHTML = '';
-      const body = el('div', 'lab-prose');
-      body.innerHTML = cell.html;
-      node.appendChild(body);
-      this.typeset(body);
+  // Swap the "opens once the one above is done" placeholder for the puzzle.
+  openNext() {
+    this.puzzles.forEach((gate, index) => {
+      const id = gate.cell_id;
+      if (this.status.get(id) !== 'open') return;
+      const section = this.sections.get(id);
+      if (!section || !section.querySelector('.lab-locked')) return;
+      const fresh = this.buildPuzzle(gate, index);
+      this.sections.set(id, fresh);
+      section.replaceWith(fresh);
+      this.typeset(fresh);
     });
-  }
-
-  showDemo(gateId) {
-    this.spec.cells.forEach((cell, index) => {
-      if (!demoGates(cell).includes(gateId)) return;
-      if (!demoReady(cell, (id) => this.done(id))) return;
-      const node = this.cellNodes[index];
-      if (!node || !node.hidden) return;
-      node.hidden = false;
-      node.appendChild(this.buildCode(cell));
-    });
-  }
-
-  openNextGate() {
-    for (const { cell, index } of this.gates) {
-      const id = cell.gate.cell_id;
-      const node = this.cellNodes[index];
-      if (!node) continue;
-      const host = node.querySelector(`.lab-gate[data-gate="${id}"]`);
-      if (!host) continue;
-      if (this.status.get(id) === 'open' && host.querySelector('.lab-locked')) {
-        host.innerHTML = '';
-        const fresh = this.buildGate(cell, index);
-        host.replaceWith(fresh);
-      }
-    }
     this.updateFinale();
   }
 
@@ -489,24 +347,23 @@ class LabController {
   // The reveal
   // -------------------------------------------------------------------------
 
-  buildReveal(cell, submission) {
-    const gate = cell.gate;
+  buildReveal(gate, submission) {
     const box = el('div', 'lab-solved');
-
     const head = el('div', 'lab-solved__head');
-    head.textContent = '✓ Solved. Your algorithm, and the Python that implements it.';
+    head.textContent = 'Solved. Here is the same algorithm in the notebook\u2019s Python.';
     box.appendChild(head);
 
     const grid = el('div', 'lab-reveal');
 
     const left = el('div', 'lab-reveal__col');
     const leftHead = el('h4');
-    leftHead.textContent = 'Your pseudocode';
+    leftHead.textContent = 'What you built';
     left.appendChild(leftHead);
+
     const rowOf = new Map();
     gate.solution.forEach((step, k) => {
       rowOf.set(step.id, k + 1);
-      const block = [...gate.blocks].find((b) => b.id === step.id);
+      const block = gate.blocks.find((b) => b.id === step.id);
       block.lines.forEach((line, li) => {
         const row = el('span', 'lab-pair');
         row.dataset.pair = String(k + 1);
@@ -522,50 +379,41 @@ class LabController {
 
     const right = el('div', 'lab-reveal__col');
     const rightHead = el('h4');
-    rightHead.textContent = 'The implementation';
+    rightHead.textContent = 'The Python';
     right.appendChild(rightHead);
     right.appendChild(this.buildPythonPane(gate));
     grid.appendChild(right);
 
     const notes = el('div', 'lab-reveal__notes');
-    notes.appendChild(this.buildGlueNote(gate));
-    for (const note of gate.annotations || []) {
+    if (gate.reveal.some((l) => l.role === 'glue')) {
       const p = el('p');
-      const rows = (note.blocks || []).map((id) => rowOf.get(id)).filter(Boolean);
-      const label = rows.length ? `${rows.map((n) => `${n}`).join(' and ')}. ` : '';
-      p.textContent = label + note.text;
+      p.textContent = 'The greyed lines are housekeeping rather than algorithm, so they were not part of the puzzle.';
       notes.appendChild(p);
     }
-    grid.appendChild(notes);
-    box.appendChild(grid);
-
-    if (cell.stdout || cell.figures?.length) {
-      const out = el('div', 'lab-reveal__output');
-      box.appendChild(out);
+    for (const note of gate.annotations || []) {
+      const p = el('p');
+      const rows = (note.blocks || []).map((bid) => rowOf.get(bid)).filter(Boolean);
+      p.textContent = (rows.length ? `Lines ${rows.join(' and ')}. ` : '') + note.text;
+      notes.appendChild(p);
     }
+    if (notes.children.length) grid.appendChild(notes);
 
+    box.appendChild(grid);
     wirePairing(box);
     return box;
   }
 
   buildPythonPane(gate) {
     const pane = el('div');
-    let docStart = null;
-
+    let docShown = false;
     for (const line of gate.reveal) {
       if (line.role === 'doc') {
-        if (docStart === null) {
-          docStart = line.n;
-          pane.appendChild(this.buildDocStub(gate));
-        }
+        if (!docShown) { docShown = true; pane.appendChild(this.buildDocStub(gate)); }
         continue;
       }
       const row = el('span', 'lab-pair');
-      if (line.role === 'block') {
-        row.dataset.pair = String(line.num);
-      } else if (line.role === 'glue' || line.role === 'head') {
-        row.classList.add('lab-pair--glue');
-      }
+      if (line.role === 'block') row.dataset.pair = String(line.num);
+      else if (line.role === 'glue' || line.role === 'head') row.classList.add('lab-pair--glue');
       const num = el('span', 'lab-pair__num');
       num.textContent = line.role === 'block' ? String(line.num) : '';
       row.appendChild(num);
@@ -575,15 +423,12 @@ class LabController {
     return pane;
   }
 
-  // The docstring would swamp the pairing, so it collapses to a stub. In this
-  // notebook it is worth opening at least once.
   buildDocStub(gate) {
     const wrap = el('span', 'lab-pair lab-pair--doc');
-    const num = el('span', 'lab-pair__num');
-    wrap.appendChild(num);
+    wrap.appendChild(el('span', 'lab-pair__num'));
     const toggle = el('button', 'lab-doc-toggle');
     toggle.type = 'button';
-    toggle.textContent = '"""…""" show documentation';
+    toggle.textContent = 'show the docstring';
     const body = el('div');
     body.hidden = true;
     for (const line of gate.reveal.filter((l) => l.role === 'doc')) {
@@ -594,7 +439,7 @@ class LabController {
     }
     toggle.addEventListener('click', () => {
       body.hidden = !body.hidden;
-      toggle.textContent = body.hidden ? '"""…""" show documentation' : '"""…""" hide documentation';
+      toggle.textContent = body.hidden ? 'show the docstring' : 'hide the docstring';
     });
     wrap.appendChild(toggle);
     const frag = document.createDocumentFragment();
@@ -603,34 +448,23 @@ class LabController {
     return frag;
   }
 
-  buildGlueNote(gate) {
-    const p = el('p');
-    const count = gate.reveal.filter((l) => l.role === 'glue').length;
-    p.textContent = count
-      ? 'The dimmed lines are bookkeeping rather than algorithm, which is why you did not assemble them.'
-      : 'Every line of the implementation pairs with a line you assembled.';
-    return p;
-  }
-
-  buildSolvedBar(cell, saved) {
+  buildSolvedBar(gate, saved) {
     const wrap = el('div');
-    const bar = el('div', 'lab-solved__head');
-    bar.style.borderRadius = '8px';
+    const bar = el('div', 'lab-solved__head lab-solved__head--bar');
     const label = el('span');
-    label.textContent = `✓ ${cell.gate.title}`;
+    label.textContent = 'Done';
     bar.appendChild(label);
     const toggle = el('button', 'lab-doc-toggle');
     toggle.type = 'button';
     toggle.textContent = 'show what you built';
-    toggle.style.marginLeft = 'auto';
     bar.appendChild(toggle);
     wrap.appendChild(bar);
 
     let reveal = null;
     toggle.addEventListener('click', () => {
       if (!reveal) {
-        reveal = this.buildReveal(cell, {
-          placements: saved?.placements ?? cell.gate.solution,
+        reveal = this.buildReveal(gate, {
+          placements: saved?.placements ?? gate.solution,
           blanks: saved?.blanks ?? {},
         });
         wrap.appendChild(reveal);
@@ -643,37 +477,37 @@ class LabController {
   }
 
   // -------------------------------------------------------------------------
-  // Finale
-  // -------------------------------------------------------------------------
 
   buildFinale() {
     const card = el('section', 'lab-finale');
     const h2 = el('h2');
-    h2.textContent = 'Open the notebook';
+    h2.textContent = 'The notebook';
     card.appendChild(h2);
     const p = el('p');
-    p.textContent = 'The whole notebook, with the sliders live and every cell yours to edit, runs in Google Colab. Nothing is installed, and your changes are not saved back here, so use File then Save a copy in Drive to keep them.';
+    p.textContent = 'The rest of this topic is in the notebook: the plots, the '
+      + 'sliders, the experiments to run and the code to change. It opens in Google '
+      + 'Colab, nothing gets installed, and your edits are not saved back here, so '
+      + 'use File then Save a copy in Drive to keep them.';
     card.appendChild(p);
     this.launch = el('a', 'lab-launch');
     this.launch.setAttribute('href', this.spec.colab);
     this.launch.target = '_blank';
     this.launch.rel = 'noopener';
-    this.launch.textContent = '▶ Launch in Colab';
+    this.launch.textContent = 'Open the notebook';
     card.appendChild(this.launch);
     this.finaleNote = el('p', 'lab-progress');
     card.appendChild(this.finaleNote);
-    this.finaleCard = card;
     this.updateFinale();
     return card;
   }
 
   updateFinale() {
     if (!this.launch) return;
-    const left = this.gates.filter(({ cell }) => !this.done(cell.gate.cell_id)).length;
+    const left = this.puzzles.filter((g) => !this.done(g.cell_id)).length;
     if (left) {
       this.launch.setAttribute('aria-disabled', 'true');
       this.launch.removeAttribute('href');
-      this.finaleNote.textContent = `${left} puzzle${left === 1 ? '' : 's'} still to go.`;
+      this.finaleNote.textContent = left === 1 ? 'One puzzle to go.' : `${left} puzzles to go.`;
     } else {
       this.launch.removeAttribute('aria-disabled');
       this.launch.setAttribute('href', this.spec.colab);
@@ -689,8 +523,6 @@ class LabController {
 }
 
 // ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 function el(tag, className) {
   const n = document.createElement(tag);
@@ -698,25 +530,16 @@ function el(tag, className) {
   return n;
 }
 
-function demoGates(cell) {
-  if (!cell.demo_for) return [];
-  return Array.isArray(cell.demo_for) ? cell.demo_for : [cell.demo_for];
-}
-
-function demoReady(cell, isDone) {
-  return demoGates(cell).every(isDone);
-}
-
 function fillBlanks(text, blanks) {
   return text.replace(/⟨\?([^⟩]+)⟩/g, (_, name) => (blanks?.[name.trim()] ?? '⟨?⟩'));
 }
 
-function prefersReducedMotion() {
+function reducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 }
 
-// Hovering or focusing either side of a pair lights both, and the pairing is
-// also exposed to a screen reader as text, since hover is not available there.
+// Hovering or focusing either side of a pair lights both. Screen readers get
+// the pairing as text on each row, since hover is not available to them.
 function wirePairing(scope) {
   const rows = scope.querySelectorAll('.lab-pair[data-pair]');
   const setPair = (pair, on) => {
@@ -734,14 +557,8 @@ function wirePairing(scope) {
   });
 }
 
-function errorCard(message, detail) {
+function notice(message) {
   const box = el('div', 'lab-locked');
   box.textContent = message;
-  if (detail) {
-    const small = el('p');
-    small.style.fontSize = '0.8em';
-    small.textContent = detail;
-    box.appendChild(small);
-  }
   return box;
 }

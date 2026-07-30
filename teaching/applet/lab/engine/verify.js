@@ -1,12 +1,12 @@
 // Grading a placed assembly.
 //
-// The pipeline is section 6.1 of the design, in order, stopping at the first
-// failure class: completeness, parse, interpret, compare, diagnose. Behaviour is
-// the verdict, so any arrangement that computes the right thing passes and no
-// equivalence groups are ever authored by hand.
+// Five stages in order, stopping at the first failure: completeness, parse,
+// interpret, compare, diagnose. Behaviour decides the verdict, so any
+// arrangement that computes the right thing passes and no lists of acceptable
+// orderings have to be written by hand.
 //
-// Nothing here reveals the reference. The classifier describes the shape of the
-// student's own wrong answer and, as a last resort, discloses one entry.
+// Nothing here shows the reference answer. The classifier describes the shape
+// of the student's own wrong result, and as a last resort names one entry.
 
 import {
   parseProgram, run, evalExpression, valuesEqual, deepCopy,
@@ -116,9 +116,9 @@ export function verify(gate, submission, reference) {
 
   const base = { placedDecoys, trace: null, why: null };
 
-  // 1. Completeness. Line counts only, never content: a student who swapped a
-  // real block for a decoy has a full workspace and should be answered by the
-  // diagnosis below, not told structurally that one of their blocks is a decoy.
+  // 1. Completeness, by line count only. A student who swapped a real block for
+  // a decoy has a full workspace, and should get the diagnosis below rather
+  // than a message that gives away which block is the decoy.
   const wanted = countLines(gate.solution, byId);
   const placed = countLines(placements, byId);
   if (placements.length === 0) {

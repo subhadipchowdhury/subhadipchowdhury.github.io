@@ -62,7 +62,24 @@ DIVDIFF = {
     'cell_id': 'divdiff',
     'concept': 'divided_differences',
     'title': 'Build the divided-difference table',
-    'intro': 'Assemble the algorithm that fills the table. Order and indentation both count, and two blocks have blanks to fill in.',
+    'brief': r'''
+Newton's form writes the interpolating polynomial through $(x_0,y_0),\dots,(x_{n-1},y_{n-1})$ as
+
+$$p(x) = c_0 + c_1(x-x_0) + c_2(x-x_0)(x-x_1) + \cdots + c_{n-1}(x-x_0)\cdots(x-x_{n-2}).$$
+
+The coefficients $c_k$ are **divided differences**, defined by
+
+$$f[x_i] = y_i, \qquad f[x_i,\dots,x_{i+j}] = \frac{f[x_{i+1},\dots,x_{i+j}] - f[x_i,\dots,x_{i+j-1}]}{x_{i+j}-x_i}.$$
+
+Each one is built from two differences of one lower order. Store them in a table $T$, where
+
+$$T[i,\,j] = f[x_i,\dots,x_{i+j}],$$
+
+so column $j$ holds the differences of order $j$. Column $0$ is just the data, and every later column is one entry shorter than the one before it, because a difference of order $j$ needs $j+1$ consecutive nodes to exist. That is what makes the table a triangle. The coefficients $c_0,\dots,c_{n-1}$ you need for $p$ are the top row.
+
+**Your job.** Turn that definition into an algorithm: fill the table one column at a time, then read the coefficients off it. Two things are left blank. How far does the inner loop run, given that column $j$ is shorter than column $j-1$? And which two nodes does the denominator span?
+''',
+    'intro': 'Order and indentation both count: a line one level further in runs once per pass of the loop above it.',
 
     'blocks': [
         block('def', 'function divided_differences(x, y):', [10, 10], 'def divided_differences'),
@@ -159,8 +176,26 @@ DDPRINT = {
     'mode': 'gated',
     'cell_id': 'ddprint',
     'concept': 'print_dd_table',
-    'title': 'How long is each row of the triangle?',
-    'intro': 'The lines are already in order; only the inner bound is missing. Row i holds the differences that start at node i, and there are fewer of them the further down the table you go.',
+    'title': 'Print the table as a triangle',
+    'brief': r'''
+You have a table but no way to look at it. Printing $T$ as a square would show a lot of zeros: the entries below the anti-diagonal were never written, because those differences do not exist.
+
+So print it as the triangle it is, one row per node:
+
+```
+  x_i   |  f[.] (order increases left -> right)
+ 0.000  |    1.0000    3.0000   -1.3333    0.3222
+ 1.000  |    4.0000   -1.0000    0.6000
+ 3.000  |    2.0000    2.0000
+ 6.000  |    8.0000
+```
+
+Row $i$ starts at node $x_i$ and runs along the differences that begin there: $f[x_i]$, then $f[x_i,x_{i+1}]$, then $f[x_i,x_{i+1},x_{i+2}]$, and so on. It stops when the next difference would need a node past $x_{n-1}$.
+
+**Your job.** The lines are already in order and only the inner bound is missing. Count the entries on row $i$ and write the index of the last one.
+
+Careful: the previous puzzle bounded the *columns*, which shrink as the order $j$ grows. This one bounds the *rows*, which shrink as the starting node $i$ moves down. They are not the same bound.
+''',
     'prefill': 'all',
 
     'blocks': [
@@ -224,8 +259,37 @@ NEWEVAL = {
     'mode': 'gated',
     'cell_id': 'neweval',
     'concept': 'newton_eval',
-    'title': 'Evaluate the Newton form by nesting',
-    'intro': 'Build the nested evaluation at a single point t. Read the nesting from the inside out and it will tell you which coefficient to start from.',
+    'title': 'Evaluate the polynomial at a point',
+    'setup': {
+        'intro': 'The table is built and the coefficients are the top row of it. For the four points we have been using, here is what came out:',
+        'code': (
+            "print('nodes        x =', x_data)\n"
+            "print('values       y =', y_data)\n"
+            "print('coefficients c =', np.array2string(coeffs, precision=4))"
+        ),
+        'caption': (
+            'So the polynomial through those four points is\n\n'
+            '$$p(x) = 1 + 3(x-0) - 1.3333(x-0)(x-1) + 0.3222(x-0)(x-1)(x-3).$$\n\n'
+            'Nothing you have built so far can tell you what $p(2.5)$ is.'
+        ),
+    },
+    'brief': r'''
+You have the coefficients. Now evaluate
+
+$$p(t) = c_0 + c_1(t-x_0) + c_2(t-x_0)(t-x_1) + \cdots + c_{n-1}(t-x_0)\cdots(t-x_{n-2})$$
+
+at a single point $t$.
+
+Computing each product from scratch costs $\mathcal{O}(n^2)$ multiplications. Factoring out the common factors nests the whole thing:
+
+$$p(t) = c_0 + (t-x_0)\Bigl(c_1 + (t-x_1)\bigl(c_2 + \cdots + (t-x_{n-2})\,c_{n-1}\bigr)\Bigr).$$
+
+That costs $\mathcal{O}(n)$. It is the same rearrangement as Horner's rule for a polynomial in powers of $x$.
+
+Read it from the inside out. Start from the value in the innermost bracket, then repeatedly multiply by $(t - x_k)$ and add $c_k$, working outward until you reach $c_0$.
+
+**Your job.** Build that sweep. Two questions decide it: which coefficient sits in the innermost bracket, and which direction does $k$ run?
+''',
 
     'blocks': [
         block('def', 'function newton_eval(xn, c, t):', [4, 4], 'def newton_eval'),
@@ -294,31 +358,13 @@ NEWEVAL = {
 # Cell-by-cell plan
 # ---------------------------------------------------------------------------
 
+# The lab page carries the puzzles and nothing else. Every other cell stays in
+# the notebook, which is what the student opens once the puzzles are done.
+
 CELLS = {
-    0: {'mode': 'shown'},
-    1: {'mode': 'shown', 'quiet': True},           # setup: run, but nothing to show
-    2: {'mode': 'defer', 'until': 'divdiff', 'heading': 'Divided differences'},
     3: DIVDIFF,
     4: DDPRINT,
-    # This prints the table using print_dd_table, so its output is a triangle
-    # with n−i entries on row i: exactly what the second puzzle asks for. It
-    # waits for both.
-    5: {'mode': 'shown', 'demo_for': ['divdiff', 'ddprint']},
-    6: {'mode': 'defer', 'until': 'neweval', 'heading': 'Evaluating the Newton form'},
     7: NEWEVAL,
-    8: {'mode': 'shown', 'demo_for': 'neweval'},
-    9: {'mode': 'shown'},
-    10: {'mode': 'shown', 'capture': [
-        {'code': 'show_newton(5)', 'caption': 'five nodes'},
-        {'code': 'show_newton(12)', 'caption': "twelve nodes: Runge's phenomenon arrives, indifferent to which representation of the polynomial you chose"},
-    ]},
-    11: {'mode': 'shown'},
-    12: {'mode': 'shown'},
-    13: {'mode': 'shown'},
-    14: {'mode': 'shown'},
-    15: {'mode': 'shown'},
-    16: {'mode': 'shown'},
-    17: {'mode': 'shown', 'finale': True},
 }
 
 NOTEBOOK_LAB = {
@@ -326,9 +372,17 @@ NOTEBOOK_LAB = {
     'module': 'M1',
     'order': 2,
     'title': 'Newton form and divided differences',
-    'blurb': 'Build the divided-difference table and the nested evaluation, then watch the coefficients reused as nodes are appended.',
+    'blurb': 'Build the divided-difference table, then the nested evaluation that uses it.',
     'series': ['m1-runge', 'm1-newton', 'm1-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
+    'intro': (
+        'Three algorithms from this week, taken apart. Rebuild each one from the '
+        'scrambled steps and the notebook opens at the end, with the plots, the '
+        'sliders and the rest of the material in it.\n\n'
+        'The steps are written in the notation we use on the board, not in Python. '
+        'Where you put a step and how far you indent it are both part of the answer: '
+        'a line one level further in runs once for every pass of the loop above it.'
+    ),
 }
 
 
@@ -337,19 +391,19 @@ def main():
         sys.exit(f'not found: {NOTEBOOK}')
     nb = json.loads(NOTEBOOK.read_text())
 
-    if len(nb['cells']) != len(CELLS):
-        sys.exit(
-            f'the notebook has {len(nb["cells"])} cells but this file plans for '
-            f'{len(CELLS)}. Reconcile before seeding.'
-        )
-
     nb['metadata']['lab'] = NOTEBOOK_LAB
+    # Clear any earlier seeding so a cell that stops being a puzzle stops being
+    # one in the file too.
+    for cell in nb['cells']:
+        cell.get('metadata', {}).pop('lab', None)
     for index, plan in CELLS.items():
+        if index >= len(nb['cells']):
+            sys.exit(f'the notebook has no cell {index}; the plan is out of date')
         nb['cells'][index].setdefault('metadata', {})['lab'] = plan
 
     NOTEBOOK.write_text(json.dumps(nb, indent=1, ensure_ascii=False) + '\n')
-    gated = [p['cell_id'] for p in CELLS.values() if p.get('mode') == 'gated']
-    print(f'seeded {NOTEBOOK} with {len(CELLS)} cell plans, gates: {", ".join(gated)}')
+    gated = [p['cell_id'] for p in CELLS.values()]
+    print(f'seeded {NOTEBOOK} with {len(gated)} puzzles: {", ".join(gated)}')
 
 
 if __name__ == '__main__':

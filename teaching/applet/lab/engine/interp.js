@@ -1,18 +1,15 @@
 // Interpreter for the house pseudocode notation.
 //
-// The notation is the one in the lab design document, section 1: loose about
-// words, strict about indices. It is a closed language, so this is a small
-// tree-walking interpreter with no dependencies and no ambition beyond running
-// the algorithms the labs actually gate.
+// A small tree-walking interpreter with no dependencies. The notation is a
+// closed language, described in the lab design document, section 1.
 //
-// The unit of input is a list of placed lines, not a blob of text, because that
-// is what the puzzle UI produces: each line knows which block it came from and
-// what indent level the student chose. Errors carry the block id back, so the
-// page can point at the offending block.
+// Input is a list of placed lines rather than a blob of text, since that is
+// what the puzzle produces: each line knows its block and its indent level.
+// Errors carry the block id back so the page can point at it.
 //
-// Two deliberate departures from IEEE arithmetic, both pedagogical:
-//   - division by zero raises, because the Lagrange guard puzzle turns on it
-//   - negative and out-of-range subscripts raise, because Python's silent
+// Two departures from IEEE arithmetic, both for teaching reasons:
+//   - division by zero raises, which the Lagrange guard puzzle turns on
+//   - negative and out-of-range subscripts raise, since Python's silent
 //     negative indexing would hide the h[-1] bug the splines puzzle is about
 //
 // Exports: parseProgram, run, evalExpression, and value helpers for the verifier.
