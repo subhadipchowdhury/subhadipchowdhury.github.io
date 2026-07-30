@@ -241,7 +241,7 @@ Commits, oldest first:
 | `219663b` | Split the library footer into the two columns it was built for |
 | `c2ccdeb` | Move the labs off `teaching/applet/` and flatten `lab/` |
 | `aa5d748` | Record the move and the footer fix in the handoff |
-| (below) | Rename the library page's prefix from `al-` to `cl-` |
+| `2644da2` | Rename the library page's prefix from `al-` to `cl-` |
 
 Bugs worth remembering because they will recur:
 
