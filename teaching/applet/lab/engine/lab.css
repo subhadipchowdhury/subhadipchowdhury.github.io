@@ -1,0 +1,633 @@
+/* Lab pages: the gated notebook reader and its puzzles.
+ *
+ * Colour comes from the site tokens (--color-*, --accent, --border-color) so
+ * the header's dark-mode toggle re-skins this page with everything else. The
+ * --lab-* layer adds the roles the site has no opinion about: block surfaces,
+ * indent guides, success and error, and the dimmed bookkeeping style in the
+ * reveal. Contrast is checked against both themes; the dimmed style is the one
+ * that usually fails, so it is a deliberate token rather than an opacity.
+ */
+
+.lab {
+  --lab-serif: "UChicagoSerif", Georgia, serif;
+  --lab-sans: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  --lab-semi: "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
+  --lab-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --lab-surface: var(--color-surface);
+  --lab-sunken: rgba(0, 0, 0, 0.025);
+  --lab-block: #ffffff;
+  --lab-block-border: rgba(0, 42, 58, 0.18);
+  --lab-block-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --lab-guide: rgba(0, 42, 58, 0.13);
+  --lab-dim: #5c5c5c;              /* bookkeeping lines in the reveal */
+  --lab-ok-bg: #e4f3ec;
+  --lab-ok-fg: #14684a;
+  --lab-err-bg: #fbeceb;
+  --lab-err-fg: #9d2f26;
+  --lab-note-bg: #f4f1e9;
+  --lab-lock: rgba(0, 42, 58, 0.45);
+
+  --lp-indent: 1.9rem;
+
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 4rem;
+}
+
+html[data-theme="dark"] .lab {
+  --lab-sunken: rgba(255, 255, 255, 0.04);
+  --lab-block: #2b2b2b;
+  --lab-block-border: rgba(255, 255, 255, 0.16);
+  --lab-block-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --lab-guide: rgba(255, 255, 255, 0.14);
+  --lab-dim: #a6a6a6;
+  --lab-ok-bg: rgba(47, 169, 125, 0.16);
+  --lab-ok-fg: #7fdcb4;
+  --lab-err-bg: rgba(206, 78, 68, 0.16);
+  --lab-err-fg: #f0a29a;
+  --lab-note-bg: rgba(255, 255, 255, 0.05);
+  --lab-lock: rgba(255, 255, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+ * Page furniture
+ * ----------------------------------------------------------------------- */
+
+.lab-head {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lab-head h1 {
+  font-family: var(--lab-serif);
+  margin: 0 0 0.25rem;
+}
+
+.lab-progress {
+  font-family: var(--lab-sans);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.lab-cell { margin: 0 0 1.75rem; }
+
+.lab-prose { font-family: var(--lab-sans); line-height: 1.6; }
+
+.lab-prose h2 {
+  font-family: var(--lab-serif);
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+}
+
+/* Deferred prose: a collapsed bar until the puzzle it answers is done. */
+.lab-defer {
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  background: var(--lab-sunken);
+  font-family: var(--lab-sans);
+  font-size: 0.9rem;
+  color: var(--lab-lock);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lab-defer[hidden] { display: none; }
+
+.lab-defer__glyph { font-size: 0.85em; }
+
+/* --------------------------------------------------------------------------
+ * Code and captured output
+ * ----------------------------------------------------------------------- */
+
+.lab-code {
+  font-family: var(--lab-mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  background: var(--lab-sunken);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem 0.9rem;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.lab-code .lab-dim { color: var(--lab-dim); }
+
+.lab-out {
+  font-family: var(--lab-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 0.5rem 0 0;
+  padding: 0.6rem 0.9rem;
+  border-left: 3px solid var(--border-color);
+  color: var(--color-text);
+}
+
+.lab-figures { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
+
+.lab-figure { margin: 0; flex: 1 1 18rem; }
+
+.lab-figure img { width: 100%; height: auto; border-radius: 4px; }
+
+.lab-figure figcaption {
+  font-family: var(--lab-sans);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-top: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+ * The puzzle
+ * ----------------------------------------------------------------------- */
+
+.lab-puzzle {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--lab-surface);
+  padding: 1rem 1.1rem 0.85rem;
+}
+
+.lp-head { margin-bottom: 0.9rem; }
+
+.lp-title {
+  font-family: var(--lab-semi), var(--lab-sans);
+  font-size: 1.02rem;
+  margin: 0 0 0.3rem;
+}
+
+.lp-intro,
+.lp-decoy-note {
+  font-family: var(--lab-sans);
+  font-size: 0.87rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin: 0 0 0.25rem;
+}
+
+.lp-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+.lp-workspace-wrap {
+  position: relative;
+  min-height: 8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--lab-sunken);
+  padding: 0.6rem 0.6rem 0.6rem 0.55rem;
+}
+
+.lp-guides {
+  position: absolute;
+  inset: 0.4rem 0 0.4rem 0.55rem;
+  pointer-events: none;
+}
+
+.lp-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--lab-guide);
+}
+
+.lp-workspace,
+.lp-tray {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.lp-empty {
+  font-family: var(--lab-sans);
+  font-size: 0.85rem;
+  color: var(--lab-lock);
+  margin: 0.4rem 0 0 0.3rem;
+}
+
+.lp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.18rem 0;
+  padding-left: calc(var(--lp-indent) * var(--indent, 0));
+  transition: padding-left 90ms ease-out;
+}
+
+.lp-tray .lp-row { padding-left: 0; }
+
+.lp-block {
+  font-family: var(--lab-mono);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  background: var(--lab-block);
+  border: 1px solid var(--lab-block-border);
+  border-radius: 5px;
+  box-shadow: var(--lab-block-shadow);
+  padding: 0.3rem 0.55rem;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  min-height: 1.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lp-block:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lp-line { display: block; white-space: pre; }
+
+.lp-line[style*="--rel"] { padding-left: calc(var(--lp-indent) * var(--rel, 0)); }
+
+.lp-block--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.25);
+}
+
+.lp-block--grabbed,
+.lp-row--flying .lp-block {
+  border-style: dashed;
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.45);
+  cursor: grabbing;
+}
+
+/* Status is never colour alone: the implicated region gets a rule as well. */
+.lp-block--implicated {
+  border-color: var(--lab-err-fg);
+  box-shadow: inset 3px 0 0 var(--lab-err-fg);
+}
+
+.lp-ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.92;
+  transform: translate(-9999px, -9999px);
+}
+
+.lp-slot {
+  height: 0.55rem;
+  margin: -0.1rem 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.lp-slot:hover { background: rgba(var(--accent-rgb), 0.22); }
+
+.lp-indent-buttons { display: inline-flex; gap: 0.2rem; }
+
+.lp-indent-btn {
+  font-family: var(--lab-mono);
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: var(--lab-block);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.lp-indent-btn:hover { border-color: var(--accent); }
+
+.lp-blank {
+  font-family: var(--lab-mono);
+  font-size: 0.78rem;
+  padding: 0.05rem 0.25rem;
+  border: 0;
+  border-bottom: 1.5px solid var(--accent);
+  border-radius: 2px 2px 0 0;
+  background: rgba(var(--accent-rgb), 0.07);
+  color: var(--color-text);
+  min-width: 4rem;
+}
+
+.lp-blank:disabled {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--lab-lock);
+  background: transparent;
+  color: var(--lab-lock);
+  cursor: not-allowed;
+}
+
+.lp-blank:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.lp-tray-wrap {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem 0.6rem;
+  background: var(--lab-surface);
+}
+
+.lp-over-tray .lp-tray-wrap {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
+.lp-tray-head,
+.lp-tray-empty {
+  font-family: var(--lab-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.4rem;
+}
+
+.lp-tray-empty { text-transform: none; letter-spacing: 0; }
+
+.lp-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.lp-check {
+  font-family: var(--lab-sans);
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--color-surface);
+  cursor: pointer;
+}
+
+.lp-check:disabled { opacity: 0.5; cursor: default; }
+
+.lp-attempts {
+  font-family: var(--lab-sans);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-right: auto;
+}
+
+.lp-reset {
+  font-family: var(--lab-sans);
+  font-size: 0.82rem;
+  background: none;
+  border: 0;
+  color: var(--color-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: 2.75rem;
+}
+
+.lp-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+ * Feedback
+ * ----------------------------------------------------------------------- */
+
+.lp-feedback {
+  margin-top: 0.9rem;
+  border-radius: 6px;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--lab-sans);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  background: var(--lab-err-bg);
+  border-left: 3px solid var(--lab-err-fg);
+}
+
+.lp-feedback__lead { font-family: var(--lab-semi), var(--lab-sans); color: var(--lab-err-fg); }
+
+.lp-feedback__detail { margin: 0.35rem 0 0; color: var(--color-text); }
+
+.lp-feedback__trace {
+  font-family: var(--lab-mono);
+  font-size: 0.74rem;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0.6rem;
+  background: var(--lab-surface);
+  border-radius: 4px;
+}
+
+.lp-feedback__probe {
+  font-family: var(--lab-mono);
+  font-size: 0.74rem;
+  color: var(--color-muted);
+  margin: 0.5rem 0 0;
+}
+
+.lp-feedback__hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.83rem;
+  color: var(--color-muted);
+}
+
+.lp-feedback__actions { display: flex; gap: 0.6rem; margin-top: 0.7rem; flex-wrap: wrap; }
+
+.lp-action {
+  font-family: var(--lab-sans);
+  font-size: 0.83rem;
+  padding: 0.35rem 0.7rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: var(--lab-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.lp-action:hover { border-color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+ * Solved and the reveal
+ * ----------------------------------------------------------------------- */
+
+.lab-puzzle[data-frozen="true"] .lp-block {
+  cursor: default;
+  border-color: var(--lab-ok-fg);
+  background: var(--lab-ok-bg);
+}
+
+.lab-solved {
+  border: 1px solid var(--lab-ok-fg);
+  border-radius: 8px;
+  background: var(--lab-surface);
+  margin-top: 0.9rem;
+  overflow: hidden;
+}
+
+.lab-solved__head {
+  font-family: var(--lab-semi), var(--lab-sans);
+  font-size: 0.92rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--lab-ok-bg);
+  color: var(--lab-ok-fg);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.lab-reveal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 1.1rem;
+  padding: 0.9rem;
+}
+
+.lab-reveal__col h4 {
+  font-family: var(--lab-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.45rem;
+}
+
+.lab-pair {
+  font-family: var(--lab-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre;
+  display: block;
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+}
+
+.lab-pair__num {
+  display: inline-block;
+  width: 1.6rem;
+  color: var(--color-muted);
+  user-select: none;
+}
+
+.lab-pair.is-paired { background: rgba(var(--accent-rgb), 0.14); }
+
+.lab-pair--glue { color: var(--lab-dim); }
+
+.lab-pair--doc { color: var(--lab-dim); font-style: italic; }
+
+.lab-doc-toggle {
+  font-family: var(--lab-sans);
+  font-size: 0.78rem;
+  background: none;
+  border: 0;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.lab-reveal__notes {
+  grid-column: 1 / -1;
+  font-family: var(--lab-sans);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--color-text);
+  background: var(--lab-note-bg);
+  border-radius: 5px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.7rem;
+}
+
+.lab-reveal__notes p { margin: 0 0 0.4rem; }
+
+.lab-reveal__notes p:last-child { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+ * Locked cells and the finale
+ * ----------------------------------------------------------------------- */
+
+.lab-locked {
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  font-family: var(--lab-sans);
+  font-size: 0.87rem;
+  color: var(--lab-lock);
+  background: var(--lab-sunken);
+}
+
+.lab-finale {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.1rem;
+  background: var(--lab-sunken);
+  font-family: var(--lab-sans);
+}
+
+.lab-finale h2 { font-family: var(--lab-serif); margin: 0 0 0.4rem; }
+
+.lab-launch {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--color-surface);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.lab-launch[aria-disabled="true"] {
+  background: var(--lab-sunken);
+  color: var(--lab-lock);
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Narrow screens
+ * ----------------------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .lp-body { grid-template-columns: minmax(0, 1fr); }
+
+  .lp-tray-wrap { order: 2; }
+
+  .lp-workspace-wrap { overflow-x: auto; }
+
+  .lab-reveal { grid-template-columns: minmax(0, 1fr); }
+
+  .lab { --lp-indent: 1.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+ * Reduced motion: nothing here conveys meaning by movement, so everything
+ * simply becomes an instant swap.
+ * ----------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-puzzle *,
+  .lab-solved * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
