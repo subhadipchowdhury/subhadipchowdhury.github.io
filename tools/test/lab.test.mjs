@@ -99,6 +99,26 @@ await it('holds nothing but puzzles, their briefs, and the notebook', async () =
 });
 
 group = 'briefs';
+await it('introduces its data before any output refers to it', async () => {
+  const { root } = await freshLab();
+  const intro = textOf(root.querySelector('.lab-intro'));
+  // Every number a puzzle shows comes from one worked example, and a student
+  // meeting a table of numbers with no provenance is the failure this catches.
+  has(intro, 'worked example', 'the lab must say what data it is working with');
+  for (const value of ['0', '1', '3', '6']) has(intro, value);
+});
+
+await it('nothing refers to output the student has not been shown', async () => {
+  const { root, lab } = await freshLab();
+  // Puzzle 2 talks about a filled table, so it has to show one first.
+  solve(lab, 'divdiff');
+  const second = root.querySelector('.lab-puzzle-block[data-gate="ddprint"]');
+  const setup = second.querySelector('.lab-setup');
+  assert(setup, 'the printing puzzle has to show the table it is reacting to');
+  has(textOf(setup), 'the table it fills');
+  has(textOf(setup), '0.3222', 'and the actual numbers in it');
+});
+
 await it('every puzzle explains itself before asking anything', async () => {
   for (const gate of spec.puzzles) {
     assert(gate.brief_html && gate.brief_html.length > 400,
@@ -120,7 +140,8 @@ await it('the evaluation puzzle shows the coefficients that raise the question',
   const section = root.querySelector('.lab-puzzle-block[data-gate="neweval"]');
   const setup = section.querySelector('.lab-setup');
   assert(setup, 'the third puzzle should open with the output that motivates it');
-  has(textOf(setup), 'coefficients c =');
+  has(textOf(setup), 'top row of the triangle you just printed');
+  has(textOf(setup), 'c = [');
   has(textOf(setup), 'what $p(2.5)$ is');
 });
 

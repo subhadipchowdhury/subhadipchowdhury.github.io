@@ -77,7 +77,7 @@ $$T[i,\,j] = f[x_i,\dots,x_{i+j}],$$
 
 so column $j$ holds the differences of order $j$. Column $0$ is just the data, and every later column is one entry shorter than the one before it, because a difference of order $j$ needs $j+1$ consecutive nodes to exist. That is what makes the table a triangle. The coefficients $c_0,\dots,c_{n-1}$ you need for $p$ are the top row.
 
-**Your job.** Turn that definition into an algorithm: fill the table one column at a time, then read the coefficients off it. Two things are left blank. How far does the inner loop run, given that column $j$ is shorter than column $j-1$? And which two nodes does the denominator span?
+**Your job.** Turn that definition into an algorithm for any $n$ points: fill the table one column at a time, then read the coefficients off the top row. Two things are left blank. How far does the inner loop run, given that column $j$ is shorter than column $j-1$? And which two nodes does the denominator span?
 ''',
 
     'blocks': [
@@ -176,10 +176,23 @@ DDPRINT = {
     'cell_id': 'ddprint',
     'concept': 'print_dd_table',
     'title': 'Print the table as a triangle',
+    'setup': {
+        'intro': 'Run the algorithm you just built on the four points and this is the table it fills:',
+        'code': (
+            "print('nodes  x =', x_data)\n"
+            "print('values y =', y_data)\n"
+            "print()\n"
+            "print(np.array2string(table, precision=4, suppress_small=True))"
+        ),
+        'caption': (
+            'Half of that is zeros, and they are not data. Column $j$ holds the '
+            'differences of order $j$, and there is one fewer of them each time '
+            '$j$ grows, so everything past the anti-diagonal was never written '
+            'to. Printed as a square, the table is mostly padding.'
+        ),
+    },
     'brief': r'''
-You have a table but no way to look at it. Printing $T$ as a square would show a lot of zeros: the entries below the anti-diagonal were never written, because those differences do not exist.
-
-So print it as the triangle it is, one row per node:
+Print it as the triangle it is instead, one row per node:
 
 ```
   x_i   |  f[.] (order increases left -> right)
@@ -189,9 +202,9 @@ So print it as the triangle it is, one row per node:
  6.000  |    8.0000
 ```
 
-Row $i$ starts at node $x_i$ and runs along the differences that begin there: $f[x_i]$, then $f[x_i,x_{i+1}]$, then $f[x_i,x_{i+1},x_{i+2}]$, and so on. It stops when the next difference would need a node past $x_{n-1}$.
+Row $i$ starts at node $x_i$ and runs along the differences that begin there: $f[x_i]$, then $f[x_i,x_{i+1}]$, then $f[x_i,x_{i+1},x_{i+2}]$, and so on. It stops when the next one would need a node past $x_{n-1}$.
 
-**Your job.** The lines are already in order and only the inner bound is missing. Count the entries on row $i$ and write the index of the last one.
+**Your job.** The lines are already in order and only the inner bound is missing. Write the index of the last entry on row $i$.
 
 Careful: the previous puzzle bounded the *columns*, which shrink as the order $j$ grows. This one bounds the *rows*, which shrink as the starting node $i$ moves down. They are not the same bound.
 ''',
@@ -260,26 +273,21 @@ NEWEVAL = {
     'concept': 'newton_eval',
     'title': 'Evaluate the polynomial at a point',
     'setup': {
-        'intro': 'The table is built and the coefficients are the top row of it. For the four points we have been using, here is what came out:',
-        'code': (
-            "print('nodes        x =', x_data)\n"
-            "print('values       y =', y_data)\n"
-            "print('coefficients c =', np.array2string(coeffs, precision=4))"
-        ),
+        'intro': 'The Newton coefficients are the top row of the triangle you just printed:',
+        'code': "print('c =', np.array2string(coeffs, precision=4))",
         'caption': (
-            'So the polynomial through those four points is\n\n'
+            'Reading those into Newton\'s form, the cubic through the four points is\n\n'
             '$$p(x) = 1 + 3(x-0) - 1.3333(x-0)(x-1) + 0.3222(x-0)(x-1)(x-3).$$\n\n'
-            'Nothing you have built so far can tell you what $p(2.5)$ is.'
+            'That is the polynomial written down. Nothing you have built so far '
+            'evaluates it, so there is still no way to ask what $p(2.5)$ is.'
         ),
     },
     'brief': r'''
-You have the coefficients. Now evaluate
+Evaluating
 
 $$p(t) = c_0 + c_1(t-x_0) + c_2(t-x_0)(t-x_1) + \cdots + c_{n-1}(t-x_0)\cdots(t-x_{n-2})$$
 
-at a single point $t$.
-
-Computing each product from scratch costs $\mathcal{O}(n^2)$ multiplications. Factoring out the common factors nests the whole thing:
+by computing each product from scratch costs $\mathcal{O}(n^2)$ multiplications. Factoring out the shared factors nests the whole thing:
 
 $$p(t) = c_0 + (t-x_0)\Bigl(c_1 + (t-x_1)\bigl(c_2 + \cdots + (t-x_{n-2})\,c_{n-1}\bigr)\Bigr).$$
 
@@ -375,13 +383,19 @@ NOTEBOOK_LAB = {
     'series': ['m1-runge', 'm1-newton', 'm1-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
     'intro': (
-        'Rebuild each algorithm from the scrambled steps. The notebook opens '
-        'once all three are done.\n\n'
-        'Where a step goes and how far it is indented are both part of the '
-        'answer: a line one level further in runs once for every pass of the '
-        'loop above it.\n\n'
-        'The steps are pseudocode. `←` assigns, `·` multiplies, subscripts '
-        'start at 0, and a range written `a to b` includes both ends.'
+        'These three puzzles build the polynomial that passes through a set of '
+        'points: its coefficients first, then a way to look at them, then a way '
+        'to evaluate the polynomial at a point.\n\n'
+        'The worked example throughout is four points,\n\n'
+        '$$x = 0,\\; 1,\\; 3,\\; 6 \\qquad y = 1,\\; 4,\\; 2,\\; 8,$$\n\n'
+        'and exactly one cubic passes through all four. Every number you see '
+        'below comes from running these algorithms on those points.\n\n'
+        'Rebuild each algorithm from the scrambled steps; the notebook opens '
+        'once all three are done. Where a step goes and how far it is indented '
+        'are both part of the answer: a line one level further in runs once for '
+        'every pass of the loop above it.\n\n'
+        'The steps are pseudocode. `←` assigns, `·` multiplies, subscripts start '
+        'at 0, and a range written `a to b` includes both ends.'
     ),
 }
 
