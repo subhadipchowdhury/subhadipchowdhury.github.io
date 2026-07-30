@@ -11,7 +11,7 @@
   "m1-splines"
  ],
  "source": "notebooks/na/newton_divided_differences.ipynb",
- "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/applet/notebooks/na/newton_divided_differences.ipynb",
+ "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/labs/notebooks/na/newton_divided_differences.ipynb",
  "puzzles": [
   {
    "cell_id": "divdiff",

@@ -36,9 +36,9 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-NOTEBOOK_DIR = ROOT / 'teaching/applet/notebooks'
-SPEC_DIR = ROOT / 'teaching/applet/lab/specs'
-OUT_DIR = ROOT / 'teaching/applet/lab/out'
+NOTEBOOK_DIR = ROOT / 'teaching/labs/notebooks'
+SPEC_DIR = ROOT / 'teaching/labs/specs'
+OUT_DIR = ROOT / 'teaching/labs/out'
 VALIDATOR = ROOT / 'tools/validate.mjs'
 JSC = pathlib.Path(
     '/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc'
@@ -46,7 +46,7 @@ JSC = pathlib.Path(
 
 COLAB_BASE = (
     'https://colab.research.google.com/github/subhadipchowdhury/'
-    'subhadipchowdhury.github.io/blob/master/teaching/applet/notebooks/'
+    'subhadipchowdhury.github.io/blob/master/teaching/labs/notebooks/'
 )
 
 

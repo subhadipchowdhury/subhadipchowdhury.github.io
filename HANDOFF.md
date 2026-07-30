@@ -37,12 +37,12 @@ Timeline: usable by roughly early September 2026.
 
 | Path | Lines | What it is |
 |---|---|---|
-| `teaching/applet/lab/engine/interp.js` | 1206 | Pseudocode interpreter: tokenizer, Pratt parser, tree-walking evaluator with a step cap. Exports `parseProgram`, `run`, `evalExpression`, `valuesEqual`, `fmtNum`, `ParseError`, `RuntimeError`. |
-| `teaching/applet/lab/engine/verify.js` | 687 | The grader. Five stages: completeness, parse, interpret, compare, diagnose. Exports `buildReference`, `verify`, `renderTriangle`. |
-| `teaching/applet/lab/engine/puzzle.js` | 956 | The drag/tap board. `PuzzleView`, `defaultOrder`, `snapIndent`, `INDENT_STICK`. |
-| `teaching/applet/lab/engine/feedback.js` | 215 | Failure card and the five-stage hint ladder. |
-| `teaching/applet/lab/engine/lab.js` | 623 | Page controller. `mountLab`, `LabController`, `Progress`, `devMode`. |
-| `teaching/applet/lab/engine/lab.css` | 765 | Built on the site's tokens (`--color-surface`, `--accent`, `--border-color`, `--focus-ring`) with a `--lab-*` layer on top. |
+| `teaching/labs/engine/interp.js` | 1206 | Pseudocode interpreter: tokenizer, Pratt parser, tree-walking evaluator with a step cap. Exports `parseProgram`, `run`, `evalExpression`, `valuesEqual`, `fmtNum`, `ParseError`, `RuntimeError`. |
+| `teaching/labs/engine/verify.js` | 687 | The grader. Five stages: completeness, parse, interpret, compare, diagnose. Exports `buildReference`, `verify`, `renderTriangle`. |
+| `teaching/labs/engine/puzzle.js` | 956 | The drag/tap board. `PuzzleView`, `defaultOrder`, `snapIndent`, `INDENT_STICK`. |
+| `teaching/labs/engine/feedback.js` | 215 | Failure card and the five-stage hint ladder. |
+| `teaching/labs/engine/lab.js` | 623 | Page controller. `mountLab`, `LabController`, `Progress`, `devMode`. |
+| `teaching/labs/engine/lab.css` | 765 | Built on the site's tokens (`--color-surface`, `--accent`, `--border-color`, `--focus-ring`) with a `--lab-*` layer on top. |
 
 ### Build and check, never shipped (`tools/` is in `_config.yml` exclude)
 
@@ -60,12 +60,19 @@ Timeline: usable by roughly early September 2026.
 
 | Path | What it is |
 |---|---|
-| `teaching/applet/index.html` | The card library. Single self-contained file: front matter, CSS, markup, controller. Now titled **Computational Labs**. |
-| `teaching/applet/lab/m1-newton.html` | Front matter only. `layout: lab`, `lab_id: m1-newton`, `robots: false`. One of these per lab. |
+| `teaching/labs/index.html` | The card library at `/teaching/labs/`. Single self-contained file: front matter, CSS, markup, controller. Titled **Computational Labs**. |
+| `teaching/labs/m1-newton.html` | Front matter only. `layout: lab`, `lab_id: m1-newton`, `robots: false`. One of these per lab, named for its lab id, sitting beside `index.html`. |
 | `_layouts/lab.html` | Loads `lab.css`, mounts `lab.js` against `specs/{lab_id}.json`. |
-| `teaching/applet/lab/specs/*.json` | Generated. Do not hand-edit. |
-| `teaching/applet/notebooks/na/*.ipynb` | 15 numerical analysis notebooks. Source of truth for lab metadata. |
-| `teaching/applet/wip/m1_lab_design.md` | The original design doc from Fable 5, 710 lines. Excluded from the build. Historical; the implementation has moved past it in places. |
+| `teaching/labs/specs/*.json` | Generated. Do not hand-edit. |
+| `teaching/labs/out/{lab_id}/*.png` | Generated setup figures. `lab.js` resolves them by stripping `specs/…` off the spec URL, so `specs/` and `out/` have to stay siblings. |
+| `teaching/labs/notebooks/na/*.ipynb` | 15 numerical analysis notebooks. Source of truth for lab metadata. |
+| `teaching/labs/de/*.html` | Three standalone PDE simulations that predate the labs. Nothing links to them. |
+| `teaching/labs/wip/m1_lab_design.md` | The original design doc from Fable 5, 710 lines. Excluded from the build. Historical; the implementation has moved past it in places. |
+
+The directory was `teaching/applet/` with the lab pages one level further down in
+`lab/`, until 2026-07-30. A lab page is now a sibling of the library index, so a
+lab lives at `/teaching/labs/{lab_id}/`. Only `wip/m1_lab_design.md` still says
+"applet", and it is historical.
 
 ---
 
@@ -95,7 +102,7 @@ The system python has none of them.
     bash tools/test/run.sh
 
     # validate a spec on its own
-    jsc -m tools/validate.mjs -- teaching/applet/lab/specs/m1-newton.json
+    jsc -m tools/validate.mjs -- teaching/labs/specs/m1-newton.json
 
     # local preview
     python3 -m http.server 8817        # then tools/demo/lab-demo.html
@@ -230,6 +237,9 @@ Commits, oldest first:
 | `b608b34` | Voice model from the Math 163 and 212 lecture notes |
 | `cfac422` | Rewrite the Newton lab and notebook in the house voice; rename the library |
 | `a4e4864` | Every card a guided lab; hide the unbuilt ones; fix the banner overlap |
+| `2a020a4` | This file |
+| `219663b` | Split the library footer into the two columns it was built for |
+| (below) | Move the labs off `teaching/applet/` and flatten `lab/` |
 
 Bugs worth remembering because they will recur:
 
@@ -254,11 +264,12 @@ Bugs worth remembering because they will recur:
 
 ### 1. Rename the `al-` prefix  ← start here
 
-`al-` stands for "applet library". The page is now **Computational Labs**, so in
-a year the prefix will mean nothing. Everything is in one self-contained file,
-`teaching/applet/index.html`.
+`al-` stands for "applet library". The page is **Computational Labs** and the
+directory is `teaching/labs/`, so nothing the prefix abbreviates is left. In a
+year it will mean nothing at all. Everything is in one self-contained file,
+`teaching/labs/index.html`.
 
-Rename `al-` to **`cl-`**. Not `lab-`: `teaching/applet/lab/engine/lab.css` uses
+Rename `al-` to **`cl-`**. Not `lab-`: `teaching/labs/engine/lab.css` uses
 `.lab-*` for the lab page itself and the two would read as one namespace.
 
 Three families, all in that one file:
@@ -306,7 +317,7 @@ not only for whole names.
 A blind `sed 's/al-/cl-/g'` is wrong. Anchor on a word boundary (`\bal-`) and
 count before and after:
 
-    grep -o '\bal-[a-z-]*' teaching/applet/index.html | sort -u | wc -l    # 70
+    grep -o '\bal-[a-z-]*' teaching/labs/index.html | sort -u | wc -l    # 70
 
 35 custom properties, 28 classes, 8 ids, plus the `al-status-` stem. Nothing
 outside this one file uses the prefix.
@@ -316,7 +327,7 @@ the table under it.
 
 ### 2. Author the Runge/Chebyshev lab (`m1-runge`)
 
-Notebook: `teaching/applet/notebooks/na/interpolation_runge_chebyshev.ipynb`.
+Notebook: `teaching/labs/notebooks/na/interpolation_runge_chebyshev.ipynb`.
 
 Follow **Math 212 §1.3**, quoted in full in `tools/author/VOICE.md`. It is
 already the lab, and the shape is: set the expectation, break it, name and
@@ -340,7 +351,7 @@ writing, dump the notebook cell by cell and confirm the line numbers and
 
 ### 3. Author the cubic splines lab (`m1-splines`)
 
-Notebook: `teaching/applet/notebooks/na/cubic_splines.ipynb`. The tridiagonal
+Notebook: `teaching/labs/notebooks/na/cubic_splines.ipynb`. The tridiagonal
 system arrives from nowhere unless the setup derives it. The spline tridiagonal
 system is already covered in `tools/test/interp.test.mjs`.
 
@@ -357,12 +368,12 @@ notebooks in `na/`, plus `de/`, `intro/`.
 
 Twelve more numerical analysis notebooks, then the DE, calculus and analysis
 ones. Each needs a `tools/author/<name>_lab.py`, a
-`teaching/applet/lab/<lab-id>.html` stub, and a flip from `drafted` to
+`teaching/labs/<lab-id>.html` stub, and a flip from `drafted` to
 `finalized` in the card data once its lab is built.
 
 ---
 
-## Verifying `teaching/applet/index.html`
+## Verifying `teaching/labs/index.html`
 
 There is no browser and no node, but the controller is plain ES5 in one
 `<script>` block, so it can be pulled out and run under `jsc` against a stub
@@ -371,7 +382,7 @@ was hiding).
 
 ```python
 import pathlib
-body = pathlib.Path('teaching/applet/index.html').read_text().rsplit('<script>',1)[1].split('</script>')[0]
+body = pathlib.Path('teaching/labs/index.html').read_text().rsplit('<script>',1)[1].split('</script>')[0]
 body = body.replace('})();', '  globalThis.__probe = { ACT: ACT, state: state, render: render };\n})();')
 harness = """
 var NODES = {};
@@ -405,10 +416,13 @@ Expected today (update the class names after the rename):
 
 ## Open and deferred
 
-- **The URL is still `/teaching/applet/`.** Moving it to `/teaching/labs/` would
-  break any link already given to students and would also move the spec paths,
-  `_layouts/lab.html`, `build_labs.py`, the tests and the demos. Doable with
-  `redirect_from` on the old path. Outward-facing, so ask first.
+- **No redirect from `/teaching/applet/`.** Dip confirmed no link had been given
+  to students and that none of this is live before September, so the old path was
+  moved rather than redirected. If a stale link does turn up, add `redirect_from`
+  to `teaching/labs/index.html` and install `jekyll-redirect-from`.
+- **`teaching/labs/de/`** holds three standalone PDE simulation pages that
+  predate the labs. Nothing links to them, and under `labs/` they are misfiled.
+  Delete them or move them out; not decided.
 - **The reveal panel** (side-by-side pseudocode and Python after a solve) is
   expanded by default. Whether it should collapse behind a toggle or go entirely
   was raised and never answered.
@@ -417,7 +431,7 @@ Expected today (update the class names after the rename):
 - **Em dashes.** `CLAUDE.md` bans them and the validator enforces it. Dip's own
   lecture notes use a few. The ban stands for generated text; the discrepancy is
   recorded in `VOICE.md`.
-- **Jelly UI** is vendored at `teaching/applet/vendor/jelly/` and provides
+- **Jelly UI** is vendored at `teaching/labs/vendor/jelly/` and provides
   `jelly-input`, `jelly-select`, `jelly-button`, `jelly-switch` on the library
   page. It is pinned to the site theme by a `MutationObserver` on
   `html[data-theme]`, because left alone it follows the OS preference and would

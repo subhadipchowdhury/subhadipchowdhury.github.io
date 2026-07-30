@@ -84,7 +84,7 @@
   }
   .demo-bar strong { font-weight: normal; color: var(--color-muted); }
 </style>
-<link rel="stylesheet" href="../../teaching/applet/lab/engine/lab.css">
+<link rel="stylesheet" href="../../teaching/labs/engine/lab.css">
 </head>
 <body>
 
@@ -103,7 +103,7 @@
 </main>
 
 <script type="module">
-import { mountLab } from '../../teaching/applet/lab/engine/lab.js';
+import { mountLab } from '../../teaching/labs/engine/lab.js';
 
 const root = document.getElementById('lab-root');
 const status = document.getElementById('status');
@@ -113,7 +113,7 @@ if (!new URLSearchParams(location.search).has('dev')) {
   try { localStorage.setItem('lab:dev', '1'); } catch { /* ignore */ }
 }
 
-const lab = await mountLab(root, '/teaching/applet/lab/specs/m1-newton.json').catch((err) => {
+const lab = await mountLab(root, '/teaching/labs/specs/m1-newton.json').catch((err) => {
   root.innerHTML = '';
   const p = document.createElement('p');
   p.className = 'lab-locked';

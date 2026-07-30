@@ -490,7 +490,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
     // A lab is the notebook with its algorithms gated behind pseudocode
     // puzzles; it lives on this site and opens the notebook in Colab at the end.
-    var labUrl = a.lab ? 'lab/' + a.lab + '/' : null;
+    // Relative to this page, so a lab id is the whole link: /teaching/labs/<id>/.
+    var labUrl = a.lab ? a.lab + '/' : null;
     // The status tag is the master switch. A card is ready only when it is
     // tagged 'finalized' AND its lab is built; flip it to 'drafted' to hold it
     // back. Everything not ready is hidden until the toggle asks for it.

@@ -20,7 +20,7 @@ import json
 import pathlib
 import sys
 
-NOTEBOOK = pathlib.Path('teaching/applet/notebooks/na/newton_divided_differences.ipynb')
+NOTEBOOK = pathlib.Path('teaching/labs/notebooks/na/newton_divided_differences.ipynb')
 
 # The reference divided-difference table for x = [0, 1, 3, 6], y = [1, 4, 2, 8],
 # used as the input to the printing puzzle, which has no table of its own.

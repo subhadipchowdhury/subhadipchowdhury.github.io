@@ -17,7 +17,7 @@ To view a copy of this license, visit:
 https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 Third-party components:
-Files under teaching/applet/vendor/ are the work of others and are not covered
+Files under teaching/labs/vendor/ are the work of others and are not covered
 by the license above. They remain under their own licenses, which are included
-alongside them. Jelly UI (teaching/applet/vendor/jelly/) is MIT licensed,
+alongside them. Jelly UI (teaching/labs/vendor/jelly/) is MIT licensed,
 Copyright (c) 2026 bmson, https://github.com/jelly-org/ui

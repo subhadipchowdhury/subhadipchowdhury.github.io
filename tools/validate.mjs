@@ -1,7 +1,7 @@
 // Build-time validation of a lab spec.
 //
-//     node tools/validate.mjs teaching/applet/lab/specs/m1-newton.json
-//     jsc -m tools/validate.mjs -- teaching/applet/lab/specs/m1-newton.json
+//     node tools/validate.mjs teaching/labs/specs/m1-newton.json
+//     jsc -m tools/validate.mjs -- teaching/labs/specs/m1-newton.json
 //
 // build_labs.py runs this and refuses to ship a spec it rejects. The main check
 // pushes every distractor and every wrong answer through the real grader, and
@@ -10,8 +10,8 @@
 // answer lets a student pass while wrong, and a message nothing can reach may
 // as well not be written.
 
-import { buildReference, verify } from '../teaching/applet/lab/engine/verify.js';
-import { evalExpression } from '../teaching/applet/lab/engine/interp.js';
+import { buildReference, verify } from '../teaching/labs/engine/verify.js';
+import { evalExpression } from '../teaching/labs/engine/interp.js';
 
 // ---------------------------------------------------------------------------
 // Runtime compatibility: node and the JavaScriptCore shell

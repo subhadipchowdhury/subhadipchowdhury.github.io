@@ -20,9 +20,9 @@ const readText = typeof read === 'function'
 
 const slurp = (p) => JSON.parse(String(readText(p, 'utf8')));
 
-const index = slurp('teaching/applet/lab/specs/index.json');
+const index = slurp('teaching/labs/specs/index.json');
 const specs = new Map(
-  index.map((entry) => [entry.lab_id, slurp(`teaching/applet/lab/specs/${entry.lab_id}.json`)]),
+  index.map((entry) => [entry.lab_id, slurp(`teaching/labs/specs/${entry.lab_id}.json`)]),
 );
 
 let served = null;
@@ -30,7 +30,7 @@ globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => serve
 
 const spec = specs.get('m1-newton');
 
-const { mountLab } = await import('../../teaching/applet/lab/engine/lab.js');
+const { mountLab } = await import('../../teaching/labs/engine/lab.js');
 
 let passed = 0;
 const failures = [];
@@ -52,14 +52,14 @@ function has(text, needle, msg) {
   }
 }
 
-const SPEC_URL = '/teaching/applet/lab/specs/m1-newton.json';
+const SPEC_URL = '/teaching/labs/specs/m1-newton.json';
 const ids = spec.puzzles.map((p) => p.cell_id);
 
 async function open(labSpec, { fresh = true } = {}) {
   served = labSpec;
   if (fresh) localStorage.clear();
   const root = document.createElement('div');
-  const lab = await mountLab(root, `/teaching/applet/lab/specs/${labSpec.lab_id}.json`);
+  const lab = await mountLab(root, `/teaching/labs/specs/${labSpec.lab_id}.json`);
   return { root, lab };
 }
 
@@ -440,7 +440,7 @@ await it('describes the attempt without describing the answer', async () => {
   view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
   view.submit();
 
-  const { attemptSnapshot } = await import('../../teaching/applet/lab/engine/feedback.js');
+  const { attemptSnapshot } = await import('../../teaching/labs/engine/feedback.js');
   const text = attemptSnapshot({
     lab: spec, gate, view, verdict: { message: 'Not yet.' }, attempts: 5,
   });
