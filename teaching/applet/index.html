@@ -60,15 +60,13 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     --al-banner-to: #ECE8E1;
     --al-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
     --al-pill-bg: #ffffffec;         /* course pill floating on the banner */
-    --al-file-bg: #ffffffd6;         /* filename chip on the banner */
     --al-course-fg: #2c2a26;
 
     --al-chip-bg: #00000008;         /* library pills, disabled launch */
     --al-chip-border: #0000000f;
     --al-hairline: #00000012;        /* sticky bar + footer rules */
-    --al-launch-fg: #ffffff;
+    --al-launch-fg: #ffffff;          /* ink on the Start button */
 
-    --al-ready-bg: #DFF3EA;  --al-ready-fg: #1E7A57;
     --al-draft-bg: #FBEFD6;  --al-draft-fg: #9A6B15;
     --al-plan-bg: #ECEAE6;   --al-plan-fg: #6B6B6B;
   }
@@ -97,7 +95,6 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     --al-banner-to: #211E1B;
     --al-banner-hatch: #ffffff0a;
     --al-pill-bg: #232120eb;
-    --al-file-bg: #1A1917d6;
     --al-course-fg: #D8D3CB;
 
     --al-chip-bg: #ffffff0d;
@@ -105,7 +102,6 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     --al-hairline: #ffffff14;
     --al-launch-fg: #141210;
 
-    --al-ready-bg: #2FA97D2e;  --al-ready-fg: #6FD3AC;
     --al-draft-bg: #CE8A2C2e;  --al-draft-fg: #E5B36A;
     --al-plan-bg: #ffffff12;   --al-plan-fg: #A9A6A0;
   }
@@ -223,12 +219,15 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     transform: translateY(-4px);
     box-shadow: var(--al-card-shadow-hover);
   }
+  /* One row, laid out by flex. The course pill and the status pill used to be
+     absolutely positioned at opposite corners, which let a long course name run
+     underneath the status pill on a narrow card. Now the course pill shrinks and
+     ellipsises instead, and the status pill can never be overlapped. */
   .al-banner {
-    height: 72px;
-    position: relative;
     display: flex;
-    align-items: flex-end;
-    padding: 11px;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 12px;
     background:
       repeating-linear-gradient(135deg, #0000 0 13px, var(--al-banner-hatch) 13px 14px),
       linear-gradient(135deg, var(--al-banner-from), var(--al-banner-to));
@@ -237,16 +236,15 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     font-family: var(--al-semi);
     font-size: 11px;
     color: var(--al-course-fg);
-    position: absolute;
-    top: 12px;
-    left: 12px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
     background: var(--al-pill-bg);
     padding: 5px 10px;
     border-radius: 999px;
   }
+  .al-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .al-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--al-accent); }
   .al-status,
   .al-topic {
@@ -254,17 +252,18 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     letter-spacing: .07em;
     text-transform: uppercase;
   }
+  /* Only the unfinished cards carry a status pill. A ready card needs none:
+     drafts are hidden unless you ask for them, so "Ready" would sit on every
+     visible card saying nothing. */
   .al-status {
-    position: absolute;
-    top: 12px;
-    right: 12px;
+    margin-left: auto;
+    flex: none;
     font-size: 10px;
     padding: 5px 9px;
     border-radius: 999px;
   }
-  .al-status-finalized { background: var(--al-ready-bg); color: var(--al-ready-fg); }
-  .al-status-drafted   { background: var(--al-draft-bg); color: var(--al-draft-fg); }
-  .al-status-planned   { background: var(--al-plan-bg);  color: var(--al-plan-fg); }
+  .al-status-progress { background: var(--al-draft-bg); color: var(--al-draft-fg); }
+  .al-status-planned  { background: var(--al-plan-bg);  color: var(--al-plan-fg); }
   .al-topic {
     align-self: flex-start;
     font-size: 10.5px;
@@ -273,17 +272,10 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     color: var(--al-accent);
     background: var(--al-accent-tint);
   }
-  .al-file, .al-lib { font-family: var(--al-mono); font-size: 10.5px; color: var(--al-faint); }
-  .al-file {
-    background: var(--al-file-bg);
-    padding: 4px 9px;
-    border-radius: 7px;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
   .al-lib {
+    font-family: var(--al-mono);
+    font-size: 10.5px;
+    color: var(--al-faint);
     background: var(--al-chip-bg);
     border: 1px solid var(--al-chip-border);
     padding: 4px 9px;
@@ -303,30 +295,13 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     font-size: 13.5px;
     line-height: 1.55;
     color: var(--al-soft);
-    flex: 1;
     text-wrap: pretty;
   }
-  /* Launch sits beside an optional source download. The row owns the top margin
-     so the buttons line up whether or not the download is there. */
-  .al-actions { margin-top: 6px; display: flex; gap: 7px; }
-  .al-launch {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    font-family: var(--al-semi);
-    font-size: 13px;
-    line-height: 1;
-    background: var(--al-accent);
-    color: var(--al-launch-fg);
-    padding: 11px 12px;
-    border-radius: 12px;
-    text-decoration: none;
-  }
-  .al-launch.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
-  /* Where a lab exists it replaces Launch: the lab opens the notebook itself
-     once its puzzles are done. */
+  /* Cards in a row are stretched to the tallest, and the slack used to go to
+     the blurb, which opened a gap between the blurb and the libraries. Sending
+     it here instead keeps the text block together and pins the button to the
+     bottom edge of every card in the row. */
+  .al-actions { margin-top: auto; padding-top: 12px; display: flex; }
   .al-lab {
     flex: 1;
     display: inline-flex;
@@ -342,21 +317,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     border-radius: 12px;
     text-decoration: none;
   }
-  .al-dl {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-family: var(--al-mono);
-    font-size: 11px;
-    line-height: 1;
-    background: var(--al-chip-bg);
-    border: 1px solid var(--al-chip-border);
-    color: var(--al-faint);
-    padding: 0 10px;
-    border-radius: 12px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
+  .al-lab.is-off { background: var(--al-chip-bg); color: var(--al-fainter); cursor: default; }
 
   /* ---------- empty state + footer ---------- */
   .al-empty { text-align: center; padding: 72px 20px; color: var(--al-faint); }
@@ -432,7 +393,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
             <jelly-option value="course">By course</jelly-option>
           </jelly-select>
         </div>
-        <jelly-switch id="al-ready" size="small">Ready only</jelly-switch>
+        <jelly-switch id="al-drafts" size="small">Show work in progress</jelly-switch>
       </div>
     </div>
   </div>
@@ -443,9 +404,10 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   <!-- ===== FOOTER ===== -->
   <footer class="al-foot">
     <div style="max-width:560px;">
-      <div class="al-footer-head"><span>🐍</span> Running these</div>
-      <p class="al-footnote">Every card here is a Jupyter notebook. <strong>Launch</strong> opens it in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work. The .ipynb link downloads the source if you would rather run it in Jupyter locally.</p>
-      <p class="al-footnote">A few cards say <strong>Start the lab</strong> instead. Those open a page on this site that asks you to rebuild the notebook's algorithms out of scrambled pseudocode first, and the notebook opens once you are through.</p>
+      <div class="al-footer-head"><span>🐍</span> How these work</div>
+      <p class="al-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
+      <p class="al-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
+      <p class="al-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
     </div>
   </footer>
 
@@ -466,27 +428,22 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentDark:'#EC7C9E', accentSoft:'#FBE9EF' }
   ];
 
-  // Status colors are themed in CSS (.al-status-<key>); only the label lives here.
+  // Shown only on the cards that are not ready; colors are themed in CSS
+  // (.al-status-<key>).
   var STATUS = {
-    finalized: { label:'Ready' },
-    drafted:   { label:'Draft' },
-    planned:   { label:'Planned' }
+    progress: { label:'In progress' },
+    planned:  { label:'Planned' }
   };
 
-  // Colab has no open-this-arbitrary-URL mode: it reads notebooks out of a
-  // public GitHub repo, so the launch URL points back at this one. An edit can
-  // take a few minutes to clear Colab's fetch cache.
-  var COLAB_BASE = 'https://colab.research.google.com/github/subhadipchowdhury/' +
-                   'subhadipchowdhury.github.io/blob/master/teaching/applet/notebooks/';
-
-  // `nb` is the notebook's path under notebooks/ and wires both the Colab
-  // launch and the source download; the banner filename is its basename. A
-  // 'planned' card has no notebook yet, so it names the file-to-be in `file`.
+  // `nb` is the notebook's path under notebooks/. `lab` is the id of the guided
+  // lab built on it; a card is only openable once that lab exists, since the lab
+  // is what opens the notebook. A 'planned' card has no notebook yet and names
+  // the file-to-be in `file`, which is a note to the author, not shown.
   var ACT = [
-    { course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'finalized', nb:'intro/python_coding_tutorial.ipynb' },
-    { course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
+    { course:'intro', module:'Getting Started · Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
+    { course:'na', module:'M1 · Interpolation', title:"Runge's phenomenon & Chebyshev nodes", blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/interpolation_runge_chebyshev.ipynb' },
     { course:'na', module:'M1 · Interpolation', title:'Newton form & divided differences', lab:'m1-newton', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/newton_divided_differences.ipynb' },
-    { course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/cubic_splines.ipynb' },
+    { course:'na', module:'M1 · Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/cubic_splines.ipynb' },
     { course:'na', module:'M2 · Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
     { course:'na', module:'M2 · Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
     { course:'na', module:'M3 · Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', nb:'na/least_squares_orthogonal_polys.ipynb' },
@@ -516,35 +473,39 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     { course:'analysis', module:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', libs:['numpy','matplotlib'], status:'planned', file:'cantor_set.ipynb' }
   ];
 
-  var state = { courseFilter:'all', query:'', finalizedOnly:false, sort:'module' };
+  var state = { courseFilter:'all', query:'', showDrafts:false, sort:'module' };
 
   function enrich(a) {
     var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
     var topic = a.module.indexOf(' · ') !== -1 ? a.module.split(' · ')[1] : a.module;
-    var launchUrl = a.nb ? COLAB_BASE + a.nb : null;
-    var srcUrl = a.nb ? 'notebooks/' + a.nb : null;
-    // A lab is the same notebook with its algorithms gated behind pseudocode
-    // puzzles; it lives on this site rather than in Colab.
-    var labUrl = a.lab && a.status === 'finalized' ? 'lab/' + a.lab + '/' : null;
-    var file = a.nb ? a.nb.split('/').pop() : a.file;
-    // The status tag is the master switch: an activity is launchable only when it
-    // is tagged 'finalized' (Ready) AND has a notebook. Flip a card to 'drafted'
-    // to hold it back from students.
-    var statusKey = STATUS[a.status] ? a.status : 'planned';
-    var ready = a.status === 'finalized' && !!launchUrl;
+    // A lab is the notebook with its algorithms gated behind pseudocode
+    // puzzles; it lives on this site and opens the notebook in Colab at the end.
+    var labUrl = a.lab ? 'lab/' + a.lab + '/' : null;
+    // The status tag is the master switch. A card is ready only when it is
+    // tagged 'finalized' AND its lab is built; flip it to 'drafted' to hold it
+    // back. Everything not ready is hidden until the toggle asks for it.
+    var ready = a.status === 'finalized' && !!labUrl;
+    var statusKey = a.nb ? 'progress' : 'planned';
     return {
-      raw:a, topic:topic, courseName:c.name, file:file,
+      raw:a, topic:topic, courseName:c.name,
       accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
       ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
-      launchUrl: launchUrl, srcUrl: srcUrl, labUrl: labUrl
+      labUrl: labUrl
     };
+  }
+
+  // Everything the draft toggle allows, before the course chips and the search
+  // narrow it further. The chip counts and the "of N" total both read off this,
+  // so a chip never advertises cards the current toggle is hiding.
+  function visibleUniverse() {
+    var list = ACT.map(enrich);
+    return state.showDrafts ? list : list.filter(function (a) { return a.ready; });
   }
 
   function filteredList() {
     var q = state.query.trim().toLowerCase();
-    var list = ACT.map(enrich);
+    var list = visibleUniverse();
     if (state.courseFilter !== 'all') list = list.filter(function (a) { return a.raw.course === state.courseFilter; });
-    if (state.finalizedOnly) list = list.filter(function (a) { return a.ready; });
     if (q) list = list.filter(function (a) {
       var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' +
                  a.raw.libs.join(' ') + (a.labUrl ? ' lab puzzle pseudocode' : '')).toLowerCase();
@@ -560,20 +521,13 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       return '<span class="al-lib">' + lib + '</span>';
     }).join('');
 
-    // Launch leaves the site for Colab, so it opens in a new tab; the download
-    // is same-origin, which is what lets `download` name the saved file.
-    var actions;
-    if (a.ready && a.labUrl) {
-      // The lab opens the notebook itself once its puzzles are done, so this
-      // card offers the lab and nothing that would go around it.
-      actions = '<a class="al-lab" href="' + a.labUrl + '">Start the lab</a>';
-    } else if (a.ready) {
-      actions =
-        '<a class="al-launch" href="' + a.launchUrl + '" target="_blank" rel="noopener">▶ Launch</a>' +
-        '<a class="al-dl" href="' + a.srcUrl + '" download title="Download the notebook source">↓ .ipynb</a>';
-    } else {
-      actions = '<span class="al-launch is-off" title="' + (a.srcUrl ? 'Not yet released to students' : 'Coming soon') + '">▶ Launch</span>';
-    }
+    // Every card leads to a guided lab. There is deliberately no direct link to
+    // the notebook and no source download: the lab is what opens the notebook,
+    // and a way around it would be a way around the puzzles.
+    var actions = a.ready
+      ? '<a class="al-lab" href="' + a.labUrl + '">Start the guided lab</a>'
+      : '<span class="al-lab is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
+        '">Start the guided lab</span>';
 
     // The course accent is handed to CSS as custom properties so the theme,
     // not this markup, decides which variant is shown.
@@ -585,10 +539,11 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       '<div class="al-card" style="' + accentVars + '">' +
         '<div class="al-banner">' +
           '<span class="al-course">' +
-            '<span class="al-dot"></span>' + a.courseName +
+            '<span class="al-dot"></span>' +
+            '<span class="al-course-name">' + a.courseName + '</span>' +
           '</span>' +
-          '<span class="al-status al-status-' + a.statusKey + '">' + a.statusLabel + '</span>' +
-          '<span class="al-file">' + a.file + '</span>' +
+          (a.ready ? '' :
+            '<span class="al-status al-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
         '</div>' +
         '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
           '<span class="al-topic">' + a.topic + '</span>' +
@@ -601,9 +556,10 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   }
 
   function renderChips() {
-    var defs = [{ key:'all', name:'All', jvariant:'graphite', count:ACT.length }];
+    var universe = visibleUniverse();
+    var defs = [{ key:'all', name:'All', jvariant:'graphite', count:universe.length }];
     COURSES.forEach(function (c) {
-      defs.push({ key:c.key, name:c.name, jvariant:c.jvariant, count:ACT.filter(function (a) { return a.course === c.key; }).length });
+      defs.push({ key:c.key, name:c.name, jvariant:c.jvariant, count:universe.filter(function (a) { return a.raw.course === c.key; }).length });
     });
     var html = defs.map(function (c) {
       var variant = state.courseFilter === c.key ? c.jvariant : 'white';
@@ -616,13 +572,16 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   function renderResults() {
     var list = filteredList();
     document.getElementById('al-shown').textContent = list.length;
-    document.getElementById('al-total').textContent = ACT.length;
+    document.getElementById('al-total').textContent = visibleUniverse().length;
     var results = document.getElementById('al-results');
     if (list.length === 0) {
+      var hint = state.showDrafts
+        ? 'Try a broader search, or clear the filters.'
+        : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see the labs that are still being built.';
       results.innerHTML =
         '<div class="al-empty">' +
           '<div class="al-empty-title">No labs match your filters.</div>' +
-          '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">Try a broader search, or clear the filters.</p>' +
+          '<p class="al-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
           '<jelly-button id="al-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
       var clr = document.getElementById('al-clear');
@@ -638,9 +597,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   function render() { renderChips(); renderResults(); }
 
   function resetFilters() {
-    state.courseFilter = 'all'; state.query = ''; state.finalizedOnly = false;
+    state.courseFilter = 'all'; state.query = '';
     var s = document.getElementById('al-search'); if (s) s.value = '';
-    var sw = document.getElementById('al-ready'); if (sw && 'checked' in sw) sw.checked = false;
     render();
   }
 
@@ -671,12 +629,12 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     var sort = document.getElementById('al-sort');
     if (sort) sort.addEventListener('change', function (e) { state.sort = readVal(e) || 'module'; renderResults(); });
 
-    var ready = document.getElementById('al-ready');
-    if (ready) ready.addEventListener('change', function (e) {
+    var drafts = document.getElementById('al-drafts');
+    if (drafts) drafts.addEventListener('change', function (e) {
       var el = e && e.target;
       var on = el && ('checked' in el ? el.checked : el.getAttribute('checked') != null);
-      state.finalizedOnly = !!on;
-      renderResults();
+      state.showDrafts = !!on;
+      render();
     });
 
     // Keyboard: "/" focuses search, Esc clears a non-empty query.
