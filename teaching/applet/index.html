@@ -345,15 +345,19 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   }
   .al-footnote strong { font-family: var(--al-semi); font-weight: normal; color: var(--al-ink); }
 
+  /* Two columns, each an unforced reading measure at this width. auto-fit drops
+     to one column when a 300px track stops fitting, so no media query. Grid
+     children default to min-width:auto and would refuse to shrink below their
+     longest word, hence the reset on the column. */
   .al-foot {
     margin-top: 52px;
     padding-top: 26px;
     border-top: 1px solid var(--al-hairline);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px 46px;
   }
+  .al-foot-col { min-width: 0; }
 
   @media (max-width: 760px) {
     .lab-library { padding: 4px 20px 44px; }
@@ -401,13 +405,19 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   <!-- ===== RESULTS ===== -->
   <div id="al-results" style="margin-top:26px;"></div>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- ===== FOOTER =====
+       Left column is this site, right column is the notebook. The snake sits on
+       the Colab heading, which is the half that actually runs Python. -->
   <footer class="al-foot">
-    <div style="max-width:560px;">
-      <div class="al-footer-head"><span>🐍</span> How these work</div>
+    <div class="al-foot-col">
+      <div class="al-footer-head">How these work</div>
       <p class="al-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
-      <p class="al-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author. Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
       <p class="al-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
+    </div>
+    <div class="al-foot-col">
+      <div class="al-footer-head"><span>🐍</span> Running the notebook</div>
+      <p class="al-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
+      <p class="al-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
     </div>
   </footer>
 
