@@ -6,11 +6,10 @@ robots: false
 ---
 
 <style>
-  /* Page-scoped styles for the specification guide. Every color is one of the
-     site theme tokens from css/stylesheet.scss, so the site's dark-mode
-     toggle re-skins this page along with everything else. Type is the site's
-     own: UChicagoSerif headings, UChicagoSansSerif text, IBM Plex Mono for
-     labels and pasteable prompts, all loaded in _includes/head.html. */
+  /* Page-scoped styles for the specification guide. Colors are site theme
+     tokens from css/stylesheet.scss, so the page follows the dark-mode
+     toggle. Fonts are loaded in _includes/head.html: UChicagoSerif headings,
+     UChicagoSansSerif text, IBM Plex Mono for labels and pasteable prompts. */
 
   .spec-guide {
     --spec-sans: "UChicagoSansSerif-Regular", sans-serif;
@@ -20,7 +19,7 @@ robots: false
   }
 
   /* Sticky contents rail beside the prose. Collapses to a block above the
-     text under 860px, where a 200px rail would leave no usable measure. */
+     text under 860px. */
   .spec-shell {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
@@ -83,8 +82,8 @@ robots: false
     background: rgba(var(--accent-rgb), 0.1);
   }
 
-  /* Entries that are not numbered steps get the italic serif treatment the
-     two interlude panels use in the body. */
+  /* Entries that are not numbered steps use the italic serif of the two
+     interlude panels. */
   .spec-toc li.is-aside {
     margin: 0.35rem 0;
   }
@@ -205,8 +204,8 @@ robots: false
     border-bottom: 1px solid var(--border-color);
   }
 
-  /* The doubled class in these selectors is deliberate: it outweighs the
-     .spec-body p rule above, which would otherwise set the margins. */
+  /* The doubled class outweighs the .spec-body p rule above, which would
+     otherwise set the margins. */
   .spec-lede .spec-lede__companion {
     font-family: var(--spec-serif);
     font-style: italic;
@@ -230,6 +229,13 @@ robots: false
     margin: 0;
   }
 
+  .spec-lede .spec-lede__disclaimer {
+    margin: 0.95rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
   /* Steps reuse the site's .section-block rule as their divider. */
   .spec-step {
     padding-bottom: 1.4rem;
@@ -251,8 +257,8 @@ robots: false
     line-height: 1.22;
   }
 
-  /* Interludes that describe the eventual document rather than a step to do
-     today. Same formula as .abstract-panel: accent stripe, tinted wash. */
+  /* Interludes that describe the eventual document rather than a step. Same
+     formula as .abstract-panel: accent stripe, tinted wash. */
   .spec-panel {
     margin: 0 0 1.7rem;
     padding: 1.5rem 1.7rem 1.6rem;
@@ -490,7 +496,7 @@ robots: false
         </li>
         <li>
           <button class="spec-check" data-check="s6" type="button" aria-pressed="false" aria-label="Mark step 6 as done">&#10003;</button>
-          <a href="#s6" data-toclink="s6">6. A second, shorter document (optional)</a>
+          <a href="#s6" data-toclink="s6">6. Write a second, shorter document (optional)</a>
         </li>
         <li>
           <button class="spec-check" data-check="s7" type="button" aria-pressed="false" aria-label="Mark step 7 as done">&#10003;</button>
@@ -524,27 +530,28 @@ robots: false
       <div class="spec-lede" data-sec="intro">
         <p class="spec-lede__companion">A companion to the Teaching Matters column &ldquo;Teaching Your AI How You Teach.&rdquo;</p>
         <p class="spec-lede__byline">Subhadip Chowdhury, Department of Mathematics</p>
-        <p class="spec-lede__text">A specification is a standing document that states how you build course material, written in enough detail that an AI model can follow it. You write a first version in an afternoon, keep it in a project workspace, and correct it as you use it. What follows assumes no prior experience with these tools.</p>
+        <p class="spec-lede__text">A specification is a standing document that states how you build course material, written in enough detail that an AI model can follow it. You write a first version in an afternoon, keep it in a project workspace, and correct it as you use it. This guide assumes no prior experience with these tools.</p>
+        <p class="spec-lede__disclaimer">This page was drafted with <a href="https://claude.ai">Claude</a> and revised by me before posting.</p>
       </div>
 
       <section class="section-block spec-step" id="s1" data-sec="s1">
         <p class="spec-step__kicker">Step 1</p>
         <h2>Narrow the scope</h2>
-        <p>Pick one course and one kind of material. Worksheets, problem sets, exam questions, lab handouts, discussion prompts, reading guides. &ldquo;How I teach&rdquo; cannot be written down in an afternoon. &ldquo;How I write weekly discussion worksheets for Introductory Chemistry&rdquo; can. One kind of material covered in detail is enough to be useful. Other kinds get added later as new sections.</p>
+        <p>Pick one course and one kind of material: worksheets, problem sets, exam questions, lab handouts, discussion prompts, reading guides. You can&rsquo;t write down &ldquo;how I teach&rdquo; in an afternoon. You can write down &ldquo;how I write weekly discussion worksheets for Introductory Chemistry.&rdquo; Add the other kinds later, as new sections.</p>
       </section>
 
       <section class="section-block spec-step" id="s2" data-sec="s2">
         <p class="spec-step__kicker">Step 2</p>
         <h2>Create the project and put your examples in it</h2>
-        <p>A project is a workspace that loads the same files and instructions into every conversation you start inside it, so you stop re-explaining yourself. Make it before you write anything else, since everything from here on happens inside it.</p>
+        <p>A project is a workspace that loads the same files and instructions into every conversation you start inside it, so you stop re-explaining yourself. Make it before you write anything else.</p>
         <ol>
           <li>Click <code>Projects</code> in the left sidebar, create a new one, and name it after the course.</li>
-          <li>Collect eight to ten pieces of that material you have already made and would hand out again. Eight to ten is enough, and more is not obviously better. What you want is range rather than volume, since the rules come from the contrast between pieces. If your material is already compiled, a single file covering a whole year counts as one upload and reads fine.</li>
-          <li>Upload them to <code>Project knowledge</code>. Scans and photographs are usable, though a text or Word file is read more reliably than an image of one.</li>
+          <li>Collect a dozen or so pieces of that material you have already made and would hand out again. Hold two or three of them back and keep them out of the project, because you will need work the model has not seen when you test the specification in <a href="#s7">Step 7</a>. The eight to ten that remain are what it learns from.</li>
+          <li>Pick those eight to ten for range: different weeks, different topics, the short ones alongside the long ones. A rule is whatever holds steady across pieces that otherwise have little in common, so ten varied pieces teach the model more than thirty near-copies. If your material is already compiled, a single file covering a whole year counts as one upload and reads fine.</li>
+          <li>Add two or three pieces you were unhappy with, and put the word <code>reject</code> in each filename, since the prompt in the next step refers to them that way. Upload these as separate files even if the rest of your material is one compiled file. They carry more per file than the successes do, because you can usually name what went wrong in a piece you shelved.</li>
+          <li>Upload everything to <code>Project knowledge</code>. Scans and photographs are usable, though a text or Word file is read more reliably than an image of one.</li>
         </ol>
-        <p>Add two or three pieces you were unhappy with, and mark them in the filename, since you will point the model at them in the next step. Upload these as separate files even if the rest of your material is one compiled file. You can usually say why you shelved a draft. The pieces you kept do not prompt the same question.</p>
-        <p>Hold two or three of the good pieces out of the upload, since you will need material the model has not seen when you test the specification in <a href="#s7">Step 7</a>.</p>
-        <p>Leave <code>Project instructions</code> empty for now. <a href="#s5">Step 5</a> is where they get written, once the specification exists.</p>
+        <p>Leave <code>Project instructions</code> empty for now. You&rsquo;ll write them in <a href="#s5">Step 5</a>, once the specification exists.</p>
       </section>
 
       <section class="section-block spec-step" id="s3" data-sec="s3">
@@ -558,14 +565,14 @@ robots: false
           </div>
           <p class="spec-prompt__body" id="prompt-draft">Read the materials in this project. I want a specification document detailed enough that you could write a new piece in my style by following it. Infer the design rules I appear to be using, covering structure, sequencing, difficulty, voice, how much I explain versus how much I ask, and anything I consistently avoid. The files marked as rejects are ones I was unhappy with; say what distinguishes them from the rest. Write the result as a numbered list of rules. For each rule, name the file you drew it from, and mark anything you are guessing at.</p>
         </div>
-        <p>Expect a draft that is roughly 60 percent right. Correcting a stated rule takes much less time than composing one from a blank page.</p>
+        <p>Expect a draft that is more right than wrong and nowhere near finished. Correcting a stated rule takes far less time than composing one from a blank page.</p>
       </section>
 
       <section class="section-block spec-step" id="s4" data-sec="s4">
         <p class="spec-step__kicker">Step 4</p>
         <h2>Fix the draft</h2>
-        <p>This is where the document actually gets written. Make three passes over what came back.</p>
-        <p>The first pass checks the inferred rules against the material. A model reading eight pieces generalizes from accidents, so it might report that you always open with a figure when five of the eight happen to, or state as a standing rule something you tried twice and abandoned. Read each rule and ask whether your material actually follows it. Delete what is wrong about you and correct what is half right.</p>
+        <p>Make three passes over what came back. This is the step that takes the afternoon.</p>
+        <p>The first pass checks the inferred rules against the material. A model reading ten pieces generalizes from accidents, so it might report that you always open with a figure when seven of them happen to, or promote a constraint from one unit, the term you taught in a room with no projector, into a standing rule. Read each rule and ask whether your material actually follows it. Delete what is wrong about you and correct what is half right.</p>
         <p>The second pass sharpens whatever is left vague. Keep a rule only if a colleague, reading a draft, could tell you whether it had been followed.</p>
 
         <div class="spec-compare">
@@ -601,27 +608,27 @@ robots: false
           </div>
         </div>
 
-        <p>The third pass adds what the model cannot infer, which is everything you decided against. Reading the material shows what is absent from your finished pieces. It cannot show what you drafted and threw out. Ask yourself what makes you throw material away, and write those answers down.</p>
-        <p>Then stop, while the document is still thin. Most of the rules will come from cases you have not met yet, and <a href="#s8">Step 8</a> is where they get written.</p>
+        <p>The third pass adds what no amount of reading would reveal. The rejects show a few failures you kept a copy of. They can&rsquo;t show the draft you abandoned halfway, the topic you refuse to assign, or the framing you have never once used. Ask yourself what makes you throw material away, and write those answers down.</p>
+        <p>Then stop, while the document is still thin. Most of the rules in mine arrived later, from cases I hadn&rsquo;t met yet, and you write yours in <a href="#s8">Step 8</a>.</p>
       </section>
 
       <section class="spec-panel" id="becomes" data-sec="becomes">
         <h2>What the document becomes</h2>
-        <p>This section describes the eventual state and is not a step. Over a term or two, a document of this kind fills out into six sections. Do not try to write them all today.</p>
+        <p>Over a term or two, mine has settled into six sections. Don&rsquo;t try to write them all today.</p>
         <ol>
           <li><strong>Purpose and audience.</strong> What the material is for, who the students are, what they have already seen, how they will be assessed.</li>
-          <li><strong>Design principles with their reasons.</strong> Why prediction comes before computation, why a derivation or a proof becomes an exercise with blanks, why an applied context sometimes gets in the way. The reasoning is what lets the model extend a rule to a case you did not anticipate.</li>
-          <li><strong>Rejection triggers,</strong> from the third pass of <a href="#s4">Step 4</a>. This is the highest-value section, and most people skip it. Models default to the safe, textbook-shaped version of everything, so the prohibitions do most of the work here.</li>
+          <li><strong>Design principles with their reasons.</strong> Why prediction comes before computation, why a derivation or a proof becomes an exercise with blanks, why an applied context sometimes gets in the way. A model can extend a rule to a case you did not anticipate only if it knows why the rule is there.</li>
+          <li><strong>Rejection triggers,</strong> from the third pass of <a href="#s4">Step 4</a>. Models default to the safe, textbook-shaped version of everything, so the prohibitions do more work here than the instructions do.</li>
           <li><strong>Voice and prose.</strong> Banned words and constructions, register, how you address students, formatting habits.</li>
           <li><strong>Format conventions.</strong> Section structure, numbering, length limits, the ratio of exposition to student work, and any typesetting or template details.</li>
-          <li><strong>One annotated example.</strong> A single piece of material you consider correct, with notes on what each part is doing and why it sits there. This can be one of the pieces you held back in <a href="#s2">Step 2</a>, once you have finished testing with it. An annotated example carries what the prose sections leave out.</li>
+          <li><strong>One annotated example.</strong> A single piece of material you consider correct, with notes on what each part is doing and why it sits there. This can be one of the pieces you held back in <a href="#s2">Step 2</a>, once you have finished testing with it.</li>
         </ol>
       </section>
 
       <section class="section-block spec-step" id="s5" data-sec="s5">
         <p class="spec-step__kicker">Step 5</p>
         <h2>Add the specification and write the instructions</h2>
-        <p>Upload the specification to <code>Project knowledge</code>, next to the examples, along with anything else the model should have on hand. Syllabus, learning goals, the table of contents of the textbook, last year&rsquo;s exams.</p>
+        <p>Save the corrected document as a file, named for the course: <code>chem101_specification.md</code>, or whatever the equivalent is for yours. Upload it to <code>Project knowledge</code> next to the examples, along with anything else the model should have on hand: syllabus, learning goals, the table of contents of the textbook, last year&rsquo;s exams.</p>
         <p>Now write the <code>Project instructions</code>. Four or five lines is enough.</p>
         <div class="spec-prompt">
           <div class="spec-prompt__head">
@@ -630,40 +637,40 @@ robots: false
           </div>
           <p class="spec-prompt__body" id="prompt-instructions">This project produces material for [course]. Treat [course]_specification.md as the authoritative reference and consult it before drafting anything. Where these instructions and the specification disagree, the specification wins. Mark anything you are unsure of, including computations, claims, and references, and do not paper over a gap in a derivation. Propose the structure of a new piece and wait for my approval before writing it out in full.</p>
         </div>
-        <p>Keep the instructions short and let them point at the document. They are awkward to edit and easy to outgrow. The document is a file you can revise properly. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
+        <p>Keep the instructions short and let them point at the document. You can revise a file properly, keep the old copies, and hand one to a colleague, and a text box gives you none of that. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
       </section>
 
       <section class="section-block spec-step" id="s6" data-sec="s6">
         <p class="spec-step__kicker">Step 6 &middot; optional</p>
-        <h2>Write a second, much shorter document about the conversation itself</h2>
-        <p>This one is separate from the specification and can wait until the rest is running. It covers how the model talks to you while you are working. By default it will spend your reading time on validation, summary, and hedging.</p>
-        <p>Mine is a skill called <code>no-fluff-response</code>, and a copy of the file is in <a href="https://drive.google.com/drive/folders/1ubk9mRdUFx_3cR9EQhBMqXTJmLsaRcmy?usp=sharing">this folder</a>, which asks for a UChicago login. A skill is a named markdown file of instructions that Claude loads when the work calls for it. Mine requires the first sentence to be the answer or the correction, and it bans openings that praise the question, closing offers of further help, and narration of what the model is about to do.</p>
-        <p>Write your own version, add it as a skill, and put a line in <code>Settings &gt; Profile</code> telling Claude to use it, which brings it into every conversation you have. Keeping it as a file means I can revise it and hand a copy to a colleague, which is the same reason the specification is a file and not a paragraph of project instructions.</p>
+        <h2>Write a second, shorter document</h2>
+        <p>Keep this one separate from the specification: it covers how the model talks to you while you are working, not what it produces. By default it will spend your reading time on validation, summary, and hedging.</p>
+        <p>A skill is a named markdown file of instructions that Claude loads when the work calls for it. Mine is called <code>no-fluff-response</code>, and a copy is in <a href="https://drive.google.com/drive/folders/1ubk9mRdUFx_3cR9EQhBMqXTJmLsaRcmy?usp=sharing">this folder</a>, which asks for a UChicago login. It requires the first sentence to be the answer or the correction, and it bans openings that praise the question, closing offers of further help, and narration of what the model is about to do.</p>
+        <p>Write your own version and add it as a skill. Because a skill loads only when the work appears to call for it, add a line in <code>Settings &gt; Profile</code> asking Claude to apply this one in every conversation. Keeping it as a file means I can revise it and hand a copy to a colleague, the same reason the specification is a file and not a paragraph of project instructions.</p>
       </section>
 
       <section class="section-block spec-step" id="s7" data-sec="s7">
         <p class="spec-step__kicker">Step 7</p>
         <h2>Test before you trust it</h2>
-        <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, decide whether the document says the wrong thing or says nothing at all, then fix or add. Two or three of these tests will find most of what is missing.</p>
-        <p>The test checks style. Nothing in it, or in the specification, checks whether the content is correct. A model states a wrong claim as fluently as a right one, so read everything for accuracy before it reaches students. The line in the project instructions asking it to mark what it is unsure of tells you where to look first. Accuracy checking does not get delegated.</p>
+        <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, work out which of three things happened: the document says nothing about that point, the document says the wrong thing, or the document is right and the model went straight past it. The first two you fix by editing. For the third, restate the rule as a prohibition, which a model follows more reliably than a preference. Two or three of these tests will find most of what is missing.</p>
+        <p>The test checks style. Nothing in it, or in the specification, checks whether the content is correct. A model states a wrong claim as fluently as a right one, so read everything for accuracy before it reaches students. The line in the project instructions asking it to mark what it is unsure of helps a little, but only a little: it shows you where the model noticed a gap, and the errors that matter are the ones it made confidently. You check the mathematics yourself.</p>
       </section>
 
       <section class="section-block spec-step" id="s8" data-sec="s8">
         <p class="spec-step__kicker">Step 8</p>
         <h2>Correct in use</h2>
-        <p>The document grows through use. Each time you get a draft back:</p>
+        <p>Each time you get a draft back:</p>
         <ol>
           <li>Find where it falls short.</li>
-          <li>State the principle behind the shortfall rather than fixing the instance, and keep a running list of these. Say &ldquo;role prompts never contain mathematical content&rdquo; rather than &ldquo;take the chain rule hint out of the Manager&rsquo;s prompt.&rdquo;</li>
+          <li>State the principle behind the shortfall rather than fixing the instance, and keep a running list of these. Say &ldquo;no question may name the reaction type it is testing&rdquo; rather than &ldquo;take the word redox out of question 3.&rdquo;</li>
           <li>Once the same infraction has appeared three or so times, promote the principle from that list into the document as a numbered rule.</li>
         </ol>
-        <p>Correcting the model in conversation does not change the uploaded file, so promoting a rule means editing the document and replacing it in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom, and should be rewritten one level up to name the principle underneath.</p>
+        <p>Correcting the model in conversation doesn&rsquo;t change the uploaded file, so promote a rule by editing the document and replacing the copy in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it one level up, so that it names the principle underneath.</p>
       </section>
 
       <section class="section-block spec-step" id="s9" data-sec="s9">
         <p class="spec-step__kicker">Step 9 &middot; optional</p>
         <h2>Put the review on a schedule</h2>
-        <p>Correcting as you go catches only what you happen to notice, so I also run a scheduled pass. <code>Claude Cowork</code> can run a saved prompt on a schedule. The task writes a memo of proposals and does not edit the specification, so promoting a rule is still an edit you make yourself. Mine runs every two weeks, with the following standing instructions.</p>
+        <p>Correcting as you go catches only what you happen to notice, so I run a scheduled pass as well. <code>Claude Cowork</code> runs a saved prompt on a schedule and can read your earlier conversations, which is what makes this work. The task writes a memo of proposals and never touches the specification, so promoting a rule is still an edit you make yourself. Mine runs every two weeks, on the following standing instructions.</p>
         <div class="spec-prompt">
           <div class="spec-prompt__head">
             <span class="spec-prompt__label">Standing instructions</span>
@@ -689,8 +696,8 @@ robots: false
           <li><strong>Conventions.</strong> One section for each kind of material, worksheets, exams, solution keys.</li>
         </ul>
         <p>The six sections map onto the layers. Purpose and audience becomes Context. Design principles, rejection triggers, and voice become Core. Format conventions and the annotated example become Conventions.</p>
-        <p>Once a term, do a structural pass yourself. Replace Context for the new quarter, condense the sections for kinds of material you are not currently using instead of deleting them, and reconcile any rules that have changed so that two versions of the same rule do not both sit in the document.</p>
-        <p>Review the project instructions in the same sitting, since they name the current course and the drafting workflow and go stale faster than the specification does. Ask the model to propose a revised set, read the proposal line by line before accepting any of it, and look in particular for instructions that have grown into a competing copy of the specification or that still describe a course you are no longer teaching.</p>
+        <p>Once a term, do a structural pass yourself. Replace Context for the new quarter, condense the sections for kinds of material you aren&rsquo;t currently using instead of deleting them, and reconcile any rules that have changed so that two versions of the same rule do not both sit in the document.</p>
+        <p>Review the project instructions in the same sitting, since they name the current course and the drafting workflow and go stale faster than the specification does. Ask the model to propose a revised set, read the proposal line by line before accepting any of it, and look in particular for instructions that have grown into a competing copy of the specification or that still describe a course you no longer teach.</p>
       </section>
 
       <section class="spec-panel spec-panel--help" id="help" data-sec="help">
@@ -709,9 +716,8 @@ robots: false
 </div>
 
 <script>
-  // Three behaviors, all optional to reading the page: copy buttons on the
-  // pasteable prompts, per-step checkboxes kept in localStorage, and a
-  // contents rail that follows the scroll position.
+  // Copy buttons on the pasteable prompts, per-step checkboxes kept in
+  // localStorage, and a contents rail that follows the scroll position.
   (function () {
     var STORE = 'teaching-spec-progress-v1';
     var STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
@@ -736,8 +742,8 @@ robots: false
         var src = document.getElementById(btn.getAttribute('data-copy'));
         if (!src) return;
 
-        // The scheduled-review prompt is a list; copy it as one dashed item per
-        // line so it pastes as instructions rather than a run-on paragraph.
+        // The scheduled-review prompt is a list; copy it as one dashed item
+        // per line.
         var text = src.tagName === 'UL'
           ? Array.prototype.map.call(src.children, function (li) { return '- ' + li.textContent.trim(); }).join('\n')
           : src.textContent.trim();
@@ -821,8 +827,7 @@ robots: false
         entries.forEach(function (e) {
           visible[e.target.getAttribute('data-sec')] = e.isIntersecting;
         });
-        // Highest section currently in the reading band wins, so the rail
-        // never jumps backwards while scrolling down.
+        // Highest section currently in the reading band wins.
         for (var i = 0; i < sections.length; i++) {
           var id = sections[i].getAttribute('data-sec');
           if (visible[id]) { setActive(id); return; }
