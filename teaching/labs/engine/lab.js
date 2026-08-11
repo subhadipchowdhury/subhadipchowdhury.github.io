@@ -14,8 +14,7 @@ const DEV_KEY = 'lab:dev';
 // Test mode. Turn it on with ?dev=1 on the URL and off with ?dev=0, or with the
 // button in the bar it adds. It sticks in localStorage so it survives reloads,
 // and it puts a Solve button on each puzzle so the later ones can be reached
-// without doing the earlier ones by hand. Nothing about it is meant to be
-// student-proof; it is here while the labs are being written.
+// without doing the earlier ones by hand.
 function devMode() {
   try {
     const query = new URLSearchParams(window.location?.search || '');
@@ -491,8 +490,7 @@ class LabController {
   buildPythonPane(gate) {
     const pane = el('div');
     for (const line of gate.reveal) {
-      // Comments and the docstring stay in the notebook. Here they would
-      // restate the brief and push the algorithm off the screen.
+      // Comments and the docstring stay in the notebook.
       if (line.role === 'head' || line.role === 'doc') continue;
       if (line.role === 'space') continue;
 
@@ -598,7 +596,7 @@ function reducedMotion() {
 }
 
 // Hovering or focusing either side of a pair lights both. Screen readers get
-// the pairing as text on each row, since hover is not available to them.
+// the pairing as text on each row.
 function wirePairing(scope) {
   const rows = scope.querySelectorAll('.lab-pair[data-pair]');
   const setPair = (pair, on) => {

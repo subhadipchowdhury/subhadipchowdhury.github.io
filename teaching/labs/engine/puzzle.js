@@ -269,9 +269,8 @@ export class PuzzleView {
 
   renderBlock(block, { interactive, placed = false }) {
     const div = el('div', 'lp-block');
-    // Decoy status is kept out of the DOM. The spec JSON gives everything away
-    // to anyone who goes looking, but a data attribute would hand it to anyone
-    // who right-clicks.
+    // Decoy status is kept out of the DOM. It is in the spec JSON, but a data
+    // attribute would put it one right-click away.
     if (interactive) {
       div.tabIndex = -1;
       div.setAttribute('role', 'button');
@@ -347,7 +346,7 @@ export class PuzzleView {
 
   suggestIndent(index) {
     // Default to the indent of the row above, one deeper if that row opens a
-    // block. Guessing well means most drops need no adjustment at all.
+    // block.
     const above = this.placements[index - 1];
     if (!above) return 0;
     const block = this.blocks.get(above.id);
@@ -624,7 +623,7 @@ export class PuzzleView {
       this.announce('Selection cleared.');
     } else if (this.selected && list === 'workspace') {
       // Tapping a placed block while holding a selection drops the held block
-      // just above the tapped one, which is the obvious reading of that tap.
+      // just above the tapped one.
       const index = this.placements.findIndex((p) => p.id === id);
       this.place(this.selected.id, index, this.suggestIndent(index));
       return;
@@ -898,9 +897,9 @@ function opensBlock(text) { return /:\s*$/.test(text.replace(/\s*#.*$/, '')); }
  * The arrangement a puzzle starts from.
  *
  * `prefill` puts the first n solution blocks in place, or all of them with
- * "all". A fully pre-placed puzzle is one whose content is in its blanks: the
- * arranging would be busywork, and the reduced rebuild of a concept met in an
- * earlier lab uses the same mechanism with a single anchor block.
+ * "all". A fully pre-placed puzzle is one whose content is in its blanks. The
+ * reduced rebuild of a concept met in an earlier lab uses the same mechanism
+ * with a single anchor block.
  */
 export function initialState(gate) {
   const prefill = gate.prefill;

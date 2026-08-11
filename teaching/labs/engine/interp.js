@@ -566,7 +566,7 @@ export function parseProgram(lines, blanks = {}) {
 // ---------------------------------------------------------------------------
 // Scalars are JS numbers. A 1-D array is a JS array of numbers. A 2-D table is
 // a JS array of arrays. Booleans exist only inside conditions and never reach a
-// variable, which keeps the value space as small as the notation claims.
+// variable.
 
 export function isArr1(v) { return Array.isArray(v) && (v.length === 0 || typeof v[0] === 'number'); }
 export function isArr2(v) { return Array.isArray(v) && v.length > 0 && Array.isArray(v[0]); }
@@ -1027,7 +1027,7 @@ class Interp {
     const subs = expr.subs.map((s) => this.evalSubscript(s, scope, expr.where));
 
     // Remember the concrete subscripts so `print T[i, j]` can record which
-    // entry was visited, which is what the printing puzzle is graded on.
+    // entry was visited.
     if (!this.lastSubs) this.lastSubs = new Map();
     this.lastSubs.set(expr, subs.map((s) => (s.kind === 'point' ? s.at : [s.lo, s.hi])));
 

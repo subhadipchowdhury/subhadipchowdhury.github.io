@@ -50,8 +50,7 @@ export function applyLadder(view, verdict, attempts) {
 function implicatedBlocks(view, verdict) {
   if (verdict.blockId) return [verdict.blockId];
   if (verdict.placedDecoys?.length) return verdict.placedDecoys;
-  // Nothing specific: outline the loop nest, since that is where most of these
-  // mistakes live, rather than a single line.
+  // Nothing specific: outline the loop nest rather than a single line.
   const ids = view.placements.filter((p) => p.indent > 0).map((p) => p.id);
   return ids.length > 1 ? ids : [];
 }
@@ -86,8 +85,7 @@ export function buildFeedbackCard(verdict, ctx) {
     card.appendChild(n);
   }
 
-  // The student's own trace, never the reference: this is evidence they
-  // generated and should be reading.
+  // The student's own trace, never the reference.
   const probe = gate.probes?.[verdict.probeIndex ?? 0];
   const traceNode = buildTrace(verdict, gate, probe);
   if (traceNode) {

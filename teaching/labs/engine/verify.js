@@ -1,9 +1,8 @@
 // Grading a placed assembly.
 //
 // Five stages in order, stopping at the first failure: completeness, parse,
-// interpret, compare, diagnose. Behaviour decides the verdict, so any
-// arrangement that computes the right thing passes and no lists of acceptable
-// orderings have to be written by hand.
+// interpret, compare, diagnose. Behaviour decides the verdict: any arrangement
+// that computes the right thing passes.
 //
 // Nothing here shows the reference answer. The classifier describes the shape
 // of the student's own wrong result, and as a last resort names one entry.
@@ -71,8 +70,7 @@ export function activeBlanks(placements, blocksById) {
 
 /**
  * Run the instructor's solution. Computed once per gate at page load, so the
- * student's answer is only ever compared against values from this same
- * interpreter and no cross-language drift is possible.
+ * student's answer is compared against values from this same interpreter.
  */
 export function buildReference(gate) {
   const byId = indexBlocks(gate);
@@ -444,7 +442,7 @@ function classifyValues(got, ref, traceNames) {
   const tuple = Array.isArray(ref.value) && ref.value.__tuple;
   if (tuple) {
     // The table can be right while the wrong slice is returned. That is the
-    // row-versus-column mistake, and it deserves its own message.
+    // row-versus-column mistake.
     const traced = traceNames.find((nm) => isArr2(ref.trace?.[nm]));
     if (traced && valuesEqual(got.trace?.[traced], ref.trace[traced], 1e-9)) {
       return {
@@ -662,7 +660,7 @@ function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
 /**
  * The failure card shows the student's computed table as a triangle. The
- * reference is never rendered; this is their evidence, not an answer key.
+ * reference is never rendered.
  */
 export function renderTriangle(table, x) {
   if (!isArr2(table)) return null;

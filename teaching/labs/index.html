@@ -106,10 +106,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     --cl-plan-bg: #ffffff12;   --cl-plan-fg: #A9A6A0;
   }
 
-  /* `cl-` throughout is this page's private prefix, for Computational Labs. It
-     is deliberately not `lab-`, which is what engine/lab.css uses for the lab
-     pages; the two namespaces would otherwise read as one. No reader ever sees
-     either. Renamed from `al-` ("applet library") on 2026-07-30. */
+  /* `cl-` throughout is this page's private prefix, for Computational Labs.
+     The lab pages use `lab-`, in engine/lab.css. */
   .cl-library {
     /* Each brand sans weight is its own family name, as everywhere else on the
        site, so weight is selected by family and font-weight stays normal. The
@@ -221,10 +219,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     transform: translateY(-4px);
     box-shadow: var(--cl-card-shadow-hover);
   }
-  /* One row, laid out by flex. The course pill and the status pill used to be
-     absolutely positioned at opposite corners, which let a long course name run
-     underneath the status pill on a narrow card. Now the course pill shrinks and
-     ellipsises instead, and the status pill can never be overlapped. */
+  /* One row, laid out by flex. The course pill shrinks and ellipsises, so a
+     long course name never overlaps the status pill. */
   .cl-banner {
     display: flex;
     align-items: center;
@@ -254,9 +250,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     letter-spacing: .07em;
     text-transform: uppercase;
   }
-  /* Only the unfinished cards carry a status pill. A ready card needs none:
-     drafts are hidden unless you ask for them, so "Ready" would sit on every
-     visible card saying nothing. */
+  /* Only the unfinished cards carry a status pill. Drafts are hidden unless
+     you ask for them. */
   .cl-status {
     margin-left: auto;
     flex: none;
@@ -299,10 +294,9 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     color: var(--cl-soft);
     text-wrap: pretty;
   }
-  /* Cards in a row are stretched to the tallest, and the slack used to go to
-     the blurb, which opened a gap between the blurb and the libraries. Sending
-     it here instead keeps the text block together and pins the button to the
-     bottom edge of every card in the row. */
+  /* Cards in a row are stretched to the tallest. The slack goes here, which
+     keeps the text block together and pins the button to the bottom edge of
+     every card in the row. */
   .cl-actions { margin-top: auto; padding-top: 12px; display: flex; }
   .cl-start {
     flex: 1;
@@ -534,9 +528,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       return '<span class="cl-lib">' + lib + '</span>';
     }).join('');
 
-    // Every card leads to a guided lab. There is deliberately no direct link to
-    // the notebook and no source download: the lab is what opens the notebook,
-    // and a way around it would be a way around the puzzles.
+    // Every card leads to a guided lab. No direct notebook link and no source
+    // download: the lab is what opens the notebook.
     var actions = a.ready
       ? '<a class="cl-start" href="' + a.labUrl + '">Start the guided lab</a>'
       : '<span class="cl-start is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
