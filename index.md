@@ -23,7 +23,7 @@ description: Assistant Instructional Professor at the University of Chicago. Tea
 | <i class="fa-solid fa-signs-post"></i> | 5734 S. University Ave|
 |        |Chicago, IL - 60637|
 |        |    |
-| <i class="fa-solid fa-file-pdf"></i> | [CV (Autumn 2025)](assets/CV.pdf) |
+| <i class="fa-solid fa-file-lines"></i> | [Curriculum Vitae]({{ '/assets/CV/' | relative_url }}) |
 
 </div>
 <div class="shield">
