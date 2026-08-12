@@ -1259,5 +1259,411 @@ body.style-variant-a .papers {
 }
 
 
+/* ========================================================================
+   CURRICULUM VITAE - the document served at /assets/CV/
+
+   One entry is the .entry grid: a right-aligned .when column, then a .what
+   column carrying the accent rule as its left border.
+
+       2012-2018 | Ph.D. in Mathematics, ...      Chicago, IL
+                 | - Advisor ...
+
+   Colours come from the theme tokens above, so the document follows the
+   dark mode toggle. Only the link colour and the hairline rule are local.
+   ======================================================================== */
+
+.cv {
+	--cv-link: #04657d;
+	--cv-rule: rgba(0, 0, 0, 0.14);
+	--cv-fine: var(--color-muted);
+
+	max-width: 54rem;
+	margin: 0 auto;
+	font-family: $heading-font; // brand serif; has italic, semibold and bold
+	font-size: 1.075rem;
+	line-height: 1.42;
+	color: var(--color-text);
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern" 1, "liga" 1;
+
+	html[data-theme="dark"] & {
+		--cv-link: #6fcfe0;
+		--cv-rule: rgba(255, 255, 255, 0.16);
+	}
+
+	// The site sets b/strong and a to named UChicago sans faces; inside the
+	// document they stay in the serif.
+	b,
+	strong {
+		font-family: inherit;
+		font-weight: 700;
+	}
+
+	a {
+		font-family: inherit;
+		font-weight: inherit;
+		color: var(--cv-link);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	// .inst is an institution name, .ttl a thesis or project title.
+	i,
+	em,
+	.inst,
+	.ttl {
+		font-style: italic;
+	}
+
+	.sc { // surnames
+		font-variant-caps: small-caps;
+		letter-spacing: 0.02em;
+	}
+
+	.mono {
+		font-family: $code-font;
+		font-size: 0.82em;
+	}
+
+	/* ---- masthead ---- */
+
+	.cv-name {
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: clamp(1.9rem, 7.5vw, 2.9rem); // cannot overrun a phone
+		line-height: 1.05;
+		letter-spacing: 0.01em;
+		color: var(--accent);
+
+		.surname {
+			font-weight: 600;
+			font-variant-caps: small-caps;
+			letter-spacing: 0.045em;
+		}
+	}
+
+	.contact {
+		display: flex;
+		justify-content: space-between;
+		gap: 2.4em;
+		margin: 1.5em 0 0;
+		font-size: 0.95rem;
+
+		.addr {
+			line-height: 1.5;
+		}
+	}
+
+	.reach {
+		min-width: 17rem;
+	}
+
+	.rrow {
+		display: flex;
+		justify-content: space-between;
+		gap: 1.2em;
+		line-height: 1.55;
+	}
+
+	.rl {
+		color: var(--color-muted);
+		font-variant-caps: small-caps;
+		letter-spacing: 0.07em;
+		font-size: 0.82rem;
+	}
+
+	.rv {
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	/* ---- section index and page actions, screen only ---- */
+
+	.cv-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.6em 1.4em;
+		margin: 1.6em 0 0;
+		padding-top: 1em;
+		border-top: 1px solid var(--cv-rule);
+
+		.jump {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.15em 1.1em;
+			font-size: 0.86rem;
+			line-height: 1.6;
+		}
+
+		// margin-left holds the actions against the right edge even after
+		// the jump list wraps them onto their own row.
+		.actions {
+			display: flex;
+			gap: 1.1em;
+			margin-left: auto;
+			font-size: 0.86rem;
+			white-space: nowrap;
+
+			button {
+				font: inherit;
+				color: var(--cv-link);
+				background: none;
+				border: 0;
+				padding: 0;
+				cursor: pointer;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	/* ---- section headings ---- */
+
+	h2.section {
+		color: var(--accent);
+		font-family: inherit;
+		font-weight: 600;
+		font-variant-caps: small-caps;
+		font-size: 1.42rem;
+		letter-spacing: 0.015em;
+		margin: 1.55em 0 0.35em;
+		padding-bottom: 0.1em;
+		border-bottom: 1px solid var(--accent);
+		scroll-margin-top: 6rem; // clears the sticky header on #jumps
+
+		&:first-of-type {
+			margin-top: 1.2em;
+		}
+	}
+
+	h3.subsec {
+		color: var(--accent);
+		font-family: inherit;
+		font-weight: 600;
+		font-variant-caps: small-caps;
+		font-size: 1.07rem;
+		letter-spacing: 0.06em;
+		text-align: left;
+		margin: 1em 0 0.15em;
+	}
+
+	/* ---- entries ---- */
+
+	.entry {
+		display: grid;
+		grid-template-columns: 6.4em 1fr;
+		margin-top: 0.62em;
+
+		> .when {
+			text-align: right;
+			padding-right: 0.85em;
+			padding-top: 0.06em;
+			color: var(--color-muted);
+			font-size: 0.88rem;
+			line-height: 1.4;
+		}
+
+		> .what {
+			border-left: 1px solid var(--accent);
+			padding-left: 0.92em;
+			min-width: 0;
+		}
+	}
+
+	.headline {
+		display: flex;
+		justify-content: space-between;
+		gap: 1.1em;
+		align-items: baseline;
+
+		.loc {
+			color: var(--color-muted);
+			font-size: 0.88rem;
+			white-space: nowrap;
+			flex: none;
+		}
+	}
+
+	.note {
+		margin-top: 0.08em;
+	}
+
+	.fine {
+		font-size: 0.85em;
+		color: var(--cv-fine);
+		margin-top: 0.12em;
+	}
+
+	.what {
+		ul {
+			margin: 0.18em 0 0;
+			padding-left: 1.05em;
+		}
+
+		li {
+			margin: 0.14em 0;
+			padding-left: 0.08em;
+		}
+
+		ul ul {
+			margin: 0.1em 0 0.25em;
+		}
+	}
+
+	.supv {
+		margin-top: 0.18em;
+	}
+
+	/* ---- prose blocks ---- */
+
+	.prose {
+		margin: 0.5em 0 0;
+	}
+
+	.pub-list {
+		list-style: none;
+		margin: 0.4em 0 0;
+		padding: 0;
+
+		> li {
+			margin: 0.7em 0 0;
+		}
+	}
+
+	.abstract {
+		margin: 0.28em 0 0;
+		color: var(--cv-fine);
+		line-height: 1.45;
+	}
+
+	// Narrow screens: the date sits above its entry rather than beside it.
+	@media (max-width: 40rem) {
+		font-size: 1rem;
+
+		.contact {
+			flex-direction: column;
+			gap: 1em;
+		}
+
+		.reach {
+			min-width: 0;
+		}
+
+		// The web address is the longest unbreakable value; let it wrap
+		// rather than push the document wider than the screen.
+		.rv {
+			white-space: normal;
+			overflow-wrap: anywhere;
+		}
+
+		.entry {
+			grid-template-columns: 1fr;
+			margin-top: 1em;
+
+			> .when {
+				text-align: left;
+				padding: 0 0 0.1em 0.92em;
+				font-variant-caps: small-caps;
+				letter-spacing: 0.05em;
+			}
+		}
+
+		.headline {
+			display: block;
+
+			.loc {
+				display: block;
+				white-space: normal;
+			}
+		}
+	}
+}
+
+/* Printing the CV drops the site chrome and the on-screen toolbar so the
+   document runs edge to edge. Scoped to body.page-cv, because every other
+   page still wants its header and footer on paper. The @page margin cannot
+   be scoped that way, so it applies site-wide; the specification how-to
+   guide sets its own and still wins, being a later rule. */
+@media print {
+	@page {
+		margin: 0.72in 0.72in 0.62in;
+	}
+
+	body.page-cv {
+		background: #fff !important;
+		color: #211e1a !important;
+
+		.site-header,
+		.site-footer,
+		.cv-toolbar {
+			display: none !important;
+		}
+
+		.main-wrapper {
+			max-width: none;
+			margin: 0;
+			padding: 0;
+			background: #fff !important;
+			border-radius: 0;
+			box-shadow: none;
+		}
+
+		.cv {
+			--cv-link: #04657d;
+			--cv-rule: rgba(0, 0, 0, 0.14);
+			--cv-fine: #48433d;
+
+			max-width: none;
+			color: #211e1a;
+			font-size: 10.5pt;
+
+			// Dark mode must not follow the document onto paper.
+			h2.section,
+			h3.subsec,
+			.cv-name {
+				color: #7d0000;
+			}
+
+			.entry > .what {
+				border-left-color: #7d0000;
+			}
+
+			.entry > .when,
+			.headline .loc,
+			.rl {
+				color: #6f6a64;
+			}
+
+			h2.section,
+			h3.subsec,
+			.headline {
+				break-after: avoid;
+			}
+
+			.entry > .what > ul > li,
+			.pub-list > li {
+				break-inside: avoid;
+			}
+
+			.prose,
+			.abstract {
+				orphans: 3;
+				widows: 3;
+			}
+		}
+	}
+}
+
+
 
 
