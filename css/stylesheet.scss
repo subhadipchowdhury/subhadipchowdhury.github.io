@@ -1383,46 +1383,78 @@ body.style-variant-a .papers {
 		white-space: nowrap;
 	}
 
-	/* ---- section index and page actions, screen only ---- */
+	/* ---- sticky section rail ----
 
-	.cv-toolbar {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 0.6em 1.4em;
-		margin: 1.6em 0 0;
-		padding-top: 1em;
-		border-top: 1px solid var(--cv-rule);
+	   Hidden by default and switched on further down, at the width where
+	   the two columns actually fit. ---- */
 
-		.jump {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.15em 1.1em;
-			font-size: 0.86rem;
-			line-height: 1.6;
+	.cv-rail {
+		display: none;
+		position: sticky;
+		top: 7rem; // clears the sticky site header
+		max-height: calc(100vh - 9rem);
+		overflow-y: auto;
+		padding-right: 0.5rem;
+		font-size: 0.82rem;
+		line-height: 1.3;
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			border-left: 1px solid var(--cv-rule);
 		}
 
-		// margin-left holds the actions against the right edge even after
-		// the jump list wraps them onto their own row.
-		.actions {
-			display: flex;
-			gap: 1.1em;
-			margin-left: auto;
-			font-size: 0.86rem;
-			white-space: nowrap;
+		li {
+			margin: 0;
+			padding: 0;
+		}
 
-			button {
-				font: inherit;
-				color: var(--cv-link);
-				background: none;
-				border: 0;
-				padding: 0;
-				cursor: pointer;
+		a {
+			display: block;
+			padding: 0.34em 0 0.34em 0.9em;
+			// Sits over the ul's border so the current marker replaces it
+			// rather than doubling it.
+			margin-left: -1px;
+			border-left: 1px solid transparent;
+			color: var(--color-muted);
+			text-decoration: none;
 
-				&:hover {
-					text-decoration: underline;
-				}
+			&:hover {
+				color: var(--accent);
+				border-left-color: var(--cv-rule);
+				text-decoration: none;
+			}
+
+			&.is-current {
+				color: var(--accent);
+				border-left-color: var(--accent);
+			}
+		}
+	}
+
+	/* ---- page actions, screen only ---- */
+
+	.cv-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 1.1em;
+		margin: 1.1em 0 0;
+		padding-top: 0.9em;
+		border-top: 1px solid var(--cv-rule);
+		font-size: 0.86rem;
+		white-space: nowrap;
+
+		button {
+			font: inherit;
+			color: var(--cv-link);
+			background: none;
+			border: 0;
+			padding: 0;
+			cursor: pointer;
+
+			&:hover {
+				text-decoration: underline;
 			}
 		}
 	}
@@ -1589,6 +1621,29 @@ body.style-variant-a .papers {
 	}
 }
 
+// The rail only appears where both columns fit: 11.5rem of rail, a 2.5rem
+// gutter, 54rem of document and the card's padding. Below that the CV stays
+// the single centred column it is on every other width.
+@media (min-width: 72rem) {
+	body.page-cv .main-wrapper {
+		max-width: 1180px;
+	}
+
+	.cv {
+		display: grid;
+		grid-template-columns: 11.5rem minmax(0, 54rem);
+		justify-content: center;
+		align-items: start;
+		gap: 0 2.5rem;
+		max-width: none;
+		margin: 0;
+
+		.cv-rail {
+			display: block;
+		}
+	}
+}
+
 /* Printing the CV drops the site chrome and the on-screen toolbar so the
    document runs edge to edge. Scoped to body.page-cv, because every other
    page still wants its header and footer on paper. The @page margin cannot
@@ -1605,7 +1660,8 @@ body.style-variant-a .papers {
 
 		.site-header,
 		.site-footer,
-		.cv-toolbar {
+		.cv-rail,
+		.cv-actions {
 			display: none !important;
 		}
 
@@ -1623,7 +1679,10 @@ body.style-variant-a .papers {
 			--cv-rule: rgba(0, 0, 0, 0.14);
 			--cv-fine: #48433d;
 
+			// Undo the two-column grid: on paper there is no rail.
+			display: block;
 			max-width: none;
+			margin: 0;
 			color: #211e1a;
 			font-size: 10.5pt;
 

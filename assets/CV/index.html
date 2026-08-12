@@ -5,11 +5,34 @@ description: Curriculum vitae of Subhadip Chowdhury, Assistant Instructional Pro
 ---
 
 {% comment %}
-  Entry markup is .entry > (.when + .what). The styling lives in the
+  Two columns: a sticky .cv-rail and the document in .cv-main. Entry markup
+  inside the document is .entry > (.when + .what). The styling lives in the
   CURRICULUM VITAE section of css/stylesheet.scss.
 {% endcomment %}
 
 <article class="cv">
+
+<nav class="cv-rail" aria-label="Sections of this curriculum vitae">
+  <ul>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#appointments">Appointments</a></li>
+    <li><a href="#leadership">Program leadership</a></li>
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#mentoring">Mentoring</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#development">Prof. development</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#pedagogical-presentations">Pedagogical talks</a></li>
+    <li><a href="#research-presentations">Research talks</a></li>
+    <li><a href="#expository">Expository talks</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<div class="cv-main">
 
 <h1 class="cv-name">Subhadip <span class="surname">Chowdhury</span></h1>
 
@@ -28,29 +51,10 @@ description: Curriculum vitae of Subhadip Chowdhury, Assistant Instructional Pro
   </div>
 </div>
 
-<nav class="cv-toolbar" aria-label="Curriculum vitae sections">
-  <div class="jump">
-    <a href="#education">Education</a>
-    <a href="#appointments">Appointments</a>
-    <a href="#leadership">Leadership</a>
-    <a href="#curriculum">Curriculum</a>
-    <a href="#mentoring">Mentoring</a>
-    <a href="#service">Service</a>
-    <a href="#membership">Membership</a>
-    <a href="#development">Development</a>
-    <a href="#interests">Interests</a>
-    <a href="#publications">Publications</a>
-    <a href="#pedagogical-presentations">Pedagogical talks</a>
-    <a href="#research-presentations">Research talks</a>
-    <a href="#expository">Expository talks</a>
-    <a href="#awards">Awards</a>
-    <a href="#skills">Skills</a>
-  </div>
-  <div class="actions">
-    <a href="{{ '/assets/CV/CV.pdf' | relative_url }}">Download PDF</a>
-    <button type="button" onclick="window.print()">Print</button>
-  </div>
-</nav>
+<div class="cv-actions">
+  <a href="{{ '/assets/CV/CV.pdf' | relative_url }}">Download PDF</a>
+  <button type="button" onclick="window.print()">Print</button>
+</div>
 
 <h2 class="section" id="education">Education</h2>
 <div class="entry"><div class="when">2012–2018</div><div class="what">
@@ -630,4 +634,66 @@ description: Curriculum vitae of Subhadip Chowdhury, Assistant Instructional Pro
   <div class="headline"><span>English (fluent); Bengali (fluent); Hindi (fluent)</span></div>
 </div></div>
 
+</div>
 </article>
+
+<script>
+	// Marks the rail link for whichever section is currently being read: the
+	// last heading whose top has passed the trigger line below the sticky site
+	// header. The rail is hidden below the layout's breakpoint, so the class
+	// this sets simply has nothing to style there.
+	(function () {
+		var links = {};
+		document.querySelectorAll('.cv-rail a[href^="#"]').forEach(function (a) {
+			links[a.getAttribute('href').slice(1)] = a;
+		});
+
+		var headings = Array.prototype.filter.call(
+			document.querySelectorAll('.cv-main h2.section[id]'),
+			function (h) { return links[h.id]; }
+		);
+		if (!headings.length) {
+			return;
+		}
+
+		var current = null;
+		var queued = false;
+
+		function paint() {
+			queued = false;
+
+			var trigger = 7 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+			var id = headings[0].id;
+			for (var i = 0; i < headings.length; i++) {
+				if (headings[i].getBoundingClientRect().top > trigger) break;
+				id = headings[i].id;
+			}
+
+			// The final section can be too short to ever reach the trigger, so
+			// hitting the bottom of the page always selects it. Measure against
+			// the document's scroll height, not the body box, which excludes
+			// the wrapper's bottom margin and would fire this early.
+			var bottom = document.documentElement.scrollHeight - window.innerHeight;
+			if (window.scrollY >= bottom - 2) {
+				id = headings[headings.length - 1].id;
+			}
+
+			if (id !== current) {
+				if (current) links[current].classList.remove('is-current');
+				links[id].classList.add('is-current');
+				current = id;
+			}
+		}
+
+		function schedule() {
+			if (!queued) {
+				queued = true;
+				requestAnimationFrame(paint);
+			}
+		}
+
+		addEventListener('scroll', schedule, { passive: true });
+		addEventListener('resize', schedule, { passive: true });
+		paint();
+	})();
+</script>
