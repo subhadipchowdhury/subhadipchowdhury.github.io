@@ -236,6 +236,11 @@ robots: false
     color: var(--color-muted);
   }
 
+  /* Provenance for a printed copy, which has no site footer to carry it. */
+  .spec-print-source {
+    display: none;
+  }
+
   /* Steps reuse the site's .section-block rule as their divider. */
   .spec-step {
     padding-bottom: 1.4rem;
@@ -449,14 +454,72 @@ robots: false
     }
   }
 
+  /* The printed page is a standalone handout, so the site chrome goes and the
+     contents rail stays. */
   @media print {
-    .spec-toc,
-    .spec-copy {
+    @page {
+      margin: 0.8in 0.85in;
+    }
+
+    /* The card is gone below, so keep the page background from printing. */
+    html,
+    body {
+      background: #fff;
+    }
+
+    .site-header,
+    .site-footer {
       display: none;
+    }
+
+    /* Flatten the card so the page background does not print as a grey slab. */
+    .main-wrapper {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .spec-shell {
       grid-template-columns: 1fr;
+    }
+
+    .spec-toc {
+      position: static;
+      max-height: none;
+      margin-bottom: 1.7rem;
+      padding: 0 0 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Everything that only means something to a cursor. */
+    .spec-copy,
+    .spec-check,
+    .spec-check-gap,
+    .spec-progress {
+      display: none;
+    }
+
+    /* Keep a kicker with its heading and a heading with its first paragraph. */
+    .spec-step__kicker,
+    .spec-step h2,
+    .spec-panel h2 {
+      break-after: avoid;
+    }
+
+    .spec-prompt,
+    .spec-compare__pair {
+      break-inside: avoid;
+    }
+
+    .spec-print-source {
+      display: block;
+      margin: 0.35rem 0 0;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--color-muted);
     }
   }
 </style>
@@ -532,6 +595,7 @@ robots: false
         <p class="spec-lede__byline">Subhadip Chowdhury, Department of Mathematics</p>
         <p class="spec-lede__text">A specification is a standing document that states how you build course material, written in enough detail that an AI model can follow it. You write a first version in an afternoon, keep it in a project workspace, and correct it as you use it. This guide assumes no prior experience with these tools.</p>
         <p class="spec-lede__disclaimer">This page was drafted with <a href="https://claude.ai">Claude</a> and revised by me before posting.</p>
+        <p class="spec-print-source">The web version at subhadipchowdhury.github.io/pedagogy/specification/how-to-guide/ is the copy I keep current, and there each prompt is a copy-to-clipboard block. This PDF is a snapshot of {{ site.time | date: "%B %-d, %Y" }} and won&rsquo;t be updated. Licensed CC BY-NC-SA 4.0.</p>
       </div>
 
       <section class="section-block spec-step" id="s1" data-sec="s1">
