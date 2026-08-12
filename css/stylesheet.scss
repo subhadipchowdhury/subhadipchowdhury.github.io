@@ -1385,8 +1385,9 @@ body.style-variant-a .papers {
 
 	/* ---- sticky section rail ----
 
-	   Hidden by default and switched on further down, at the width where
-	   the two columns actually fit. ---- */
+	   Entries carry the section headings verbatim, so several wrap. Hidden
+	   by default and switched on further down, at the width where the two
+	   columns actually fit. ---- */
 
 	.cv-rail {
 		display: none;
@@ -1412,7 +1413,9 @@ body.style-variant-a .papers {
 
 		a {
 			display: block;
-			padding: 0.34em 0 0.34em 0.9em;
+			// Generous vertical padding so the entries that wrap to two or
+			// three lines still read as separate items.
+			padding: 0.45em 0 0.45em 0.9em;
 			// Sits over the ul's border so the current marker replaces it
 			// rather than doubling it.
 			margin-left: -1px;
@@ -1621,17 +1624,19 @@ body.style-variant-a .papers {
 	}
 }
 
-// The rail only appears where both columns fit: 11.5rem of rail, a 2.5rem
-// gutter, 54rem of document and the card's padding. Below that the CV stays
-// the single centred column it is on every other width.
-@media (min-width: 72rem) {
+// The rail only appears where both columns fit: 12.5rem of rail, a 2.5rem
+// gutter, 54rem of document and the card's padding. The breakpoint clears the
+// widened card itself, so it never grows to touch the window edges the way it
+// would between the two figures. Below this the CV stays the single centred
+// column it is on every other width.
+@media (min-width: 76rem) {
 	body.page-cv .main-wrapper {
 		max-width: 1180px;
 	}
 
 	.cv {
 		display: grid;
-		grid-template-columns: 11.5rem minmax(0, 54rem);
+		grid-template-columns: 12.5rem minmax(0, 54rem);
 		justify-content: center;
 		align-items: start;
 		gap: 0 2.5rem;
