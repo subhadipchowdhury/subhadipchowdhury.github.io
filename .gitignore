@@ -2,5 +2,7 @@
 assets/.DS_Store
 teaching/.DS_Store.DS_Store
 CLAUDE.md
+HANDOFF.md
 .venv/
 __pycache__/
+tools/
