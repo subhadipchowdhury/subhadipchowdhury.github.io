@@ -1,0 +1,500 @@
+\documentclass[worksheet]{workbook}
+
+\solutionfalse
+% \solutiontrue  % uncomment to reveal solutions
+
+\assignmenttitle{Practice Worksheet 3: Concept Maps}
+% \assignmenttitle{Solutions for Practice Worksheet 2}
+\assignmentcourse{\textsc{Math 163}}
+\assignmentsemester{Spring 2026}
+\assignmentduedate{Math 163}
+\instructorname{Prof.\ Chowdhury}
+
+\begin{document}
+
+\maketitle
+
+The next page displays fifteen major concepts from chapter 2 as labeled nodes, connected by numbered arrows.  Each arrow represents a mathematical relationship: a \textbf{solid arrow} means the source concept implies or establishes the target; a \textbf{dashed arrow} marks a relationship that \alert{fails}; a \textbf{double-headed arrow} means the two concepts are equivalent.  Your task: \textit{for each numbered arrow, write a one-sentence description of the relationship it represents.}  Name the relevant theorem or give a precise mathematical reason.
+
+\bigskip
+
+\noindent{\large\bfseries\color{maroon} Concept Inventory}
+
+\medskip
+\small
+
+\begin{enumerate}[label=\textbf{\Alph*.}, leftmargin=2.5em, itemsep=1pt]
+
+\item \textbf{Infinite Series $\sum a_n$.}  An expression $a_1 + a_2 + a_3 + \cdots$ whose convergence is defined via its partial sums.
+
+\item \textbf{Partial Sums $\{s_n\}$.}  $s_n = a_1 + a_2 + \cdots + a_n$. The series converges iff $\{s_n\}$ converges.
+
+\item \textbf{Convergent Series.}  The series $\sum a_n$ converges when $\{s_n\}$ has a finite limit.
+
+\item \textbf{Divergent Series.}  The series $\sum a_n$ diverges when $\{s_n\}$ fails to converge.
+
+\item \textbf{Divergence Test.}  If $a_n \not\to 0$, then $\sum a_n$ diverges.  The converse is false ($\sum 1/n$).
+
+\item \textbf{Geometric Series $\sum ar^n$.}  Converges iff $|r| < 1$, sum $= a/(1-r)$.  Closed-form partial sums: $s_n = a(1-r^n)/(1-r)$.
+
+\item \textbf{Telescoping Series.}  $\sum (b_n - b_{n+1})$ converges iff $\{b_n\}$ converges, with sum $= b_1 - \lim b_n$.  Partial sums collapse.
+
+\item \textbf{$p$-Series $\sum 1/n^p$.}  Converges iff $p > 1$.  The boundary $p = 1$ is the harmonic series.  Proved via the integral test.
+
+\item \textbf{Nonneg Series $+$ MCT.}  If $a_n \geq 0$, the partial sums are increasing.  By the MCT, $\sum a_n$ converges iff $\{s_n\}$ is bounded.  Foundation for all nonneg tests.
+
+\item \textbf{Comparison Tests.}  Direct: $0 \leq a_n \leq cb_n$ eventually and $\sum b_n$ converges $\implies$ $\sum a_n$ converges.  Limit: $\lim a_n/b_n \in (0, \infty) \implies$ same behavior.
+
+\item \textbf{Integral Test.}  If $f$ is positive, continuous, decreasing, and $f(n) = a_n$, then $\sum a_n$ and $\int_1^\infty f$ converge or diverge together.
+
+\item \textbf{Dirichlet's Test.}  If $\{a_n\}$ decreases to $0$ and the partial sums $B_n = \sum_{k=1}^n b_k$ are bounded, then $\sum a_n b_n$ converges.  Alternating series test: special case $b_n = (-1)^n$.  Proof: summation by parts.
+
+\item \textbf{Absolute Convergence.}  $\sum a_n$ converges absolutely if $\sum |a_n|$ converges.  Absolute convergence implies convergence (via Cauchy criterion).
+
+\item \textbf{Conditional Convergence.}  $\sum a_n$ converges conditionally if it converges but $\sum |a_n|$ diverges.  Depends on cancellation.
+
+\item \textbf{Ratio and Root Tests.}  $L = \lim |a_{n+1}/a_n|$ or $L = \limsup |a_n|^{1/n}$: if $L < 1$, absolutely convergent; if $L > 1$, divergent; if $L = 1$, inconclusive.  Both compare with geometric series.
+
+\end{enumerate}
+
+\normalsize
+
+\medskip
+
+\noindent\textbf{Other tools and benchmarks:} Cauchy criterion for series; harmonic series $\sum 1/n$ (diverges despite $a_n \to 0$); alternating harmonic $\sum (-1)^{n+1}/n$ (conditionally convergent, sum $= \ln 2$); summation by parts (discrete integration by parts, key tool for Dirichlet's test); $\sum \sin(n\theta)/n$ (non-alternating Dirichlet example).
+
+
+% ============================================================
+% PAGE 2: CONCEPT MAP DIAGRAM
+% ============================================================
+\newpage
+\begin{center}
+{\large\bfseries\color{maroon} Concept Map}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,
+  concept/.style={rectangle, draw=darkgray, rounded corners=2pt, minimum width=2.2cm, minimum height=0.6cm, align=center, font=\footnotesize, inner sep=3pt, fill=white, line width=0.5pt},
+  highlight/.style={concept, fill=lightblue!15},
+  edgenum/.style={circle, fill=white, draw=darkgray, inner sep=0pt, minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
+  arr/.style={->, thick, darkgray},
+  fail/.style={->, thick, dashed, red!70!black},
+  nlabel/.style={font=\tiny\bfseries, text=darkgray, inner sep=1pt}
+]
+
+% ===== ROW 0: Definition =====
+\node[concept] (A) at (1.5, 0)
+  {Infinite Series\\[-1pt]$\sum a_n$};
+
+% ===== ROW 1: Partial sums, Divergence test =====
+\node[highlight] (B) at (-1.5, -2)
+  {Partial Sums\\[-1pt]$\{s_n\}$};
+\node[concept] (E) at (6, -2)
+  {Divergence\\[-1pt]Test};
+
+% ===== ROW 2: Benchmarks with closed-form sums =====
+\node[concept] (F) at (-1, -3.8)
+  {Geometric\\[-1pt]Series};
+\node[concept] (G) at (3, -3.8)
+  {Telescoping\\[-1pt]Series};
+
+% ===== ROW 3: Convergent / Divergent =====
+\node[concept, fill=lightgreen!12] (C) at (-4, -5.8)
+  {Convergent\\[-1pt]Series};
+\node[concept] (D) at (7, -5.8)
+  {Divergent\\[-1pt]Series};
+
+% ===== ROW 4: Main test families =====
+\node[concept] (I) at (-6.5, -8.5)
+  {Nonneg Series\\[-1pt]$+$ MCT};
+\node[concept] (L) at (-2, -8.5)
+  {Dirichlet's\\[-1pt]Test};
+\node[concept] (M) at (2.5, -8.5)
+  {Absolute\\[-1pt]Convergence};
+\node[concept] (O) at (7, -8.5)
+  {Ratio and\\[-1pt]Root Tests};
+
+% ===== ROW 5: Bottom tools =====
+\node[concept] (J) at (-7.5, -11)
+  {Comparison\\[-1pt]Tests};
+\node[concept] (K) at (-4, -11)
+  {Integral\\[-1pt]Test};
+\node[concept] (H) at (-0.5, -11)
+  {$p$-Series\\[-1pt]$\sum 1/n^p$};
+\node[concept] (N) at (4, -11)
+  {Conditional\\[-1pt]Convergence};
+
+% ===== NODE LETTER LABELS =====
+% Inventory letters: A=A, B=B, C=C, D=D, E=E, F=F, G(telescoping)=G, 
+% H(p-series)=H, I(nonneg)=I, J(comparison)=J, K(integral)=K,
+% L(Dirichlet)=L, M(absolute)=M, N(conditional)=N, O(ratio/root)=O
+\node[nlabel, anchor=south east] at (A.north west) {A};
+\node[nlabel, anchor=south east] at (B.north west) {B};
+\node[nlabel, anchor=south east] at (C.north west) {C};
+\node[nlabel, anchor=south east] at (D.north west) {D};
+\node[nlabel, anchor=south east] at (E.north west) {E};
+\node[nlabel, anchor=south east] at (F.north west) {F};
+\node[nlabel, anchor=south east] at (G.north west) {G};
+\node[nlabel, anchor=south east] at (H.north west) {H};
+\node[nlabel, anchor=south east] at (I.north west) {I};
+\node[nlabel, anchor=south east] at (J.north west) {J};
+\node[nlabel, anchor=south east] at (K.north west) {K};
+\node[nlabel, anchor=south east] at (L.north west) {L};
+\node[nlabel, anchor=south east] at (M.north west) {M};
+\node[nlabel, anchor=south east] at (N.north west) {N};
+\node[nlabel, anchor=south east] at (O.north west) {O};
+
+
+% ================================================================
+%  EDGES — 16 numbered, unlabeled
+% ================================================================
+
+% 1: A → B  (convergence defined via partial sums)
+\draw[arr] (A) -- (B)
+  node[edgenum, pos=0.45, above left=-2pt] {1};
+
+% 2: B → C  (partial sums converge → series converges)
+\draw[arr] (B.south west) -- (C.north)
+  node[edgenum, pos=0.5, left=2pt] {2};
+
+% 3: B → D  (partial sums diverge → series diverges)
+\draw[arr] (B.east) to[out=-10, in=150]
+  node[edgenum, pos=0.3, above=3pt] {3} (D.north west);
+
+% 4: E → D  (divergence test: a_n ≠→ 0 forces divergence)
+\draw[arr] (E) -- (D)
+  node[edgenum, midway, right=2pt] {4};
+
+% 5: E ⇸ C  (a_n → 0 necessary but NOT sufficient)
+%   Route: from E going left-and-down, ending with × above the C/D row
+\draw[fail] (E.south west) -- (C.north east)
+  node[edgenum, pos=0.2, above left=-1pt] {5}
+  node[at end, font=\normalsize\bfseries, red!70!black] {$\boldsymbol{\times}$};
+
+% 6: F → C  (geometric: converges iff |r| < 1)
+\draw[arr] (F.south west) -- (C.north)
+  node[edgenum, pos=0.5, above left=-2pt] {6};
+
+% 7: G → C  (telescoping: partial sums collapse)
+\draw[arr] (G.south west) to[out=210, in=30]
+  node[edgenum, pos=0.45, above=2pt] {7} (C.east);
+
+% 8: I → C  (MCT: bounded nonneg partial sums → convergence)
+\draw[arr] (I.north) to[out=80, in=220]
+  node[edgenum, pos=0.5, left=2pt] {8} (C.south west);
+
+% 9: I → J  (comparison tests flow from MCT)
+\draw[arr] (I.south) -- (J.north)
+  node[edgenum, pos=0.45, left=2pt] {9};
+
+% 10: I → K  (integral test flows from MCT)
+\draw[arr] (I.south east) -- (K.north)
+  node[edgenum, pos=0.45, right=2pt] {10};
+
+% 11: K → H  (integral test determines p-series threshold)
+\draw[arr] (K) -- (H)
+  node[edgenum, midway, above] {11};
+
+% 12: L → C  (Dirichlet gives convergence; alternating as corollary)
+\draw[arr] (L.north) -- (C.south)
+  node[edgenum, pos=0.45, right=2pt] {12};
+
+% 13: M → C  (absolute convergence implies convergence)
+\draw[arr] (M.north west) to[out=135, in=325]
+  node[edgenum, pos=0.5, right=2pt] {13} (C.south east);
+
+% 14: C ⇸ M  (convergence does NOT imply absolute)
+\draw[fail] (C.south) -- (M.south west)
+  node[edgenum, pos=0.5, below left=-1pt] {14}
+  node[at end, font=\normalsize\bfseries, red!70!black] {$\boldsymbol{\times}$};
+
+% 15: O → M  (ratio/root establish absolute convergence)
+\draw[arr] (O.west) -- (M.east)
+  node[edgenum, midway, above] {15};
+
+% 16: L → N  (Dirichlet can produce conditional convergence)
+\draw[arr] (L.south east) to[out=-30, in=150]
+  node[edgenum, pos=0.45, above=2pt] {16} (N.north west);
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+
+\noindent{\bfseries Edge Labels.} For each numbered arrow, describe the relationship.  Name the theorem, state the key hypothesis, or explain what goes wrong.
+
+\smallskip
+\footnotesize
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.8em, leftmargin=2em]
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\columnbreak
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\end{enumerate}
+\end{multicols}
+
+\normalsize
+
+\noindent\textbf{Reflection.} Which single arrow represents the most important insight of this chapter?  Explain in one sentence.
+
+\vfill
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+% ============================================================
+%  CONCEPT MAP ACTIVITY — append at end of Chapter 3
+%  (before any \end{document} or next chapter)
+% ============================================================
+
+\newpage
+\begin{center}
+{\Large\bfseries\color{maroon} Sequences and Series of Functions}
+\end{center}
+
+\medskip
+
+\noindent The next page displays fourteen major concepts from chapter 3 as labeled nodes, connected by numbered arrows.  Each arrow represents a mathematical relationship: a \textbf{solid arrow} means the source concept implies or establishes the target; a \textbf{dashed red arrow} marks a relationship that \alert{fails}; a \textbf{double-headed arrow} means equivalence.  One arrow is drawn in \textbf{\textcolor{orange!80!black}{dotted orange}}: it marks a theorem whose hypotheses differ from those of its neighbors.  Your task: \textit{for each numbered arrow, write a one-sentence description of the relationship it represents.}  Name the relevant theorem, state the key hypotheses, or explain what goes wrong.
+
+\bigskip
+
+\noindent{\large\bfseries\color{maroon} Concept Inventory}
+
+\medskip
+\small
+
+\begin{enumerate}[label=\textbf{\Alph*.}, leftmargin=2.5em, itemsep=1pt]
+
+\item \textbf{Pointwise Convergence of $\{f_n\}$.}  For each $x$ and each $\epsilon > 0$, there exists $N$ (depending on \emph{both} $x$ and $\epsilon$) such that $n \geq N \implies |f_n(x) - f(x)| < \epsilon$.
+
+\item \textbf{Uniform Convergence of $\{f_n\}$.}  For each $\epsilon > 0$, there exists $N$ (depending only on $\epsilon$) such that $n \geq N \implies |f_n(x) - f(x)| < \epsilon$ for \emph{all} $x$ simultaneously.
+
+\item \textbf{Cauchy Criterion for Uniform Convergence.}  $\{f_n\}$ converges uniformly iff for each $\epsilon > 0$ there exists $N$ such that $|f_m(x) - f_n(x)| < \epsilon$ for all $m, n \geq N$ and all $x$.
+
+\item \textbf{Continuity of the Limit.}  Each $f_n$ continuous $+$ $f_n \unifto f$ $\implies$ $f$ continuous.
+
+\item \textbf{Integrability of the Limit.}  Each $f_n$ integrable $+$ $f_n \unifto f$ $\implies$ $\lim \int f_n = \int \lim f_n$.
+
+\item \textbf{Differentiability of the Limit \emph{(stronger hypotheses)}.}  $f_n \to f$ \textbf{pointwise} $+$ $f_n' \unifto g$ \textbf{uniformly} $\implies$ $f' = g$.  Note: it is the \emph{derivatives} that must converge uniformly, not $f_n$ itself.  Uniform convergence of $f_n$ alone does not suffice.
+
+\item \textbf{Dini's Theorem.}  $f_n \to f$ pointwise on $[a,b]$, convergence monotone, each $f_n$ and $f$ continuous $\implies$ $f_n \unifto f$.
+
+\item \textbf{Series of Functions $\sum f_n$.}  Convergence means the partial sums $S_N(x) = \sum_{k=1}^N f_k(x)$ converge.  A series of functions \emph{is} a sequence of functions (the partial sums).
+
+\item \textbf{Weierstrass $M$-test.}  If $|f_n(x)| \leq M_n$ for all $x$ and $\sum M_n < \infty$, then $\sum f_n$ converges uniformly and absolutely.
+
+\item \textbf{Power Series $\sum a_n(x-c)^n$.}  A series of functions whose $n$th term is a monomial of degree $n$ centered at $c$.
+
+\item \textbf{Radius of Convergence $R$.}  $\sum a_n(x-c)^n$ converges absolutely for $|x-c| < R$, diverges for $|x-c| > R$.  Endpoints checked separately.
+
+\item \textbf{Term-by-term Differentiation and Integration.}  Inside $(c-R, c+R)$, a power series can be differentiated and integrated term by term.  The derived series has the same radius $R$.
+
+\item \textbf{Taylor Series.}  $\sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!}(x-a)^n$.  The Taylor coefficients are forced by the differentiability of the power series: $a_n = f^{(n)}(c)/n!$.
+
+\item \textbf{Convergence of Taylor Series to $f$.}  The Taylor series converges to $f(x)$ iff the remainder $R_N(x) = f(x) - P_N(x) \to 0$.
+
+\end{enumerate}
+
+\normalsize
+
+\medskip
+
+\noindent\textbf{Key counterexamples:} $x^n$ on $[0,1]$ (continuous $\to$ discontinuous); $\sqrt{x^2+1/n^2}\unifto |x|$ (differentiable $\to$ non-differentiable); $(1/n)\sin(n^2 x)$ (derivatives diverge); $x/(1+n^2 x^2)\unifto 0$ ($ \ddx\lim \neq \lim \ddx$); $e^{-1/x^2}$ (smooth but not analytic).
+
+
+% ============================================================
+% PAGE 2: CONCEPT MAP DIAGRAM
+% ============================================================
+\newpage
+\begin{center}
+{\large\bfseries\color{maroon} Concept Map}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,
+  concept/.style={rectangle, draw=darkgray, rounded corners=2pt, minimum width=2.3cm, minimum height=0.65cm, align=center, font=\footnotesize, inner sep=3pt, fill=white, line width=0.5pt},
+  highlight/.style={concept, fill=lightblue!15},
+  edgenum/.style={circle, fill=white, draw=darkgray, inner sep=0pt, minimum size=12pt, font=\scriptsize\bfseries, line width=0.4pt},
+  arr/.style={->, thick, darkgray},
+  darr/.style={<->, thick, darkgray},
+  fail/.style={->, thick, dashed, red!70!black},
+  caution/.style={->, thick, orange!80!black, densely dotted},
+  nlabel/.style={font=\tiny\bfseries, text=darkgray, inner sep=1pt}
+]
+
+% ===== ROW 0: Types of convergence =====
+\node[concept] (A) at (-6, 0)
+  {Pointwise\\[-1pt]Convergence};
+\node[highlight] (B) at (1.5, 0)
+  {Uniform\\[-1pt]Convergence};
+\node[concept] (C) at (7.5, 0.8)
+  {Cauchy\\[-1pt]Criterion};
+
+% ===== ROW 1: Interchange theorems =====
+\node[concept] (D) at (-0.5, -3.3)
+  {Continuity\\[-1pt]of Limit};
+\node[concept] (E) at (3.5, -3.3)
+  {Integrability\\[-1pt]of Limit};
+\node[concept, draw=orange!80!black] (F) at (7.5, -3.3)
+  {Differentiability\\[-1pt]of Limit};
+
+% ===== ROW 2: Tools + bridge to series =====
+\node[concept] (G) at (-5.5, -6.3)
+  {Dini's\\[-1pt]Theorem};
+\node[concept, fill=lightgreen!12] (H) at (-1.5, -6.3)
+  {Series of Functions\\[-1pt]$\sum f_n$ via $\{S_N\}$};
+\node[concept] (I) at (4, -6.3)
+  {Weierstrass\\[-1pt]$M$-test};
+
+% ===== ROW 3: Power series =====
+\node[concept] (J) at (0, -9)
+  {Power Series\\[-1pt]$\sum a_n(x-c)^n$};
+\node[concept] (K) at (6, -9)
+  {Radius of\\[-1pt]Convergence $R$};
+
+% ===== ROW 4: Taylor =====
+\node[concept] (L) at (-2, -11.3)
+  {Term-by-term\\[-1pt]Diff.\ and Integ.};
+\node[concept] (M) at (3, -11.3)
+  {Taylor\\[-1pt]Series};
+\node[concept] (N) at (7.5, -11.3)
+  {Taylor series\\[-1pt]converges to $f$};
+
+
+% ===== NODE LETTER LABELS =====
+\foreach \nd/\lbl in {A/A, B/B, C/C, D/D, E/E, F/F, G/G, H/H, I/I, J/J, K/K, L/L, M/M, N/N} {
+  \node[nlabel, anchor=south east] at (\nd.north west) {\lbl};
+}
+
+
+% ================================================================
+%  EDGES — 15 numbered, unlabeled
+% ================================================================
+
+% 1: B → A  (uniform implies pointwise)
+\draw[arr] (B) -- (A)
+  node[edgenum, midway, above] {1};
+
+% 2: A ⇸ D/E/F  (pointwise does NOT preserve properties)
+\draw[fail] (A.south) -- (D.west)
+  node[edgenum, pos=0.3, left=2pt] {2}
+  node[at end, font=\normalsize\bfseries, red!70!black] {$\boldsymbol{\times}$};
+
+% 3: B → D  (Continuous Uniform Limit Theorem)
+\draw[arr] (B.south west) -- (D.north)
+  node[edgenum, pos=0.5, above left=-2pt] {3};
+
+% 4: B → E  (Integrable Uniform Limit Theorem)
+\draw[arr] (B.south) -- (E.north)
+  node[edgenum, pos=0.5, right=2pt] {4};
+
+% 5: B → F  ⚠ (Differentiable ULT — needs f_n' →unif g, NOT f_n →unif f)
+%   Drawn in orange dotted to signal different hypothesis structure
+\draw[caution] (B.south east) -- (F.north)
+  node[edgenum, draw=orange!80!black, pos=0.4, right=2pt] {5}
+  node[pos=0.6, right=5pt, font=\scriptsize\bfseries, orange!80!black] {$\boldsymbol{!}$};
+
+% 6: C ↔ B  (equivalent characterization)
+\draw[darr] (B.east) -- (C.west)
+  node[edgenum, midway, above] {6};
+
+% 7: G → B  (Dini: ptwise + monotone + cont + compact ⟹ uniform)
+\draw[arr] (G.north) to[out=45, in=215]
+  node[edgenum, pos=0.75, left=2pt] {7} (B.south west);
+
+% 8: H → A  (series conv = convergence of partial sums = sequence conv)
+\draw[arr] (H.north west) -- (A.south)
+  node[edgenum, pos=0.5, left=2pt] {8};
+
+% 9: I → B  (M-test establishes uniform convergence for series)
+\draw[arr] (I.west) to[out=180, in=270]
+  node[edgenum, pos=0.55, right=2pt] {9} (B.south);
+
+% 10: J → K  (trichotomy theorem determines R)
+\draw[arr] (J.east) -- (K.west)
+  node[edgenum, midway, above] {10};
+
+% 11: J → B  (power series converge uniformly on compact sub-intervals)
+\draw[arr] (J.north) -- (B.south)
+  node[edgenum, pos=0.45, left=3pt] {11} ;
+
+% 12: J → L  (term-by-term operations via uniform conv + interchange)
+\draw[arr] (J.south) -- (L.north)
+  node[edgenum, pos=0.45, above left=-2pt] {12};
+
+% 13: L → M  (differentiability gives Taylor coefficients: a_n = f^(n)(c)/n!)
+\draw[arr] (L) -- (M)
+  node[edgenum, midway, above] {13};
+
+% 14: M → N  (Lagrange remainder criterion → convergence to f)
+\draw[arr] (M) -- (N)
+  node[edgenum, midway, above] {14};
+
+% 15: H → D  (series corollaries: M-test + interchange → 
+%              continuity/integrability/differentiability of sums)
+\draw[arr] (H.north) -- (D.south)
+  node[edgenum, pos=0.5, above=2pt] {15};
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+
+\noindent{\bfseries Edge Labels.} For each numbered arrow, describe the relationship.  Name the theorem, state the key hypothesis, or explain what goes wrong.  Pay special attention to arrow~5.
+
+\smallskip
+\footnotesize
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.85em, leftmargin=2em]
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\columnbreak
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\item \dotfill
+\end{enumerate}
+\end{multicols}
+
+\normalsize
+
+\noindent\textbf{Reflection.} Which single arrow represents the most important insight of this chapter?  Explain in one sentence.
+
+\vfill
+
+\end{document}

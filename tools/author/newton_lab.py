@@ -381,7 +381,6 @@ CELLS = {
 
 NOTEBOOK_LAB = {
     'lab_id': 'lab2-newton',
-    'module': 'M1',
     'order': 2,
     'title': 'Newton form and divided differences',
     'blurb': 'Build the divided-difference table, then the nested evaluation that uses it.',

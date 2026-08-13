@@ -326,7 +326,6 @@ def build_spec(nb_path, nb, captured, carried):
     rel = nb_path.relative_to(NOTEBOOK_DIR).as_posix()
     return {
         'lab_id': lab_id,
-        'module': lab.get('module'),
         'order': lab.get('order'),
         'title': lab['title'],
         'blurb': lab.get('blurb', ''),
@@ -455,12 +454,11 @@ def write_index():
         entries.append({
             'lab_id': spec['lab_id'],
             'title': spec['title'],
-            'module': spec.get('module'),
             'order': spec.get('order'),
             'puzzles': len(spec.get('puzzles', [])),
         })
-    # By order alone. A lab id carries its own number now, so `module` is not
-    # part of the sort and a lab that omits it still lands in the right place.
+    # By `order`, then by id. The labs are not assigned in a fixed sequence, so
+    # `order` is only here to give this file a stable order to be read in.
     entries.sort(key=lambda e: (e.get('order') or 0, e['lab_id']))
     (SPEC_DIR / 'index.json').write_text(json.dumps(entries, indent=1) + '\n')
     print(f'  index lists {len(entries)} lab(s)')

@@ -320,7 +320,6 @@ CELLS = {
 
 NOTEBOOK_LAB = {
     'lab_id': 'lab1-runge',
-    'module': 'M1',
     'order': 1,
     'title': "Runge's phenomenon and Chebyshev nodes",
     'blurb': 'Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.',
