@@ -34,41 +34,41 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
      below, so the site's dark-mode toggle re-skins the whole page at once. */
   body.page-computational-labs .main-wrapper {
     padding: 0;
-    background: var(--cl-page);
+    background: var(--cat-page);
     overflow: hidden;
   }
 
-  /* Light palette. The tokens live on the body (not .cl-library) because
+  /* Light palette. The tokens live on the body (not .cat-library) because
      .main-wrapper above sits outside the library container. The body class is
      built from page.title in _layouts/default.html, so it tracks the page name. */
   body.page-computational-labs {
-    --cl-maroon: #800000;
-    --cl-ink: #161512;
+    --cat-maroon: #800000;
+    --cat-ink: #161512;
 
-    --cl-page: #FBF9F6;
-    --cl-sticky: #FBF9F6f2;          /* sticky bar: page color, semi-opaque */
-    --cl-text: #000000b3;            /* body copy */
-    --cl-soft: #00000099;            /* blurbs */
-    --cl-faint: #00000073;           /* filenames, labels */
-    --cl-fainter: #00000047;         /* ink on a disabled Start button */
+    --cat-page: #FBF9F6;
+    --cat-sticky: #FBF9F6f2;          /* sticky bar: page color, semi-opaque */
+    --cat-text: #000000b3;            /* body copy */
+    --cat-soft: #00000099;            /* blurbs */
+    --cat-faint: #00000073;           /* filenames, labels */
+    --cat-fainter: #00000047;         /* ink on a disabled Start button */
 
-    --cl-card-bg: #ffffff;
-    --cl-card-border: #00000010;
-    --cl-card-shadow: 0 14px 32px -22px #00000066;
-    --cl-card-shadow-hover: 0 24px 48px -22px #00000073;
-    --cl-banner-from: #F5F2EC;       /* card header wash */
-    --cl-banner-to: #ECE8E1;
-    --cl-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
-    --cl-pill-bg: #ffffffec;         /* course pill floating on the banner */
-    --cl-course-fg: #2c2a26;
+    --cat-card-bg: #ffffff;
+    --cat-card-border: #00000010;
+    --cat-card-shadow: 0 14px 32px -22px #00000066;
+    --cat-card-shadow-hover: 0 24px 48px -22px #00000073;
+    --cat-banner-from: #F5F2EC;       /* card header wash */
+    --cat-banner-to: #ECE8E1;
+    --cat-banner-hatch: #0000000a;    /* diagonal hatch over the wash */
+    --cat-pill-bg: #ffffffec;         /* course pill floating on the banner */
+    --cat-course-fg: #2c2a26;
 
-    --cl-chip-bg: #00000008;         /* library pills, disabled Start button */
-    --cl-chip-border: #0000000f;
-    --cl-hairline: #00000012;        /* sticky bar + footer rules */
-    --cl-start-fg: #ffffff;          /* ink on the Start button */
+    --cat-chip-bg: #00000008;         /* library pills, disabled Start button */
+    --cat-chip-border: #0000000f;
+    --cat-hairline: #00000012;        /* sticky bar + footer rules */
+    --cat-start-fg: #ffffff;          /* ink on the Start button */
 
-    --cl-draft-bg: #FBEFD6;  --cl-draft-fg: #9A6B15;
-    --cl-plan-bg: #ECEAE6;   --cl-plan-fg: #6B6B6B;
+    --cat-draft-bg: #FBEFD6;  --cat-draft-fg: #9A6B15;
+    --cat-plan-bg: #ECEAE6;   --cat-plan-fg: #6B6B6B;
   }
 
   /* Dark palette. Warm charcoals rather than the site's neutral greys, so the
@@ -77,283 +77,285 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     /* Maroon goes near-black on a dark ground; this is the same hue lifted
        into a legible range (the site swaps to lake blue, which fights the
        warm surfaces here). */
-    --cl-maroon: #E08A84;
-    --cl-ink: #EDE9E3;
+    --cat-maroon: #E08A84;
+    --cat-ink: #EDE9E3;
 
-    --cl-page: #191816;
-    --cl-sticky: #191816f0;
-    --cl-text: #ffffffb3;
-    --cl-soft: #ffffff99;
-    --cl-faint: #ffffff73;
-    --cl-fainter: #ffffff47;
+    --cat-page: #191816;
+    --cat-sticky: #191816f0;
+    --cat-text: #ffffffb3;
+    --cat-soft: #ffffff99;
+    --cat-faint: #ffffff73;
+    --cat-fainter: #ffffff47;
 
-    --cl-card-bg: #232120;
-    --cl-card-border: #ffffff14;
-    --cl-card-shadow: 0 14px 32px -20px #000000b3;
-    --cl-card-shadow-hover: 0 24px 48px -20px #000000cc;
-    --cl-banner-from: #2A2724;
-    --cl-banner-to: #211E1B;
-    --cl-banner-hatch: #ffffff0a;
-    --cl-pill-bg: #232120eb;
-    --cl-course-fg: #D8D3CB;
+    --cat-card-bg: #232120;
+    --cat-card-border: #ffffff14;
+    --cat-card-shadow: 0 14px 32px -20px #000000b3;
+    --cat-card-shadow-hover: 0 24px 48px -20px #000000cc;
+    --cat-banner-from: #2A2724;
+    --cat-banner-to: #211E1B;
+    --cat-banner-hatch: #ffffff0a;
+    --cat-pill-bg: #232120eb;
+    --cat-course-fg: #D8D3CB;
 
-    --cl-chip-bg: #ffffff0d;
-    --cl-chip-border: #ffffff1a;
-    --cl-hairline: #ffffff14;
-    --cl-start-fg: #141210;
+    --cat-chip-bg: #ffffff0d;
+    --cat-chip-border: #ffffff1a;
+    --cat-hairline: #ffffff14;
+    --cat-start-fg: #141210;
 
-    --cl-draft-bg: #CE8A2C2e;  --cl-draft-fg: #E5B36A;
-    --cl-plan-bg: #ffffff12;   --cl-plan-fg: #A9A6A0;
+    --cat-draft-bg: #CE8A2C2e;  --cat-draft-fg: #E5B36A;
+    --cat-plan-bg: #ffffff12;   --cat-plan-fg: #A9A6A0;
   }
 
-  /* `cl-` throughout is this page's private prefix, for Computational Labs.
-     The lab pages use `lab-`, in engine/lab.css. */
-  .cl-library {
+  /* `cat-` throughout is this page's private prefix, for the catalogue this page
+     is. It is named for what the page does rather than for what it is called,
+     because the title has already changed twice and each change orphaned the
+     prefix. The lab pages use `lab-`, in engine/lab.css. */
+  .cat-library {
     /* Each brand sans weight is its own family name, as everywhere else on the
        site, so weight is selected by family and font-weight stays normal. The
        serif does carry real weight axes (400/600/700) on one family name. */
-    --cl-serif: "UChicagoSerif", Georgia, serif;
-    --cl-sans:  "UChicagoSansSerif-Regular", system-ui, sans-serif;
-    --cl-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
-    --cl-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
-    --cl-mono:  "IBM Plex Mono", ui-monospace, monospace;
+    --cat-serif: "UChicagoSerif", Georgia, serif;
+    --cat-sans:  "UChicagoSansSerif-Regular", system-ui, sans-serif;
+    --cat-light: "UChicagoSansSerif-Light", system-ui, sans-serif;
+    --cat-semi:  "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
+    --cat-mono:  "IBM Plex Mono", ui-monospace, monospace;
 
-    --jelly-font-display: var(--cl-serif);
-    --jelly-font-text: var(--cl-sans);
-    --jelly-font-mono: var(--cl-mono);
+    --jelly-font-display: var(--cat-serif);
+    --jelly-font-text: var(--cat-sans);
+    --jelly-font-mono: var(--cat-mono);
     padding: 8px 34px 60px;
-    font-family: var(--cl-sans);
-    color: var(--cl-ink);
+    font-family: var(--cat-sans);
+    color: var(--cat-ink);
     -webkit-font-smoothing: antialiased;
   }
-  .cl-library *,
-  .cl-library *::before,
-  .cl-library *::after { box-sizing: border-box; }
+  .cat-library *,
+  .cat-library *::before,
+  .cat-library *::after { box-sizing: border-box; }
 
   /* Neutralize the site's global link styling inside the library;
      the design manages colors, weight and hover per element. */
-  .cl-library a { font-family: inherit; font-weight: inherit; transition: none; }
-  .cl-library a:hover { text-decoration: none; }
+  .cat-library a { font-family: inherit; font-weight: inherit; transition: none; }
+  .cat-library a:hover { text-decoration: none; }
 
   /* Header: title block on the left, search on the right; stacks under 760px. */
-  .cl-head {
+  .cat-head {
     padding: 34px 0 6px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 32px;
   }
-  .cl-head-text { flex: 1 1 auto; min-width: 0; }
-  .cl-head-search { flex: 0 0 300px; padding-bottom: 5px; }
+  .cat-head-text { flex: 1 1 auto; min-width: 0; }
+  .cat-head-search { flex: 0 0 300px; padding-bottom: 5px; }
   /* jelly-input[size=small] hardcodes width:220px on its host, which clips the
      placeholder; let it fill the slot instead (and the viewport on mobile). */
-  .cl-head-search jelly-input { width: 100%; }
+  .cat-head-search jelly-input { width: 100%; }
 
   /* The brand serif is a Garamond, x-height 0.400 em against the sans's 0.525,
      so serif sizes run ~25% larger than their sans equivalents would; otherwise
      headings read as the same optical size as the body text. */
-  .cl-title {
-    font-family: var(--cl-serif);
+  .cat-title {
+    font-family: var(--cat-serif);
     font-weight: 700;
     font-size: clamp(38px, 5.6vw, 56px);
     line-height: 1.04;
     letter-spacing: -.008em;
     margin: 8px 0 0;
-    color: var(--cl-maroon);
+    color: var(--cat-maroon);
   }
-  .cl-sub {
-    font-family: var(--cl-light);
+  .cat-sub {
+    font-family: var(--cat-light);
     margin: 14px 0 0;
     max-width: 600px;
     font-size: 16.5px;
     line-height: 1.6;
-    color: var(--cl-text);
+    color: var(--cat-text);
     text-wrap: pretty;
   }
 
   /* ---------- sticky controls ---------- */
-  .cl-sticky {
+  .cat-sticky {
     position: sticky;
     top: 4.9rem;
     z-index: 5;
-    background: var(--cl-sticky);
+    background: var(--cat-sticky);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     margin: 22px 0 0;
     padding: 16px 0;
-    border-bottom: 1px solid var(--cl-hairline);
+    border-bottom: 1px solid var(--cat-hairline);
   }
-  .cl-count { font-size: 13px; letter-spacing: .005em; color: var(--cl-text); }
-  .cl-count strong,
-  .cl-count span { font-family: var(--cl-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
-  .cl-count strong { color: var(--cl-ink); }
-  .cl-tool-label {
-    font-family: var(--cl-semi);
+  .cat-count { font-size: 13px; letter-spacing: .005em; color: var(--cat-text); }
+  .cat-count strong,
+  .cat-count span { font-family: var(--cat-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .cat-count strong { color: var(--cat-ink); }
+  .cat-tool-label {
+    font-family: var(--cat-semi);
     font-size: 12px;
     letter-spacing: .04em;
     text-transform: uppercase;
-    color: var(--cl-faint);
+    color: var(--cat-faint);
   }
 
   /* ---------- cards ----------
-     Each card carries its course accent inline as --cl-accent-light /
-     --cl-accent-dark; the theme picks one so a toggle needs no re-render. */
-  .cl-card {
+     Each card carries its course accent inline as --cat-accent-light /
+     --cat-accent-dark; the theme picks one so a toggle needs no re-render. */
+  .cat-card {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: var(--cl-card-bg);
-    border: 1px solid var(--cl-card-border);
+    background: var(--cat-card-bg);
+    border: 1px solid var(--cat-card-border);
     border-radius: 18px;
-    box-shadow: var(--cl-card-shadow);
+    box-shadow: var(--cat-card-shadow);
     transition: transform .18s ease, box-shadow .18s ease;
-    --cl-accent: var(--cl-accent-light);
-    --cl-accent-tint: var(--cl-accent-soft);
+    --cat-accent: var(--cat-accent-light);
+    --cat-accent-tint: var(--cat-accent-soft);
   }
-  html[data-theme="dark"] .cl-card {
-    --cl-accent: var(--cl-accent-dark);
-    --cl-accent-tint: color-mix(in srgb, var(--cl-accent-dark) 20%, transparent);
+  html[data-theme="dark"] .cat-card {
+    --cat-accent: var(--cat-accent-dark);
+    --cat-accent-tint: color-mix(in srgb, var(--cat-accent-dark) 20%, transparent);
   }
-  .cl-card:hover {
+  .cat-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--cl-card-shadow-hover);
+    box-shadow: var(--cat-card-shadow-hover);
   }
   /* One row, laid out by flex. The course pill shrinks and ellipsises, so a
      long course name never overlaps the status pill. */
-  .cl-banner {
+  .cat-banner {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 11px 12px;
     background:
-      repeating-linear-gradient(135deg, #0000 0 13px, var(--cl-banner-hatch) 13px 14px),
-      linear-gradient(135deg, var(--cl-banner-from), var(--cl-banner-to));
+      repeating-linear-gradient(135deg, #0000 0 13px, var(--cat-banner-hatch) 13px 14px),
+      linear-gradient(135deg, var(--cat-banner-from), var(--cat-banner-to));
   }
-  .cl-course {
-    font-family: var(--cl-semi);
+  .cat-course {
+    font-family: var(--cat-semi);
     font-size: 11px;
-    color: var(--cl-course-fg);
+    color: var(--cat-course-fg);
     display: inline-flex;
     align-items: center;
     gap: 6px;
     min-width: 0;
-    background: var(--cl-pill-bg);
+    background: var(--cat-pill-bg);
     padding: 5px 10px;
     border-radius: 999px;
   }
-  .cl-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cl-accent); }
-  .cl-status,
-  .cl-topic {
-    font-family: var(--cl-semi);
+  .cat-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cat-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cat-accent); }
+  .cat-status,
+  .cat-topic {
+    font-family: var(--cat-semi);
     letter-spacing: .07em;
     text-transform: uppercase;
   }
   /* Only the unfinished cards carry a status pill. Drafts are hidden unless
      you ask for them. */
-  .cl-status {
+  .cat-status {
     margin-left: auto;
     flex: none;
     font-size: 10px;
     padding: 5px 9px;
     border-radius: 999px;
   }
-  .cl-status-progress { background: var(--cl-draft-bg); color: var(--cl-draft-fg); }
-  .cl-status-planned  { background: var(--cl-plan-bg);  color: var(--cl-plan-fg); }
-  .cl-topic {
+  .cat-status-progress { background: var(--cat-draft-bg); color: var(--cat-draft-fg); }
+  .cat-status-planned  { background: var(--cat-plan-bg);  color: var(--cat-plan-fg); }
+  .cat-topic {
     align-self: flex-start;
     font-size: 10.5px;
     padding: 4px 10px;
     border-radius: 999px;
-    color: var(--cl-accent);
-    background: var(--cl-accent-tint);
+    color: var(--cat-accent);
+    background: var(--cat-accent-tint);
   }
-  .cl-lib {
-    font-family: var(--cl-mono);
+  .cat-lib {
+    font-family: var(--cat-mono);
     font-size: 10.5px;
-    color: var(--cl-faint);
-    background: var(--cl-chip-bg);
-    border: 1px solid var(--cl-chip-border);
+    color: var(--cat-faint);
+    background: var(--cat-chip-bg);
+    border: 1px solid var(--cat-chip-border);
     padding: 4px 9px;
     border-radius: 999px;
   }
-  .cl-card-title {
-    font-family: var(--cl-serif);
+  .cat-card-title {
+    font-family: var(--cat-serif);
     font-weight: 700;
     font-size: 21px;
     line-height: 1.18;
     letter-spacing: -.005em;
-    color: var(--cl-ink);
+    color: var(--cat-ink);
     text-wrap: pretty;
   }
-  .cl-blurb {
-    font-family: var(--cl-light);
+  .cat-blurb {
+    font-family: var(--cat-light);
     font-size: 13.5px;
     line-height: 1.55;
-    color: var(--cl-soft);
+    color: var(--cat-soft);
     text-wrap: pretty;
   }
   /* Cards in a row are stretched to the tallest. The slack goes here, which
      keeps the text block together and pins the button to the bottom edge of
      every card in the row. */
-  .cl-actions { margin-top: auto; padding-top: 12px; display: flex; }
-  .cl-start {
+  .cat-actions { margin-top: auto; padding-top: 12px; display: flex; }
+  .cat-start {
     flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    font-family: var(--cl-semi);
+    font-family: var(--cat-semi);
     font-size: 12.5px;
     line-height: 1;
-    background: var(--cl-accent);
-    color: var(--cl-start-fg);
+    background: var(--cat-accent);
+    color: var(--cat-start-fg);
     padding: 11px 12px;
     border-radius: 12px;
     text-decoration: none;
   }
-  .cl-start.is-off { background: var(--cl-chip-bg); color: var(--cl-fainter); cursor: default; }
+  .cat-start.is-off { background: var(--cat-chip-bg); color: var(--cat-fainter); cursor: default; }
 
   /* ---------- empty state + footer ---------- */
-  .cl-empty { text-align: center; padding: 72px 20px; color: var(--cl-faint); }
-  .cl-empty-title {
-    font-family: var(--cl-serif);
+  .cat-empty { text-align: center; padding: 72px 20px; color: var(--cat-faint); }
+  .cat-empty-title {
+    font-family: var(--cat-serif);
     font-weight: 700;
     font-size: 29px;
-    color: var(--cl-maroon);
+    color: var(--cat-maroon);
   }
-  .cl-footer-head {
+  .cat-footer-head {
     display: flex;
     align-items: center;
     gap: 9px;
-    font-family: var(--cl-serif);
+    font-family: var(--cat-serif);
     font-weight: 700;
     font-size: 20px;
-    color: var(--cl-maroon);
+    color: var(--cat-maroon);
   }
-  .cl-footnote {
-    font-family: var(--cl-light);
+  .cat-footnote {
+    font-family: var(--cat-light);
     margin: 9px 0 0;
     font-size: 13.5px;
     line-height: 1.65;
-    color: var(--cl-text);
+    color: var(--cat-text);
   }
-  .cl-footnote strong { font-family: var(--cl-semi); font-weight: normal; color: var(--cl-ink); }
+  .cat-footnote strong { font-family: var(--cat-semi); font-weight: normal; color: var(--cat-ink); }
 
   /* Two columns, each an unforced reading measure at this width. auto-fit drops
      to one column when a 300px track stops fitting, so no media query. Grid
      children default to min-width:auto and would refuse to shrink below their
      longest word, hence the reset on the column. */
-  .cl-foot {
+  .cat-foot {
     margin-top: 52px;
     padding-top: 26px;
-    border-top: 1px solid var(--cl-hairline);
+    border-top: 1px solid var(--cat-hairline);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px 46px;
   }
-  .cl-foot-col { min-width: 0; }
+  .cat-foot-col { min-width: 0; }
 
   /* The disclosure spans the whole footer rather than becoming a third column:
      it is addressed to everyone reading, not a peer of the two how-to blocks,
@@ -364,88 +366,88 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
      leaves the rest of the width empty. Columns give the same measure and use
      the space. column-width picks the count off the room available, so this
      needs no breakpoint of its own. */
-  .cl-ai {
+  .cat-ai {
     grid-column: 1 / -1;
     min-width: 0;
     padding-top: 22px;
-    border-top: 1px solid var(--cl-hairline);
+    border-top: 1px solid var(--cat-hairline);
   }
-  .cl-ai-body {
+  .cat-ai-body {
     columns: 300px;
     column-gap: 46px;
   }
   /* Keep each point whole. One column ending higher than the other reads as
      ordinary column text; a paragraph split down the middle does not. */
-  .cl-ai-body .cl-footnote {
+  .cat-ai-body .cat-footnote {
     break-inside: avoid;
     margin: 0 0 9px;
   }
 
   @media (max-width: 760px) {
-    .cl-library { padding: 4px 20px 44px; }
-    .cl-head {
+    .cat-library { padding: 4px 20px 44px; }
+    .cat-head {
       display: block;
       padding-top: 26px;
     }
-    .cl-head-search { margin-top: 20px; padding-bottom: 0; }
-    .cl-sub { font-size: 15.5px; }
+    .cat-head-search { margin-top: 20px; padding-bottom: 0; }
+    .cat-sub { font-size: 15.5px; }
   }
 </style>
 
-<div class="cl-library">
+<div class="cat-library">
 
   <!-- ===== HEADER ===== -->
-  <header class="cl-head">
-    <div class="cl-head-text">
-      <h1 class="cl-title">Computational Labs</h1>
-      <p class="cl-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
+  <header class="cat-head">
+    <div class="cat-head-text">
+      <h1 class="cat-title">Computational Labs</h1>
+      <p class="cat-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
     </div>
-    <div class="cl-head-search">
-      <jelly-input id="cl-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
+    <div class="cat-head-search">
+      <jelly-input id="cat-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
     </div>
   </header>
 
   <!-- ===== STICKY CONTROLS ===== -->
-  <div class="cl-sticky">
-    <div id="cl-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
+  <div class="cat-sticky">
+    <div id="cat-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
-      <div class="cl-count">Showing <strong id="cl-shown">0</strong> of <span id="cl-total">0</span> labs</div>
+      <div class="cat-count">Showing <strong id="cat-shown">0</strong> of <span id="cat-total">0</span> labs</div>
       <div style="display:flex;align-items:center;gap:18px;">
         <div style="display:flex;align-items:center;gap:9px;">
-          <span class="cl-tool-label">Sort</span>
-          <jelly-select id="cl-sort" size="small">
+          <span class="cat-tool-label">Sort</span>
+          <jelly-select id="cat-sort" size="small">
             <jelly-option value="az">Title A–Z</jelly-option>
             <jelly-option value="course">By course</jelly-option>
           </jelly-select>
         </div>
-        <jelly-switch id="cl-drafts" size="small">Show work in progress</jelly-switch>
+        <jelly-switch id="cat-drafts" size="small">Show work in progress</jelly-switch>
       </div>
     </div>
   </div>
 
   <!-- ===== RESULTS ===== -->
-  <div id="cl-results" style="margin-top:26px;"></div>
+  <div id="cat-results" style="margin-top:26px;"></div>
 
   <!-- ===== FOOTER =====
        Left column is this site, right column is the notebook. The snake sits on
        the Colab heading, which is the half that actually runs Python. -->
-  <footer class="cl-foot">
-    <div class="cl-foot-col">
-      <div class="cl-footer-head">How these work</div>
-      <p class="cl-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
-      <p class="cl-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
+  <footer class="cat-foot">
+    <div class="cat-foot-col">
+      <div class="cat-footer-head">How these work</div>
+      <p class="cat-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
+      <p class="cat-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
     </div>
-    <div class="cl-foot-col">
-      <div class="cl-footer-head"><span>🐍</span> Running the notebook</div>
-      <p class="cl-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
-      <p class="cl-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
+    <div class="cat-foot-col">
+      <div class="cat-footer-head"><span>🐍</span> Running the notebook</div>
+      <p class="cat-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
+      <p class="cat-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
     </div>
-    <div class="cl-ai">
-      <div class="cl-footer-head">How these labs were built</div>
-      <div class="cl-ai-body">
-        <p class="cl-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
-        <p class="cl-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
-        <p class="cl-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
+    <div class="cat-ai">
+      <div class="cat-footer-head">How these labs were built</div>
+      <div class="cat-ai-body">
+        <p class="cat-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
+        <p class="cat-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
+        <p class="cat-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
       </div>
     </div>
   </footer>
@@ -468,7 +470,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   ];
 
   // Shown only on the cards that are not ready; colors are themed in CSS
-  // (.cl-status-<key>).
+  // (.cat-status-<key>).
   var STATUS = {
     progress: { label:'In progress' },
     planned:  { label:'Planned' }
@@ -561,38 +563,38 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   function cardHTML(a) {
     var libs = a.raw.libs.map(function (lib) {
-      return '<span class="cl-lib">' + lib + '</span>';
+      return '<span class="cat-lib">' + lib + '</span>';
     }).join('');
 
     // Every card leads to a guided lab. No direct notebook link and no source
     // download: the lab is what opens the notebook.
     var actions = a.ready
-      ? '<a class="cl-start" href="' + a.labUrl + '">Start the guided lab</a>'
-      : '<span class="cl-start is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
+      ? '<a class="cat-start" href="' + a.labUrl + '">Start the guided lab</a>'
+      : '<span class="cat-start is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
         '">Start the guided lab</span>';
 
     // The course accent is handed to CSS as custom properties so the theme,
     // not this markup, decides which variant is shown.
-    var accentVars = '--cl-accent-light:' + a.accent +
-                     ';--cl-accent-dark:' + a.accentDark +
-                     ';--cl-accent-soft:' + a.accentSoft + ';';
+    var accentVars = '--cat-accent-light:' + a.accent +
+                     ';--cat-accent-dark:' + a.accentDark +
+                     ';--cat-accent-soft:' + a.accentSoft + ';';
 
     return '' +
-      '<div class="cl-card" style="' + accentVars + '">' +
-        '<div class="cl-banner">' +
-          '<span class="cl-course">' +
-            '<span class="cl-dot"></span>' +
-            '<span class="cl-course-name">' + a.courseName + '</span>' +
+      '<div class="cat-card" style="' + accentVars + '">' +
+        '<div class="cat-banner">' +
+          '<span class="cat-course">' +
+            '<span class="cat-dot"></span>' +
+            '<span class="cat-course-name">' + a.courseName + '</span>' +
           '</span>' +
           (a.ready ? '' :
-            '<span class="cl-status cl-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
+            '<span class="cat-status cat-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
         '</div>' +
         '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
-          '<span class="cl-topic">' + a.topic + '</span>' +
-          '<div class="cl-card-title">' + a.raw.title + '</div>' +
-          '<div class="cl-blurb">' + a.raw.blurb + '</div>' +
+          '<span class="cat-topic">' + a.topic + '</span>' +
+          '<div class="cat-card-title">' + a.raw.title + '</div>' +
+          '<div class="cat-blurb">' + a.raw.blurb + '</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
-          '<div class="cl-actions">' + actions + '</div>' +
+          '<div class="cat-actions">' + actions + '</div>' +
         '</div>' +
       '</div>';
   }
@@ -608,25 +610,25 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       return '<jelly-button data-course="' + c.key + '" size="small" variant="' + variant + '">' + c.name +
         ' <span style="opacity:.5;font-variant-numeric:tabular-nums;">' + c.count + '</span></jelly-button>';
     }).join('');
-    document.getElementById('cl-chips').innerHTML = html;
+    document.getElementById('cat-chips').innerHTML = html;
   }
 
   function renderResults() {
     var list = filteredList();
-    document.getElementById('cl-shown').textContent = list.length;
-    document.getElementById('cl-total').textContent = visibleUniverse().length;
-    var results = document.getElementById('cl-results');
+    document.getElementById('cat-shown').textContent = list.length;
+    document.getElementById('cat-total').textContent = visibleUniverse().length;
+    var results = document.getElementById('cat-results');
     if (list.length === 0) {
       var hint = state.showDrafts
         ? 'Try a broader search, or clear the filters.'
         : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see the labs that are still being built.';
       results.innerHTML =
-        '<div class="cl-empty">' +
-          '<div class="cl-empty-title">No labs match your filters.</div>' +
-          '<p class="cl-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
-          '<jelly-button id="cl-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
+        '<div class="cat-empty">' +
+          '<div class="cat-empty-title">No labs match your filters.</div>' +
+          '<p class="cat-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
+          '<jelly-button id="cat-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
-      var clr = document.getElementById('cl-clear');
+      var clr = document.getElementById('cat-clear');
       if (clr) clr.addEventListener('click', resetFilters);
     } else {
       results.innerHTML =
@@ -640,7 +642,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   function resetFilters() {
     state.courseFilter = 'all'; state.query = '';
-    var s = document.getElementById('cl-search'); if (s) s.value = '';
+    var s = document.getElementById('cat-search'); if (s) s.value = '';
     render();
   }
 
@@ -654,24 +656,24 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     render();
 
     // Course chips (event delegation; jelly-button click bubbles to the container).
-    document.getElementById('cl-chips').addEventListener('click', function (e) {
+    document.getElementById('cat-chips').addEventListener('click', function (e) {
       var btn = e.target && e.target.closest ? e.target.closest('[data-course]') : null;
       if (!btn) return;
       state.courseFilter = btn.getAttribute('data-course');
       render();
     });
 
-    var search = document.getElementById('cl-search');
+    var search = document.getElementById('cat-search');
     if (search) {
       var onSearch = function (e) { state.query = readVal(e); renderResults(); };
       search.addEventListener('input', onSearch);
       search.addEventListener('change', onSearch);
     }
 
-    var sort = document.getElementById('cl-sort');
+    var sort = document.getElementById('cat-sort');
     if (sort) sort.addEventListener('change', function (e) { state.sort = readVal(e) || 'az'; renderResults(); });
 
-    var drafts = document.getElementById('cl-drafts');
+    var drafts = document.getElementById('cat-drafts');
     if (drafts) drafts.addEventListener('change', function (e) {
       var el = e && e.target;
       var on = el && ('checked' in el ? el.checked : el.getAttribute('checked') != null);
@@ -685,7 +687,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       var typing = /INPUT|TEXTAREA|SELECT/.test(tag) || (e.target && e.target.isContentEditable);
       if (e.key === '/' && !typing) {
         e.preventDefault();
-        var el = document.getElementById('cl-search');
+        var el = document.getElementById('cat-search');
         if (el) {
           if (el.focus) el.focus();
           var inner = el.shadowRoot && el.shadowRoot.querySelector('input');
@@ -694,7 +696,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       }
       if (e.key === 'Escape' && state.query) {
         state.query = '';
-        var s = document.getElementById('cl-search'); if (s) s.value = '';
+        var s = document.getElementById('cat-search'); if (s) s.value = '';
         renderResults();
       }
     });
