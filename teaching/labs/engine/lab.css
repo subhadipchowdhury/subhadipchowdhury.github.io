@@ -53,8 +53,14 @@ html[data-theme="dark"] {
 
 /* body.lab-page is set by _layouts/lab.html. Wider than the site's 960px card,
    for the reveal's two columns of monospace. The bar and the footer repeat the
-   1140px, so all three give a 1076px content row and share a left edge. */
-.lab-page .main-wrapper { max-width: 1140px; }
+   1140px, so all three give a 1076px content row and share a left edge.
+
+   body.applet-page is set by _layouts/applet.html, which reuses this file's
+   standalone chrome (.lab-skip, .lab-bar, .lab-foot, .theme-toggle--bar) rather
+   than restyling it. It has to be on this selector too, or an applet's bar and
+   footer measure 1140px while its content measures 960px. */
+.lab-page .main-wrapper,
+.applet-page .main-wrapper { max-width: 1140px; }
 
 /* The cap and the side padding here are for tools/demo/puzzle-demo.html, which
    mounts <main class="lab"> on a bare body. On a lab page the rule below hands

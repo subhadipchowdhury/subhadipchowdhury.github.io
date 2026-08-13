@@ -1,514 +1,299 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave Equation Simulation: Variable c and k</title>
-    <style>
-        /* Tailwind-like CSS Reset and Styles */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f3f4f6; /* gray-100 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            color: #1f2937; /* gray-800 */
-        }
+---
+layout: applet
+title: Forced wave equation
+description: A string driven by a steady spatial force, oscillating about the steady shape it would settle into.
+robots: false
+---
 
-        .container {
-            width: 100%;
-            max-width: 48rem; /* max-w-3xl */
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+<h1>Forced wave equation</h1>
 
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #1f2937;
-        }
+<p class="ap-lede">A string pinned at both ends, pushed the whole time by a
+force that varies along its length but never changes with time. It never settles,
+because nothing here removes energy. It oscillates about the shape it would
+settle into, and that shape is the dashed curve.</p>
 
-        .subtitle {
-            font-size: 1rem;
-            color: #4b5563; /* gray-600 */
-            margin-bottom: 1.5rem;
-            text-align: center;
-            background-color: #f3f4f6;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-        }
+<div class="ap-eqn">
+  \[ u_{tt} = c^2 u_{xx} + \sin(2\pi k x), \qquad u(0,t) = u(1,t) = 0, \qquad u(x,0) = u_t(x,0) = 0 \]
+</div>
 
-        .mono {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-weight: 600;
-            color: #2563eb;
-        }
+<div class="ap-split">
+  <div class="ap-stack">
+    <div>
+      <div class="ap-figure" id="ap-figure">
+        <canvas id="wf-canvas"></canvas>
+        <div class="ap-legend">
+          <div class="ap-legend__item">
+            <span class="ap-legend__sample" id="wf-key-u" style="border-top-width:3px;"></span>
+            <span>\(u(x,t)\), the string</span>
+          </div>
+          <div class="ap-legend__item">
+            <span class="ap-legend__sample" id="wf-key-v" style="border-top-width:2px;border-top-style:dashed;"></span>
+            <span>\(v(x)\), the steady shape</span>
+          </div>
+          <div class="ap-legend__item">
+            <span class="ap-legend__sample" id="wf-key-f" style="border-top-width:2px;border-top-style:dotted;"></span>
+            <span>the force, as arrows</span>
+          </div>
+        </div>
+      </div>
+      <p class="ap-figcaption">The vertical scale is chosen from the steady shape,
+      so the picture stays the same size while the response gets smaller. Watch
+      the peak below rather than the drawing to see how much smaller.</p>
+    </div>
+  </div>
 
-        .canvas-wrapper {
-            position: relative;
-            width: 100%;
-            border: 1px solid #e5e7eb; /* gray-200 */
-            border-radius: 0.25rem;
-            background-color: #f9fafb; /* gray-50 */
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-        }
-
-        canvas {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .legend {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e7eb;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .legend-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .line-sample {
-            width: 1.5rem;
-            height: 2px;
-        }
-
-        /* Controls Grid */
-        .controls-container {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #f9fafb;
-            border-radius: 0.5rem;
-            border: 1px solid #e5e7eb;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .label-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .playback-controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        button {
-            background: white;
-            border: 1px solid #d1d5db;
-            padding: 0.5rem;
-            border-radius: 9999px;
-            cursor: pointer;
-            color: #374151;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        button:hover {
-            background-color: #f3f4f6;
-            border-color: #9ca3af;
-        }
-
-        button:active {
-            background-color: #e5e7eb;
-            transform: translateY(1px);
-        }
-
-        input[type=range] {
-            width: 100%;
-            height: 0.375rem;
-            background: #d1d5db;
-            border-radius: 0.5rem;
-            appearance: none;
-            outline: none;
-            cursor: pointer;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            appearance: none;
-            width: 1rem;
-            height: 1rem;
-            background: #2563eb; /* blue-600 */
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .time-display {
-            font-family: ui-monospace, SFMono-Regular, monospace;
-            font-size: 0.875rem;
-            color: #4b5563;
-            min-width: 80px;
-            text-align: right;
-            background: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            border: 1px solid #e5e7eb;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h2>Wave Equation Simulation</h2>
-        <div class="subtitle">
-            Equation: <span class="mono">u_tt = c²u_xx + sin(2πxk)</span>
+  <div class="ap-stack">
+    <div class="ap-panel">
+      <h2>The equation</h2>
+      <div class="ap-grid">
+        <div class="ap-field">
+          <div class="ap-readout">
+            <label for="wf-c">Wave speed \(c\)</label>
+            <span class="ap-value" id="wf-c-value">1.00</span>
+          </div>
+          <input type="range" id="wf-c" min="0.1" max="2" step="0.01" value="1">
         </div>
 
-        <div class="canvas-wrapper">
-            <canvas id="simCanvas" width="800" height="400"></canvas>
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="line-sample" style="background-color: #2563eb; height: 3px;"></div>
-                    <span>u(x,t) String</span>
-                </div>
-                <div class="legend-item">
-                    <div class="line-sample" style="border-top: 2px dashed #ef4444;"></div>
-                    <span>v(x) Equilibrium</span>
-                </div>
-                <div class="legend-item">
-                    <div class="line-sample" style="background-color: #d1d5db;"></div>
-                    <span>F(x) Force</span>
-                </div>
-            </div>
+        <div class="ap-field">
+          <div class="ap-readout">
+            <label for="wf-k">Forcing mode \(k\)</label>
+            <span class="ap-value" id="wf-k-value">1</span>
+          </div>
+          <input type="range" id="wf-k" min="1" max="5" step="1" value="1">
+          <p class="ap-hint">Whole numbers, so the force completes \(k\) full
+          periods across the string.</p>
         </div>
-
-        <div class="controls-container">
-            <div class="control-group">
-                <div class="label-row">
-                    <label for="cSlider">Wave Speed (c)</label>
-                    <span id="cValue" class="mono">1.00</span>
-                </div>
-                <!-- c: 0.1 to 2.0 (Changed from 1.0) -->
-                <input type="range" id="cSlider" min="0.1" max="2.0" step="0.01" value="1.0">
-            </div>
-
-            <div class="control-group">
-                <div class="label-row">
-                    <label for="kSlider">Forcing Mode (k)</label>
-                    <span id="kValue" class="mono">1</span>
-                </div>
-                <!-- k: Integers 1 to 5 -->
-                <input type="range" id="kSlider" min="1" max="5" step="1" value="1">
-            </div>
-        </div>
-
-        <div class="playback-controls">
-            <div class="btn-group">
-                <button id="playPauseBtn" title="Pause">
-                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                    <svg id="playIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </button>
-                <button id="resetBtn" title="Reset Simulation">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-                </button>
-            </div>
-            <div class="time-display" id="timeDisplay">t = 0.00s</div>
-        </div>
+      </div>
     </div>
 
-    <script>
-        // --- Physics Configuration ---
-        const NUM_POINTS = 200;        // Number of spatial points
-        const DOMAIN_L = 1.0;        // Length of domain
-        const dx = DOMAIN_L / NUM_POINTS;     // Spatial step size
-        const dt = 0.002;     // Time step (kept small for stability)
-        const VISUAL_SCALE = 50; // Scale factor for drawing amplitude
+    <div class="ap-panel">
+      <h2>Running</h2>
+      <div class="ap-btns">
+        <button class="ap-btn ap-btn--primary" id="wf-play">Pause</button>
+        <button class="ap-btn" id="wf-reset">Start over</button>
+      </div>
+      <table class="ap-table" style="margin-top:0.9rem;">
+        <tbody>
+          <tr><th scope="row">Elapsed \(t\)</th><td id="wf-time">0.00</td></tr>
+          <tr><th scope="row">Peak \(|v|\)</th><td id="wf-peak">0.0000</td></tr>
+        </tbody>
+      </table>
+      <p class="ap-hint" style="margin-top:0.7rem;">Raise \(c\) or \(k\) and the
+      peak falls fast. Both sit inside \(1/(ck)^2\) in the steady shape, so
+      doubling either divides the response by four. Predict the new peak before
+      you move the slider.</p>
+    </div>
+  </div>
+</div>
 
-        // --- State Variables ---
-        let c = 1.0; // Default
-        let k = 1;   // Default integer
-        
-        // Arrays for Finite Difference Method
-        let u_curr = new Float64Array(NUM_POINTS + 1);
-        let u_prev = new Float64Array(NUM_POINTS + 1);
-        let u_next = new Float64Array(NUM_POINTS + 1);
-        
-        let forcingArr = new Float64Array(NUM_POINTS + 1); // Precomputed spatial forcing
-        let steadyStateArr = new Float64Array(NUM_POINTS + 1); // Precomputed steady state
+<script type="module">
+  import { plotColors, onTheme, fitCanvas, onResize } from '{{ '/teaching/labs/applets/applet.js' | relative_url }}';
 
-        // Animation State
-        let isPlaying = true;
-        let simTime = 0;
-        let animationId;
+  // Spatial grid. dt is small enough that r = c*dt/dx stays under 1 for every c
+  // the slider offers: at c = 2 it is 0.8, so the explicit scheme is stable
+  // across the whole range and the page never has to say otherwise.
+  const N = 200;
+  const L = 1.0;
+  const dx = L / N;
+  const dt = 0.002;
+  const STEPS_PER_FRAME = 4;
 
-        // --- DOM Elements ---
-        const canvas = document.getElementById('simCanvas');
-        const ctx = canvas.getContext('2d');
-        const cSlider = document.getElementById('cSlider');
-        const kSlider = document.getElementById('kSlider');
-        const cValueDisplay = document.getElementById('cValue');
-        const kValueDisplay = document.getElementById('kValue');
-        const timeDisplay = document.getElementById('timeDisplay');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const playIcon = document.getElementById('playIcon');
-        const pauseIcon = document.getElementById('pauseIcon');
+  // The steady shape's amplitude runs as 1/(c*2*pi*k)^2, which is four orders of
+  // magnitude across the two sliders. A fixed vertical scale therefore shows
+  // either a flat line or something off the top of the figure, so the scale is
+  // taken from the steady shape and the amplitude is reported as a number
+  // instead. PEAK_FRACTION is how much of the half-height that peak fills.
+  const PEAK_FRACTION = 0.62;
+  const PAD = 46;
 
-        // --- Initialization & Physics ---
+  let c = 1.0;
+  let k = 1;
 
-        function initSimulation() {
-            // Reset arrays to 0 (Initial Conditions: u(x,0)=0, u_t(x,0)=0)
-            u_curr.fill(0);
-            u_prev.fill(0);
-            u_next.fill(0);
-            simTime = 0;
-            
-            precomputeSteadyStateAndForcing();
-        }
+  let uCurr = new Float64Array(N + 1);
+  let uPrev = new Float64Array(N + 1);
+  let uNext = new Float64Array(N + 1);
+  const force = new Float64Array(N + 1);
+  const steady = new Float64Array(N + 1);
+  let steadyPeak = 0;
 
-        function precomputeSteadyStateAndForcing() {
-            // Calculate Constants for Steady State Formula
-            // v'' = -1/c^2 * sin(Bx), where B = 2*pi*k (changed from 2*pi/k)
-            // v(x) = (1 / (c*B)^2) * [ sin(Bx) - x*sin(B) ]
-            
-            const B = 2 * Math.PI * k; // UPDATED: Proportional to k
-            const factor = 1.0 / Math.pow(c * B, 2);
-            const sinB = Math.sin(B);
+  let playing = true;
+  let simTime = 0;
+  let colors = plotColors();
 
-            for (let i = 0; i <= NUM_POINTS; i++) {
-                const x = i * dx;
-                // 1. Forcing F(x) = sin(2*pi*x*k)
-                forcingArr[i] = Math.sin(B * x);
+  const canvas = document.getElementById('wf-canvas');
+  const cSlider = document.getElementById('wf-c');
+  const kSlider = document.getElementById('wf-k');
+  const cValue = document.getElementById('wf-c-value');
+  const kValue = document.getElementById('wf-k-value');
+  const timeCell = document.getElementById('wf-time');
+  const peakCell = document.getElementById('wf-peak');
+  const playBtn = document.getElementById('wf-play');
+  const resetBtn = document.getElementById('wf-reset');
 
-                // 2. Steady State v(x)
-                // Since k is integer, sin(B) = sin(2*pi*k) = 0, so linear term vanishes naturally.
-                steadyStateArr[i] = factor * (Math.sin(B * x) - x * sinB);
-            }
-        }
+  function precompute() {
+    // v'' = -(1/c^2) sin(Bx) with v(0) = v(1) = 0 gives
+    // v(x) = (1/(cB)^2) (sin(Bx) - x sin(B)), and sin(B) = 0 for whole k, so the
+    // linear term drops out on its own. It is kept so the formula stays the one
+    // in the notes rather than a special case of it.
+    const B = 2 * Math.PI * k;
+    const factor = 1 / Math.pow(c * B, 2);
+    const sinB = Math.sin(B);
 
-        function physicsStep() {
-            // Finite Difference Method for Wave Equation with Forcing
-            
-            const r = (c * dt) / dx;
-            const r2 = r * r;
-            const dt2 = dt * dt;
+    steadyPeak = 0;
+    for (let i = 0; i <= N; i++) {
+      const x = i * dx;
+      force[i] = Math.sin(B * x);
+      steady[i] = factor * (Math.sin(B * x) - x * sinB);
+      const mag = Math.abs(steady[i]);
+      if (mag > steadyPeak) steadyPeak = mag;
+    }
+    peakCell.textContent = steadyPeak.toExponential(3);
+  }
 
-            // Stability check: For this explicit scheme, we typically want r <= 1.
-            // c <= 2, dt=0.002, dx=0.005. r = 2*0.002/0.005 = 0.8. Stable.
+  function reset() {
+    uCurr.fill(0);
+    uPrev.fill(0);
+    uNext.fill(0);
+    simTime = 0;
+    timeCell.textContent = '0.00';
+    precompute();
+  }
 
-            for (let i = 1; i < NUM_POINTS; i++) {
-                // Wave Laplacian part: c^2 * u_xx
-                const laplacian = r2 * (u_curr[i+1] - 2*u_curr[i] + u_curr[i-1]);
-                
-                // Forcing part: F(x) * dt^2
-                const forcingTerm = forcingArr[i] * dt2;
-                
-                // Time stepping
-                u_next[i] = 2*u_curr[i] - u_prev[i] + laplacian + forcingTerm;
-                
-                // Minimal numerical damping to prevent long-term instability in float32/64
-                u_next[i] *= 0.99995; 
-            }
+  function step() {
+    const r2 = Math.pow((c * dt) / dx, 2);
+    const dt2 = dt * dt;
 
-            // Boundary Conditions (Dirichlet u=0)
-            u_next[0] = 0;
-            u_next[NUM_POINTS] = 0;
+    for (let i = 1; i < N; i++) {
+      const laplacian = r2 * (uCurr[i + 1] - 2 * uCurr[i] + uCurr[i - 1]);
+      uNext[i] = 2 * uCurr[i] - uPrev[i] + laplacian + force[i] * dt2;
+      // A whisker of damping. Without it the undamped scheme accumulates
+      // round-off over the tens of thousands of steps a lecture demonstration
+      // runs for, and the string slowly grows.
+      uNext[i] *= 0.99995;
+    }
 
-            // Rotate arrays
-            let temp = u_prev;
-            u_prev = u_curr;
-            u_curr = u_next;
-            u_next = temp;
+    uNext[0] = 0;
+    uNext[N] = 0;
 
-            simTime += dt;
-        }
+    const spare = uPrev;
+    uPrev = uCurr;
+    uCurr = uNext;
+    uNext = spare;
 
-        // --- Rendering ---
+    simTime += dt;
+  }
 
-        function draw() {
-            const w = canvas.width;
-            const h = canvas.height;
-            const centerY = h / 2;
-            const padding = 50;
-            const plotW = w - padding * 2;
-            const plotH = h - padding * 2;
+  function draw() {
+    const { ctx, width, height } = fitCanvas(canvas);
+    const midY = height / 2;
+    const plotW = width - PAD * 2;
+    const scale = steadyPeak > 0 ? (PEAK_FRACTION * (height / 2 - PAD / 2)) / steadyPeak : 0;
+    const xAt = (i) => PAD + (i / N) * plotW;
+    const yAt = (value) => midY - value * scale;
 
-            ctx.clearRect(0, 0, w, h);
+    ctx.clearRect(0, 0, width, height);
 
-            // 1. Axes
-            ctx.beginPath();
-            ctx.strokeStyle = '#9ca3af';
-            ctx.lineWidth = 1;
-            // X-axis
-            ctx.moveTo(padding, centerY);
-            ctx.lineTo(w - padding, centerY);
-            // Y-axis
-            ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, h - padding);
-            ctx.stroke();
-            
-            // Labels
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '12px sans-serif';
-            ctx.fillText('x=0', padding, centerY + 20);
-            ctx.fillText('x=1', w - padding - 20, centerY + 20);
+    ctx.strokeStyle = colors.axis;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(PAD, midY);
+    ctx.lineTo(width - PAD, midY);
+    ctx.stroke();
 
-            // 2. Forcing Arrows (Gray)
-            ctx.save();
-            ctx.strokeStyle = '#e5e7eb';
-            ctx.fillStyle = '#e5e7eb';
-            ctx.lineWidth = 2;
-            // Draw fewer arrows than NUM_POINTS for clarity
-            const arrowStep = 10; 
-            for (let i = 0; i <= NUM_POINTS; i += arrowStep) {
-                const xPx = padding + (i / NUM_POINTS) * plotW;
-                const force = forcingArr[i];
-                // Force visualization scale
-                const fScale = 40; 
-                
-                if (Math.abs(force) > 0.05) {
-                    const yStart = centerY;
-                    const yEnd = centerY - force * fScale;
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(xPx, yStart);
-                    ctx.lineTo(xPx, yEnd);
-                    ctx.stroke();
-                    
-                    // Arrowhead
-                    const headSize = 3;
-                    ctx.beginPath();
-                    ctx.moveTo(xPx - headSize, yEnd + (force > 0 ? headSize : -headSize));
-                    ctx.lineTo(xPx, yEnd);
-                    ctx.lineTo(xPx + headSize, yEnd + (force > 0 ? headSize : -headSize));
-                    ctx.stroke();
-                }
-            }
-            ctx.restore();
+    ctx.fillStyle = colors.label;
+    ctx.font = '12px system-ui, sans-serif';
+    ctx.fillText('x = 0', PAD - 12, midY + 22);
+    ctx.fillText('x = 1', width - PAD - 16, midY + 22);
 
-            // 3. Steady State (Red Dashed)
-            ctx.beginPath();
-            ctx.strokeStyle = '#ef4444';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([6, 4]);
-            for (let i = 0; i <= NUM_POINTS; i++) {
-                const xPx = padding + (i / NUM_POINTS) * plotW;
-                const yVal = steadyStateArr[i];
-                const yPx = centerY - yVal * VISUAL_SCALE * (plotH/2);
-                if (i === 0) ctx.moveTo(xPx, yPx);
-                else ctx.lineTo(xPx, yPx);
-            }
-            ctx.stroke();
-            ctx.setLineDash([]);
+    // The force, as arrows off the axis. Its own scale, because it is an
+    // annotation rather than a quantity being compared with the other two.
+    ctx.strokeStyle = colors.annot;
+    ctx.lineWidth = 2;
+    const arrowScale = height * 0.1;
+    for (let i = 0; i <= N; i += 10) {
+      const f = force[i];
+      if (Math.abs(f) < 0.05) continue;
+      const x = xAt(i);
+      const yEnd = midY - f * arrowScale;
+      const head = f > 0 ? 3 : -3;
+      ctx.beginPath();
+      ctx.moveTo(x, midY);
+      ctx.lineTo(x, yEnd);
+      ctx.moveTo(x - 3, yEnd + head);
+      ctx.lineTo(x, yEnd);
+      ctx.lineTo(x + 3, yEnd + head);
+      ctx.stroke();
+    }
 
-            // 4. Current String Position (Blue)
-            ctx.beginPath();
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 3;
-            for (let i = 0; i <= NUM_POINTS; i++) {
-                const xPx = padding + (i / NUM_POINTS) * plotW;
-                const yVal = u_curr[i];
-                const yPx = centerY - yVal * VISUAL_SCALE * (plotH/2);
-                if (i === 0) ctx.moveTo(xPx, yPx);
-                else ctx.lineTo(xPx, yPx);
-            }
-            ctx.stroke();
+    ctx.strokeStyle = colors.series2;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const x = xAt(i);
+      const y = yAt(steady[i]);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
 
-            // 5. Nodes (Black dots at ends)
-            ctx.fillStyle = 'black';
-            ctx.beginPath(); ctx.arc(padding, centerY, 4, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(w - padding, centerY, 4, 0, Math.PI*2); ctx.fill();
-        }
+    ctx.strokeStyle = colors.series1;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const x = xAt(i);
+      const y = yAt(uCurr[i]);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
 
-        function loop() {
-            if (isPlaying) {
-                // Multiple physics steps per frame for speed
-                for(let k=0; k<4; k++) physicsStep();
-                timeDisplay.textContent = `t = ${simTime.toFixed(2)}s`;
-            }
-            draw();
-            animationId = requestAnimationFrame(loop);
-        }
+    // The pinned ends, so the boundary condition is visible rather than implied.
+    ctx.fillStyle = colors.ink;
+    for (const x of [PAD, width - PAD]) {
+      ctx.beginPath();
+      ctx.arc(x, midY, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 
-        // --- Interaction ---
+  function loop() {
+    if (playing) {
+      for (let n = 0; n < STEPS_PER_FRAME; n++) step();
+      timeCell.textContent = simTime.toFixed(2);
+    }
+    draw();
+    requestAnimationFrame(loop);
+  }
 
-        cSlider.addEventListener('input', (e) => {
-            c = parseFloat(e.target.value);
-            cValueDisplay.textContent = c.toFixed(2);
-            // Need to recompute steady state when c changes
-            precomputeSteadyStateAndForcing();
-        });
+  function paintKeys() {
+    document.getElementById('wf-key-u').style.borderTopColor = colors.series1;
+    document.getElementById('wf-key-v').style.borderTopColor = colors.series2;
+    document.getElementById('wf-key-f').style.borderTopColor = colors.annot;
+  }
 
-        kSlider.addEventListener('input', (e) => {
-            k = parseInt(e.target.value); // Integers only
-            kValueDisplay.textContent = k;
-            // Need to recompute steady state and forcing when k changes
-            precomputeSteadyStateAndForcing();
-        });
+  cSlider.addEventListener('input', (e) => {
+    c = parseFloat(e.target.value);
+    cValue.textContent = c.toFixed(2);
+    precompute();
+  });
 
-        playPauseBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if(isPlaying) {
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
-            } else {
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
-            }
-        });
+  kSlider.addEventListener('input', (e) => {
+    k = parseInt(e.target.value, 10);
+    kValue.textContent = String(k);
+    precompute();
+  });
 
-        resetBtn.addEventListener('click', () => {
-            initSimulation();
-            draw(); // force redraw immediately
-        });
+  playBtn.addEventListener('click', () => {
+    playing = !playing;
+    playBtn.textContent = playing ? 'Pause' : 'Play';
+    playBtn.classList.toggle('ap-btn--running', !playing);
+  });
 
-        // Start
-        initSimulation();
-        loop();
+  resetBtn.addEventListener('click', reset);
 
-    </script>
-</body>
-</html>
+  onTheme(() => { colors = plotColors(); paintKeys(); draw(); });
+  onResize(draw);
+
+  reset();
+  loop();
+</script>

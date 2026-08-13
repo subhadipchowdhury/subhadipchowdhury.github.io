@@ -1,0 +1,110 @@
+---
+layout: compress
+---
+
+{% comment %}
+  An applet page. Same shape as lab.html and for the same reason: an applet is a
+  working surface rather than a page of the site, so it drops the site header,
+  the navigation and the site footer, and replaces them with a way back to the
+  catalogue, a theme control, and the licence and AI disclosure.
+
+  It reuses the chrome out of engine/lab.css (.lab-skip, .lab-bar, .lab-foot,
+  .theme-toggle--bar) instead of restyling it here, so the bar and the footer
+  cannot drift between a lab and an applet and the 1076px content row documented
+  in HANDOFF.md holds on both. applets/applet.css adds the --ap-* layer on top.
+
+  What differs from a lab: no notation key (an applet has no pseudocode), no
+  spec fetch, and the disclosure footer speaks about an applet rather than a
+  puzzle. The page body is the applet itself, written in the page file.
+
+  Front matter a page supplies:
+    title    shown in <title> and as the h1 the page writes itself
+    robots   false on every applet, as on every lab
+    scripts  optional list of classic script paths, for a vendored library. They
+             are emitted before the page content, and a page's own <script
+             type="module"> is deferred by definition, so the library is always
+             defined by the time the page's code runs.
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body class="applet-page">
+    <a class="lab-skip" href="#ap-root">Skip to the applet</a>
+
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/applets/applet.css' | relative_url }}">
+
+    {% for src in page.scripts %}
+    <script src="{{ src | relative_url }}"></script>
+    {% endfor %}
+
+    <div class="lab-bar">
+      <div class="lab-bar__inner">
+        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span>Labs and Applets</span>
+        </a>
+        {% include theme_toggle.html variant="bar" %}
+      </div>
+    </div>
+
+    <main class="main-wrapper">
+      <div class="ap" id="ap-root">
+        <noscript>
+          <p class="ap-noscript">This applet computes and draws everything in
+          your browser, so it needs JavaScript. Turn it on for this page and
+          reload.</p>
+        </noscript>
+
+        {{ content }}
+      </div>
+    </main>
+
+    <footer class="lab-foot">
+      <div class="lab-foot__inner">
+        <p class="lab-foot__lede">I built these applets with AI assistance and
+        checked the mathematics myself. Nothing you do on this page leaves your
+        browser.</p>
+
+        <details class="lab-foot__more">
+          <summary>How this applet was built, and what it is for</summary>
+          <div class="lab-foot__body">
+            <section class="lab-foot__sec">
+              <h2>How this applet was built</h2>
+              <p>The simulation and the first drafts of the writing were built
+              with the help of a large language model. I checked the mathematics
+              and the numerical method myself, and anything still wrong in them
+              is mine. The
+              <a href="https://leidendeclaration.ai/">Leiden Declaration on
+              Artificial Intelligence and Mathematics</a> asks for this kind of
+              disclosure.</p>
+
+              <p>Nothing on this page calls an AI service, and nothing is sent
+              anywhere. Every number you see was computed in your own browser
+              while you watched.</p>
+            </section>
+
+            <section class="lab-foot__sec">
+              <h2>What this applet is for</h2>
+              <p>There is nothing to submit here. An applet is for building the
+              picture you reason with: change one thing, predict what will
+              happen, and check whether the plot agrees with you. The prediction
+              is the part that does the work.</p>
+
+              <p>Every simulation on this page is an approximation on a finite
+              grid, so it can be made to lie. If something looks wrong, ask
+              whether it is the mathematics or the step size.</p>
+            </section>
+          </div>
+        </details>
+
+        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        under a <a rel="license"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+        Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        License</a>.</p>
+      </div>
+    </footer>
+  </body>
+</html>

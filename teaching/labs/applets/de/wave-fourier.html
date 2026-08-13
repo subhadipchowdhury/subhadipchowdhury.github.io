@@ -1,610 +1,445 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive 1D Wave Equation Solver</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom slider styling for better visibility */
-        input[type=range] {
-            -webkit-appearance: none; 
-            width: 100%; 
-            background: transparent; 
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: #2563eb;
-            cursor: pointer;
-            margin-top: -6px; 
-            box-shadow: 0 0 2px rgba(0,0,0,0.5);
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: #cbd5e1;
-            border-radius: 2px;
-        }
-        .canvas-container {
-            position: relative;
-            width: 100%;
-            height: 400px; /* Fixed height for stability */
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            touch-action: none; /* Prevent scrolling while drawing */
-        }
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-        .draw-cursor {
-            cursor: crosshair;
-        }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans p-4 md:p-8">
+---
+layout: applet
+title: Wave equation and Fourier series
+description: The fixed-string solution built as a sum of standing modes, with the dominant Fourier coefficients listed as it runs.
+robots: false
+---
 
-    <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-slate-200">
-        
-        <!-- Header -->
-        <div class="bg-blue-600 p-6 text-white">
-            <h1 class="text-2xl font-bold flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                1D Wave Equation Solver
-            </h1>
-            <p class="mt-2 opacity-90 text-sm md:text-base">
-                Simulating $u_{tt} = c^2 u_{xx}$ with Dirichlet boundary conditions.
-            </p>
+<h1>Wave equation and Fourier series</h1>
+
+<p class="ap-lede">A string pinned at \(x=0\) and \(x=\pi\), released from a shape
+you choose. Nothing here solves a differential equation step by step. The initial
+shape is broken into standing modes \(\sin(nx)\), each mode is sent forward in
+time on its own, and the modes are added back up. The picture you get is the sum
+of the first forty of them, which is why a corner never quite stays a corner.</p>
+
+<div class="ap-eqn">
+  \[ u_{tt} = c^2 u_{xx}, \qquad u(0,t) = u(\pi,t) = 0, \qquad
+     u(x,t) = \sum_{n\ge 1}\bigl(A_n\cos nct + B_n\sin nct\bigr)\sin nx \]
+</div>
+
+<div class="ap-split">
+  <div class="ap-stack">
+    <div>
+      <div class="ap-figure" id="wq-figure">
+        <canvas id="wq-canvas"></canvas>
+        <div class="ap-badge">
+          <div class="ap-badge__label">Starting from</div>
+          <div id="wq-model">\(u(x,0) = \sin x\)</div>
         </div>
+      </div>
+      <p class="ap-figcaption" id="wq-caption">Fundamental mode, released from
+      rest.</p>
+    </div>
+  </div>
 
-        <div class="flex flex-col lg:flex-row">
-            
-            <!-- Left Panel: Controls -->
-            <div class="w-full lg:w-1/3 p-6 bg-slate-50 border-r border-slate-200 flex flex-col gap-6">
-                
-                <!-- Section 1: Scenario -->
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">1. Initial Conditions</label>
-                    <select id="scenarioSelect" class="w-full p-3 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm">
-                        <option value="1">1. Basic Standing Wave (sin x)</option>
-                        <option value="2">2. User Harmonic (sin mx)</option>
-                        <option value="3">3. Mixed Mode (Pos + Vel)</option>
-                        <option value="4">4. Complex Sum of Sines</option>
-                        <option value="5">5. Plucked String (Triangle)</option>
-                        <option value="6">6. Hammer Strike (Impulse)</option>
-                        <option value="7" class="font-bold text-blue-600">7. Draw Custom Wave ✏️</option>
-                    </select>
-                    <p id="scenarioDesc" class="text-xs text-slate-500 mt-2 italic">Fundamental mode starting from rest.</p>
-                    
-                    <!-- Draw Mode Instructions -->
-                    <div id="drawInstructions" class="hidden mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800 flex items-start gap-2">
-                        <span class="text-lg">✏️</span>
-                        <div>
-                            <b>Draw Mode Active:</b><br>
-                            Click and drag on the graph to draw your wave shape $u(x,0)$.
-                        </div>
-                    </div>
-                </div>
+  <div class="ap-stack">
+    <div class="ap-panel">
+      <h2>Initial conditions</h2>
+      <div class="ap-field">
+        <label for="wq-scenario">Shape at \(t = 0\)</label>
+        <select id="wq-scenario">
+          <option value="1">Fundamental, \(\sin x\)</option>
+          <option value="2">A single harmonic, \(\sin mx\)</option>
+          <option value="3">Shape on one mode, velocity on another</option>
+          <option value="4">A sum of four sines</option>
+          <option value="5">Plucked in the middle (triangle)</option>
+          <option value="6">Struck at \(x = \pi/4\) (impulse)</option>
+          <option value="7">Draw it yourself</option>
+        </select>
+      </div>
 
-                <!-- Section 2: Parameter m -->
-                <div id="paramContainer" class="opacity-50 transition-opacity duration-300 pointer-events-none">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Parameter <span class="font-mono text-blue-600">m</span></label>
-                    <div class="flex items-center gap-3">
-                        <input type="number" id="mInput" value="3" step="0.5" class="w-24 p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono text-center">
-                        <span class="text-xs text-slate-500">Controls frequency of option 2.</span>
-                    </div>
-                </div>
-
-                <hr class="border-slate-200">
-
-                <!-- Section 3: Playback -->
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-3 uppercase tracking-wide">2. Animation Controls</label>
-                    
-                    <div class="flex items-center gap-4 mb-4">
-                        <button id="playBtn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow-md active:transform active:scale-95">
-                            <span id="playIcon">▶</span> <span id="playText">Play</span>
-                        </button>
-                        <button id="resetBtn" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-lg transition shadow-sm">
-                            ↺ Reset
-                        </button>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-                        <div class="flex justify-between text-xs text-slate-500 mb-1 font-mono">
-                            <span>t = 0.00s</span>
-                            <span id="timeDisplay">0.00s</span>
-                            <span>t = 10&pi;</span>
-                        </div>
-                        <input type="range" id="timeSlider" min="0" max="31.4159" step="0.02" value="0">
-                    </div>
-                </div>
-
-                <!-- Fourier Coeffs Table -->
-                <div class="flex-grow">
-                    <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Dominant Fourier Modes</label>
-                    <div class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm text-sm">
-                        <table class="w-full text-left">
-                            <thead class="bg-slate-100 border-b border-slate-200 text-xs uppercase text-slate-500">
-                                <tr>
-                                    <th class="px-4 py-2">n</th>
-                                    <th class="px-4 py-2">Amplitude (√(A²+B²))</th>
-                                </tr>
-                            </thead>
-                            <tbody id="coeffTableBody" class="font-mono text-slate-700">
-                                <!-- JS populates this -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Panel: Visualization -->
-            <div class="w-full lg:w-2/3 p-6 bg-slate-50 flex flex-col">
-                <div class="canvas-container shadow-inner relative" id="canvasContainer">
-                    <canvas id="waveCanvas"></canvas>
-                    
-                    <!-- Overlay Info -->
-                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-2 rounded border border-slate-200 shadow-sm pointer-events-none">
-                        <div class="text-xs text-slate-500 uppercase font-bold tracking-wider">Math Model</div>
-                        <div id="mathModelTex" class="text-sm font-serif text-slate-800 mt-1">u(x,0) = sin(x)</div>
-                    </div>
-                </div>
-                
-                <div class="mt-4 grid grid-cols-3 gap-4 text-center text-xs text-slate-400 font-mono">
-                    <div>x = 0</div>
-                    <div>x = π/2</div>
-                    <div>x = π</div>
-                </div>
-            </div>
+      <div class="ap-field" id="wq-m-field" style="margin-top:0.9rem;" hidden>
+        <div class="ap-readout">
+          <label for="wq-m">Harmonic \(m\)</label>
+          <span class="ap-value" id="wq-m-value">3</span>
         </div>
+        <input type="range" id="wq-m" min="1" max="8" step="0.5" value="3">
+        <p class="ap-hint">Half-integer values are not modes of this string, so
+        watch what the coefficient table does to them.</p>
+      </div>
+
+      <p class="ap-hint" id="wq-draw-hint" style="margin-top:0.9rem;" hidden>Drag
+      across the figure to draw \(u(x,0)\). Let go and the drawing is replaced by
+      its own forty-mode approximation, which is the whole point: compare the two
+      and see what the sum can and cannot reproduce.</p>
     </div>
 
-    <!-- MathJax Configuration (Must be before script load) -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            }
-        };
-    </script>
-    <!-- MathJax Load -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <div class="ap-panel">
+      <h2>Running</h2>
+      <div class="ap-btns">
+        <button class="ap-btn ap-btn--primary" id="wq-play">Play</button>
+        <button class="ap-btn" id="wq-reset">Back to \(t = 0\)</button>
+      </div>
 
-    <script>
-        (function() {
-        /**
-         * WAVE EQUATION SOLVER ENGINE
-         * Solves u_tt = c^2 u_xx using Fourier Series approximation.
-         */
+      <div class="ap-field" style="margin-top:0.9rem;">
+        <div class="ap-readout">
+          <label for="wq-time">Time \(t\)</label>
+          <span class="ap-value" id="wq-time-value">0.00</span>
+        </div>
+        <input type="range" id="wq-time" min="0" max="31.4159" step="0.02" value="0">
+        <p class="ap-hint">The string is periodic with period \(2\pi\), so the
+        slider covers five returns to the start.</p>
+      </div>
+    </div>
 
-        // --- Constants & State ---
-        const PI = Math.PI;
-        const C = 1.0;        // Wave speed
-        const L = PI;         // Domain length
-        const N_TERMS = 40;   // Number of Fourier terms
-        const MAX_TIME = 10 * PI;
-        
-        let currentTime = 0;
-        let isPlaying = false;
-        let animationFrameId;
-        let aCoeffs = [];
-        let bCoeffs = [];
+    <div class="ap-panel">
+      <h2>Largest coefficients</h2>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th scope="col">\(n\)</th>
+            <th scope="col">\(\sqrt{A_n^2 + B_n^2}\)</th>
+          </tr>
+        </thead>
+        <tbody id="wq-coeffs"></tbody>
+      </table>
+      <p class="ap-hint" style="margin-top:0.7rem;">A shape with a corner in it
+      needs every mode, and the amplitudes fall off slowly. A shape that is
+      already a mode needs exactly one.</p>
+    </div>
+  </div>
+</div>
 
-        // Drawing Mode State
-        const SAMPLE_RES = 500; // Resolution for custom wave
-        let customWaveData = new Float32Array(SAMPLE_RES).fill(0);
-        let isDrawing = false;
+<script type="module">
+  import { plotColors, onTheme, fitCanvas, onResize, typeset } from '{{ '/teaching/labs/applets/applet.js' | relative_url }}';
 
-        // --- DOM Elements ---
-        const canvasContainer = document.getElementById('canvasContainer');
-        const canvas = document.getElementById('waveCanvas');
-        const ctx = canvas.getContext('2d');
-        const scenarioSelect = document.getElementById('scenarioSelect');
-        const mInput = document.getElementById('mInput');
-        const paramContainer = document.getElementById('paramContainer');
-        const timeSlider = document.getElementById('timeSlider');
-        const timeDisplay = document.getElementById('timeDisplay');
-        const playBtn = document.getElementById('playBtn');
-        const playIcon = document.getElementById('playIcon');
-        const playText = document.getElementById('playText');
-        const resetBtn = document.getElementById('resetBtn');
-        const coeffTableBody = document.getElementById('coeffTableBody');
-        const mathModelTex = document.getElementById('mathModelTex');
-        const scenarioDesc = document.getElementById('scenarioDesc');
-        const drawInstructions = document.getElementById('drawInstructions');
+  const PI = Math.PI;
+  const C = 1.0;          // wave speed
+  const L = PI;           // the string runs from 0 to pi
+  const TERMS = 40;
+  const MAX_T = 10 * PI;
+  const SAMPLES = 500;    // resolution of a drawn shape
 
-        // --- Numerical Integration (Simpson's Rule) ---
-        function integrateFourier(func, n) {
-            const steps = 200; 
-            const h = L / steps;
-            let sum = 0;
+  let time = 0;
+  let playing = false;
+  let frame = null;
+  let aCoeffs = [];
+  let bCoeffs = [];
+  let envelope = 1;       // the largest |u| the solution ever reaches
+  let colors = plotColors();
 
-            sum += func(0) * Math.sin(n * 0);
-            sum += func(L) * Math.sin(n * L);
+  const drawn = new Float32Array(SAMPLES);
+  let drawing = false;
 
-            for (let i = 1; i < steps; i++) {
-                const x = i * h;
-                const val = func(x) * Math.sin(n * x);
-                const weight = (i % 2 === 0) ? 2 : 4;
-                sum += weight * val;
-            }
-            return (h / 3) * sum;
-        }
+  const figure = document.getElementById('wq-figure');
+  const canvas = document.getElementById('wq-canvas');
+  const scenarioSel = document.getElementById('wq-scenario');
+  const mField = document.getElementById('wq-m-field');
+  const mSlider = document.getElementById('wq-m');
+  const mValue = document.getElementById('wq-m-value');
+  const drawHint = document.getElementById('wq-draw-hint');
+  const playBtn = document.getElementById('wq-play');
+  const resetBtn = document.getElementById('wq-reset');
+  const timeSlider = document.getElementById('wq-time');
+  const timeValue = document.getElementById('wq-time-value');
+  const coeffBody = document.getElementById('wq-coeffs');
+  const modelEl = document.getElementById('wq-model');
+  const captionEl = document.getElementById('wq-caption');
 
-        // --- Custom Wave Helper ---
-        // Interpolates value from the customWaveData array
-        function getCustomValue(x) {
-            // Map x (0 to PI) to index (0 to SAMPLE_RES-1)
-            const idx = (x / L) * (SAMPLE_RES - 1);
-            const i = Math.floor(idx);
-            const t = idx - i;
-            
-            // Boundary checks
-            if (i < 0) return 0;
-            if (i >= SAMPLE_RES - 1) return 0;
+  // Linear interpolation into the drawn buffer, so the shape is defined at every
+  // x the integrator asks for and not only at the sample points.
+  function drawnAt(x) {
+    const idx = (x / L) * (SAMPLES - 1);
+    const i = Math.floor(idx);
+    if (i < 0 || i >= SAMPLES - 1) return 0;
+    const t = idx - i;
+    return drawn[i] * (1 - t) + drawn[i + 1] * t;
+  }
 
-            // Linear interpolation
-            const y0 = customWaveData[i];
-            const y1 = customWaveData[i+1];
-            return y0 * (1 - t) + y1 * t;
-        }
+  const SCENARIOS = {
+    '1': {
+      u: () => (x) => Math.sin(x),
+      v: () => () => 0,
+      tex: 'u(x,0) = \\sin x, \\quad u_t(x,0) = 0',
+      note: 'Fundamental mode, released from rest.'
+    },
+    '2': {
+      u: (m) => (x) => Math.sin(m * x),
+      v: () => () => 0,
+      tex: 'u(x,0) = \\sin mx, \\quad u_t(x,0) = 0',
+      note: 'One harmonic, released from rest. A whole m is a mode of the string and stands still in shape; a half-integer m is not, and spreads across many modes.'
+    },
+    '3': {
+      u: () => (x) => 4 * Math.sin(x),
+      v: () => (x) => Math.sin(2 * x),
+      tex: 'u(x,0) = 4\\sin x, \\quad u_t(x,0) = \\sin 2x',
+      note: 'Shape on the first mode, velocity on the second. The two run at different frequencies, so the sum never repeats its own shape.'
+    },
+    '4': {
+      u: () => (x) => Math.sin(x) + Math.sin(2 * x) + Math.sin(3 * x) / 2 + Math.sin(4 * x) / 6,
+      v: () => () => 0,
+      tex: 'u(x,0) = \\sin x + \\sin 2x + \\tfrac12\\sin 3x + \\tfrac16\\sin 4x',
+      note: 'Four modes with the amplitudes written down for you. Check them against the table.'
+    },
+    '5': {
+      u: () => (x) => (x <= PI / 2 ? x : PI - x),
+      v: () => () => 0,
+      tex: 'u(x,0) = \\min(x, \\pi - x)',
+      note: 'A pluck. The corner at the middle is what forces the slow tail of coefficients.'
+    },
+    '6': {
+      u: () => () => 0,
+      v: () => {
+        // A narrow Gaussian standing in for a delta at pi/4, with unit area.
+        const sigma = 0.15;
+        const centre = PI / 4;
+        const amp = 1 / (sigma * Math.sqrt(2 * PI));
+        return (x) => amp * Math.exp(-Math.pow(x - centre, 2) / (2 * sigma * sigma));
+      },
+      tex: 'u(x,0) = 0, \\quad u_t(x,0) \\approx \\delta(x - \\pi/4)',
+      note: 'A hammer strike. It starts flat, so everything you see came from the velocity.'
+    },
+    '7': {
+      u: () => (x) => drawnAt(x),
+      v: () => () => 0,
+      tex: 'u(x,0) = \\text{your drawing}',
+      note: 'Your shape, released from rest, and then approximated by forty modes.'
+    }
+  };
 
-        // --- Scenarios ---
-        const scenarios = {
-            '1': {
-                u: (x, m) => Math.sin(x),
-                v: (x, m) => 0,
-                desc: "Fundamental mode. Pure standing wave.",
-                tex: "u(x,0) = \\sin(x), \\; u_t = 0"
-            },
-            '2': {
-                u: (x, m) => Math.sin(m * x),
-                v: (x, m) => 0,
-                desc: "Higher harmonic defined by parameter m.",
-                tex: "u(x,0) = \\sin(mx), \\; u_t = 0"
-            },
-            '3': {
-                u: (x, m) => 4 * Math.sin(x),
-                v: (x, m) => Math.sin(2 * x),
-                desc: "Initial position and velocity on different modes.",
-                tex: "u = 4\\sin(x), \\; u_t = \\sin(2x)"
-            },
-            '4': {
-                u: (x, m) => Math.sin(x) + Math.sin(2*x) + Math.sin(3*x)/2 + Math.sin(4*x)/6,
-                v: (x, m) => 0,
-                desc: "Complex shape built from multiple sine waves.",
-                tex: "u = \\sum \\frac{\\sin(nx)}{coeff}"
-            },
-            '5': {
-                u: (x, m) => (x <= PI/2) ? x : (PI - x),
-                v: (x, m) => 0,
-                desc: "Triangular pluck at center.",
-                tex: "u(x,0) = \\text{Triangle}(x)"
-            },
-            '6': {
-                u: (x, m) => 0,
-                v: (x, m) => {
-                    // Gaussian approximation of delta(x - PI/4)
-                    // Area = 1.
-                    const sigma = 0.15; 
-                    const center = PI / 4;
-                    const amp = 1.0 / (sigma * Math.sqrt(2 * PI));
-                    return amp * Math.exp(-Math.pow(x - center, 2) / (2 * sigma * sigma));
-                },
-                desc: "Sharp impulse at x=π/4 (Approximating delta(x-π/4)).",
-                tex: "u=0, \\; u_t = \\delta(x-\\pi/4)"
-            },
-            '7': {
-                u: (x, m) => getCustomValue(x),
-                v: (x, m) => 0,
-                desc: "Custom shape drawn by user. Released from rest.",
-                tex: "u(x,0) = \\text{Custom Drawing}"
-            }
-        };
+  // Simpson's rule on the interval, weights 4 on odd nodes and 2 on even ones.
+  function project(f, n) {
+    const steps = 200;
+    const h = L / steps;
+    let sum = f(0) * Math.sin(0) + f(L) * Math.sin(n * L);
+    for (let i = 1; i < steps; i++) {
+      const x = i * h;
+      sum += (i % 2 === 0 ? 2 : 4) * f(x) * Math.sin(n * x);
+    }
+    return (h / 3) * sum;
+  }
 
-        // --- Core Solver ---
-        function computeCoefficients() {
-            const key = scenarioSelect.value;
-            const m = parseFloat(mInput.value) || 1;
-            const scenario = scenarios[key];
+  function solve(x, t) {
+    let u = 0;
+    for (let n = 1; n <= TERMS; n++) {
+      const omega = n * C;
+      u += Math.sin(n * x) * (aCoeffs[n - 1] * Math.cos(omega * t) + bCoeffs[n - 1] * Math.sin(omega * t));
+    }
+    return u;
+  }
 
-            aCoeffs = [];
-            bCoeffs = [];
+  // The vertical scale has to hold for the whole animation, not just for t = 0.
+  // Scenario 6 starts flat, so a scale taken at t = 0 would be zero and the
+  // strike would run off the top of the figure the moment it began.
+  function measureEnvelope() {
+    let peak = 0;
+    for (let ti = 0; ti <= 24; ti++) {
+      const t = (ti / 24) * (2 * PI / C);
+      for (let xi = 0; xi <= 60; xi++) {
+        const mag = Math.abs(solve((xi / 60) * L, t));
+        if (mag > peak) peak = mag;
+      }
+    }
+    return peak > 1e-6 ? peak : 1;
+  }
 
-            scenarioDesc.innerText = scenario.desc;
-            mathModelTex.innerText = `$$${scenario.tex}$$`;
-            
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                MathJax.typesetPromise([mathModelTex]).catch(err => console.log('MathJax error:', err));
-            }
+  function recompute() {
+    const key = scenarioSel.value;
+    const scenario = SCENARIOS[key];
+    const m = parseFloat(mSlider.value) || 1;
+    const u0 = scenario.u(m);
+    const v0 = scenario.v(m);
 
-            // UI State Updates
-            if (key === '2') {
-                paramContainer.classList.remove('opacity-50', 'pointer-events-none');
-            } else {
-                paramContainer.classList.add('opacity-50', 'pointer-events-none');
-            }
-            
-            if (key === '7') {
-                drawInstructions.classList.remove('hidden');
-                canvasContainer.classList.add('draw-cursor');
-            } else {
-                drawInstructions.classList.add('hidden');
-                canvasContainer.classList.remove('draw-cursor');
-            }
+    aCoeffs = [];
+    bCoeffs = [];
+    for (let n = 1; n <= TERMS; n++) {
+      aCoeffs.push((2 / L) * project(u0, n));
+      bCoeffs.push((2 / (n * PI * C)) * project(v0, n));
+    }
 
-            // Compute Fourier Terms
-            for (let n = 1; n <= N_TERMS; n++) {
-                let valA = integrateFourier((x) => scenario.u(x, m), n);
-                aCoeffs.push((2/L) * valA);
+    envelope = measureEnvelope();
+    // Drawing wants a stable frame even when the drawing is nearly flat, so the
+    // scale never zooms in past the range the pointer maps to.
+    if (key === '7' && envelope < 1) envelope = 1;
 
-                let valB = integrateFourier((x) => scenario.v(x, m), n);
-                bCoeffs.push((2 / (n * PI * C)) * valB);
-            }
+    mField.hidden = key !== '2';
+    drawHint.hidden = key !== '7';
+    figure.classList.toggle('ap-figure--draw', key === '7');
 
-            updateCoeffTable();
-        }
+    captionEl.textContent = scenario.note;
+    modelEl.innerHTML = '\\(' + scenario.tex + '\\)';
+    typeset(modelEl);
 
-        function solveWave(x, t) {
-            let u = 0;
-            for (let n = 1; n <= N_TERMS; n++) {
-                const idx = n - 1;
-                const omega = n * C; 
-                const spatial = Math.sin(n * x);
-                const temporal = aCoeffs[idx] * Math.cos(omega * t) + bCoeffs[idx] * Math.sin(omega * t);
-                u += spatial * temporal;
-            }
-            return u;
-        }
+    fillCoeffTable();
+  }
 
-        // --- Drawing Logic ---
-        function handleDraw(e) {
-            if (!isDrawing) return;
-            if (scenarioSelect.value !== '7') return;
+  function fillCoeffTable() {
+    const rows = aCoeffs
+      .map((a, i) => ({ n: i + 1, mag: Math.hypot(a, bCoeffs[i]) }))
+      .filter((r) => r.mag >= 0.001)
+      .sort((x, y) => y.mag - x.mag)
+      .slice(0, 6);
 
-            const rect = canvas.getBoundingClientRect();
-            const x_px = e.clientX - rect.left;
-            const y_px = e.clientY - rect.top;
-            
-            // Map px to math coords
-            const x_math = Math.max(0, Math.min(L, (x_px / rect.width) * L));
-            
-            // y_math scale approx (-1.5 to 1.5 usually). 
-            // Center is height/2. Down is positive Y in canvas, negative in math.
-            const y_math = -1 * (y_px - rect.height/2) / (rect.height/3); 
+    coeffBody.innerHTML = '';
+    if (rows.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 2;
+      td.className = 'ap-table__empty';
+      td.textContent = 'Every coefficient is below 0.001.';
+      tr.appendChild(td);
+      coeffBody.appendChild(tr);
+      return;
+    }
+    for (const row of rows) {
+      const tr = document.createElement('tr');
+      const th = document.createElement('td');
+      th.textContent = String(row.n);
+      const td = document.createElement('td');
+      td.textContent = row.mag.toFixed(4);
+      tr.append(th, td);
+      coeffBody.appendChild(tr);
+    }
+  }
 
-            // Update buffer
-            // We update a range of indices to avoid holes if moving fast
-            const idx = Math.floor((x_math / L) * (SAMPLE_RES - 1));
-            
-            // Simple brush (width of ~3 indices)
-            for(let i = Math.max(0, idx-2); i <= Math.min(SAMPLE_RES-1, idx+2); i++) {
-                customWaveData[i] = y_math;
-            }
+  function draw(rawBuffer = false) {
+    const { ctx, width, height } = fitCanvas(canvas);
+    const midY = height / 2;
+    // Leave the top and bottom sixth clear, so a peak at the envelope does not
+    // touch the frame.
+    const scale = (height / 2) * 0.78 / envelope;
 
-            // Visual feedback (draw raw buffer immediately)
-            draw(true); // Pass true to indicate we are in 'edit mode' rendering
-        }
+    ctx.clearRect(0, 0, width, height);
 
-        canvas.addEventListener('mousedown', (e) => {
-            if (scenarioSelect.value !== '7') return;
-            isDrawing = true;
-            // Pause animation if playing
-            if (isPlaying) {
-                playBtn.click(); 
-            }
-            currentTime = 0;
-            timeSlider.value = 0;
-            timeDisplay.innerText = "0.00s";
-            handleDraw(e);
-        });
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, midY);
+    ctx.lineTo(width, midY);
+    ctx.stroke();
 
-        window.addEventListener('mousemove', handleDraw);
+    ctx.fillStyle = colors.label;
+    ctx.font = '12px system-ui, sans-serif';
+    ctx.fillText('0', 4, midY + 18);
+    ctx.fillText('\u03c0/2', width / 2 - 10, midY + 18);
+    ctx.fillText('\u03c0', width - 14, midY + 18);
 
-        window.addEventListener('mouseup', () => {
-            if (isDrawing) {
-                isDrawing = false;
-                // Recalculate coefficients based on new drawing
-                computeCoefficients();
-                draw(); // Render the Fourier approximation
-            }
-        });
+    if (rawBuffer) {
+      // While the pointer is down, show the drawn buffer itself rather than its
+      // Fourier sum. Series 2, because it is not the solution.
+      ctx.strokeStyle = colors.series2;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i < SAMPLES; i++) {
+        const x = (i / (SAMPLES - 1)) * width;
+        const y = midY - drawn[i] * scale;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      return;
+    }
 
-        // --- Rendering ---
-        function draw(showRawBuffer = false) {
-            const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
+    const points = 320;
+    ctx.beginPath();
+    for (let i = 0; i <= points; i++) {
+      const x = (i / points) * width;
+      const y = midY - solve((i / points) * L, time) * scale;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = colors.series1;
+    ctx.lineWidth = 3;
+    ctx.stroke();
 
-            const width = rect.width;
-            const height = rect.height;
+    ctx.lineTo(width, midY);
+    ctx.lineTo(0, midY);
+    ctx.closePath();
+    ctx.fillStyle = colors.series1Fill;
+    ctx.fill();
+  }
 
-            // Clear
-            ctx.fillStyle = '#f8fafc';
-            ctx.fillRect(0, 0, width, height);
+  function setTime(t) {
+    time = t;
+    timeSlider.value = String(t);
+    timeValue.textContent = t.toFixed(2);
+  }
 
-            // Axis
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(0, height/2);
-            ctx.lineTo(width, height/2);
-            ctx.stroke();
+  function stop() {
+    playing = false;
+    playBtn.textContent = 'Play';
+    playBtn.classList.remove('ap-btn--running');
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = null;
+  }
 
-            // If drawing, show the raw custom buffer
-            if (showRawBuffer && scenarioSelect.value === '7') {
-                 ctx.beginPath();
-                 ctx.strokeStyle = '#ef4444'; // Red while drawing
-                 ctx.lineWidth = 2;
-                 const scaleY = height / 3; // Match the input scaling
-                 
-                 for (let i = 0; i < SAMPLE_RES; i++) {
-                     const x_screen = (i / (SAMPLE_RES-1)) * width;
-                     const y_val = customWaveData[i];
-                     const y_screen = (height/2) - (y_val * scaleY);
-                     if (i===0) ctx.moveTo(x_screen, y_screen);
-                     else ctx.lineTo(x_screen, y_screen);
-                 }
-                 ctx.stroke();
-                 return;
-            }
+  function animate() {
+    if (!playing) return;
+    setTime(time + 0.04 > MAX_T ? 0 : time + 0.04);
+    draw();
+    frame = requestAnimationFrame(animate);
+  }
 
-            // Otherwise, plot the Fourier Series Solution
-            ctx.beginPath();
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 3;
-            
-            const plotPoints = 300;
-            
-            // Auto-scale Y
-            let maxAmp = 0;
-            // Check t=0 to establish scale
-            for(let i=0; i<=50; i++) {
-                const val = Math.abs(solveWave(i * L/50, 0));
-                if(val > maxAmp) maxAmp = val;
-            }
-            // For drawing mode, ensure we can see at least range -1 to 1
-            if (scenarioSelect.value === '7' && maxAmp < 1.0) maxAmp = 1.0;
-            
-            const scaleY = (height / 2) / (maxAmp * 1.5 || 1.5); 
-            const centerY = height / 2;
+  // Pointer events rather than mouse events, so drawing works on a tablet as
+  // well as with a mouse. .ap-figure--draw sets touch-action: none.
+  function paint(e) {
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.max(0, Math.min(L, ((e.clientX - rect.left) / rect.width) * L));
+    // The pointer maps to +-1.5 across the figure, matching the 0.78 of the
+    // half-height the draw scale uses at envelope 1.
+    const y = -((e.clientY - rect.top) - rect.height / 2) / (rect.height * 0.26);
+    const idx = Math.round((x / L) * (SAMPLES - 1));
+    for (let i = Math.max(0, idx - 2); i <= Math.min(SAMPLES - 1, idx + 2); i++) {
+      drawn[i] = y;
+    }
+    draw(true);
+  }
 
-            for (let i = 0; i <= plotPoints; i++) {
-                const x_screen = (i / plotPoints) * width;
-                const x_math = (i / plotPoints) * L;
-                const u_val = solveWave(x_math, currentTime);
-                
-                const y_screen = centerY - (u_val * scaleY);
-                
-                if (i === 0) ctx.moveTo(x_screen, y_screen);
-                else ctx.lineTo(x_screen, y_screen);
-            }
-            ctx.stroke();
+  canvas.addEventListener('pointerdown', (e) => {
+    if (scenarioSel.value !== '7') return;
+    drawing = true;
+    canvas.setPointerCapture(e.pointerId);
+    stop();
+    setTime(0);
+    paint(e);
+  });
 
-            // Fill
-            ctx.lineTo(width, centerY);
-            ctx.lineTo(0, centerY);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.1)';
-            ctx.fill();
-        }
+  canvas.addEventListener('pointermove', paint);
 
-        function updateCoeffTable() {
-            let mags = [];
-            for(let i=0; i<aCoeffs.length; i++) {
-                const n = i + 1;
-                const mag = Math.sqrt(aCoeffs[i]**2 + bCoeffs[i]**2);
-                mags.push({n, mag});
-            }
-            mags.sort((a, b) => b.mag - a.mag);
+  canvas.addEventListener('pointerup', () => {
+    if (!drawing) return;
+    drawing = false;
+    recompute();
+    draw();
+  });
 
-            coeffTableBody.innerHTML = '';
-            for(let i=0; i<Math.min(6, mags.length); i++) {
-                if (mags[i].mag < 0.001) continue;
-                
-                const row = document.createElement('tr');
-                row.className = "border-b border-slate-100 hover:bg-slate-50";
-                row.innerHTML = `
-                    <td class="px-4 py-2 font-bold text-slate-600">${mags[i].n}</td>
-                    <td class="px-4 py-2 text-blue-600">${mags[i].mag.toFixed(4)}</td>
-                `;
-                coeffTableBody.appendChild(row);
-            }
-            
-            if (coeffTableBody.children.length === 0) {
-                coeffTableBody.innerHTML = `<tr><td colspan="2" class="px-4 py-4 text-center text-slate-400 italic">No significant modes</td></tr>`;
-            }
-        }
+  scenarioSel.addEventListener('change', () => {
+    stop();
+    setTime(0);
+    if (scenarioSel.value === '7') drawn.fill(0);
+    recompute();
+    draw();
+  });
 
-        function animate(timestamp) {
-            if (isPlaying) {
-                currentTime += 0.04; 
-                if (currentTime > MAX_TIME) currentTime = 0;
-                
-                timeSlider.value = currentTime;
-                timeDisplay.innerText = currentTime.toFixed(2) + 's';
-                
-                draw();
-                animationFrameId = requestAnimationFrame(animate);
-            }
-        }
+  mSlider.addEventListener('input', () => {
+    mValue.textContent = parseFloat(mSlider.value).toString();
+    recompute();
+    draw();
+  });
 
-        // --- Event Listeners ---
-        scenarioSelect.addEventListener('change', () => {
-            currentTime = 0;
-            timeSlider.value = 0;
-            timeDisplay.innerText = "0.00s";
-            
-            // Reset buffer if switching to draw mode initially
-            if (scenarioSelect.value === '7') {
-                customWaveData.fill(0);
-            }
+  timeSlider.addEventListener('input', (e) => {
+    stop();
+    setTime(parseFloat(e.target.value));
+    draw();
+  });
 
-            computeCoefficients();
-            draw();
-            if (isPlaying) {
-                playBtn.click(); // Pause on switch
-            }
-        });
+  playBtn.addEventListener('click', () => {
+    if (playing) { stop(); return; }
+    playing = true;
+    playBtn.textContent = 'Pause';
+    playBtn.classList.add('ap-btn--running');
+    animate();
+  });
 
-        mInput.addEventListener('input', () => {
-            computeCoefficients();
-            draw();
-        });
+  resetBtn.addEventListener('click', () => {
+    stop();
+    setTime(0);
+    draw();
+  });
 
-        timeSlider.addEventListener('input', (e) => {
-            currentTime = parseFloat(e.target.value);
-            timeDisplay.innerText = currentTime.toFixed(2) + 's';
-            draw();
-            if(isPlaying) {
-                playBtn.click();
-            }
-        });
+  onTheme(() => { colors = plotColors(); draw(); });
+  onResize(() => draw());
 
-        playBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
-                playText.innerText = "Pause";
-                playIcon.innerText = "⏸";
-                playBtn.classList.replace('bg-blue-600', 'bg-amber-500');
-                playBtn.classList.replace('hover:bg-blue-700', 'hover:bg-amber-600');
-                animate();
-            } else {
-                playText.innerText = "Play";
-                playIcon.innerText = "▶";
-                playBtn.classList.replace('bg-amber-500', 'bg-blue-600');
-                playBtn.classList.replace('hover:bg-amber-600', 'hover:bg-blue-700');
-                cancelAnimationFrame(animationFrameId);
-            }
-        });
-
-        resetBtn.addEventListener('click', () => {
-            if (isPlaying) playBtn.click();
-            currentTime = 0;
-            timeSlider.value = 0;
-            timeDisplay.innerText = "0.00s";
-            draw();
-        });
-
-        window.addEventListener('resize', () => draw());
-
-        // --- Initialization ---
-        computeCoefficients();
-        draw();
-
-        })();
-    </script>
-</body>
-</html>
+  recompute();
+  draw();
+</script>

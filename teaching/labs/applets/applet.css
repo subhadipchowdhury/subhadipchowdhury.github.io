@@ -1,0 +1,436 @@
+/* Applet pages: the shared shell, the controls, and the plot palette.
+ *
+ * An applet reuses the standalone chrome from engine/lab.css (.lab-skip,
+ * .lab-bar, .lab-foot, .theme-toggle--bar) so the bar and footer cannot drift
+ * between a lab and an applet, and so the 1076px content row documented in
+ * HANDOFF.md holds on both. This file adds the --ap-* layer: page furniture,
+ * form controls, and the colours a canvas or a Plotly plot draws with.
+ *
+ * The plot colours are declared here rather than inside each page so that
+ * applet.js can read one set of names off :root, and so dark mode is a chosen
+ * palette rather than an automatic flip. Both modes were validated for
+ * colour-vision separation against their own surface; see HANDOFF.md.
+ */
+
+/* --------------------------------------------------------------------------
+ * Tokens
+ * ----------------------------------------------------------------------- */
+
+:root {
+  --ap-panel: rgba(0, 0, 0, 0.025);
+  --ap-panel-border: rgba(0, 42, 58, 0.12);
+  --ap-field-bg: #ffffff;
+  --ap-field-border: rgba(0, 42, 58, 0.22);
+  --ap-warn-bg: #fbeceb;
+  --ap-warn-fg: #9d2f26;
+  --ap-warn-border: rgba(157, 47, 38, 0.28);
+
+  /* Plot surface and furniture. --ap-plot-bg is the value the light palette was
+     validated against, so a page that overrides it has to revalidate. */
+  --ap-plot-bg: #f9fafb;
+  --ap-plot-axis: rgba(0, 42, 58, 0.35);
+  --ap-plot-grid: rgba(0, 42, 58, 0.12);
+  --ap-plot-label: #4d4d4d;
+
+  /* Two data series, in fixed order. Series 1 is the quantity the applet is
+     about; series 2 is what it is being compared against. */
+  --ap-series-1: #2563eb;
+  --ap-series-1-fill: rgba(37, 99, 235, 0.12);
+  --ap-series-2: #c0392b;
+
+  /* Annotation, deliberately below both series in salience. Not a third series:
+     the forcing arrows are identified by being arrows, not by their colour. */
+  --ap-plot-annot: rgba(0, 42, 58, 0.22);
+}
+
+html[data-theme="dark"] {
+  --ap-panel: rgba(255, 255, 255, 0.04);
+  --ap-panel-border: rgba(255, 255, 255, 0.12);
+  --ap-field-bg: #2b2b2b;
+  --ap-field-border: rgba(255, 255, 255, 0.22);
+  --ap-warn-bg: rgba(206, 78, 68, 0.16);
+  --ap-warn-fg: #f0a29a;
+  --ap-warn-border: rgba(240, 162, 154, 0.3);
+
+  --ap-plot-bg: #1e1e1e;
+  --ap-plot-axis: rgba(255, 255, 255, 0.32);
+  --ap-plot-grid: rgba(255, 255, 255, 0.12);
+  --ap-plot-label: #a8a8a8;
+
+  --ap-series-1: #5f92e8;
+  --ap-series-1-fill: rgba(95, 146, 232, 0.16);
+  --ap-series-2: #dc6a57;
+
+  --ap-plot-annot: rgba(255, 255, 255, 0.24);
+}
+
+/* --------------------------------------------------------------------------
+ * Page furniture
+ * ----------------------------------------------------------------------- */
+
+.ap {
+  padding: 1rem 0 4rem;
+  font-family: var(--lab-sans);
+  color: var(--color-text);
+}
+
+.ap *,
+.ap *::before,
+.ap *::after { box-sizing: border-box; }
+
+/* The site right-aligns every h3. */
+.ap h1,
+.ap h2,
+.ap h3 { text-align: left; }
+
+.ap h1 {
+  font-family: var(--lab-serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+}
+
+.ap h2 {
+  font-family: var(--lab-semi);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.7rem;
+}
+
+.ap-lede {
+  margin: 0 0 1.4rem;
+  max-width: 60ch;
+  line-height: 1.55;
+  color: var(--color-muted);
+  text-wrap: pretty;
+}
+
+/* The governing equation, set apart from the prose. */
+.ap-eqn {
+  margin: 0 0 1.4rem;
+  padding: 0.7rem 1rem;
+  background: var(--ap-panel);
+  border: 1px solid var(--ap-panel-border);
+  border-radius: 6px;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.ap-panel {
+  padding: 1rem 1.1rem;
+  background: var(--ap-panel);
+  border: 1px solid var(--ap-panel-border);
+  border-radius: 8px;
+}
+
+/* Controls left, figure right, stacking under 900px. The figure comes first in
+   the source so a narrow screen shows the picture before the knobs. */
+.ap-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.ap-split > * { min-width: 0; }
+
+.ap-stack { display: flex; flex-direction: column; gap: 1.1rem; }
+
+/* --------------------------------------------------------------------------
+ * Controls
+ * ----------------------------------------------------------------------- */
+
+.ap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.1rem;
+}
+
+.ap-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+
+.ap-field > label,
+.ap-label {
+  font-family: var(--lab-semi);
+  font-size: 0.82rem;
+  color: var(--color-text);
+}
+
+.ap-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+/* Label on the left, current value on the right, above a slider. */
+.ap-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+/* Numbers a student reads off the page wear the text token, never a series
+   colour: a coloured number reads as a fourth series that is not on the plot. */
+.ap-value {
+  font-family: var(--lab-mono);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.ap input[type="number"],
+.ap select {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  background: var(--ap-field-bg);
+  border: 1px solid var(--ap-field-border);
+  border-radius: 6px;
+}
+
+.ap input[type="number"] { font-family: var(--lab-mono); }
+
+.ap input[type="range"] {
+  width: 100%;
+  height: 1.1rem;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.ap input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ap-plot-grid);
+}
+
+.ap input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+  background: var(--ap-series-1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ap input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ap-plot-grid);
+}
+
+.ap input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+  background: var(--ap-series-1);
+}
+
+.ap-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--lab-semi);
+  font-size: 0.85rem;
+  line-height: 1.2;
+  color: var(--color-text);
+  background: var(--ap-field-bg);
+  border: 1px solid var(--ap-field-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ap-btn:hover { border-color: var(--accent); color: var(--accent); }
+.ap-btn:active { transform: translateY(1px); }
+
+.ap-btn--primary {
+  color: #ffffff;
+  background: var(--ap-series-1);
+  border-color: transparent;
+}
+
+.ap-btn--primary:hover {
+  color: #ffffff;
+  filter: brightness(1.08);
+  border-color: transparent;
+}
+
+/* The running state is a different word as well as a different colour, so the
+   button never relies on colour to say what it will do. */
+.ap-btn--running {
+  color: #ffffff;
+  background: var(--ap-series-2);
+  border-color: transparent;
+}
+
+.ap-btn--running:hover { color: #ffffff; filter: brightness(1.08); border-color: transparent; }
+
+.ap-btn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+  filter: none;
+}
+
+.ap-btn--icon { padding: 0.45rem; border-radius: 999px; }
+.ap-btn--icon svg { display: block; }
+
+.ap-btns { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.ap :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * Figure
+ * ----------------------------------------------------------------------- */
+
+.ap-figure {
+  --ap-fig-h: 25rem;
+
+  position: relative;
+  background: var(--ap-plot-bg);
+  border: 1px solid var(--ap-panel-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* The height has to come from CSS, not from the canvas height attribute. With
+   no CSS height a canvas takes its layout height from that attribute, so
+   applet.js setting canvas.height for the device pixel ratio would grow the
+   element, which would grow the next measurement, and so on every frame. */
+.ap-figure canvas {
+  display: block;
+  width: 100%;
+  height: var(--ap-fig-h);
+}
+
+.ap-figure--draw { cursor: crosshair; touch-action: none; }
+
+.ap-figcaption {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+/* Legend and overlay badge float on the figure. Both are non-interactive, so
+   neither steals a pointer event from a canvas being drawn on. */
+.ap-legend,
+.ap-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 1px solid var(--ap-panel-border);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.ap-legend { display: grid; gap: 0.3rem; }
+
+.ap-legend__item { display: flex; align-items: center; gap: 0.45rem; }
+
+/* The sample carries the line's weight and dash as well as its colour, so the
+   legend still distinguishes the series in greyscale or forced colours. */
+.ap-legend__sample {
+  flex: none;
+  width: 1.4rem;
+  border-top-style: solid;
+}
+
+.ap-badge__label {
+  font-family: var(--lab-semi);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* --------------------------------------------------------------------------
+ * Table and warning
+ * ----------------------------------------------------------------------- */
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.ap-table th,
+.ap-table td {
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--ap-panel-border);
+}
+
+.ap-table th {
+  font-family: var(--lab-semi);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.ap-table td { font-family: var(--lab-mono); font-variant-numeric: tabular-nums; }
+.ap-table tr:last-child td { border-bottom: 0; }
+.ap-table__empty { font-family: var(--lab-sans); color: var(--color-muted); }
+
+/* Hidden until something is inconsistent, and it says so in words as well as in
+   colour. */
+.ap-warn {
+  display: none;
+  margin: 0 0 1.1rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ap-warn-fg);
+  background: var(--ap-warn-bg);
+  border: 1px solid var(--ap-warn-border);
+  border-radius: 6px;
+}
+
+.ap-warn.is-on { display: block; }
+
+.ap-noscript {
+  margin: 0 0 1.4rem;
+  padding: 0.7rem 0.9rem;
+  color: var(--ap-warn-fg);
+  background: var(--ap-warn-bg);
+  border: 1px solid var(--ap-warn-border);
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+ * Narrow screens
+ * ----------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .ap-split { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .ap-figure { --ap-fig-h: 17rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-btn:active { transform: none; }
+}
