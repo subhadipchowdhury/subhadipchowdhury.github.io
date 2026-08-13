@@ -474,8 +474,12 @@ class LabController {
     for (const note of gate.annotations || []) {
       const p = el('p');
       const rows = (note.blocks || []).map((bid) => rowOf.get(bid)).filter(Boolean);
+      // Three or more chained on "and" reads as a mistake, so list them.
+      const listed = rows.length > 2
+        ? `${rows.slice(0, -1).join(', ')} and ${rows[rows.length - 1]}`
+        : rows.join(' and ');
       const label = rows.length
-        ? `Line${rows.length > 1 ? 's' : ''} ${rows.join(' and ')}. `
+        ? `Line${rows.length > 1 ? 's' : ''} ${listed}. `
         : '';
       p.textContent = label + note.text;
       notes.appendChild(p);
