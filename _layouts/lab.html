@@ -32,7 +32,7 @@ layout: compress
       <div class="lab-bar__inner">
         <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
           <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
-          <span>Computational Labs</span>
+          <span>Labs and Applets</span>
         </a>
         {% include theme_toggle.html variant="bar" %}
       </div>
@@ -84,9 +84,8 @@ layout: compress
            data-spec="{{ '/teaching/labs/specs/' | append: page.lab_id | append: '.json' | relative_url }}">
         <noscript>
           <p>These labs assemble an algorithm from draggable blocks, so they need
-          JavaScript. The notebook itself does not:
-          <a href="{{ '/teaching/labs/' | relative_url }}">open it from Computational
-          Labs</a> and it will run in Google Colab.</p>
+          JavaScript. Turn it on for this page and reload. The notebook is behind
+          the puzzles and there is no way around them, here or anywhere else.</p>
         </noscript>
         <p class="lab-progress" id="lab-loading">Loading the lab…</p>
       </div>

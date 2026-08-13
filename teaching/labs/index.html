@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Computational Labs
+title: Labs and Applets
 parentnav: Teaching
 subnav_weight: 24
-description: Notebooks and guided labs for undergraduate mathematics, run in Google Colab.
+description: Guided labs, applets, and concept maps for undergraduate mathematics.
 ---
 
 {% raw %}
@@ -32,7 +32,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   /* This page fills the site content card edge-to-edge with its own paper
      surface rather than the site background. Every themeable color is a token
      below, so the site's dark-mode toggle re-skins the whole page at once. */
-  body.page-computational-labs .main-wrapper {
+  body.page-labs-and-applets .main-wrapper {
     padding: 0;
     background: var(--cat-page);
     overflow: hidden;
@@ -41,7 +41,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   /* Light palette. The tokens live on the body (not .cat-library) because
      .main-wrapper above sits outside the library container. The body class is
      built from page.title in _layouts/default.html, so it tracks the page name. */
-  body.page-computational-labs {
+  body.page-labs-and-applets {
     --cat-maroon: #800000;
     --cat-ink: #161512;
 
@@ -73,7 +73,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   /* Dark palette. Warm charcoals rather than the site's neutral greys, so the
      page keeps the warm-paper character it has in light mode. */
-  html[data-theme="dark"] body.page-computational-labs {
+  html[data-theme="dark"] body.page-labs-and-applets {
     /* Maroon goes near-black on a dark ground; this is the same hue lifted
        into a legible range (the site swaps to lake blue, which fights the
        warm surfaces here). */
@@ -399,8 +399,8 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   <!-- ===== HEADER ===== -->
   <header class="cat-head">
     <div class="cat-head-text">
-      <h1 class="cat-title">Computational Labs</h1>
-      <p class="cat-sub">Notebooks and guided labs for undergraduate mathematics, spanning numerical analysis, differential equations, calculus, and real analysis.</p>
+      <h1 class="cat-title">Labs and Applets</h1>
+      <p class="cat-sub">Guided labs, applets, and concept maps for numerical analysis, differential equations, calculus, and real analysis. A lab is an assignment and takes a while. An applet you can just open and push around.</p>
     </div>
     <div class="cat-head-search">
       <jelly-input id="cat-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
@@ -411,8 +411,17 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   <div class="cat-sticky">
     <div id="cat-chips" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;">
-      <div class="cat-count">Showing <strong id="cat-shown">0</strong> of <span id="cat-total">0</span> labs</div>
+      <div class="cat-count">Showing <strong id="cat-shown">0</strong> of <span id="cat-total">0</span> activities</div>
       <div style="display:flex;align-items:center;gap:18px;">
+        <div style="display:flex;align-items:center;gap:9px;">
+          <span class="cat-tool-label">Type</span>
+          <jelly-select id="cat-kind" size="small">
+            <jelly-option value="all">Everything</jelly-option>
+            <jelly-option value="lab">Guided labs</jelly-option>
+            <jelly-option value="applet">Applets</jelly-option>
+            <jelly-option value="map">Concept maps</jelly-option>
+          </jelly-select>
+        </div>
         <div style="display:flex;align-items:center;gap:9px;">
           <span class="cat-tool-label">Sort</span>
           <jelly-select id="cat-sort" size="small">
@@ -429,24 +438,28 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   <div id="cat-results" style="margin-top:26px;"></div>
 
   <!-- ===== FOOTER =====
-       Left column is this site, right column is the notebook. The snake sits on
-       the Colab heading, which is the half that actually runs Python. -->
+       Left column is the three kinds of activity, right column is the notebook a
+       lab opens. The snake sits on the Colab heading, which is the half that
+       actually runs Python. -->
   <footer class="cat-foot">
     <div class="cat-foot-col">
       <div class="cat-footer-head">How these work</div>
-      <p class="cat-footnote">Each lab starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
-      <p class="cat-footnote">Labs still being built are hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
+      <p class="cat-footnote">A <strong>guided lab</strong> starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
+      <p class="cat-footnote">An <strong>applet</strong> is one page that runs in your browser. There is nothing to install and nothing to hand in. Open it, move the sliders, and watch what the numbers do.</p>
+      <p class="cat-footnote">A <strong>concept map</strong> gives you the theorems of a chapter as boxes with unlabelled arrows between them. You say what each arrow claims, and whether it holds at all.</p>
+      <p class="cat-footnote">Anything still being built is hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
     </div>
     <div class="cat-foot-col">
       <div class="cat-footer-head"><span>🐍</span> Running the notebook</div>
-      <p class="cat-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
+      <p class="cat-footnote">The notebook a lab opens runs in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
       <p class="cat-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
+      <p class="cat-footnote">The applets and the concept maps don't use Colab at all. They run in the page you open, and a map keeps track of where you got to on your own machine.</p>
     </div>
     <div class="cat-ai">
-      <div class="cat-footer-head">How these labs were built</div>
+      <div class="cat-footer-head">How these were built</div>
       <div class="cat-ai-body">
-        <p class="cat-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
-        <p class="cat-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
+        <p class="cat-footnote">I built the puzzle engine, the concept maps, the applets, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
+        <p class="cat-footnote">Nothing on any of these pages calls an AI service. Your work is checked in your own browser, and your progress is saved on your own machine.</p>
         <p class="cat-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
       </div>
     </div>
@@ -476,71 +489,103 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     planned:  { label:'Planned' }
   };
 
-  // `nb` is the notebook's path under notebooks/. `lab` is the id of the guided
-  // lab built on it; a card is only openable once that lab exists, since the lab
-  // is what opens the notebook. A 'planned' card has no notebook yet and names
-  // the file-to-be in `file`, which is a note to the author, not shown.
+  // Two kinds of thing, and they behave differently. A `lab` puts the algorithms
+  // behind pseudocode puzzles and opens a Colab notebook at the end; it lives on
+  // this site at /teaching/labs/<lab id>/. An `applet` is a self-contained page,
+  // opened directly, with nothing to hand in and no notebook behind it.
+  //
+  // `flavor:'map'` marks a concept map. A map is an applet as far as this page's
+  // machinery is concerned, and its own choice in the Type filter, because a
+  // student looking for one is not looking for a simulation.
+  var KINDS = {
+    lab:    { label:'Guided labs',  open:'Start the guided lab',  pending:'Lab not built yet' },
+    applet: { label:'Applets',      open:'Open the applet',       pending:'Applet not finished' },
+    map:    { label:'Concept maps', open:'Open the concept map',  pending:'Map not finished' }
+  };
+
+  // `nb` is the notebook's path under notebooks/, and only a lab has one. `lab`
+  // is the id of the guided lab built on that notebook; a lab card is openable
+  // only once the lab exists, since the lab is what opens the notebook. `href` is
+  // an applet's own page, relative to this one. `libs` lists what the notebook
+  // imports, so applets carry none and show no pill row. A card with neither
+  // `lab` nor `href` names the file-to-be in `file`, which is a note to the
+  // author and is not shown.
   var ACT = [
-    { course:'intro', topic:'Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
-    { course:'na', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
-    { course:'na', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab2-newton', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/newton_divided_differences.ipynb' },
-    { course:'na', topic:'Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/cubic_splines.ipynb' },
-    { course:'na', topic:'Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
-    { course:'na', topic:'Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
-    { course:'na', topic:'Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', nb:'na/least_squares_orthogonal_polys.ipynb' },
-    { course:'na', topic:'Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/quadrature_newton_cotes_adaptive.ipynb' },
-    { course:'na', topic:'Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', nb:'na/gaussian_quadrature_orthogonal_polys.ipynb' },
-    { course:'na', topic:'ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/euler_rungekutta_convergence_order.ipynb' },
-    { course:'na', topic:'Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/conditioning_ellipse.ipynb' },
-    { course:'na', topic:'Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/jacobi_gauss_seidel.ipynb' },
-    { course:'na', topic:'Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/gaussian_elimination_lu.ipynb' },
-    { course:'na', topic:'Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/power_inverse_iteration.ipynb' },
-    { course:'na', topic:'Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/rootfinding_cobweb.ipynb' },
-    { course:'na', topic:'Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/stability_regions_stiffness.ipynb' },
+    { course:'intro', kind:'lab', topic:'Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab2-newton', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], status:'finalized', nb:'na/newton_divided_differences.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/cubic_splines.ipynb' },
+    { course:'na', kind:'lab', topic:'Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
+    { course:'na', kind:'lab', topic:'Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
+    { course:'na', kind:'lab', topic:'Least Squares', title:'Least squares & orthogonal polynomials', blurb:'Fit data and build an orthogonal basis that stabilizes the normal equations.', libs:['numpy','matplotlib','sympy','ipywidgets'], status:'drafted', nb:'na/least_squares_orthogonal_polys.ipynb' },
+    { course:'na', kind:'lab', topic:'Quadrature', title:'Newton–Cotes & adaptive Simpson', blurb:'Recover composite convergence orders and watch adaptivity cluster panels at a spike.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/quadrature_newton_cotes_adaptive.ipynb' },
+    { course:'na', kind:'lab', topic:'Quadrature', title:'Gaussian quadrature from orthogonal polys', blurb:'Derive Gauss nodes as Legendre roots and confirm degree-of-exactness 2n−1.', libs:['numpy','matplotlib','sympy','mpmath','ipywidgets'], status:'drafted', nb:'na/gaussian_quadrature_orthogonal_polys.ipynb' },
+    { course:'na', kind:'lab', topic:'ODEs', title:'Euler & Runge–Kutta: convergence order', blurb:'Fit the global order of Euler, RK2, and RK4 on a log–log error plot.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/euler_rungekutta_convergence_order.ipynb' },
+    { course:'na', kind:'lab', topic:'Linear Systems', title:'Conditioning: unit ball → ellipse', blurb:'See how κ(A) stretches the unit ball and amplifies input error.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/conditioning_ellipse.ipynb' },
+    { course:'na', kind:'lab', topic:'Linear Systems', title:'Jacobi & Gauss–Seidel convergence', blurb:'Relate iterative convergence to the spectral radius of the iteration matrix.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/jacobi_gauss_seidel.ipynb' },
+    { course:'na', kind:'lab', topic:'Linear Systems', title:'Gaussian elimination / LU with pivoting', blurb:'Step through LU factorization and see why partial pivoting matters.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/gaussian_elimination_lu.ipynb' },
+    { course:'na', kind:'lab', topic:'Linear Systems', title:'Power & inverse iteration', blurb:'Iterate toward the dominant eigenvector and watch the Rayleigh quotient settle.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/power_inverse_iteration.ipynb' },
+    { course:'na', kind:'lab', topic:'Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/rootfinding_cobweb.ipynb' },
+    { course:'na', kind:'lab', topic:'Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'na/stability_regions_stiffness.ipynb' },
 
-    { course:'de', topic:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'de/heat_equation_forced.ipynb' },
-    { course:'de', topic:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'de/wave_equation_fourier.ipynb' },
-    { course:'de', topic:'PDE Simulations', title:'Forced wave equation', blurb:'Drive a fixed string with a steady force and watch it oscillate about the steady shape.', libs:['numpy','matplotlib','ipywidgets'], status:'drafted', nb:'de/wave_equation_forced.ipynb' },
-    { course:'de', topic:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'phase_portraits.ipynb' },
-    { course:'de', topic:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'direction_fields.ipynb' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', status:'drafted', href:'applets/de/heat-forced-3d.html' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', status:'drafted', href:'applets/de/wave-fourier.html' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced wave equation', blurb:'Change the wave speed and the forcing mode, and watch the string answer back.', status:'drafted', href:'applets/de/wave-forced.html' },
+    { course:'de', kind:'applet', topic:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', status:'planned', file:'applets/de/phase-portraits.html' },
+    { course:'de', kind:'applet', topic:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", status:'planned', file:'applets/de/direction-fields.html' },
 
-    { course:'calc', topic:'Integration & Series', title:'Riemann sums', blurb:'Slide from left sums toward the definite integral as the panels multiply.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'riemann_sums.ipynb' },
-    { course:'calc', topic:'Integration & Series', title:'Taylor polynomial approximations', blurb:'Add Taylor terms and watch the approximation hug the curve.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'taylor_polys.ipynb' },
-    { course:'calc', topic:'Limits & Rates', title:'Epsilon–delta limit explorer', blurb:'Pick ε, find δ, and see the limit definition made visual.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'epsilon_delta.ipynb' },
-    { course:'calc', topic:'Limits & Rates', title:'Related rates visualizer', blurb:'Animate a geometric setup and read off how the quantities co-vary.', libs:['numpy','matplotlib'], status:'planned', file:'related_rates.ipynb' },
+    { course:'calc', kind:'applet', topic:'Integration & Series', title:'Riemann sums', blurb:'Slide from left sums toward the definite integral as the panels multiply.', status:'planned', file:'applets/calc/riemann-sums.html' },
+    { course:'calc', kind:'applet', topic:'Integration & Series', title:'Taylor polynomial approximations', blurb:'Add Taylor terms and watch the approximation hug the curve.', status:'planned', file:'applets/calc/taylor-polys.html' },
+    { course:'calc', kind:'applet', topic:'Limits & Rates', title:'Epsilon–delta limit explorer', blurb:'Pick ε, find δ, and see the limit definition made visual.', status:'planned', file:'applets/calc/epsilon-delta.html' },
+    { course:'calc', kind:'applet', topic:'Limits & Rates', title:'Related rates visualizer', blurb:'Animate a geometric setup and read off how the quantities co-vary.', status:'planned', file:'applets/calc/related-rates.html' },
 
-    { course:'analysis', topic:'Sequences & Convergence', title:'Cauchy sequences', blurb:'Test whether a sequence bunches up and converges.', libs:['numpy','matplotlib'], status:'planned', file:'cauchy_sequences.ipynb' },
-    { course:'analysis', topic:'Sequences & Convergence', title:'Uniform vs pointwise convergence', blurb:'Compare fₙ→f pointwise against uniform convergence on an interval.', libs:['numpy','matplotlib','ipywidgets'], status:'planned', file:'convergence_modes.ipynb' },
-    { course:'analysis', topic:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', libs:['numpy','matplotlib'], status:'planned', file:'cantor_set.ipynb' }
+    { course:'analysis', kind:'applet', topic:'Sequences & Convergence', title:'Cauchy sequences', blurb:'Test whether a sequence bunches up and converges.', status:'planned', file:'applets/analysis/cauchy-sequences.html' },
+    { course:'analysis', kind:'applet', topic:'Sequences & Convergence', title:'Uniform vs pointwise convergence', blurb:'Compare fₙ→f pointwise against uniform convergence on an interval.', status:'planned', file:'applets/analysis/convergence-modes.html' },
+    { course:'analysis', kind:'applet', topic:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', status:'planned', file:'applets/analysis/cantor-set.html' },
+
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences of real numbers', blurb:'Say what every arrow claims, from the epsilon-N definition out to completeness.', status:'planned', file:'maps/sequences.html' },
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Infinite series', blurb:'Put every convergence test in one diagram and name what each arrow does for you.', status:'planned', file:'maps/series.html' },
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences and series of functions', blurb:'Separate pointwise from uniform convergence, and find which theorem needs which.', status:'planned', file:'maps/func-sequences.html' }
   ];
 
-  var state = { courseFilter:'all', query:'', showDrafts:false, sort:'az' };
+  var state = { courseFilter:'all', kindFilter:'all', query:'', showDrafts:false, sort:'az' };
 
   function enrich(a) {
     var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
-    // A lab is the notebook with its algorithms gated behind pseudocode
-    // puzzles; it lives on this site and opens the notebook in Colab at the end.
-    // Relative to this page, so a lab id is the whole link: /teaching/labs/<id>/.
-    var labUrl = a.lab ? a.lab + '/' : null;
+    // What the Type filter and the button caption go by. A map is an applet
+    // that answers to its own name.
+    var kindKey = a.flavor === 'map' ? 'map' : a.kind;
+    // Where the card leads. Every link is relative to this page, so a lab id is
+    // the whole link (/teaching/labs/<id>/) and an applet gives its own path.
+    var url = a.kind === 'lab' ? (a.lab ? a.lab + '/' : null) : (a.href || null);
     // The status tag is the master switch. A card is ready only when it is
-    // tagged 'finalized' AND its lab is built; flip it to 'drafted' to hold it
-    // back. Everything not ready is hidden until the toggle asks for it.
-    var ready = a.status === 'finalized' && !!labUrl;
-    var statusKey = a.nb ? 'progress' : 'planned';
+    // tagged 'finalized' AND the thing it points at exists; flip it to 'drafted'
+    // to hold it back. Everything not ready is hidden until the toggle asks.
+    var ready = a.status === 'finalized' && !!url;
+    // 'In progress' means the thing behind the card exists in some form, so a
+    // notebook for a lab or a page for an applet. Everything else is 'Planned'.
+    var statusKey = (a.nb || a.href) ? 'progress' : 'planned';
     return {
       raw:a, topic:a.topic, courseName:c.name,
       accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
       ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
-      labUrl: labUrl
+      kindKey:kindKey, kindLabel:KINDS[kindKey].label, url:url
     };
   }
 
   // Everything the draft toggle allows, before the course chips and the search
   // narrow it further. The chip counts and the "of N" total both read off this,
   // so a chip never advertises cards the current toggle is hiding.
+  // The Type filter belongs here rather than in filteredList, alongside the
+  // draft toggle and not alongside the course chips. Both of those set the scope
+  // the page is counting; the chips are one filter inside it. Were Type applied
+  // later, a course chip would go on advertising the labs while Type said
+  // concept maps, and clicking it would give nothing.
   function visibleUniverse() {
     var list = ACT.map(enrich);
-    return state.showDrafts ? list : list.filter(function (a) { return a.ready; });
+    if (!state.showDrafts) list = list.filter(function (a) { return a.ready; });
+    if (state.kindFilter !== 'all') list = list.filter(function (a) { return a.kindKey === state.kindFilter; });
+    return list;
   }
 
   function filteredList() {
@@ -548,13 +593,16 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     var list = visibleUniverse();
     if (state.courseFilter !== 'all') list = list.filter(function (a) { return a.raw.course === state.courseFilter; });
     if (q) list = list.filter(function (a) {
+      // The kind label is in the haystack so searching "applet" or "concept map"
+      // finds them; only a lab gets the puzzle words.
       var hay = (a.raw.title + ' ' + a.raw.blurb + ' ' + a.courseName + ' ' + a.topic + ' ' +
-                 a.raw.libs.join(' ') + (a.labUrl ? ' lab puzzle pseudocode' : '')).toLowerCase();
+                 a.kindLabel + ' ' + (a.raw.libs || []).join(' ') +
+                 (a.kindKey === 'lab' ? ' puzzle pseudocode' : '')).toLowerCase();
       return hay.indexOf(q) !== -1;
     });
     // Two orders, both total: nothing falls back to the order the array happens
-    // to be written in. The labs carry no sequence, so there is no third option
-    // for one to be shown in.
+    // to be written in. Nothing here carries a sequence, so there is no third
+    // option for one to be shown in.
     var byTitle = function (x, y) { return x.raw.title.localeCompare(y.raw.title); };
     return list.slice().sort(state.sort === 'course'
       ? function (x, y) { return x.courseName.localeCompare(y.courseName) || byTitle(x, y); }
@@ -562,16 +610,22 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   }
 
   function cardHTML(a) {
-    var libs = a.raw.libs.map(function (lib) {
+    // Only a lab has libraries to name, and an empty row would still take its
+    // gap, so the row is left out rather than emptied.
+    var libs = (a.raw.libs || []).map(function (lib) {
       return '<span class="cat-lib">' + lib + '</span>';
     }).join('');
+    var libRow = libs ? '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' : '';
 
-    // Every card leads to a guided lab. No direct notebook link and no source
-    // download: the lab is what opens the notebook.
+    // A lab card leads to the lab and nowhere else. No direct notebook link and
+    // no source download: the lab is what opens the notebook. An applet card
+    // leads straight to the applet, since there is nothing to gate.
+    var kind = KINDS[a.kindKey];
     var actions = a.ready
-      ? '<a class="cat-start" href="' + a.labUrl + '">Start the guided lab</a>'
-      : '<span class="cat-start is-off" title="' + (a.raw.nb ? 'Lab not built yet' : 'Coming soon') +
-        '">Start the guided lab</span>';
+      ? '<a class="cat-start" href="' + a.url + '">' + kind.open + '</a>'
+      : '<span class="cat-start is-off" title="' +
+        (a.statusKey === 'progress' ? kind.pending : 'Coming soon') +
+        '">' + kind.open + '</span>';
 
     // The course accent is handed to CSS as custom properties so the theme,
     // not this markup, decides which variant is shown.
@@ -593,7 +647,7 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
           '<span class="cat-topic">' + a.topic + '</span>' +
           '<div class="cat-card-title">' + a.raw.title + '</div>' +
           '<div class="cat-blurb">' + a.raw.blurb + '</div>' +
-          '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + libs + '</div>' +
+          libRow +
           '<div class="cat-actions">' + actions + '</div>' +
         '</div>' +
       '</div>';
@@ -621,10 +675,10 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     if (list.length === 0) {
       var hint = state.showDrafts
         ? 'Try a broader search, or clear the filters.'
-        : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see the labs that are still being built.';
+        : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see what is still being built.';
       results.innerHTML =
         '<div class="cat-empty">' +
-          '<div class="cat-empty-title">No labs match your filters.</div>' +
+          '<div class="cat-empty-title">Nothing matches your filters.</div>' +
           '<p class="cat-footnote" style="margin:10px 0 20px;font-size:14.5px;">' + hint + '</p>' +
           '<jelly-button id="cat-clear" size="small" variant="graphite">Clear filters</jelly-button>' +
         '</div>';
@@ -641,8 +695,9 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   function render() { renderChips(); renderResults(); }
 
   function resetFilters() {
-    state.courseFilter = 'all'; state.query = '';
+    state.courseFilter = 'all'; state.kindFilter = 'all'; state.query = '';
     var s = document.getElementById('cat-search'); if (s) s.value = '';
+    var k = document.getElementById('cat-kind'); if (k) k.value = 'all';
     render();
   }
 
@@ -669,6 +724,10 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       search.addEventListener('input', onSearch);
       search.addEventListener('change', onSearch);
     }
+
+    // Type narrows the universe the chips count, so it renders both.
+    var kind = document.getElementById('cat-kind');
+    if (kind) kind.addEventListener('change', function (e) { state.kindFilter = readVal(e) || 'all'; render(); });
 
     var sort = document.getElementById('cat-sort');
     if (sort) sort.addEventListener('change', function (e) { state.sort = readVal(e) || 'az'; renderResults(); });

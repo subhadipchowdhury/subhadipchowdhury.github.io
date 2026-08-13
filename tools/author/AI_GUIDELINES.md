@@ -130,7 +130,7 @@ excusing the first.
 
 A shorter version, the same three points compressed into three paragraphs, sits
 in the footer of the library index at `teaching/labs/index.html` under
-`.cl-ai`. A student who never opens a lab still sees it there.
+`.cat-ai`. A student who never opens a lab still sees it there.
 
 The whole disclosure is duplicated in `tools/demo/lab-demo.html`, which stands in
 for the layout locally. Change one and change the other. That makes three copies

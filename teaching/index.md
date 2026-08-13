@@ -16,7 +16,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 * [Go to this link](/teaching/recommendations/) if you are considering asking me to be a reference or for a letter of recommendation.
 
-* [Go to this link](/teaching/labs/) for guided computational labs and Python notebooks for different courses.
+* [Go to this link](/teaching/labs/) for guided computational labs, interactive applets, and concept maps for different courses.
 
 {% include section_close.html %}
 
