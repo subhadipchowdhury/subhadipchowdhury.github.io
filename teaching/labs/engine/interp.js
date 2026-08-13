@@ -922,12 +922,11 @@ class Interp {
   // axis is null for a 1-D array, 0 for a table's rows, 1 for its columns.
   checkIndex(i, n, name, axis, where) {
     if (i < 0 || i >= n) {
-      const what = axis === null ? 'index' : axis === 0 ? 'row' : 'column';
       const hint = i < 0
         ? ' Subscripts start at 0 and never go negative in this notation.'
         : '';
       throw new RuntimeError(
-        `The ${what} ${i} is outside ${name}, whose ${what}s run 0 to ${n - 1}.${hint}`,
+        `The ${axisName(axis)} ${i} is outside ${name}, whose ${axisPlural(axis)} run 0 to ${n - 1}.${hint}`,
         { kind: 'index', index: i, extent: n, axis, ...where },
       );
     }
@@ -937,9 +936,8 @@ class Interp {
   rangeIndices(r, n, name, axis, where) {
     if (r.lo > r.hi) return []; // a..b is empty when a > b, by definition
     if (r.lo < 0 || r.hi >= n) {
-      const what = axis === null ? 'index' : axis === 0 ? 'row' : 'column';
       throw new RuntimeError(
-        `The range ${r.lo}..${r.hi} runs outside ${name}, whose ${what}s run 0 to ${n - 1}.`,
+        `The range ${r.lo}..${r.hi} runs outside ${name}, whose ${axisPlural(axis)} run 0 to ${n - 1}.`,
         { kind: 'index', index: r.lo < 0 ? r.lo : r.hi, extent: n, axis, ...where },
       );
     }
@@ -1102,6 +1100,16 @@ class Interp {
 
     throw new RuntimeError(`There is no function called "${expr.name}" in this notation.`, { kind: 'name', name: expr.name, ...where });
   }
+}
+
+// axis is null for a 1-D array, 0 for a table's rows, 1 for its columns. The
+// plural is spelled out because "indexs" is what the obvious template produces.
+function axisName(axis) {
+  return axis === null ? 'index' : axis === 0 ? 'row' : 'column';
+}
+
+function axisPlural(axis) {
+  return axis === null ? 'subscripts' : `${axisName(axis)}s`;
 }
 
 function truthy(v, where) {
