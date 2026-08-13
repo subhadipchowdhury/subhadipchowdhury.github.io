@@ -1,35 +1,146 @@
 ---
-layout: default
+layout: compress
 ---
 
 {% comment %}
-  A gated lab page. The page itself is front matter only: everything below the
-  header is built at runtime from the spec that tools/build_labs.py generates
-  out of the notebook's own cell metadata.
+  A gated lab page. Deliberately does NOT extend default.html: a lab is a
+  working surface rather than a page of the site, so it drops the site header,
+  the navigation and the site footer. What replaces them is the minimum a
+  student actually needs, which is a way back to the library, a theme control,
+  the notation the puzzles are written in, and the licence and AI disclosure.
+
+  head.html is still included, and has to be: it carries the pre-paint theme
+  script, MathJax for the LaTeX in the briefs, the fonts, and the site
+  stylesheet that defines the --color-*, --accent and --border-color tokens
+  lab.css builds its --lab-* layer on top of. navigation.js is loaded from
+  there too and early-returns when it finds no nav, so it costs nothing.
+
+  The page itself is front matter only: everything inside .lab is built at
+  runtime from the spec that tools/build_labs.py generates out of the
+  notebook's own cell metadata.
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body class="lab-page">
+    <a class="lab-skip" href="#lab-root">Skip to the lab</a>
 
-<div class="lab" id="lab-root"
-     data-spec="{{ '/teaching/labs/specs/' | append: page.lab_id | append: '.json' | relative_url }}">
-  <noscript>
-    <p>These labs assemble an algorithm from draggable blocks, so they need
-    JavaScript. The notebook itself does not:
-    <a href="{{ '/teaching/labs/' | relative_url }}">open it from Computational
-    Labs</a> and it will run in Google Colab.</p>
-  </noscript>
-  <p class="lab-progress" id="lab-loading">Loading the lab…</p>
-</div>
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
 
-<script type="module">
-  import { mountLab } from '{{ '/teaching/labs/engine/lab.js' | relative_url }}';
+    <div class="lab-bar">
+      <div class="lab-bar__inner">
+        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span>Computational Labs</span>
+        </a>
+        {% include theme_toggle.html variant="bar" %}
+      </div>
+    </div>
 
-  const root = document.getElementById('lab-root');
-  mountLab(root, root.dataset.spec).catch((err) => {
-    root.innerHTML = '';
-    const p = document.createElement('p');
-    p.className = 'lab-locked';
-    p.textContent = 'The lab failed to load: ' + err.message;
-    root.appendChild(p);
-  });
-</script>
+    <main class="main-wrapper">
+      <details class="lab-notation">
+        <summary>Notation used in these puzzles</summary>
+        <div class="lab-notation__body">
+          <dl>
+            <dt><code>a ← b</code></dt>
+            <dd>assigns. <code>=</code> compares two values and never assigns.</dd>
+
+            <dt><code>for i ← 0 to 3:</code></dt>
+            <dd>runs i = 0, 1, 2, 3. A range includes both of its ends, so the
+            bound you write is the last index visited, not a count.</dd>
+
+            <dt><code>for i ← 3 down to 0:</code></dt>
+            <dd>runs the same four values, counting down.</dd>
+
+            <dt><code>x[0]</code>, <code>T[i, j]</code></dt>
+            <dd>subscripts start at 0. Arrays take one, tables take two.</dd>
+
+            <dt><code>x[0..n−1]</code></dt>
+            <dd>a slice, and it includes both ends too.</dd>
+
+            <dt><code>length(x)</code></dt>
+            <dd>along with <code>abs</code>, <code>sqrt</code>, <code>cos</code>,
+            <code>sin</code>, <code>exp</code>, <code>max</code>,
+            <code>min</code>, <code>sum</code>, <code>zeros</code> and
+            <code>solve</code>.</dd>
+          </dl>
+
+          <p>Two things behave differently from Python on purpose. Dividing by
+          zero stops the program instead of handing back infinity, and a
+          subscript outside the array stops it instead of wrapping to the other
+          end. Both are mistakes, and stopping is more use to you than quietly
+          carrying on.</p>
+        </div>
+      </details>
+
+      <div class="lab" id="lab-root"
+           data-spec="{{ '/teaching/labs/specs/' | append: page.lab_id | append: '.json' | relative_url }}">
+        <noscript>
+          <p>These labs assemble an algorithm from draggable blocks, so they need
+          JavaScript. The notebook itself does not:
+          <a href="{{ '/teaching/labs/' | relative_url }}">open it from Computational
+          Labs</a> and it will run in Google Colab.</p>
+        </noscript>
+        <p class="lab-progress" id="lab-loading">Loading the lab…</p>
+      </div>
+    </main>
+
+    <footer class="lab-foot">
+      <div class="lab-foot__inner">
+        <p class="lab-foot__lede">I built these labs with AI assistance and
+        checked the mathematics myself. Nothing you do on this page leaves your
+        browser.</p>
+
+        <details class="lab-foot__more">
+          <summary>How this lab was built, and what I expect from you</summary>
+          <div class="lab-foot__body">
+            <h2>How this lab was built</h2>
+            <p>The puzzle engine, the build pipeline and the first drafts of the
+            prose on this page were written with the help of a large language
+            model. I read and checked every mathematical claim, every hint and
+            every wrong-answer message before it went up, and anything still
+            wrong in them is mine. The
+            <a href="https://leidendeclaration.ai/">Leiden Declaration on
+            Artificial Intelligence and Mathematics</a> asks for this kind of
+            disclosure and I think it's right.</p>
+
+            <p>Nothing on this page talks to an AI service. Your work is checked
+            by a small interpreter running inside your browser, your progress is
+            saved on your own machine, and no request leaves the page.</p>
+
+            <h2>Using AI on this lab</h2>
+            <p>You could paste any of these puzzles into a chatbot and have the
+            answer in seconds. I know, and I've built them anyway, because the
+            answer isn't the point. The blocks are written for you already. What
+            the lab asks is that you work out what order they go in and why, and
+            that reasoning is what carries over to the next algorithm you meet,
+            the one nobody has written a lab for.</p>
+
+            <p>So use whatever helps you understand something you're stuck on.
+            Don't use it to skip the thinking.</p>
+          </div>
+        </details>
+
+        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        under a <a rel="license"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+        Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        License</a>.</p>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { mountLab } from '{{ '/teaching/labs/engine/lab.js' | relative_url }}';
+
+      const root = document.getElementById('lab-root');
+      mountLab(root, root.dataset.spec).catch((err) => {
+        root.innerHTML = '';
+        const p = document.createElement('p');
+        p.className = 'lab-locked';
+        p.textContent = 'The lab failed to load: ' + err.message;
+        root.appendChild(p);
+      });
+    </script>
+  </body>
+</html>

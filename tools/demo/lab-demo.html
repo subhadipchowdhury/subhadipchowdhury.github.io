@@ -7,8 +7,13 @@
 
 <!--
   Stands in for _layouts/lab.html, which only exists once Jekyll builds on
-  GitHub's side. Same stylesheet, same module, same spec; the site chrome and
-  the theme toggle are faked here so both palettes can be looked at.
+  GitHub's side. Same stylesheet, same module, same spec.
+
+  The lab layout no longer extends default.html, so the chrome below the grey
+  strip is the real thing rather than a stand-in: the same .lab-bar, the same
+  notation key and the same footer markup the layout emits. Only the grey strip
+  at the very top is the demo's own, and the theme button is wired here because
+  javascript/theme.js is not loaded.
 -->
 
 <script>
@@ -24,12 +29,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSansSerif.css">
 <link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSerif.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 
 <style>
   /* The site tokens lab.css consumes, copied from css/stylesheet.scss. */
   :root {
     --color-bg: #D9D9D9;
     --color-surface: #FFFFFF;
+    --color-card: rgba(255, 255, 255, 0.82);
     --color-text: #262626;
     --color-muted: #4D4D4D;
     --accent: #800000;
@@ -41,6 +48,7 @@
   html[data-theme="dark"] {
     --color-bg: #151515;
     --color-surface: #232323;
+    --color-card: rgba(255, 255, 255, 0.045);
     --color-text: #e4e4e4;
     --color-muted: #a8a8a8;
     --accent: #3EB1C8;
@@ -63,13 +71,38 @@
     background: var(--color-surface);
     border-radius: 0.75rem;
   }
+
+  /* .theme-toggle base rules, copied from css/stylesheet.scss. The --bar
+     variant itself lives in lab.css, like the rest of the lab chrome. */
+  .theme-toggle {
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    cursor: pointer;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+  }
+  .theme-toggle .fa-sun,
+  .theme-toggle .theme-toggle__label--to-light { display: none; }
+  .theme-toggle .fa-moon,
+  .theme-toggle .theme-toggle__label--to-dark { display: inline-block; }
+  html[data-theme="dark"] .theme-toggle .fa-moon,
+  html[data-theme="dark"] .theme-toggle .theme-toggle__label--to-dark { display: none; }
+  html[data-theme="dark"] .theme-toggle .fa-sun,
+  html[data-theme="dark"] .theme-toggle .theme-toggle__label--to-light { display: inline-block; }
+
+  /* The demo's own strip, not part of the page. */
   .demo-bar {
     display: flex;
     gap: 1rem;
     align-items: center;
     flex-wrap: wrap;
     padding: 0.6rem 1.25rem;
-    background: var(--color-surface);
+    background: var(--color-bg);
     border-bottom: 1px solid var(--border-color);
     font-size: 0.85rem;
   }
@@ -86,21 +119,113 @@
 </style>
 <link rel="stylesheet" href="../../teaching/labs/engine/lab.css">
 </head>
-<body>
+<body class="lab-page">
 
 <div class="demo-bar">
   <strong>Lab page demo &middot; m1-newton</strong>
-  <button id="theme">Toggle dark mode</button>
   <button id="wipe">Clear saved progress and reload</button>
-
   <span id="status"></span>
 </div>
 
+<div class="lab-bar">
+  <div class="lab-bar__inner">
+    <a class="lab-bar__back" href="../../teaching/labs/">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      <span>Computational Labs</span>
+    </a>
+    <button type="button" class="theme-toggle theme-toggle--bar" id="theme">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      <i class="fa-solid fa-sun" aria-hidden="true"></i>
+      <span class="theme-toggle__label theme-toggle__label--to-dark">Dark mode</span>
+      <span class="theme-toggle__label theme-toggle__label--to-light">Light mode</span>
+    </button>
+  </div>
+</div>
+
 <main class="main-wrapper">
+  <details class="lab-notation">
+    <summary>Notation used in these puzzles</summary>
+    <div class="lab-notation__body">
+      <dl>
+        <dt><code>a ← b</code></dt>
+        <dd>assigns. <code>=</code> compares two values and never assigns.</dd>
+
+        <dt><code>for i ← 0 to 3:</code></dt>
+        <dd>runs i = 0, 1, 2, 3. A range includes both of its ends, so the
+        bound you write is the last index visited, not a count.</dd>
+
+        <dt><code>for i ← 3 down to 0:</code></dt>
+        <dd>runs the same four values, counting down.</dd>
+
+        <dt><code>x[0]</code>, <code>T[i, j]</code></dt>
+        <dd>subscripts start at 0. Arrays take one, tables take two.</dd>
+
+        <dt><code>x[0..n−1]</code></dt>
+        <dd>a slice, and it includes both ends too.</dd>
+
+        <dt><code>length(x)</code></dt>
+        <dd>along with <code>abs</code>, <code>sqrt</code>, <code>cos</code>,
+        <code>sin</code>, <code>exp</code>, <code>max</code>,
+        <code>min</code>, <code>sum</code>, <code>zeros</code> and
+        <code>solve</code>.</dd>
+      </dl>
+
+      <p>Two things behave differently from Python on purpose. Dividing by
+      zero stops the program instead of handing back infinity, and a
+      subscript outside the array stops it instead of wrapping to the other
+      end. Both are mistakes, and stopping is more use to you than quietly
+      carrying on.</p>
+    </div>
+  </details>
+
   <div class="lab" id="lab-root">
     <p class="lab-progress">Loading the lab…</p>
   </div>
 </main>
+
+<footer class="lab-foot">
+  <div class="lab-foot__inner">
+    <p class="lab-foot__lede">I built these labs with AI assistance and
+    checked the mathematics myself. Nothing you do on this page leaves your
+    browser.</p>
+
+    <details class="lab-foot__more">
+      <summary>How this lab was built, and what I expect from you</summary>
+      <div class="lab-foot__body">
+        <h2>How this lab was built</h2>
+        <p>The puzzle engine, the build pipeline and the first drafts of the
+        prose on this page were written with the help of a large language
+        model. I read and checked every mathematical claim, every hint and
+        every wrong-answer message before it went up, and anything still
+        wrong in them is mine. The
+        <a href="https://leidendeclaration.ai/">Leiden Declaration on
+        Artificial Intelligence and Mathematics</a> asks for this kind of
+        disclosure and I think it's right.</p>
+
+        <p>Nothing on this page talks to an AI service. Your work is checked
+        by a small interpreter running inside your browser, your progress is
+        saved on your own machine, and no request leaves the page.</p>
+
+        <h2>Using AI on this lab</h2>
+        <p>You could paste any of these puzzles into a chatbot and have the
+        answer in seconds. I know, and I've built them anyway, because the
+        answer isn't the point. The blocks are written for you already. What
+        the lab asks is that you work out what order they go in and why, and
+        that reasoning is what carries over to the next algorithm you meet,
+        the one nobody has written a lab for.</p>
+
+        <p>So use whatever helps you understand something you're stuck on.
+        Don't use it to skip the thinking.</p>
+      </div>
+    </details>
+
+    <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+    under a <a rel="license"
+    href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+    Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    License</a>.</p>
+  </div>
+</footer>
 
 <script type="module">
 import { mountLab } from '../../teaching/labs/engine/lab.js';
@@ -122,6 +247,7 @@ const lab = await mountLab(root, '/teaching/labs/specs/m1-newton.json').catch((e
   return null;
 });
 
+// Stands in for javascript/theme.js, which the real page loads from head.html.
 document.getElementById('theme').addEventListener('click', () => {
   const el = document.documentElement;
   el.setAttribute('data-theme', el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');

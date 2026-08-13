@@ -760,3 +760,188 @@ html[data-theme="dark"] .lab {
     animation: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+ * Standalone page chrome
+ *
+ * _layouts/lab.html does not extend default.html, so a lab page has no site
+ * header, no navigation and no site footer. Everything below replaces them.
+ * These rules sit outside .lab, so they use the site tokens directly rather
+ * than the --lab-* layer, which is scoped to .lab.
+ * ----------------------------------------------------------------------- */
+
+.lab-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.6rem 1rem;
+  background: var(--color-surface);
+  color: var(--accent);
+  z-index: 40;
+}
+
+.lab-skip:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.lab-bar__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0.6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lab-bar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.lab-bar__back:hover { color: var(--accent); }
+
+.lab-bar__back:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* The footer variant is display:none below 900px, where the mobile menu
+   normally takes the toggle over. A lab page has no mobile menu, so this
+   variant has to stand on its own at every width. */
+.theme-toggle--bar {
+  flex-shrink: 0;
+  padding: 0.4em 0.9em;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-toggle--bar:hover {
+  color: var(--color-text);
+  border-color: var(--accent);
+}
+
+/* Notation key. Collapsed by default: it is a reference, not an introduction,
+   and a student who already reads the notation should not have to scroll past
+   it on every lab. */
+.lab-notation {
+  font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  font-size: 0.88rem;
+  margin: 0 0 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--color-card);
+}
+
+.lab-notation > summary {
+  cursor: pointer;
+  padding: 0.6rem 0.9rem;
+  color: var(--color-muted);
+}
+
+.lab-notation > summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lab-notation__body {
+  padding: 0 0.9rem 0.9rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.lab-notation dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.4rem 1rem;
+  margin: 0.9rem 0;
+  padding-left: 0;       /* the site zeroes prose lists, not layout ones */
+}
+
+.lab-notation dt { min-width: 0; }
+.lab-notation dd { margin: 0; min-width: 0; color: var(--color-muted); }
+
+.lab-notation code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.92em;
+}
+
+.lab-notation p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+@media all and (max-width: 640px) {
+  /* Two columns stop working once a term wraps. */
+  .lab-notation dl { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
+  .lab-notation dd { margin-bottom: 0.55rem; }
+}
+
+/* Footer: licence and the AI disclosure. The lede stays visible because a
+   disclosure behind a closed toggle is not a disclosure. */
+.lab-foot {
+  font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 0 3rem;
+}
+
+.lab-foot__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.lab-foot__lede { margin: 0 0 0.6rem; }
+
+.lab-foot__more > summary {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.lab-foot__more > summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lab-foot__body {
+  max-width: 42rem;
+  margin: 0.8rem 0 0;
+}
+
+.lab-foot__body h2 {
+  font-family: "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 1rem 0 0.35rem;
+  color: var(--color-text);
+}
+
+.lab-foot__body h2:first-child { margin-top: 0; }
+.lab-foot__body p { margin: 0 0 0.6rem; }
+
+.lab-foot__licence { margin: 1rem 0 0; }
+
+@media all and (max-width: 640px) {
+  .lab-bar__inner { padding: 0.6rem 1.25rem; }
+  .lab-foot__inner { padding: 0 1.25rem; }
+}
