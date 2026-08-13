@@ -77,7 +77,11 @@ $$T[i,\,j] = f[x_i,\dots,x_{i+j}],$$
 
 so column $j$ holds every difference of order $j$, and column $0$ is the data itself. A difference of order $j$ needs $j+1$ consecutive nodes to exist, so column $j$ runs $j$ entries shorter than column $0$, and the part of the table that gets filled in is a triangle. The coefficients $c_0,\dots,c_{n-1}$ sit along its top row.
 
-Turn that recurrence into an algorithm that works for any $n$: fill $T$ one column at a time, then read the coefficients off the top row. Two expressions are left blank. How far should the inner loop run, given that each column is shorter than the last? And which two nodes go in the denominator?
+Turn that recurrence into an algorithm that works for any $n$: fill $T$ one column at a time, then read the coefficients off the top row. Two expressions are left blank.
+
+Let's settle the notation first. A range in this notation includes both of its ends, so `for k ← 0 to 3` runs $k = 0, 1, 2, 3$. The bound you write is the last index the loop visits, not the number of passes it makes.
+
+Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row. Write the index of the last row that column $j$ fills. Then write the two nodes that belong in the denominator.
 ''',
 
     'blocks': [
@@ -155,7 +159,7 @@ Turn that recurrence into an algorithm that works for any $n$: fill $T$ one colu
         'den_j_not_ij': 'T[i, j] is the divided difference over the nodes x_i through x_{i+j}. Your denominator uses a different pair. Which two of those nodes are the outer ones?',
         'den_neighbour': 'You divided by the gap between two adjacent nodes. That works in column 1, where a difference does span a single interval, but a difference of order j spans j of them.',
         'bound_full': 'Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j−1 exist, and that fails one row earlier each time j grows.',
-        'bound_off_by_one': 'Your inner loop goes one row too far. Computing T[i, j] reads T[i, j−1] and T[i+1, j−1], so find the largest i for which both of those were filled in.',
+        'bound_off_by_one': 'Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i, j] reads T[i, j−1] and T[i+1, j−1], so find the largest i for which both of those were filled in.',
     },
 }
 
@@ -260,7 +264,7 @@ One warning. The previous puzzle bounded the *columns*, which get shorter as the
     'feedback': {
         'rowlen_square': 'You printed the whole square array, including entries the algorithm never assigned. Those zeros came from np.zeros and say nothing about the data.',
         'rowlen_uses_j': "The loop is about to assign j, so j can't appear in its own upper bound. Which index tells you how far down the table this row sits?",
-        'rowlen_off_by_one': 'Every row has one entry too many. Count the divided differences that start at node x_i: the first is f[x_i] and the last is the one reaching x_{n−1}. How many is that?',
+        'rowlen_off_by_one': 'Every row has one entry too many. The last difference in row i is the one that reaches node x_{n−1}. A range includes both of its ends, so what goes here is that entry\'s index, not the number of entries in the row.',
     },
 }
 
@@ -390,7 +394,7 @@ NOTEBOOK_LAB = {
         'coefficients first, then a readable display of the table they come out '
         'of, then a cheap way to evaluate the polynomial at a point.\n\n'
         "We'll work throughout with the same four points,\n\n"
-        '$$x = 0,\; 1,\; 3,\; 6 \\qquad y = 1,\; 4,\; 2,\; 8,$$\n\n'
+        r'$$x = 0,\; 1,\; 3,\; 6 \qquad y = 1,\; 4,\; 2,\; 8,$$' '\n\n'
         "so the polynomial we're after is a cubic. Any output you see on this "
         'page came from running these algorithms on those four points.\n\n'
         'Each puzzle hands you the steps of an algorithm in scrambled order. '
