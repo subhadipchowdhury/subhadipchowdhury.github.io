@@ -1,7 +1,7 @@
 """Turn an annotated notebook into a lab spec.
 
     .venv/bin/python tools/build_labs.py                # every annotated notebook
-    .venv/bin/python tools/build_labs.py m1-newton      # one lab
+    .venv/bin/python tools/build_labs.py lab2-newton      # one lab
     .venv/bin/python tools/build_labs.py --no-run       # skip the notebook run
 
 A lab page carries the puzzles and nothing else. Everything else the notebook
@@ -459,7 +459,9 @@ def write_index():
             'order': spec.get('order'),
             'puzzles': len(spec.get('puzzles', [])),
         })
-    entries.sort(key=lambda e: (e.get('module') or '', e.get('order') or 0))
+    # By order alone. A lab id carries its own number now, so `module` is not
+    # part of the sort and a lab that omits it still lands in the right place.
+    entries.sort(key=lambda e: (e.get('order') or 0, e['lab_id']))
     (SPEC_DIR / 'index.json').write_text(json.dumps(entries, indent=1) + '\n')
     print(f'  index lists {len(entries)} lab(s)')
 

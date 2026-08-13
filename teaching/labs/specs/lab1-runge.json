@@ -1,14 +1,14 @@
 {
- "lab_id": "m1-runge",
+ "lab_id": "lab1-runge",
  "module": "M1",
  "order": 1,
  "title": "Runge's phenomenon and Chebyshev nodes",
  "blurb": "Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.",
  "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It does not always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>These two puzzles build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The steps are pseudocode rather than Python, and the key above lists the notation. The notebook opens once both puzzles are done.</p>",
  "series": [
-  "m1-runge",
-  "m1-newton",
-  "m1-splines"
+  "lab1-runge",
+  "lab2-newton",
+  "lab3-splines"
  ],
  "source": "notebooks/na/interpolation_runge_chebyshev.ipynb",
  "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/labs/notebooks/na/interpolation_runge_chebyshev.ipynb",
@@ -22,7 +22,7 @@
     "caption_html": "<p>The degree-20 polynomial passes through all 21 nodes and misses the function by nearly 60 between them. Read the right-hand panel for where it misses: across the middle half of the interval the error stays under a fiftieth, in the second gap from the end it reaches four, and in the last gap it reaches 60. This is Runge’s phenomenon, after the German mathematician and physicist Carl David Tolmé Runge, who published it in 1901. It is not roundoff, it does not go away in exact arithmetic, and the only thing left to blame is where the nodes are.</p>",
     "stdout": "degree  4   nodes  5   max |f - p| =    0.438\ndegree 12   nodes 13   max |f - p| =    3.663\ndegree 20   nodes 21   max |f - p| =   59.822",
     "figures": [
-     "out/m1-runge/chebnodes-0.png"
+     "out/lab1-runge/chebnodes-0.png"
     ]
    },
    "blocks": [

@@ -380,12 +380,12 @@ CELLS = {
 }
 
 NOTEBOOK_LAB = {
-    'lab_id': 'm1-newton',
+    'lab_id': 'lab2-newton',
     'module': 'M1',
     'order': 2,
     'title': 'Newton form and divided differences',
     'blurb': 'Build the divided-difference table, then the nested evaluation that uses it.',
-    'series': ['m1-runge', 'm1-newton', 'm1-splines'],
+    'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
     'intro': (
         'Through $n$ points with distinct $x$ values there is exactly one '

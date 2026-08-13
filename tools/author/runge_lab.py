@@ -319,12 +319,12 @@ CELLS = {
 }
 
 NOTEBOOK_LAB = {
-    'lab_id': 'm1-runge',
+    'lab_id': 'lab1-runge',
     'module': 'M1',
     'order': 1,
     'title': "Runge's phenomenon and Chebyshev nodes",
     'blurb': 'Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.',
-    'series': ['m1-runge', 'm1-newton', 'm1-splines'],
+    'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
     'colab_path': 'na/interpolation_runge_chebyshev.ipynb',
     'intro': (
         'Adding more data points ought to improve a polynomial fit. It does '

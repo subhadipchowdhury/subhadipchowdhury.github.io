@@ -3,7 +3,7 @@
 // The first half runs against every built lab, so a new one is covered the
 // moment it exists: the page builds, puzzles open in order, the notebook stays
 // shut until they are done, and progress survives a reload. The second half is
-// specific to m1-newton, where the exact wording and the exact wrong answers
+// specific to lab2-newton, where the exact wording and the exact wrong answers
 // are worth pinning.
 //
 // These run on a DOM stub, so nothing here says how anything looks. Editorial
@@ -28,7 +28,7 @@ const specs = new Map(
 let served = null;
 globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => served });
 
-const spec = specs.get('m1-newton');
+const spec = specs.get('lab2-newton');
 
 const { mountLab } = await import('../../teaching/labs/engine/lab.js');
 
@@ -52,7 +52,7 @@ function has(text, needle, msg) {
   }
 }
 
-const SPEC_URL = '/teaching/labs/specs/m1-newton.json';
+const SPEC_URL = '/teaching/labs/specs/lab2-newton.json';
 const ids = spec.puzzles.map((p) => p.cell_id);
 
 async function open(labSpec, { fresh = true } = {}) {
@@ -154,7 +154,7 @@ for (const entry of index) {
 }
 
 // ---------------------------------------------------------------------------
-// m1-newton in particular
+// lab2-newton in particular
 // ---------------------------------------------------------------------------
 
 served = spec;
@@ -336,8 +336,8 @@ await it('numbers a single annotated line in the singular', async () => {
 });
 
 await it('lists three annotated lines rather than chaining them on "and"', async () => {
-  // m1-runge/lageval is the first annotation to name three blocks.
-  const runge = specs.get('m1-runge');
+  // lab1-runge/lageval is the first annotation to name three blocks.
+  const runge = specs.get('lab1-runge');
   const { root, lab } = await open(runge);
   solveIn(lab, runge, 'chebnodes');
   solveIn(lab, runge, 'lageval');

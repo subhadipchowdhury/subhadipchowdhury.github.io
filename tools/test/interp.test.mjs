@@ -605,7 +605,7 @@ function print_dd_table(x, T):
   });
 });
 
-// The two algorithms of m1-runge, in the pseudocode that lab ships. The
+// The two algorithms of lab1-runge, in the pseudocode that lab ships. The
 // distractor and wrong-blank cases below are the mathematical reasons the
 // build-time validator can separate them; the validator checks the separation
 // itself, these check the tell each feedback message names.
@@ -750,7 +750,7 @@ function lagrange_eval(xn, yn, t):
   });
 
   it('factor_sign: an even number of factors would hide a flipped denominator', () => {
-    // Why m1-runge probes lageval with four nodes and not five. Each L_i has
+    // Why lab1-runge probes lageval with four nodes and not five. Each L_i has
     // m−1 factors, so flipping the sign of every denominator multiplies L_i by
     // (−1)^(m−1): visible when m is even, invisible when m is odd.
     const flipped = { factor: '(t − xn[j]) / (xn[j] − xn[i])' };
