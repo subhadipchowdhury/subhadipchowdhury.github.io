@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzle mechanics demo</title>
+
+<!-- The site's fonts, so the demo reads the way the real page will. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSansSerif.css">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSerif.css">
+
+<!--
+  The demo stands in for the site shell: only the tokens lab.css consumes are
+  defined here, copied from css/stylesheet.scss so both themes are exercised.
+-->
+<style>
+  :root {
+    --color-bg: #D9D9D9;
+    --color-surface: #FFFFFF;
+    --color-text: #262626;
+    --color-muted: #4D4D4D;
+    --accent: #800000;
+    --accent-rgb: 128, 0, 0;
+    --border-color: rgba(0, 42, 58, 0.12);
+    --focus-ring: #3EB1C8;
+    --code-bg: #ddd;
+  }
+  html[data-theme="dark"] {
+    --color-bg: #151515;
+    --color-surface: #232323;
+    --color-text: #e4e4e4;
+    --color-muted: #a8a8a8;
+    --accent: #3EB1C8;
+    --accent-rgb: 62, 177, 200;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --focus-ring: #6fcfe0;
+    --code-bg: #333333;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  }
+  .demo-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+  }
+  .demo-bar button {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .demo-bar strong { font-weight: normal; color: var(--color-muted); }
+  .demo-note {
+    max-width: 62rem;
+    margin: 1rem auto 0;
+    padding: 0 1.25rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+</style>
+<link rel="stylesheet" href="../../teaching/labs/engine/lab.css">
+</head>
+<body>
+
+<div class="demo-bar">
+  <strong>Puzzle mechanics demo</strong>
+  <button id="theme">Toggle dark mode</button>
+  <button id="solve">Fill in the solution</button>
+  <button id="decoy">Place the reversed-numerator decoy</button>
+  <button id="indent">Break only the indentation</button>
+  <button id="attempts">Bump the attempt count</button>
+  <span id="status"></span>
+</div>
+
+<div class="demo-note">
+  <p>
+    Everything here is the real engine against the real divided-difference gate.
+    Drag a block, or select one and click a gap. Keyboard: Tab into a list,
+    arrows to move focus, Enter to grab, arrows to move and indent, Enter to
+    drop, Escape to cancel, Delete to send a block back.
+  </p>
+</div>
+
+<main class="lab">
+  <div id="puzzle"></div>
+</main>
+
+<script type="module">
+import { PuzzleView } from '../../teaching/labs/engine/puzzle.js';
+import { buildReference, verify } from '../../teaching/labs/engine/verify.js';
+import { buildFeedbackCard, applyLadder, attemptSnapshot } from '../../teaching/labs/engine/feedback.js';
+import { DIVDIFF_GATE, CORRECT } from '../test/fixtures/divdiff-gate.mjs';
+
+const gate = DIVDIFF_GATE;
+const reference = buildReference(gate);
+const status = document.getElementById('status');
+
+let view;
+
+function start(state) {
+  view = new PuzzleView(document.getElementById('puzzle'), gate, {
+    state,
+    onSubmit: (submission) => {
+      const verdict = verify(gate, submission, reference);
+      view.attempts = verdict.ok ? view.attempts : view.attempts + 1;
+
+      if (verdict.ok) {
+        view.setFeedback(null);
+        view.freeze();
+        status.textContent = 'solved';
+        const done = document.createElement('div');
+        done.className = 'lab-solved';
+        const head = document.createElement('div');
+        head.className = 'lab-solved__head';
+        head.textContent = '✓ Solved. The reveal goes here.';
+        done.appendChild(head);
+        document.getElementById('puzzle').after(done);
+        return;
+      }
+
+      const ladderNote = applyLadder(view, verdict, view.attempts);
+      view.setFeedback(buildFeedbackCard(verdict, {
+        gate,
+        attempts: view.attempts,
+        ladderNote,
+        onPark: () => { status.textContent = 'parked'; },
+        onCopy: () => attemptSnapshot({
+          lab: { title: 'Newton form and divided differences', lab_id: 'm1-newton' },
+          gate, view, verdict, attempts: view.attempts,
+        }),
+      }));
+      view.render();
+      status.textContent = `${verdict.stage} · ${verdict.why ?? ''} · attempt ${view.attempts}`;
+    },
+    onChange: () => { status.textContent = ''; },
+  });
+}
+
+start();
+
+document.getElementById('theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+document.getElementById('solve').addEventListener('click', () => {
+  document.querySelectorAll('.lab-solved').forEach((n) => n.remove());
+  start({ placements: CORRECT.placements, blanks: CORRECT.blanks });
+});
+
+document.getElementById('decoy').addEventListener('click', () => {
+  document.querySelectorAll('.lab-solved').forEach((n) => n.remove());
+  start({
+    placements: CORRECT.placements.map((p) => (p.id === 'rec' ? { id: 'd_num', indent: 3 } : p)),
+    blanks: CORRECT.blanks,
+  });
+});
+
+document.getElementById('indent').addEventListener('click', () => {
+  document.querySelectorAll('.lab-solved').forEach((n) => n.remove());
+  start({
+    placements: CORRECT.placements.map((p) => (p.id === 'rec' ? { ...p, indent: 2 } : p)),
+    blanks: CORRECT.blanks,
+  });
+});
+
+document.getElementById('attempts').addEventListener('click', () => {
+  view.attempts = view.attempts + 1;
+  view.render();
+  status.textContent = `attempts now ${view.attempts}; the next check uses ladder stage ${Math.min(5, view.attempts + 1)}`;
+});
+</script>
+</body>
+</html>
