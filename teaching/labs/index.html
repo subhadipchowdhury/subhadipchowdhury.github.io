@@ -355,6 +355,17 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
   }
   .cl-foot-col { min-width: 0; }
 
+  /* The disclosure spans the whole footer rather than becoming a third column:
+     it is addressed to everyone reading, not a peer of the two how-to blocks,
+     and at 300px tracks a third column would strand it beside them. */
+  .cl-ai {
+    grid-column: 1 / -1;
+    min-width: 0;
+    max-width: 68ch;
+    padding-top: 22px;
+    border-top: 1px solid var(--cl-hairline);
+  }
+
   @media (max-width: 760px) {
     .cl-library { padding: 4px 20px 44px; }
     .cl-head {
@@ -414,6 +425,12 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
       <div class="cl-footer-head"><span>🐍</span> Running the notebook</div>
       <p class="cl-footnote">The notebook itself opens in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
       <p class="cl-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
+    </div>
+    <div class="cl-ai">
+      <div class="cl-footer-head">How these labs were built</div>
+      <p class="cl-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
+      <p class="cl-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
+      <p class="cl-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
     </div>
   </footer>
 

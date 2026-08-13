@@ -44,11 +44,11 @@ layout: compress
         <div class="lab-notation__body">
           <dl>
             <dt><code>a ← b</code></dt>
-            <dd>assigns. <code>=</code> compares two values and never assigns.</dd>
+            <dd>assigns. <code>=</code> compares and never assigns.</dd>
 
             <dt><code>for i ← 0 to 3:</code></dt>
-            <dd>runs i = 0, 1, 2, 3. A range includes both of its ends, so the
-            bound you write is the last index visited, not a count.</dd>
+            <dd>runs i = 0, 1, 2, 3. A range includes both ends, so the bound is
+            the last index visited, not a count.</dd>
 
             <dt><code>for i ← 3 down to 0:</code></dt>
             <dd>runs the same four values, counting down.</dd>
@@ -57,7 +57,7 @@ layout: compress
             <dd>subscripts start at 0. Arrays take one, tables take two.</dd>
 
             <dt><code>x[0..n−1]</code></dt>
-            <dd>a slice, and it includes both ends too.</dd>
+            <dd>a slice, ends included.</dd>
 
             <dt><code>length(x)</code></dt>
             <dd>along with <code>abs</code>, <code>sqrt</code>, <code>cos</code>,
@@ -66,11 +66,9 @@ layout: compress
             <code>solve</code>.</dd>
           </dl>
 
-          <p>Two things behave differently from Python on purpose. Dividing by
-          zero stops the program instead of handing back infinity, and a
-          subscript outside the array stops it instead of wrapping to the other
-          end. Both are mistakes, and stopping is more use to you than quietly
-          carrying on.</p>
+          <p>Two things differ from Python on purpose. Dividing by zero stops the
+          program instead of returning infinity, and a subscript outside the
+          array stops it instead of wrapping to the other end.</p>
         </div>
       </details>
 
@@ -97,28 +95,26 @@ layout: compress
           <div class="lab-foot__body">
             <h2>How this lab was built</h2>
             <p>The puzzle engine, the build pipeline and the first drafts of the
-            prose on this page were written with the help of a large language
-            model. I read and checked every mathematical claim, every hint and
-            every wrong-answer message before it went up, and anything still
-            wrong in them is mine. The
+            writing were built with the help of a large language model. I checked
+            every mathematical claim, every hint and every wrong-answer message
+            before it went up, and anything still wrong in them is mine. The
             <a href="https://leidendeclaration.ai/">Leiden Declaration on
             Artificial Intelligence and Mathematics</a> asks for this kind of
-            disclosure and I think it's right.</p>
+            disclosure.</p>
 
-            <p>Nothing on this page talks to an AI service. Your work is checked
-            by a small interpreter running inside your browser, your progress is
-            saved on your own machine, and no request leaves the page.</p>
+            <p>Nothing on this page calls an AI service. Your work is checked by
+            a small interpreter running in your browser, your progress is saved
+            on your own machine, and no request leaves the page.</p>
 
             <h2>Using AI on this lab</h2>
             <p>You could paste any of these puzzles into a chatbot and have the
-            answer in seconds. I know, and I've built them anyway, because the
-            answer isn't the point. The blocks are written for you already. What
-            the lab asks is that you work out what order they go in and why, and
-            that reasoning is what carries over to the next algorithm you meet,
-            the one nobody has written a lab for.</p>
+            answer in seconds. The answer isn't what the lab is for. The blocks
+            are written for you already, so the work left is deciding what order
+            they go in and why, and that is the part that transfers to an
+            algorithm you haven't seen before.</p>
 
-            <p>So use whatever helps you understand something you're stuck on.
-            Don't use it to skip the thinking.</p>
+            <p>Use whatever helps you understand something you're stuck on. Don't
+            use it to skip the reasoning.</p>
           </div>
         </details>
 

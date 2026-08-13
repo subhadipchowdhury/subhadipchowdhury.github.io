@@ -128,8 +128,18 @@ setting expectations for a student's are different statements in different
 voices, and blending them into one paragraph reads as though the second is
 excusing the first.
 
-The lede is duplicated in `tools/demo/lab-demo.html`, which stands in for the
-layout locally. Change one and change the other.
+A shorter version, the same three points compressed into three paragraphs, sits
+in the footer of the library index at `teaching/labs/index.html` under
+`.cl-ai`. A student who never opens a lab still sees it there.
+
+The whole disclosure is duplicated in `tools/demo/lab-demo.html`, which stands in
+for the layout locally. Change one and change the other. That makes three copies
+of this text in total; keep them in step.
+
+Keep it plain. The first draft of this disclosure carried lines like "Both are
+mistakes, and stopping is more use to you than quietly carrying on" and "asks
+for this kind of disclosure and I think it's right", which are throat-clearing
+rather than information. Dip cut them on 2026-08-13. State the fact and stop.
 
 Note a gap: `lab.test.mjs` runs the tic list over the page `lab.js` renders, so
 it does not see this footer, which Jekyll emits. Nothing machine-checks the
