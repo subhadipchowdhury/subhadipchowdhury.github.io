@@ -357,13 +357,28 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
 
   /* The disclosure spans the whole footer rather than becoming a third column:
      it is addressed to everyone reading, not a peer of the two how-to blocks,
-     and at 300px tracks a third column would strand it beside them. */
+     and a third 300px track would narrow those two to make room.
+
+     Spanning the row means the text needs a measure from somewhere, and a
+     max-width is the wrong place to get one: it wraps at half the row and
+     leaves the rest of the width empty. Columns give the same measure and use
+     the space. column-width picks the count off the room available, so this
+     needs no breakpoint of its own. */
   .cl-ai {
     grid-column: 1 / -1;
     min-width: 0;
-    max-width: 68ch;
     padding-top: 22px;
     border-top: 1px solid var(--cl-hairline);
+  }
+  .cl-ai-body {
+    columns: 300px;
+    column-gap: 46px;
+  }
+  /* Keep each point whole. One column ending higher than the other reads as
+     ordinary column text; a paragraph split down the middle does not. */
+  .cl-ai-body .cl-footnote {
+    break-inside: avoid;
+    margin: 0 0 9px;
   }
 
   @media (max-width: 760px) {
@@ -428,9 +443,11 @@ description: Notebooks and guided labs for undergraduate mathematics, run in Goo
     </div>
     <div class="cl-ai">
       <div class="cl-footer-head">How these labs were built</div>
-      <p class="cl-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
-      <p class="cl-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
-      <p class="cl-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
+      <div class="cl-ai-body">
+        <p class="cl-footnote">I built the puzzle engine, the build pipeline and the first drafts of the writing with the help of a large language model. I checked every mathematical claim, every hint and every wrong-answer message myself, and anything still wrong in them is mine. The <a href="https://leidendeclaration.ai/">Leiden Declaration on Artificial Intelligence and Mathematics</a> asks for this kind of disclosure.</p>
+        <p class="cl-footnote">Nothing on a lab page calls an AI service. Your work is checked by an interpreter running in your browser, and your progress is saved on your own machine.</p>
+        <p class="cl-footnote">You could paste any of these puzzles into a chatbot and have the answer in seconds. The answer isn't what the labs are for. Use whatever helps you understand something you're stuck on, and don't use it to skip the reasoning.</p>
+      </div>
     </div>
   </footer>
 

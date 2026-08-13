@@ -923,21 +923,30 @@ html[data-theme="dark"] .lab {
   outline-offset: 2px;
 }
 
+/* The two headed sections sit side by side and share the width. A max-width
+   here would hold the measure but wrap at two thirds of the row and leave the
+   rest empty, which reads as a mistake rather than a margin. Two 22rem tracks
+   fit the 1140px inner and a third does not, so auto-fit gives exactly two
+   columns on a desktop and one on a phone without a breakpoint. */
 .lab-foot__body {
-  max-width: 42rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 1rem 3rem;
   margin: 0.8rem 0 0;
 }
+
+.lab-foot__sec { min-width: 0; }
 
 .lab-foot__body h2 {
   font-family: "UChicagoSansSerif-SemiBold", system-ui, sans-serif;
   font-size: 0.9rem;
   text-align: left;
-  margin: 1rem 0 0.35rem;
+  margin: 0 0 0.35rem;
   color: var(--color-text);
 }
 
-.lab-foot__body h2:first-child { margin-top: 0; }
 .lab-foot__body p { margin: 0 0 0.6rem; }
+.lab-foot__body p:last-child { margin-bottom: 0; }
 
 .lab-foot__licence { margin: 1rem 0 0; }
 
