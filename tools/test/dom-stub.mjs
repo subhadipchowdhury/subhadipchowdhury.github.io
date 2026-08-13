@@ -94,6 +94,22 @@ class Element {
     return node;
   }
 
+  // Variadic, and it takes strings, which appendChild does not. map.js uses it to
+  // put a swatch and a word into one row.
+  append(...nodes) {
+    for (const node of nodes) {
+      this.appendChild(typeof node === 'string' ? new TextNode(node) : node);
+    }
+  }
+
+  // Layout metrics. Nothing here lays anything out, so these are whatever a test
+  // sets them to, and zero otherwise. map.js clips its arrows to these, so a suite
+  // that cares about the geometry has to fill them in.
+  get offsetWidth() { return this._w ?? 0; }
+  set offsetWidth(v) { this._w = v; }
+  get offsetHeight() { return this._h ?? 0; }
+  set offsetHeight(v) { this._h = v; }
+
   prepend(node) { return this.insertBefore(node, this.childNodes[0] ?? null); }
 
   insertBefore(node, ref) {
@@ -283,6 +299,9 @@ function matchesDescendant(node, selector) {
 const doc = {
   activeElement: null,
   createElement: (tag) => new Element(tag),
+  // The map draws its arrows in SVG. Namespaces buy nothing here, so this is the
+  // same Element with the tag it was asked for.
+  createElementNS: (_ns, tag) => new Element(tag),
   createTextNode: (text) => new TextNode(text),
   createDocumentFragment: () => new Fragment(),
   documentElement: new Element('html'),
@@ -308,6 +327,17 @@ export function installDom({ store = new Map() } = {}) {
     matchMedia: () => ({ matches: false, addEventListener() {} }),
     MathJax: null,
     getComputedStyle: () => ({ getPropertyValue: () => '', fontSize: '16px' }),
+    addEventListener() {},
+    removeEventListener() {},
+    devicePixelRatio: 1,
+  };
+  // map.js relays out when a node box changes size, which is how it copes with
+  // MathJax finishing after the first draw. Nothing resizes here.
+  previous.ResizeObserver = g.ResizeObserver;
+  g.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
   };
   g.getComputedStyle = g.window.getComputedStyle;
   g.navigator = { clipboard: { writeText: async () => {} } };

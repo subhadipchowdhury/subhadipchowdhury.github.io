@@ -1,0 +1,108 @@
+---
+layout: compress
+---
+
+{% comment %}
+  A concept map page. Same shape as lab.html and applet.html: no site header, no
+  navigation, no site footer, and the standalone chrome reused out of
+  engine/lab.css so the bar and the footer cannot drift between the three.
+
+  The page itself is front matter only. Everything inside .cm is built at runtime
+  by maps/engine/map.js from maps/data/{map_id}.json, which tools/author writes.
+
+  Front matter a page supplies:
+    title   shown in <title>; map.js writes the h1 from the data
+    map_id  names the data file under maps/data/
+    robots  false, as on every lab and applet
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body class="applet-page">
+    <a class="lab-skip" href="#cm-root">Skip to the map</a>
+
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/maps/engine/map.css' | relative_url }}">
+
+    <div class="lab-bar">
+      <div class="lab-bar__inner">
+        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span>Labs and Applets</span>
+        </a>
+        {% include theme_toggle.html variant="bar" %}
+      </div>
+    </div>
+
+    <main class="main-wrapper">
+      <div class="cm" id="cm-root"
+           data-map="{{ '/teaching/labs/maps/data/' | append: page.map_id | append: '.json' | relative_url }}">
+        <noscript>
+          <p class="cm-noscript">This map is drawn and checked in your browser, so
+          it needs JavaScript. Turn it on for this page and reload. The printed
+          worksheet covers the same ground on paper.</p>
+        </noscript>
+        <p class="cm-intro" id="cm-loading">Loading the map…</p>
+      </div>
+    </main>
+
+    <footer class="lab-foot">
+      <div class="lab-foot__inner">
+        <p class="lab-foot__lede">I built this map with AI assistance and checked
+        the mathematics myself. Nothing you write here leaves your browser.</p>
+
+        <details class="lab-foot__more">
+          <summary>How this map was built, and what I expect from you</summary>
+          <div class="lab-foot__body">
+            <section class="lab-foot__sec">
+              <h2>How this map was built</h2>
+              <p>The map engine and the first drafts of the writing were built
+              with the help of a large language model. Every relationship on the
+              diagram, and every sentence offered as its description, I checked
+              myself, and anything still wrong in them is mine. The
+              <a href="https://leidendeclaration.ai/">Leiden Declaration on
+              Artificial Intelligence and Mathematics</a> asks for this kind of
+              disclosure.</p>
+
+              <p>Nothing on this page calls an AI service. Your answers are
+              checked here in the page, your sentences and your closing answer are
+              saved on your own machine, and no request leaves it.</p>
+            </section>
+
+            <section class="lab-foot__sec">
+              <h2>Using AI on this map</h2>
+              <p>A chatbot will name any one of these arrows for you. What it
+              cannot do is hold the whole diagram in your head, which is what an
+              exam asks for and what the map is built to train.</p>
+
+              <p>The first step of every arrow asks for your own sentence before
+              it shows you the list. Nothing checks that sentence. Skipping it
+              turns the map into a matching game, and a matching game is worth
+              much less to you than the ten seconds it costs.</p>
+            </section>
+          </div>
+        </details>
+
+        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        under a <a rel="license"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+        Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        License</a>.</p>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { mountMap } from '{{ '/teaching/labs/maps/engine/map.js' | relative_url }}';
+
+      const root = document.getElementById('cm-root');
+      mountMap(root, root.dataset.map).catch((err) => {
+        root.textContent = '';
+        const p = document.createElement('p');
+        p.className = 'cm-noscript';
+        p.textContent = 'The map failed to load: ' + err.message;
+        root.appendChild(p);
+      });
+    </script>
+  </body>
+</html>

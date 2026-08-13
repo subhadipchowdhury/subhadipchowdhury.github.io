@@ -1,0 +1,308 @@
+{
+  "id": "series",
+  "title": "Infinite series",
+  "intro": "Fifteen ideas from the chapter on series, with sixteen arrows between them and nothing written on any of the arrows. Every arrow is a real mathematical relationship: usually the source establishes the target, sometimes the relationship is one that fails, and the picture does not tell you which. Take them in any order. For each one, write down what you think it claims, decide whether it holds at all, and then find your sentence in the list. Click any box to be reminded what it means.",
+  "reflection": "Which single arrow carries the most of this chapter? Say why in one sentence. There is more than one defensible answer, and the argument is the useful part.",
+  "nodes": [
+    {
+      "id": "A",
+      "letter": "A",
+      "label": "Infinite Series\n\\(\\sum a_n\\)",
+      "x": 632,
+      "y": 93,
+      "definition": "The expression \\(a_1 + a_2 + a_3 + \\cdots\\). It has no meaning until the partial sums give it one."
+    },
+    {
+      "id": "B",
+      "letter": "B",
+      "label": "Partial Sums\n\\(\\{s_n\\}\\)",
+      "x": 458,
+      "y": 209,
+      "definition": "\\(s_n = a_1 + \\cdots + a_n\\). An ordinary sequence, so everything you know about sequences applies to it."
+    },
+    {
+      "id": "C",
+      "letter": "C",
+      "label": "Convergent\nSeries",
+      "x": 313,
+      "y": 429,
+      "definition": "\\(\\sum a_n\\) converges when \\(\\{s_n\\}\\) has a finite limit, and the sum is that limit."
+    },
+    {
+      "id": "D",
+      "letter": "D",
+      "label": "Divergent\nSeries",
+      "x": 951,
+      "y": 429,
+      "definition": "\\(\\sum a_n\\) diverges when \\(\\{s_n\\}\\) fails to converge, whether it runs away or oscillates."
+    },
+    {
+      "id": "E",
+      "letter": "E",
+      "label": "Divergence\nTest",
+      "x": 893,
+      "y": 209,
+      "definition": "If \\(a_n \\not\\to 0\\) then \\(\\sum a_n\\) diverges. It is a test for divergence only, and it never certifies convergence."
+    },
+    {
+      "id": "F",
+      "letter": "F",
+      "label": "Geometric\nSeries",
+      "x": 487,
+      "y": 313,
+      "definition": "\\(\\sum ar^n\\), which converges exactly when \\(|r| < 1\\), with sum \\(a/(1-r)\\) and partial sums \\(a(1-r^n)/(1-r)\\)."
+    },
+    {
+      "id": "G",
+      "letter": "G",
+      "label": "Telescoping\nSeries",
+      "x": 719,
+      "y": 313,
+      "definition": "\\(\\sum (b_n - b_{n+1})\\), whose partial sums collapse to \\(b_1 - b_{n+1}\\)."
+    },
+    {
+      "id": "H",
+      "letter": "H",
+      "label": "\\(p\\)-Series\n\\(\\sum 1/n^p\\)",
+      "x": 516,
+      "y": 731,
+      "definition": "Converges exactly when \\(p > 1\\). The boundary \\(p = 1\\) is the harmonic series, which diverges."
+    },
+    {
+      "id": "I",
+      "letter": "I",
+      "label": "Nonneg Series\n\\(+\\) MCT",
+      "x": 168,
+      "y": 586,
+      "definition": "If \\(a_n \\ge 0\\) the partial sums increase, so the monotone convergence theorem turns convergence into boundedness."
+    },
+    {
+      "id": "J",
+      "letter": "J",
+      "label": "Comparison\nTests",
+      "x": 110,
+      "y": 731,
+      "definition": "Direct: \\(0 \\le a_n \\le cb_n\\) eventually and \\(\\sum b_n\\) convergent gives \\(\\sum a_n\\) convergent. Limit: \\(\\lim a_n/b_n \\in (0,\\infty)\\) gives the same behaviour for both."
+    },
+    {
+      "id": "K",
+      "letter": "K",
+      "label": "Integral\nTest",
+      "x": 313,
+      "y": 731,
+      "definition": "If \\(f\\) is positive, continuous and eventually decreasing with \\(f(n) = a_n\\), then \\(\\sum a_n\\) and \\(\\int_1^\\infty f\\) converge or diverge together."
+    },
+    {
+      "id": "L",
+      "letter": "L",
+      "label": "Dirichlet's\nTest",
+      "x": 429,
+      "y": 586,
+      "definition": "If \\(a_n\\) decreases to \\(0\\) and the partial sums of \\(b_n\\) are bounded, then \\(\\sum a_n b_n\\) converges. Proved by summation by parts."
+    },
+    {
+      "id": "M",
+      "letter": "M",
+      "label": "Absolute\nConvergence",
+      "x": 690,
+      "y": 586,
+      "definition": "\\(\\sum a_n\\) converges absolutely when \\(\\sum |a_n|\\) converges. This is strictly stronger than convergence."
+    },
+    {
+      "id": "N",
+      "letter": "N",
+      "label": "Conditional\nConvergence",
+      "x": 777,
+      "y": 731,
+      "definition": "\\(\\sum a_n\\) converges conditionally when it converges and \\(\\sum |a_n|\\) does not. The convergence rests on cancellation."
+    },
+    {
+      "id": "O",
+      "letter": "O",
+      "label": "Ratio and\nRoot Tests",
+      "x": 951,
+      "y": 586,
+      "definition": "With \\(L = \\lim |a_{n+1}/a_n|\\) or \\(L = \\limsup |a_n|^{1/n}\\): absolutely convergent if \\(L < 1\\), divergent if \\(L > 1\\), and no conclusion if \\(L = 1\\)."
+    }
+  ],
+  "edges": [
+    {
+      "n": 1,
+      "from": "A",
+      "to": "B",
+      "kind": "implies",
+      "statement": "Convergence of the series is defined to be convergence of its sequence of partial sums.",
+      "why": "Nothing else defines it. Every test in this chapter is a statement about the partial sums, reached without ever computing them.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 2,
+      "from": "B",
+      "to": "C",
+      "kind": "implies",
+      "statement": "If the partial sums have a finite limit then the series converges, and its sum is that limit.",
+      "why": "The definition read from left to right.",
+      "bend": -40,
+      "at": 0.5
+    },
+    {
+      "n": 3,
+      "from": "B",
+      "to": "D",
+      "kind": "implies",
+      "statement": "If the partial sums fail to converge then the series diverges, and running off to infinity is only one of the ways that happens.",
+      "why": "Divergence is the negation of convergence, so unbounded partial sums and oscillating ones are both covered by it.",
+      "bend": -140,
+      "at": 0.5
+    },
+    {
+      "n": 4,
+      "from": "E",
+      "to": "D",
+      "kind": "implies",
+      "statement": "Terms that do not tend to zero leave the partial sums unable to settle, so the series diverges.",
+      "why": "The difference \\(s_n - s_{n-1}\\) is \\(a_n\\). If \\(s_n\\) had a limit, that difference would have to tend to zero.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 5,
+      "from": "E",
+      "to": "C",
+      "kind": "fails",
+      "statement": "Terms tending to zero is necessary for convergence and not sufficient for it, and the harmonic series is the witness.",
+      "why": "\\(1/n \\to 0\\) while \\(\\sum 1/n\\) diverges, by Nicole Oresme's grouping of the terms into blocks each contributing at least \\(1/2\\).",
+      "bend": 220,
+      "at": 0.5,
+      "hint": "Both of the failing arrows say that something you might hope for does not follow. This one is about a condition that every convergent series satisfies without that being enough."
+    },
+    {
+      "n": 6,
+      "from": "F",
+      "to": "C",
+      "kind": "implies",
+      "statement": "A geometric series converges exactly when its ratio has modulus below one, and then the closed form for the partial sums gives the sum.",
+      "why": "One of the two series here whose partial sums you can write down, which is why the comparison tests are run against it.",
+      "bend": -30,
+      "at": 0.5
+    },
+    {
+      "n": 7,
+      "from": "G",
+      "to": "C",
+      "kind": "implies",
+      "statement": "In a telescoping series consecutive terms cancel, so the partial sums collapse and converge exactly when \\(b_n\\) does.",
+      "why": "The other series whose partial sums you can write down. The sum is \\(b_1\\) minus the limit of \\(b_n\\).",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 8,
+      "from": "I",
+      "to": "C",
+      "kind": "implies",
+      "statement": "For a series of nonnegative terms the partial sums increase, so the series converges exactly when they are bounded above.",
+      "why": "This is what every test for a nonnegative series is really using. Boundedness has replaced the limit, and a bound is something you can find without knowing the sum.",
+      "bend": 95,
+      "at": 0.5
+    },
+    {
+      "n": 9,
+      "from": "I",
+      "to": "J",
+      "kind": "implies",
+      "statement": "Bounding a nonnegative series term by term against a series you already know bounds its partial sums.",
+      "why": "Direct comparison bounds the partial sums; limit comparison compares growth rates instead and reaches the same conclusion for both series.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 10,
+      "from": "I",
+      "to": "K",
+      "kind": "implies",
+      "statement": "Comparing a decreasing positive term with the area under the matching function bounds the partial sums by an improper integral.",
+      "why": "The rectangles drawn on either side of the graph give the two inequalities, and both of them need \\(f\\) positive, continuous and eventually decreasing.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 11,
+      "from": "K",
+      "to": "H",
+      "kind": "implies",
+      "statement": "Running the integral test on \\(1/x^p\\) puts the threshold for the \\(p\\)-series at \\(p = 1\\).",
+      "why": "\\(\\int_1^\\infty x^{-p}\\,dx\\) is finite exactly when \\(p > 1\\), and \\(p = 1\\) is the harmonic series on the wrong side of the line.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 12,
+      "from": "L",
+      "to": "C",
+      "kind": "implies",
+      "statement": "A sequence decreasing to zero paired with bounded partial sums gives a convergent series, and the alternating series test is the case where the second factor is \\((-1)^n\\).",
+      "why": "The proof is summation by parts, which is the discrete version of integration by parts. For a case that is not alternating at all, look at \\(\\sum \\sin(n\\theta)/n\\).",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 13,
+      "from": "M",
+      "to": "C",
+      "kind": "implies",
+      "statement": "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
+      "why": "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\).",
+      "bend": -70,
+      "at": 0.5
+    },
+    {
+      "n": 14,
+      "from": "C",
+      "to": "M",
+      "kind": "fails",
+      "statement": "A convergent series need not converge absolutely, and the alternating harmonic series is the witness.",
+      "why": "\\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on.",
+      "bend": 70,
+      "at": 0.5,
+      "hint": "Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs."
+    },
+    {
+      "n": 15,
+      "from": "O",
+      "to": "M",
+      "kind": "implies",
+      "statement": "The ratio and root tests compare the sizes of the terms against a geometric series, so what they establish is the absolute version.",
+      "why": "Both of them run on \\(|a_n|\\), and both are silent at the value one, where \\(\\sum 1/n\\) and \\(\\sum 1/n^2\\) sit on opposite sides of the answer.",
+      "bend": 0,
+      "at": 0.5
+    },
+    {
+      "n": 16,
+      "from": "L",
+      "to": "N",
+      "kind": "implies",
+      "statement": "A test that gives convergence without touching the absolute version can certify a series whose absolute version diverges.",
+      "why": "The alternating harmonic series again: Dirichlet's test gives the convergence and the harmonic series denies the absolute version, which is what conditional convergence means.",
+      "bend": 55,
+      "at": 0.5
+    }
+  ],
+  "decoys": [
+    "A series of nonnegative terms converges exactly when its terms tend to zero.",
+    "Bounded partial sums are enough for a series to converge.",
+    "Rearranging the terms of a convergent series never changes its sum.",
+    "The integral test applies to any series whose terms are positive.",
+    "A series that passes the ratio test at \\(L = 1\\) diverges."
+  ],
+  "benchmarks": [
+    "The harmonic series \\(\\sum 1/n\\) diverges even though its terms tend to zero.",
+    "The alternating harmonic series \\(\\sum (-1)^{n+1}/n\\) converges conditionally, to \\(\\ln 2\\).",
+    "\\(\\sum \\sin(n\\theta)/n\\) converges by Dirichlet's test and is not alternating.",
+    "Summation by parts is the discrete integration by parts, and it is what proves Dirichlet's test.",
+    "The Cauchy criterion for series: control every far enough tail at once, not one chosen tail."
+  ],
+  "width": 1061,
+  "height": 801
+}

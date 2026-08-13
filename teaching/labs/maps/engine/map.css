@@ -1,0 +1,423 @@
+/* Concept map pages: the diagram, the answer panel, and the list of named arrows.
+ *
+ * Same arrangement as the applets: the standalone chrome comes from
+ * engine/lab.css (.lab-skip, .lab-bar, .lab-foot, .theme-toggle--bar) so the bar
+ * and footer cannot drift, and this file adds a --cm-* layer.
+ *
+ * The four arrow kinds each carry a colour AND a stroke pattern AND a word in
+ * the legend, because the kind is the answer to half of every question here and
+ * a student who cannot see colour still has to be able to check their work.
+ */
+
+:root {
+  --cm-node-bg: #ffffff;
+  --cm-node-border: rgba(0, 42, 58, 0.28);
+  --cm-node-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+  --cm-panel: rgba(0, 0, 0, 0.025);
+  --cm-panel-border: rgba(0, 42, 58, 0.12);
+  --cm-field-bg: #ffffff;
+  --cm-field-border: rgba(0, 42, 58, 0.22);
+
+  --cm-idle: rgba(0, 42, 58, 0.3);       /* an arrow nobody has named yet */
+  --cm-active: #7d4b00;                   /* the arrow the panel is about */
+  --cm-implies: #1f6f4a;
+  --cm-fails: #a32b1f;
+  --cm-equiv: #1c5d99;
+  --cm-caution: #8a5a00;
+
+  --cm-ok-bg: #e4f3ec;
+  --cm-ok-fg: #14684a;
+  --cm-no-bg: #fbeceb;
+  --cm-no-fg: #9d2f26;
+}
+
+html[data-theme="dark"] {
+  --cm-node-bg: #2b2b2b;
+  --cm-node-border: rgba(255, 255, 255, 0.26);
+  --cm-node-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --cm-panel: rgba(255, 255, 255, 0.04);
+  --cm-panel-border: rgba(255, 255, 255, 0.12);
+  --cm-field-bg: #232323;
+  --cm-field-border: rgba(255, 255, 255, 0.22);
+
+  --cm-idle: rgba(255, 255, 255, 0.32);
+  --cm-active: #e8b25c;
+  --cm-implies: #6fca9c;
+  --cm-fails: #ee8b80;
+  --cm-equiv: #74b6e8;
+  --cm-caution: #e0a94e;
+
+  --cm-ok-bg: rgba(47, 169, 125, 0.16);
+  --cm-ok-fg: #7fdcb4;
+  --cm-no-bg: rgba(206, 78, 68, 0.16);
+  --cm-no-fg: #f0a29a;
+}
+
+/* --------------------------------------------------------------------------
+ * Page furniture
+ * ----------------------------------------------------------------------- */
+
+.cm {
+  padding: 1rem 0 4rem;
+  font-family: var(--lab-sans);
+  color: var(--color-text);
+}
+
+.cm *,
+.cm *::before,
+.cm *::after { box-sizing: border-box; }
+
+.cm h1,
+.cm h2,
+.cm h3 { text-align: left; }
+
+.cm h1 {
+  font-family: var(--lab-serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+}
+
+.cm h2 {
+  font-family: var(--lab-semi);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.7rem;
+}
+
+.cm-intro {
+  margin: 0 0 1.2rem;
+  max-width: 68ch;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.cm-panel {
+  padding: 1rem 1.1rem;
+  background: var(--cm-panel);
+  border: 1px solid var(--cm-panel-border);
+  border-radius: 8px;
+}
+
+.cm-noscript {
+  margin: 0 0 1.2rem;
+  padding: 0.7rem 0.9rem;
+  color: var(--cm-no-fg);
+  background: var(--cm-no-bg);
+  border: 1px solid var(--cm-panel-border);
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+ * The bar over the diagram
+ * ----------------------------------------------------------------------- */
+
+.cm-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.1rem;
+  margin: 0 0 0.7rem;
+}
+
+.cm-count {
+  font-family: var(--lab-mono);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cm-zoom { display: flex; gap: 0.35rem; margin-left: auto; }
+
+.cm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.4rem 0.7rem;
+  font-family: var(--lab-semi);
+  font-size: 0.82rem;
+  line-height: 1.2;
+  color: var(--color-text);
+  background: var(--cm-field-bg);
+  border: 1px solid var(--cm-field-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cm-btn:hover { border-color: var(--accent); color: var(--accent); }
+.cm-btn[disabled] { opacity: 0.45; cursor: default; }
+.cm-btn--primary { color: #ffffff; background: var(--cm-equiv); border-color: transparent; }
+.cm-btn--primary:hover { color: #ffffff; filter: brightness(1.08); border-color: transparent; }
+
+.cm :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * The diagram
+ *
+ * The stage is the authored coordinate space at scale 1. It is scaled with a
+ * transform rather than by recomputing coordinates, so the authored geometry and
+ * the measured node boxes stay in one unit system. The frame is what scrolls
+ * when the stage is wider than the page.
+ * ----------------------------------------------------------------------- */
+
+.cm-frame {
+  overflow: auto;
+  padding: 0.4rem;
+  background: var(--lab-sunken);
+  border: 1px solid var(--cm-panel-border);
+  border-radius: 8px;
+}
+
+.cm-stage {
+  position: relative;
+  transform-origin: 0 0;
+}
+
+.cm-edges {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.cm-edge {
+  fill: none;
+  stroke: var(--cm-idle);
+  stroke-width: 1.6;
+}
+
+.cm-edge--implies { stroke: var(--cm-implies); stroke-width: 2; }
+.cm-edge--fails { stroke: var(--cm-fails); stroke-width: 2; stroke-dasharray: 7 4; }
+.cm-edge--equiv { stroke: var(--cm-equiv); stroke-width: 2; }
+.cm-edge--caution { stroke: var(--cm-caution); stroke-width: 2; stroke-dasharray: 2 3; }
+.cm-edge--active { stroke: var(--cm-active); stroke-width: 3.5; }
+
+.cm-cross {
+  font-family: var(--lab-semi);
+  font-size: 15px;
+  fill: var(--cm-fails);
+}
+
+.cm-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: 12rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--color-text);
+  background: var(--cm-node-bg);
+  border: 1px solid var(--cm-node-border);
+  border-radius: 4px;
+  box-shadow: var(--cm-node-shadow);
+  cursor: pointer;
+}
+
+.cm-node:hover { border-color: var(--accent); }
+.cm-node--lit { border-color: var(--cm-active); border-width: 2px; }
+
+.cm-node__letter {
+  position: absolute;
+  top: -0.65rem;
+  left: -0.5rem;
+  font-family: var(--lab-semi);
+  font-size: 0.62rem;
+  color: var(--color-muted);
+}
+
+/* The numbered badge is the question. A real button, so the whole map is
+   completable from the keyboard in reading order. */
+.cm-badge {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  font-family: var(--lab-semi);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  background: var(--cm-node-bg);
+  border: 1px solid var(--cm-idle);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cm-badge:hover { border-color: var(--accent); color: var(--accent); }
+.cm-badge--active { border-color: var(--cm-active); border-width: 2px; color: var(--cm-active); }
+.cm-badge--solved { border-color: var(--cm-implies); color: var(--cm-implies); }
+.cm-badge--solved.is-fails { border-color: var(--cm-fails); color: var(--cm-fails); }
+.cm-badge--solved.is-equiv { border-color: var(--cm-equiv); color: var(--cm-equiv); }
+.cm-badge--solved.is-caution { border-color: var(--cm-caution); color: var(--cm-caution); }
+
+/* --------------------------------------------------------------------------
+ * Legend
+ * ----------------------------------------------------------------------- */
+
+.cm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0.6rem 0 0;
+  font-size: 0.76rem;
+  color: var(--color-muted);
+}
+
+.cm-legend__item { display: flex; align-items: center; gap: 0.4rem; }
+
+.cm-legend__sample {
+  flex: none;
+  width: 1.6rem;
+  border-top-width: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * The answer panel
+ * ----------------------------------------------------------------------- */
+
+.cm-work { margin-top: 1.1rem; }
+
+.cm-work__idle { margin: 0; color: var(--color-muted); }
+
+.cm-step { margin: 0 0 1rem; }
+.cm-step:last-child { margin-bottom: 0; }
+
+.cm-step__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.4rem;
+}
+
+.cm-step__num {
+  font-family: var(--lab-semi);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.cm-step__ask { font-family: var(--lab-semi); font-size: 0.9rem; }
+
+.cm-ends {
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.cm-ends strong { font-family: var(--lab-semi); font-weight: normal; }
+
+.cm-note {
+  width: 100%;
+  min-height: 4.2rem;
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--cm-field-bg);
+  border: 1px solid var(--cm-field-border);
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.cm-choices { display: grid; gap: 0.4rem; }
+
+.cm-choice {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  text-align: left;
+  color: var(--color-text);
+  background: var(--cm-field-bg);
+  border: 1px solid var(--cm-field-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cm-choice:hover { border-color: var(--accent); }
+.cm-choice--spent { opacity: 0.5; }
+
+.cm-verdict {
+  margin: 0.7rem 0 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  border-radius: 6px;
+}
+
+.cm-verdict--ok { color: var(--cm-ok-fg); background: var(--cm-ok-bg); }
+.cm-verdict--no { color: var(--cm-no-fg); background: var(--cm-no-bg); }
+
+.cm-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+/* --------------------------------------------------------------------------
+ * The list of named arrows, the inventory, the reflection
+ * ----------------------------------------------------------------------- */
+
+.cm-named { margin: 1.4rem 0 0; }
+
+.cm-named ol { margin: 0; padding-left: 1.6rem; }
+
+.cm-named li {
+  margin: 0 0 0.55rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.cm-named li:last-child { margin-bottom: 0; }
+
+.cm-named__kind {
+  font-family: var(--lab-semi);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-right: 0.4rem;
+}
+
+.cm-named__kind.is-implies { color: var(--cm-implies); }
+.cm-named__kind.is-fails { color: var(--cm-fails); }
+.cm-named__kind.is-equiv { color: var(--cm-equiv); }
+.cm-named__kind.is-caution { color: var(--cm-caution); }
+
+.cm-named__why { display: block; margin-top: 0.2rem; color: var(--color-muted); }
+
+.cm-named__todo { color: var(--color-muted); }
+
+.cm-fold { margin: 1.1rem 0 0; }
+
+.cm-fold > summary {
+  font-family: var(--lab-semi);
+  font-size: 0.88rem;
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.cm-fold__body { padding: 0.7rem 0 0; }
+
+.cm-fold dl { margin: 0; }
+.cm-fold dt { font-family: var(--lab-semi); font-size: 0.85rem; margin-top: 0.6rem; }
+.cm-fold dd { margin: 0.15rem 0 0; font-size: 0.85rem; line-height: 1.5; color: var(--color-muted); }
+
+.cm-done { margin-top: 1.4rem; }
+
+.cm-done__lede { margin: 0 0 0.7rem; font-size: 0.95rem; line-height: 1.55; }
+
+@media (max-width: 640px) {
+  .cm-node { max-width: 9rem; font-size: 0.74rem; }
+}
