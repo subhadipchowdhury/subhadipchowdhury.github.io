@@ -335,6 +335,17 @@ await it('numbers a single annotated line in the singular', async () => {
   has(notes, 'Lines 5 and 6.', 'two are Lines');
 });
 
+await it('lists three annotated lines rather than chaining them on "and"', async () => {
+  // m1-runge/lageval is the first annotation to name three blocks.
+  const runge = specs.get('m1-runge');
+  const { root, lab } = await open(runge);
+  solveIn(lab, runge, 'chebnodes');
+  solveIn(lab, runge, 'lageval');
+  const notes = textOf(root.querySelector('.lab-gate[data-gate="lageval"] .lab-reveal__notes'));
+  has(notes, 'Lines 3, 5 and 8.', 'three lines are a list');
+  assert(!notes.includes('5 and 8 and'), 'no line should chain on a second "and"');
+});
+
 await it('quotes the blanks the student typed, not the model answer', async () => {
   const { root, lab } = await freshLab();
   const view = lab.views.get('divdiff');

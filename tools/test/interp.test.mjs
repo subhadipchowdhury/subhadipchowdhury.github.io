@@ -605,19 +605,23 @@ function print_dd_table(x, T):
   });
 });
 
+// The two algorithms of m1-runge, in the pseudocode that lab ships. The
+// distractor and wrong-blank cases below are the mathematical reasons the
+// build-time validator can separate them; the validator checks the separation
+// itself, these check the tell each feedback message names.
 describe('chebyshev_nodes', () => {
   const CHEB = `
 function chebyshev_nodes(a, b, n):
     x ← zeros(n+1)
     for k ← 0 to n:
         θ ← ((2·k + 1) / ⟨?frac⟩) · π
-        x[k] ← cos(θ)
+        u ← cos(θ)
         x[k] ← ⟨?map⟩
     return x
 `;
-  const BLANKS = { frac: '2·(n+1)', map: '(a+b)/2 + ((b−a)/2)·x[k]' };
+  const BLANKS = { frac: '2·(n+1)', map: '(a+b)/2 + ((b−a)/2)·u' };
 
-  const nodes = (a, b, n, blanks = {}) => exec(CHEB, {
+  const nodes = (a, b, n, blanks = {}, source = CHEB) => exec(source, {
     blanks: { ...BLANKS, ...blanks }, env: { a, b, n }, call: 'chebyshev_nodes(a, b, n)',
   }).value;
 
@@ -640,32 +644,79 @@ function chebyshev_nodes(a, b, n):
     x.forEach((v) => assert(v > 0 && v < 4, `node ${v} must land inside [0, 4]`));
   });
 
-  it('the second-kind angle puts nodes at the endpoints', () => {
-    const x = nodes(-1, 1, 3, { frac: 'n' });
-    assert(x.some((v) => Math.abs(Math.abs(v) - 1) < 1e-12),
-      'the k/n·π distractor should land a node on ±1, which is the tell');
+  it('comes out symmetric about the midpoint of the interval', () => {
+    const x = nodes(0, 4, 4);
+    x.forEach((v, k) => eq(v + x[x.length - 1 - k], 4, `the pair at ${k}`));
   });
 
-  it('the wrong rescale leaves [a, b]', () => {
-    const x = nodes(0, 4, 3, { map: '(b−a)·x[k]' });
-    assert(x.some((v) => v < 0 || v > 4), 'the wrong rescale should escape [0, 4]');
+  it('d_second: the second-kind angle lands a node on each endpoint', () => {
+    const second = CHEB.replace('θ ← ((2·k + 1) / ⟨?frac⟩) · π', 'θ ← (k / n) · π');
+    const x = nodes(0, 4, 3, {}, second);
+    assert(x.some((v) => Math.abs(v - 4) < 1e-12) && x.some((v) => Math.abs(v) < 1e-12),
+      'projecting the marks rather than the arc midpoints should hit both a and b');
+  });
+
+  it('d_short: n slots cannot hold the n+1 nodes', () => {
+    const short = CHEB.replace('x ← zeros(n+1)', 'x ← zeros(n)');
+    const err = throws(() => nodes(-1, 1, 4, {}, short), 'outside x');
+    eq(err.kind, 'index');
+  });
+
+  it('frac_past_pi: dividing by n+1 runs past π, and pairs of nodes coincide', () => {
+    for (const n of [1, 3, 4, 7]) {
+      const x = nodes(-1, 1, n, { frac: 'n+1' });
+      const repeats = x.filter((v, k) => x.some((w, l) => l > k && Math.abs(v - w) < 1e-9));
+      assert(repeats.length > 0,
+        `n = ${n}: the angles for k and n−k are reflections, so their nodes agree`);
+    }
+  });
+
+  it('frac_arc_count: dividing by 2n overshoots π, and the last two nodes agree', () => {
+    for (const n of [2, 3, 5]) {
+      const x = nodes(-1, 1, n, { frac: '2·n' });
+      eq(x[n], x[n - 1], `n = ${n}: cos(π + π/2n) = cos(π − π/2n)`);
+    }
+  });
+
+  it('map_no_centre: dropping the centre leaves [a, b]', () => {
+    const x = nodes(0, 4, 3, { map: '(b−a)·u' });
+    assert(x.some((v) => v < 0), 'without the centre term the nodes straddle zero instead of [0, 4]');
+  });
+
+  it('map_centred_on_zero: dropping only the centre keeps the spacing', () => {
+    const x = nodes(0, 4, 3, { map: '((b−a)/2)·u' });
+    const right = nodes(0, 4, 3);
+    x.forEach((v, k) => {
+      if (k === 0) return;
+      eq(v - x[k - 1], right[k] - right[k - 1], `gap ${k} should match the answer's`);
+    });
+    // It agrees with the answer on [−1, 1], which is why chebnodes has a second
+    // probe on [0, 4].
+    eq(nodes(-1, 1, 4, { map: '((b−a)/2)·u' }), nodes(-1, 1, 4));
+    ne(x, right, 'on [0, 4] it is off by the centre');
+  });
+
+  it('map_full_width: the whole length doubles the interval', () => {
+    const x = nodes(0, 4, 4, { map: '(a+b)/2 + (b−a)·u' });
+    assert(Math.min(...x) < 0 && Math.max(...x) > 4, 'the outer nodes should fall outside [0, 4]');
+    eq(x[0] + x[x.length - 1], 4, 'the centre is still right, so it is the width that is wrong');
   });
 });
 
 describe('lagrange_eval', () => {
   const LAGRANGE = `
 function lagrange_eval(xn, yn, t):
-    n ← length(xn)
+    m ← length(xn)
     p ← 0
-    for i ← 0 to n−1:
+    for i ← 0 to m−1:
         L ← 1
-        for j ← 0 to n−1:
-            if j ≠ i:
+        for j ← 0 to m−1:
+            if ⟨?guard⟩:
                 L ← L · ⟨?factor⟩
         p ← p + yn[i] · L
     return p
 `;
-  const BLANKS = { factor: '(t − xn[j]) / (xn[i] − xn[j])' };
+  const BLANKS = { guard: 'j ≠ i', factor: '(t − xn[j]) / (xn[i] − xn[j])' };
 
   const at = (t, blanks = {}, source = LAGRANGE) => exec(source, {
     blanks: { ...BLANKS, ...blanks }, env: { xn: PROBE.x, yn: PROBE.y, t }, call: 'lagrange_eval(xn, yn, t)',
@@ -684,20 +735,52 @@ function lagrange_eval(xn, yn, t):
     }
   });
 
-  it('omitting the guard divides by zero, and says so', () => {
-    const noGuard = `
-function lagrange_eval(xn, yn, t):
-    n ← length(xn)
-    p ← 0
-    for i ← 0 to n−1:
-        L ← 1
-        for j ← 0 to n−1:
-            L ← L · ⟨?factor⟩
-        p ← p + yn[i] · L
-    return p
-`;
-    const err = throws(() => at(0.5, {}, noGuard), 'divides by zero');
+  it('guard_inverted: keeping only j = i divides by zero, and says so', () => {
+    const err = throws(() => at(0.5, { guard: 'j = i' }), 'divides by zero');
     eq(err.kind, 'divzero');
+  });
+
+  it('a guard that lets every j through divides by zero too', () => {
+    const err = throws(() => at(0.5, { guard: 'j ≥ 0' }), 'divides by zero');
+    eq(err.kind, 'divzero');
+  });
+
+  it('guard_partial: stopping at j = i drops the later nodes', () => {
+    caught(() => at(0.5, { guard: 'j < i' }), at(0.5));
+  });
+
+  it('factor_sign: an even number of factors would hide a flipped denominator', () => {
+    // Why m1-runge probes lageval with four nodes and not five. Each L_i has
+    // m−1 factors, so flipping the sign of every denominator multiplies L_i by
+    // (−1)^(m−1): visible when m is even, invisible when m is odd.
+    const flipped = { factor: '(t − xn[j]) / (xn[j] − xn[i])' };
+    eq(PROBE.x.length, 4, 'the four-node probe is what makes this catchable');
+    eq(at(0.5, flipped), -at(0.5), 'four nodes: three factors, so the sign flips');
+
+    const five = { xn: [0, 1, 3, 6, 7], yn: [1, 4, 2, 8, 3] };
+    const withFive = (blanks) => exec(LAGRANGE, {
+      blanks: { ...BLANKS, ...blanks }, env: { ...five, t: 0.5 }, call: 'lagrange_eval(xn, yn, t)',
+    }).value;
+    eq(withFive(flipped), withFive({}), 'five nodes: four factors, and the flip cancels');
+  });
+
+  it('factor_roles_swapped: exchanging i and j moves the root off x_j', () => {
+    caught(() => at(0.5, { factor: '(t − xn[i]) / (xn[j] − xn[i])' }), at(0.5));
+  });
+
+  it('d_last: overwriting the sum leaves the last term alone', () => {
+    const last = LAGRANGE.replace('p ← p + yn[i] · L', 'p ← yn[i] · L');
+    caught(() => at(0.5, {}, last), at(0.5));
+  });
+
+  it('d_zero: a product started at zero stays there', () => {
+    const zero = LAGRANGE.replace('L ← 1', 'L ← 0');
+    eq(at(0.5, {}, zero), 0, 'every L_i is zero, so p is zero');
+  });
+
+  it('d_plus: adding the factors is not multiplying them', () => {
+    const plus = LAGRANGE.replace('L ← L · ⟨?factor⟩', 'L ← L + ⟨?factor⟩');
+    caught(() => at(0.5, {}, plus), at(0.5));
   });
 });
 

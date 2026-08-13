@@ -1,5 +1,12 @@
 [
  {
+  "lab_id": "m1-runge",
+  "title": "Runge's phenomenon and Chebyshev nodes",
+  "module": "M1",
+  "order": 1,
+  "puzzles": 2
+ },
+ {
   "lab_id": "m1-newton",
   "title": "Newton form and divided differences",
   "module": "M1",
