@@ -70,6 +70,8 @@
     padding: 1.5rem 2rem 3rem;
     background: var(--color-surface);
     border-radius: 0.75rem;
+    box-sizing: border-box;    /* the site sets this; without it the bar and the
+                                  footer no longer share the wrapper's edge */
   }
 
   /* .theme-toggle base rules, copied from css/stylesheet.scss. The --bar

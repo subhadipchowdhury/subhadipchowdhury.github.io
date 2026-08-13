@@ -602,8 +602,8 @@ export class PuzzleView {
       this.ghost.style.width = `${box.width}px`;
       this.ghost.style.height = `${box.height}px`;
     }
-    // Inside the puzzle, not on document.body: the lab colour tokens are scoped
-    // to .lab, and a ghost outside them renders as unstyled text.
+    // Inside the puzzle, not on document.body: --lp-indent is scoped to .lab,
+    // and without it a multi-line block loses its per-line indent.
     this.root.appendChild(this.ghost);
   }
 
