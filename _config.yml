@@ -7,10 +7,18 @@ permalink: pretty
 url: "https://subhadipchowdhury.github.io/"
 description: "Personal academic website of Subhadip Chowdhury: teaching, pedagogy, research, and mentoring."
   
-# tools/ holds the lab build scripts, test suites and the mechanics demo, and
-# teaching/labs/wip/ the lab design document and its draft notebooks. Both
-# belong in the repo and neither should be served as part of the site.
-exclude: ['deploy', 'stylesheet.scss', 'tools', 'teaching/labs/wip', 'HANDOFF.md']
+# tools/ holds the build scripts, the test suites, the authoring scripts and the
+# design notes; it belongs in the repo and none of it should be served.
+#
+# teaching/labs/notebooks/ is excluded too. Colab opens a notebook from its
+# GitHub blob URL, never from this site, and a lab is the way into its notebook,
+# so serving the .ipynb files would only publish a route around the puzzles.
+exclude:
+  - deploy
+  - stylesheet.scss
+  - tools
+  - teaching/labs/notebooks
+  - HANDOFF.md
 
 defaults:
 

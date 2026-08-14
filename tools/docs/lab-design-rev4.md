@@ -1,5 +1,11 @@
 # Gated Lab Pages for the Applet Library: Design
 
+Historical. This is the design document the labs were built from, kept for the
+reasoning in it. The implementation has moved past it in places, and its
+vocabulary is older than the code: it says "applet" for what is now a lab, and
+"M1" for what is now `lab1-runge` and `lab2-newton`. `HANDOFF.md` is the current
+account.
+
 Revision note (rev 4). The notebooks are no longer immutable, so the design gains a second instrument: when a notebook's structure fights the lab, restructure the notebook. Applied to all three M1 notebooks (revised .ipynb files ship alongside this document, executed and verified), which deletes two pieces of page machinery from the first implementation pass: multi-region cells and the `witness` field are gone from the v1 schema, replaced by one-algorithm-per-cell and real demo cells. Section 4 states the notebook revision principles; section 9 is rewritten against the revised files. Also fixed in this pass: the reveal wireframe in 5.3 carried fabricated coefficient values; the numbers there now come from executing the demo cell.
 
 Revision note (rev 3). The five open questions of section 10 are resolved (four by your answers, one by delegated judgment) and the resolutions are folded into the body: `defer` mode for prose that answers a puzzle (section 4, applied in 9.1 and 9.3), student-trace-visible verification (6.1), multi-frame `capture` (4, applied in all three specs), and a park-and-bring-to-office-hours stage 5 with no in-page solution reveal (6.2, 7.2). Section 10's list now records the decisions and the one policy left under review. (Rev 4 supersedes parts of this rev where noted.)
