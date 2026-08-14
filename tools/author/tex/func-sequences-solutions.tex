@@ -13,6 +13,7 @@
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{xcolor}
+\usepackage{url}
 
 \definecolor{maroon}{HTML}{800000}
 \definecolor{inkgrey}{HTML}{4D4D4D}
@@ -144,8 +145,8 @@ Every arrow, with the reason underneath. Keep this away from the blank worksheet
   Uniform convergence is pointwise convergence with an \(N\) that does not depend on \(x\), so it is the stronger of the two.
   {\scriptsize\color{inkgrey} One quantifier moves and everything in the chapter follows from where it lands. Pointwise lets \(N\) chase \(x\); uniform does not.\par}
 \item
-  Dini's theorem starts from pointwise convergence and adds compactness, monotone convergence and a continuous limit, and gets uniform convergence out.
-  {\scriptsize\color{inkgrey} Pointwise convergence on its own carries nothing to the limit: every \(x^n\) on \([0,1]\) is continuous and the limit is not. Dini's three extra hypotheses are what close that gap, and dropping any one of them reopens it.\par}
+  Dini's theorem takes pointwise convergence and three further hypotheses, a closed bounded interval, monotone convergence, and a continuous limit, and concludes uniform convergence.
+  {\scriptsize\color{inkgrey} Pointwise convergence alone preserves neither continuity nor integrability: every \(x^n\) on \([0,1]\) is continuous and their pointwise limit is discontinuous at \(1\). Each of Dini's three hypotheses is necessary, and dropping any one of them admits a counterexample.\par}
 \item
   A uniform limit of continuous functions is continuous.
   {\scriptsize\color{inkgrey} The three-epsilon argument: get near \(f_n\) uniformly, use the continuity of that one \(f_n\), and come back.\par}
@@ -153,11 +154,11 @@ Every arrow, with the reason underneath. Keep this away from the blank worksheet
   A uniform limit of integrable functions is integrable, and the limit of the integrals is the integral of the limit.
   {\scriptsize\color{inkgrey} Uniform closeness bounds the difference of the integrals by the length of the interval times \(\varepsilon\), which is what lets the two operations swap.\par}
 \item
-  The differentiability theorem is uniform convergence imposed on the derivatives rather than on the functions: \(f_n \to f\) pointwise with \(f_n' \to g\) uniformly gives \(f' = g\).
-  {\scriptsize\color{inkgrey} It has to be the derivatives. \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly and \(|x|\) is not differentiable at \(0\), and \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge. After the clean results for continuity and integrability, this one is disappointing.\par}
+  If \(f_n \to f\) pointwise and \(f_n' \to g\) uniformly, then \(f\) is differentiable with \(f' = g\), so the hypothesis of uniform convergence falls on the derivatives.
+  {\scriptsize\color{inkgrey} Uniform convergence of \(f_n\) alone is insufficient: \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly and \(|x|\) is not differentiable at \(0\), while \((1/n)\sin(n^2x) \to 0\) uniformly with derivatives \(n\cos(n^2x)\) that diverge. After the clean results for continuity and integrability, the situation for differentiability is disappointing.\par}
 \item
   A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.
-  {\scriptsize\color{inkgrey} This is what makes the \(M\)-test possible: you can prove uniform convergence of a series without ever writing down its sum.\par}
+  {\scriptsize\color{inkgrey} The criterion never mentions the limit, which is what makes the \(M\)-test possible: uniform convergence of a series can be established without writing down its sum.\par}
 \item
   On a closed bounded interval, monotone pointwise convergence of continuous functions to a continuous limit is already uniform.
   {\scriptsize\color{inkgrey} Every hypothesis is doing work. Drop compactness, monotonicity, or the continuity of the limit and there is a counterexample waiting.\par}
@@ -166,13 +167,13 @@ Every arrow, with the reason underneath. Keep this away from the blank worksheet
   {\scriptsize\color{inkgrey} Nothing about series of functions is new. It is the sequence \(\{S_N\}\) wearing different notation.\par}
 \item
   Bounding each term by a constant whose series converges gives uniform and absolute convergence of the series of functions.
-  {\scriptsize\color{inkgrey} The bound has to hold for every \(x\) with one constant per term, which is exactly how the \(x\) is got out of the way.\par}
+  {\scriptsize\color{inkgrey} Each \(M_n\) bounds \(|f_n(x)|\) uniformly in \(x\), so \(\sum M_n < \infty\) bounds the tails of \(\sum f_n\) by a quantity independent of \(x\).\par}
 \item
   A power series converges absolutely inside one radius and diverges outside it, and that radius is what the ratio or root test computes.
   {\scriptsize\color{inkgrey} The trichotomy is the theorem. What happens at the two endpoints is decided separately and can go either way.\par}
 \item
   Inside its radius a power series converges uniformly on every closed bounded subinterval, which is what licenses working on it term by term.
-  {\scriptsize\color{inkgrey} Uniform on compact subsets, not on the whole open interval. That distinction is why the statement names a closed bounded subinterval.\par}
+  {\scriptsize\color{inkgrey} The convergence is uniform on each compact subset of \((c-R, c+R)\) and can fail to be uniform on the whole interval, which is why the statement names a closed bounded subinterval.\par}
 \item
   Because the convergence is uniform on compact subintervals, a power series can be differentiated and integrated term by term, and the result keeps the same radius.
   {\scriptsize\color{inkgrey} The interchange theorems supply this, and the radius is unchanged because the ratio or root test sees the same limit for the derived series.\par}
@@ -180,11 +181,11 @@ Every arrow, with the reason underneath. Keep this away from the blank worksheet
   Differentiating term by term at the centre forces the coefficients to be \(f^{(n)}(c)/n!\), so a function has at most one power series about a point.
   {\scriptsize\color{inkgrey} Uniqueness comes free. Any two power series agreeing near a point have the same coefficients, because both sets are computed from the same derivatives.\par}
 \item
-  The Taylor series converges to \(f\) at a point exactly when the remainder tends to zero there, which is a statement about \(f\) and not about the coefficients.
-  {\scriptsize\color{inkgrey} A series can have every Taylor coefficient of \(f\), converge everywhere, and still not converge to \(f\). The remainder is what decides it.\par}
+  The Taylor series converges to \(f(x)\) exactly when \(R_N(x) = f(x) - P_N(x) \to 0\), a condition on \(f\) itself.
+  {\scriptsize\color{inkgrey} \(e^{-1/x^2}\) extended by \(0\) has every derivative zero at the origin, so its Taylor series is identically zero and converges everywhere, and it agrees with the function only at \(0\). The remainder is what decides the question.\par}
 \item
   Applying the interchange theorems to the partial sums gives the matching statements for the sum of a series of functions.
-  {\scriptsize\color{inkgrey} A uniformly convergent series of continuous functions has a continuous sum, and can be integrated term by term, for exactly the reason the sequence version holds.\par}
+  {\scriptsize\color{inkgrey} A uniformly convergent series of continuous functions has a continuous sum and may be integrated term by term, by the sequence theorems applied to \(\{S_N\}\).\par}
 \end{enumerate}
 \end{multicols}
 \normalsize

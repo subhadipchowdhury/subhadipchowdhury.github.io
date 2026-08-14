@@ -60,8 +60,8 @@ EDGES = [
          "One quantifier moves and everything in the chapter follows from where it lands. Pointwise lets \\(N\\) chase \\(x\\); uniform does not."),
 
     edge(2, "A", "G", "holds",
-         "Dini's theorem starts from pointwise convergence and adds compactness, monotone convergence and a continuous limit, and gets uniform convergence out.",
-         "Pointwise convergence on its own carries nothing to the limit: every \\(x^n\\) on \\([0,1]\\) is continuous and the limit is not. Dini's three extra hypotheses are what close that gap, and dropping any one of them reopens it."),
+         "Dini's theorem takes pointwise convergence and three further hypotheses, a closed bounded interval, monotone convergence, and a continuous limit, and concludes uniform convergence.",
+         "Pointwise convergence alone preserves neither continuity nor integrability: every \\(x^n\\) on \\([0,1]\\) is continuous and their pointwise limit is discontinuous at \\(1\\). Each of Dini's three hypotheses is necessary, and dropping any one of them admits a counterexample."),
 
     edge(3, "B", "D", "holds",
          "A uniform limit of continuous functions is continuous.",
@@ -72,12 +72,12 @@ EDGES = [
          "Uniform closeness bounds the difference of the integrals by the length of the interval times \\(\\varepsilon\\), which is what lets the two operations swap."),
 
     edge(5, "B", "F", "holds",
-         "The differentiability theorem is uniform convergence imposed on the derivatives rather than on the functions: \\(f_n \\to f\\) pointwise with \\(f_n' \\to g\\) uniformly gives \\(f' = g\\).",
-         "It has to be the derivatives. \\(\\sqrt{x^2 + 1/n^2} \\to |x|\\) uniformly and \\(|x|\\) is not differentiable at \\(0\\), and \\((1/n)\\sin(n^2x) \\to 0\\) uniformly while its derivatives diverge. After the clean results for continuity and integrability, this one is disappointing."),
+         "If \\(f_n \\to f\\) pointwise and \\(f_n' \\to g\\) uniformly, then \\(f\\) is differentiable with \\(f' = g\\), so the hypothesis of uniform convergence falls on the derivatives.",
+         "Uniform convergence of \\(f_n\\) alone is insufficient: \\(\\sqrt{x^2 + 1/n^2} \\to |x|\\) uniformly and \\(|x|\\) is not differentiable at \\(0\\), while \\((1/n)\\sin(n^2x) \\to 0\\) uniformly with derivatives \\(n\\cos(n^2x)\\) that diverge. After the clean results for continuity and integrability, the situation for differentiability is disappointing."),
 
     edge(6, "C", "B", "equiv",
          "A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.",
-         "This is what makes the \\(M\\)-test possible: you can prove uniform convergence of a series without ever writing down its sum."),
+         "The criterion never mentions the limit, which is what makes the \\(M\\)-test possible: uniform convergence of a series can be established without writing down its sum."),
 
     edge(7, "G", "B", "holds",
          "On a closed bounded interval, monotone pointwise convergence of continuous functions to a continuous limit is already uniform.",
@@ -89,7 +89,7 @@ EDGES = [
 
     edge(9, "I", "B", "holds",
          "Bounding each term by a constant whose series converges gives uniform and absolute convergence of the series of functions.",
-         "The bound has to hold for every \\(x\\) with one constant per term, which is exactly how the \\(x\\) is got out of the way.",
+         "Each \\(M_n\\) bounds \\(|f_n(x)|\\) uniformly in \\(x\\), so \\(\\sum M_n < \\infty\\) bounds the tails of \\(\\sum f_n\\) by a quantity independent of \\(x\\).",
          bend=-50),
 
     edge(10, "J", "K", "holds",
@@ -98,7 +98,7 @@ EDGES = [
 
     edge(11, "J", "B", "holds",
          "Inside its radius a power series converges uniformly on every closed bounded subinterval, which is what licenses working on it term by term.",
-         "Uniform on compact subsets, not on the whole open interval. That distinction is why the statement names a closed bounded subinterval."),
+         "The convergence is uniform on each compact subset of \\((c-R, c+R)\\) and can fail to be uniform on the whole interval, which is why the statement names a closed bounded subinterval."),
 
     edge(12, "J", "L", "holds",
          "Because the convergence is uniform on compact subintervals, a power series can be differentiated and integrated term by term, and the result keeps the same radius.",
@@ -109,12 +109,12 @@ EDGES = [
          "Uniqueness comes free. Any two power series agreeing near a point have the same coefficients, because both sets are computed from the same derivatives."),
 
     edge(14, "M", "N", "holds",
-         "The Taylor series converges to \\(f\\) at a point exactly when the remainder tends to zero there, which is a statement about \\(f\\) and not about the coefficients.",
-         "A series can have every Taylor coefficient of \\(f\\), converge everywhere, and still not converge to \\(f\\). The remainder is what decides it."),
+         "The Taylor series converges to \\(f(x)\\) exactly when \\(R_N(x) = f(x) - P_N(x) \\to 0\\), a condition on \\(f\\) itself.",
+         "\\(e^{-1/x^2}\\) extended by \\(0\\) has every derivative zero at the origin, so its Taylor series is identically zero and converges everywhere, and it agrees with the function only at \\(0\\). The remainder is what decides the question."),
 
     edge(15, "H", "D", "holds",
          "Applying the interchange theorems to the partial sums gives the matching statements for the sum of a series of functions.",
-         "A uniformly convergent series of continuous functions has a continuous sum, and can be integrated term by term, for exactly the reason the sequence version holds."),
+         "A uniformly convergent series of continuous functions has a continuous sum and may be integrated term by term, by the sequence theorems applied to \\(\\{S_N\\}\\)."),
 ]
 
 
@@ -135,13 +135,12 @@ DATA = {
     "title": "Sequences and series of functions",
     "intro": (
         "Fourteen ideas from the chapter on sequences and series of functions, with "
-        "fifteen arrows between them and nothing written on any arrow. Every arrow is a "
-        "relationship that holds in the direction drawn, and it does not have to be an "
-        "implication: often one box is the tool that settles the other, and sometimes "
-        "one is defined in terms of the other. Work out what each arrow says, in your "
-        "own words, and then check yourself against the list at the bottom. Click any "
-        "box to be reminded what it means, and click a numbered circle to see that one "
-        "arrow's answer on its own."
+        "fifteen arrows between them and nothing written on any arrow. Each arrow is a "
+        "relationship that holds in the direction drawn. Some are implications between "
+        "properties, some record that one box is defined in terms of another, and many "
+        "name the theorem that decides a question about the box it points at. State each "
+        "one in your own words, then check yourself against the list at the bottom. "
+        "Click a box for its definition, or a numbered circle for that one arrow."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? One quantifier separates "

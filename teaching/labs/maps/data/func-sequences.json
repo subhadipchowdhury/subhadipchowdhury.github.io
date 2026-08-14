@@ -1,7 +1,7 @@
 {
   "id": "func-sequences",
   "title": "Sequences and series of functions",
-  "intro": "Fourteen ideas from the chapter on sequences and series of functions, with fifteen arrows between them and nothing written on any arrow. Every arrow is a relationship that holds in the direction drawn, and it does not have to be an implication: often one box is the tool that settles the other, and sometimes one is defined in terms of the other. Work out what each arrow says, in your own words, and then check yourself against the list at the bottom. Click any box to be reminded what it means, and click a numbered circle to see that one arrow's answer on its own.",
+  "intro": "Fourteen ideas from the chapter on sequences and series of functions, with fifteen arrows between them and nothing written on any arrow. Each arrow is a relationship that holds in the direction drawn. Some are implications between properties, some record that one box is defined in terms of another, and many name the theorem that decides a question about the box it points at. State each one in your own words, then check yourself against the list at the bottom. Click a box for its definition, or a numbered circle for that one arrow.",
   "reflection": "Which single arrow carries the most of this chapter? One quantifier separates the two kinds of convergence, and most of the chapter follows from where it lands, so say whether your answer is the arrow that moves it.",
   "nodes": [
     {
@@ -189,8 +189,8 @@
       "from": "A",
       "to": "G",
       "kind": "holds",
-      "statement": "Dini's theorem starts from pointwise convergence and adds compactness, monotone convergence and a continuous limit, and gets uniform convergence out.",
-      "why": "Pointwise convergence on its own carries nothing to the limit: every \\(x^n\\) on \\([0,1]\\) is continuous and the limit is not. Dini's three extra hypotheses are what close that gap, and dropping any one of them reopens it.",
+      "statement": "Dini's theorem takes pointwise convergence and three further hypotheses, a closed bounded interval, monotone convergence, and a continuous limit, and concludes uniform convergence.",
+      "why": "Pointwise convergence alone preserves neither continuity nor integrability: every \\(x^n\\) on \\([0,1]\\) is continuous and their pointwise limit is discontinuous at \\(1\\). Each of Dini's three hypotheses is necessary, and dropping any one of them admits a counterexample.",
       "bend": 0,
       "at": 0.5
     },
@@ -219,8 +219,8 @@
       "from": "B",
       "to": "F",
       "kind": "holds",
-      "statement": "The differentiability theorem is uniform convergence imposed on the derivatives rather than on the functions: \\(f_n \\to f\\) pointwise with \\(f_n' \\to g\\) uniformly gives \\(f' = g\\).",
-      "why": "It has to be the derivatives. \\(\\sqrt{x^2 + 1/n^2} \\to |x|\\) uniformly and \\(|x|\\) is not differentiable at \\(0\\), and \\((1/n)\\sin(n^2x) \\to 0\\) uniformly while its derivatives diverge. After the clean results for continuity and integrability, this one is disappointing.",
+      "statement": "If \\(f_n \\to f\\) pointwise and \\(f_n' \\to g\\) uniformly, then \\(f\\) is differentiable with \\(f' = g\\), so the hypothesis of uniform convergence falls on the derivatives.",
+      "why": "Uniform convergence of \\(f_n\\) alone is insufficient: \\(\\sqrt{x^2 + 1/n^2} \\to |x|\\) uniformly and \\(|x|\\) is not differentiable at \\(0\\), while \\((1/n)\\sin(n^2x) \\to 0\\) uniformly with derivatives \\(n\\cos(n^2x)\\) that diverge. After the clean results for continuity and integrability, the situation for differentiability is disappointing.",
       "bend": 0,
       "at": 0.5
     },
@@ -230,7 +230,7 @@
       "to": "B",
       "kind": "equiv",
       "statement": "A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.",
-      "why": "This is what makes the \\(M\\)-test possible: you can prove uniform convergence of a series without ever writing down its sum.",
+      "why": "The criterion never mentions the limit, which is what makes the \\(M\\)-test possible: uniform convergence of a series can be established without writing down its sum.",
       "bend": 0,
       "at": 0.5
     },
@@ -260,7 +260,7 @@
       "to": "B",
       "kind": "holds",
       "statement": "Bounding each term by a constant whose series converges gives uniform and absolute convergence of the series of functions.",
-      "why": "The bound has to hold for every \\(x\\) with one constant per term, which is exactly how the \\(x\\) is got out of the way.",
+      "why": "Each \\(M_n\\) bounds \\(|f_n(x)|\\) uniformly in \\(x\\), so \\(\\sum M_n < \\infty\\) bounds the tails of \\(\\sum f_n\\) by a quantity independent of \\(x\\).",
       "bend": -50,
       "at": 0.5
     },
@@ -280,7 +280,7 @@
       "to": "B",
       "kind": "holds",
       "statement": "Inside its radius a power series converges uniformly on every closed bounded subinterval, which is what licenses working on it term by term.",
-      "why": "Uniform on compact subsets, not on the whole open interval. That distinction is why the statement names a closed bounded subinterval.",
+      "why": "The convergence is uniform on each compact subset of \\((c-R, c+R)\\) and can fail to be uniform on the whole interval, which is why the statement names a closed bounded subinterval.",
       "bend": 0,
       "at": 0.5
     },
@@ -309,8 +309,8 @@
       "from": "M",
       "to": "N",
       "kind": "holds",
-      "statement": "The Taylor series converges to \\(f\\) at a point exactly when the remainder tends to zero there, which is a statement about \\(f\\) and not about the coefficients.",
-      "why": "A series can have every Taylor coefficient of \\(f\\), converge everywhere, and still not converge to \\(f\\). The remainder is what decides it.",
+      "statement": "The Taylor series converges to \\(f(x)\\) exactly when \\(R_N(x) = f(x) - P_N(x) \\to 0\\), a condition on \\(f\\) itself.",
+      "why": "\\(e^{-1/x^2}\\) extended by \\(0\\) has every derivative zero at the origin, so its Taylor series is identically zero and converges everywhere, and it agrees with the function only at \\(0\\). The remainder is what decides the question.",
       "bend": 0,
       "at": 0.5
     },
@@ -320,7 +320,7 @@
       "to": "D",
       "kind": "holds",
       "statement": "Applying the interchange theorems to the partial sums gives the matching statements for the sum of a series of functions.",
-      "why": "A uniformly convergent series of continuous functions has a continuous sum, and can be integrated term by term, for exactly the reason the sequence version holds.",
+      "why": "A uniformly convergent series of continuous functions has a continuous sum and may be integrated term by term, by the sequence theorems applied to \\(\\{S_N\\}\\).",
       "bend": 0,
       "at": 0.5
     }

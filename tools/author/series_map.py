@@ -66,22 +66,22 @@ EDGES = [
          "The definition read from left to right."),
 
     edge(3, "B", "D", "holds",
-         "If the partial sums fail to converge then the series diverges, and running off to infinity is only one of the ways that happens.",
-         "Divergence is the negation of convergence, so unbounded partial sums and oscillating ones are both covered by it.",
+         "If the sequence of partial sums has no finite limit then the series diverges, whether the partial sums are unbounded or oscillate without approaching a limit.",
+         "Divergence is the negation of convergence, so an unbounded sequence of partial sums and a bounded oscillating one are both divergent.",
          bend=-110),
 
     edge(4, "E", "D", "holds",
-         "Terms that do not tend to zero leave the partial sums unable to settle, so the series diverges.",
+         "If \\(a_n \\not\\to 0\\) then the partial sums cannot converge, so the series diverges.",
          "The difference \\(s_n - s_{n-1}\\) is \\(a_n\\). If \\(s_n\\) had a limit, that difference would have to tend to zero."),
 
     edge(5, "C", "E", "holds",
          "A convergent series has terms tending to zero, and the divergence test is that theorem read in contrapositive form.",
-         "The two are one statement. \\(s_n - s_{n-1} = a_n\\), so a convergent \\(s_n\\) forces \\(a_n \\to 0\\). Read the other way it is a test for divergence and nothing else: \\(1/n \\to 0\\) while \\(\\sum 1/n\\) diverges, so the condition is necessary and not sufficient.",
+         "It is one statement with two readings. \\(s_n - s_{n-1} = a_n\\), so if \\(s_n\\) converges then \\(a_n \\to 0\\). The condition is necessary and not sufficient: \\(1/n \\to 0\\) and \\(\\sum 1/n\\) diverges, so the contrapositive detects divergence and never certifies convergence.",
          bend=100),
 
     edge(6, "F", "C", "holds",
          "A geometric series converges exactly when its ratio has modulus below one, and then the closed form for the partial sums gives the sum.",
-         "One of the two series here whose partial sums you can write down, which is why the comparison tests are run against it."),
+         "One of the two series here with partial sums in closed form, which is what makes it a benchmark for the comparison tests."),
 
     edge(7, "G", "C", "holds",
          "In a telescoping series consecutive terms cancel, so the partial sums collapse and converge exactly when \\(b_n\\) does.",
@@ -89,39 +89,39 @@ EDGES = [
 
     edge(8, "I", "C", "holds",
          "For a series of nonnegative terms the partial sums increase, so the series converges exactly when they are bounded above.",
-         "This is what every test for a nonnegative series is really using. Boundedness has replaced the limit, and a bound is something you can find without knowing the sum."),
+         "Every test for a nonnegative series rests on this. It replaces the question of a limit with the question of an upper bound, and an upper bound can be established without knowing the sum."),
 
     edge(9, "I", "J", "holds",
-         "Bounding a nonnegative series term by term against a series you already know bounds its partial sums.",
-         "Direct comparison bounds the partial sums; limit comparison compares growth rates instead and reaches the same conclusion for both series."),
+         "Bounding \\(a_n\\) term by term against a series of known behaviour bounds the partial sums of \\(\\sum a_n\\), which is what the comparison tests do.",
+         "Direct comparison bounds the partial sums outright. Limit comparison instead asks for \\(\\lim a_n/b_n\\) to lie in \\((0,\\infty)\\), which is enough to give both series the same behaviour."),
 
     edge(10, "I", "K", "holds",
-         "Comparing a decreasing positive term with the area under the matching function bounds the partial sums by an improper integral.",
+         "For a positive decreasing \\(f\\) with \\(f(n) = a_n\\), the rectangles of the partial sums are bounded above and below by \\(\\int f\\), so the series and the improper integral converge together.",
          "The rectangles drawn on either side of the graph give the two inequalities, and both of them need \\(f\\) positive, continuous and eventually decreasing."),
 
     edge(11, "K", "H", "holds",
-         "The integral test is the one tool here that settles the \\(p\\)-series, and applied to \\(1/x^p\\) it puts the threshold at \\(p = 1\\).",
-         "\\(\\int_1^\\infty x^{-p}\\,dx\\) is finite exactly when \\(p > 1\\), and \\(p = 1\\) is the harmonic series on the wrong side of the line. Nothing else on this map reaches it: the ratio and root tests both return one for every \\(p\\), and comparison needs a benchmark, which for a \\(p\\)-series means another \\(p\\)-series."),
+         "Applying the integral test to \\(1/x^p\\) determines exactly which exponents give convergence: \\(\\sum 1/n^p\\) converges if and only if \\(p > 1\\).",
+         "\\(\\int_1^\\infty x^{-p}\\,dx\\) is finite exactly when \\(p > 1\\), and at \\(p = 1\\) the series is harmonic and diverges. It is the only test on this map that decides the question: the ratio and root tests both give \\(L = 1\\) for every \\(p\\), and a comparison would need a benchmark, which for a \\(p\\)-series means another \\(p\\)-series."),
 
     edge(12, "L", "C", "holds",
-         "A sequence decreasing to zero paired with bounded partial sums gives a convergent series, and the alternating series test is the case where the second factor is \\((-1)^n\\).",
+         "If \\(a_n\\) decreases to zero and the partial sums of \\(b_n\\) are bounded then \\(\\sum a_n b_n\\) converges, and the alternating series test is the case \\(b_n = (-1)^n\\).",
          "The proof is summation by parts, which is the discrete version of integration by parts. For a case that is not alternating at all, look at \\(\\sum \\sin(n\\theta)/n\\)."),
 
     edge(13, "M", "C", "holds",
-         "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
+         "If \\(\\sum |a_n|\\) converges then \\(\\sum a_n\\) converges, so absolute convergence is the stronger property.",
          "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\)."),
 
     edge(14, "C", "N", "holds",
-         "A series that converges while its absolute version diverges is what conditional convergence means.",
-         "The alternating harmonic series is the case to hold on to: \\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) and \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on, which is why absolute convergence is the stronger property and not the same one."),
+         "A series for which \\(\\sum a_n\\) converges and \\(\\sum |a_n|\\) diverges is what conditional convergence means.",
+         "The alternating harmonic series is the case to hold on to: \\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. The convergence depends on cancellation between the positive and negative terms, and taking absolute values removes it."),
 
     edge(15, "O", "M", "holds",
-         "The ratio and root tests compare the sizes of the terms against a geometric series, so what they establish is the absolute version.",
-         "Both of them run on \\(|a_n|\\), and both are silent at the value one, where \\(\\sum 1/n\\) and \\(\\sum 1/n^2\\) sit on opposite sides of the answer."),
+         "The ratio and root tests compare \\(|a_n|\\) against a geometric series, so what they establish is convergence of \\(\\sum |a_n|\\).",
+         "Both are computed from \\(|a_n|\\), and both are inconclusive when the limit is \\(1\\): \\(\\sum 1/n\\) diverges and \\(\\sum 1/n^2\\) converges, and both give \\(1\\)."),
 
     edge(16, "L", "N", "holds",
-         "Dirichlet's test certifies convergence without ever looking at the absolute version, which is how a conditionally convergent series is produced.",
-         "The alternating harmonic series again: Dirichlet's test gives the convergence and the harmonic series denies the absolute version, which is what conditional convergence means."),
+         "Dirichlet's test establishes convergence from the sizes and signs of the terms together, so it can certify a series for which \\(\\sum |a_n|\\) diverges.",
+         "The alternating harmonic series again: Dirichlet's test gives the convergence of \\(\\sum (-1)^{n+1}/n\\), and \\(\\sum 1/n\\) diverges."),
 ]
 
 
@@ -142,12 +142,12 @@ DATA = {
     "title": "Infinite series",
     "intro": (
         "Fifteen ideas from the chapter on series, with sixteen arrows between them and "
-        "nothing written on any arrow. Every arrow is a relationship that holds in the "
-        "direction drawn, and it does not have to be an implication: often one box is "
-        "the tool that settles the other, and sometimes one is defined in terms of the "
-        "other. Work out what each arrow says, in your own words, and then check "
-        "yourself against the list at the bottom. Click any box to be reminded what it "
-        "means, and click a numbered circle to see that one arrow's answer on its own."
+        "nothing written on any arrow. Each arrow is a relationship that holds in the "
+        "direction drawn. Some are implications between properties, some record that one "
+        "box is defined in terms of another, and many name the theorem that decides a "
+        "question about the box it points at. State each one in your own words, then "
+        "check yourself against the list at the bottom. Click a box for its definition, "
+        "or a numbered circle for that one arrow."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? There is more than one "

@@ -52,6 +52,7 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{xcolor}
+\usepackage{url}
 
 \definecolor{maroon}{HTML}{800000}
 \definecolor{inkgrey}{HTML}{4D4D4D}
@@ -178,23 +179,22 @@ def _document(data, solutions):
         parts.append(
             r"The next page has " + str(len(data["nodes"])) + r" ideas as boxes, with "
             + str(len(data["edges"])) + r" numbered arrows between them and nothing "
-            r"written on any arrow. Every arrow is a relationship that holds in the "
-            r"direction drawn, and it does not have to be an implication. Sometimes one "
-            r"property forces another. Sometimes one box is defined in terms of the "
-            r"other. Often one box is the tool that settles the other: the integral test "
-            r"doesn't imply anything about the \(p\)-series, it is what pins down where "
-            r"the \(p\)-series turns."
+            r"written on any arrow. Each arrow is a relationship that holds in the "
+            r"direction drawn. Some are implications between properties. Some record "
+            r"that one box is defined in terms of another. Many name the theorem that "
+            r"decides a question about the box the arrow points at: the integral test "
+            r"applied to \(1/x^p\) determines exactly which exponents make "
+            r"\(\sum 1/n^p\) converge."
         )
         parts.append("")
         parts.append(
-            r"For each numbered arrow, say in one sentence what the relationship is. "
-            r"Name the theorem where there is one, state the hypothesis doing the work, "
-            r"or say which box settles which. An arrow with a head at each end runs both "
-            r"ways."
+            r"For each numbered arrow, state the relationship in one sentence. Name the "
+            r"theorem where there is one, and give the hypothesis it turns on. An arrow "
+            r"with a head at each end holds in both directions."
         )
         parts.append("")
         parts.append(
-            r"When you have had a go at all of them, check yourself at \texttt{" +
+            r"When you have had a go at all of them, check yourself at \url{" +
             PAGE_URL + "/" + data["id"] + r"/}. That page draws the same map and will "
             r"show you the answers one arrow at a time, or all at once."
         )
