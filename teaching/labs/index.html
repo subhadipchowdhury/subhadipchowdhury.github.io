@@ -166,7 +166,6 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   .cat-sub {
     font-family: var(--cat-light);
     margin: 14px 0 0;
-    max-width: 600px;
     font-size: 16.5px;
     line-height: 1.6;
     color: var(--cat-text);
@@ -221,10 +220,14 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     transform: translateY(-4px);
     box-shadow: var(--cat-card-shadow-hover);
   }
-  /* One row, laid out by flex. The course pill shrinks and ellipsises, so a
-     long course name never overlaps the status pill. */
+  /* One row, laid out by flex, and it wraps rather than squeezing. The course pill
+     used to shrink and ellipsise so a long name could not overlap the status pill,
+     which cut "Differential Equations" short on a narrow card. Nothing here
+     truncates now: if the two pills do not fit, the status pill drops to a second
+     line. See the text-width rule in CLAUDE.md. */
   .cat-banner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     padding: 11px 12px;
@@ -244,7 +247,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     padding: 5px 10px;
     border-radius: 999px;
   }
-  .cat-course-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cat-course-name { white-space: nowrap; }
   .cat-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cat-accent); }
   .cat-status,
   .cat-topic {

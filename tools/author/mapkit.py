@@ -127,8 +127,10 @@ def nominal_size(label):
         plain = re.sub(r"\\[a-zA-Z]+|[\\{}$]|\\\(|\\\)", "", line)
         widest = max(widest, len(plain))
     # 0.8rem text in the brand sans runs near 6.2px per character, plus the
-    # 0.6rem of side padding on .cm-node. .cm-node caps at 12rem.
-    return min(192, round(widest * 6.2) + 20), round(len(lines) * 17) + 14
+    # 0.6rem of side padding on .cm-node. No cap: .cm-node is nowrap and carries
+    # no max-width, so a box is as wide as its widest authored line and the label
+    # breaks only where the author put a \n.
+    return round(widest * 6.2) + 20, round(len(lines) * 17) + 14
 
 
 def _bezier(t, p0, c, p1):

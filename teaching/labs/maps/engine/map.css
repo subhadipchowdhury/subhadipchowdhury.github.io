@@ -90,7 +90,6 @@ html[data-theme="dark"] {
 
 .cm-intro {
   margin: 0 0 1.2rem;
-  max-width: 68ch;
   line-height: 1.6;
   text-wrap: pretty;
 }
@@ -204,10 +203,13 @@ html[data-theme="dark"] {
   fill: var(--cm-fails);
 }
 
+/* No width cap. The author decides where a label breaks, with \n in the data, and
+   a cap here would break it somewhere else as well. The engine measures whatever
+   box results and clips the arrows to that. */
 .cm-node {
   position: absolute;
   transform: translate(-50%, -50%);
-  max-width: 12rem;
+  white-space: nowrap;
   padding: 0.4rem 0.6rem;
   font-size: 0.8rem;
   line-height: 1.3;
@@ -419,5 +421,5 @@ html[data-theme="dark"] {
 .cm-done__lede { margin: 0 0 0.7rem; font-size: 0.95rem; line-height: 1.55; }
 
 @media (max-width: 640px) {
-  .cm-node { max-width: 9rem; font-size: 0.74rem; }
+  .cm-node { font-size: 0.74rem; }
 }

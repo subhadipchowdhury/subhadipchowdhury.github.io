@@ -102,7 +102,6 @@ html[data-theme="dark"] {
 
 .ap-lede {
   margin: 0 0 1.4rem;
-  max-width: 60ch;
   line-height: 1.55;
   color: var(--color-muted);
   text-wrap: pretty;
@@ -126,11 +125,15 @@ html[data-theme="dark"] {
   border-radius: 8px;
 }
 
-/* Controls left, figure right, stacking under 900px. The figure comes first in
-   the source so a narrow screen shows the picture before the knobs. */
+/* Figure left, controls right, stacking under 900px. The figure comes first in
+   the source so a narrow screen shows the picture before the knobs.
+
+   Both tracks are proportional. A pinned sidebar (19rem, as this was) wraps its
+   hint text to a width chosen here rather than to the width available, which is
+   the thing Dip has asked me to stop doing. See CLAUDE.md. */
 .ap-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 1.4rem;
   align-items: start;
 }
@@ -195,6 +198,10 @@ html[data-theme="dark"] {
 }
 
 .ap input[type="number"] { font-family: var(--lab-mono); }
+
+/* In a label-and-value row the input takes what is left of the row. Setting a
+   width on it at the call site clips long values. */
+.ap-readout input[type="number"] { flex: 1 1 5rem; min-width: 4.5rem; }
 
 .ap input[type="range"] {
   width: 100%;
