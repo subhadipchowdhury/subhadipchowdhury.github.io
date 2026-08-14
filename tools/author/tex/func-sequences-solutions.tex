@@ -43,7 +43,6 @@
   kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
   kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
   kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
-  kindcaution/.style={-{Latex[length=2mm]}, thick, densely dotted, orange!75!black},
 }
 
 \begin{document}
@@ -120,7 +119,7 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
   \draw[kindfails] (-5.268, -0.444) .. controls (-3.268, -1.641) .. (-1.269, -2.838);
   \draw[kindimplies] (1.218, -0.461) .. controls (0.506, -1.635) .. (-0.207, -2.809);
   \draw[kindimplies] (1.775, -0.461) .. controls (2.488, -1.635) .. (3.2, -2.809);
-  \draw[kindcaution] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
+  \draw[kindfails] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
   \draw[kindequiv] (6.79, 0.711) .. controls (4.565, 0.411) .. (2.341, 0.111);
   \draw[kindimplies] (-5.005, -5.848) .. controls (-2.016, -3.162) .. (0.972, -0.475);
   \draw[kindimplies] (-1.829, -5.841) .. controls (-3.743, -3.164) .. (-5.657, -0.487);
@@ -150,7 +149,7 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
 \end{tikzpicture}
 \end{center}
 \begin{center}\small
-\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad \textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad \textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}} \quad \textcolor{orange!75!black}{\textbf{$\cdots$\!\!\textgreater\ other hypotheses}}
+\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad \textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad \textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}}
 \end{center}
 \vspace*{\fill}
 \newpage
@@ -171,8 +170,8 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
   {\scriptsize\bfseries\color{maroon} gives.}\ A uniform limit of integrable functions is integrable, and the limit of the integrals is the integral of the limit.
   {\scriptsize\color{inkgrey} Uniform closeness bounds the difference of the integrals by the length of the interval times \(\varepsilon\), which is what lets the two operations swap.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives, other hypotheses.}\ For the derivative to pass to the limit it is the derivatives that must converge uniformly, and uniform convergence of the functions themselves is not enough.
-  {\scriptsize\color{inkgrey} \(\sqrt{x^2 + 1/n^2}\) converges uniformly to \(|x|\), which is not differentiable at \(0\). Look also at \((1/n)\sin(n^2x)\), where the functions converge uniformly to \(0\) and the derivatives diverge.\par}
+  {\scriptsize\bfseries\color{maroon} fails.}\ Uniform convergence of the functions themselves does not carry differentiability to the limit, and what does is uniform convergence of the derivatives.
+  {\scriptsize\color{inkgrey} \(\sqrt{x^2 + 1/n^2}\) converges uniformly to \(|x|\), which is not differentiable at \(0\). The theorem that does work asks for \(f_n \to f\) pointwise and \(f_n' \to g\) uniformly, and concludes \(f' = g\). Look also at \((1/n)\sin(n^2x)\), where the functions converge uniformly to \(0\) and the derivatives diverge.\par}
 \item
   {\scriptsize\bfseries\color{maroon} both ways.}\ A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.
   {\scriptsize\color{inkgrey} This is what makes the \(M\)-test possible: you can prove uniform convergence of a series without ever writing down its sum.\par}
@@ -207,7 +206,7 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
 \end{multicols}
 \normalsize
 \heading{One last question}
-Which single arrow carries the most of this chapter? Say why in one sentence. If your answer is the one arrow whose hypotheses are not what you expected, say what you expected instead.
+Which single arrow carries the most of this chapter? Say why in one sentence. If you pick one of the two that fail, say what you would have expected instead and what the counterexample costs you.
 
 \vfill
 {\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked the mathematics myself.\par}

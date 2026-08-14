@@ -1,7 +1,7 @@
 {
   "id": "series",
   "title": "Infinite series",
-  "intro": "Fifteen ideas from the chapter on series, with sixteen arrows between them and nothing written on any of the arrows. Every arrow is a real mathematical relationship: usually the source establishes the target, sometimes the relationship is one that fails, and the picture does not tell you which. Take them in any order. For each one, write down what you think it claims, decide whether it holds at all, and then find your sentence in the list. Click any box to be reminded what it means.",
+  "intro": "Fifteen ideas from the chapter on series, with sixteen arrows between them and nothing written on any arrow. An arrow is a relationship, and not always an implication: sometimes the first box gives you the second, sometimes it doesn't and there's a counterexample, and sometimes each gives the other. The picture does not say which. Take the arrows in any order. For each one write down your own description first, then decide which of the three it is, then find your sentence in the list. Click any box to be reminded what it means.",
   "reflection": "Which single arrow carries the most of this chapter? Say why in one sentence. There is more than one defensible answer, and the argument is the useful part.",
   "nodes": [
     {

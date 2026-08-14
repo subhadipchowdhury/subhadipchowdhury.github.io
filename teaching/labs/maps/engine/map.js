@@ -27,11 +27,17 @@
 const STORE_VERSION = 1;
 const MIN_NOTE = 15;
 
-/* The four kinds of relationship an arrow can be.
+/* The three kinds of relationship an arrow can be.
  *
  * `word` is what the student clicks, `label` is the short form used on the map and
  * in the list, and `ask` is what is said back once the kind is right. An arrow is a
  * relationship and not always an implication, so none of this says "claims".
+ *
+ * There was a fourth, `caution`, for a theorem whose hypotheses are not the ones its
+ * neighbours use. Dip cut it on 2026-08-13: it was vague, and its one instance is
+ * honestly a `fails`. Uniform convergence of the functions does not give a
+ * differentiable limit; that the repair is to ask for the derivatives instead
+ * belongs in the sentence, not in a category of its own.
  */
 export const KINDS = {
   implies: {
@@ -48,15 +54,10 @@ export const KINDS = {
     word: 'Each one gives the other',
     label: 'both ways',
     ask: 'Yes. Neither is stronger; they are the same condition said two ways.'
-  },
-  caution: {
-    word: 'It does, but on hypotheses you would not have guessed',
-    label: 'gives, other hypotheses',
-    ask: 'Yes. It holds, and the thing the hypotheses are about is not what you would expect.'
   }
 };
 
-const KIND_ORDER = ['implies', 'fails', 'equiv', 'caution'];
+const KIND_ORDER = ['implies', 'fails', 'equiv'];
 
 /* -----------------------------------------------------------------------------
  * Small utilities
@@ -360,7 +361,7 @@ export class MapView {
     for (const kind of KIND_ORDER) {
       const item = el('div', 'cm-legend__item');
       const sample = el('span', 'cm-legend__sample cm-legend__sample--' + kind);
-      sample.style.borderTopStyle = kind === 'fails' ? 'dashed' : kind === 'caution' ? 'dotted' : 'solid';
+      sample.style.borderTopStyle = kind === 'fails' ? 'dashed' : 'solid';
       sample.style.borderTopColor = `var(--cm-${kind})`;
       item.append(sample, el('span', null, KINDS[kind].label));
       legend.appendChild(item);

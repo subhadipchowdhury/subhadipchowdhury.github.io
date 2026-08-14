@@ -25,7 +25,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "validate.mjs"
 OUT_DIR = ROOT / "teaching" / "labs" / "maps" / "data"
 
-KINDS = ("implies", "fails", "equiv", "caution")
+KINDS = ("implies", "fails", "equiv")
 
 # tikz units are about 1cm; 58px reads at roughly the size the printed worksheet
 # does on screen. The offsets put the leftmost and topmost node far enough inside

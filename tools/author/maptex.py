@@ -9,7 +9,7 @@ Two deliberate departures from Dip's own Practice Worksheet 3, which this is
 modelled on:
 
 - **Every arrow is drawn the same way.** His worksheet distinguishes solid,
-  dashed, double-headed and dotted, and says so in the instructions. On screen the
+  dashed and double-headed, and says so in the instructions. On screen the
   style is hidden until the arrow is named, because on paper it gives away half of
   every answer. The PDF hides it too, so the paper exercise asks exactly what the
   page asks, and the instructions ask for the kind as part of each answer.
@@ -33,11 +33,12 @@ PDF_DIR = ROOT / "teaching" / "labs" / "maps"
 
 PDFLATEX = shutil.which("pdflatex") or "/Library/TeX/texbin/pdflatex"
 
-# The four things a student circles, in the same order as KIND_ORDER in
+# The three things a student circles, in the same order as KIND_ORDER in
 # maps/engine/map.js so the paper and the page offer the same choices in the same
 # sequence. An arrow is a relationship and not always an implication, so none of
-# these says "claims".
-KIND_WORDS = ["gives", "fails", "both ways", "gives, other hypotheses"]
+# these says "claims". There was a fourth; see the note above KINDS in map.js.
+KIND_ORDER = ["implies", "fails", "equiv"]
+KIND_WORDS = ["gives", "fails", "both ways"]
 
 PREAMBLE = r"""\documentclass[11pt]{article}
 
@@ -84,7 +85,6 @@ PREAMBLE = r"""\documentclass[11pt]{article}
   kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
   kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
   kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
-  kindcaution/.style={-{Latex[length=2mm]}, thick, densely dotted, orange!75!black},
 }
 """
 
@@ -156,7 +156,7 @@ def _answer_lines(data, solutions):
         out.append(r"\item")
         if solutions:
             out.append(r"  {\scriptsize\bfseries\color{maroon} " +
-                       KIND_WORDS[["implies", "fails", "equiv", "caution"].index(e["kind"])] +
+                       KIND_WORDS[KIND_ORDER.index(e["kind"])] +
                        r".}\ " + _plain(e["statement"]))
             out.append(r"  {\scriptsize\color{inkgrey} " + _plain(e["why"]) + r"\par}")
         else:
@@ -190,13 +190,12 @@ def _document(data, solutions):
             + str(len(data["edges"])) + r" numbered arrows between them and nothing "
             r"written on any arrow. An arrow is a relationship between two ideas, and "
             r"not always an implication. Sometimes the first box gives you the second. "
-            r"Sometimes it doesn't, and there's a counterexample. Sometimes each gives "
-            r"the other. And sometimes it does give it, but on hypotheses you wouldn't "
-            r"have guessed."
+            r"Sometimes it doesn't, and there's a counterexample. And sometimes each "
+            r"gives the other."
         )
         parts.append("")
         parts.append(
-            r"For each arrow, circle which of those four it is, and describe the "
+            r"For each arrow, circle which of the three it is, and describe the "
             r"relationship in one sentence. Name the theorem where there is one, and "
             r"say what goes wrong where there isn't."
         )
@@ -236,8 +235,7 @@ def _document(data, solutions):
         parts.append(r"\begin{center}\small")
         parts.append(r"\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad "
                      r"\textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad "
-                     r"\textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}} \quad "
-                     r"\textcolor{orange!75!black}{\textbf{$\cdots$\!\!\textgreater\ other hypotheses}}")
+                     r"\textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}}")
         parts.append(r"\end{center}")
     parts.append(r"\vspace*{\fill}")
     parts.append(r"\newpage")

@@ -1,9 +1,9 @@
 """The infinite series concept map, from chapter 2 of Practice Worksheet 3.
 
 Fifteen boxes and sixteen arrows, with the tikz coordinates carried over so the
-screen version and the printed version have the same shape. Two arrows fail; the
-other fourteen hold. Nothing here is an equivalence, which is why the legend still
-offers the word: the vocabulary is the same across every map.
+screen version and the printed version have the same shape. Two arrows fail and the
+other fourteen hold. Nothing here is an equivalence, and the legend offers the word
+anyway: the three kinds are the same three on every map.
 
 Run it to rewrite teaching/labs/maps/data/series.json.
 """
@@ -140,12 +140,12 @@ DATA = {
     "title": "Infinite series",
     "intro": (
         "Fifteen ideas from the chapter on series, with sixteen arrows between them and "
-        "nothing written on any of the arrows. Every arrow is a real mathematical "
-        "relationship: usually the source establishes the target, sometimes the "
-        "relationship is one that fails, and the picture does not tell you which. "
-        "Take them in any order. For each one, write down what you think it claims, "
-        "decide whether it holds at all, and then find your sentence in the list. "
-        "Click any box to be reminded what it means."
+        "nothing written on any arrow. An arrow is a relationship, and not always an "
+        "implication: sometimes the first box gives you the second, sometimes it "
+        "doesn't and there's a counterexample, and sometimes each gives the other. The "
+        "picture does not say which. Take the arrows in any order. For each one write "
+        "down your own description first, then decide which of the three it is, then "
+        "find your sentence in the list. Click any box to be reminded what it means."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? Say why in one sentence. "

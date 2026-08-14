@@ -1,11 +1,14 @@
 """The sequences and series of functions concept map, from chapter 3 of
 Practice Worksheet 3.
 
-Fourteen boxes and fifteen arrows, with the tikz coordinates carried over. This is
-the map that uses all four kinds: one arrow fails, one is an equivalence, and one
-holds on hypotheses that are not the ones its neighbours use. That last one is the
-arrow the printed worksheet draws in orange and tells the student to pay attention
-to, and here it is not marked at all until they have named it.
+Fourteen boxes and fifteen arrows, with the tikz coordinates carried over. Two
+arrows fail and one is an equivalence, so this is the map that uses all three kinds.
+
+Arrow 5 is the one the printed worksheet draws in orange and flags for attention:
+uniform convergence of the functions does not give a differentiable limit. It was a
+fourth kind of its own until 2026-08-13, when Dip cut that category as vague. It is
+honestly a failure, and the fact that the repair is to ask for the derivatives to
+converge uniformly belongs in its sentence.
 
 Run it to rewrite teaching/labs/maps/data/func-sequences.json.
 """
@@ -58,7 +61,7 @@ EDGES = [
     edge(2, "A", "D", "fails",
          "Pointwise convergence does not carry continuity to the limit, and \\(x^n\\) on \\([0,1]\\) is the witness.",
          "Every \\(x^n\\) is continuous, the pointwise limit is \\(0\\) on \\([0,1)\\) and \\(1\\) at \\(x = 1\\), and that limit is not continuous.",
-         hint="Only one arrow on this map fails outright, and it starts at the weaker of the two kinds of convergence. Which of the two lets \\(N\\) depend on \\(x\\)?"),
+         hint="Two arrows on this map fail. This one starts at the weaker of the two kinds of convergence, the one that lets \\(N\\) chase \\(x\\), and the counterexample is a sequence of continuous functions you have met."),
 
     edge(3, "B", "D", "implies",
          "A uniform limit of continuous functions is continuous.",
@@ -68,9 +71,10 @@ EDGES = [
          "A uniform limit of integrable functions is integrable, and the limit of the integrals is the integral of the limit.",
          "Uniform closeness bounds the difference of the integrals by the length of the interval times \\(\\varepsilon\\), which is what lets the two operations swap."),
 
-    edge(5, "B", "F", "caution",
-         "For the derivative to pass to the limit it is the derivatives that must converge uniformly, and uniform convergence of the functions themselves is not enough.",
-         "\\(\\sqrt{x^2 + 1/n^2}\\) converges uniformly to \\(|x|\\), which is not differentiable at \\(0\\). Look also at \\((1/n)\\sin(n^2x)\\), where the functions converge uniformly to \\(0\\) and the derivatives diverge.",
+    edge(5, "B", "F", "fails",
+         "Uniform convergence of the functions themselves does not carry differentiability to the limit, and what does is uniform convergence of the derivatives.",
+         "\\(\\sqrt{x^2 + 1/n^2}\\) converges uniformly to \\(|x|\\), which is not differentiable at \\(0\\). The theorem that does work asks for \\(f_n \\to f\\) pointwise and \\(f_n' \\to g\\) uniformly, and concludes \\(f' = g\\). Look also at \\((1/n)\\sin(n^2x)\\), where the functions converge uniformly to \\(0\\) and the derivatives diverge.",
+         hint="Continuity and integrability both survive a uniform limit. This is the one that does not, and the repair is to ask for something else to converge uniformly.",
          bend=0),
 
     edge(6, "C", "B", "equiv",
@@ -132,17 +136,18 @@ DATA = {
     "title": "Sequences and series of functions",
     "intro": (
         "Fourteen ideas from the chapter on sequences and series of functions, with "
-        "fifteen arrows between them and nothing written on any arrow. One of them "
-        "fails, one is an equivalence, and one holds on hypotheses that are not the "
-        "ones its neighbours use. The picture does not say which is which, so for each "
-        "arrow write down what you think it claims, decide what kind of relationship "
-        "it is, and then find your sentence in the list. Click any box to be reminded "
+        "fifteen arrows between them and nothing written on any arrow. An arrow is a "
+        "relationship, and not always an implication: sometimes the first box gives "
+        "you the second, sometimes it doesn't and there's a counterexample, and "
+        "sometimes each gives the other. The picture does not say which. For each "
+        "arrow write down your own description first, then decide which of the three "
+        "it is, then find your sentence in the list. Click any box to be reminded "
         "what it means."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? Say why in one sentence. "
-        "If your answer is the one arrow whose hypotheses are not what you expected, "
-        "say what you expected instead."
+        "If you pick one of the two that fail, say what you would have expected "
+        "instead and what the counterexample costs you."
     ),
     "nodes": NODES,
     "edges": EDGES,

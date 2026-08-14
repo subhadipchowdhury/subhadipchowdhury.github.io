@@ -1,8 +1,8 @@
 {
   "id": "func-sequences",
   "title": "Sequences and series of functions",
-  "intro": "Fourteen ideas from the chapter on sequences and series of functions, with fifteen arrows between them and nothing written on any arrow. One of them fails, one is an equivalence, and one holds on hypotheses that are not the ones its neighbours use. The picture does not say which is which, so for each arrow write down what you think it claims, decide what kind of relationship it is, and then find your sentence in the list. Click any box to be reminded what it means.",
-  "reflection": "Which single arrow carries the most of this chapter? Say why in one sentence. If your answer is the one arrow whose hypotheses are not what you expected, say what you expected instead.",
+  "intro": "Fourteen ideas from the chapter on sequences and series of functions, with fifteen arrows between them and nothing written on any arrow. An arrow is a relationship, and not always an implication: sometimes the first box gives you the second, sometimes it doesn't and there's a counterexample, and sometimes each gives the other. The picture does not say which. For each arrow write down your own description first, then decide which of the three it is, then find your sentence in the list. Click any box to be reminded what it means.",
+  "reflection": "Which single arrow carries the most of this chapter? Say why in one sentence. If you pick one of the two that fail, say what you would have expected instead and what the counterexample costs you.",
   "nodes": [
     {
       "id": "A",
@@ -193,7 +193,7 @@
       "why": "Every \\(x^n\\) is continuous, the pointwise limit is \\(0\\) on \\([0,1)\\) and \\(1\\) at \\(x = 1\\), and that limit is not continuous.",
       "bend": 0,
       "at": 0.5,
-      "hint": "Only one arrow on this map fails outright, and it starts at the weaker of the two kinds of convergence. Which of the two lets \\(N\\) depend on \\(x\\)?"
+      "hint": "Two arrows on this map fail. This one starts at the weaker of the two kinds of convergence, the one that lets \\(N\\) chase \\(x\\), and the counterexample is a sequence of continuous functions you have met."
     },
     {
       "n": 3,
@@ -219,11 +219,12 @@
       "n": 5,
       "from": "B",
       "to": "F",
-      "kind": "caution",
-      "statement": "For the derivative to pass to the limit it is the derivatives that must converge uniformly, and uniform convergence of the functions themselves is not enough.",
-      "why": "\\(\\sqrt{x^2 + 1/n^2}\\) converges uniformly to \\(|x|\\), which is not differentiable at \\(0\\). Look also at \\((1/n)\\sin(n^2x)\\), where the functions converge uniformly to \\(0\\) and the derivatives diverge.",
+      "kind": "fails",
+      "statement": "Uniform convergence of the functions themselves does not carry differentiability to the limit, and what does is uniform convergence of the derivatives.",
+      "why": "\\(\\sqrt{x^2 + 1/n^2}\\) converges uniformly to \\(|x|\\), which is not differentiable at \\(0\\). The theorem that does work asks for \\(f_n \\to f\\) pointwise and \\(f_n' \\to g\\) uniformly, and concludes \\(f' = g\\). Look also at \\((1/n)\\sin(n^2x)\\), where the functions converge uniformly to \\(0\\) and the derivatives diverge.",
       "bend": 0,
-      "at": 0.5
+      "at": 0.5,
+      "hint": "Continuity and integrability both survive a uniform limit. This is the one that does not, and the repair is to ask for something else to converge uniformly."
     },
     {
       "n": 6,
