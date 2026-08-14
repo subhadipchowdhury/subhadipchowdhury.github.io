@@ -25,7 +25,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "validate.mjs"
 OUT_DIR = ROOT / "teaching" / "labs" / "maps" / "data"
 
-KINDS = ("implies", "fails", "equiv")
+KINDS = ("holds", "equiv")
 
 # tikz units are about 1cm; 58px reads at roughly the size the printed worksheet
 # does on screen. The offsets put the leftmost and topmost node far enough inside
@@ -323,8 +323,8 @@ def _prose_of(data):
         yield f"edge {e['n']} why", e["why"]
         if e.get("hint"):
             yield f"edge {e['n']} hint", e["hint"]
-    for i, d in enumerate(data.get("decoys", [])):
-        yield f"decoy {i + 1}", d
+    for i, m in enumerate(data.get("mistakes", [])):
+        yield f"mistake {i + 1}", m
     for i, b in enumerate(data.get("benchmarks", [])):
         yield f"benchmark {i + 1}", b
 
@@ -371,20 +371,14 @@ def validate(data):
         if len(_text(e["why"])) < 30:
             bad.append(f"edge {e['n']} why is too short to add anything")
 
-    # An arrow whose kind fails wants a hint, because the two failing arrows in a
-    # chapter are the pair a student is most likely to confuse with each other.
-    for e in data["edges"]:
-        if e["kind"] == "fails" and not e.get("hint"):
-            bad.append(f"edge {e['n']} fails and has no hint")
+    for m in data.get("mistakes", []):
+        if m in statements:
+            bad.append("a listed mistake repeats a real statement")
 
-    for d in data.get("decoys", []):
-        if d in statements:
-            bad.append("a decoy repeats a real statement")
-
-    # Without decoys the last arrow is answered by elimination, since solving an
-    # arrow takes its statement out of the bank.
-    if len(data.get("decoys", [])) < 3:
-        bad.append("a map wants at least three decoys in the bank")
+    # A map ships a short list of false claims a student might make, alongside the
+    # answers. These were the answer bank's distractors until the bank was removed.
+    if len(data.get("mistakes", [])) < 3:
+        bad.append("a map wants at least three listed mistakes")
 
     for label, value in _prose_of(data):
         text = _text(value)
@@ -450,7 +444,7 @@ def write(data):
     print(
         f"wrote {path.relative_to(ROOT)}  "
         f"{len(data['nodes'])} nodes, {len(data['edges'])} arrows, "
-        f"{len(data.get('decoys', []))} decoys, stage {data['width']}x{data['height']}"
+        f"{len(data.get('mistakes', []))} mistakes, stage {data['width']}x{data['height']}"
     )
     print(f"  and {data['pdf']} plus tools/author/tex/{data['id']}-solutions.pdf")
 

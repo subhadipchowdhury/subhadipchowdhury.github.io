@@ -1,104 +1,46 @@
 /* Concept map engine.
  *
- * A map is a fixed diagram of concepts with numbered, unlabelled arrows. Each
- * arrow asks three things in order:
+ * A map is a fixed diagram of concepts with numbered arrows and nothing written on
+ * them. The work happens on the printed worksheet; this page draws the same diagram
+ * and checks it. Click a numbered circle for that one arrow's answer, or open the
+ * list at the bottom for all of them at once.
  *
- *   1. Write your own sentence for it. Never graded, never sent anywhere, but it
- *      has to be there before step 2 opens. Recognising the right answer in a
- *      list is much easier than producing it, and the produced version is the one
- *      worth having.
- *   2. Does the relationship hold, fail, or is it an equivalence? On paper the
- *      line style gives this away before the student reads anything, so here the
- *      style is hidden until the arrow is named.
- *   3. Pick the statement out of a shared bank holding every arrow's statement.
- *      The distractors are the other real answers, so there is nothing to author
- *      and no pattern to exploit. A solved statement leaves the bank.
+ * It was a graded three-step exercise until 2026-08-13: write your own sentence,
+ * then choose whether the relationship holds or fails, then match it out of a
+ * shuffled bank of every arrow's statement. All three are gone, and the reasoning is
+ * worth recording because it applies to the next map too.
  *
- * The whole map is visible from the start. It is not revealed outward from a
- * start node, because the closing question asks which single arrow matters most
- * and that cannot be answered without seeing the shape.
+ *   - **The bank was not a test.** Solving one arrow showed a student every
+ *     statement, which they could copy or screenshot. A gate that opens on the first
+ *     correct answer is not protecting anything, so the list is simply given.
+ *   - **The kind question collapsed.** The four kinds became three, and the three
+ *     became two once the failing arrows were rewritten (see below), and a two-way
+ *     choice a student wins by always guessing the same answer is a formality.
+ *   - **The written sentence was never graded** and could not be, so requiring it
+ *     before showing the list only added a click.
  *
- * Geometry is authored, not computed: coordinates come from the tikz the print
- * worksheet is drawn with. Node boxes are measured after MathJax typesets, and
- * the edges are clipped to the measured borders, so a long label cannot leave an
- * arrow hanging in the middle of a box.
+ * The failing arrows were rewritten rather than kept. Each was a real relationship
+ * stated backwards: "terms tending to zero does not give convergence" is the
+ * contrapositive of a theorem that runs the other way, and "pointwise convergence
+ * does not preserve continuity" names the gap Dini's theorem closes. Every arrow now
+ * holds in the direction drawn, so nothing has to be hidden and every head is drawn
+ * from the start.
+ *
+ * Geometry is authored, not computed: coordinates come from the tikz the printed
+ * worksheet is drawn with, and tools/author/maptex.py draws the paper version from
+ * the same three points this file draws from. Node boxes are measured after MathJax
+ * typesets and the arrows are clipped to the measured borders, so a long label
+ * cannot leave an arrow hanging in the middle of a box.
  */
 
-const STORE_VERSION = 1;
-const MIN_NOTE = 15;
-
-/* The three kinds of relationship an arrow can be.
- *
- * `word` is what the student clicks, `label` is the short form used on the map and
- * in the list, and `ask` is what is said back once the kind is right. An arrow is a
- * relationship and not always an implication, so none of this says "claims".
- *
- * There was a fourth, `caution`, for a theorem whose hypotheses are not the ones its
- * neighbours use. Dip cut it on 2026-08-13: it was vague, and its one instance is
- * honestly a `fails`. Uniform convergence of the functions does not give a
- * differentiable limit; that the repair is to ask for the derivatives instead
- * belongs in the sentence, not in a category of its own.
+/* The two kinds of arrow. `label` appears in the answer list, and the kind decides
+ * whether the arrow gets one head or two. See the note above for the two kinds that
+ * used to be here.
  */
 export const KINDS = {
-  implies: {
-    word: 'The first gives you the second',
-    label: 'gives',
-    ask: 'Yes. The first box is enough for the second.'
-  },
-  fails: {
-    word: "It doesn't, and there's a counterexample",
-    label: 'fails',
-    ask: 'Yes. There is an example satisfying the first and not the second.'
-  },
-  equiv: {
-    word: 'Each one gives the other',
-    label: 'both ways',
-    ask: 'Yes. Neither is stronger; they are the same condition said two ways.'
-  }
+  holds: { label: 'one way' },
+  equiv: { label: 'both ways' }
 };
-
-const KIND_ORDER = ['implies', 'fails', 'equiv'];
-
-/* -----------------------------------------------------------------------------
- * Small utilities
- * -------------------------------------------------------------------------- */
-
-/** A cheap stable string hash. Used to stamp saved progress and to seed the shuffle. */
-export function hashString(str) {
-  let h = 2166136261;
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0).toString(36);
-}
-
-/** The fingerprint saved progress is stamped with. An edited map discards it. */
-export function stampOf(data) {
-  const parts = data.edges.map((e) => [e.n, e.from, e.to, e.kind, e.statement].join(''));
-  return hashString(parts.join(''));
-}
-
-/**
- * Deterministic shuffle. The bank has to keep one order across reloads, or a
- * student who comes back finds the list rearranged and has to re-read all of it.
- */
-export function seededShuffle(items, seed) {
-  const out = items.slice();
-  let state = 0;
-  for (let i = 0; i < seed.length; i++) state = (Math.imul(state, 31) + seed.charCodeAt(i)) >>> 0;
-  const next = () => {
-    state ^= state << 13; state >>>= 0;
-    state ^= state >> 17;
-    state ^= state << 5; state >>>= 0;
-    return state / 4294967296;
-  };
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(next() * (i + 1));
-    const spare = out[i]; out[i] = out[j]; out[j] = spare;
-  }
-  return out;
-}
 
 /* -----------------------------------------------------------------------------
  * Geometry
@@ -158,69 +100,6 @@ export function arrowHead(tip, dir, size) {
 }
 
 /* -----------------------------------------------------------------------------
- * Progress
- * -------------------------------------------------------------------------- */
-
-export class Progress {
-  constructor(mapId, stamp, storage) {
-    this.key = `cmap:${STORE_VERSION}:${mapId}`;
-    this.stamp = stamp;
-    this.store = storage || (typeof localStorage === 'undefined' ? null : localStorage);
-    this.state = { stamp, solved: [], notes: {}, reflection: '' };
-    this.load();
-  }
-
-  load() {
-    if (!this.store) return;
-    try {
-      const raw = this.store.getItem(this.key);
-      if (!raw) return;
-      const saved = JSON.parse(raw);
-      // A map whose arrows have been edited invalidates its own saved answers
-      // rather than restoring them against the wrong questions.
-      if (saved && saved.stamp === this.stamp) {
-        this.state = {
-          stamp: this.stamp,
-          solved: Array.isArray(saved.solved) ? saved.solved : [],
-          notes: saved.notes && typeof saved.notes === 'object' ? saved.notes : {},
-          reflection: typeof saved.reflection === 'string' ? saved.reflection : ''
-        };
-      }
-    } catch (e) { /* a corrupt or unreadable store just means no progress */ }
-  }
-
-  save() {
-    if (!this.store) return;
-    try { this.store.setItem(this.key, JSON.stringify(this.state)); } catch (e) { /* full or blocked */ }
-  }
-
-  isSolved(n) { return this.state.solved.indexOf(n) !== -1; }
-
-  solve(n) {
-    if (!this.isSolved(n)) { this.state.solved.push(n); this.save(); }
-  }
-
-  note(n, text) {
-    if (text === undefined) return this.state.notes[String(n)] || '';
-    this.state.notes[String(n)] = text;
-    this.save();
-    return text;
-  }
-
-  reflection(text) {
-    if (text === undefined) return this.state.reflection;
-    this.state.reflection = text;
-    this.save();
-    return text;
-  }
-
-  clear() {
-    this.state = { stamp: this.stamp, solved: [], notes: {}, reflection: '' };
-    this.save();
-  }
-}
-
-/* -----------------------------------------------------------------------------
  * Rendering
  * -------------------------------------------------------------------------- */
 
@@ -252,10 +131,12 @@ export class MapView {
   constructor(root, data) {
     this.root = root;
     this.data = data;
-    this.progress = new Progress(data.id, stampOf(data));
     this.nodeById = new Map(data.nodes.map((n) => [n.id, n]));
+    // Which arrows have had their answer looked at. In memory only: there is
+    // nothing to earn here, so there is nothing to save, and a reload gives a
+    // clean map, which is what someone coming back to practise wants.
+    this.shown = new Set();
     this.active = null;
-    this.tries = new Map();
     this.scale = 1;
     this.build();
   }
@@ -272,29 +153,11 @@ export class MapView {
     intro.innerHTML = d.intro;
     this.root.appendChild(intro);
 
-    // Status bar
+    if (d.pdf) this.root.appendChild(this.paperCallout());
+
     const status = el('div', 'cm-status');
     this.countEl = el('span', 'cm-count');
     status.appendChild(this.countEl);
-
-    // The same worksheet on paper, generated from this same data by
-    // tools/author/maptex.py. No `download` attribute: opening it in the browser's
-    // own viewer and saving from there is friendlier than forcing a file.
-    if (d.pdf) {
-      const paper = el('a', 'cm-btn', 'Paper version (PDF)');
-      paper.href = d.pdf;
-      paper.target = '_blank';
-      paper.rel = 'noopener';
-      status.appendChild(paper);
-    }
-    const clear = el('button', 'cm-btn', 'Start over');
-    clear.type = 'button';
-    clear.addEventListener('click', () => {
-      this.progress.clear();
-      this.tries.clear();
-      this.active = null;
-      this.refresh();
-    });
     const zoom = el('div', 'cm-zoom');
     for (const [label, factor] of [['Smaller', 0.85], ['Larger', 1.18], ['Fit', 0]]) {
       const b = el('button', 'cm-btn', label);
@@ -302,11 +165,9 @@ export class MapView {
       b.addEventListener('click', () => (factor ? this.setScale(this.scale * factor) : this.fit()));
       zoom.appendChild(b);
     }
-    zoom.appendChild(clear);
     status.appendChild(zoom);
     this.root.appendChild(status);
 
-    // Diagram
     this.frame = el('div', 'cm-frame');
     this.stage = el('div', 'cm-stage');
     this.stage.style.width = d.width + 'px';
@@ -319,7 +180,6 @@ export class MapView {
       const box = el('div', 'cm-node');
       box.style.left = n.x + 'px';
       box.style.top = n.y + 'px';
-      box.type = 'button';
       box.setAttribute('role', 'button');
       box.tabIndex = 0;
       box.innerHTML = (n.letter ? `<span class="cm-node__letter">${n.letter}</span>` : '') +
@@ -337,64 +197,44 @@ export class MapView {
     for (const e of d.edges) {
       const path = svgEl('path', { class: 'cm-edge' });
       this.svg.appendChild(path);
-      const head = svgEl('path', { class: 'cm-edge', 'stroke-width': 0 });
+      const head = svgEl('path', { class: 'cm-arrowhead' });
       this.svg.appendChild(head);
-      const tail = svgEl('path', { class: 'cm-edge', 'stroke-width': 0 });
+      const tail = svgEl('path', { class: 'cm-arrowhead' });
       this.svg.appendChild(tail);
-      const cross = svgEl('text', { class: 'cm-cross', 'text-anchor': 'middle' });
-      cross.textContent = '×';
-      this.svg.appendChild(cross);
 
       const badge = el('button', 'cm-badge', String(e.n));
       badge.type = 'button';
-      badge.addEventListener('click', () => this.open(e.n));
+      badge.addEventListener('click', () => this.showArrow(e.n));
       this.stage.appendChild(badge);
 
-      this.edgeEls.set(e.n, { path, head, tail, cross, badge });
+      this.edgeEls.set(e.n, { path, head, tail, badge });
     }
 
     this.frame.appendChild(this.stage);
     this.root.appendChild(this.frame);
 
-    // Legend. The words matter as much as the colours.
     const legend = el('div', 'cm-legend');
-    for (const kind of KIND_ORDER) {
+    for (const [text, both] of [['one way', false], ['both ways', true]]) {
       const item = el('div', 'cm-legend__item');
-      const sample = el('span', 'cm-legend__sample cm-legend__sample--' + kind);
-      sample.style.borderTopStyle = kind === 'fails' ? 'dashed' : 'solid';
-      sample.style.borderTopColor = `var(--cm-${kind})`;
-      item.append(sample, el('span', null, KINDS[kind].label));
+      item.append(el('span', 'cm-legend__sample' + (both ? ' cm-legend__sample--both' : '')),
+                  el('span', null, text));
       legend.appendChild(item);
     }
-    const idle = el('div', 'cm-legend__item');
-    const idleSample = el('span', 'cm-legend__sample');
-    idleSample.style.borderTopColor = 'var(--cm-idle)';
-    idle.append(idleSample, el('span', null, 'not named yet'));
-    legend.appendChild(idle);
     this.root.appendChild(legend);
 
-    // Work panel
     this.work = el('div', 'cm-work cm-panel');
     this.root.appendChild(this.work);
+    this.renderIdle();
 
-    // Named list
-    this.named = el('div', 'cm-named');
-    this.root.appendChild(this.named);
-
-    // Inventory and benchmarks
+    this.root.appendChild(this.answerFold());
     this.root.appendChild(this.inventoryFold());
     if (d.benchmarks && d.benchmarks.length) this.root.appendChild(this.benchmarkFold());
 
-    // Reflection, hidden until the map is finished
-    this.done = el('div', 'cm-done cm-panel');
-    this.done.hidden = true;
-    this.root.appendChild(this.done);
-
     typeset(this.root).then(() => this.layout());
-    this.refresh();
+    this.paint();
 
-    // MathJax finishing, a font arriving, or a window resize all change a node's
-    // measured box, and every arrow is clipped to those boxes.
+    // MathJax finishing, a font arriving, or a resize all change a node's measured
+    // box, and every arrow is clipped to those boxes.
     if (typeof ResizeObserver !== 'undefined') {
       const ro = new ResizeObserver(() => this.layout());
       for (const box of this.nodeEls.values()) ro.observe(box);
@@ -405,6 +245,73 @@ export class MapView {
     }
   }
 
+  /** The worksheet, up front, because that is where the work is meant to happen. */
+  paperCallout() {
+    const box = el('div', 'cm-paper');
+    const lede = el('p', 'cm-paper__lede');
+    lede.innerHTML = 'Start on paper. The worksheet has the same diagram with room to ' +
+      'write, and nothing on this page is saved, so there is nothing to lose by ' +
+      'working it out first and checking here afterwards.';
+    box.appendChild(lede);
+    const link = el('a', 'cm-btn cm-btn--primary', 'The worksheet (PDF)');
+    link.href = this.data.pdf;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    box.appendChild(link);
+    return box;
+  }
+
+  /**
+   * Every answer, behind one toggle.
+   *
+   * Opening it also reveals every arrow on the map, so the list and the diagram
+   * agree. There is no attempt to make this hard to reach: a student who wants the
+   * answers has them, and the toggle is there so that a student who wants to think
+   * first is not shown them by accident.
+   */
+  answerFold() {
+    const fold = el('details', 'cm-fold cm-fold--answers');
+    fold.appendChild(el('summary', null, 'Show the answers'));
+    const body = el('div', 'cm-fold__body');
+
+    const ol = document.createElement('ol');
+    for (const e of this.data.edges) {
+      const from = this.nodeById.get(e.from);
+      const to = this.nodeById.get(e.to);
+      const li = el('li');
+      li.value = e.n;
+      li.innerHTML =
+        `<span class="cm-named__ends">${this.plainLabel(from)} → ${this.plainLabel(to)}` +
+        (e.kind === 'equiv' ? ', both ways' : '') + '</span>' +
+        e.statement +
+        (e.why ? `<span class="cm-named__why">${e.why}</span>` : '');
+      ol.appendChild(li);
+    }
+    body.appendChild(ol);
+
+    if (this.data.mistakes && this.data.mistakes.length) {
+      body.appendChild(el('h2', null, 'Claims that look right and are not'));
+      const ul = document.createElement('ul');
+      for (const m of this.data.mistakes) {
+        const li = el('li');
+        li.innerHTML = m;
+        ul.appendChild(li);
+      }
+      body.appendChild(ul);
+    }
+
+    fold.appendChild(body);
+    fold.addEventListener('toggle', () => {
+      if (fold.open) this.revealAll();
+      typeset(body);
+    });
+    return fold;
+  }
+
+  plainLabel(node) {
+    return node.label.replace(/\n/g, ' ');
+  }
+
   inventoryFold() {
     const fold = el('details', 'cm-fold');
     fold.appendChild(el('summary', null, 'What each box means'));
@@ -412,7 +319,7 @@ export class MapView {
     const dl = document.createElement('dl');
     for (const n of this.data.nodes) {
       const dt = el('dt');
-      dt.innerHTML = (n.letter ? n.letter + '. ' : '') + n.label.replace(/\n/g, ' ');
+      dt.innerHTML = (n.letter ? n.letter + '. ' : '') + this.plainLabel(n);
       const dd = el('dd');
       dd.innerHTML = n.definition || '';
       dl.append(dt, dd);
@@ -424,7 +331,7 @@ export class MapView {
 
   benchmarkFold() {
     const fold = el('details', 'cm-fold');
-    fold.appendChild(el('summary', null, 'Examples worth keeping to hand'));
+    fold.appendChild(el('summary', null, 'Counterexamples and benchmarks'));
     const body = el('div', 'cm-fold__body');
     const ul = document.createElement('ul');
     for (const item of this.data.benchmarks) {
@@ -450,53 +357,32 @@ export class MapView {
       const b = this.nodeById.get(e.to);
       // offsetWidth is layout px, so the stage transform does not enter here and
       // the whole calculation stays in authored coordinates.
-      const ahw = from.offsetWidth / 2;
-      const ahh = from.offsetHeight / 2;
-      const bhw = to.offsetWidth / 2;
-      const bhh = to.offsetHeight / 2;
-
       const bend = e.bend || 0;
       const ctrl = controlPoint(a.x, a.y, b.x, b.y, bend);
-      const p0 = clipToBox(a.x, a.y, ctrl.x, ctrl.y, ahw, ahh, 3);
-      const p1 = clipToBox(b.x, b.y, ctrl.x, ctrl.y, bhw, bhh, 5);
+      const p0 = clipToBox(a.x, a.y, ctrl.x, ctrl.y, from.offsetWidth / 2, from.offsetHeight / 2, 3);
+      const p1 = clipToBox(b.x, b.y, ctrl.x, ctrl.y, to.offsetWidth / 2, to.offsetHeight / 2, 5);
       const c = controlPoint(p0.x, p0.y, p1.x, p1.y, bend);
 
       parts.path.setAttribute('d', `M ${p0.x} ${p0.y} Q ${c.x} ${c.y} ${p1.x} ${p1.y}`);
+      parts.path.setAttribute('class', 'cm-edge' +
+        (this.shown.has(e.n) ? ' cm-edge--shown' : '') +
+        (this.active === e.n ? ' cm-edge--active' : ''));
 
-      const solved = this.progress.isSolved(e.n);
-      const kindCls = solved ? ' cm-edge--' + e.kind : '';
-      const activeCls = this.active === e.n ? ' cm-edge--active' : '';
-      parts.path.setAttribute('class', 'cm-edge' + kindCls + activeCls);
-
-      // Heads only once the arrow is named. Before that every arrow is drawn the
-      // same way, so the drawing cannot answer step 2 for the student.
-      if (solved) {
-        const dirEnd = tangentAt(1, p0, c, p1);
-        parts.head.setAttribute('d', arrowHead(p1, dirEnd, 11));
-        parts.head.setAttribute('class', 'cm-edge cm-edge--' + e.kind);
-        parts.head.setAttribute('fill', `var(--cm-${e.kind})`);
-        parts.head.setAttribute('stroke-width', '0');
-        if (e.kind === 'equiv') {
-          const dirStart = tangentAt(0, p0, c, p1);
-          parts.tail.setAttribute('d', arrowHead(p0, { x: -dirStart.x, y: -dirStart.y }, 11));
-          parts.tail.setAttribute('fill', `var(--cm-${e.kind})`);
-          parts.tail.setAttribute('stroke-width', '0');
-        } else {
-          parts.tail.setAttribute('d', '');
-        }
-        if (e.kind === 'fails') {
-          const at = bezierAt(0.55, p0, c, p1);
-          parts.cross.setAttribute('x', at.x);
-          parts.cross.setAttribute('y', at.y + 5);
-          parts.cross.style.display = '';
-        } else {
-          parts.cross.style.display = 'none';
-        }
+      // Every arrow keeps its head. Nothing is being withheld: the direction is the
+      // information the diagram is for.
+      const dirEnd = tangentAt(1, p0, c, p1);
+      parts.head.setAttribute('d', arrowHead(p1, dirEnd, 10));
+      if (e.kind === 'equiv') {
+        const dirStart = tangentAt(0, p0, c, p1);
+        parts.tail.setAttribute('d', arrowHead(p0, { x: -dirStart.x, y: -dirStart.y }, 10));
       } else {
-        parts.head.setAttribute('d', '');
         parts.tail.setAttribute('d', '');
-        parts.cross.style.display = 'none';
       }
+      const headCls = 'cm-arrowhead' +
+        (this.shown.has(e.n) ? ' cm-arrowhead--shown' : '') +
+        (this.active === e.n ? ' cm-arrowhead--active' : '');
+      parts.head.setAttribute('class', headCls);
+      parts.tail.setAttribute('class', headCls);
 
       const at = bezierAt(typeof e.at === 'number' ? e.at : 0.5, p0, c, p1);
       parts.badge.style.left = at.x + 'px';
@@ -519,263 +405,91 @@ export class MapView {
     if (room > 0) this.setScale(Math.min(1, room / this.data.width));
   }
 
-  /* ---- the answer panel ------------------------------------------------ */
+  /* ---- the panel ------------------------------------------------------- */
 
   showDefinition(node) {
     for (const [id, box] of this.nodeEls) box.classList.toggle('cm-node--lit', id === node.id);
     this.active = null;
-    this.layout();
     this.work.textContent = '';
-    const head = el('div', 'cm-step__head');
-    head.appendChild(el('span', 'cm-step__num', 'Box ' + (node.letter || '')));
-    const ask = el('span', 'cm-step__ask');
-    ask.innerHTML = node.label.replace(/\n/g, ' ');
-    head.appendChild(ask);
+
+    const head = el('div', 'cm-work__head');
+    head.appendChild(el('span', 'cm-work__tag', 'Box ' + (node.letter || '')));
+    const name = el('span', 'cm-work__name');
+    name.innerHTML = this.plainLabel(node);
+    head.appendChild(name);
     this.work.appendChild(head);
-    const body = el('p', 'cm-ends');
+
+    const body = el('p', 'cm-work__body');
     body.innerHTML = node.definition || '';
     this.work.appendChild(body);
-    const back = el('p', 'cm-hint', 'Click a numbered circle to name the arrow it sits on.');
-    this.work.appendChild(back);
+
+    this.work.appendChild(el('p', 'cm-hint',
+      'Click a numbered circle to see what that arrow says.'));
     typeset(this.work);
-    this.paintBadges();
+    this.paint();
   }
 
-  open(n) {
-    this.active = n;
-    for (const box of this.nodeEls.values()) box.classList.remove('cm-node--lit');
+  /** One arrow's answer, on its own. */
+  showArrow(n) {
     const edge = this.data.edges.find((e) => e.n === n);
+    if (!edge) return;
+    this.shown.add(n);
+    this.active = n;
+
+    for (const box of this.nodeEls.values()) box.classList.remove('cm-node--lit');
     this.nodeEls.get(edge.from).classList.add('cm-node--lit');
     this.nodeEls.get(edge.to).classList.add('cm-node--lit');
-    this.layout();
-    this.paintBadges();
-    this.renderPanel(edge);
-  }
 
-  renderPanel(edge) {
-    const solved = this.progress.isSolved(edge.n);
-    const from = this.nodeById.get(edge.from);
-    const to = this.nodeById.get(edge.to);
     this.work.textContent = '';
-
-    const head = el('div', 'cm-step__head');
-    head.appendChild(el('span', 'cm-step__num', 'Arrow ' + edge.n));
-    const ends = el('span', 'cm-step__ask');
-    ends.innerHTML = `${from.label.replace(/\n/g, ' ')} → ${to.label.replace(/\n/g, ' ')}`;
+    const head = el('div', 'cm-work__head');
+    head.appendChild(el('span', 'cm-work__tag', 'Arrow ' + edge.n));
+    const ends = el('span', 'cm-work__name');
+    ends.innerHTML = `${this.plainLabel(this.nodeById.get(edge.from))} → ` +
+      `${this.plainLabel(this.nodeById.get(edge.to))}` +
+      (edge.kind === 'equiv' ? ' <em>(and back)</em>' : '');
     head.appendChild(ends);
     this.work.appendChild(head);
 
-    if (solved) {
-      const v = el('p', 'cm-verdict cm-verdict--ok');
-      v.innerHTML = `<strong>${KINDS[edge.kind].label}.</strong> ${edge.statement}`;
-      this.work.appendChild(v);
-      if (edge.why) {
-        const why = el('p', 'cm-hint');
-        why.innerHTML = edge.why;
-        this.work.appendChild(why);
-      }
-      const mine = this.progress.note(edge.n);
-      if (mine) {
-        const own = el('p', 'cm-hint');
-        own.innerHTML = '<strong>What you wrote:</strong> ' + mine.replace(/</g, '&lt;');
-        this.work.appendChild(own);
-      }
-      typeset(this.work);
-      return;
-    }
+    const body = el('p', 'cm-work__body');
+    body.innerHTML = edge.statement;
+    this.work.appendChild(body);
 
-    // Step 1: write it yourself.
-    const step1 = el('div', 'cm-step');
-    const h1 = el('div', 'cm-step__head');
-    h1.appendChild(el('span', 'cm-step__num', 'Step 1'));
-    h1.appendChild(el('span', 'cm-step__ask', 'Describe this arrow in one sentence.'));
-    step1.appendChild(h1);
-    const area = el('textarea', 'cm-note');
-    area.value = this.progress.note(edge.n);
-    area.setAttribute('aria-label', 'Your sentence for arrow ' + edge.n);
-    step1.appendChild(area);
-    const ready = el('button', 'cm-btn cm-btn--primary', 'That is my answer');
-    ready.type = 'button';
-    ready.style.marginTop = '0.5rem';
-    step1.appendChild(ready);
-    const note1 = el('p', 'cm-hint', 'Nobody marks this and it never leaves your browser. Writing it before you see the list is the part that does the work.');
-    step1.appendChild(note1);
-    this.work.appendChild(step1);
-
-    const rest = el('div');
-    rest.hidden = area.value.trim().length < MIN_NOTE;
-    this.work.appendChild(rest);
-
-    ready.addEventListener('click', () => {
-      const text = area.value.trim();
-      if (text.length < MIN_NOTE) {
-        note1.className = 'cm-verdict cm-verdict--no';
-        note1.textContent = 'Write a sentence first, even a rough one. A guess you have committed to is what makes the list below useful.';
-        return;
-      }
-      this.progress.note(edge.n, text);
-      note1.className = 'cm-hint';
-      note1.textContent = 'Saved on this machine. You can keep editing it.';
-      rest.hidden = false;
-    });
-
-    // Step 2: which kind.
-    const step2 = el('div', 'cm-step');
-    const h2 = el('div', 'cm-step__head');
-    h2.appendChild(el('span', 'cm-step__num', 'Step 2'));
-    h2.appendChild(el('span', 'cm-step__ask', 'What kind of relationship is it?'));
-    step2.appendChild(h2);
-    const kindBox = el('div', 'cm-choices');
-    step2.appendChild(kindBox);
-    const kindVerdict = el('p', 'cm-hint', 'The line style is hidden until you have named the arrow, so this is a real question here even though the printed worksheet gives it away.');
-    step2.appendChild(kindVerdict);
-    rest.appendChild(step2);
-
-    const step3 = el('div', 'cm-step');
-    step3.hidden = true;
-    const h3 = el('div', 'cm-step__head');
-    h3.appendChild(el('span', 'cm-step__num', 'Step 3'));
-    h3.appendChild(el('span', 'cm-step__ask', 'Now find your sentence in the list.'));
-    step3.appendChild(h3);
-    const bankBox = el('div', 'cm-choices');
-    step3.appendChild(bankBox);
-    const bankVerdict = el('p', 'cm-hint');
-    step3.appendChild(bankVerdict);
-    rest.appendChild(step3);
-
-    for (const kind of KIND_ORDER) {
-      const b = el('button', 'cm-choice', KINDS[kind].word);
-      b.type = 'button';
-      b.addEventListener('click', () => {
-        if (kind === edge.kind) {
-          kindVerdict.className = 'cm-verdict cm-verdict--ok';
-          kindVerdict.textContent = KINDS[kind].ask;
-          for (const other of kindBox.children) other.disabled = true;
-          b.classList.add('cm-choice--spent');
-          step3.hidden = false;
-        } else {
-          this.bump(edge.n);
-          kindVerdict.className = 'cm-verdict cm-verdict--no';
-          kindVerdict.textContent = 'Not that. Look at what the source alone gives you, and ask whether a counterexample is available.';
-          b.classList.add('cm-choice--spent');
-        }
-      });
-      kindBox.appendChild(b);
-    }
-
-    for (const item of this.bank()) {
-      const b = el('button', 'cm-choice');
-      b.type = 'button';
-      b.innerHTML = item.statement;
-      b.addEventListener('click', () => {
-        if (item.n === edge.n) {
-          this.progress.solve(edge.n);
-          this.refresh();
-          this.renderPanel(edge);
-          return;
-        }
-        this.bump(edge.n);
-        b.classList.add('cm-choice--spent');
-        bankVerdict.className = 'cm-verdict cm-verdict--no';
-        // A decoy is not on the map at all, and saying so is a different piece of
-        // information from "you have the wrong arrow".
-        bankVerdict.innerHTML = (this.tries.get(edge.n) || 0) >= 2 && edge.hint
-          ? edge.hint
-          : item.n === null
-            ? 'That sentence is not true. Find the false step in it before you move on.'
-            : 'That one belongs to a different arrow. Check which two boxes it is about.';
-      });
-      bankBox.appendChild(b);
+    if (edge.why) {
+      const why = el('p', 'cm-hint');
+      why.innerHTML = edge.why;
+      this.work.appendChild(why);
     }
 
     typeset(this.work);
+    this.paint();
   }
 
-  bump(n) {
-    this.tries.set(n, (this.tries.get(n) || 0) + 1);
-  }
-
-  /**
-   * Every statement not yet placed, plus the decoys, in one stable order.
-   *
-   * The decoys never leave. Without them the last arrow is answered by
-   * elimination, since a solved statement is taken out, and a map that hands over
-   * its final answer has stopped asking anything.
-   */
-  bank() {
-    const open = this.data.edges.filter((e) => !this.progress.isSolved(e.n));
-    const items = open.map((e) => ({ n: e.n, statement: e.statement }));
-    for (const decoy of this.data.decoys || []) items.push({ n: null, statement: decoy });
-    return seededShuffle(items, this.progress.stamp);
+  revealAll() {
+    for (const e of this.data.edges) this.shown.add(e.n);
+    this.paint();
   }
 
   /* ---- redraw ---------------------------------------------------------- */
 
-  paintBadges() {
+  paint() {
     for (const e of this.data.edges) {
       const badge = this.edgeEls.get(e.n).badge;
-      const solved = this.progress.isSolved(e.n);
-      badge.className = 'cm-badge' +
-        (solved ? ' cm-badge--solved is-' + e.kind : '') +
+      const seen = this.shown.has(e.n);
+      badge.className = 'cm-badge' + (seen ? ' cm-badge--shown' : '') +
         (this.active === e.n ? ' cm-badge--active' : '');
-      badge.setAttribute('aria-label', solved
-        ? `Arrow ${e.n}, named, ${KINDS[e.kind].label}`
-        : `Arrow ${e.n}, not named yet`);
+      badge.setAttribute('aria-label', `Arrow ${e.n}` + (seen ? ', answer shown' : ''));
     }
-  }
-
-  refresh() {
     const total = this.data.edges.length;
-    const count = this.data.edges.filter((e) => this.progress.isSolved(e.n)).length;
-    this.countEl.textContent = `${count} of ${total} arrows named`;
-    this.paintBadges();
+    this.countEl.textContent = this.shown.size === 0
+      ? `${total} arrows`
+      : `${this.shown.size} of ${total} arrows looked at`;
     this.layout();
-    this.renderNamed();
-    this.renderDone(count === total);
-    if (this.active === null && !this.work.textContent) this.renderIdle();
   }
 
   renderIdle() {
     this.work.textContent = '';
-    const p = el('p', 'cm-work__idle', 'Click a numbered circle on the map to start. Click a box to see what it means.');
-    this.work.appendChild(p);
-  }
-
-  renderNamed() {
-    this.named.textContent = '';
-    this.named.appendChild(el('h2', null, 'The arrows you have named'));
-    const ol = document.createElement('ol');
-    for (const e of this.data.edges) {
-      const li = el('li');
-      li.value = e.n;
-      if (this.progress.isSolved(e.n)) {
-        li.innerHTML = `<span class="cm-named__kind is-${e.kind}">${KINDS[e.kind].label}</span>${e.statement}` +
-          (e.why ? `<span class="cm-named__why">${e.why}</span>` : '');
-      } else {
-        li.className = 'cm-named__todo';
-        li.textContent = 'not named yet';
-      }
-      ol.appendChild(li);
-    }
-    this.named.appendChild(ol);
-    typeset(this.named);
-  }
-
-  renderDone(complete) {
-    this.done.hidden = !complete;
-    if (!complete || this.done.dataset.built === '1') return;
-    this.done.dataset.built = '1';
-    this.done.appendChild(el('h2', null, 'One last question'));
-    const lede = el('p', 'cm-done__lede');
-    lede.innerHTML = this.data.reflection;
-    this.done.appendChild(lede);
-    const area = el('textarea', 'cm-note');
-    area.value = this.progress.reflection();
-    area.setAttribute('aria-label', 'Your answer to the closing question');
-    area.addEventListener('input', () => this.progress.reflection(area.value));
-    this.done.appendChild(area);
-    this.done.appendChild(el('p', 'cm-hint', 'Saved on this machine, like your sentences above. Bring it to class if you want to argue about it.'));
-    typeset(this.done);
+    this.work.appendChild(el('p', 'cm-work__idle',
+      'Click a numbered circle for that arrow, or a box to be reminded what it means.'));
   }
 }
 

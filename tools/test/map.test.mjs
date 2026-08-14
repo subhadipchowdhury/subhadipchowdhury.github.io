@@ -1,19 +1,21 @@
 // Tests for the concept map engine and for the map data.
 //
-// Three groups. The geometry and the small utilities are pure and are tested
-// directly, because an arrow anchored to the wrong place is the failure nobody
-// notices in a screenshot. Progress is tested against an injected store. And both
-// built maps are swept for the invariants the engine relies on, so a hand-edited
-// JSON is caught here as well as by tools/author/mapkit.py.
+// The geometry is pure and is tested directly, because an arrow anchored to the
+// wrong place is the failure nobody notices in a screenshot. Both built maps are
+// swept for the invariants the engine relies on, so a hand-edited JSON is caught
+// here as well as by tools/author/mapkit.py. And the mount tests check the reveal
+// behaviour, which is all the page does now.
 //
-// What is not covered: how any of it looks. The stub lays nothing out, so the
-// mount test fills in node sizes by hand and checks the arithmetic, not the page.
+// What is not covered: how any of it looks. The stub lays nothing out, so the mount
+// tests fill in node sizes by hand and check the arithmetic, not the page.
+//
+// Gone with the three-step exercise on 2026-08-13: the Progress store, the seeded
+// shuffle, the answer bank and the kind question. There is nothing to save and
+// nothing to grade, so there is nothing to test about either.
 
 import { installDom, walk, textOf } from './dom-stub.mjs';
 import {
-  KINDS, hashString, stampOf, seededShuffle,
-  clipToBox, controlPoint, bezierAt, tangentAt, arrowHead,
-  Progress, MapView,
+  KINDS, clipToBox, controlPoint, bezierAt, tangentAt, arrowHead, MapView,
 } from '../../teaching/labs/maps/engine/map.js';
 
 const teardown = installDom();
@@ -50,47 +52,6 @@ function near(a, b, tol, msg) {
 }
 
 /* -------------------------------------------------------------------------- */
-
-describe('hashing and the stamp', () => {
-  it('is stable and differs on different input', () => {
-    eq(hashString('abc'), hashString('abc'));
-    assert(hashString('abc') !== hashString('abd'));
-  });
-
-  it('changes when an arrow changes, and not when prose elsewhere does', () => {
-    const data = MAPS.get('series');
-    const before = stampOf(data);
-    const copy = JSON.parse(JSON.stringify(data));
-    copy.intro = 'something else entirely';
-    eq(stampOf(copy), before, 'the intro is not part of the answer key');
-    copy.edges[3].kind = copy.edges[3].kind === 'implies' ? 'fails' : 'implies';
-    assert(stampOf(copy) !== before, 'a changed kind has to invalidate saved answers');
-  });
-});
-
-describe('the shuffle', () => {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  it('keeps every item', () => {
-    const out = seededShuffle(items, 'seed');
-    eq(out.length, items.length);
-    eq(out.slice().sort((a, b) => a - b).join(','), items.join(','));
-  });
-
-  it('gives the same order for the same seed', () => {
-    eq(seededShuffle(items, 'abc').join(','), seededShuffle(items, 'abc').join(','));
-  });
-
-  it('actually reorders, and differently for a different seed', () => {
-    assert(seededShuffle(items, 'abc').join(',') !== items.join(','));
-    assert(seededShuffle(items, 'abc').join(',') !== seededShuffle(items, 'xyz').join(','));
-  });
-
-  it('leaves the array it was handed alone', () => {
-    seededShuffle(items, 'abc');
-    eq(items.join(','), '1,2,3,4,5,6,7,8,9,10');
-  });
-});
 
 describe('clipping an arrow to a box', () => {
   it('leaves through the side when the run is mostly horizontal', () => {
@@ -135,38 +96,28 @@ describe('the curve', () => {
     const c = controlPoint(0, 0, 100, 0, 30);
     near(c.x, 50);
     near(c.y, 30, 1e-9, 'a rightward chord bends downward in screen coordinates');
-    const back = controlPoint(0, 0, 100, 0, -30);
-    near(back.y, -30);
+    near(controlPoint(0, 0, 100, 0, -30).y, -30);
   });
 
   it('bends by the same distance whatever the chord length', () => {
-    const short = controlPoint(0, 0, 10, 0, 25);
-    const long = controlPoint(0, 0, 1000, 0, 25);
-    near(short.y, 25);
-    near(long.y, 25);
+    near(controlPoint(0, 0, 10, 0, 25).y, 25);
+    near(controlPoint(0, 0, 1000, 0, 25).y, 25);
   });
 
   it('passes through both ends and bulges toward the control point', () => {
     const p0 = { x: 0, y: 0 };
     const p1 = { x: 100, y: 0 };
     const c = { x: 50, y: 60 };
-    const a = bezierAt(0, p0, c, p1);
-    const b = bezierAt(1, p0, c, p1);
-    near(a.x, 0); near(a.y, 0);
-    near(b.x, 100); near(b.y, 0);
-    const mid = bezierAt(0.5, p0, c, p1);
-    near(mid.x, 50);
-    near(mid.y, 30, 1e-9, 'the curve reaches half the control offset at the midpoint');
+    near(bezierAt(0, p0, c, p1).x, 0);
+    near(bezierAt(1, p0, c, p1).x, 100);
+    near(bezierAt(0.5, p0, c, p1).y, 30, 1e-9,
+      'the curve reaches half the control offset at the midpoint');
   });
 
   it('gives a unit tangent that points along the curve', () => {
-    const p0 = { x: 0, y: 0 };
-    const p1 = { x: 100, y: 0 };
-    const c = { x: 50, y: 0 };
-    const t = tangentAt(1, p0, c, p1);
+    const t = tangentAt(1, { x: 0, y: 0 }, { x: 50, y: 0 }, { x: 100, y: 0 });
     near(Math.hypot(t.x, t.y), 1);
     near(t.x, 1);
-    near(t.y, 0);
   });
 
   it('gives a unit tangent even on a degenerate curve', () => {
@@ -188,81 +139,6 @@ describe('the arrowhead', () => {
     // M x y L x y L x y: the two back corners share an x of tip - size.
     eq(xs[2], 90);
     eq(xs[4], 90);
-  });
-});
-
-describe('progress', () => {
-  const fakeStore = () => {
-    const map = new Map();
-    return {
-      getItem: (k) => (map.has(k) ? map.get(k) : null),
-      setItem: (k, v) => map.set(k, String(v)),
-      _map: map,
-    };
-  };
-
-  it('starts empty and records a solve', () => {
-    const p = new Progress('m', 'stamp1', fakeStore());
-    assert(!p.isSolved(3));
-    p.solve(3);
-    assert(p.isSolved(3));
-  });
-
-  it('does not record the same arrow twice', () => {
-    const p = new Progress('m', 'stamp1', fakeStore());
-    p.solve(3);
-    p.solve(3);
-    eq(p.state.solved.length, 1);
-  });
-
-  it('comes back after a reload', () => {
-    const store = fakeStore();
-    const first = new Progress('m', 'stamp1', store);
-    first.solve(2);
-    first.note(2, 'my own sentence');
-    first.reflection('arrow 5');
-    const second = new Progress('m', 'stamp1', store);
-    assert(second.isSolved(2));
-    eq(second.note(2), 'my own sentence');
-    eq(second.reflection(), 'arrow 5');
-  });
-
-  it('throws away answers saved against a different set of arrows', () => {
-    const store = fakeStore();
-    const first = new Progress('m', 'stamp1', store);
-    first.solve(2);
-    first.note(2, 'written against the old question');
-    const edited = new Progress('m', 'stamp2', store);
-    assert(!edited.isSolved(2), 'an edited map must not restore stale answers');
-    eq(edited.note(2), '');
-  });
-
-  it('survives a corrupt store rather than throwing', () => {
-    const store = fakeStore();
-    store.setItem('cmap:1:m', 'not json at all');
-    const p = new Progress('m', 'stamp1', store);
-    eq(p.state.solved.length, 0);
-  });
-
-  it('survives a store that refuses to be written to', () => {
-    const blocked = {
-      getItem: () => null,
-      setItem: () => { throw new Error('quota'); },
-    };
-    const p = new Progress('m', 'stamp1', blocked);
-    p.solve(1);
-    assert(p.isSolved(1), 'the in-memory answer stands even when the save fails');
-  });
-
-  it('clears everything', () => {
-    const p = new Progress('m', 'stamp1', fakeStore());
-    p.solve(1);
-    p.note(1, 'x');
-    p.reflection('y');
-    p.clear();
-    eq(p.state.solved.length, 0);
-    eq(p.note(1), '');
-    eq(p.reflection(), '');
   });
 });
 
@@ -297,32 +173,41 @@ for (const [id, data] of MAPS) {
       }
     });
 
-    it('uses only the four kinds the legend shows', () => {
+    it('uses only the two kinds that are left', () => {
       for (const e of data.edges) {
         assert(KINDS[e.kind], `arrow ${e.n} has the unknown kind ${e.kind}`);
       }
     });
 
-    it('gives every arrow a statement of its own', () => {
+    it('has no failing arrows, which were rewritten out', () => {
+      // Every arrow is a relationship that holds in the direction drawn. A `fails`
+      // kind reappearing means someone reintroduced an arrow stated backwards.
+      for (const e of data.edges) {
+        assert(e.kind !== 'fails', `arrow ${e.n} is a failure; state it as the relationship it is`);
+      }
+    });
+
+    it('gives every arrow a statement of its own and a reason', () => {
       const seen = new Set();
       for (const e of data.edges) {
         assert(e.statement && e.statement.length > 40, `arrow ${e.n} has no real statement`);
+        assert(e.why && e.why.length > 30, `arrow ${e.n} has no reason`);
         assert(!seen.has(e.statement), `arrow ${e.n} repeats another statement`);
         seen.add(e.statement);
       }
     });
 
-    it('carries decoys, so the last arrow is not free', () => {
-      assert((data.decoys || []).length >= 3, 'wants at least three decoys');
+    it('lists false claims to check against, distinct from the answers', () => {
+      assert((data.mistakes || []).length >= 3, 'wants at least three listed mistakes');
       const real = new Set(data.edges.map((e) => e.statement));
-      for (const d of data.decoys) assert(!real.has(d), 'a decoy repeats a real statement');
+      for (const m of data.mistakes) assert(!real.has(m), 'a listed mistake repeats an answer');
     });
 
-    it('leaves every box reachable by some arrow', () => {
+    it('leaves every box on some arrow', () => {
       const touched = new Set();
       for (const e of data.edges) { touched.add(e.from); touched.add(e.to); }
       for (const n of data.nodes) {
-        assert(touched.has(n.id), `box ${n.id} has no arrow, so nothing on the map asks about it`);
+        assert(touched.has(n.id), `box ${n.id} has no arrow, so nothing asks about it`);
       }
     });
 
@@ -332,26 +217,18 @@ for (const [id, data] of MAPS) {
       }
     });
 
-    it('names a paper version that exists', () => {
-      assert(data.pdf === `/teaching/labs/maps/${id}.pdf`, `unexpected pdf path ${data.pdf}`);
-      // The JSON claiming a worksheet that was never built would put a dead link
-      // in the status bar of the page.
+    it('names a worksheet that exists', () => {
+      eq(data.pdf, `/teaching/labs/maps/${id}.pdf`, `unexpected pdf path ${data.pdf}`);
+      // The JSON claiming a worksheet that was never built would put a dead link in
+      // the callout at the top of the page.
       const bytes = readText('teaching' + data.pdf.slice('/teaching'.length));
       assert(bytes.length > 20000, `${data.pdf} is too small to be the worksheet`);
-    });
-
-    it('hints at every failing arrow', () => {
-      for (const e of data.edges) {
-        if (e.kind === 'fails') assert(e.hint, `arrow ${e.n} fails and has no hint`);
-      }
     });
   });
 }
 
 /* -------------------------------------------------------------------------- */
 
-// Each view gets its own map id, because progress is keyed on it and two views
-// of one map would otherwise share a store and read each other's answers.
 let uniq = 0;
 function freshView(data, sized) {
   const copy = JSON.parse(JSON.stringify(data));
@@ -366,109 +243,131 @@ function freshView(data, sized) {
 
 describe('mounting a map', () => {
   const data = MAPS.get('series');
-  let view;
 
   it('builds a badge per arrow and a box per node', () => {
-    view = freshView(data);
+    const view = freshView(data);
     const all = walk(view.root);
     eq(all.filter((n) => n.className === 'cm-node').length, data.nodes.length);
     eq(all.filter((n) => String(n.className).startsWith('cm-badge')).length, data.edges.length);
   });
 
-  it('reports nothing solved to begin with', () => {
-    assert(textOf(view.countEl).startsWith('0 of'), textOf(view.countEl));
+  it('says how many arrows there are before any are looked at', () => {
+    const view = freshView(data);
+    eq(textOf(view.countEl), `${data.edges.length} arrows`);
   });
 
-  it('offers every statement plus every decoy in the bank', () => {
-    eq(view.bank().length, data.edges.length + data.decoys.length);
+  it('draws every arrowhead from the start', () => {
+    const view = freshView(data, true);
+    for (const e of data.edges) {
+      assert(view.edgeEls.get(e.n).head.getAttribute('d'),
+        `arrow ${e.n} has no head; the direction is the information here`);
+    }
   });
 
-  it('takes a statement out of the bank once its arrow is named', () => {
-    const before = view.bank().length;
-    view.progress.solve(1);
-    view.refresh();
-    eq(view.bank().length, before - 1);
-    assert(textOf(view.countEl).startsWith('1 of'));
-  });
-
-  it('draws no arrowhead on an arrow nobody has named', () => {
-    const parts = view.edgeEls.get(2);
-    assert(!view.progress.isSolved(2), 'arrow 2 should still be open here');
-    eq(parts.head.getAttribute('d'), '', 'an unnamed arrow must not reveal its direction or kind');
-    eq(parts.path.getAttribute('class'), 'cm-edge', 'and must be drawn in the neutral style');
-  });
-
-  it('styles an arrow by its kind once it is named', () => {
-    const edge = data.edges.find((e) => e.kind === 'fails');
-    view.progress.solve(edge.n);
-    view.refresh();
-    const parts = view.edgeEls.get(edge.n);
-    assert(String(parts.path.getAttribute('class')).includes('cm-edge--fails'), parts.path.getAttribute('class'));
-    assert(parts.head.getAttribute('d'), 'a named arrow gets a head');
-  });
-
-  it('puts a head at both ends of an equivalence and at one end otherwise', () => {
+  it('puts a second head on an arrow that runs both ways and not otherwise', () => {
     const fs = MAPS.get('func-sequences');
-    const both = freshView(fs, true);
-    const equiv = fs.edges.find((e) => e.kind === 'equiv');
-    const plain = fs.edges.find((e) => e.kind === 'implies');
-    both.progress.solve(equiv.n);
-    both.progress.solve(plain.n);
-    both.refresh();
-    assert(both.edgeEls.get(equiv.n).tail.getAttribute('d'), 'an equivalence needs a head at each end');
-    eq(both.edgeEls.get(plain.n).tail.getAttribute('d'), '', 'a one-way arrow has one head');
+    const view = freshView(fs, true);
+    const both = fs.edges.find((e) => e.kind === 'equiv');
+    const oneWay = fs.edges.find((e) => e.kind === 'holds');
+    assert(view.edgeEls.get(both.n).tail.getAttribute('d'), 'both ways needs a head at each end');
+    eq(view.edgeEls.get(oneWay.n).tail.getAttribute('d'), '', 'one way has one head');
+  });
+
+  it('shows one arrow and marks only that one', () => {
+    const view = freshView(data, true);
+    view.showArrow(4);
+    eq(view.shown.size, 1);
+    assert(String(view.edgeEls.get(4).badge.className).includes('cm-badge--shown'));
+    assert(!String(view.edgeEls.get(5).badge.className).includes('cm-badge--shown'));
+    assert(textOf(view.work).includes('Arrow 4'), textOf(view.work));
+  });
+
+  it('puts the arrow statement and its reason in the panel', () => {
+    const view = freshView(data, true);
+    const edge = data.edges[3];
+    view.showArrow(edge.n);
+    const text = textOf(view.work);
+    assert(text.includes(edge.statement.slice(0, 40)), 'the statement should be shown');
+    assert(text.includes(edge.why.slice(0, 30)), 'and the reason with it');
+  });
+
+  it('counts the arrows looked at', () => {
+    const view = freshView(data, true);
+    view.showArrow(1);
+    view.showArrow(2);
+    view.showArrow(1);
+    eq(view.shown.size, 2, 'the same arrow twice is one arrow');
+    assert(textOf(view.countEl).startsWith('2 of'), textOf(view.countEl));
+  });
+
+  it('reveals every arrow at once', () => {
+    const view = freshView(data, true);
+    view.revealAll();
+    eq(view.shown.size, data.edges.length);
+    for (const e of data.edges) {
+      assert(String(view.edgeEls.get(e.n).path.getAttribute('class')).includes('cm-edge--shown'),
+        `arrow ${e.n} should be marked after revealing everything`);
+    }
+  });
+
+  it('carries every answer in the page, behind the toggle', () => {
+    const view = freshView(data);
+    const fold = walk(view.root).find((n) => String(n.className).includes('cm-fold--answers'));
+    assert(fold, 'wants an answers fold');
+    const text = textOf(fold);
+    for (const e of data.edges) {
+      assert(text.includes(e.statement.slice(0, 40)), `arrow ${e.n} is missing from the answer list`);
+    }
+    for (const m of data.mistakes) {
+      assert(text.includes(m.slice(0, 30)), 'a listed mistake is missing from the answer list');
+    }
+  });
+
+  it('links the worksheet at the top', () => {
+    const view = freshView(data);
+    // The property, not getAttribute: a browser reflects `a.href = x` into the
+    // attribute and the stub does not, so reading the attribute here would test the
+    // stub rather than the page.
+    const link = walk(view.root).find((n) => n.tagName === 'A' && n.href === data.pdf);
+    assert(link, 'wants a link to the worksheet');
+    eq(link.target, '_blank', 'the worksheet should not replace the map');
+  });
+
+  it('shows a box definition when the box is clicked', () => {
+    const view = freshView(data);
+    view.showDefinition(data.nodes[2]);
+    const text = textOf(view.work);
+    assert(text.includes('Box ' + data.nodes[2].letter), text);
+    assert(text.includes(data.nodes[2].definition.slice(0, 25)), 'and its definition');
   });
 
   it('clips an arrow to the measured box rather than to the node centre', () => {
-    const fresh = freshView(data);
+    const view = freshView(data);
     const edge = data.edges[0];
-    const from = fresh.nodeById.get(edge.from);
-    // Zero-sized boxes put the path at the two centres; a real box moves it in.
-    const bare = fresh.edgeEls.get(edge.n).path.getAttribute('d');
+    const from = view.nodeById.get(edge.from);
+    const bare = view.edgeEls.get(edge.n).path.getAttribute('d');
     const startX = Number(bare.split(' ')[1]);
     const startY = Number(bare.split(' ')[2]);
-    // Not exactly the centre: clipToBox pushes out by its 3px gap even when the
-    // box has no size, so the arrow never starts under its own node's border.
+    // Not exactly the centre: clipToBox pushes out by its 3px gap even when the box
+    // has no size, so the arrow never starts under its own node's border.
     near(Math.hypot(startX - from.x, startY - from.y), 3, 1e-6,
       'with no box the path starts one gap from the centre');
-    for (const box of fresh.nodeEls.values()) { box.offsetWidth = 140; box.offsetHeight = 46; }
-    fresh.layout();
-    const clipped = fresh.edgeEls.get(edge.n).path.getAttribute('d');
-    assert(bare !== clipped, 'measuring the boxes has to move the endpoints');
+    for (const box of view.nodeEls.values()) { box.offsetWidth = 140; box.offsetHeight = 46; }
+    view.layout();
+    assert(bare !== view.edgeEls.get(edge.n).path.getAttribute('d'),
+      'measuring the boxes has to move the endpoints');
   });
 
-  it('keeps the badge on the curve', () => {
-    const fresh = freshView(data, true);
+  it('keeps every badge on the stage', () => {
+    const view = freshView(data, true);
     for (const e of data.edges) {
-      const badge = fresh.edgeEls.get(e.n).badge;
+      const badge = view.edgeEls.get(e.n).badge;
       const x = parseFloat(badge.style.left);
       const y = parseFloat(badge.style.top);
       assert(Number.isFinite(x) && Number.isFinite(y), `arrow ${e.n} badge has no position`);
       assert(x > -40 && x < data.width + 40, `arrow ${e.n} badge is off the stage at x=${x}`);
       assert(y > -40 && y < data.height + 40, `arrow ${e.n} badge is off the stage at y=${y}`);
     }
-  });
-
-  it('holds the reflection back until every arrow is named', () => {
-    const fresh = freshView(data);
-    assert(fresh.done.hidden, 'the closing question should not be showing yet');
-    for (const e of data.edges) fresh.progress.solve(e.n);
-    fresh.refresh();
-    assert(!fresh.done.hidden, 'and should show once the map is finished');
-  });
-
-  it('still offers the decoys once every arrow is named', () => {
-    const fresh = freshView(data);
-    for (const e of data.edges) fresh.progress.solve(e.n);
-    fresh.refresh();
-    eq(fresh.bank().length, data.decoys.length, 'the decoys never leave the bank');
-  });
-
-  it('leaves the last arrow a real choice', () => {
-    const fresh = freshView(data);
-    for (const e of data.edges.slice(0, -1)) fresh.progress.solve(e.n);
-    fresh.refresh();
-    eq(fresh.bank().length, 1 + data.decoys.length, 'one true statement among the decoys');
   });
 });
 

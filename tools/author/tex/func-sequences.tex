@@ -34,15 +34,11 @@
   edgenum/.style={circle, fill=white, draw=inkgrey, inner sep=0pt,
     minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
   nlabel/.style={font=\tiny\bfseries, text=inkgrey, inner sep=1pt},
-  % One style for every arrow on the blank sheet. Which of the four kinds it is is
-  % part of the question, so the drawing must not answer it.
-  arr/.style={-, thick, inkgrey},
-  % On the answer key each kind is drawn as itself, so the kinds can be checked off
-  % the picture as well as read off the list. No hyphens in these names: tikz reads
-  % a hyphen in a style name as an arrow-tip spec.
-  kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
-  kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
-  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
+  % One arrow style, on the worksheet and on the key alike. Nothing is withheld any
+  % more, so the head is drawn, and a relationship that runs both ways gets two of
+  % them. No hyphens in these names: tikz reads a hyphen as an arrow-tip spec.
+  kindholds/.style={-{Latex[length=2mm]}, thick, inkgrey},
+  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, inkgrey},
 }
 
 \begin{document}
@@ -50,9 +46,11 @@
 {\LARGE\bfseries\color{maroon} Sequences and series of functions}\par\medskip
 {\color{inkgrey}\small Math 163 \quad\textbullet\quad Prof.\ Chowdhury}\par\bigskip
 
-The next page has 14 ideas as boxes, with 15 numbered arrows between them and nothing written on any arrow. An arrow is a relationship between two ideas, and not always an implication. Sometimes the first box gives you the second. Sometimes it doesn't, and there's a counterexample. And sometimes each gives the other.
+The next page has 14 ideas as boxes, with 15 numbered arrows between them and nothing written on any arrow. Every arrow is a relationship that holds in the direction drawn, and it does not have to be an implication. Sometimes one property forces another. Sometimes one box is defined in terms of the other. Often one box is the tool that settles the other: the integral test doesn't imply anything about the \(p\)-series, it is what pins down where the \(p\)-series turns.
 
-For each arrow, circle which of the three it is, and describe the relationship in one sentence. Name the theorem where there is one, and say what goes wrong where there isn't.
+For each numbered arrow, say in one sentence what the relationship is. Name the theorem where there is one, state the hypothesis doing the work, or say which box settles which. An arrow with a head at each end runs both ways.
+
+When you have had a go at all of them, check yourself at \texttt{subhadipchowdhury.github.io/teaching/labs/maps/func-sequences/}. That page draws the same map and will show you the answers one arrow at a time, or all at once.
 
 \heading{What each box means}
 \small
@@ -72,16 +70,6 @@ For each arrow, circle which of the three it is, and describe the relationship i
 \item \textbf{Taylor Series.} \(\sum f^{(n)}(a)(x-a)^n/n!\). The coefficients are forced by differentiating the power series at its centre.
 \item \textbf{Taylor series converges to \(f\).} The Taylor series converges to \(f(x)\) exactly when the remainder \(R_N(x) = f(x) - P_N(x)\) tends to zero.
 \end{enumerate}
-\normalsize
-\heading{Counterexamples and benchmarks}
-\small
-\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
-\item \(x^n\) on \([0,1]\) takes continuous functions to a discontinuous limit, pointwise.
-\item \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly, and the limit is not differentiable at \(0\).
-\item \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge.
-\item \(x/(1 + n^2x^2) \to 0\) uniformly, and the derivative of the limit is not the limit of the derivatives at \(0\).
-\item \(e^{-1/x^2}\) extended by \(0\) is infinitely differentiable at \(0\) with every Taylor coefficient zero, so its Taylor series converges and not to it.
-\end{itemize}
 \normalsize
 \newpage
 \vspace*{\fill}
@@ -117,24 +105,24 @@ For each arrow, circle which of the three it is, and describe the relationship i
   \node[nlabel, anchor=south east] at (M.north west) {M};
   \node[nlabel, anchor=south east] at (N.north west) {N};
 
-  \draw[arr] (0.686, -0.003) .. controls (-2.236, -0.003) .. (-5.159, -0.003);
-  \draw[arr] (-5.268, -0.444) .. controls (-3.268, -1.641) .. (-1.269, -2.838);
-  \draw[arr] (1.218, -0.461) .. controls (0.506, -1.635) .. (-0.207, -2.809);
-  \draw[arr] (1.775, -0.461) .. controls (2.488, -1.635) .. (3.2, -2.809);
-  \draw[arr] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
-  \draw[arr] (6.79, 0.711) .. controls (4.565, 0.411) .. (2.341, 0.111);
-  \draw[arr] (-5.005, -5.848) .. controls (-2.016, -3.162) .. (0.972, -0.475);
-  \draw[arr] (-1.829, -5.841) .. controls (-3.743, -3.164) .. (-5.657, -0.487);
-  \draw[arr] (3.666, -5.841) .. controls (1.812, -3.488) .. (1.561, -0.503);
-  \draw[arr] (0.919, -9.003) .. controls (2.928, -9.003) .. (4.936, -9.003);
-  \draw[arr] (0.074, -8.539) .. controls (0.744, -4.52) .. (1.413, -0.502);
-  \draw[arr] (-0.398, -9.456) .. controls (-0.992, -10.137) .. (-1.586, -10.818);
-  \draw[arr] (-0.926, -11.297) .. controls (0.747, -11.297) .. (2.419, -11.297);
-  \draw[arr] (3.54, -11.297) .. controls (4.962, -11.297) .. (6.384, -11.297);
-  \draw[arr] (-1.349, -5.834) .. controls (-1.009, -4.813) .. (-0.669, -3.792);
+  \draw[kindholds] (0.686, -0.003) .. controls (-2.236, -0.003) .. (-5.159, -0.003);
+  \draw[kindholds] (-5.966, -0.469) .. controls (-5.755, -3.133) .. (-5.543, -5.797);
+  \draw[kindholds] (1.218, -0.461) .. controls (0.506, -1.635) .. (-0.207, -2.809);
+  \draw[kindholds] (1.775, -0.461) .. controls (2.488, -1.635) .. (3.2, -2.809);
+  \draw[kindholds] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
+  \draw[kindequiv] (6.79, 0.711) .. controls (4.565, 0.411) .. (2.341, 0.111);
+  \draw[kindholds] (-5.005, -5.848) .. controls (-2.016, -3.162) .. (0.972, -0.475);
+  \draw[kindholds] (-1.829, -5.841) .. controls (-3.743, -3.164) .. (-5.657, -0.487);
+  \draw[kindholds] (3.666, -5.841) .. controls (1.812, -3.488) .. (1.561, -0.503);
+  \draw[kindholds] (0.919, -9.003) .. controls (2.928, -9.003) .. (4.936, -9.003);
+  \draw[kindholds] (0.074, -8.539) .. controls (0.744, -4.52) .. (1.413, -0.502);
+  \draw[kindholds] (-0.398, -9.456) .. controls (-0.992, -10.137) .. (-1.586, -10.818);
+  \draw[kindholds] (-0.926, -11.297) .. controls (0.747, -11.297) .. (2.419, -11.297);
+  \draw[kindholds] (3.54, -11.297) .. controls (4.962, -11.297) .. (6.384, -11.297);
+  \draw[kindholds] (-1.349, -5.834) .. controls (-1.009, -4.813) .. (-0.669, -3.792);
 
   \node[edgenum] at (-2.24, -0.00) {1};
-  \node[edgenum] at (-3.27, -1.64) {2};
+  \node[edgenum] at (-5.75, -3.13) {2};
   \node[edgenum] at (0.51, -1.64) {3};
   \node[edgenum] at (2.49, -1.64) {4};
   \node[edgenum] at (4.48, -1.64) {5};
@@ -150,65 +138,57 @@ For each arrow, circle which of the three it is, and describe the relationship i
   \node[edgenum] at (-1.01, -4.81) {15};
 \end{tikzpicture}
 \end{center}
-\begin{center}\small\color{inkgrey}
-Every arrow is drawn the same way on purpose. Deciding the kind is half of each answer.
-\end{center}
 \vspace*{\fill}
 \newpage
 \heading{The arrows}
 \small
 \begin{multicols}{2}
-\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.55em, leftmargin=1.8em]
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.7em, leftmargin=1.8em]
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways}\par\vspace{2pt}
-  \dotfill\\[2pt]\dotfill
+  \dotfill\\[3pt]\dotfill
 \end{enumerate}
 \end{multicols}
 \normalsize
+\heading{Counterexamples and benchmarks}
+\small
+\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
+\item \(x^n\) on \([0,1]\) takes continuous functions to a discontinuous limit, pointwise.
+\item \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly, and the limit is not differentiable at \(0\).
+\item \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge.
+\item \(x/(1 + n^2x^2) \to 0\) uniformly, and the derivative of the limit is not the limit of the derivatives at \(0\).
+\item \(e^{-1/x^2}\) extended by \(0\) is infinitely differentiable at \(0\) with every Taylor coefficient zero, so its Taylor series converges and not to it.
+\end{itemize}
+\normalsize
 \heading{One last question}
-Which single arrow carries the most of this chapter? Say why in one sentence. If you pick one of the two that fail, say what you would have expected instead and what the counterexample costs you.
+Which single arrow carries the most of this chapter? One quantifier separates the two kinds of convergence, and most of the chapter follows from where it lands, so say whether your answer is the arrow that moves it.
 \par\medskip\dotfill\\[4pt]\dotfill\\[4pt]\dotfill
 
 \vfill

@@ -5,17 +5,17 @@ the map data rather than from a second hand-kept tex file is that the two cannot
 drift: the arrows, the boxes, the inventory and the closing question all come from
 one place.
 
-Two deliberate departures from Dip's own Practice Worksheet 3, which this is
-modelled on:
+**The worksheet is the primary artefact.** As of 2026-08-13 the page is a checker: it
+draws the map, reveals one arrow at a time, and keeps the whole answer list behind a
+toggle. The work happens on paper, so the worksheet says so and carries the address of
+the page.
 
-- **Every arrow is drawn the same way.** His worksheet distinguishes solid,
-  dashed and double-headed, and says so in the instructions. On screen the
-  style is hidden until the arrow is named, because on paper it gives away half of
-  every answer. The PDF hides it too, so the paper exercise asks exactly what the
-  page asks, and the instructions ask for the kind as part of each answer.
-- **`workbook.cls` is not used**, because it is not in the repository or in the
-  TeX Live tree. This is a standalone `article` with kpfonts, which is what Dip
-  asked for.
+Arrows are drawn identically here and on the key, heads and all, with a head at each
+end where the relationship runs both ways. There is nothing left to withhold: the
+kind question is gone and every arrow holds in the direction drawn.
+
+`workbook.cls` is not used, because it is not in the repository or in the TeX Live
+tree. This is a standalone `article` with kpfonts, which is what Dip asked for.
 
 The blank worksheet is what the site serves. The answer key is written next to the
 tex under `tools/`, which `_config.yml` excludes, so publishing the key is a
@@ -33,12 +33,9 @@ PDF_DIR = ROOT / "teaching" / "labs" / "maps"
 
 PDFLATEX = shutil.which("pdflatex") or "/Library/TeX/texbin/pdflatex"
 
-# The three things a student circles, in the same order as KIND_ORDER in
-# maps/engine/map.js so the paper and the page offer the same choices in the same
-# sequence. An arrow is a relationship and not always an implication, so none of
-# these says "claims". There was a fourth; see the note above KINDS in map.js.
-KIND_ORDER = ["implies", "fails", "equiv"]
-KIND_WORDS = ["gives", "fails", "both ways"]
+# Where the site serves the maps. Printed on the worksheet so a student holding
+# paper can find the page that checks it.
+PAGE_URL = "subhadipchowdhury.github.io/teaching/labs/maps"
 
 PREAMBLE = r"""\documentclass[11pt]{article}
 
@@ -76,15 +73,11 @@ PREAMBLE = r"""\documentclass[11pt]{article}
   edgenum/.style={circle, fill=white, draw=inkgrey, inner sep=0pt,
     minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
   nlabel/.style={font=\tiny\bfseries, text=inkgrey, inner sep=1pt},
-  % One style for every arrow on the blank sheet. Which of the four kinds it is is
-  % part of the question, so the drawing must not answer it.
-  arr/.style={-, thick, inkgrey},
-  % On the answer key each kind is drawn as itself, so the kinds can be checked off
-  % the picture as well as read off the list. No hyphens in these names: tikz reads
-  % a hyphen in a style name as an arrow-tip spec.
-  kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
-  kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
-  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
+  % One arrow style, on the worksheet and on the key alike. Nothing is withheld any
+  % more, so the head is drawn, and a relationship that runs both ways gets two of
+  % them. No hyphens in these names: tikz reads a hyphen as an arrow-tip spec.
+  kindholds/.style={-{Latex[length=2mm]}, thick, inkgrey},
+  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, inkgrey},
 }
 """
 
@@ -129,7 +122,7 @@ def _diagram(data, solutions):
         # boxes and worked out the control point from those, and handed all three
         # points over. Drawing from the node names and a bend instead gave a
         # different curve, and the badge then sat beside the arrow.
-        style = ("kind" + e["kind"]) if solutions else "arr"
+        style = "kind" + e["kind"]
         (x0, y0), (cx, cy), (x1, y1) = e["draw"]
         lines.append(
             f"  \\draw[{style}] ({x0}, {y0}) .. controls ({cx}, {cy}) .. ({x1}, {y1});"
@@ -150,19 +143,17 @@ def _diagram(data, solutions):
 
 
 def _answer_lines(data, solutions):
+    """Two ruled lines per arrow on the worksheet; the sentence and its reason on
+    the key. There is no kind to circle any more, so the room goes to writing."""
     out = [r"\begin{multicols}{2}",
-           r"\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.55em, leftmargin=1.8em]"]
+           r"\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.7em, leftmargin=1.8em]"]
     for e in data["edges"]:
         out.append(r"\item")
         if solutions:
-            out.append(r"  {\scriptsize\bfseries\color{maroon} " +
-                       KIND_WORDS[KIND_ORDER.index(e["kind"])] +
-                       r".}\ " + _plain(e["statement"]))
+            out.append("  " + _plain(e["statement"]))
             out.append(r"  {\scriptsize\color{inkgrey} " + _plain(e["why"]) + r"\par}")
         else:
-            out.append(r"  {\scriptsize\color{inkgrey} " +
-                       r" \;/\; ".join(KIND_WORDS) + r"}\par\vspace{2pt}")
-            out.append(r"  \dotfill\\[2pt]\dotfill")
+            out.append(r"  \dotfill\\[3pt]\dotfill")
     out.append(r"\end{enumerate}")
     out.append(r"\end{multicols}")
     return "\n".join(out)
@@ -181,23 +172,31 @@ def _document(data, solutions):
     # The instructions. Not the intro from the data: that one is addressed to
     # someone looking at a screen and tells them to click things.
     if solutions:
-        parts.append(r"Every arrow, with the kind of relationship it is. On this copy "
-                     r"each arrow is drawn in the style of its kind, so you can check "
-                     r"the kinds off the picture as well as off the list.")
+        parts.append(r"Every arrow, with the reason underneath. Keep this away from the "
+                     r"blank worksheet.")
     else:
         parts.append(
             r"The next page has " + str(len(data["nodes"])) + r" ideas as boxes, with "
             + str(len(data["edges"])) + r" numbered arrows between them and nothing "
-            r"written on any arrow. An arrow is a relationship between two ideas, and "
-            r"not always an implication. Sometimes the first box gives you the second. "
-            r"Sometimes it doesn't, and there's a counterexample. And sometimes each "
-            r"gives the other."
+            r"written on any arrow. Every arrow is a relationship that holds in the "
+            r"direction drawn, and it does not have to be an implication. Sometimes one "
+            r"property forces another. Sometimes one box is defined in terms of the "
+            r"other. Often one box is the tool that settles the other: the integral test "
+            r"doesn't imply anything about the \(p\)-series, it is what pins down where "
+            r"the \(p\)-series turns."
         )
         parts.append("")
         parts.append(
-            r"For each arrow, circle which of the three it is, and describe the "
-            r"relationship in one sentence. Name the theorem where there is one, and "
-            r"say what goes wrong where there isn't."
+            r"For each numbered arrow, say in one sentence what the relationship is. "
+            r"Name the theorem where there is one, state the hypothesis doing the work, "
+            r"or say which box settles which. An arrow with a head at each end runs both "
+            r"ways."
+        )
+        parts.append("")
+        parts.append(
+            r"When you have had a go at all of them, check yourself at \texttt{" +
+            PAGE_URL + "/" + data["id"] + r"/}. That page draws the same map and will "
+            r"show you the answers one arrow at a time, or all at once."
         )
     parts.append("")
 
@@ -210,6 +209,30 @@ def _document(data, solutions):
     parts.append(r"\end{enumerate}")
     parts.append(r"\normalsize")
 
+    # The diagram gets a page to itself, centred. Left at the top of the page it
+    # sat in the upper half with the lower half empty, which reads as a mistake.
+    parts.append(r"\newpage")
+    parts.append(r"\vspace*{\fill}")
+    parts.append(r"\begin{center}")
+    parts.append(_diagram(data, solutions))
+    parts.append(r"\end{center}")
+    parts.append(r"\vspace*{\fill}")
+    parts.append(r"\newpage")
+
+    parts.append(r"\heading{The arrows}")
+    parts.append(r"\small")
+    parts.append(_answer_lines(data, solutions))
+    parts.append(r"\normalsize")
+
+    if solutions and data.get("mistakes"):
+        parts.append(r"\heading{Claims that look right and are not}")
+        parts.append(r"\small")
+        parts.append(r"\begin{itemize}[leftmargin=1.4em, itemsep=1pt]")
+        for m in data["mistakes"]:
+            parts.append(r"\item " + _plain(m))
+        parts.append(r"\end{itemize}")
+        parts.append(r"\normalsize")
+
     if data.get("benchmarks"):
         parts.append(r"\heading{Counterexamples and benchmarks}")
         parts.append(r"\small")
@@ -218,32 +241,6 @@ def _document(data, solutions):
             parts.append(r"\item " + _plain(b))
         parts.append(r"\end{itemize}")
         parts.append(r"\normalsize")
-
-    # The diagram gets a page to itself, centred. Left at the top of the page it
-    # sat in the upper half with the lower half empty, which reads as a mistake.
-    parts.append(r"\newpage")
-    parts.append(r"\vspace*{\fill}")
-    parts.append(r"\begin{center}")
-    parts.append(_diagram(data, solutions))
-    parts.append(r"\end{center}")
-    if not solutions:
-        parts.append(r"\begin{center}\small\color{inkgrey}")
-        parts.append(r"Every arrow is drawn the same way on purpose. Deciding the kind "
-                     r"is half of each answer.")
-        parts.append(r"\end{center}")
-    if solutions:
-        parts.append(r"\begin{center}\small")
-        parts.append(r"\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad "
-                     r"\textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad "
-                     r"\textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}}")
-        parts.append(r"\end{center}")
-    parts.append(r"\vspace*{\fill}")
-    parts.append(r"\newpage")
-
-    parts.append(r"\heading{The arrows}")
-    parts.append(r"\small")
-    parts.append(_answer_lines(data, solutions))
-    parts.append(r"\normalsize")
 
     parts.append(r"\heading{One last question}")
     parts.append(_plain(data["reflection"]))

@@ -34,15 +34,11 @@
   edgenum/.style={circle, fill=white, draw=inkgrey, inner sep=0pt,
     minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
   nlabel/.style={font=\tiny\bfseries, text=inkgrey, inner sep=1pt},
-  % One style for every arrow on the blank sheet. Which of the four kinds it is is
-  % part of the question, so the drawing must not answer it.
-  arr/.style={-, thick, inkgrey},
-  % On the answer key each kind is drawn as itself, so the kinds can be checked off
-  % the picture as well as read off the list. No hyphens in these names: tikz reads
-  % a hyphen in a style name as an arrow-tip spec.
-  kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
-  kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
-  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
+  % One arrow style, on the worksheet and on the key alike. Nothing is withheld any
+  % more, so the head is drawn, and a relationship that runs both ways gets two of
+  % them. No hyphens in these names: tikz reads a hyphen as an arrow-tip spec.
+  kindholds/.style={-{Latex[length=2mm]}, thick, inkgrey},
+  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, inkgrey},
 }
 
 \begin{document}
@@ -50,7 +46,7 @@
 {\LARGE\bfseries\color{maroon} Sequences and series of functions: answers}\par\medskip
 {\color{inkgrey}\small Math 163 \quad\textbullet\quad Prof.\ Chowdhury}\par\bigskip
 
-Every arrow, with the kind of relationship it is. On this copy each arrow is drawn in the style of its kind, so you can check the kinds off the picture as well as off the list.
+Every arrow, with the reason underneath. Keep this away from the blank worksheet.
 
 \heading{What each box means}
 \small
@@ -70,16 +66,6 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
 \item \textbf{Taylor Series.} \(\sum f^{(n)}(a)(x-a)^n/n!\). The coefficients are forced by differentiating the power series at its centre.
 \item \textbf{Taylor series converges to \(f\).} The Taylor series converges to \(f(x)\) exactly when the remainder \(R_N(x) = f(x) - P_N(x)\) tends to zero.
 \end{enumerate}
-\normalsize
-\heading{Counterexamples and benchmarks}
-\small
-\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
-\item \(x^n\) on \([0,1]\) takes continuous functions to a discontinuous limit, pointwise.
-\item \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly, and the limit is not differentiable at \(0\).
-\item \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge.
-\item \(x/(1 + n^2x^2) \to 0\) uniformly, and the derivative of the limit is not the limit of the derivatives at \(0\).
-\item \(e^{-1/x^2}\) extended by \(0\) is infinitely differentiable at \(0\) with every Taylor coefficient zero, so its Taylor series converges and not to it.
-\end{itemize}
 \normalsize
 \newpage
 \vspace*{\fill}
@@ -115,24 +101,24 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
   \node[nlabel, anchor=south east] at (M.north west) {M};
   \node[nlabel, anchor=south east] at (N.north west) {N};
 
-  \draw[kindimplies] (0.686, -0.003) .. controls (-2.236, -0.003) .. (-5.159, -0.003);
-  \draw[kindfails] (-5.268, -0.444) .. controls (-3.268, -1.641) .. (-1.269, -2.838);
-  \draw[kindimplies] (1.218, -0.461) .. controls (0.506, -1.635) .. (-0.207, -2.809);
-  \draw[kindimplies] (1.775, -0.461) .. controls (2.488, -1.635) .. (3.2, -2.809);
-  \draw[kindfails] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
+  \draw[kindholds] (0.686, -0.003) .. controls (-2.236, -0.003) .. (-5.159, -0.003);
+  \draw[kindholds] (-5.966, -0.469) .. controls (-5.755, -3.133) .. (-5.543, -5.797);
+  \draw[kindholds] (1.218, -0.461) .. controls (0.506, -1.635) .. (-0.207, -2.809);
+  \draw[kindholds] (1.775, -0.461) .. controls (2.488, -1.635) .. (3.2, -2.809);
+  \draw[kindholds] (2.296, -0.442) .. controls (4.481, -1.642) .. (6.667, -2.841);
   \draw[kindequiv] (6.79, 0.711) .. controls (4.565, 0.411) .. (2.341, 0.111);
-  \draw[kindimplies] (-5.005, -5.848) .. controls (-2.016, -3.162) .. (0.972, -0.475);
-  \draw[kindimplies] (-1.829, -5.841) .. controls (-3.743, -3.164) .. (-5.657, -0.487);
-  \draw[kindimplies] (3.666, -5.841) .. controls (1.812, -3.488) .. (1.561, -0.503);
-  \draw[kindimplies] (0.919, -9.003) .. controls (2.928, -9.003) .. (4.936, -9.003);
-  \draw[kindimplies] (0.074, -8.539) .. controls (0.744, -4.52) .. (1.413, -0.502);
-  \draw[kindimplies] (-0.398, -9.456) .. controls (-0.992, -10.137) .. (-1.586, -10.818);
-  \draw[kindimplies] (-0.926, -11.297) .. controls (0.747, -11.297) .. (2.419, -11.297);
-  \draw[kindimplies] (3.54, -11.297) .. controls (4.962, -11.297) .. (6.384, -11.297);
-  \draw[kindimplies] (-1.349, -5.834) .. controls (-1.009, -4.813) .. (-0.669, -3.792);
+  \draw[kindholds] (-5.005, -5.848) .. controls (-2.016, -3.162) .. (0.972, -0.475);
+  \draw[kindholds] (-1.829, -5.841) .. controls (-3.743, -3.164) .. (-5.657, -0.487);
+  \draw[kindholds] (3.666, -5.841) .. controls (1.812, -3.488) .. (1.561, -0.503);
+  \draw[kindholds] (0.919, -9.003) .. controls (2.928, -9.003) .. (4.936, -9.003);
+  \draw[kindholds] (0.074, -8.539) .. controls (0.744, -4.52) .. (1.413, -0.502);
+  \draw[kindholds] (-0.398, -9.456) .. controls (-0.992, -10.137) .. (-1.586, -10.818);
+  \draw[kindholds] (-0.926, -11.297) .. controls (0.747, -11.297) .. (2.419, -11.297);
+  \draw[kindholds] (3.54, -11.297) .. controls (4.962, -11.297) .. (6.384, -11.297);
+  \draw[kindholds] (-1.349, -5.834) .. controls (-1.009, -4.813) .. (-0.669, -3.792);
 
   \node[edgenum] at (-2.24, -0.00) {1};
-  \node[edgenum] at (-3.27, -1.64) {2};
+  \node[edgenum] at (-5.75, -3.13) {2};
   \node[edgenum] at (0.51, -1.64) {3};
   \node[edgenum] at (2.49, -1.64) {4};
   \node[edgenum] at (4.48, -1.64) {5};
@@ -148,65 +134,82 @@ Every arrow, with the kind of relationship it is. On this copy each arrow is dra
   \node[edgenum] at (-1.01, -4.81) {15};
 \end{tikzpicture}
 \end{center}
-\begin{center}\small
-\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad \textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad \textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}}
-\end{center}
 \vspace*{\fill}
 \newpage
 \heading{The arrows}
 \small
 \begin{multicols}{2}
-\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.55em, leftmargin=1.8em]
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.7em, leftmargin=1.8em]
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Uniform convergence is pointwise convergence with an \(N\) that does not depend on \(x\), so it is the stronger of the two.
+  Uniform convergence is pointwise convergence with an \(N\) that does not depend on \(x\), so it is the stronger of the two.
   {\scriptsize\color{inkgrey} One quantifier moves and everything in the chapter follows from where it lands. Pointwise lets \(N\) chase \(x\); uniform does not.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} fails.}\ Pointwise convergence does not carry continuity to the limit, and \(x^n\) on \([0,1]\) is the witness.
-  {\scriptsize\color{inkgrey} Every \(x^n\) is continuous, the pointwise limit is \(0\) on \([0,1)\) and \(1\) at \(x = 1\), and that limit is not continuous.\par}
+  Dini's theorem starts from pointwise convergence and adds compactness, monotone convergence and a continuous limit, and gets uniform convergence out.
+  {\scriptsize\color{inkgrey} Pointwise convergence on its own carries nothing to the limit: every \(x^n\) on \([0,1]\) is continuous and the limit is not. Dini's three extra hypotheses are what close that gap, and dropping any one of them reopens it.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ A uniform limit of continuous functions is continuous.
+  A uniform limit of continuous functions is continuous.
   {\scriptsize\color{inkgrey} The three-epsilon argument: get near \(f_n\) uniformly, use the continuity of that one \(f_n\), and come back.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ A uniform limit of integrable functions is integrable, and the limit of the integrals is the integral of the limit.
+  A uniform limit of integrable functions is integrable, and the limit of the integrals is the integral of the limit.
   {\scriptsize\color{inkgrey} Uniform closeness bounds the difference of the integrals by the length of the interval times \(\varepsilon\), which is what lets the two operations swap.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} fails.}\ Uniform convergence of the functions themselves does not carry differentiability to the limit, and what does is uniform convergence of the derivatives.
-  {\scriptsize\color{inkgrey} \(\sqrt{x^2 + 1/n^2}\) converges uniformly to \(|x|\), which is not differentiable at \(0\). The theorem that does work asks for \(f_n \to f\) pointwise and \(f_n' \to g\) uniformly, and concludes \(f' = g\). Look also at \((1/n)\sin(n^2x)\), where the functions converge uniformly to \(0\) and the derivatives diverge.\par}
+  The differentiability theorem is uniform convergence imposed on the derivatives rather than on the functions: \(f_n \to f\) pointwise with \(f_n' \to g\) uniformly gives \(f' = g\).
+  {\scriptsize\color{inkgrey} It has to be the derivatives. \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly and \(|x|\) is not differentiable at \(0\), and \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge. After the clean results for continuity and integrability, this one is disappointing.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} both ways.}\ A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.
+  A sequence of functions converges uniformly exactly when it is uniformly Cauchy, so neither statement needs the limit named in advance.
   {\scriptsize\color{inkgrey} This is what makes the \(M\)-test possible: you can prove uniform convergence of a series without ever writing down its sum.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ On a closed bounded interval, monotone pointwise convergence of continuous functions to a continuous limit is already uniform.
+  On a closed bounded interval, monotone pointwise convergence of continuous functions to a continuous limit is already uniform.
   {\scriptsize\color{inkgrey} Every hypothesis is doing work. Drop compactness, monotonicity, or the continuity of the limit and there is a counterexample waiting.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ A series of functions is the sequence of its partial sums, so every statement about sequences of functions applies to it unchanged.
+  A series of functions is the sequence of its partial sums, so every statement about sequences of functions applies to it unchanged.
   {\scriptsize\color{inkgrey} Nothing about series of functions is new. It is the sequence \(\{S_N\}\) wearing different notation.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Bounding each term by a constant whose series converges gives uniform and absolute convergence of the series of functions.
+  Bounding each term by a constant whose series converges gives uniform and absolute convergence of the series of functions.
   {\scriptsize\color{inkgrey} The bound has to hold for every \(x\) with one constant per term, which is exactly how the \(x\) is got out of the way.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ A power series converges absolutely inside one radius and diverges outside it, and that radius is what the ratio or root test computes.
+  A power series converges absolutely inside one radius and diverges outside it, and that radius is what the ratio or root test computes.
   {\scriptsize\color{inkgrey} The trichotomy is the theorem. What happens at the two endpoints is decided separately and can go either way.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Inside its radius a power series converges uniformly on every closed bounded subinterval, which is what licenses working on it term by term.
+  Inside its radius a power series converges uniformly on every closed bounded subinterval, which is what licenses working on it term by term.
   {\scriptsize\color{inkgrey} Uniform on compact subsets, not on the whole open interval. That distinction is why the statement names a closed bounded subinterval.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Because the convergence is uniform on compact subintervals, a power series can be differentiated and integrated term by term, and the result keeps the same radius.
+  Because the convergence is uniform on compact subintervals, a power series can be differentiated and integrated term by term, and the result keeps the same radius.
   {\scriptsize\color{inkgrey} The interchange theorems supply this, and the radius is unchanged because the ratio or root test sees the same limit for the derived series.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Differentiating term by term at the centre forces the coefficients to be \(f^{(n)}(c)/n!\), so a function has at most one power series about a point.
+  Differentiating term by term at the centre forces the coefficients to be \(f^{(n)}(c)/n!\), so a function has at most one power series about a point.
   {\scriptsize\color{inkgrey} Uniqueness comes free. Any two power series agreeing near a point have the same coefficients, because both sets are computed from the same derivatives.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ The Taylor series converges to \(f\) at a point exactly when the remainder tends to zero there, which is a statement about \(f\) and not about the coefficients.
+  The Taylor series converges to \(f\) at a point exactly when the remainder tends to zero there, which is a statement about \(f\) and not about the coefficients.
   {\scriptsize\color{inkgrey} A series can have every Taylor coefficient of \(f\), converge everywhere, and still not converge to \(f\). The remainder is what decides it.\par}
 \item
-  {\scriptsize\bfseries\color{maroon} gives.}\ Applying the interchange theorems to the partial sums gives the matching statements for the sum of a series of functions.
+  Applying the interchange theorems to the partial sums gives the matching statements for the sum of a series of functions.
   {\scriptsize\color{inkgrey} A uniformly convergent series of continuous functions has a continuous sum, and can be integrated term by term, for exactly the reason the sequence version holds.\par}
 \end{enumerate}
 \end{multicols}
 \normalsize
+\heading{Claims that look right and are not}
+\small
+\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
+\item A uniform limit of differentiable functions is differentiable.
+\item A power series and the series obtained by differentiating it term by term have different radii of convergence.
+\item A function with derivatives of every order at a point is the sum of its Taylor series near that point.
+\item Pointwise convergence on a closed bounded interval is automatically uniform.
+\item A series of continuous functions that converges pointwise has a continuous sum.
+\end{itemize}
+\normalsize
+\heading{Counterexamples and benchmarks}
+\small
+\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
+\item \(x^n\) on \([0,1]\) takes continuous functions to a discontinuous limit, pointwise.
+\item \(\sqrt{x^2 + 1/n^2} \to |x|\) uniformly, and the limit is not differentiable at \(0\).
+\item \((1/n)\sin(n^2x) \to 0\) uniformly while its derivatives diverge.
+\item \(x/(1 + n^2x^2) \to 0\) uniformly, and the derivative of the limit is not the limit of the derivatives at \(0\).
+\item \(e^{-1/x^2}\) extended by \(0\) is infinitely differentiable at \(0\) with every Taylor coefficient zero, so its Taylor series converges and not to it.
+\end{itemize}
+\normalsize
 \heading{One last question}
-Which single arrow carries the most of this chapter? Say why in one sentence. If you pick one of the two that fail, say what you would have expected instead and what the counterexample costs you.
+Which single arrow carries the most of this chapter? One quantifier separates the two kinds of convergence, and most of the chapter follows from where it lands, so say whether your answer is the arrow that moves it.
 
 \vfill
 {\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked the mathematics myself.\par}
