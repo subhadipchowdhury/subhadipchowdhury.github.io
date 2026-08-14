@@ -432,9 +432,11 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
         </div>
         <div style="display:flex;align-items:center;gap:9px;">
           <span class="cat-tool-label">Sort</span>
+          <!-- The default is first in the list as well as in `state`, and init()
+               writes `state` back to both selects so the two cannot disagree. -->
           <jelly-select id="cat-sort" size="small">
-            <jelly-option value="course">By course</jelly-option>
             <jelly-option value="updated">Last updated</jelly-option>
+            <jelly-option value="course">By course</jelly-option>
             <jelly-option value="az">Title A–Z</jelly-option>
           </jelly-select>
         </div>
@@ -557,7 +559,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences and series of functions', blurb:'Separate pointwise from uniform convergence, and find which theorem needs which.', updated:'2026-05-23', status:'finalized', href:'maps/func-sequences.html' }
   ];
 
-  var state = { courseFilter:'all', kindFilter:'all', query:'', showDrafts:false, sort:'course' };
+  var state = { courseFilter:'all', kindFilter:'all', query:'', showDrafts:false, sort:'updated' };
 
   // `permalink: pretty` in _config.yml turns page.html into page/index.html, so
   // every page on this site is reached without its extension and with a trailing
@@ -631,8 +633,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
       return hay.indexOf(q) !== -1;
     });
     // Three orders, all total: nothing falls back to the order the array happens to
-    // be written in. `course` is the default, because a student arrives looking for
-    // their own course. `updated` puts the most recently touched first and everything
+    // be written in. `updated` puts the most recently touched first and everything
     // without a date last, which is how a card that has not been opened since July
     // becomes visible as such.
     var byTitle = function (x, y) { return x.raw.title.localeCompare(y.raw.title); };
@@ -648,7 +649,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
       },
       az: byTitle
     };
-    return list.slice().sort(orders[state.sort] || orders.course);
+    return list.slice().sort(orders[state.sort] || orders.updated);
   }
 
   function cardHTML(a) {
@@ -756,6 +757,14 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   }
 
   function init() {
+    // The two selects are told the starting state rather than trusted to agree with
+    // it. Reordering the options would otherwise leave the control showing one thing
+    // while the page sorted by another.
+    var startSort = document.getElementById('cat-sort');
+    if (startSort) startSort.value = state.sort;
+    var startKind = document.getElementById('cat-kind');
+    if (startKind) startKind.value = state.kindFilter;
+
     render();
 
     // Course chips (event delegation; jelly-button click bubbles to the container).
