@@ -17,8 +17,13 @@
 \definecolor{maroon}{HTML}{800000}
 \definecolor{inkgrey}{HTML}{4D4D4D}
 
+% An explicit white page. Without it the page background is undefined, and a viewer
+% or a converter that composites onto black renders the body text invisible.
+\pagecolor{white}
+
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
 
 \newcommand{\heading}[1]{%
   \par\medskip{\large\bfseries\color{maroon} #1}\par\smallskip}
@@ -29,18 +34,26 @@
   edgenum/.style={circle, fill=white, draw=inkgrey, inner sep=0pt,
     minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
   nlabel/.style={font=\tiny\bfseries, text=inkgrey, inner sep=1pt},
-  % One style for every arrow. Which of the four kinds it is is part of the
-  % question, so the drawing must not answer it.
+  % One style for every arrow on the blank sheet. Which of the four kinds it is is
+  % part of the question, so the drawing must not answer it.
   arr/.style={-, thick, inkgrey},
-  solved/.style={-{Latex[length=2mm]}, thick, maroon},
+  % On the answer key each kind is drawn as itself, so the kinds can be checked off
+  % the picture as well as read off the list. No hyphens in these names: tikz reads
+  % a hyphen in a style name as an arrow-tip spec.
+  kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
+  kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
+  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
+  kindcaution/.style={-{Latex[length=2mm]}, thick, densely dotted, orange!75!black},
 }
 
 \begin{document}
 
 {\LARGE\bfseries\color{maroon} Infinite series}\par\medskip
-{\color{inkgrey}\small Math 163 \quad\textbullet\quad Prof.\ Chowdhury \quad\textbullet\quad Concept map}\par\bigskip
+{\color{inkgrey}\small Math 163 \quad\textbullet\quad Prof.\ Chowdhury}\par\bigskip
 
-The next page shows 15 ideas as labelled boxes, joined by 16 numbered arrows. Every arrow is a real mathematical relationship, and the drawing does not tell you which kind: an arrow may \emph{hold}, it may \emph{fail}, the two ideas may be \emph{equivalent}, or it may hold on \emph{other hypotheses} than the ones its neighbours use. For each numbered arrow, circle the kind and describe the relationship in one sentence. Name the theorem, state the hypothesis that is doing the work, or say what goes wrong.
+The next page has 15 ideas as boxes, with 16 numbered arrows between them and nothing written on any arrow. An arrow is a relationship between two ideas, and not always an implication. Sometimes the first box gives you the second. Sometimes it doesn't, and there's a counterexample. Sometimes each gives the other. And sometimes it does give it, but on hypotheses you wouldn't have guessed.
+
+For each arrow, circle which of those four it is, and describe the relationship in one sentence. Name the theorem where there is one, and say what goes wrong where there isn't.
 
 \heading{What each box means}
 \small
@@ -59,10 +72,10 @@ The next page shows 15 ideas as labelled boxes, joined by 16 numbered arrows. Ev
 \item \textbf{Dirichlet's Test.} If \(a_n\) decreases to \(0\) and the partial sums of \(b_n\) are bounded, then \(\sum a_n b_n\) converges. Proved by summation by parts.
 \item \textbf{Absolute Convergence.} \(\sum a_n\) converges absolutely when \(\sum |a_n|\) converges. This is strictly stronger than convergence.
 \item \textbf{Conditional Convergence.} \(\sum a_n\) converges conditionally when it converges and \(\sum |a_n|\) does not. The convergence rests on cancellation.
-\item \textbf{Ratio and Root Tests.} With \(L = \lim |a_{n+1}/a_n|\) or \(L = \limsup |a_n|^{1/n}\): absolutely convergent if \(L  1\), and no conclusion if \(L = 1\).
+\item \textbf{Ratio and Root Tests.} With \(L = \lim |a_{n+1}/a_n|\) or \(L = \limsup |a_n|^{1/n}\): absolutely convergent if \(L < 1\), divergent if \(L > 1\), and no conclusion if \(L = 1\).
 \end{enumerate}
 \normalsize
-\heading{Examples worth keeping to hand}
+\heading{Counterexamples and benchmarks}
 \small
 \begin{itemize}[leftmargin=1.4em, itemsep=1pt]
 \item The harmonic series \(\sum 1/n\) diverges even though its terms tend to zero.
@@ -80,7 +93,7 @@ The next page shows 15 ideas as labelled boxes, joined by 16 numbered arrows. Ev
   \node[concept] (B) at (-1.5, -2) {Partial Sums \\ \(\{s_n\}\)};
   \node[concept] (C) at (-4, -5.8) {Convergent \\ Series};
   \node[concept] (D) at (7, -5.8) {Divergent \\ Series};
-  \node[concept] (E) at (6, -2) {Divergence \\ Test};
+  \node[concept] (E) at (6, -3) {Divergence \\ Test};
   \node[concept] (F) at (-1, -3.8) {Geometric \\ Series};
   \node[concept] (G) at (3, -3.8) {Telescoping \\ Series};
   \node[concept] (H) at (-0.5, -11) {\(p\)-Series \\ \(\sum 1/n^p\)};
@@ -108,43 +121,43 @@ The next page shows 15 ideas as labelled boxes, joined by 16 numbered arrows. Ev
   \node[nlabel, anchor=south east] at (N.north west) {N};
   \node[nlabel, anchor=south east] at (O.north west) {O};
 
-  \draw[arr] (A) .. controls (0.00, -1.00) .. (B);
-  \draw[arr] (B) .. controls (-3.04, -3.71) .. (C);
-  \draw[arr] (B) .. controls (3.74, -1.70) .. (D);
-  \draw[arr] (E) .. controls (6.50, -3.90) .. (D);
-  \draw[arr] (E) .. controls (-0.35, -0.35) .. (C);
-  \draw[arr] (F) .. controls (-2.50, -4.80) .. (C);
-  \draw[arr] (G) .. controls (-0.50, -4.80) .. (C);
-  \draw[arr] (I) .. controls (-4.05, -8.26) .. (C);
-  \draw[arr] (I) .. controls (-7.00, -9.75) .. (J);
-  \draw[arr] (I) .. controls (-5.25, -9.75) .. (K);
-  \draw[arr] (K) .. controls (-2.25, -11.00) .. (H);
-  \draw[arr] (L) .. controls (-3.00, -7.15) .. (C);
-  \draw[arr] (M) .. controls (-0.75, -7.15) .. (C);
-  \draw[arr] (C) .. controls (-0.49, -6.51) .. (M);
-  \draw[arr] (O) .. controls (4.75, -8.50) .. (M);
-  \draw[arr] (L) .. controls (0.64, -10.63) .. (N);
+  \draw[arr] (0.833, -0.446) .. controls (0.011, -0.994) .. (-0.811, -1.542);
+  \draw[arr] (-1.805, -2.46) .. controls (-2.744, -3.886) .. (-3.683, -5.311);
+  \draw[arr] (-0.641, -2.032) .. controls (3.739, -1.952) .. (6.54, -5.321);
+  \draw[arr] (6.162, -3.466) .. controls (6.491, -4.384) .. (6.819, -5.302);
+  \draw[arr] (5.34, -3.446) .. controls (1.529, -6.301) .. (-3.21, -5.835);
+  \draw[arr] (-1.667, -4.239) .. controls (-2.489, -4.787) .. (-3.311, -5.335);
+  \draw[arr] (2.188, -4.028) .. controls (-0.513, -4.799) .. (-3.214, -5.571);
+  \draw[arr] (-6.086, -8.052) .. controls (-5.265, -7.163) .. (-4.444, -6.274);
+  \draw[arr] (-6.688, -8.965) .. controls (-6.997, -9.737) .. (-7.306, -10.51);
+  \draw[arr] (-6.053, -8.954) .. controls (-5.266, -9.741) .. (-4.478, -10.529);
+  \draw[arr] (-3.348, -11.003) .. controls (-2.322, -11.003) .. (-1.297, -11.003);
+  \draw[arr] (-2.34, -8.048) .. controls (-2.993, -7.164) .. (-3.646, -6.28);
+  \draw[arr] (1.687, -8.377) .. controls (-1.175, -8.115) .. (-3.372, -6.261);
+  \draw[arr] (-3.249, -6.111) .. controls (-0.795, -7.133) .. (1.658, -8.154);
+  \draw[arr] (6.238, -8.503) .. controls (4.79, -8.503) .. (3.341, -8.503);
+  \draw[arr] (-1.197, -8.839) .. controls (0.981, -9.747) .. (3.158, -10.654);
 
   \node[edgenum] at (0.01, -0.99) {1};
-  \node[edgenum] at (-2.99, -3.79) {2};
-  \node[edgenum] at (3.49, -2.54) {3};
-  \node[edgenum] at (6.49, -3.88) {4};
-  \node[edgenum] at (0.09, -1.79) {5};
+  \node[edgenum] at (-2.74, -3.89) {2};
+  \node[edgenum] at (3.34, -2.81) {3};
+  \node[edgenum] at (6.49, -4.38) {4};
+  \node[edgenum] at (1.30, -5.47) {5};
   \node[edgenum] at (-2.49, -4.79) {6};
   \node[edgenum] at (-0.51, -4.80) {7};
-  \node[edgenum] at (-4.14, -7.84) {8};
+  \node[edgenum] at (-5.26, -7.16) {8};
   \node[edgenum] at (-7.00, -9.74) {9};
   \node[edgenum] at (-5.27, -9.74) {10};
   \node[edgenum] at (-2.32, -11.00) {11};
   \node[edgenum] at (-2.99, -7.16) {12};
-  \node[edgenum] at (-0.76, -7.15) {13};
-  \node[edgenum] at (-0.59, -6.68) {14};
+  \node[edgenum] at (-1.01, -7.72) {13};
+  \node[edgenum] at (-0.80, -7.13) {14};
   \node[edgenum] at (4.79, -8.50) {15};
-  \node[edgenum] at (0.67, -10.37) {16};
+  \node[edgenum] at (0.98, -9.75) {16};
 \end{tikzpicture}
 \end{center}
 \begin{center}\small\color{inkgrey}
-Every arrow is drawn the same way. For each one, decide whether it holds, fails, is an equivalence, or holds on other hypotheses, and say what it claims.
+Every arrow is drawn the same way on purpose. Deciding the kind is half of each answer.
 \end{center}
 \vspace*{\fill}
 \newpage
@@ -153,52 +166,52 @@ Every arrow is drawn the same way. For each one, decide whether it holds, fails,
 \begin{multicols}{2}
 \begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.55em, leftmargin=1.8em]
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \item
-  {\scriptsize\color{inkgrey} holds \;/\; fails \;/\; equivalent \;/\; other hypotheses}\par\vspace{2pt}
+  {\scriptsize\color{inkgrey} gives \;/\; fails \;/\; both ways \;/\; gives, other hypotheses}\par\vspace{2pt}
   \dotfill\\[2pt]\dotfill
 \end{enumerate}
 \end{multicols}
@@ -208,5 +221,5 @@ Which single arrow carries the most of this chapter? Say why in one sentence. Th
 \par\medskip\dotfill\\[4pt]\dotfill\\[4pt]\dotfill
 
 \vfill
-{\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, licensed CC BY-NC-SA 4.0. Built with AI assistance; the mathematics was checked by a human.\par}
+{\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked the mathematics myself.\par}
 \end{document}

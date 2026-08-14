@@ -156,6 +156,12 @@ def _control(p0, p1, bend):
     return mx - dy / length * bend, my + dx / length * bend
 
 
+def _to_tikz(point):
+    """A stage pixel back to a tikz coordinate, which is what maptex draws in."""
+    x, y = point
+    return round(x / SCALE - X_SHIFT, 3), round(-(y / SCALE - Y_SHIFT), 3)
+
+
 def _boxes(data):
     out = {}
     for n in data["nodes"]:
@@ -200,7 +206,7 @@ def crossings(data):
 # --------------------------------------------------------------------------
 
 BADGE_R = 12          # .cm-badge is 1.5rem across
-ARROW_GAP = 14        # two arrows closer than this read as one
+ARROW_GAP = 22        # two arrows closer than this read as one
 
 
 def _clip(cx, cy, tx, ty, hw, hh, gap):
@@ -276,7 +282,7 @@ def overlaps(data):
                         break
             # One near-crossing is a crossing and is fine. A long stretch of them is
             # two arrows drawn on top of each other.
-            if close > 6:
+            if close > 4:
                 out.append(f"arrows {e['n']} and {f['n']} run together over {close} samples")
     return out
 
@@ -423,13 +429,20 @@ def write(data):
     # Each arrow's badge point is worked out here, in the stage's pixels, and handed
     # over converted to tikz units. Letting tikz place it with `pos=` put it
     # somewhere else on every bent arrow; see the note in maptex._diagram.
+    # The tex is handed the whole drawn curve, converted to tikz units, rather than
+    # its endpoints and a bend. Two reasons: the control point of the drawn curve is
+    # recomputed from the *clipped* endpoints, not from the node centres, so
+    # rebuilding it in the tex from a bend gave a different curve and left the
+    # numbered badge floating beside the arrow instead of on it. And sharing the
+    # geometry means overlaps() predicts the PDF as well as the page.
     boxes = _boxes(data)
     for e in data["edges"]:
-        bx, by = badge_at(boxes, e)
-        e["badge_tikz"] = (bx / SCALE - X_SHIFT, -(by / SCALE - Y_SHIFT))
-    data["pdf"] = maptex.build(data, SCALE)
+        p0, c, p1 = _curve(boxes, e)
+        e["draw"] = [_to_tikz(p0), _to_tikz(c), _to_tikz(p1)]
+        e["badge_tikz"] = _to_tikz(badge_at(boxes, e))
+    data["pdf"] = maptex.build(data)
     for e in data["edges"]:
-        del e["badge_tikz"]
+        del e["badge_tikz"], e["draw"]
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / f"{data['id']}.json"

@@ -25,7 +25,7 @@ NODES = [
          "\\(\\sum a_n\\) converges when \\(\\{s_n\\}\\) has a finite limit, and the sum is that limit."),
     node("D", "Divergent\nSeries", (7, -5.8),
          "\\(\\sum a_n\\) diverges when \\(\\{s_n\\}\\) fails to converge, whether it runs away or oscillates."),
-    node("E", "Divergence\nTest", (6, -2),
+    node("E", "Divergence\nTest", (6, -3),
          "If \\(a_n \\not\\to 0\\) then \\(\\sum a_n\\) diverges. It is a test for divergence only, and it never certifies convergence."),
     node("F", "Geometric\nSeries", (-1, -3.8),
          "\\(\\sum ar^n\\), which converges exactly when \\(|r| < 1\\), with sum \\(a/(1-r)\\) and partial sums \\(a(1-r^n)/(1-r)\\)."),
@@ -57,13 +57,12 @@ EDGES = [
 
     edge(2, "B", "C", "implies",
          "If the partial sums have a finite limit then the series converges, and its sum is that limit.",
-         "The definition read from left to right.",
-         bend=20),
+         "The definition read from left to right."),
 
     edge(3, "B", "D", "implies",
          "If the partial sums fail to converge then the series diverges, and running off to infinity is only one of the ways that happens.",
          "Divergence is the negation of convergence, so unbounded partial sums and oscillating ones are both covered by it.",
-         bend=-140),
+         bend=-110),
 
     edge(4, "E", "D", "implies",
          "Terms that do not tend to zero leave the partial sums unable to settle, so the series diverges.",
@@ -73,7 +72,7 @@ EDGES = [
          "Terms tending to zero is necessary for convergence and not sufficient for it, and the harmonic series is the witness.",
          "\\(1/n \\to 0\\) while \\(\\sum 1/n\\) diverges, by Nicole Oresme's grouping of the terms into blocks each contributing at least \\(1/2\\).",
          hint="Both of the failing arrows say that something you might hope for does not follow. This one is about a condition that every convergent series satisfies without that being enough.",
-         bend=220),
+         bend=-100),
 
     edge(6, "F", "C", "implies",
          "A geometric series converges exactly when its ratio has modulus below one, and then the closed form for the partial sums gives the sum.",
@@ -86,8 +85,7 @@ EDGES = [
 
     edge(8, "I", "C", "implies",
          "For a series of nonnegative terms the partial sums increase, so the series converges exactly when they are bounded above.",
-         "This is what every test for a nonnegative series is really using. Boundedness has replaced the limit, and a bound is something you can find without knowing the sum.",
-         bend=95),
+         "This is what every test for a nonnegative series is really using. Boundedness has replaced the limit, and a bound is something you can find without knowing the sum."),
 
     edge(9, "I", "J", "implies",
          "Bounding a nonnegative series term by term against a series you already know bounds its partial sums.",
@@ -107,13 +105,13 @@ EDGES = [
 
     edge(13, "M", "C", "implies",
          "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
-         "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\)."),
+         "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\).",
+         bend=-50),
 
     edge(14, "C", "M", "fails",
          "A convergent series need not converge absolutely, and the alternating harmonic series is the witness.",
          "\\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on.",
-         hint="Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs.",
-         bend=-40),
+         hint="Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs."),
 
     edge(15, "O", "M", "implies",
          "The ratio and root tests compare the sizes of the terms against a geometric series, so what they establish is the absolute version.",
@@ -121,8 +119,7 @@ EDGES = [
 
     edge(16, "L", "N", "implies",
          "A test that gives convergence without touching the absolute version can certify a series whose absolute version diverges.",
-         "The alternating harmonic series again: Dirichlet's test gives the convergence and the harmonic series denies the absolute version, which is what conditional convergence means.",
-         bend=55),
+         "The alternating harmonic series again: Dirichlet's test gives the convergence and the harmonic series denies the absolute version, which is what conditional convergence means."),
 ]
 
 

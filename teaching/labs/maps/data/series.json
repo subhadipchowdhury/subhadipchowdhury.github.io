@@ -57,10 +57,10 @@
       "letter": "E",
       "label": "Divergence\nTest",
       "x": 893,
-      "y": 209,
+      "y": 267,
       "tikz": [
         6,
-        -2
+        -3
       ],
       "definition": "If \\(a_n \\not\\to 0\\) then \\(\\sum a_n\\) diverges. It is a test for divergence only, and it never certifies convergence."
     },
@@ -203,7 +203,7 @@
       "kind": "implies",
       "statement": "If the partial sums have a finite limit then the series converges, and its sum is that limit.",
       "why": "The definition read from left to right.",
-      "bend": 20,
+      "bend": 0,
       "at": 0.5
     },
     {
@@ -213,7 +213,7 @@
       "kind": "implies",
       "statement": "If the partial sums fail to converge then the series diverges, and running off to infinity is only one of the ways that happens.",
       "why": "Divergence is the negation of convergence, so unbounded partial sums and oscillating ones are both covered by it.",
-      "bend": -140,
+      "bend": -110,
       "at": 0.5
     },
     {
@@ -233,7 +233,7 @@
       "kind": "fails",
       "statement": "Terms tending to zero is necessary for convergence and not sufficient for it, and the harmonic series is the witness.",
       "why": "\\(1/n \\to 0\\) while \\(\\sum 1/n\\) diverges, by Nicole Oresme's grouping of the terms into blocks each contributing at least \\(1/2\\).",
-      "bend": 220,
+      "bend": -100,
       "at": 0.5,
       "hint": "Both of the failing arrows say that something you might hope for does not follow. This one is about a condition that every convergent series satisfies without that being enough."
     },
@@ -264,7 +264,7 @@
       "kind": "implies",
       "statement": "For a series of nonnegative terms the partial sums increase, so the series converges exactly when they are bounded above.",
       "why": "This is what every test for a nonnegative series is really using. Boundedness has replaced the limit, and a bound is something you can find without knowing the sum.",
-      "bend": 95,
+      "bend": 0,
       "at": 0.5
     },
     {
@@ -314,7 +314,7 @@
       "kind": "implies",
       "statement": "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
       "why": "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\).",
-      "bend": 0,
+      "bend": -50,
       "at": 0.5
     },
     {
@@ -324,7 +324,7 @@
       "kind": "fails",
       "statement": "A convergent series need not converge absolutely, and the alternating harmonic series is the witness.",
       "why": "\\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on.",
-      "bend": -40,
+      "bend": 0,
       "at": 0.5,
       "hint": "Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs."
     },
@@ -345,7 +345,7 @@
       "kind": "implies",
       "statement": "A test that gives convergence without touching the absolute version can certify a series whose absolute version diverges.",
       "why": "The alternating harmonic series again: Dirichlet's test gives the convergence and the harmonic series denies the absolute version, which is what conditional convergence means.",
-      "bend": 55,
+      "bend": 0,
       "at": 0.5
     }
   ],

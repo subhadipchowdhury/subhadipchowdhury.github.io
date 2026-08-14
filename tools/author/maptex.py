@@ -33,10 +33,11 @@ PDF_DIR = ROOT / "teaching" / "labs" / "maps"
 
 PDFLATEX = shutil.which("pdflatex") or "/Library/TeX/texbin/pdflatex"
 
-# The four words a student circles. Kept in the same order as KIND_ORDER in
-# maps/engine/map.js so the paper and the page offer the same four choices in the
-# same sequence.
-KIND_WORDS = ["holds", "fails", "equivalent", "other hypotheses"]
+# The four things a student circles, in the same order as KIND_ORDER in
+# maps/engine/map.js so the paper and the page offer the same choices in the same
+# sequence. An arrow is a relationship and not always an implication, so none of
+# these says "claims".
+KIND_WORDS = ["gives", "fails", "both ways", "gives, other hypotheses"]
 
 PREAMBLE = r"""\documentclass[11pt]{article}
 
@@ -57,8 +58,13 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \definecolor{maroon}{HTML}{800000}
 \definecolor{inkgrey}{HTML}{4D4D4D}
 
+% An explicit white page. Without it the page background is undefined, and a viewer
+% or a converter that composites onto black renders the body text invisible.
+\pagecolor{white}
+
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
 
 \newcommand{\heading}[1]{%
   \par\medskip{\large\bfseries\color{maroon} #1}\par\smallskip}
@@ -69,10 +75,16 @@ PREAMBLE = r"""\documentclass[11pt]{article}
   edgenum/.style={circle, fill=white, draw=inkgrey, inner sep=0pt,
     minimum size=11pt, font=\scriptsize\bfseries, line width=0.4pt},
   nlabel/.style={font=\tiny\bfseries, text=inkgrey, inner sep=1pt},
-  % One style for every arrow. Which of the four kinds it is is part of the
-  % question, so the drawing must not answer it.
+  % One style for every arrow on the blank sheet. Which of the four kinds it is is
+  % part of the question, so the drawing must not answer it.
   arr/.style={-, thick, inkgrey},
-  solved/.style={-{Latex[length=2mm]}, thick, maroon},
+  % On the answer key each kind is drawn as itself, so the kinds can be checked off
+  % the picture as well as read off the list. No hyphens in these names: tikz reads
+  % a hyphen in a style name as an arrow-tip spec.
+  kindimplies/.style={-{Latex[length=2mm]}, thick, green!45!black},
+  kindfails/.style={-{Latex[length=2mm]}, thick, dashed, red!65!black},
+  kindequiv/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, thick, blue!60!black},
+  kindcaution/.style={-{Latex[length=2mm]}, thick, densely dotted, orange!75!black},
 }
 """
 
@@ -82,9 +94,16 @@ def _tex_label(label):
     return r" \\ ".join(label.split("\n"))
 
 
+# Only these tags, and only these. A general `<[^>]+>` ate the mathematics: in
+# "converges if \(L < 1\), diverges if \(L > 1\)" the stretch from the first `<`
+# to the next `>` looks exactly like a tag, and item O of the series map shipped
+# reading "absolutely convergent if L1".
+_TAG = re.compile(r"</?(?:strong|em|b|i|code|span|br)\s*/?>", re.I)
+
+
 def _plain(text):
-    """Strip the HTML a definition may carry. The data holds LaTeX, not markup."""
-    return re.sub(r"<[^>]+>", "", str(text))
+    """Drop the few HTML tags a definition might carry. The data holds LaTeX."""
+    return _TAG.sub("", str(text))
 
 
 def _diagram(data, solutions):
@@ -106,13 +125,14 @@ def _diagram(data, solutions):
 
     lines.append("")
     for e in data["edges"]:
-        # The same quadratic the page draws, so the paper and the screen have the
-        # same shape. bend is a pixel offset there; SCALE converts it back.
-        style = "solved" if solutions else "arr"
-        cx, cy = e["control"]
+        # Exactly the curve the page draws: mapkit clipped both ends to the measured
+        # boxes and worked out the control point from those, and handed all three
+        # points over. Drawing from the node names and a bend instead gave a
+        # different curve, and the badge then sat beside the arrow.
+        style = ("kind" + e["kind"]) if solutions else "arr"
+        (x0, y0), (cx, cy), (x1, y1) = e["draw"]
         lines.append(
-            f"  \\draw[{style}] ({e['from']}) .. controls ({cx:.2f}, {cy:.2f}) .. "
-            f"({e['to']});"
+            f"  \\draw[{style}] ({x0}, {y0}) .. controls ({cx}, {cy}) .. ({x1}, {y1});"
         )
 
     # The numbered badges are placed at a computed point rather than with tikz's
@@ -138,6 +158,7 @@ def _answer_lines(data, solutions):
             out.append(r"  {\scriptsize\bfseries\color{maroon} " +
                        KIND_WORDS[["implies", "fails", "equiv", "caution"].index(e["kind"])] +
                        r".}\ " + _plain(e["statement"]))
+            out.append(r"  {\scriptsize\color{inkgrey} " + _plain(e["why"]) + r"\par}")
         else:
             out.append(r"  {\scriptsize\color{inkgrey} " +
                        r" \;/\; ".join(KIND_WORDS) + r"}\par\vspace{2pt}")
@@ -154,26 +175,30 @@ def _document(data, solutions):
 
     parts = [PREAMBLE, r"\begin{document}", "",
              r"{\LARGE\bfseries\color{maroon} " + title + r"}\par\medskip",
-             r"{\color{inkgrey}\small Math 163 \quad\textbullet\quad Prof.\ Chowdhury"
-             r" \quad\textbullet\quad Concept map}\par\bigskip", ""]
+             r"{\color{inkgrey}\small " + data.get("course", "Math 163") +
+             r" \quad\textbullet\quad Prof.\ Chowdhury}\par\bigskip", ""]
 
     # The instructions. Not the intro from the data: that one is addressed to
     # someone looking at a screen and tells them to click things.
     if solutions:
-        parts.append(r"Every arrow named, with the kind of relationship it is. "
-                     r"The arrows are drawn here in one style, as they are on the "
-                     r"blank worksheet and on the web version.")
+        parts.append(r"Every arrow, with the kind of relationship it is. On this copy "
+                     r"each arrow is drawn in the style of its kind, so you can check "
+                     r"the kinds off the picture as well as off the list.")
     else:
         parts.append(
-            r"The next page shows " + str(len(data["nodes"])) + r" ideas as labelled "
-            r"boxes, joined by " + str(len(data["edges"])) + r" numbered arrows. "
-            r"Every arrow is a real mathematical relationship, and the drawing does "
-            r"not tell you which kind: an arrow may \emph{hold}, it may \emph{fail}, "
-            r"the two ideas may be \emph{equivalent}, or it may hold on "
-            r"\emph{other hypotheses} than the ones its neighbours use. "
-            r"For each numbered arrow, circle the kind and describe the relationship "
-            r"in one sentence. Name the theorem, state the hypothesis that is doing "
-            r"the work, or say what goes wrong."
+            r"The next page has " + str(len(data["nodes"])) + r" ideas as boxes, with "
+            + str(len(data["edges"])) + r" numbered arrows between them and nothing "
+            r"written on any arrow. An arrow is a relationship between two ideas, and "
+            r"not always an implication. Sometimes the first box gives you the second. "
+            r"Sometimes it doesn't, and there's a counterexample. Sometimes each gives "
+            r"the other. And sometimes it does give it, but on hypotheses you wouldn't "
+            r"have guessed."
+        )
+        parts.append("")
+        parts.append(
+            r"For each arrow, circle which of those four it is, and describe the "
+            r"relationship in one sentence. Name the theorem where there is one, and "
+            r"say what goes wrong where there isn't."
         )
     parts.append("")
 
@@ -187,7 +212,7 @@ def _document(data, solutions):
     parts.append(r"\normalsize")
 
     if data.get("benchmarks"):
-        parts.append(r"\heading{Examples worth keeping to hand}")
+        parts.append(r"\heading{Counterexamples and benchmarks}")
         parts.append(r"\small")
         parts.append(r"\begin{itemize}[leftmargin=1.4em, itemsep=1pt]")
         for b in data["benchmarks"]:
@@ -204,9 +229,15 @@ def _document(data, solutions):
     parts.append(r"\end{center}")
     if not solutions:
         parts.append(r"\begin{center}\small\color{inkgrey}")
-        parts.append(r"Every arrow is drawn the same way. For each one, decide "
-                     r"whether it holds, fails, is an equivalence, or holds on other "
-                     r"hypotheses, and say what it claims.")
+        parts.append(r"Every arrow is drawn the same way on purpose. Deciding the kind "
+                     r"is half of each answer.")
+        parts.append(r"\end{center}")
+    if solutions:
+        parts.append(r"\begin{center}\small")
+        parts.append(r"\textcolor{green!45!black}{\textbf{---\!\!\textgreater\ gives}} \quad "
+                     r"\textcolor{red!65!black}{\textbf{--\,--\!\!\textgreater\ fails}} \quad "
+                     r"\textcolor{blue!60!black}{\textbf{\textless\!\!---\!\!\textgreater\ both ways}} \quad "
+                     r"\textcolor{orange!75!black}{\textbf{$\cdots$\!\!\textgreater\ other hypotheses}}")
         parts.append(r"\end{center}")
     parts.append(r"\vspace*{\fill}")
     parts.append(r"\newpage")
@@ -224,8 +255,8 @@ def _document(data, solutions):
     parts.append("")
     parts.append(r"\vfill")
     parts.append(r"{\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, "
-                 r"licensed CC BY-NC-SA 4.0. Built with AI assistance; the "
-                 r"mathematics was checked by a human.\par}")
+                 r"licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked the "
+                 r"mathematics myself.\par}")
     parts.append(r"\end{document}")
     return "\n".join(parts) + "\n"
 
@@ -247,33 +278,15 @@ def _compile(tex_path, out_dir):
     return out_dir / (tex_path.stem + ".pdf")
 
 
-def build(data, scale):
+def build(data):
     """Write both tex files, compile both, and put the blank PDF where the site is.
 
-    `scale` is `mapkit.SCALE`, needed to turn a pixel bend back into tikz units.
+    The geometry arrives ready to draw: mapkit puts each arrow's three control
+    points and its badge position into the edge, in tikz units.
+
     Returns the served path of the blank PDF, relative to the site root.
     """
     TEX_DIR.mkdir(parents=True, exist_ok=True)
-
-    # The control point of each arrow, in tikz units, from the same construction
-    # the engine uses. Done here rather than in the template so the arithmetic
-    # sits next to the comment explaining it.
-    for e in data["edges"]:
-        a = next(n for n in data["nodes"] if n["id"] == e["from"])["tikz"]
-        b = next(n for n in data["nodes"] if n["id"] == e["to"])["tikz"]
-        mx, my = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
-        bend = e.get("bend", 0) / scale
-        if bend:
-            dx, dy = b[0] - a[0], b[1] - a[1]
-            length = (dx * dx + dy * dy) ** 0.5 or 1
-            # y runs upward in tikz and downward on the stage. Mirroring the curve
-            # in y means negating the y component of the offset, and dy has already
-            # changed sign with the axis, so the x component keeps its form and the
-            # y component gains a minus against controlPoint() in map.js. Getting
-            # this wrong bows every curved arrow the opposite way, which is what the
-            # first PDF did.
-            mx, my = mx + dy / length * bend, my - dx / length * bend
-        e["control"] = (mx, my)
 
     served = None
     for solutions in (False, True):
@@ -285,8 +298,5 @@ def build(data, scale):
             PDF_DIR.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(pdf, PDF_DIR / f"{data['id']}.pdf")
             served = f"/teaching/labs/maps/{data['id']}.pdf"
-
-    for e in data["edges"]:
-        del e["control"]
 
     return served

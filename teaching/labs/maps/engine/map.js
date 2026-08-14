@@ -27,11 +27,33 @@
 const STORE_VERSION = 1;
 const MIN_NOTE = 15;
 
+/* The four kinds of relationship an arrow can be.
+ *
+ * `word` is what the student clicks, `label` is the short form used on the map and
+ * in the list, and `ask` is what is said back once the kind is right. An arrow is a
+ * relationship and not always an implication, so none of this says "claims".
+ */
 export const KINDS = {
-  implies: { word: 'It holds', label: 'holds', ask: 'The source establishes the target.' },
-  fails: { word: 'It fails', label: 'fails', ask: 'The implication is false in this direction.' },
-  equiv: { word: 'They are equivalent', label: 'equivalent', ask: 'Each one implies the other.' },
-  caution: { word: 'It holds, but not on the hypotheses you would guess', label: 'different hypotheses', ask: 'It holds, but its hypotheses are not the ones its neighbours use.' }
+  implies: {
+    word: 'The first gives you the second',
+    label: 'gives',
+    ask: 'Yes. The first box is enough for the second.'
+  },
+  fails: {
+    word: "It doesn't, and there's a counterexample",
+    label: 'fails',
+    ask: 'Yes. There is an example satisfying the first and not the second.'
+  },
+  equiv: {
+    word: 'Each one gives the other',
+    label: 'both ways',
+    ask: 'Yes. Neither is stronger; they are the same condition said two ways.'
+  },
+  caution: {
+    word: 'It does, but on hypotheses you would not have guessed',
+    label: 'gives, other hypotheses',
+    ask: 'Yes. It holds, and the thing the hypotheses are about is not what you would expect.'
+  }
 };
 
 const KIND_ORDER = ['implies', 'fails', 'equiv', 'caution'];
@@ -565,7 +587,7 @@ export class MapView {
     const step1 = el('div', 'cm-step');
     const h1 = el('div', 'cm-step__head');
     h1.appendChild(el('span', 'cm-step__num', 'Step 1'));
-    h1.appendChild(el('span', 'cm-step__ask', 'Say what this arrow claims, in one sentence.'));
+    h1.appendChild(el('span', 'cm-step__ask', 'Describe this arrow in one sentence.'));
     step1.appendChild(h1);
     const area = el('textarea', 'cm-note');
     area.value = this.progress.note(edge.n);
@@ -600,7 +622,7 @@ export class MapView {
     const step2 = el('div', 'cm-step');
     const h2 = el('div', 'cm-step__head');
     h2.appendChild(el('span', 'cm-step__num', 'Step 2'));
-    h2.appendChild(el('span', 'cm-step__ask', 'Does the relationship hold?'));
+    h2.appendChild(el('span', 'cm-step__ask', 'What kind of relationship is it?'));
     step2.appendChild(h2);
     const kindBox = el('div', 'cm-choices');
     step2.appendChild(kindBox);
