@@ -340,6 +340,31 @@ describe('mounting a map', () => {
     eq(view.edgeEls.get(oneWay.n).tail.getAttribute('d'), '', 'one way has one head');
   });
 
+  it('opens on the diagram alone, with the list shut', () => {
+    const view = freshView(data);
+    assert(view.board.hidden, 'the sheet and the sentences should start hidden');
+    assert(view.giveUp.hidden, 'and so should the fill-them-in toggle');
+    eq(textOf(view.boardBtn), 'Start matching');
+    assert(textOf(view.work).includes('Open the list below'), textOf(view.work));
+  });
+
+  it('opens the list when the button is used, and shuts it again', () => {
+    const view = freshView(data);
+    view.toggleBoard();
+    assert(!view.board.hidden);
+    eq(textOf(view.boardBtn), 'Hide the list');
+    assert(textOf(view.work).includes('then click the sentence'), textOf(view.work));
+    view.toggleBoard();
+    assert(view.board.hidden, 'and shuts again');
+  });
+
+  it('opens the list when an arrow is clicked, since that is half a match', () => {
+    const view = freshView(data);
+    view.pick(3);
+    assert(!view.board.hidden, 'clicking an arrow should open the list');
+    eq(view.active, 3);
+  });
+
   it('starts with every arrow empty and the whole list scrambled on offer', () => {
     const view = freshView(data);
     eq(view.progress.placed.size, 0);

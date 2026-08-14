@@ -1,16 +1,16 @@
 ---
 layout: applet
 title: Forced wave equation
-description: A string driven by a steady spatial force, oscillating about the steady shape it would settle into.
+description: A string driven by a force that varies along its length and not with time, oscillating about the steady shape that force determines.
 robots: false
 ---
 
 <h1>Forced wave equation</h1>
 
-<p class="ap-lede">A string pinned at both ends, pushed the whole time by a
-force that varies along its length but never changes with time. It never settles,
-because nothing here removes energy. It oscillates about the shape it would
-settle into, and that shape is the dashed curve.</p>
+<p class="ap-lede">A string pinned at both ends, driven by a force that varies
+along its length and not with time. The equation is undamped, so the motion never
+decays: the string oscillates about the steady shape \(v(x)\) solving
+\(c^2 v'' + \sin(2\pi k x) = 0\), which is the dashed curve.</p>
 
 <div class="ap-eqn">
   \[ u_{tt} = c^2 u_{xx} + \sin(2\pi k x), \qquad u(0,t) = u(1,t) = 0, \qquad u(x,0) = u_t(x,0) = 0 \]
@@ -36,9 +36,9 @@ settle into, and that shape is the dashed curve.</p>
           </div>
         </div>
       </div>
-      <p class="ap-figcaption">The vertical scale is chosen from the steady shape,
-      so the picture stays the same size while the response gets smaller. Watch
-      the peak below rather than the drawing to see how much smaller.</p>
+      <p class="ap-figcaption">The vertical scale is taken from the peak of
+      \(v\), so the drawing keeps its size as the response shrinks. Read the
+      amplitude off the peak below rather than off the picture.</p>
     </div>
   </div>
 
@@ -78,10 +78,9 @@ settle into, and that shape is the dashed curve.</p>
           <tr><th scope="row">Peak \(|v|\)</th><td id="wf-peak">0.0000</td></tr>
         </tbody>
       </table>
-      <p class="ap-hint" style="margin-top:0.7rem;">Raise \(c\) or \(k\) and the
-      peak falls fast. Both sit inside \(1/(ck)^2\) in the steady shape, so
-      doubling either divides the response by four. Predict the new peak before
-      you move the slider.</p>
+      <p class="ap-hint" style="margin-top:0.7rem;">The steady shape has amplitude
+      \(1/(2\pi ck)^2\), so doubling either \(c\) or \(k\) divides the peak by
+      four. Predict the new peak before you move the slider.</p>
     </div>
   </div>
 </div>

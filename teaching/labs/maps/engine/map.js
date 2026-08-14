@@ -313,12 +313,25 @@ export class MapView {
     this.root.appendChild(legend);
 
     this.work = el('div', 'cm-work cm-panel');
-    this.work.appendChild(el('p', 'cm-work__body',
-      'Click an arrow on the map, then click the sentence that belongs on it.'));
     this.root.appendChild(this.work);
+    this.renderIdle();
+
+    // The page opens on the diagram alone. The sheet and the sentences are a lot of
+    // text, and a student who has come to look at the shape of the chapter should
+    // see the shape.
+    this.boardBtn = el('button', 'cm-btn cm-btn--primary', 'Start matching');
+    this.boardBtn.type = 'button';
+    this.boardBtn.addEventListener('click', () => this.toggleBoard());
+    const boardBar = el('div', 'cm-boardbar');
+    boardBar.appendChild(this.boardBtn);
+    boardBar.appendChild(el('p', 'cm-hint',
+      'Opens the numbered arrows and the list of sentences that go on them.'));
+    this.root.appendChild(boardBar);
 
     // The numbered sheet and the scrambled list, side by side on a wide screen.
     const board = el('div', 'cm-board');
+    board.hidden = true;
+    this.board = board;
     this.sheetEl = el('ol', 'cm-sheet');
     const sheetCol = el('div', 'cm-board__col');
     sheetCol.appendChild(el('h2', null, 'The arrows'));
@@ -334,8 +347,11 @@ export class MapView {
     this.root.appendChild(board);
 
     // Every answer, for a student who is stuck. It fills the sheet in rather than
-    // printing a second copy of it somewhere else.
+    // printing a second copy of it somewhere else. Hidden with the board, since
+    // there is nothing to fill in before the board is open.
     const giveUp = el('details', 'cm-fold');
+    giveUp.hidden = true;
+    this.giveUp = giveUp;
     giveUp.appendChild(el('summary', null, 'Fill in the ones I have not got'));
     const giveBody = el('div', 'cm-fold__body');
     giveBody.appendChild(el('p', 'cm-hint',
@@ -364,6 +380,28 @@ export class MapView {
       window.addEventListener('resize', () => this.fit());
       this.fit();
     }
+  }
+
+  /** Show or hide the numbered sheet and the list of sentences. */
+  toggleBoard(force) {
+    const open = force === undefined ? this.board.hidden : force;
+    this.board.hidden = !open;
+    this.giveUp.hidden = !open;
+    this.boardBtn.textContent = open ? 'Hide the list' : 'Start matching';
+    this.boardBtn.classList.toggle('cm-btn--primary', !open);
+    if (open) this.render();
+    // The standing instruction changes with the list, so it is rewritten either way.
+    // pick() opens the list before it sets the active arrow, and then writes over
+    // this with the arrow's own card.
+    if (this.active === null) this.renderIdle();
+  }
+
+  renderIdle() {
+    this.work.textContent = '';
+    this.work.appendChild(el('p', 'cm-work__body',
+      this.board && !this.board.hidden
+        ? 'Click an arrow on the map, then click the sentence that belongs on it.'
+        : 'Click a box to see what it means. Open the list below to start matching the arrows.'));
   }
 
   /** The worksheet, up front, because that is where the work is meant to happen. */
@@ -510,6 +548,9 @@ export class MapView {
   pick(n) {
     const edge = this.data.edges.find((e) => e.n === n);
     if (!edge) return;
+    // Clicking an arrow is the first half of a match, so it opens the list if the
+    // list is still shut.
+    if (this.board && this.board.hidden) this.toggleBoard(true);
     this.active = n;
 
     for (const box of this.nodeEls.values()) box.classList.remove('cm-node--lit');
@@ -603,8 +644,10 @@ export class MapView {
     const done = this.progress.placed.size;
     this.countEl.textContent = `${done} of ${total} arrows filled in`;
 
-    this.renderSheet();
-    this.renderList();
+    if (this.board && !this.board.hidden) {
+      this.renderSheet();
+      this.renderList();
+    }
     this.layout();
   }
 

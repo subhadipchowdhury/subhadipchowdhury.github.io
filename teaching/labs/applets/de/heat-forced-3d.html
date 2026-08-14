@@ -1,7 +1,7 @@
 ---
 layout: applet
 title: Forced heat equation
-description: A temperature profile diffusing toward the steady state set by a heat source and two fixed boundary values, drawn as a surface over space and time.
+description: A temperature profile converging to the steady state determined by a heat source and two fixed boundary values, drawn as a surface over space and time.
 robots: false
 scripts:
   - /teaching/labs/applets/vendor/plotly-gl3d-2.27.0.min.js
@@ -10,10 +10,10 @@ scripts:
 <h1>Forced heat equation</h1>
 
 <p class="ap-lede">A rod held at a fixed temperature at each end, with a heat
-source along its length that never changes. Whatever it starts at, it settles
-into one shape, and that shape is decided by the source and the two end values
-together. The surface below is the whole history: position across, time back,
-temperature up.</p>
+source that varies along its length and not with time. From any starting profile
+the temperature converges to one steady state, and that state is determined by the
+source together with the two end values. The surface below plots the whole history:
+position across, time back, temperature up.</p>
 
 <div class="ap-eqn">
   \[ u_t = u_{xx} + f(x), \qquad x \in [0,1], \qquad u(0,t) = a, \qquad u(1,t) = b \]
@@ -70,10 +70,10 @@ temperature up.</p>
   <div id="ht-plot" style="width:100%;height:44rem;"></div>
 </div>
 
-<p class="ap-figcaption">Drag to turn the surface. The ridge running back in time
-is the steady state; the ripples near the front are the starting shape being
-forgotten. Try a starting shape that disagrees with an end value and watch how
-fast the disagreement is erased.</p>
+<p class="ap-figcaption">Drag to turn the surface. The profile at the back is the
+steady state, and the variation near the front is what remains of the starting
+profile. Set a starting profile that disagrees with an end value, and time how long
+the disagreement survives.</p>
 
 <script type="module">
   import { plotColors, onTheme, typeset } from '{{ '/teaching/labs/applets/applet.js' | relative_url }}';
@@ -88,8 +88,8 @@ fast the disagreement is erased.</p>
   // One recorded profile per frame, capped. Recording every step filled memory
   // in seconds and Plotly slowed to a crawl long before the rod settled.
   const MAX_ROWS = 600;
-  // Settled means the largest change per unit time has fallen this far. The rod
-  // reaches it well inside MAX_ROWS for every option here.
+  // Settled means the largest \(|u_t|\) across the rod has fallen this far. Every
+  // option here reaches it well inside MAX_ROWS.
   const SETTLE_TOL = 0.05;
 
   const xs = new Float64Array(N);
@@ -313,7 +313,7 @@ fast the disagreement is erased.</p>
     plot.data[0].y = times;
     Plotly.redraw(plot);
 
-    // Two ways to finish: the rod stops moving, or the record fills up. Both say
+    // Two ways to finish: the profile stops changing, or the record fills up. Both say
     // so, because a plot that silently stops updating reads as a broken page.
     if (biggest / DT < SETTLE_TOL) {
       stop();

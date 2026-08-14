@@ -8,10 +8,11 @@ robots: false
 <h1>Wave equation and Fourier series</h1>
 
 <p class="ap-lede">A string pinned at \(x=0\) and \(x=\pi\), released from a shape
-you choose. Nothing here solves a differential equation step by step. The initial
-shape is broken into standing modes \(\sin(nx)\), each mode is sent forward in
-time on its own, and the modes are added back up. The picture you get is the sum
-of the first forty of them, which is why a corner never quite stays a corner.</p>
+you choose. No time stepping happens here. The initial data is expanded in the
+standing modes \(\sin(nx)\), each mode is advanced by its own \(\cos(nct)\) and
+\(\sin(nct)\), and the modes are summed. The sum is truncated at forty terms, so a
+shape with a corner in it is reproduced only to within the overshoot that truncation
+leaves.</p>
 
 <div class="ap-eqn">
   \[ u_{tt} = c^2 u_{xx}, \qquad u(0,t) = u(\pi,t) = 0, \qquad
@@ -55,14 +56,15 @@ of the first forty of them, which is why a corner never quite stays a corner.</p
           <span class="ap-value" id="wq-m-value">3</span>
         </div>
         <input type="range" id="wq-m" min="1" max="8" step="0.5" value="3">
-        <p class="ap-hint">Half-integer values are not modes of this string, so
-        watch what the coefficient table does to them.</p>
+        <p class="ap-hint">A whole \(m\) is a mode of this string and needs one
+        coefficient. A half-integer \(m\) is not, and the table shows how many it
+        takes instead.</p>
       </div>
 
       <p class="ap-hint" id="wq-draw-hint" style="margin-top:0.9rem;" hidden>Drag
-      across the figure to draw \(u(x,0)\). Let go and the drawing is replaced by
-      its own forty-mode approximation, which is the whole point: compare the two
-      and see what the sum can and cannot reproduce.</p>
+      across the figure to draw \(u(x,0)\). While you drag you see the drawing
+      itself; let go and you see its forty-mode approximation. Compare the two, and
+      note where the approximation departs from what you drew.</p>
     </div>
 
     <div class="ap-panel">
@@ -94,9 +96,10 @@ of the first forty of them, which is why a corner never quite stays a corner.</p
         </thead>
         <tbody id="wq-coeffs"></tbody>
       </table>
-      <p class="ap-hint" style="margin-top:0.7rem;">A shape with a corner in it
-      needs every mode, and the amplitudes fall off slowly. A shape that is
-      already a mode needs exactly one.</p>
+      <p class="ap-hint" style="margin-top:0.7rem;">A shape that is already a mode
+      needs one coefficient. A shape with a corner needs every mode, and its
+      coefficients decay like \(1/n^2\), which is slow enough to see in the
+      table.</p>
     </div>
   </div>
 </div>
@@ -158,7 +161,7 @@ of the first forty of them, which is why a corner never quite stays a corner.</p
       u: (m) => (x) => Math.sin(m * x),
       v: () => () => 0,
       tex: 'u(x,0) = \\sin mx, \\quad u_t(x,0) = 0',
-      note: 'One harmonic, released from rest. A whole m is a mode of the string and stands still in shape; a half-integer m is not, and spreads across many modes.'
+      note: 'One harmonic, released from rest. A whole m is a mode, so the shape is fixed and only its amplitude changes; a half-integer m is not, and its expansion needs many modes.'
     },
     '3': {
       u: () => (x) => 4 * Math.sin(x),
@@ -176,7 +179,7 @@ of the first forty of them, which is why a corner never quite stays a corner.</p
       u: () => (x) => (x <= PI / 2 ? x : PI - x),
       v: () => () => 0,
       tex: 'u(x,0) = \\min(x, \\pi - x)',
-      note: 'A pluck. The corner at the middle is what forces the slow tail of coefficients.'
+      note: 'A pluck. The corner at the midpoint is what makes the coefficients decay only like 1/n^2.'
     },
     '6': {
       u: () => () => 0,
@@ -188,7 +191,7 @@ of the first forty of them, which is why a corner never quite stays a corner.</p
         return (x) => amp * Math.exp(-Math.pow(x - centre, 2) / (2 * sigma * sigma));
       },
       tex: 'u(x,0) = 0, \\quad u_t(x,0) \\approx \\delta(x - \\pi/4)',
-      note: 'A hammer strike. It starts flat, so everything you see came from the velocity.'
+      note: 'A hammer strike. The initial displacement is zero, so every bit of the motion comes from the initial velocity.'
     },
     '7': {
       u: () => (x) => drawnAt(x),

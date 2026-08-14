@@ -341,6 +341,16 @@ html[data-theme="dark"] {
  * The board: the numbered sheet beside the scrambled sentences
  * ----------------------------------------------------------------------- */
 
+.cm-boardbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.9rem;
+  margin: 1.1rem 0 0;
+}
+
+.cm-boardbar .cm-hint { margin: 0; }
+
 .cm-board {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
