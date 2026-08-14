@@ -208,6 +208,10 @@
      {
       "text": "2·n",
       "why": "frac_arc_count"
+     },
+     {
+      "text": "2·n + 1",
+      "why": "frac_odd_denominator"
      }
     ],
     "map": [
@@ -273,6 +277,7 @@
     "count_off_by_one": "There is nowhere to put the last node. A polynomial of degree n is pinned down by n+1 values, and the construction produces exactly that many: cutting the arc at n+2 marks leaves n+1 pieces, and every piece contributes a node.",
     "frac_past_pi": "Your angles run past pi and on around the circle, so the later nodes come back through the interval a second time and land on top of the earlier ones. The arc is a semicircle, so the last midpoint has to sit just short of pi.",
     "frac_arc_count": "You divided the arc into n pieces rather than n+1. Count the pieces again: the n+2 marks, both ends included, have n+1 gaps between them, and each gap holds one node.",
+    "frac_odd_denominator": "The denominator has to be twice the number of pieces, and 2n+1 is odd, so it is not twice anything. Yours sends the last angle to exactly pi, which puts the last node exactly on a, and the midpoint of a piece never lands on the end of the arc.",
     "map_no_centre": "Your nodes are spread twice as wide as they should be, and nothing in your map mentions where the interval sits. Check the two ends of it: the map has to send u = -1 to a and u = +1 to b, and yours sends them to a-b and b-a instead.",
     "map_centred_on_zero": "The length is right and the position is not. Your nodes are centred on 0 wherever [a, b] happens to lie, so both ends miss: u = -1 lands on (a-b)/2 rather than a, and u = +1 on (b-a)/2 rather than b.",
     "map_full_width": "The centre is right and the width is twice what it should be, so the nodes nearest the ends fall outside the interval altogether. From the centre of [a, b] to either end is half its length."
@@ -398,7 +403,7 @@
      "num": 7
     }
    ],
-   "hash": "afbc326c1ea7ed47",
+   "hash": "940db936355179ac",
    "python": "# ---------------------------------------------------------------------------\n# Chebyshev nodes\n# ---------------------------------------------------------------------------\ndef chebyshev_nodes(a, b, n):\n    \"\"\"Return n+1 Chebyshev nodes (first kind) on [a, b].\n\n    Each node is the projection down onto [a, b] of the midpoint of one of\n    the n+1 arcs that n+2 equally spaced points cut the semicircle above the\n    interval into.\n\n    Parameters\n    ----------\n    a, b : float   endpoints of the interval\n    n    : int     polynomial degree (so we get n+1 nodes)\n    \"\"\"\n    x = np.zeros(n + 1)\n    for k in range(n + 1):\n        theta = (2 * k + 1) / (2 * (n + 1)) * np.pi\n        u = np.cos(theta)\n        x[k] = 0.5 * (a + b) + 0.5 * (b - a) * u\n    return x",
    "brief_html": "<p>The error is no mystery. If $f$ has $n+1$ continuous derivatives on $[a,b]$, then interpolation at the nodes $x_0,\\dots,x_n$ leaves</p>\n<p>$$f(x) - p_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}\\,\\omega(x), \\qquad \\omega(x) = (x-x_0)(x-x_1)\\cdots(x-x_n),$$</p>\n<p>for some $\\xi$ between the smallest and largest of $x, x_0, \\dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That is the same lopsidedness the figure above has. So let's put more nodes near the ends.</p>\n<p>How many more, and where? A good answer came from the Russian mathematician Pafnuty Chebyshev (1821-1894), and it starts as a picture rather than a formula:</p>\n<ol>\n<li>Draw a semicircle with the interval $[a,b]$ as its diameter.</li>\n<li>Mark $n+2$ equally spaced points along the arc, both endpoints included, so the arc is cut into $n+1$ equal pieces.</li>\n<li>Take the midpoint of each piece, which gives $n+1$ points on the arc.</li>\n<li>Drop each one straight down onto the interval.</li>\n</ol>\n<p>Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That is the shape $\\omega$ wanted.</p>\n<p>Now turn the picture into arithmetic. Measure $\\theta$ from the right-hand end of the interval, so the arc runs from $\\theta = 0$ to $\\theta = \\pi$ and a point at angle $\\theta$ on the unit semicircle over $[-1,1]$ sits above $u = \\cos\\theta$. Write the two blanks: the denominator that lands $\\theta$ at the midpoint of the $k$th piece, given the $2k+1$ already sitting in the numerator, and the map that carries $u$ to the matching point of $[a,b]$. The map has to send $u = -1$ to $a$ and $u = 1$ to $b$.</p>\n<p>The nodes come out running from near $b$ down to near $a$. Interpolation doesn't mind.</p>"
   },
@@ -672,6 +677,10 @@
      {
       "text": "(t − xn[i]) / (xn[j] − xn[i])",
       "why": "factor_roles_swapped"
+     },
+     {
+      "text": "(t − xn[j])",
+      "why": "factor_no_denominator"
      }
     ]
    },
@@ -729,6 +738,24 @@
       "t": 0.33333333333333326
      },
      "call": "lagrange_eval(xn, yn, t)"
+    },
+    {
+     "env": {
+      "xn": [
+       0.0,
+       0.3333333333333333,
+       0.6666666666666666,
+       1.0
+      ],
+      "yn": [
+       1.0,
+       0.2647058823529412,
+       0.08256880733944955,
+       0.038461538461538464
+      ],
+      "t": 0.9
+     },
+     "call": "lagrange_eval(xn, yn, t)"
     }
    ],
    "trace": [],
@@ -770,7 +797,8 @@
     "guard_inverted": "That keeps the one factor the product has to leave out and drops the rest. It also divides by x_i minus x_i, which is zero. Which node is the one L_i must not vanish at?",
     "guard_partial": "Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.",
     "factor_sign": "Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.",
-    "factor_roles_swapped": "You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero."
+    "factor_roles_swapped": "You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.",
+    "factor_no_denominator": "Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node."
    },
    "reveal": [
     {
@@ -919,7 +947,7 @@
      "num": 10
     }
    ],
-   "hash": "267d7f2d709e1530",
+   "hash": "603039922b2975e0",
    "python": "# ---------------------------------------------------------------------------\n# The interpolating polynomial, evaluated via the Lagrange formula\n# ---------------------------------------------------------------------------\ndef lagrange_eval(nodes, values, xq):\n    \"\"\"Evaluate the polynomial interpolating (nodes[i], values[i]) at xq.\n\n    Parameters\n    ----------\n    nodes  : array (m,)  distinct x-coordinates of the data\n    values : array (m,)  y-coordinates, values[i] = f(nodes[i])\n    xq     : array       points at which to evaluate the interpolant\n    \"\"\"\n    nodes  = np.asarray(nodes,  dtype=float)\n    values = np.asarray(values, dtype=float)\n    xq     = np.asarray(xq,     dtype=float)\n\n    m = len(nodes)\n    result = np.zeros_like(xq)\n    for i in range(m):\n        Li = np.ones_like(xq)\n        for j in range(m):\n            if j != i:\n                Li = Li * (xq - nodes[j]) / (nodes[i] - nodes[j])\n        result = result + values[i] * Li\n    return result",
    "brief_html": "<p>One route to that polynomial is to write $p(x) = c_0 + c_1x + c_2x^2 + c_3x^3$, substitute the four points and solve for the $c_k$. Let's not. If we choose the basis to suit the data, the coefficients turn out to be the data.</p>\n<p>Ask for one polynomial per node, $L_0,\\dots,L_n$, each of them equal to $1$ at its own node and $0$ at every other node. Then</p>\n<p>$$p(x) = y_0L_0(x) + y_1L_1(x) + \\cdots + y_nL_n(x)$$</p>\n<p>interpolates: at $x_k$ every term but the $k$th is zero, and the term left standing is $y_k \\cdot 1$. This is the Lagrange form, named for the Italian-French mathematician Joseph-Louis Lagrange, who published it in 1795, though Edward Waring had written it down in 1779.</p>\n<p>So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.</p>\n<p>Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: <code>m ← length(xn)</code> is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.</p>"
   }

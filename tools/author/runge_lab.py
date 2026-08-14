@@ -33,6 +33,16 @@ DATA_X = [-1.0, -0.33333333333333337, 0.33333333333333326, 1.0]
 DATA_Y = [0.038461538461538464, 0.2647058823529412, 0.26470588235294124,
           0.038461538461538464]
 
+# A second, deliberately lopsided set: four equally spaced nodes on [0, 1] with
+# the same function. The set above is symmetric about 0, so its cubic term
+# vanishes and the cubic through all four points is the same polynomial as the
+# quadratic through the first three. That makes dropping the last node invisible,
+# and a decoy that dropped it passed the grader on every probe until this set
+# existed. The decoy is gone and this stays: any future block or blank that costs
+# the algorithm its last node is graded against data where the last node matters.
+DATA2_X = [0.0, 0.3333333333333333, 0.6666666666666666, 1.0]
+DATA2_Y = [1.0, 0.2647058823529412, 0.08256880733944955, 0.038461538461538464]
+
 
 def block(bid, text, py, match, indent=0):
     return {'id': bid, 'lines': [{'text': text, 'indent': indent}], 'py': py, 'py_match': match}
@@ -123,6 +133,11 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
         'map': {'kind': 'expr', 'answer': '(a+b)/2 + ((b−a)/2)·u', 'env': ['a', 'b', 'u'], 'width': 24},
     },
 
+    # Two decoys, which is where this started and where Dip wants it: seven
+    # blocks and nine tiles on the board. A third was tried on 2026-08-14 and
+    # taken back out, on the grounds that a longer tray is a reading task rather
+    # than a harder puzzle. Where the pressure goes instead is `wrong_blanks`,
+    # which cost nothing on the board.
     'distractors': [
         decoy('d_second', 'θ ← (k / n) · π', 'theta', 'angle_second_kind'),
         decoy('d_short', 'x ← zeros(n)', 'alloc', 'count_off_by_one'),
@@ -132,6 +147,7 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
         'frac': [
             {'text': 'n+1', 'why': 'frac_past_pi'},
             {'text': '2·n', 'why': 'frac_arc_count'},
+            {'text': '2·n + 1', 'why': 'frac_odd_denominator'},
         ],
         'map': [
             {'text': '(b−a)·u', 'why': 'map_no_centre'},
@@ -168,6 +184,7 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
         'count_off_by_one': 'There is nowhere to put the last node. A polynomial of degree n is pinned down by n+1 values, and the construction produces exactly that many: cutting the arc at n+2 marks leaves n+1 pieces, and every piece contributes a node.',
         'frac_past_pi': 'Your angles run past pi and on around the circle, so the later nodes come back through the interval a second time and land on top of the earlier ones. The arc is a semicircle, so the last midpoint has to sit just short of pi.',
         'frac_arc_count': 'You divided the arc into n pieces rather than n+1. Count the pieces again: the n+2 marks, both ends included, have n+1 gaps between them, and each gap holds one node.',
+        'frac_odd_denominator': 'The denominator has to be twice the number of pieces, and 2n+1 is odd, so it is not twice anything. Yours sends the last angle to exactly pi, which puts the last node exactly on a, and the midpoint of a piece never lands on the end of the arc.',
         'map_no_centre': 'Your nodes are spread twice as wide as they should be, and nothing in your map mentions where the interval sits. Check the two ends of it: the map has to send u = -1 to a and u = +1 to b, and yours sends them to a-b and b-a instead.',
         'map_centred_on_zero': 'The length is right and the position is not. Your nodes are centred on 0 wherever [a, b] happens to lie, so both ends miss: u = -1 lands on (a-b)/2 rather than a, and u = +1 on (b-a)/2 rather than b.',
         'map_full_width': 'The centre is right and the width is twice what it should be, so the nodes nearest the ends fall outside the interval altogether. From the centre of [a, b] to either end is half its length.',
@@ -251,6 +268,10 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         },
     },
 
+    # Three decoys, as originally, and thirteen tiles on the board is already the
+    # most of any gate in the repo. Three more were tried on 2026-08-14 and taken
+    # back out; see the note in HANDOFF.md, and note that one of them is what
+    # found the degenerate probe set the fourth probe below now covers.
     'distractors': [
         decoy('d_last', 'p ← yn[i] · L', 'add', 'sum_overwritten'),
         decoy('d_zero', 'L ← 0', 'L1', 'product_starts_at_zero'),
@@ -265,17 +286,21 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         'factor': [
             {'text': '(t − xn[j]) / (xn[j] − xn[i])', 'why': 'factor_sign'},
             {'text': '(t − xn[i]) / (xn[j] − xn[i])', 'why': 'factor_roles_swapped'},
+            {'text': '(t − xn[j])', 'why': 'factor_no_denominator'},
         ],
     },
 
     # Four nodes rather than five, and it matters: with an odd number of nodes
     # each L_i has an even number of factors, and flipping the sign of every
     # denominator then cancels out and cannot be caught. The third probe is a
-    # node, where the answer has to be that node's own value.
+    # node, where the answer has to be that node's own value. The fourth uses the
+    # lopsided data set, because the first three cannot see a missing last node;
+    # see the note on DATA2_X.
     'probes': [
         {'env': {'xn': DATA_X, 'yn': DATA_Y, 't': 0.9}, 'call': 'lagrange_eval(xn, yn, t)'},
         {'env': {'xn': DATA_X, 'yn': DATA_Y, 't': -0.55}, 'call': 'lagrange_eval(xn, yn, t)'},
         {'env': {'xn': DATA_X, 'yn': DATA_Y, 't': DATA_X[2]}, 'call': 'lagrange_eval(xn, yn, t)'},
+        {'env': {'xn': DATA2_X, 'yn': DATA2_Y, 't': 0.9}, 'call': 'lagrange_eval(xn, yn, t)'},
     ],
     'trace': [],
     'compare': 'value',
@@ -302,6 +327,7 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         'guard_partial': 'Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.',
         'factor_sign': 'Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.',
         'factor_roles_swapped': 'You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.',
+        'factor_no_denominator': 'Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node.',
     },
 }
 
