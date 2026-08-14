@@ -502,8 +502,8 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
 
   // Two kinds of thing, and they behave differently. A `lab` puts the algorithms
   // behind pseudocode puzzles and opens a Colab notebook at the end; it lives on
-  // this site at /teaching/labs/<lab id>/. An `applet` is a self-contained page,
-  // opened directly, with nothing to hand in and no notebook behind it.
+  // this site at /teaching/labs/guided/<lab id>/. An `applet` is a self-contained
+  // page, opened directly, with nothing to hand in and no notebook behind it.
   //
   // `flavor:'map'` marks a concept map. A map is an applet as far as this page's
   // machinery is concerned, and its own choice in the Type filter, because a
@@ -570,6 +570,11 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     return file ? String(file).replace(/\.html$/, '') + '/' : null;
   }
 
+  // Every lab page lives here, one directory per kind of page, the way applet
+  // pages live under applets/ and maps under maps/. It is not `labs/`, because
+  // that would read /teaching/labs/labs/lab1-runge/.
+  var LAB_DIR = 'guided/';
+
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -586,9 +591,10 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     // What the Type filter and the button caption go by. A map is an applet
     // that answers to its own name.
     var kindKey = a.flavor === 'map' ? 'map' : a.kind;
-    // Where the card leads, relative to this page. A lab id is already the whole
-    // link; an applet names its own file.
-    var url = a.kind === 'lab' ? pageUrl(a.lab) : pageUrl(a.href);
+    // Where the card leads, relative to this page. A lab card carries an id
+    // rather than a filename, and every lab page sits in guided/, so this is the
+    // one place that knows the directory. An applet names its own file.
+    var url = a.kind === 'lab' ? pageUrl(LAB_DIR + a.lab) : pageUrl(a.href);
     // The status tag is the master switch. A card is ready only when it is
     // tagged 'finalized' AND the thing it points at exists; flip it to 'drafted'
     // to hold it back. Everything not ready is hidden until the toggle asks.
