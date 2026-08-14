@@ -672,10 +672,10 @@ html[data-theme="dark"] {
   gap: 0.45rem;
 }
 
-/* The --bar variant is not inside .lab-solved, so it rounds all four corners.
-   lab.js builds it for a puzzle restored as already solved. */
-.lab-solved__head--bar { border-radius: 8px; }
-
+/* Every solved puzzle uses the --bar variant: the label on the left, the toggle
+   pushed to the right, and the reveal appended under it when the toggle is
+   pressed. It needs no radius of its own, since .lab-solved rounds and clips it,
+   and a radius here would notch the bottom corners once the reveal is open. */
 .lab-solved__head--bar .lab-doc-toggle { margin-left: auto; }
 
 .lab-reveal {

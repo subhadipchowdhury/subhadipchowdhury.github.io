@@ -91,6 +91,17 @@ function solve(lab, id) {
   view.submit();
 }
 
+// A solved puzzle shows a one-line bar, and the two columns are built on the
+// first press of its toggle. Anything asserting about the reveal has to press it
+// first, which is also the check that the toggle is wired.
+function expand(root, id) {
+  const scope = id ? root.querySelector(`.lab-gate[data-gate="${id}"]`) : root;
+  const toggle = scope?.querySelector('.lab-doc-toggle');
+  if (!toggle) fail(`no reveal toggle on ${id || 'the solved puzzle'}`);
+  toggle.dispatch('click');
+  return toggle;
+}
+
 // ---------------------------------------------------------------------------
 // Every built lab
 // ---------------------------------------------------------------------------
@@ -303,9 +314,31 @@ await it('setting a puzzle aside also opens the notebook', async () => {
 });
 
 group = 'the reveal';
+await it('stays shut on a solve, behind a toggle on a one-line bar', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, ids[0]);
+  const bar = root.querySelector(`.lab-gate[data-gate="${ids[0]}"] .lab-solved`);
+  assert(bar, 'a solved puzzle should still say so');
+  has(textOf(bar), 'Solved');
+  assert(!bar.querySelector('.lab-reveal'), 'the reveal must not be open on the solve');
+  const toggle = expand(root, ids[0]);
+  const body = bar.querySelector('.lab-solved__body');
+  assert(body?.querySelector('.lab-reveal'), 'the toggle should build it');
+  // One press opens it. It used to take two: toggling `hidden` on the element it
+  // had just built set the flag rather than clearing it.
+  eq(body.hidden, false, 'one press should leave it open');
+  eq(toggle.textContent, 'hide what you built');
+  toggle.dispatch('click');
+  eq(body.hidden, true, 'a second press should shut it again');
+  eq(toggle.textContent, 'show what you built');
+  toggle.dispatch('click');
+  eq(body.hidden, false, 'and a third should reopen the one it already built');
+});
+
 await it('pairs each row you built with a line of the Python', async () => {
   const { root, lab } = await freshLab();
   solve(lab, ids[0]);
+  expand(root, ids[0]);
   const reveal = root.querySelector('.lab-solved');
   const pairs = reveal.querySelectorAll('.lab-pair[data-pair]');
   const numbers = new Set(pairs.map((p) => p.dataset.pair));
@@ -319,6 +352,7 @@ await it('pairs each row you built with a line of the Python', async () => {
 await it('shows the algorithm only, with no comments or docstring', async () => {
   const { root, lab } = await freshLab();
   solve(lab, 'divdiff');
+  expand(root, 'divdiff');
   const python = textOf(root.querySelectorAll('.lab-reveal__col')[1]);
   has(python, 'def divided_differences');
   has(python, 'table[i, j] =', 'the recurrence has to be there');
@@ -330,6 +364,7 @@ await it('shows the algorithm only, with no comments or docstring', async () => 
 await it('numbers a single annotated line in the singular', async () => {
   const { root, lab } = await freshLab();
   solve(lab, 'divdiff');
+  expand(root, 'divdiff');
   const notes = textOf(root.querySelector('.lab-reveal__notes'));
   has(notes, 'Line 8.', 'one line is a Line, not Lines');
   has(notes, 'Lines 5 and 6.', 'two are Lines');
@@ -341,6 +376,7 @@ await it('lists three annotated lines rather than chaining them on "and"', async
   const { root, lab } = await open(runge);
   solveIn(lab, runge, 'chebnodes');
   solveIn(lab, runge, 'lageval');
+  expand(root, 'lageval');
   const notes = textOf(root.querySelector('.lab-gate[data-gate="lageval"] .lab-reveal__notes'));
   has(notes, 'Lines 3, 5 and 8.', 'three lines are a list');
   assert(!notes.includes('5 and 8 and'), 'no line should chain on a second "and"');
@@ -352,6 +388,7 @@ await it('quotes the blanks the student typed, not the model answer', async () =
   view.placements = gateOf('divdiff').solution.map((s) => ({ ...s }));
   view.blanks = { bound: 'n−j−1', den: '−(x[i] − x[i+j])' };
   view.submit();
+  expand(root, 'divdiff');
   has(textOf(root.querySelector('.lab-solved')), '−(x[i] − x[i+j])');
 });
 

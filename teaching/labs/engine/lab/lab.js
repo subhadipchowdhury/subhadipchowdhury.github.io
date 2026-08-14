@@ -11,6 +11,11 @@ import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
 const STORE_VERSION = 2;
 const DEV_KEY = 'lab:dev';
 
+// The toggle on a solved puzzle's bar. Two spellings of one control, so they
+// live together rather than as literals at either end of an event handler.
+const SHOW_REVEAL = 'show what you built';
+const HIDE_REVEAL = 'hide what you built';
+
 // Test mode. Turn it on with ?dev=1 on the URL and off with ?dev=0, or with the
 // button in the bar it adds. It sticks in localStorage so it survives reloads,
 // and it puts a Solve button on each puzzle so the later ones can be reached
@@ -377,12 +382,11 @@ class LabController {
       this.relock();
 
       const host = this.root.querySelector(`.lab-gate[data-gate="${id}"]`);
-      const reveal = this.buildReveal(gate, view.getSubmission());
-      host?.appendChild(reveal);
+      const solved = this.buildSolvedBar(gate, view.getSubmission());
+      host?.appendChild(solved);
       this.openNext();
       this.updateProgressLabel();
-      this.typeset(reveal);
-      reveal.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
+      solved.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
       return;
     }
 
@@ -430,11 +434,10 @@ class LabController {
   // The reveal
   // -------------------------------------------------------------------------
 
-  buildReveal(gate, submission) {
-    const box = el('div', 'lab-solved');
-    const head = el('div', 'lab-solved__head');
-    head.textContent = 'Solved. Here\u2019s the same algorithm as the notebook writes it:';
-    box.appendChild(head);
+  // The two columns of monospace, with no chrome of their own. Only
+  // buildSolvedBar calls this, and only when the student asks for it.
+  buildRevealBody(gate, submission) {
+    const box = el('div', 'lab-solved__body');
 
     const grid = el('div', 'lab-reveal');
 
@@ -512,32 +515,45 @@ class LabController {
     return pane;
   }
 
-  buildSolvedBar(gate, saved) {
-    const wrap = el('div');
+  // One line, and the reveal behind its toggle. This is what a solved gate looks
+  // like whether it was just solved or restored from a reload: the comparison is
+  // worth a click, and left open it puts twenty lines of monospace between the
+  // student and the next puzzle. `submission` carries the blanks as the student
+  // typed them, so the pseudocode column stays their own work; a gate restored
+  // from an older save with no blanks recorded falls back to the model answer.
+  buildSolvedBar(gate, submission) {
+    const box = el('div', 'lab-solved');
     const bar = el('div', 'lab-solved__head lab-solved__head--bar');
     const label = el('span');
-    label.textContent = 'Done';
+    label.textContent = 'Solved';
     bar.appendChild(label);
     const toggle = el('button', 'lab-doc-toggle');
     toggle.type = 'button';
-    toggle.textContent = 'show what you built';
+    toggle.textContent = SHOW_REVEAL;
     bar.appendChild(toggle);
-    wrap.appendChild(bar);
+    box.appendChild(bar);
 
-    let reveal = null;
+    // Built on the first press and kept, so reopening it costs nothing. The
+    // first press has to leave it *shown*: toggling `hidden` on a fresh element
+    // sets it, which used to hide the reveal the same click that built it and
+    // took two presses to open. Nobody caught it while this path was only
+    // reached by a puzzle restored from a reload.
+    let body = null;
     toggle.addEventListener('click', () => {
-      if (!reveal) {
-        reveal = this.buildReveal(gate, {
-          placements: saved?.placements ?? gate.solution,
-          blanks: saved?.blanks ?? {},
+      if (!body) {
+        body = this.buildRevealBody(gate, {
+          placements: submission?.placements ?? gate.solution,
+          blanks: submission?.blanks ?? {},
         });
-        wrap.appendChild(reveal);
-        this.typeset(reveal);
+        box.appendChild(body);
+        this.typeset(body);
+        body.hidden = false;
+      } else {
+        body.hidden = !body.hidden;
       }
-      reveal.hidden = !reveal.hidden;
-      toggle.textContent = reveal.hidden ? 'show what you built' : 'hide what you built';
+      toggle.textContent = body.hidden ? SHOW_REVEAL : HIDE_REVEAL;
     });
-    return wrap;
+    return box;
   }
 
   // -------------------------------------------------------------------------
