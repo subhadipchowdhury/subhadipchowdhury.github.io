@@ -1,14 +1,20 @@
+# Finder and Python litter, at any depth.
 .DS_Store
-assets/.DS_Store
-teaching/.DS_Store.DS_Store
+__pycache__/
+
+# Dead: an in-repo venv cannot survive OneDrive. The live one is ~/.venvs/labs.
+.venv/
+
+# Travel through OneDrive, not git. See HANDOFF.md.
 CLAUDE.md
 HANDOFF.md
-.venv/
-__pycache__/
 tools/author/VOICE.md
 
-# pdflatex leftovers from tools/author/maptex.py. The .tex and the answer-key .pdf
-# are tracked; the aux and log files are not.
+# pdflatex leftovers from tools/author/maptex.py, plus the blank worksheet PDF,
+# which maptex.py copies to teaching/labs/worksheets/ and that copy is tracked.
+# The answer key is not served anywhere, so it is tracked here.
 tools/author/tex/*.aux
 tools/author/tex/*.log
 tools/author/tex/*.out
+tools/author/tex/*.pdf
+!tools/author/tex/*-solutions.pdf
