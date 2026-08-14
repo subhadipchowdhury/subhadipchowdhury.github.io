@@ -10,8 +10,8 @@
 // answer lets a student pass while wrong, and a message nothing can reach may
 // as well not be written.
 
-import { buildReference, verify } from '../teaching/labs/engine/verify.js';
-import { evalExpression } from '../teaching/labs/engine/interp.js';
+import { buildReference, verify } from '../teaching/labs/engine/lab/verify.js';
+import { evalExpression } from '../teaching/labs/engine/lab/interp.js';
 
 // ---------------------------------------------------------------------------
 // Runtime compatibility: node and the JavaScriptCore shell

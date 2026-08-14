@@ -11,7 +11,7 @@
 import {
   parseProgram, run, evalExpression, linesFromSource, valuesEqual,
   ParseError, RuntimeError,
-} from '../../teaching/labs/engine/interp.js';
+} from '../../teaching/labs/engine/lab/interp.js';
 
 // ---------------------------------------------------------------------------
 // Harness

@@ -18,7 +18,7 @@ import { installDom, walk, textOf } from './dom-stub.mjs';
 import {
   KINDS, hashString, stampOf, seededShuffle,
   clipToBox, controlPoint, bezierAt, tangentAt, arrowHead, Progress, MapView,
-} from '../../teaching/labs/maps/engine/map.js';
+} from '../../teaching/labs/engine/map/map.js';
 
 const teardown = installDom();
 
@@ -312,7 +312,7 @@ describe('the stylesheet', () => {
   // The stub has no cascade, so `hidden` works there whatever the CSS says. This is
   // the only way the suite can see the trap that shipped a dead Hide button: an
   // author `display` on a container beats the UA's `[hidden] { display: none }`.
-  const css = String(readText('teaching/labs/maps/engine/map.css', 'utf8'));
+  const css = String(readText('teaching/labs/engine/map/map.css', 'utf8'));
 
   it('makes the hidden attribute work inside .cm', () => {
     assert(/\.cm \[hidden\]\s*\{[^}]*display:\s*none/.test(css),

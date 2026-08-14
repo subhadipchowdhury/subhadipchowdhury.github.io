@@ -26,7 +26,7 @@ layout: compress
   <body class="lab-page">
     <a class="lab-skip" href="#lab-root">Skip to the lab</a>
 
-    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab/lab.css' | relative_url }}">
 
     <div class="lab-bar">
       <div class="lab-bar__inner">
@@ -139,7 +139,7 @@ layout: compress
     </footer>
 
     <script type="module">
-      import { mountLab } from '{{ '/teaching/labs/engine/lab.js' | relative_url }}';
+      import { mountLab } from '{{ '/teaching/labs/engine/lab/lab.js' | relative_url }}';
 
       const root = document.getElementById('lab-root');
       mountLab(root, root.dataset.spec).catch((err) => {

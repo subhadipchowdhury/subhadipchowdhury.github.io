@@ -210,7 +210,7 @@ ARROW_GAP = 22        # two arrows closer than this read as one
 
 
 def _clip(cx, cy, tx, ty, hw, hh, gap):
-    """clipToBox from maps/engine/map.js, so the two agree on where an arrow starts."""
+    """clipToBox from engine/map/map.js, so the two agree on where an arrow starts."""
     dx, dy = tx - cx, ty - cy
     length = (dx * dx + dy * dy) ** 0.5
     if length == 0:

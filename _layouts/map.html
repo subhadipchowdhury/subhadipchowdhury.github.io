@@ -8,7 +8,7 @@ layout: compress
   engine/lab.css so the bar and the footer cannot drift between the three.
 
   The page itself is front matter only. Everything inside .cm is built at runtime
-  by maps/engine/map.js from maps/data/{map_id}.json, which tools/author writes.
+  by engine/map/map.js from maps/data/{map_id}.json, which tools/author writes.
 
   Front matter a page supplies:
     title   shown in <title>; map.js writes the h1 from the data
@@ -22,8 +22,8 @@ layout: compress
   <body class="applet-page">
     <a class="lab-skip" href="#cm-root">Skip to the map</a>
 
-    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/teaching/labs/maps/engine/map.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/map/map.css' | relative_url }}">
 
     <div class="lab-bar">
       <div class="lab-bar__inner">
@@ -93,7 +93,7 @@ layout: compress
     </footer>
 
     <script type="module">
-      import { mountMap } from '{{ '/teaching/labs/maps/engine/map.js' | relative_url }}';
+      import { mountMap } from '{{ '/teaching/labs/engine/map/map.js' | relative_url }}';
 
       const root = document.getElementById('cm-root');
       mountMap(root, root.dataset.map).catch((err) => {

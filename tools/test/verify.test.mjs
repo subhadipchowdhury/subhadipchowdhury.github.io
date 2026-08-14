@@ -4,8 +4,8 @@
 // computes the right thing. Everything else here is about the quality of the
 // message a student sees when it does not.
 
-import { buildReference, verify, renderTriangle, expressionsAgree } from '../../teaching/labs/engine/verify.js';
-import { valuesEqual } from '../../teaching/labs/engine/interp.js';
+import { buildReference, verify, renderTriangle, expressionsAgree } from '../../teaching/labs/engine/lab/verify.js';
+import { valuesEqual } from '../../teaching/labs/engine/lab/interp.js';
 import {
   DIVDIFF_GATE, REF_TABLE, REF_COEFFS, CORRECT, swapBlock, withBlank,
 } from './fixtures/divdiff-gate.mjs';

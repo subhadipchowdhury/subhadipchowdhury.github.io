@@ -30,7 +30,7 @@ globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => serve
 
 const spec = specs.get('lab2-newton');
 
-const { mountLab } = await import('../../teaching/labs/engine/lab.js');
+const { mountLab } = await import('../../teaching/labs/engine/lab/lab.js');
 
 let passed = 0;
 const failures = [];
@@ -451,7 +451,7 @@ await it('describes the attempt without describing the answer', async () => {
   view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
   view.submit();
 
-  const { attemptSnapshot } = await import('../../teaching/labs/engine/feedback.js');
+  const { attemptSnapshot } = await import('../../teaching/labs/engine/lab/feedback.js');
   const text = attemptSnapshot({
     lab: spec, gate, view, verdict: { message: 'Not yet.' }, attempts: 5,
   });

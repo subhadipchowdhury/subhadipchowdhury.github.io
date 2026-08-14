@@ -7,7 +7,7 @@
 // in. Sweeping across the workspace and asserting that every level is reachable
 // and held is the regression test for both.
 
-import { snapIndent, INDENT_STICK, defaultOrder } from '../../teaching/labs/engine/puzzle.js';
+import { snapIndent, INDENT_STICK, defaultOrder } from '../../teaching/labs/engine/lab/puzzle.js';
 import { DIVDIFF_GATE } from './fixtures/divdiff-gate.mjs';
 
 let passed = 0;
