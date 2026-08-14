@@ -169,6 +169,9 @@ html[data-theme="dark"] {
 
 .ap-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
 
+/* The child combinator is deliberate: a label inside an .ap-readout row is a
+   descendant, not a child, so it keeps .ap's regular sans and only the field's
+   own heading label goes semibold. */
 .ap-field > label,
 .ap-label {
   font-family: var(--shell-semi);
