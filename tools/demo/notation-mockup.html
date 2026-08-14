@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notation mockup: the three Newton puzzles in five notations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSansSerif.css">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSerif.css">
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] },
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!--
+  Same token block as the other two demo pages: only what shell.css and lab.css
+  consume, copied from css/stylesheet.scss so both themes are exercised.
+-->
+<style>
+  :root {
+    --color-bg: #D9D9D9;
+    --color-surface: #FFFFFF;
+    --color-text: #262626;
+    --color-muted: #4D4D4D;
+    --accent: #800000;
+    --accent-rgb: 128, 0, 0;
+    --border-color: rgba(0, 42, 58, 0.12);
+    --focus-ring: #3EB1C8;
+    --code-bg: #ddd;
+  }
+  html[data-theme="dark"] {
+    --color-bg: #151515;
+    --color-surface: #232323;
+    --color-text: #e4e4e4;
+    --color-muted: #a8a8a8;
+    --accent: #3EB1C8;
+    --accent-rgb: 62, 177, 200;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --focus-ring: #6fcfe0;
+    --code-bg: #333333;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  }
+  .mk-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+  }
+  .mk-bar strong { font-weight: normal; color: var(--color-muted); }
+  .mk-bar button, .mk-bar label {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .mk-bar label input { margin-right: 0.35rem; }
+  .mk-bar label:has(input:checked) {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  .mk-wrap { padding: 1.4rem 1.25rem 5rem; }
+  .mk-wrap p, .mk-wrap li { line-height: 1.6; }
+  .mk-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin: 0 0 1.6rem;
+  }
+  .mk-panel h2 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+  .mk-panel dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+    gap: 0.25rem 1rem;
+    margin: 0.7rem 0 0;
+    font-size: 0.88rem;
+  }
+  .mk-panel dt { color: var(--color-muted); }
+  .mk-panel dd { margin: 0; }
+  .mk-key {
+    margin: 0.9rem 0 0;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .mk-key th, .mk-key td {
+    text-align: left;
+    padding: 0.28rem 0.9rem 0.28rem 0;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: baseline;
+  }
+  .mk-key th { color: var(--color-muted); font-weight: normal; }
+  .mk-key .mk-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.82rem; }
+  .mk-cost { font-size: 0.88rem; color: var(--color-muted); margin: 0.7rem 0 0; }
+  .mk-cost b { color: var(--color-text); font-weight: normal; }
+  .mk-flag {
+    font-size: 0.88rem;
+    margin: 0.55rem 0 0;
+    padding-left: 0.7rem;
+    border-left: 2px solid var(--border-color);
+  }
+  .mk-sources { margin: 0 0 2rem; }
+  .mk-sources h2 { font-size: 1.15rem; margin: 0 0 0.6rem; }
+  .mk-sources h3 { font-size: 0.95rem; margin: 1.2rem 0 0.3rem; color: var(--color-muted); }
+  .mk-sources code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 0.05rem 0.25rem;
+    border-radius: 3px;
+  }
+  .mk-sources ol { padding-left: 1.4rem; }
+  .mk-sources li { margin-bottom: 0.5rem; }
+  .mk-sources b { font-weight: normal; color: var(--accent); }
+</style>
+<link rel="stylesheet" href="../../teaching/labs/engine/shell.css">
+<link rel="stylesheet" href="../../teaching/labs/engine/lab/lab.css">
+</head>
+<body>
+
+<div class="mk-bar">
+  <strong>Notation mockup</strong>
+  <label><input type="radio" name="style" value="current" checked>Current</label>
+  <label><input type="radio" name="style" value="ascii">Plain ASCII</label>
+  <label><input type="radio" name="style" value="worded">Keyword</label>
+  <label><input type="radio" name="style" value="prose">Structured English</label>
+  <label><input type="radio" name="style" value="math">Mathematical</label>
+  <button id="theme">Toggle dark mode</button>
+</div>
+
+<main class="lab mk-wrap" id="root">
+
+  <section class="mk-sources">
+    <h2>What the two references say</h2>
+
+    <h3>Wikipedia, <i>Pseudocode</i>, "mathematical style pseudocode"</h3>
+    <p>Its claim: in numerical computation, pseudocode is often mathematical
+    notation from matrix and set theory mixed with the control structures of a
+    programming language, and sometimes natural language as well. It gives the sum
+    operator standing in for a whole loop, <span class="mk-tex">\(\text{return } \sum_{k \in S} x_k\)</span>,
+    notes that non-ASCII typesetting (TeX, MathML) is normal for it, and records
+    the older name, pidgin ALGOL.</p>
+    <p>That is the <b>Mathematical</b> option below. Two consequences to decide
+    about, both visible in the puzzles once you switch to it. The good one: the
+    slice line <code>T[0..n−1, 0] ← y</code> becomes a quantified assignment,
+    which is the clearest that line gets in any of the five. The bad one: the same
+    move lets a sum operator swallow a loop, and a block that swallows a loop
+    removes exactly what the puzzle is testing. If we go this way, the rule has to
+    be that <span class="mk-tex">\(\sum\)</span> and <span class="mk-tex">\(\prod\)</span>
+    stay out of the blocks and live only in the brief.</p>
+
+    <h3>Cornell CS482 handout (Naomi Nishimura, written for CS341)</h3>
+    <p>It isn't a syntax specification. It's one page arguing about the level of
+    detail, with seven guidelines and no example algorithms. Four of them bear on
+    this decision, and two of them cut in opposite directions:</p>
+    <ol>
+      <li><b>"Mimic good code and good English"</b>, and specifically that
+      variable names be mnemonic. That is an argument against the mathematical
+      style's single letters, which is the cost flagged in its panel below.</li>
+      <li><b>"Ignore unnecessary details. If you are worrying about the placement
+      of commas, you are using too much detail [...] you shouldn't obsess about
+      syntax."</b> This is the one place our situation differs from hers. Her
+      pseudocode is read and graded by a person, so syntax can stay loose; ours is
+      parsed and executed, so it can't. What we can still do is pick the notation
+      with the least syntax to learn, which is what the panel below is comparing.</li>
+      <li><b>"Take advantage of programming shorthands"</b>, since if-then-else
+      and loop structures are more concise than the English equivalent. An
+      argument against <b>Structured English</b>.</li>
+      <li><b>"Don't lose sight of the underlying model"</b>: it should be possible
+      to see through the pseudocode to the model below. Against Structured English
+      again, and the reason it is in this page only to mark the far end of the
+      range.</li>
+    </ol>
+    <p>Guideline 7 is "check for balance", which is the whole question here, so it
+    doesn't settle it.</p>
+  </section>
+
+  <div id="panel"></div>
+  <div id="gates"></div>
+</main>
+
+<script>
+// ---------------------------------------------------------------------------
+// This page is a mockup, not the engine.
+//
+// The blocks are rendered with the real lab.css classes, in the real solution
+// order and indentation, so the type, the block size and the line lengths are
+// what a student would see. Nothing here is draggable and nothing is graded;
+// the point is to read the five notations side by side, on the same three
+// puzzles, before any of them goes into tools/author/newton_lab.py.
+//
+// A blank is written @name@. In the mathematical style a blank that lands inside
+// a subscript is written @!name@ instead: it cannot be a plain input spliced
+// into the line, so it is typeset as a box and swapped for the input after
+// MathJax has finished. That difference is a finding, not an implementation
+// detail; see the panel for that style.
+// ---------------------------------------------------------------------------
+
+const STYLES = {
+  current: {
+    name: 'Current: house glyph notation',
+    what: 'What ships today. Monospace, with \u2190 for assignment, \u00b7 for multiplication, \u2212 for subtraction, two-subscript tables and a\u00a0..\u00a0slice.',
+    cost: 'None. This is the baseline.',
+    key: [
+      ['assignment', 'a \u2190 b', 'and = only ever compares'],
+      ['loop', 'for i \u2190 0 to 3:', 'both ends included, so the bound is the last index'],
+      ['subscript', 'x[0], T[i, j]', 'arrays take one, tables take two'],
+      ['whole column', 'T[0..n\u22121, 0] \u2190 y', 'a slice, ends included'],
+    ],
+    flag: 'The glyphs are typed as ASCII in a blank (* and - and !=), so a student meets two spellings of the same operator: one they read and another they write.',
+  },
+  ascii: {
+    name: 'Plain ASCII, same structure',
+    what: 'Every glyph replaced by the character on the keyboard. The shape of the algorithm, the block count and the indentation are untouched.',
+    cost: 'One change to interp.js: accept = as assignment at the head of a statement, and == for comparison. The ASCII fold already turns - into \u2212 and * into \u00b7, so nothing else in the tokenizer moves. Both author scripts, both specs and the notation key get a mechanical pass.',
+    key: [
+      ['assignment', 'a = b', 'and == compares'],
+      ['loop', 'for i = 0 to 3:', 'both ends included'],
+      ['subscript', 'x[0], T[i, j]', 'unchanged'],
+      ['whole column', 'T[0..n-1, 0] = y', 'unchanged'],
+    ],
+    flag: 'This fixes the read-one-thing-type-another problem and nothing else. The two subscripts on a table and the .. slice are the lines students are most likely to stall on, and both survive verbatim.',
+  },
+  worded: {
+    name: 'Keyword pseudocode',
+    what: 'ASCII operators for the algebra, English keywords for everything structural: set \u2026 to, for \u2026 from \u2026 to, row and column named rather than sliced.',
+    cost: 'The ASCII change, plus a set X to Y statement form, for i from a to b, chained subscripts T[i][j] for both reading and assignment, and row 0 of T / column 0 of T as an expression and as a target. Call it 150 lines of interpreter, a rewrite of both author scripts, and a reread of every feedback message that quotes notation.',
+    key: [
+      ['assignment', 'set a to b', 'no symbol to decode; = never appears'],
+      ['loop', 'for i from 0 to 3:', '"from 0 to 3" reads as inclusive'],
+      ['subscript', 'x[0], T[i][j]', 'one bracket per dimension'],
+      ['whole column', 'set column 0 of T to y', 'the slice is gone'],
+    ],
+    flag: 'The inclusive-range trap (see HANDOFF, 2026-08-13) is a notation problem, and "from 0 to 3" is the one wording that states the convention in the line itself rather than in the brief above it.',
+  },
+  prose: {
+    name: 'Structured English',
+    what: 'The frame is a sentence per step. Only the arithmetic stays symbolic.',
+    cost: 'A different language, not a change to this one. Every verb form needs its own statement rule, and the reveal pairs one sentence with one line of Python, which reads as a translation rather than a correspondence.',
+    key: [
+      ['assignment', 'count the nodes; call that n', 'a verb per operation'],
+      ['loop', 'for each row i from 0 to 3:', 'names what is being counted'],
+      ['subscript', 'the entry T[i][j]', 'brackets survive; there is nowhere else to put an index'],
+      ['whole column', 'copy the values y into column 0 of T', ''],
+    ],
+    flag: 'Included to bracket the range. The cost is not the parser, it is that the puzzle stops being about an algorithm and starts being about parsing a sentence, and a long sentence in a draggable tile is hard to scan.',
+  },
+  math: {
+    name: 'Mathematical style',
+    what: 'Typeset mathematics with the control structures in bold, the way a numerical analysis paper or textbook writes an algorithm. Indices are subscripts, and a quantified assignment replaces the slice.',
+    cost: 'Blocks stop being text and become LaTeX, so puzzle.js typesets each line with MathJax and re-typesets after every drag. A blank at the top level of a line splices in as an input; a blank inside a subscript or a fraction does not, and has to be typeset as a box and swapped afterwards. The board is also the thing MathJax is slowest at: one line per tile, re-run on every move.',
+    key: [
+      ['assignment', '\\(a \\leftarrow b\\)', 'the arrow again, but now it is set in mathematics, where students already read it'],
+      ['loop', '\\(\\textbf{for } i \\leftarrow 0 \\textbf{ to } 3\\)', 'bold keywords, no colon'],
+      ['subscript', '\\(x_0,\\; T_{i,j}\\)', 'what the textbook writes'],
+      ['whole column', '\\(T_{i,0} \\leftarrow y_i \\quad \\text{for } i = 0,\\dots,n-1\\)', 'a quantified assignment, which is the clearest of the five'],
+    ],
+    flag: 'Two real costs. It wants single-letter names, so xn becomes x and print_dd_table becomes something set in \\(\\textit{roman}\\), which loosens the pairing with the notebook\u2019s Python in the reveal. And a blank in a subscript needs the box-and-swap below, which is the one piece of this page I could not check in a browser from here.',
+  },
+};
+
+const ORDER = ['current', 'ascii', 'worded', 'prose', 'math'];
+
+// ---------------------------------------------------------------------------
+// The three gates, straight out of tools/author/newton_lab.py
+// ---------------------------------------------------------------------------
+
+function b(id, current, ascii, worded, prose, math) {
+  return { id, text: { current, ascii, worded, prose, math } };
+}
+
+// A fused two-line block: each entry is [line, line], the second one indented
+// one level relative to the first.
+function b2(id, current, ascii, worded, prose, math) {
+  return { id, fused: true, text: { current, ascii, worded, prose, math } };
+}
+
+const GATES = [
+  {
+    title: 'Puzzle 1. Build the divided-difference table',
+    note: 'Nine blocks, two blanks, three decoys. The blanks are the inner bound and the denominator.',
+    blanks: { bound: 8, den: 14 },
+    blocks: [
+      b('def',
+        'function divided_differences(x, y):',
+        'function divided_differences(x, y):',
+        'function divided_differences(x, y):',
+        'to build the divided-difference table from nodes x and values y:',
+        '\\textbf{function } \\textit{divided\\_differences}(x, y)'),
+      b('n',
+        'n \u2190 length(x)',
+        'n = length(x)',
+        'set n to length(x)',
+        'count the nodes; call that n',
+        'n \\leftarrow \\operatorname{length}(x)'),
+      b('tab',
+        'T \u2190 zeros(n, n)',
+        'T = zeros(n, n)',
+        'set T to a table of zeros with n rows and n columns',
+        'start a table T with n rows and n columns, every entry zero',
+        'T \\leftarrow 0 \\in \\mathbb{R}^{n \\times n}'),
+      b('col0',
+        'T[0..n\u22121, 0] \u2190 y',
+        'T[0..n-1, 0] = y',
+        'set column 0 of T to y',
+        'copy the values y into column 0 of T',
+        'T_{i,0} \\leftarrow y_i \\quad \\text{for } i = 0,\\dots,n-1'),
+      b('loopj',
+        'for j \u2190 1 to n\u22121:',
+        'for j = 1 to n-1:',
+        'for j from 1 to n-1:',
+        'for each order j from 1 to n-1:',
+        '\\textbf{for } j \\leftarrow 1 \\textbf{ to } n-1'),
+      b('loopi',
+        'for i \u2190 0 to @bound@:',
+        'for i = 0 to @bound@:',
+        'for i from 0 to @bound@:',
+        'for each row i from 0 to @bound@:',
+        '\\textbf{for } i \\leftarrow 0 \\textbf{ to } @bound@'),
+      b('rec',
+        'T[i, j] \u2190 (T[i+1, j\u22121] \u2212 T[i, j\u22121]) / @den@',
+        'T[i, j] = (T[i+1, j-1] - T[i, j-1]) / @den@',
+        'set T[i][j] to (T[i+1][j-1] - T[i][j-1]) / @den@',
+        'divide (T[i+1][j-1] - T[i][j-1]) by @den@ and store it in T[i][j]',
+        'T_{i,j} \\leftarrow \\bigl(T_{i+1,\\,j-1} - T_{i,\\,j-1}\\bigr) \\big/ @den@'),
+      b('coef',
+        'c \u2190 T[0, 0..n\u22121]',
+        'c = T[0, 0..n-1]',
+        'set c to row 0 of T',
+        'the coefficients c are row 0 of T',
+        'c_j \\leftarrow T_{0,j} \\quad \\text{for } j = 0,\\dots,n-1'),
+      b('ret',
+        'return c, T',
+        'return c, T',
+        'return c and T',
+        'report the coefficients c and the table T',
+        '\\textbf{return } c, T'),
+    ],
+    solution: [
+      ['def', 0], ['n', 1], ['tab', 1], ['col0', 1], ['loopj', 1],
+      ['loopi', 2], ['rec', 3], ['coef', 1], ['ret', 1],
+    ],
+    decoys: [
+      b('d_num',
+        'T[i, j] \u2190 (T[i, j\u22121] \u2212 T[i+1, j\u22121]) / @den@',
+        'T[i, j] = (T[i, j-1] - T[i+1, j-1]) / @den@',
+        'set T[i][j] to (T[i][j-1] - T[i+1][j-1]) / @den@',
+        'divide (T[i][j-1] - T[i+1][j-1]) by @den@ and store it in T[i][j]',
+        'T_{i,j} \\leftarrow \\bigl(T_{i,\\,j-1} - T_{i+1,\\,j-1}\\bigr) \\big/ @den@'),
+      b2('d_swap',
+        ['for i \u2190 0 to n\u22121:', 'for j \u2190 1 to n\u2212i\u22121:'],
+        ['for i = 0 to n-1:', 'for j = 1 to n-i-1:'],
+        ['for i from 0 to n-1:', 'for j from 1 to n-i-1:'],
+        ['for each row i from 0 to n-1:', 'for each order j from 1 to n-i-1:'],
+        ['\\textbf{for } i \\leftarrow 0 \\textbf{ to } n-1', '\\textbf{for } j \\leftarrow 1 \\textbf{ to } n-i-1']),
+      b('d_colc',
+        'c \u2190 T[0..n\u22121, 0]',
+        'c = T[0..n-1, 0]',
+        'set c to column 0 of T',
+        'the coefficients c are column 0 of T',
+        'c_i \\leftarrow T_{i,0} \\quad \\text{for } i = 0,\\dots,n-1'),
+    ],
+  },
+
+  {
+    title: 'Puzzle 2. Print the table as a triangle',
+    note: 'Pre-placed on purpose: only the inner bound is missing, and the whole gate exists for the contrast with puzzle 1\u2019s bound. No decoys.',
+    blanks: { rowlen: 8 },
+    blocks: [
+      b('def',
+        'function print_dd_table(x, T):',
+        'function print_dd_table(x, T):',
+        'function print_dd_table(x, T):',
+        'to print the table as a triangle, given nodes x and table T:',
+        '\\textbf{function } \\textit{print\\_dd\\_table}(x, T)'),
+      b('n',
+        'n \u2190 length(x)',
+        'n = length(x)',
+        'set n to length(x)',
+        'count the nodes; call that n',
+        'n \\leftarrow \\operatorname{length}(x)'),
+      b('loopi',
+        'for i \u2190 0 to n\u22121:',
+        'for i = 0 to n-1:',
+        'for i from 0 to n-1:',
+        'for each row i from 0 to n-1:',
+        '\\textbf{for } i \\leftarrow 0 \\textbf{ to } n-1'),
+      b('loopj',
+        'for j \u2190 0 to @rowlen@:',
+        'for j = 0 to @rowlen@:',
+        'for j from 0 to @rowlen@:',
+        'for each entry j from 0 to @rowlen@:',
+        '\\textbf{for } j \\leftarrow 0 \\textbf{ to } @rowlen@'),
+      b('pr',
+        'print T[i, j]',
+        'print T[i, j]',
+        'print T[i][j]',
+        'print the entry T[i][j]',
+        '\\textbf{print } T_{i,j}'),
+    ],
+    solution: [['def', 0], ['n', 1], ['loopi', 1], ['loopj', 2], ['pr', 3]],
+    decoys: [],
+  },
+
+  {
+    title: 'Puzzle 3. Evaluate the polynomial at a point',
+    note: 'Six blocks, one blank, two decoys. The blank is the coefficient the sweep starts from.',
+    blanks: { init: 6 },
+    blocks: [
+      b('def',
+        'function newton_eval(xn, c, t):',
+        'function newton_eval(xn, c, t):',
+        'function newton_eval(xn, c, t):',
+        'to evaluate the Newton polynomial at t, given nodes xn and coefficients c:',
+        '\\textbf{function } \\textit{newton\\_eval}(x, c, t)'),
+      b('n',
+        'n \u2190 length(c)',
+        'n = length(c)',
+        'set n to length(c)',
+        'count the coefficients; call that n',
+        'n \\leftarrow \\operatorname{length}(c)'),
+      b('init',
+        'p \u2190 c[@init@]',
+        'p = c[@init@]',
+        'set p to c[@init@]',
+        'start with p equal to c[@init@]',
+        'p \\leftarrow c_{@!init@}'),
+      b('loop',
+        'for k \u2190 n\u22122 down to 0:',
+        'for k = n-2 down to 0:',
+        'for k from n-2 down to 0:',
+        'for each k from n-2 counting down to 0:',
+        '\\textbf{for } k \\leftarrow n-2 \\textbf{ down to } 0'),
+      b('upd',
+        'p \u2190 p \u00b7 (t \u2212 xn[k]) + c[k]',
+        'p = p * (t - xn[k]) + c[k]',
+        'set p to p * (t - xn[k]) + c[k]',
+        'replace p by p * (t - xn[k]) + c[k]',
+        'p \\leftarrow p\\,(t - x_k) + c_k'),
+      b('ret',
+        'return p',
+        'return p',
+        'return p',
+        'report p',
+        '\\textbf{return } p'),
+    ],
+    solution: [['def', 0], ['n', 1], ['init', 1], ['loop', 1], ['upd', 2], ['ret', 1]],
+    decoys: [
+      b('d_fwd',
+        'for k \u2190 1 to n\u22121:',
+        'for k = 1 to n-1:',
+        'for k from 1 to n-1:',
+        'for each k from 1 up to n-1:',
+        '\\textbf{for } k \\leftarrow 1 \\textbf{ to } n-1'),
+      b('d_node',
+        'p \u2190 p \u00b7 (t \u2212 c[k]) + c[k]',
+        'p = p * (t - c[k]) + c[k]',
+        'set p to p * (t - c[k]) + c[k]',
+        'replace p by p * (t - c[k]) + c[k]',
+        'p \\leftarrow p\\,(t - c_k) + c_k'),
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------------------
+
+let style = 'current';
+let mathIds = [];   // { id, blank, width } to swap after typesetting
+
+function el(tag, cls) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  return n;
+}
+
+function blankInput(name, width, enabled) {
+  const input = el('input', 'lp-blank');
+  input.type = 'text';
+  input.size = width || 10;
+  input.spellcheck = false;
+  input.disabled = !enabled;
+  input.setAttribute('aria-label', 'blank ' + name);
+  return input;
+}
+
+// A plain-text line: split at @name@ and drop an input in each gap.
+function renderTextLine(row, text, blanks, enabled) {
+  for (const part of text.split(/(@!?[a-z_]+@)/g)) {
+    const m = part.match(/^@!?([a-z_]+)@$/);
+    if (!m) { if (part) row.appendChild(document.createTextNode(part)); continue; }
+    row.appendChild(blankInput(m[1], blanks[m[1]], enabled));
+  }
+}
+
+// A mathematical line. @name@ splits the LaTeX and takes an input between the
+// two fragments; @!name@ stays inside the formula as a box, to be swapped for an
+// input once MathJax has typeset the line.
+function renderMathLine(row, latex, blanks, enabled) {
+  row.classList.add('mk-math-line');
+
+  // A @!name@ blank must not split the line: "p \leftarrow c_{" is not a
+  // formula. It stays where it is, as a box, and becomes an input after MathJax
+  // has run. This is the whole difficulty with a subscript blank.
+  const marked = latex.replace(/@!([a-z_]+)@/g, (_, name) => {
+    const id = 'mb-' + (mathIds.length + 1);
+    mathIds.push({ id, blank: name, width: blanks[name], enabled });
+    return '\\cssId{' + id + '}{\\square}';
+  });
+
+  for (const part of marked.split(/(@[a-z_]+@)/g)) {
+    const m = part.match(/^@([a-z_]+)@$/);
+    if (m) {
+      row.appendChild(blankInput(m[1], blanks[m[1]], enabled));
+      continue;
+    }
+    if (!part.trim()) continue;
+    const span = el('span');
+    span.textContent = '\\(' + part + '\\)';
+    row.appendChild(span);
+  }
+}
+
+function renderBlock(block, gate, enabled) {
+  const div = el('div', 'lp-block');
+  const text = block.text[style];
+  const lines = Array.isArray(text) ? text : [text];
+  lines.forEach((line, k) => {
+    const row = el('span', 'lp-line');
+    if (block.fused && k) row.style.setProperty('--rel', String(k));
+    if (style === 'math') renderMathLine(row, line, gate.blanks, enabled);
+    else renderTextLine(row, line, gate.blanks, enabled);
+    div.appendChild(row);
+  });
+  return div;
+}
+
+function renderGate(gate) {
+  const wrap = el('section', 'lab-puzzle');
+
+  const head = el('div', 'lp-head');
+  const h = el('h3', 'lp-title');
+  h.textContent = gate.title;
+  head.appendChild(h);
+  const note = el('p', 'lp-note');
+  note.textContent = gate.note;
+  head.appendChild(note);
+  wrap.appendChild(head);
+
+  const body = el('div', 'lp-body');
+
+  const wsWrap = el('div', 'lp-workspace-wrap');
+  const guides = el('div', 'lp-guides');
+  guides.setAttribute('aria-hidden', 'true');
+  const maxIndent = Math.max(...gate.solution.map(([, ind]) => ind));
+  for (let i = 0; i <= maxIndent; i++) {
+    const g = el('span', 'lp-guide');
+    g.style.left = 'calc(var(--lp-indent) * ' + i + ')';
+    guides.appendChild(g);
+  }
+  wsWrap.appendChild(guides);
+
+  const ws = el('ol', 'lp-workspace');
+  const byId = {};
+  for (const blk of gate.blocks) byId[blk.id] = blk;
+  for (const [id, indent] of gate.solution) {
+    const row = el('li', 'lp-row');
+    row.style.setProperty('--indent', String(indent));
+    row.appendChild(renderBlock(byId[id], gate, true));
+    ws.appendChild(row);
+  }
+  wsWrap.appendChild(ws);
+  body.appendChild(wsWrap);
+
+  if (gate.decoys.length) {
+    const trayWrap = el('div', 'lp-tray-wrap');
+    const trayHead = el('p', 'lp-tray-head');
+    trayHead.textContent = 'Tray (the decoys, as a student first sees them)';
+    trayWrap.appendChild(trayHead);
+    const tray = el('ul', 'lp-tray');
+    for (const d of gate.decoys) {
+      const row = el('li', 'lp-row');
+      row.appendChild(renderBlock(d, gate, false));
+      tray.appendChild(row);
+    }
+    trayWrap.appendChild(tray);
+    body.appendChild(trayWrap);
+  }
+
+  wrap.appendChild(body);
+  return wrap;
+}
+
+function renderPanel() {
+  const s = STYLES[style];
+  const p = el('div', 'mk-panel');
+
+  const h = el('h2');
+  h.textContent = s.name;
+  p.appendChild(h);
+
+  const what = el('p');
+  what.textContent = s.what;
+  p.appendChild(what);
+
+  const table = el('table', 'mk-key');
+  const thead = el('tr');
+  for (const label of ['', 'How it is written', 'What the student has to know']) {
+    const th = el('th');
+    th.textContent = label;
+    thead.appendChild(th);
+  }
+  table.appendChild(thead);
+  for (const [what_, how, why] of s.key) {
+    const tr = el('tr');
+    const a = el('td');
+    a.textContent = what_;
+    const bcell = el('td', style === 'math' ? '' : 'mk-mono');
+    bcell.textContent = how;
+    const c = el('td');
+    c.textContent = why;
+    tr.append(a, bcell, c);
+    table.appendChild(tr);
+  }
+  p.appendChild(table);
+
+  const cost = el('p', 'mk-cost');
+  const b_ = el('b');
+  b_.textContent = 'Cost to build: ';
+  cost.appendChild(b_);
+  cost.appendChild(document.createTextNode(s.cost));
+  p.appendChild(cost);
+
+  const flag = el('p', 'mk-flag');
+  flag.textContent = s.flag;
+  p.appendChild(flag);
+
+  return p;
+}
+
+function render() {
+  mathIds = [];
+
+  const panel = document.getElementById('panel');
+  panel.innerHTML = '';
+  panel.appendChild(renderPanel());
+
+  const gates = document.getElementById('gates');
+  gates.innerHTML = '';
+  for (const gate of GATES) gates.appendChild(renderGate(gate));
+
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    // Scoped to the two containers being rebuilt, or the sources section above
+    // loses the state MathJax keeps for its own already-typeset math.
+    window.MathJax.typesetClear && window.MathJax.typesetClear([panel, gates]);
+    window.MathJax.typesetPromise([panel, gates]).then(swapMathBlanks);
+  }
+}
+
+// The box-and-swap for a blank inside a subscript. If MathJax's output does not
+// carry the id (which is the case worth knowing about, and the one thing on this
+// page not checked in a browser), the input is appended after the formula with a
+// label instead, so the line is still fillable.
+function swapMathBlanks() {
+  for (const spec of mathIds) {
+    const node = document.getElementById(spec.id);
+    const input = blankInput(spec.blank, spec.width, spec.enabled);
+    if (node && node.parentNode) {
+      input.classList.add('mk-blank-inline');
+      node.parentNode.replaceChild(input, node);
+      continue;
+    }
+    const row = document.querySelector('.mk-math-line');
+    if (!row) continue;
+    const fallback = el('span', 'mk-blank-after');
+    fallback.appendChild(document.createTextNode(' with ' + spec.blank + ' = '));
+    fallback.appendChild(input);
+    row.appendChild(fallback);
+  }
+}
+
+document.querySelectorAll('input[name="style"]').forEach((r) => {
+  r.addEventListener('change', () => { style = r.value; render(); });
+});
+
+document.getElementById('theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+render();
+// MathJax loads deferred, so the first mathematical render can miss it.
+window.addEventListener('load', () => { if (style === 'math') render(); });
+</script>
+
+<style>
+  /* lab.css loads after the block at the top of this file, so .lab wins the
+     padding. The page needs room under the last tray either way. */
+  .mk-wrap { padding-bottom: 5rem; }
+
+  /* A mathematical line is a row of typeset fragments and inputs, so it cannot
+     use the pre-wrap whitespace the monospace lines rely on. */
+  .mk-math-line {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: normal;
+    font-size: 1rem;
+  }
+  .mk-math-line mjx-container { margin: 0 !important; }
+  .mk-blank-inline { vertical-align: baseline; }
+  .mk-blank-after { font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif; font-size: 0.85rem; }
+</style>
+</body>
+</html>
