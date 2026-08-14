@@ -550,14 +550,23 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
 
   var state = { courseFilter:'all', kindFilter:'all', query:'', showDrafts:false, sort:'az' };
 
+  // `permalink: pretty` in _config.yml turns page.html into page/index.html, so
+  // every page on this site is reached without its extension and with a trailing
+  // slash. Card data names the file, which is what an author thinks in, and this
+  // is the one place that turns a filename into the URL. Linking straight to
+  // `applets/de/wave-forced.html` is a 404, and it was one on 2026-08-13.
+  function pageUrl(file) {
+    return file ? String(file).replace(/\.html$/, '') + '/' : null;
+  }
+
   function enrich(a) {
     var c = COURSES.filter(function (x) { return x.key === a.course; })[0];
     // What the Type filter and the button caption go by. A map is an applet
     // that answers to its own name.
     var kindKey = a.flavor === 'map' ? 'map' : a.kind;
-    // Where the card leads. Every link is relative to this page, so a lab id is
-    // the whole link (/teaching/labs/<id>/) and an applet gives its own path.
-    var url = a.kind === 'lab' ? (a.lab ? a.lab + '/' : null) : (a.href || null);
+    // Where the card leads, relative to this page. A lab id is already the whole
+    // link; an applet names its own file.
+    var url = a.kind === 'lab' ? pageUrl(a.lab) : pageUrl(a.href);
     // The status tag is the master switch. A card is ready only when it is
     // tagged 'finalized' AND the thing it points at exists; flip it to 'drafted'
     // to hold it back. Everything not ready is hidden until the toggle asks.
