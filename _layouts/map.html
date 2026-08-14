@@ -5,7 +5,7 @@ layout: compress
 {% comment %}
   A concept map page. Same shape as lab.html and applet.html: no site header, no
   navigation, no site footer, and the standalone chrome reused out of
-  engine/lab.css so the bar and the footer cannot drift between the three.
+  engine/shell.css so the bar and the footer cannot drift between the three.
 
   The page itself is front matter only. Everything inside .cm is built at runtime
   by engine/map/map.js from data/maps/{map_id}.json, which tools/author writes.
@@ -19,15 +19,15 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  <body class="applet-page">
-    <a class="lab-skip" href="#cm-root">Skip to the map</a>
+  <body class="shell-page">
+    <a class="shell-skip" href="#cm-root">Skip to the map</a>
 
-    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/shell.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/teaching/labs/engine/map/map.css' | relative_url }}">
 
-    <div class="lab-bar">
-      <div class="lab-bar__inner">
-        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+    <div class="shell-bar">
+      <div class="shell-bar__inner">
+        <a class="shell-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
           <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
           <span>Labs and Applets</span>
         </a>
@@ -47,15 +47,15 @@ layout: compress
       </div>
     </main>
 
-    <footer class="lab-foot">
-      <div class="lab-foot__inner">
-        <p class="lab-foot__lede">I built this map with AI assistance and checked
+    <footer class="shell-foot">
+      <div class="shell-foot__inner">
+        <p class="shell-foot__lede">I built this map with AI assistance and checked
         the mathematics myself. Nothing you write here leaves your browser.</p>
 
-        <details class="lab-foot__more">
+        <details class="shell-foot__more">
           <summary>How this map was built, and what I expect from you</summary>
-          <div class="lab-foot__body">
-            <section class="lab-foot__sec">
+          <div class="shell-foot__body">
+            <section class="shell-foot__sec">
               <h2>How this map was built</h2>
               <p>The map engine and the first drafts of the writing were built
               with the help of a large language model. Every relationship on the
@@ -70,7 +70,7 @@ layout: compress
               saved on your own machine, and no request leaves it.</p>
             </section>
 
-            <section class="lab-foot__sec">
+            <section class="shell-foot__sec">
               <h2>Using AI on this map</h2>
               <p>A chatbot will name any one of these arrows for you. What it
               cannot do is hold the whole diagram in your head, which is what an
@@ -84,7 +84,7 @@ layout: compress
           </div>
         </details>
 
-        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        <p class="shell-foot__licence">Contents by Subhadip Chowdhury, licensed
         under a <a rel="license"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
         Commons Attribution-NonCommercial-ShareAlike 4.0 International

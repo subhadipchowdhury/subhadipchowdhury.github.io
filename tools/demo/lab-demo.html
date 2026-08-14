@@ -10,7 +10,7 @@
   GitHub's side. Same stylesheet, same module, same spec.
 
   The lab layout no longer extends default.html, so the chrome below the grey
-  strip is the real thing rather than a stand-in: the same .lab-bar, the same
+  strip is the real thing rather than a stand-in: the same .shell-bar, the same
   notation key and the same footer markup the layout emits. Only the grey strip
   at the very top is the demo's own, and the theme button is wired here because
   javascript/theme.js is not loaded.
@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 
 <style>
-  /* The site tokens lab.css consumes, copied from css/stylesheet.scss. */
+  /* The site tokens shell.css and lab.css consume, from css/stylesheet.scss. */
   :root {
     --color-bg: #D9D9D9;
     --color-surface: #FFFFFF;
@@ -75,7 +75,7 @@
   }
 
   /* .theme-toggle base rules, copied from css/stylesheet.scss. The --bar
-     variant itself lives in lab.css, like the rest of the lab chrome. */
+     variant itself lives in engine/shell.css, with the rest of the chrome. */
   .theme-toggle {
     -webkit-appearance: none;
     appearance: none;
@@ -119,9 +119,10 @@
   }
   .demo-bar strong { font-weight: normal; color: var(--color-muted); }
 </style>
+<link rel="stylesheet" href="../../teaching/labs/engine/shell.css">
 <link rel="stylesheet" href="../../teaching/labs/engine/lab/lab.css">
 </head>
-<body class="lab-page">
+<body class="shell-page">
 
 <div class="demo-bar">
   <strong>Lab page demo &middot; lab2-newton</strong>
@@ -129,9 +130,9 @@
   <span id="status"></span>
 </div>
 
-<div class="lab-bar">
-  <div class="lab-bar__inner">
-    <a class="lab-bar__back" href="../../teaching/labs/">
+<div class="shell-bar">
+  <div class="shell-bar__inner">
+    <a class="shell-bar__back" href="../../teaching/labs/">
       <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
       <span>Labs and Applets</span>
     </a>
@@ -191,16 +192,16 @@
   </div>
 </main>
 
-<footer class="lab-foot">
-  <div class="lab-foot__inner">
-    <p class="lab-foot__lede">I built these labs with AI assistance and
+<footer class="shell-foot">
+  <div class="shell-foot__inner">
+    <p class="shell-foot__lede">I built these labs with AI assistance and
     checked the mathematics myself. Nothing you do on this page leaves your
     browser.</p>
 
-    <details class="lab-foot__more">
+    <details class="shell-foot__more">
       <summary>How this lab was built, and what I expect from you</summary>
-      <div class="lab-foot__body">
-        <section class="lab-foot__sec">
+      <div class="shell-foot__body">
+        <section class="shell-foot__sec">
           <h2>How this lab was built</h2>
           <p>The puzzle engine, the build pipeline and the first drafts of the
           writing were built with the help of a large language model. I checked
@@ -215,7 +216,7 @@
           on your own machine, and no request leaves the page.</p>
         </section>
 
-        <section class="lab-foot__sec">
+        <section class="shell-foot__sec">
           <h2>Using AI on this lab</h2>
           <p>You could paste any of these puzzles into a chatbot and have the
           answer in seconds. The answer isn't what the lab is for. The blocks
@@ -229,7 +230,7 @@
       </div>
     </details>
 
-    <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+    <p class="shell-foot__licence">Contents by Subhadip Chowdhury, licensed
     under a <a rel="license"
     href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
     Commons Attribution-NonCommercial-ShareAlike 4.0 International

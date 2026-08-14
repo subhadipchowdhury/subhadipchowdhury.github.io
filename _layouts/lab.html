@@ -12,8 +12,9 @@ layout: compress
   head.html is still included, and has to be: it carries the pre-paint theme
   script, MathJax for the LaTeX in the briefs, the fonts, and the site
   stylesheet that defines the --color-*, --accent and --border-color tokens
-  lab.css builds its --lab-* layer on top of. navigation.js is loaded from
-  there too and early-returns when it finds no nav, so it costs nothing.
+  shell.css and lab.css build their --shell-* and --lab-* layers on.
+  navigation.js is loaded from there too and early-returns when it finds no nav,
+  so it costs nothing.
 
   The page itself is front matter only: everything inside .lab is built at
   runtime from the spec that tools/build_labs.py generates out of the
@@ -23,14 +24,15 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  <body class="lab-page">
-    <a class="lab-skip" href="#lab-root">Skip to the lab</a>
+  <body class="shell-page">
+    <a class="shell-skip" href="#lab-root">Skip to the lab</a>
 
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/shell.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab/lab.css' | relative_url }}">
 
-    <div class="lab-bar">
-      <div class="lab-bar__inner">
-        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+    <div class="shell-bar">
+      <div class="shell-bar__inner">
+        <a class="shell-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
           <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
           <span>Labs and Applets</span>
         </a>
@@ -91,16 +93,16 @@ layout: compress
       </div>
     </main>
 
-    <footer class="lab-foot">
-      <div class="lab-foot__inner">
-        <p class="lab-foot__lede">I built these labs with AI assistance and
+    <footer class="shell-foot">
+      <div class="shell-foot__inner">
+        <p class="shell-foot__lede">I built these labs with AI assistance and
         checked the mathematics myself. Nothing you do on this page leaves your
         browser.</p>
 
-        <details class="lab-foot__more">
+        <details class="shell-foot__more">
           <summary>How this lab was built, and what I expect from you</summary>
-          <div class="lab-foot__body">
-            <section class="lab-foot__sec">
+          <div class="shell-foot__body">
+            <section class="shell-foot__sec">
               <h2>How this lab was built</h2>
               <p>The puzzle engine, the build pipeline and the first drafts of
               the writing were built with the help of a large language model. I
@@ -116,7 +118,7 @@ layout: compress
               saved on your own machine, and no request leaves the page.</p>
             </section>
 
-            <section class="lab-foot__sec">
+            <section class="shell-foot__sec">
               <h2>Using AI on this lab</h2>
               <p>You could paste any of these puzzles into a chatbot and have
               the answer in seconds. The answer isn't what the lab is for. The
@@ -130,7 +132,7 @@ layout: compress
           </div>
         </details>
 
-        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        <p class="shell-foot__licence">Contents by Subhadip Chowdhury, licensed
         under a <a rel="license"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
         Commons Attribution-NonCommercial-ShareAlike 4.0 International

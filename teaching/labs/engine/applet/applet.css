@@ -1,8 +1,8 @@
 /* Applet pages: the shared shell, the controls, and the plot palette.
  *
- * An applet reuses the standalone chrome from engine/lab.css (.lab-skip,
- * .lab-bar, .lab-foot, .theme-toggle--bar) so the bar and footer cannot drift
- * between a lab and an applet, and so the 1076px content row documented in
+ * An applet reuses the standalone chrome from engine/shell.css (.shell-skip,
+ * .shell-bar, .shell-foot, .theme-toggle--bar) so the bar and footer cannot
+ * drift between a lab and an applet, and so the 1076px content row documented in
  * HANDOFF.md holds on both. This file adds the --ap-* layer: page furniture,
  * form controls, and the colours a canvas or a Plotly plot draws with.
  *
@@ -70,7 +70,7 @@ html[data-theme="dark"] {
 
 .ap {
   padding: 1rem 0 4rem;
-  font-family: var(--lab-sans);
+  font-family: var(--shell-sans);
   color: var(--color-text);
 }
 
@@ -99,7 +99,7 @@ html[data-theme="dark"] {
 .ap h3 { text-align: left; }
 
 .ap h1 {
-  font-family: var(--lab-serif);
+  font-family: var(--shell-serif);
   font-size: clamp(1.6rem, 3.4vw, 2.2rem);
   line-height: 1.15;
   margin: 0 0 0.4rem;
@@ -107,7 +107,7 @@ html[data-theme="dark"] {
 }
 
 .ap h2 {
-  font-family: var(--lab-semi);
+  font-family: var(--shell-semi);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -171,7 +171,7 @@ html[data-theme="dark"] {
 
 .ap-field > label,
 .ap-label {
-  font-family: var(--lab-semi);
+  font-family: var(--shell-semi);
   font-size: 0.82rem;
   color: var(--color-text);
 }
@@ -194,7 +194,7 @@ html[data-theme="dark"] {
 /* Numbers a student reads off the page wear the text token, never a series
    colour: a coloured number reads as a fourth series that is not on the plot. */
 .ap-value {
-  font-family: var(--lab-mono);
+  font-family: var(--shell-mono);
   font-size: 0.82rem;
   font-variant-numeric: tabular-nums;
   color: var(--color-text);
@@ -212,7 +212,7 @@ html[data-theme="dark"] {
   border-radius: 6px;
 }
 
-.ap input[type="number"] { font-family: var(--lab-mono); }
+.ap input[type="number"] { font-family: var(--shell-mono); }
 
 /* In a label-and-value row the input takes what is left of the row. Setting a
    width on it at the call site clips long values. */
@@ -266,7 +266,7 @@ html[data-theme="dark"] {
   justify-content: center;
   gap: 0.45em;
   padding: 0.5rem 0.9rem;
-  font-family: var(--lab-semi);
+  font-family: var(--shell-semi);
   font-size: 0.85rem;
   line-height: 1.2;
   color: var(--color-text);
@@ -380,7 +380,7 @@ html[data-theme="dark"] {
 }
 
 .ap-badge__label {
-  font-family: var(--lab-semi);
+  font-family: var(--shell-semi);
   font-size: 0.66rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -405,16 +405,16 @@ html[data-theme="dark"] {
 }
 
 .ap-table th {
-  font-family: var(--lab-semi);
+  font-family: var(--shell-semi);
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-muted);
 }
 
-.ap-table td { font-family: var(--lab-mono); font-variant-numeric: tabular-nums; }
+.ap-table td { font-family: var(--shell-mono); font-variant-numeric: tabular-nums; }
 .ap-table tr:last-child td { border-bottom: 0; }
-.ap-table__empty { font-family: var(--lab-sans); color: var(--color-muted); }
+.ap-table__empty { font-family: var(--shell-sans); color: var(--color-muted); }
 
 /* Hidden until something is inconsistent, and it says so in words as well as in
    colour. */

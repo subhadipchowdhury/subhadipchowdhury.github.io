@@ -8,10 +8,11 @@ layout: compress
   the navigation and the site footer, and replaces them with a way back to the
   catalogue, a theme control, and the licence and AI disclosure.
 
-  It reuses the chrome out of engine/lab.css (.lab-skip, .lab-bar, .lab-foot,
-  .theme-toggle--bar) instead of restyling it here, so the bar and the footer
-  cannot drift between a lab and an applet and the 1076px content row documented
-  in HANDOFF.md holds on both. applets/applet.css adds the --ap-* layer on top.
+  It reuses the chrome out of engine/shell.css (.shell-skip, .shell-bar,
+  .shell-foot, .theme-toggle--bar) instead of restyling it here, so the bar and
+  the footer cannot drift between a lab and an applet and the 1076px content row
+  documented in HANDOFF.md holds on both. engine/applet/applet.css adds the
+  --ap-* layer on top.
 
   What differs from a lab: no notation key (an applet has no pseudocode), no
   spec fetch, and the disclosure footer speaks about an applet rather than a
@@ -29,19 +30,19 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  <body class="applet-page">
-    <a class="lab-skip" href="#ap-root">Skip to the applet</a>
+  <body class="shell-page">
+    <a class="shell-skip" href="#ap-root">Skip to the applet</a>
 
-    <link rel="stylesheet" href="{{ '/teaching/labs/engine/lab/lab.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/teaching/labs/engine/shell.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/teaching/labs/engine/applet/applet.css' | relative_url }}">
 
     {% for src in page.scripts %}
     <script src="{{ src | relative_url }}"></script>
     {% endfor %}
 
-    <div class="lab-bar">
-      <div class="lab-bar__inner">
-        <a class="lab-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
+    <div class="shell-bar">
+      <div class="shell-bar__inner">
+        <a class="shell-bar__back" href="{{ '/teaching/labs/' | relative_url }}">
           <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
           <span>Labs and Applets</span>
         </a>
@@ -61,16 +62,16 @@ layout: compress
       </div>
     </main>
 
-    <footer class="lab-foot">
-      <div class="lab-foot__inner">
-        <p class="lab-foot__lede">I built these applets with AI assistance and
+    <footer class="shell-foot">
+      <div class="shell-foot__inner">
+        <p class="shell-foot__lede">I built these applets with AI assistance and
         checked the mathematics myself. Nothing you do on this page leaves your
         browser.</p>
 
-        <details class="lab-foot__more">
+        <details class="shell-foot__more">
           <summary>How this applet was built, and what it is for</summary>
-          <div class="lab-foot__body">
-            <section class="lab-foot__sec">
+          <div class="shell-foot__body">
+            <section class="shell-foot__sec">
               <h2>How this applet was built</h2>
               <p>The simulation and the first drafts of the writing were built
               with the help of a large language model. I checked the mathematics
@@ -84,7 +85,7 @@ layout: compress
               anywhere. Every number you see was computed in your own browser.</p>
             </section>
 
-            <section class="lab-foot__sec">
+            <section class="shell-foot__sec">
               <h2>What this applet is for</h2>
               <p>There is nothing to submit here. Change one thing, say out loud
               what the plot will do, and then look. The prediction is where the
@@ -98,7 +99,7 @@ layout: compress
           </div>
         </details>
 
-        <p class="lab-foot__licence">Contents by Subhadip Chowdhury, licensed
+        <p class="shell-foot__licence">Contents by Subhadip Chowdhury, licensed
         under a <a rel="license"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
         Commons Attribution-NonCommercial-ShareAlike 4.0 International
