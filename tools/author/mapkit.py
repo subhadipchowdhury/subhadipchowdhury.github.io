@@ -19,6 +19,8 @@ import pathlib
 import re
 import sys
 
+import maptex
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "validate.mjs"
 OUT_DIR = ROOT / "teaching" / "labs" / "maps" / "data"
@@ -53,6 +55,10 @@ def node(letter, label, tikz, definition):
         "label": label,
         "x": x,
         "y": y,
+        # The tikz coordinate is kept as well as the pixel one, because
+        # tools/author/maptex.py draws the paper version from it. Converting back
+        # from pixels would round.
+        "tikz": list(tikz),
         "definition": definition,
     }
 
@@ -183,6 +189,96 @@ def crossings(data):
         for other in _hits_for(boxes, e, e.get("bend", 0)):
             hits.append((e["n"], other))
     return hits
+
+
+# --------------------------------------------------------------------------
+# The rest of what a drawing can get wrong, which reading the file cannot catch.
+#
+# Added after the first look at a rendered map, which showed two faults the
+# box-crossing check above is blind to: arrows 13 and 14 of the series map drawn on
+# top of each other, and arrow 8's numbered badge sitting on the border of a box.
+# --------------------------------------------------------------------------
+
+BADGE_R = 12          # .cm-badge is 1.5rem across
+ARROW_GAP = 14        # two arrows closer than this read as one
+
+
+def _clip(cx, cy, tx, ty, hw, hh, gap):
+    """clipToBox from maps/engine/map.js, so the two agree on where an arrow starts."""
+    dx, dy = tx - cx, ty - cy
+    length = (dx * dx + dy * dy) ** 0.5
+    if length == 0:
+        return cx, cy
+    sx = float("inf") if dx == 0 else hw / abs(dx)
+    sy = float("inf") if dy == 0 else hh / abs(dy)
+    s = min(sx, sy) + gap / length
+    return cx + dx * s, cy + dy * s
+
+
+def _curve(boxes, e):
+    """The drawn curve: both ends clipped to their measured boxes, as the page does."""
+    ax, ay, aw, ah = boxes[e["from"]]
+    bx, by, bw, bh = boxes[e["to"]]
+    bend = e.get("bend", 0)
+    ctrl = _control((ax, ay), (bx, by), bend)
+    p0 = _clip(ax, ay, ctrl[0], ctrl[1], aw / 2, ah / 2, 3)
+    p1 = _clip(bx, by, ctrl[0], ctrl[1], bw / 2, bh / 2, 5)
+    return p0, _control(p0, p1, bend), p1
+
+
+def _samples(boxes, e, n=48):
+    p0, c, p1 = _curve(boxes, e)
+    return [_bezier(i / n, p0, c, p1) for i in range(n + 1)]
+
+
+def badge_at(boxes, e):
+    p0, c, p1 = _curve(boxes, e)
+    return _bezier(e.get("at", 0.5), p0, c, p1)
+
+
+def overlaps(data):
+    """Everything that will read as a mistake in the drawing.
+
+    Three kinds, all of which happened on the first draft:
+      - a numbered badge sitting on or inside a box
+      - two badges on top of each other
+      - two arrows running close enough together to look like one arrow
+    """
+    boxes = _boxes(data)
+    out = []
+
+    spots = {e["n"]: badge_at(boxes, e) for e in data["edges"]}
+
+    for e in data["edges"]:
+        bxp, byp = spots[e["n"]]
+        for nid, (bx, by, bw, bh) in boxes.items():
+            if abs(bxp - bx) < bw / 2 + BADGE_R and abs(byp - by) < bh / 2 + BADGE_R:
+                out.append(f"badge {e['n']} sits on box {nid}")
+
+    numbers = [e["n"] for e in data["edges"]]
+    for i, a in enumerate(numbers):
+        for b in numbers[i + 1:]:
+            ax, ay = spots[a]
+            bx, by = spots[b]
+            if ((ax - bx) ** 2 + (ay - by) ** 2) ** 0.5 < 2 * BADGE_R + 3:
+                out.append(f"badges {a} and {b} overlap")
+
+    curves = {e["n"]: _samples(boxes, e) for e in data["edges"]}
+    for i, e in enumerate(data["edges"]):
+        for f in data["edges"][i + 1:]:
+            # Two arrows that share an endpoint necessarily meet at it, so only the
+            # middle of each is compared.
+            close = 0
+            for x1, y1 in curves[e["n"]][6:-6]:
+                for x2, y2 in curves[f["n"]][6:-6]:
+                    if ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 < ARROW_GAP:
+                        close += 1
+                        break
+            # One near-crossing is a crossing and is fine. A long stretch of them is
+            # two arrows drawn on top of each other.
+            if close > 6:
+                out.append(f"arrows {e['n']} and {f['n']} run together over {close} samples")
+    return out
 
 
 def suggest_bends(data):
@@ -320,6 +416,21 @@ def write(data):
         raise SystemExit(1)
 
     data["width"], data["height"] = stage_size(data["nodes"])
+
+    # The paper version, from this same data, so the two cannot drift. Done before
+    # the JSON is written so the served PDF's path can go into it.
+    #
+    # Each arrow's badge point is worked out here, in the stage's pixels, and handed
+    # over converted to tikz units. Letting tikz place it with `pos=` put it
+    # somewhere else on every bent arrow; see the note in maptex._diagram.
+    boxes = _boxes(data)
+    for e in data["edges"]:
+        bx, by = badge_at(boxes, e)
+        e["badge_tikz"] = (bx / SCALE - X_SHIFT, -(by / SCALE - Y_SHIFT))
+    data["pdf"] = maptex.build(data, SCALE)
+    for e in data["edges"]:
+        del e["badge_tikz"]
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / f"{data['id']}.json"
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
@@ -328,6 +439,7 @@ def write(data):
         f"{len(data['nodes'])} nodes, {len(data['edges'])} arrows, "
         f"{len(data.get('decoys', []))} decoys, stage {data['width']}x{data['height']}"
     )
+    print(f"  and {data['pdf']} plus tools/author/tex/{data['id']}-solutions.pdf")
 
     hits = crossings(data)
     if hits:
@@ -338,3 +450,9 @@ def write(data):
         for n, was, best in suggest_bends(data):
             note = "no bend clears it; move a box" if best is None else f"bend={best}"
             print(f"    arrow {n}: currently {was}, {note}")
+
+    laps = overlaps(data)
+    if laps:
+        print(f"  {len(laps)} thing(s) drawn on top of something else:")
+        for line in laps:
+            print("    " + line)

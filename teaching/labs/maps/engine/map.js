@@ -253,6 +253,17 @@ export class MapView {
     const status = el('div', 'cm-status');
     this.countEl = el('span', 'cm-count');
     status.appendChild(this.countEl);
+
+    // The same worksheet on paper, generated from this same data by
+    // tools/author/maptex.py. No `download` attribute: opening it in the browser's
+    // own viewer and saving from there is friendlier than forcing a file.
+    if (d.pdf) {
+      const paper = el('a', 'cm-btn', 'Paper version (PDF)');
+      paper.href = d.pdf;
+      paper.target = '_blank';
+      paper.rel = 'noopener';
+      status.appendChild(paper);
+    }
     const clear = el('button', 'cm-btn', 'Start over');
     clear.type = 'button';
     clear.addEventListener('click', () => {

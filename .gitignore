@@ -6,3 +6,9 @@ HANDOFF.md
 .venv/
 __pycache__/
 tools/author/VOICE.md
+
+# pdflatex leftovers from tools/author/maptex.py. The .tex and the answer-key .pdf
+# are tracked; the aux and log files are not.
+tools/author/tex/*.aux
+tools/author/tex/*.log
+tools/author/tex/*.out

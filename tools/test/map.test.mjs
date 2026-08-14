@@ -332,6 +332,14 @@ for (const [id, data] of MAPS) {
       }
     });
 
+    it('names a paper version that exists', () => {
+      assert(data.pdf === `/teaching/labs/maps/${id}.pdf`, `unexpected pdf path ${data.pdf}`);
+      // The JSON claiming a worksheet that was never built would put a dead link
+      // in the status bar of the page.
+      const bytes = readText('teaching' + data.pdf.slice('/teaching'.length));
+      assert(bytes.length > 20000, `${data.pdf} is too small to be the worksheet`);
+    });
+
     it('hints at every failing arrow', () => {
       for (const e of data.edges) {
         if (e.kind === 'fails') assert(e.hint, `arrow ${e.n} fails and has no hint`);

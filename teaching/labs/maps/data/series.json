@@ -10,6 +10,10 @@
       "label": "Infinite Series\n\\(\\sum a_n\\)",
       "x": 632,
       "y": 93,
+      "tikz": [
+        1.5,
+        0
+      ],
       "definition": "The expression \\(a_1 + a_2 + a_3 + \\cdots\\). It has no meaning until the partial sums give it one."
     },
     {
@@ -18,6 +22,10 @@
       "label": "Partial Sums\n\\(\\{s_n\\}\\)",
       "x": 458,
       "y": 209,
+      "tikz": [
+        -1.5,
+        -2
+      ],
       "definition": "\\(s_n = a_1 + \\cdots + a_n\\). An ordinary sequence, so everything you know about sequences applies to it."
     },
     {
@@ -26,6 +34,10 @@
       "label": "Convergent\nSeries",
       "x": 313,
       "y": 429,
+      "tikz": [
+        -4,
+        -5.8
+      ],
       "definition": "\\(\\sum a_n\\) converges when \\(\\{s_n\\}\\) has a finite limit, and the sum is that limit."
     },
     {
@@ -34,6 +46,10 @@
       "label": "Divergent\nSeries",
       "x": 951,
       "y": 429,
+      "tikz": [
+        7,
+        -5.8
+      ],
       "definition": "\\(\\sum a_n\\) diverges when \\(\\{s_n\\}\\) fails to converge, whether it runs away or oscillates."
     },
     {
@@ -42,6 +58,10 @@
       "label": "Divergence\nTest",
       "x": 893,
       "y": 209,
+      "tikz": [
+        6,
+        -2
+      ],
       "definition": "If \\(a_n \\not\\to 0\\) then \\(\\sum a_n\\) diverges. It is a test for divergence only, and it never certifies convergence."
     },
     {
@@ -50,6 +70,10 @@
       "label": "Geometric\nSeries",
       "x": 487,
       "y": 313,
+      "tikz": [
+        -1,
+        -3.8
+      ],
       "definition": "\\(\\sum ar^n\\), which converges exactly when \\(|r| < 1\\), with sum \\(a/(1-r)\\) and partial sums \\(a(1-r^n)/(1-r)\\)."
     },
     {
@@ -58,6 +82,10 @@
       "label": "Telescoping\nSeries",
       "x": 719,
       "y": 313,
+      "tikz": [
+        3,
+        -3.8
+      ],
       "definition": "\\(\\sum (b_n - b_{n+1})\\), whose partial sums collapse to \\(b_1 - b_{n+1}\\)."
     },
     {
@@ -66,6 +94,10 @@
       "label": "\\(p\\)-Series\n\\(\\sum 1/n^p\\)",
       "x": 516,
       "y": 731,
+      "tikz": [
+        -0.5,
+        -11
+      ],
       "definition": "Converges exactly when \\(p > 1\\). The boundary \\(p = 1\\) is the harmonic series, which diverges."
     },
     {
@@ -74,6 +106,10 @@
       "label": "Nonneg Series\n\\(+\\) MCT",
       "x": 168,
       "y": 586,
+      "tikz": [
+        -6.5,
+        -8.5
+      ],
       "definition": "If \\(a_n \\ge 0\\) the partial sums increase, so the monotone convergence theorem turns convergence into boundedness."
     },
     {
@@ -82,6 +118,10 @@
       "label": "Comparison\nTests",
       "x": 110,
       "y": 731,
+      "tikz": [
+        -7.5,
+        -11
+      ],
       "definition": "Direct: \\(0 \\le a_n \\le cb_n\\) eventually and \\(\\sum b_n\\) convergent gives \\(\\sum a_n\\) convergent. Limit: \\(\\lim a_n/b_n \\in (0,\\infty)\\) gives the same behaviour for both."
     },
     {
@@ -90,6 +130,10 @@
       "label": "Integral\nTest",
       "x": 313,
       "y": 731,
+      "tikz": [
+        -4,
+        -11
+      ],
       "definition": "If \\(f\\) is positive, continuous and eventually decreasing with \\(f(n) = a_n\\), then \\(\\sum a_n\\) and \\(\\int_1^\\infty f\\) converge or diverge together."
     },
     {
@@ -98,6 +142,10 @@
       "label": "Dirichlet's\nTest",
       "x": 429,
       "y": 586,
+      "tikz": [
+        -2,
+        -8.5
+      ],
       "definition": "If \\(a_n\\) decreases to \\(0\\) and the partial sums of \\(b_n\\) are bounded, then \\(\\sum a_n b_n\\) converges. Proved by summation by parts."
     },
     {
@@ -106,6 +154,10 @@
       "label": "Absolute\nConvergence",
       "x": 690,
       "y": 586,
+      "tikz": [
+        2.5,
+        -8.5
+      ],
       "definition": "\\(\\sum a_n\\) converges absolutely when \\(\\sum |a_n|\\) converges. This is strictly stronger than convergence."
     },
     {
@@ -114,6 +166,10 @@
       "label": "Conditional\nConvergence",
       "x": 777,
       "y": 731,
+      "tikz": [
+        4,
+        -11
+      ],
       "definition": "\\(\\sum a_n\\) converges conditionally when it converges and \\(\\sum |a_n|\\) does not. The convergence rests on cancellation."
     },
     {
@@ -122,6 +178,10 @@
       "label": "Ratio and\nRoot Tests",
       "x": 951,
       "y": 586,
+      "tikz": [
+        7,
+        -8.5
+      ],
       "definition": "With \\(L = \\lim |a_{n+1}/a_n|\\) or \\(L = \\limsup |a_n|^{1/n}\\): absolutely convergent if \\(L < 1\\), divergent if \\(L > 1\\), and no conclusion if \\(L = 1\\)."
     }
   ],
@@ -143,7 +203,7 @@
       "kind": "implies",
       "statement": "If the partial sums have a finite limit then the series converges, and its sum is that limit.",
       "why": "The definition read from left to right.",
-      "bend": -40,
+      "bend": 20,
       "at": 0.5
     },
     {
@@ -184,7 +244,7 @@
       "kind": "implies",
       "statement": "A geometric series converges exactly when its ratio has modulus below one, and then the closed form for the partial sums gives the sum.",
       "why": "One of the two series here whose partial sums you can write down, which is why the comparison tests are run against it.",
-      "bend": -30,
+      "bend": 0,
       "at": 0.5
     },
     {
@@ -254,7 +314,7 @@
       "kind": "implies",
       "statement": "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
       "why": "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\).",
-      "bend": -70,
+      "bend": 0,
       "at": 0.5
     },
     {
@@ -264,7 +324,7 @@
       "kind": "fails",
       "statement": "A convergent series need not converge absolutely, and the alternating harmonic series is the witness.",
       "why": "\\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on.",
-      "bend": 70,
+      "bend": -40,
       "at": 0.5,
       "hint": "Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs."
     },
@@ -304,5 +364,6 @@
     "The Cauchy criterion for series: control every far enough tail at once, not one chosen tail."
   ],
   "width": 1061,
-  "height": 801
+  "height": 801,
+  "pdf": "/teaching/labs/maps/series.pdf"
 }

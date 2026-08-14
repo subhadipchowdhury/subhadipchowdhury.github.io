@@ -10,6 +10,10 @@
       "label": "Pointwise\nConvergence",
       "x": 197,
       "y": 93,
+      "tikz": [
+        -6,
+        0
+      ],
       "definition": "For each \\(x\\) and each \\(\\varepsilon > 0\\) there is an \\(N\\) depending on both, with \\(|f_n(x) - f(x)| < \\varepsilon\\) for \\(n \\ge N\\)."
     },
     {
@@ -18,6 +22,10 @@
       "label": "Uniform\nConvergence",
       "x": 632,
       "y": 93,
+      "tikz": [
+        1.5,
+        0
+      ],
       "definition": "For each \\(\\varepsilon > 0\\) there is an \\(N\\) depending only on \\(\\varepsilon\\), with \\(|f_n(x) - f(x)| < \\varepsilon\\) for \\(n \\ge N\\) and every \\(x\\) at once."
     },
     {
@@ -26,6 +34,10 @@
       "label": "Cauchy\nCriterion",
       "x": 980,
       "y": 46,
+      "tikz": [
+        7.5,
+        0.8
+      ],
       "definition": "\\(\\{f_n\\}\\) converges uniformly exactly when for each \\(\\varepsilon > 0\\) there is an \\(N\\) with \\(|f_m(x) - f_n(x)| < \\varepsilon\\) for all \\(m, n \\ge N\\) and all \\(x\\)."
     },
     {
@@ -34,6 +46,10 @@
       "label": "Continuity\nof Limit",
       "x": 516,
       "y": 284,
+      "tikz": [
+        -0.5,
+        -3.3
+      ],
       "definition": "Each \\(f_n\\) continuous and \\(f_n \\to f\\) uniformly gives \\(f\\) continuous."
     },
     {
@@ -42,6 +58,10 @@
       "label": "Integrability\nof Limit",
       "x": 748,
       "y": 284,
+      "tikz": [
+        3.5,
+        -3.3
+      ],
       "definition": "Each \\(f_n\\) integrable and \\(f_n \\to f\\) uniformly gives \\(f\\) integrable, with \\(\\lim \\int f_n = \\int \\lim f_n\\)."
     },
     {
@@ -50,6 +70,10 @@
       "label": "Differentiability\nof Limit",
       "x": 980,
       "y": 284,
+      "tikz": [
+        7.5,
+        -3.3
+      ],
       "definition": "\\(f_n \\to f\\) pointwise together with \\(f_n' \\to g\\) uniformly gives \\(f' = g\\). It is the derivatives that have to converge uniformly."
     },
     {
@@ -58,6 +82,10 @@
       "label": "Dini's\nTheorem",
       "x": 226,
       "y": 458,
+      "tikz": [
+        -5.5,
+        -6.3
+      ],
       "definition": "\\(f_n \\to f\\) pointwise on \\([a,b]\\), monotonely, with every \\(f_n\\) and \\(f\\) continuous, gives \\(f_n \\to f\\) uniformly."
     },
     {
@@ -66,6 +94,10 @@
       "label": "Series of Functions\n\\(\\sum f_n\\)",
       "x": 458,
       "y": 458,
+      "tikz": [
+        -1.5,
+        -6.3
+      ],
       "definition": "\\(\\sum f_n\\) converges when its partial sums \\(S_N(x) = \\sum_{k \\le N} f_k(x)\\) do. A series of functions is a sequence of functions."
     },
     {
@@ -74,6 +106,10 @@
       "label": "Weierstrass\n\\(M\\)-test",
       "x": 777,
       "y": 458,
+      "tikz": [
+        4,
+        -6.3
+      ],
       "definition": "If \\(|f_n(x)| \\le M_n\\) for every \\(x\\) and \\(\\sum M_n < \\infty\\), then \\(\\sum f_n\\) converges uniformly and absolutely."
     },
     {
@@ -82,6 +118,10 @@
       "label": "Power Series\n\\(\\sum a_n(x-c)^n\\)",
       "x": 545,
       "y": 615,
+      "tikz": [
+        0,
+        -9
+      ],
       "definition": "A series of functions whose \\(n\\)th term is a monomial of degree \\(n\\) centred at \\(c\\)."
     },
     {
@@ -90,6 +130,10 @@
       "label": "Radius of\nConvergence \\(R\\)",
       "x": 893,
       "y": 615,
+      "tikz": [
+        6,
+        -9
+      ],
       "definition": "\\(\\sum a_n(x-c)^n\\) converges absolutely for \\(|x - c| < R\\) and diverges for \\(|x - c| > R\\). The endpoints are checked one at a time."
     },
     {
@@ -98,6 +142,10 @@
       "label": "Term-by-term\nDiff. and Integ.",
       "x": 429,
       "y": 748,
+      "tikz": [
+        -2,
+        -11.3
+      ],
       "definition": "Inside \\((c-R, c+R)\\) a power series can be differentiated and integrated term by term, and the result has the same radius \\(R\\)."
     },
     {
@@ -106,6 +154,10 @@
       "label": "Taylor\nSeries",
       "x": 719,
       "y": 748,
+      "tikz": [
+        3,
+        -11.3
+      ],
       "definition": "\\(\\sum f^{(n)}(a)(x-a)^n/n!\\). The coefficients are forced by differentiating the power series at its centre."
     },
     {
@@ -114,6 +166,10 @@
       "label": "Taylor series\nconverges to \\(f\\)",
       "x": 980,
       "y": 748,
+      "tikz": [
+        7.5,
+        -11.3
+      ],
       "definition": "The Taylor series converges to \\(f(x)\\) exactly when the remainder \\(R_N(x) = f(x) - P_N(x)\\) tends to zero."
     }
   ],
@@ -285,5 +341,6 @@
     "\\(e^{-1/x^2}\\) extended by \\(0\\) is infinitely differentiable at \\(0\\) with every Taylor coefficient zero, so its Taylor series converges and not to it."
   ],
   "width": 1090,
-  "height": 818
+  "height": 818,
+  "pdf": "/teaching/labs/maps/func-sequences.pdf"
 }

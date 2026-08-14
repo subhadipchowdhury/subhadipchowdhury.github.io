@@ -58,7 +58,7 @@ EDGES = [
     edge(2, "B", "C", "implies",
          "If the partial sums have a finite limit then the series converges, and its sum is that limit.",
          "The definition read from left to right.",
-         bend=-40),
+         bend=20),
 
     edge(3, "B", "D", "implies",
          "If the partial sums fail to converge then the series diverges, and running off to infinity is only one of the ways that happens.",
@@ -77,8 +77,7 @@ EDGES = [
 
     edge(6, "F", "C", "implies",
          "A geometric series converges exactly when its ratio has modulus below one, and then the closed form for the partial sums gives the sum.",
-         "One of the two series here whose partial sums you can write down, which is why the comparison tests are run against it.",
-         bend=-30),
+         "One of the two series here whose partial sums you can write down, which is why the comparison tests are run against it."),
 
     edge(7, "G", "C", "implies",
          "In a telescoping series consecutive terms cancel, so the partial sums collapse and converge exactly when \\(b_n\\) does.",
@@ -108,14 +107,13 @@ EDGES = [
 
     edge(13, "M", "C", "implies",
          "A series whose terms are absolutely summable converges, so the absolute version is the stronger property.",
-         "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\).",
-         bend=-70),
+         "The Cauchy criterion gives it: by the triangle inequality the tails of \\(\\sum |a_n|\\) control the tails of \\(\\sum a_n\\)."),
 
     edge(14, "C", "M", "fails",
          "A convergent series need not converge absolutely, and the alternating harmonic series is the witness.",
          "\\(\\sum (-1)^{n+1}/n\\) converges to \\(\\ln 2\\) while \\(\\sum 1/n\\) diverges. Dropping the signs destroys the cancellation the convergence was resting on.",
          hint="Both of the failing arrows go from something weaker to something stronger. This one is about what happens when you drop the signs.",
-         bend=70),
+         bend=-40),
 
     edge(15, "O", "M", "implies",
          "The ratio and root tests compare the sizes of the terms against a geometric series, so what they establish is the absolute version.",
