@@ -7,12 +7,14 @@ robots: false
 
 <h1>Wave equation and Fourier series</h1>
 
-<p class="ap-lede">A string pinned at \(x=0\) and \(x=\pi\), released from a shape
-you choose. No time stepping happens here. The initial data is expanded in the
-standing modes \(\sin(nx)\), each mode is advanced by its own \(\cos(nct)\) and
-\(\sin(nct)\), and the modes are summed. The sum is truncated at forty terms, so a
-shape with a corner in it is reproduced only to within the overshoot that truncation
-leaves.</p>
+<p class="ap-lede">Let's pin a string at \(x=0\) and \(x=\pi\), pull it into a
+shape of your choosing, and let go. Nothing here steps forward in time. Instead we
+write your shape as a sum of the standing modes \(\sin(nx)\), which is its Fourier
+sine series, move each mode along at its own frequency with \(\cos(nct)\) and
+\(\sin(nct)\), and add the modes back up. The sum stops at forty terms, so a shape
+with a corner in it comes back slightly rounded, with small ripples to either side
+of where the corner was. More terms would shrink those ripples, but slowly: a
+corner's coefficients only decay like \(1/n^2\).</p>
 
 <div class="ap-eqn">
   \[ u_{tt} = c^2 u_{xx}, \qquad u(0,t) = u(\pi,t) = 0, \qquad
@@ -56,15 +58,16 @@ leaves.</p>
           <span class="ap-value" id="wq-m-value">3</span>
         </div>
         <input type="range" id="wq-m" min="1" max="8" step="0.5" value="3">
-        <p class="ap-hint">A whole \(m\) is a mode of this string and needs one
-        coefficient. A half-integer \(m\) is not, and the table shows how many it
-        takes instead.</p>
+        <p class="ap-hint">A whole \(m\) is a mode of this string, so it needs one
+        coefficient and nothing else. A half-integer \(m\) isn't a mode, and the
+        table shows how many it takes instead. Why can't \(\sin(\tfrac52 x)\) be
+        one of the modes here?</p>
       </div>
 
       <p class="ap-hint" id="wq-draw-hint" style="margin-top:0.9rem;" hidden>Drag
-      across the figure to draw \(u(x,0)\). While you drag you see the drawing
-      itself; let go and you see its forty-mode approximation. Compare the two, and
-      note where the approximation departs from what you drew.</p>
+      across the figure to draw \(u(x,0)\). While you're dragging you see your own
+      drawing; let go and you see what forty modes make of it. Where do the two
+      disagree, and what did you draw there?</p>
     </div>
 
     <div class="ap-panel">
@@ -80,8 +83,9 @@ leaves.</p>
           <span class="ap-value" id="wq-time-value">0.00</span>
         </div>
         <input type="range" id="wq-time" min="0" max="31.4159" step="0.02" value="0">
-        <p class="ap-hint">The string is periodic with period \(2\pi\), so the
-        slider covers five returns to the start.</p>
+        <p class="ap-hint">Mode \(n\) has period \(2\pi/n\), and every one of those
+        divides \(2\pi\), so the whole motion repeats every \(2\pi\) whatever you
+        started from. The slider covers five returns to the start.</p>
       </div>
     </div>
 
@@ -96,10 +100,11 @@ leaves.</p>
         </thead>
         <tbody id="wq-coeffs"></tbody>
       </table>
-      <p class="ap-hint" style="margin-top:0.7rem;">A shape that is already a mode
-      needs one coefficient. A shape with a corner needs every mode, and its
-      coefficients decay like \(1/n^2\), which is slow enough to see in the
-      table.</p>
+      <p class="ap-hint" style="margin-top:0.7rem;">A shape that's already a mode
+      needs one coefficient and nothing else. A shape with a corner needs
+      infinitely many, and they only decay like \(1/n^2\), which is slow enough to
+      watch happening in the table. Try the pluck: it uses no even \(n\) at all
+      (why?).</p>
     </div>
   </div>
 </div>
@@ -155,31 +160,31 @@ leaves.</p>
       u: () => (x) => Math.sin(x),
       v: () => () => 0,
       tex: 'u(x,0) = \\sin x, \\quad u_t(x,0) = 0',
-      note: 'Fundamental mode, released from rest.'
+      note: 'The string starts in its lowest mode and is let go from rest, so the shape never changes and only the amplitude moves.'
     },
     '2': {
       u: (m) => (x) => Math.sin(m * x),
       v: () => () => 0,
       tex: 'u(x,0) = \\sin mx, \\quad u_t(x,0) = 0',
-      note: 'One harmonic, released from rest. A whole m is a mode, so the shape is fixed and only its amplitude changes; a half-integer m is not, and its expansion needs many modes.'
+      note: 'The string starts in a single harmonic and is let go from rest. A whole m is a mode of this string, so the shape stays put and only its amplitude changes. A half-integer m isn\'t a mode, and it takes many of them to build.'
     },
     '3': {
       u: () => (x) => 4 * Math.sin(x),
       v: () => (x) => Math.sin(2 * x),
       tex: 'u(x,0) = 4\\sin x, \\quad u_t(x,0) = \\sin 2x',
-      note: 'Shape on the first mode, velocity on the second. The two run at different frequencies, so the sum never repeats its own shape.'
+      note: 'The shape sits on the first mode and the velocity on the second. Each one keeps its own frequency, so watch how the string never settles into either shape for long.'
     },
     '4': {
       u: () => (x) => Math.sin(x) + Math.sin(2 * x) + Math.sin(3 * x) / 2 + Math.sin(4 * x) / 6,
       v: () => () => 0,
       tex: 'u(x,0) = \\sin x + \\sin 2x + \\tfrac12\\sin 3x + \\tfrac16\\sin 4x',
-      note: 'Four modes with the amplitudes written down for you. Check them against the table.'
+      note: 'Here the amplitudes of four modes are written down for you. Check them against the table before you press play.'
     },
     '5': {
       u: () => (x) => (x <= PI / 2 ? x : PI - x),
       v: () => () => 0,
       tex: 'u(x,0) = \\min(x, \\pi - x)',
-      note: 'A pluck. The corner at the midpoint is what makes the coefficients decay only like 1/n^2.'
+      note: 'Plucking the string puts a corner at the midpoint, and a corner is why the coefficients decay only like 1/n^2 instead of dying off quickly.'
     },
     '6': {
       u: () => () => 0,
@@ -191,13 +196,13 @@ leaves.</p>
         return (x) => amp * Math.exp(-Math.pow(x - centre, 2) / (2 * sigma * sigma));
       },
       tex: 'u(x,0) = 0, \\quad u_t(x,0) \\approx \\delta(x - \\pi/4)',
-      note: 'A hammer strike. The initial displacement is zero, so every bit of the motion comes from the initial velocity.'
+      note: 'A hammer leaves the string flat at t = 0, so all of the motion you see comes from the initial velocity and none of it from the initial shape.'
     },
     '7': {
       u: () => (x) => drawnAt(x),
       v: () => () => 0,
       tex: 'u(x,0) = \\text{your drawing}',
-      note: 'Your shape, released from rest, and then approximated by forty modes.'
+      note: 'This is your own shape, let go from rest. What you see moving is its forty-mode approximation and not the drawing itself.'
     }
   };
 

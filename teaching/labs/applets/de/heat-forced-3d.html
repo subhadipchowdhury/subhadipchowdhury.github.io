@@ -9,10 +9,11 @@ scripts:
 
 <h1>Forced heat equation</h1>
 
-<p class="ap-lede">A rod held at a fixed temperature at each end, with a heat
-source that varies along its length and not with time. From any starting profile
-the temperature converges to one steady state, and that state is determined by the
-source together with the two end values. The surface below plots the whole history:
+<p class="ap-lede">Here we hold each end of a rod at a fixed temperature and heat
+it along its length with a source \(f(x)\) that doesn't change with time. Does it
+matter how warm the rod was to begin with? Start it anywhere you like and it ends
+up at the same steady state every time, and that state is fixed by the source and
+the two end values alone. The surface below plots the whole history at once:
 position across, time back, temperature up.</p>
 
 <div class="ap-eqn">
@@ -71,9 +72,9 @@ position across, time back, temperature up.</p>
 </div>
 
 <p class="ap-figcaption">Drag to turn the surface. The profile at the back is the
-steady state, and the variation near the front is what remains of the starting
-profile. Set a starting profile that disagrees with an end value, and time how long
-the disagreement survives.</p>
+steady state, and the bumps near the front are what's left of the shape you started
+from. Try a starting shape that disagrees with one of the end values, and watch how
+little time the rod needs to erase the disagreement.</p>
 
 <script type="module">
   import { plotColors, onTheme, typeset } from '{{ '/teaching/labs/engine/applet/applet.js' | relative_url }}';
@@ -205,7 +206,7 @@ the disagreement survives.</p>
     if (Math.abs(right - endB()) > 0.05) parts.push('at the right end it starts at ' + right.toFixed(1) + ' while the end is held at ' + endB());
     if (parts.length === 0) { warnEl.classList.remove('is-on'); return; }
     warnEl.textContent = 'The starting shape disagrees with the ends: ' + parts.join(', ') +
-      '. There is a jump at t = 0, and the rod will erase it almost immediately.';
+      ". That's a jump at t = 0, and the rod will erase it almost immediately.";
     warnEl.classList.add('is-on');
   }
 

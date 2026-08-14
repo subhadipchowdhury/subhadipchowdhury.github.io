@@ -7,10 +7,12 @@ robots: false
 
 <h1>Forced wave equation</h1>
 
-<p class="ap-lede">A string pinned at both ends, driven by a force that varies
-along its length and not with time. The equation is undamped, so the motion never
-decays: the string oscillates about the steady shape \(v(x)\) solving
-\(c^2 v'' + \sin(2\pi k x) = 0\), which is the dashed curve.</p>
+<p class="ap-lede">Here we push on a string that's pinned at both ends, with a
+force that varies along the string and not with time. Push on something once and
+you expect it to settle where you've pushed it, but there's no damping in this
+equation, so nothing ever decays. Instead the string oscillates forever about the
+shape the force would have held it in, and that's the dashed curve: \(v(x)\), the
+solution of \(c^2 v'' + \sin(2\pi k x) = 0\) with both ends pinned.</p>
 
 <div class="ap-eqn">
   \[ u_{tt} = c^2 u_{xx} + \sin(2\pi k x), \qquad u(0,t) = u(1,t) = 0, \qquad u(x,0) = u_t(x,0) = 0 \]
@@ -36,9 +38,10 @@ decays: the string oscillates about the steady shape \(v(x)\) solving
           </div>
         </div>
       </div>
-      <p class="ap-figcaption">The vertical scale is taken from the peak of
-      \(v\), so the drawing keeps its size as the response shrinks. Read the
-      amplitude off the peak below rather than off the picture.</p>
+      <p class="ap-figcaption">The vertical scale comes from the peak of \(v\),
+      so the picture keeps its size however small the response gets. That means
+      the picture can't tell you the amplitude; read that off the number
+      below.</p>
     </div>
   </div>
 
@@ -60,8 +63,9 @@ decays: the string oscillates about the steady shape \(v(x)\) solving
             <span class="ap-value" id="wf-k-value">1</span>
           </div>
           <input type="range" id="wf-k" min="1" max="5" step="1" value="1">
-          <p class="ap-hint">Whole numbers, so the force completes \(k\) full
-          periods across the string.</p>
+          <p class="ap-hint">\(k\) is a whole number here, so the force completes
+          \(k\) full periods along the string and pushes the two halves of each
+          period in opposite directions.</p>
         </div>
       </div>
     </div>
