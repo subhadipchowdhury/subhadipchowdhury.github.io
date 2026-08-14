@@ -308,6 +308,24 @@ function freshView(data, sized) {
   return view;
 }
 
+describe('the stylesheet', () => {
+  // The stub has no cascade, so `hidden` works there whatever the CSS says. This is
+  // the only way the suite can see the trap that shipped a dead Hide button: an
+  // author `display` on a container beats the UA's `[hidden] { display: none }`.
+  const css = String(readText('teaching/labs/maps/engine/map.css', 'utf8'));
+
+  it('makes the hidden attribute work inside .cm', () => {
+    assert(/\.cm \[hidden\]\s*\{[^}]*display:\s*none/.test(css),
+      'map.css needs `.cm [hidden] { display: none }`, or every element the engine ' +
+      'hides that carries an author display stays visible');
+  });
+
+  it('still sets a display on the board, which is why the guard is needed', () => {
+    assert(/\.cm-board\s*\{[^}]*display:\s*grid/.test(css),
+      'if .cm-board stops being a grid, check whether the guard is still load-bearing');
+  });
+});
+
 describe('mounting a map', () => {
   const data = MAPS.get('series');
 

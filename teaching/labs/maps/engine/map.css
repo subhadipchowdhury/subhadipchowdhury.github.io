@@ -64,6 +64,21 @@ html[data-theme="dark"] {
 .cm *::before,
 .cm *::after { box-sizing: border-box; }
 
+/* Restore what `hidden` is supposed to do.
+ *
+ * The UA stylesheet hides an element with the `hidden` attribute using
+ * `[hidden] { display: none }`, and *any* author `display` declaration beats it,
+ * because author rules outrank the UA sheet. So `el.hidden = true` silently does
+ * nothing to a flex or grid container. That is how the map's board shipped visible
+ * on load with a "Hide the list" button that did nothing, and how the harmonic
+ * slider on wave-fourier.html showed for every scenario.
+ *
+ * These are specificity (0,2,0) against the (0,1,0) of a single class, so they win
+ * without !important. Anything hidden with the attribute inside these pages is
+ * covered, now and later.
+ */
+.cm [hidden] { display: none; }
+
 .cm h1,
 .cm h2,
 .cm h3 { text-align: left; }
