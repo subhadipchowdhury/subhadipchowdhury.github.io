@@ -408,7 +408,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   <header class="cat-head">
     <div class="cat-head-text">
       <h1 class="cat-title">Labs and Applets</h1>
-      <p class="cat-sub">Guided labs, applets, and concept maps for numerical analysis, differential equations, calculus, and real analysis. A lab is an assignment, and you work through it once. An applet and a concept map are here whenever you want them.</p>
+      <p class="cat-sub">Guided labs, applets, and concept maps for numerical analysis, differential equations, calculus, and real analysis. A lab is an assignment, and you work through it once. An applet and a concept map aren't assignments, so they're here whenever you want them.</p>
     </div>
     <div class="cat-head-search">
       <jelly-input id="cat-search" size="small" type="search" placeholder="Search topic, method, library…"></jelly-input>
@@ -455,16 +455,15 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   <footer class="cat-foot">
     <div class="cat-foot-col">
       <div class="cat-footer-head">How these work</div>
-      <p class="cat-footnote">A <strong>guided lab</strong> starts on this site with the algorithms taken apart. You put them back together out of scrambled pseudocode, and the notebook opens once you are through. Nothing on the lab page runs Python, so it works on anything with a browser.</p>
-      <p class="cat-footnote">An <strong>applet</strong> is one page that computes and draws in your browser. There is nothing to install and nothing to hand in. Change one thing, predict what the plot will do, and see whether it agrees with you.</p>
-      <p class="cat-footnote">A <strong>concept map</strong> is the theorems of a chapter as boxes, with numbered arrows between them and nothing written on any arrow. Every sentence that belongs on an arrow is listed, scrambled, and the exercise is to work out which sentence goes on which arrow. There is a printable version to write your own answers on first.</p>
-      <p class="cat-footnote">Anything still being built is hidden. Turn on <strong>Show work in progress</strong> to see what is coming.</p>
+      <p class="cat-footnote">A <strong>guided lab</strong> hands you the algorithms as scrambled pseudocode, and the notebook opens once you've put them back together.</p>
+      <p class="cat-footnote">An <strong>applet</strong> is one page that computes and draws in your browser, with nothing to install and nothing to hand in.</p>
+      <p class="cat-footnote">A <strong>concept map</strong> is a chapter's theorems as boxes with nothing written on the arrows, and the exercise is to match the right sentence to each one.</p>
     </div>
     <div class="cat-foot-col">
       <div class="cat-footer-head"><span>🐍</span> Running the notebook</div>
-      <p class="cat-footnote">The notebook a lab opens runs in <strong>Google Colab</strong>, which runs NumPy, Matplotlib, SymPy and the rest on Google's machines, so there is nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before running a notebook it did not author.</p>
+      <p class="cat-footnote">The notebook a lab opens runs in <strong>Google Colab</strong>, which keeps NumPy, Matplotlib, SymPy and the rest on Google's machines, so there's nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before it runs a notebook it didn't write.</p>
       <p class="cat-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
-      <p class="cat-footnote">The applets and the concept maps don't use Colab. They run in the page you open, and a map remembers which arrows you have matched on your own machine.</p>
+      <p class="cat-footnote">The applets and the concept maps don't use Colab. They run in the page you open, and a map remembers which arrows you've matched on your own machine.</p>
     </div>
     <div class="cat-ai">
       <div class="cat-footer-head">How these were built</div>
@@ -523,8 +522,8 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   // author and is not shown.
   var ACT = [
     { course:'intro', kind:'lab', topic:'Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], updated:'2026-07-30', status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
-    { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Watch equispaced interpolation diverge, then Chebyshev nodes tame the error.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
-    { course:'na', kind:'lab', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab2-newton', blurb:'Build the divided-difference table and watch the Newton interpolant grow term by term.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/newton_divided_differences.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Equally spaced nodes make the interpolant blow up near the ends as the degree rises. Find the nodes that fix it.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab2-newton', blurb:'Fill in the divided-difference table, then add one term at a time and see what each new node changes.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/newton_divided_differences.ipynb' },
     { course:'na', kind:'lab', topic:'Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/cubic_splines.ipynb' },
     { course:'na', kind:'lab', topic:'Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
     { course:'na', kind:'lab', topic:'Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
@@ -539,9 +538,9 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     { course:'na', kind:'lab', topic:'Root-Finding', title:'Bisection, Newton, secant & cobweb', blurb:'Compare root-finders and read convergence off a cobweb diagram.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/rootfinding_cobweb.ipynb' },
     { course:'na', kind:'lab', topic:'Stability', title:'Stability regions & stiffness', blurb:'Plot absolute stability regions and watch an explicit method blow up on stiff decay.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/stability_regions_stiffness.ipynb' },
 
-    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced heat equation', blurb:'Diffuse a temperature profile toward the steady state set by a heat source and fixed boundary values.', updated:'2025-11-21', status:'finalized', href:'applets/de/heat-forced-3d.html' },
-    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Build the fixed-string solution as a sum of standing modes and watch it oscillate.', updated:'2025-11-14', status:'finalized', href:'applets/de/wave-fourier.html' },
-    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced wave equation', blurb:'Change the wave speed and the forcing mode, and watch the string respond.', updated:'2025-11-17', status:'finalized', href:'applets/de/wave-forced.html' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced heat equation', blurb:'Set a heat source and the two end temperatures, then let the rod run to the steady state they fix.', updated:'2025-11-21', status:'finalized', href:'applets/de/heat-forced-3d.html' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Wave equation & Fourier series', blurb:'Release the string from a shape you choose, then count the standing modes that shape needs.', updated:'2025-11-14', status:'finalized', href:'applets/de/wave-fourier.html' },
+    { course:'de', kind:'applet', topic:'PDE Simulations', title:'Forced wave equation', blurb:'Predict what doubling the wave speed does to the peak response, then move the slider.', updated:'2025-11-17', status:'finalized', href:'applets/de/wave-forced.html' },
     { course:'de', kind:'applet', topic:'ODE Systems', title:'Phase portraits', blurb:'Sketch trajectories of a 2D linear system and classify the equilibrium.', status:'planned', file:'applets/de/phase-portraits.html' },
     { course:'de', kind:'applet', topic:'ODE Systems', title:'Direction fields & Euler', blurb:"Overlay Euler's method on a slope field and refine the step size.", status:'planned', file:'applets/de/direction-fields.html' },
 
@@ -555,7 +554,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     { course:'analysis', kind:'applet', topic:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', status:'planned', file:'applets/analysis/cantor-set.html' },
 
     { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences of real numbers', blurb:'Match a sentence to every arrow, from the epsilon-N definition out to completeness.', status:'planned', file:'maps/sequences.html' },
-    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Infinite series', blurb:'Put every convergence test in one diagram and match a sentence to every arrow.', updated:'2026-05-23', status:'finalized', href:'maps/series.html' },
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Infinite series', blurb:'Match a sentence to each of the sixteen arrows between the convergence tests.', updated:'2026-05-23', status:'finalized', href:'maps/series.html' },
     { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences and series of functions', blurb:'Separate pointwise from uniform convergence, and find which theorem needs which.', updated:'2026-05-23', status:'finalized', href:'maps/func-sequences.html' }
   ];
 
@@ -730,7 +729,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     if (list.length === 0) {
       var hint = state.showDrafts
         ? 'Try a broader search, or clear the filters.'
-        : 'Try a broader search, or turn on <strong>Show work in progress</strong> to see what is still being built.';
+        : "Try a broader search, or turn on <strong>Show work in progress</strong> to see what's still being built.";
       results.innerHTML =
         '<div class="cat-empty">' +
           '<div class="cat-empty-title">Nothing matches your filters.</div>' +
