@@ -210,11 +210,9 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     box-shadow: var(--cat-card-shadow);
     transition: transform .18s ease, box-shadow .18s ease;
     --cat-accent: var(--cat-accent-light);
-    --cat-accent-tint: var(--cat-accent-soft);
   }
   html[data-theme="dark"] .cat-card {
     --cat-accent: var(--cat-accent-dark);
-    --cat-accent-tint: color-mix(in srgb, var(--cat-accent-dark) 20%, transparent);
   }
   .cat-card:hover {
     transform: translateY(-4px);
@@ -249,31 +247,21 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   }
   .cat-course-name { white-space: nowrap; }
   .cat-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cat-accent); }
-  .cat-status,
-  .cat-topic {
-    font-family: var(--cat-semi);
-    letter-spacing: .07em;
-    text-transform: uppercase;
-  }
   /* Only the unfinished cards carry a status pill. Drafts are hidden unless
-     you ask for them. */
+     you ask for them. The course pill in the banner is the only other tag a
+     card carries; a card used to name its topic here too and no longer does. */
   .cat-status {
     margin-left: auto;
     flex: none;
+    font-family: var(--cat-semi);
+    letter-spacing: .07em;
+    text-transform: uppercase;
     font-size: 10px;
     padding: 5px 9px;
     border-radius: 999px;
   }
   .cat-status-progress { background: var(--cat-draft-bg); color: var(--cat-draft-fg); }
   .cat-status-planned  { background: var(--cat-plan-bg);  color: var(--cat-plan-fg); }
-  .cat-topic {
-    align-self: flex-start;
-    font-size: 10.5px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    color: var(--cat-accent);
-    background: var(--cat-accent-tint);
-  }
   .cat-stamp {
     font-family: var(--cat-mono);
     font-size: 10.5px;
@@ -482,14 +470,14 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   "use strict";
 
   // accentDark is the same hue lifted for the dark theme; the card CSS picks
-  // between the two, and accentSoft (the light topic-pill wash) is replaced in
-  // dark mode by a color-mix of the accent.
+  // between the two. Each course also has a Jelly button variant, which is what
+  // colors its chip.
   var COURSES = [
-    { key:'intro', name:'Getting Started',     jvariant:'graphite', accent:'#5B6672', accentDark:'#98A3B0', accentSoft:'#EEF0F2' },
-    { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentDark:'#4CC796', accentSoft:'#E6F5EF' },
-    { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentDark:'#7BA4F0', accentSoft:'#EAF0FD' },
-    { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentDark:'#E0A44E', accentSoft:'#F8EFDD' },
-    { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentDark:'#EC7C9E', accentSoft:'#FBE9EF' }
+    { key:'intro', name:'Getting Started',     jvariant:'graphite', accent:'#5B6672', accentDark:'#98A3B0' },
+    { key:'na', name:'Numerical Analysis',     jvariant:'mint',  accent:'#2FA97D', accentDark:'#4CC796' },
+    { key:'de', name:'Differential Equations', jvariant:'azure', accent:'#4F7FE0', accentDark:'#7BA4F0' },
+    { key:'calc', name:'Calculus',             jvariant:'amber', accent:'#CE8A2C', accentDark:'#E0A44E' },
+    { key:'analysis', name:'Real Analysis',    jvariant:'rose',  accent:'#D65C82', accentDark:'#EC7C9E' }
   ];
 
   // Shown only on the cards that are not ready; colors are themed in CSS
@@ -520,6 +508,13 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   // imports, so applets carry none and show no pill row. A card with neither
   // `lab` nor `href` names the file-to-be in `file`, which is a note to the
   // author and is not shown.
+  //
+  // `topic` is not shown either. It used to be a pill above the title and was
+  // removed on 2026-08-14: the course pill already says what subject a card
+  // belongs to, and a second tag saying "Interpolation" or "PDE Simulations"
+  // was noise. It stays in the data because it is in the search haystack, and
+  // it carries words no title does: searching "interpolation", "linear
+  // systems" or "root-finding" finds those cards only through this field.
   var ACT = [
     { course:'intro', kind:'lab', topic:'Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], updated:'2026-07-30', status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
     { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Equally spaced nodes make the interpolant blow up near the ends as the degree rises. Find the nodes that fix it.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
@@ -603,7 +598,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     var statusKey = (a.nb || a.href) ? 'progress' : 'planned';
     return {
       raw:a, topic:a.topic, courseName:c.name,
-      accent:c.accent, accentDark:c.accentDark, accentSoft:c.accentSoft,
+      accent:c.accent, accentDark:c.accentDark,
       ready:ready, statusKey:statusKey, statusLabel:STATUS[statusKey].label,
       kindKey:kindKey, kindLabel:KINDS[kindKey].label, url:url
     };
@@ -683,8 +678,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     // The course accent is handed to CSS as custom properties so the theme,
     // not this markup, decides which variant is shown.
     var accentVars = '--cat-accent-light:' + a.accent +
-                     ';--cat-accent-dark:' + a.accentDark +
-                     ';--cat-accent-soft:' + a.accentSoft + ';';
+                     ';--cat-accent-dark:' + a.accentDark + ';';
 
     return '' +
       '<div class="cat-card" style="' + accentVars + '">' +
@@ -697,7 +691,6 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
             '<span class="cat-status cat-status-' + a.statusKey + '">' + a.statusLabel + '</span>') +
         '</div>' +
         '<div style="padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1;">' +
-          '<span class="cat-topic">' + a.topic + '</span>' +
           '<div class="cat-card-title">' + a.raw.title + '</div>' +
           '<div class="cat-blurb">' + a.raw.blurb + '</div>' +
           libRow +
