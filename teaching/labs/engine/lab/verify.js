@@ -11,6 +11,7 @@ import {
   parseProgram, run, evalExpression, valuesEqual, deepCopy,
   isArr2, isNum, fmtNum, shapeOf, ParseError, RuntimeError,
 } from './interp.js';
+import { crashReport, divergenceReport } from './steps.js';
 
 // ---------------------------------------------------------------------------
 // Assembling placed blocks into lines
@@ -72,18 +73,35 @@ export function activeBlanks(placements, blocksById) {
  * Run the instructor's solution. Computed once per gate at page load, so the
  * student's answer is compared against values from this same interpreter.
  */
+/**
+ * The instructor's solution as a parsed program. Built again on demand rather
+ * than kept from buildReference, since only a failed submission needs it and
+ * buildReference's return value is the runs, not the program.
+ */
+export function referenceProgram(gate) {
+  const byId = indexBlocks(gate);
+  const answers = {};
+  for (const [name, spec] of Object.entries(gate.blanks || {})) answers[name] = spec.answer;
+  return parseProgram(assemble(gate.solution, byId), answers);
+}
+
 export function buildReference(gate) {
   const byId = indexBlocks(gate);
   const answers = {};
   for (const [name, spec] of Object.entries(gate.blanks || {})) answers[name] = spec.answer;
   const lines = assemble(gate.solution, byId);
   const program = parseProgram(lines, answers);
-  return gate.probes.map((probe) => run(program, {
+  const runs = gate.probes.map((probe) => run(program, {
     env: probe.env,
     call: probe.call,
     trace: gate.trace || [],
     maxSteps: gate.maxSteps || 1e6,
   }));
+  // The step diagnosis needs the program these runs came from, and rebuilding it
+  // from the gate would be a second source of truth. Non-enumerable so nothing
+  // that iterates or serialises the runs sees it.
+  Object.defineProperty(runs, 'program', { value: program, enumerable: false });
+  return runs;
 }
 
 // ---------------------------------------------------------------------------
@@ -201,6 +219,8 @@ export function verify(gate, submission, reference) {
       }));
     } catch (err) {
       if (!(err instanceof RuntimeError)) throw err;
+      // Where it stopped, in the student's own line and on the pass it was on.
+      const crash = crashReport(err, lines, blanks, probeLabel(probe));
       // A wrong blank or a placed decoy that happens to crash still deserves
       // the message written for that mistake; the crash becomes the detail.
       const authored = authoredFeedback(gate, placements, blanks, k);
@@ -209,7 +229,7 @@ export function verify(gate, submission, reference) {
         return {
           ...base, ok: false, stage: 'run', probeIndex: k,
           message: authored.message,
-          detail: runtimeMessage(err, probe),
+          detail: [crash.message, crash.detail].filter(Boolean).join(' '),
           blank: authored.blank ?? null,
           blockId: err.blockId ?? null,
           why: authored.why,
@@ -219,8 +239,8 @@ export function verify(gate, submission, reference) {
         ...base,
         ok: false,
         stage: 'run',
-        message: runtimeMessage(err, probe),
-        detail: err.kind === 'index' ? 'A subscript outside the array is an error here, it does not wrap around.' : null,
+        message: crash.message,
+        detail: crash.detail,
         blockId: err.blockId ?? null,
         blank: err.blank ?? null,
         why: `runtime_${err.kind}`,
@@ -240,8 +260,11 @@ export function verify(gate, submission, reference) {
         && traceEqual(got.trace, ref.trace, gate.trace || [], gate.tolerance ?? 1e-9);
 
     if (!same) {
-      // 5. Diagnose.
-      const diag = diagnose(gate, byId, placements, blanks, got, ref, mode, k, indentOnly);
+      // 5. Diagnose. The step-level half needs the program and the assembled
+      // lines, so it can name the student's own step and the pass it was on.
+      const diag = diagnose(gate, byId, placements, blanks, got, ref, mode, k, indentOnly, {
+        program, lines, probe: gate.probes[k], refProgram: reference.program,
+      });
       return { ...base, ok: false, stage: 'compare', probeIndex: k, trace: got.trace, prints: got.prints, ...diag };
     }
   }
@@ -256,14 +279,6 @@ function blockOwningBlank(gate, byId, placements, name) {
     if (block.lines.some((l) => l.text.includes(`⟨?${name}⟩`))) return p.id;
   }
   return null;
-}
-
-function runtimeMessage(err, probe) {
-  const on = probeLabel(probe);
-  if (err.kind === 'cap') {
-    return `On ${on}, your algorithm never finished. Something in a loop does not shrink.`;
-  }
-  return `On ${on}: ${err.message}`;
 }
 
 function probeLabel(probe) {
@@ -320,7 +335,7 @@ function authoredFeedback(gate, placements, blanks, probeIndex) {
   return null;
 }
 
-function diagnose(gate, byId, placements, blanks, got, ref, mode, probeIndex, indentOnly) {
+function diagnose(gate, byId, placements, blanks, got, ref, mode, probeIndex, indentOnly, ctx) {
   const authored = authoredFeedback(gate, placements, blanks, probeIndex);
   if (authored) {
     return { ok: false, message: authored.message, why: authored.why, blank: authored.blank };
@@ -336,16 +351,50 @@ function diagnose(gate, byId, placements, blanks, got, ref, mode, probeIndex, in
     };
   }
 
-  // (ii) structural patterns in the output
+  // (iii) the step it first went wrong at. Two of its findings outrank the
+  // structural patterns below, because both explain the wrong numbers as well as
+  // locating them: an entry read before anything filled it in, and an entry the
+  // algorithm never fills in at all.
+  const step = stepDiagnosis(gate, blanks, ctx);
+  if (step && (step.unfilled || step.why === 'entry_never_written')) return { ok: false, ...step };
+
+  // (iv) structural patterns in the output, which describe the whole shape of
+  // the error where there is one. The step still sets the highlight.
   const pattern = mode === 'prints'
     ? classifyPrints(got.prints, ref.prints)
     : classifyValues(got, ref, gate.trace || []);
   if (pattern) {
-    return { ok: false, why: pattern.why, message: pattern.message, detail: pattern.detail || null };
+    return {
+      ok: false,
+      why: pattern.why,
+      message: pattern.message,
+      detail: pattern.detail || step?.detail || null,
+      blockId: step?.blockId ?? null,
+    };
   }
 
-  // (iii) one disclosed entry
+  if (step) return { ok: false, ...step };
+
+  // (v) one disclosed entry
   return { ok: false, why: 'generic', message: firstDifference(got, ref, gate.trace || []) };
+}
+
+// Wrapped so a gate the write log cannot say anything about, or a reference that
+// will not rebuild, degrades to the classifiers rather than failing the check.
+function stepDiagnosis(gate, blanks, ctx) {
+  if (!ctx || !ctx.program || !ctx.probe) return null;
+  try {
+    return divergenceReport({
+      gate,
+      program: ctx.program,
+      refProgram: ctx.refProgram || referenceProgram(gate),
+      probe: ctx.probe,
+      lines: ctx.lines,
+      blanks,
+    });
+  } catch {
+    return null;
+  }
 }
 
 function matchWrongBlank(gate, blanks, probeIndex) {

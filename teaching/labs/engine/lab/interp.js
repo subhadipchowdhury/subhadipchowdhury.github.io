@@ -727,6 +727,51 @@ class Interp {
     this.snapshots = null;
     this.traceNames = opts.trace || [];
     this.callDepth = 0;
+
+    // The enclosing for loops, outermost first, live rather than snapshotted:
+    // a frame is pushed on entry and popped after the loop finishes normally, so
+    // when an error propagates the stack still holds the pass it happened on.
+    this.loops = [];
+
+    // Off unless a caller asks for it, since it allocates per write. The grader
+    // runs a probe without logging and only re-runs the one that failed.
+    this.logging = !!opts.log;
+    this.logCap = opts.logCap ?? 20000;
+    this.writes = [];      // { blockId, line, name, cell, value, loops }
+    this.created = new Set();  // arrays and tables this run built, by name
+    this.filled = new Set();   // "name|i,j" written at least once
+    this.readKeys = new Set(); // "name|i,j" read at least once, in read order
+    this.unfilled = [];    // reads of an entry this run has not written yet
+  }
+
+  loopState() {
+    return this.loops.map((f) => ({ name: f.name, value: f.value }));
+  }
+
+  // One write to one entry. Called after the store, so `value` is what landed.
+  noteWrite(name, cell, value, where) {
+    if (!this.logging) return;
+    const key = `${name}|${cell.join(',')}`;
+    this.filled.add(key);
+    if (this.writes.length >= this.logCap) return;
+    this.writes.push({
+      name, cell, key, value, loops: this.loopState(),
+      blockId: where?.blockId ?? null, line: where?.line ?? null,
+    });
+  }
+
+  // Every subscripted read, in order, deduplicated. Two things are asked of it:
+  // which entries of the inputs an algorithm never looks at, and whether it read
+  // an entry of something it built and had not filled in yet. The second is only
+  // ever reported alongside a wrong answer, so a legitimate read of an untouched
+  // zero costs nothing.
+  noteRead(name, cell) {
+    if (!this.logging || !name) return;
+    const key = `${name}|${cell.join(',')}`;
+    if (this.readKeys.size < this.logCap) this.readKeys.add(key);
+    if (!this.created.has(name)) return;
+    if (this.filled.has(key) || this.unfilled.length >= 200) return;
+    this.unfilled.push({ name, cell, loops: this.loopState(), after: this.writes.length });
   }
 
   tick(where) {
@@ -778,21 +823,28 @@ class Interp {
       case 'for': {
         const from = needInt(this.eval(stmt.from, scope), 'A loop bound', stmt.where);
         const to = needInt(this.eval(stmt.to, scope), 'A loop bound', stmt.where);
+        // Not popped in a finally, on purpose: an error propagating out of the
+        // body should leave the stack holding the pass it happened on.
+        const frame = { name: stmt.varName, value: from };
+        this.loops.push(frame);
         if (stmt.descending) {
           for (let v = from; v >= to; v--) {
             scope.set(stmt.varName, v);
+            frame.value = v;
             this.tick(stmt.where);
             const r = this.execBlock(stmt.body, scope);
-            if (r) return r;
+            if (r) { this.loops.pop(); return r; }
           }
         } else {
           for (let v = from; v <= to; v++) {
             scope.set(stmt.varName, v);
+            frame.value = v;
             this.tick(stmt.where);
             const r = this.execBlock(stmt.body, scope);
-            if (r) return r;
+            if (r) { this.loops.pop(); return r; }
           }
         }
+        this.loops.pop();
         return null;
       }
 
@@ -843,7 +895,14 @@ class Interp {
   }
 
   assignTo(target, value, scope) {
-    if (target.kind === 'name') { scope.set(target.name, value); return; }
+    if (target.kind === 'name') {
+      scope.set(target.name, value);
+      if (this.logging) {
+        if (Array.isArray(value)) this.created.add(target.name);
+        this.noteWrite(target.name, [], value, target.where);
+      }
+      return;
+    }
 
     const container = scope.get(target.name);
     if (container === undefined) {
@@ -862,9 +921,11 @@ class Interp {
       if (subs[0].kind === 'point') {
         const i = this.checkIndex(subs[0].at, container.length, target.name, null, target.where);
         container[i] = requireScalar(value, target.name, target.where);
+        this.noteWrite(target.name, [i], container[i], target.where);
       } else {
         const idx = this.rangeIndices(subs[0], container.length, target.name, null, target.where);
         assignSlice1(container, idx, value, target);
+        idx.forEach((i) => this.noteWrite(target.name, [i], container[i], target.where));
       }
       return;
     }
@@ -880,12 +941,14 @@ class Interp {
       const i = this.checkIndex(rs.at, rows, target.name, 0, target.where);
       const j = this.checkIndex(cs.at, cols, target.name, 1, target.where);
       container[i][j] = requireScalar(value, target.name, target.where);
+      this.noteWrite(target.name, [i, j], container[i][j], target.where);
       return;
     }
     if (rs.kind === 'point') {
       const i = this.checkIndex(rs.at, rows, target.name, 0, target.where);
       const idx = this.rangeIndices(cs, cols, target.name, 1, target.where);
       assignSlice1(container[i], idx, value, target);
+      idx.forEach((j) => this.noteWrite(target.name, [i, j], container[i][j], target.where));
       return;
     }
     if (cs.kind === 'point') {
@@ -893,6 +956,7 @@ class Interp {
       const idx = this.rangeIndices(rs, rows, target.name, 0, target.where);
       const vals = spreadValues(value, idx.length, target);
       idx.forEach((i, k) => { container[i][j] = vals[k]; });
+      idx.forEach((i) => this.noteWrite(target.name, [i, j], container[i][j], target.where));
       return;
     }
     const ri = this.rangeIndices(rs, rows, target.name, 0, target.where);
@@ -902,10 +966,11 @@ class Interp {
         throw new RuntimeError(`The table being stored is ${shapeOf(value)} but the destination is ${ri.length}×${ci.length}.`, { kind: 'shape', ...target.where });
       }
       ri.forEach((i, a) => ci.forEach((j, b) => { container[i][j] = value[a][b]; }));
-      return;
+    } else {
+      const s = requireScalar(value, target.name, target.where);
+      ri.forEach((i) => ci.forEach((j) => { container[i][j] = s; }));
     }
-    const s = requireScalar(value, target.name, target.where);
-    ri.forEach((i) => ci.forEach((j) => { container[i][j] = s; }));
+    ri.forEach((i) => ci.forEach((j) => this.noteWrite(target.name, [i, j], container[i][j], target.where)));
   }
 
   evalSubscript(sub, scope, where) {
@@ -1035,7 +1100,9 @@ class Interp {
       }
       needArr(container, name, expr.where);
       if (subs[0].kind === 'point') {
-        return container[this.checkIndex(subs[0].at, container.length, name, null, expr.where)];
+        const i = this.checkIndex(subs[0].at, container.length, name, null, expr.where);
+        this.noteRead(name, [i]);
+        return container[i];
       }
       return this.rangeIndices(subs[0], container.length, name, null, expr.where).map((i) => container[i]);
     }
@@ -1050,6 +1117,7 @@ class Interp {
     if (rs.kind === 'point' && cs.kind === 'point') {
       const i = this.checkIndex(rs.at, rows, name, 0, expr.where);
       const j = this.checkIndex(cs.at, cols, name, 1, expr.where);
+      this.noteRead(name, [i, j]);
       return container[i][j];
     }
     if (rs.kind === 'point') {
@@ -1154,16 +1222,38 @@ function assignSlice1(container, idx, value, target) {
  *   call     {string}                 pseudocode call expression, e.g. "f(x, y)"
  *   trace    {string[]}               locals to snapshot at the call's return
  *   maxSteps {number}
- * @returns {{value, trace, prints, steps}}
+ *   log      {boolean}                record every write, and every read of an
+ *                                     entry this run has not filled in yet
+ * @returns {{value, trace, prints, steps, writes, unfilled}}
  */
 export function run(program, options = {}) {
   const interp = new Interp(options);
   const global = new Scope(null);
   for (const [k, v] of Object.entries(options.env || {})) global.set(k, deepCopy(v));
 
-  const top = interp.execBlock(program.body, global);
+  // A runtime error carries the pass it happened on. The loop stack is not
+  // unwound on the way out (see the `for` case), so it is still accurate here.
+  const report = (value) => ({
+    value,
+    trace: interp.snapshots || {},
+    prints: interp.prints,
+    steps: interp.steps,
+    writes: interp.writes,
+    unfilled: interp.unfilled,
+    readKeys: interp.readKeys,
+    created: interp.created,
+  });
+  const withLoops = (err) => {
+    if (err instanceof LabError && err.loops === undefined) err.loops = interp.loopState();
+    throw err;
+  };
+
+  let top;
+  try {
+    top = interp.execBlock(program.body, global);
+  } catch (err) { withLoops(err); }
   if (top && top.type === RETURN) {
-    return { value: top.values.length === 1 ? top.values[0] : top.values, trace: interp.snapshots || {}, prints: interp.prints, steps: interp.steps };
+    return report(top.values.length === 1 ? top.values[0] : top.values);
   }
 
   let value;
@@ -1172,9 +1262,11 @@ export function run(program, options = {}) {
     const parser = new ExprParser(toks, {});
     const expr = parser.parseExpression();
     parser.expect('eol', 'the end of the call');
-    value = interp.eval(expr, global);
+    try {
+      value = interp.eval(expr, global);
+    } catch (err) { withLoops(err); }
   }
-  return { value, trace: interp.snapshots || {}, prints: interp.prints, steps: interp.steps };
+  return report(value);
 }
 
 /**
