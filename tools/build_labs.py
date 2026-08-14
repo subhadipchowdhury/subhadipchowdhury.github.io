@@ -1,8 +1,11 @@
 """Turn an annotated notebook into a lab spec.
 
-    .venv/bin/python tools/build_labs.py                # every annotated notebook
-    .venv/bin/python tools/build_labs.py lab2-newton      # one lab
-    .venv/bin/python tools/build_labs.py --no-run       # skip the notebook run
+    ~/.venvs/labs/bin/python tools/build_labs.py              # every annotated notebook
+    ~/.venvs/labs/bin/python tools/build_labs.py lab2-newton  # one lab
+    ~/.venvs/labs/bin/python tools/build_labs.py --no-run     # skip the notebook run
+
+The venv is deliberately outside this folder: an in-repo `.venv/` cannot survive
+OneDrive, which dereferences the interpreter into a text stub.
 
 A lab page carries the puzzles and nothing else. Everything else the notebook
 holds stays in the notebook, which is what the student opens once the puzzles
