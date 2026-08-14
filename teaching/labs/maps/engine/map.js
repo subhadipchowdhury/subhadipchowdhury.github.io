@@ -1,30 +1,26 @@
 /* Concept map engine.
  *
  * A map is a fixed diagram of concepts with numbered arrows and nothing written on
- * them. The work happens on the printed worksheet; this page draws the same diagram
- * and checks it. Click a numbered circle for that one arrow's answer, or open the
- * list at the bottom for all of them at once.
+ * them, and a scrambled list of every sentence that belongs on one. The exercise is
+ * to put each sentence on its arrow: click an arrow, click the sentence, and the
+ * numbered blank fills in and the sentence leaves the list.
  *
- * It was a graded three-step exercise until 2026-08-13: write your own sentence,
- * then choose whether the relationship holds or fails, then match it out of a
- * shuffled bank of every arrow's statement. All three are gone, and the reasoning is
- * worth recording because it applies to the next map too.
+ * The list is given in full from the start. It used to be a reward for solving the
+ * first arrow, which protected nothing, because solving one arrow showed a student
+ * everything and they could copy it. Dip: "might as well give the full list from the
+ * get go." What the list cannot give away is which sentence goes with which arrow,
+ * and that assignment is the whole exercise.
  *
- *   - **The bank was not a test.** Solving one arrow showed a student every
- *     statement, which they could copy or screenshot. A gate that opens on the first
- *     correct answer is not protecting anything, so the list is simply given.
- *   - **The kind question collapsed.** The four kinds became three, and the three
- *     became two once the failing arrows were rewritten (see below), and a two-way
- *     choice a student wins by always guessing the same answer is a formality.
- *   - **The written sentence was never graded** and could not be, so requiring it
- *     before showing the list only added a click.
+ * Two steps that used to come before the matching are gone. Writing your own
+ * sentence first could not be graded, so requiring it only added a click. And
+ * choosing whether the relationship held or failed collapsed when the failing arrows
+ * were rewritten: every arrow now holds in the direction drawn, so there is nothing
+ * to ask. See the note by KINDS.
  *
- * The failing arrows were rewritten rather than kept. Each was a real relationship
- * stated backwards: "terms tending to zero does not give convergence" is the
- * contrapositive of a theorem that runs the other way, and "pointwise convergence
- * does not preserve continuity" names the gap Dini's theorem closes. Every arrow now
- * holds in the direction drawn, so nothing has to be hidden and every head is drawn
- * from the start.
+ * The scrambled list also carries a few false claims that never leave it. Without
+ * them the last arrow is answered by elimination, since a placed sentence is
+ * removed, and a wrong pick out of that group earns a different message from a wrong
+ * pick out of the real ones.
  *
  * Geometry is authored, not computed: coordinates come from the tikz the printed
  * worksheet is drawn with, and tools/author/maptex.py draws the paper version from
@@ -33,14 +29,99 @@
  * cannot leave an arrow hanging in the middle of a box.
  */
 
-/* The two kinds of arrow. `label` appears in the answer list, and the kind decides
- * whether the arrow gets one head or two. See the note above for the two kinds that
- * used to be here.
+/* The two kinds of arrow. The kind decides whether the arrow gets one head or two.
+ *
+ * There were four. `caution`, for a theorem whose hypotheses are not the ones its
+ * neighbours use, was cut as vague. `fails` went when the four arrows using it were
+ * rewritten as the relationships they are: each was a real relationship stated
+ * backwards, and "terms tending to zero does not give convergence" is the
+ * contrapositive of a theorem that runs the other way.
  */
 export const KINDS = {
   holds: { label: 'one way' },
   equiv: { label: 'both ways' }
 };
+
+const STORE_VERSION = 3;
+
+/** A cheap stable string hash, for the scramble seed and the progress stamp. */
+export function hashString(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(36);
+}
+
+/** The fingerprint saved progress is stamped with. An edited map discards it. */
+export function stampOf(data) {
+  const parts = data.edges.map((e) => [e.n, e.from, e.to, e.statement].join(''));
+  return hashString(parts.join('') + (data.mistakes || []).join(''));
+}
+
+/**
+ * Deterministic shuffle.
+ *
+ * The list has to hold one order across reloads and across every render. Reshuffling
+ * when a sentence is placed would move everything a student had already read past,
+ * which is why this is seeded rather than random.
+ */
+export function seededShuffle(items, seed) {
+  const out = items.slice();
+  let state = 0;
+  for (let i = 0; i < seed.length; i++) state = (Math.imul(state, 31) + seed.charCodeAt(i)) >>> 0;
+  const next = () => {
+    state ^= state << 13; state >>>= 0;
+    state ^= state >> 17;
+    state ^= state << 5; state >>>= 0;
+    return state / 4294967296;
+  };
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    const spare = out[i]; out[i] = out[j]; out[j] = spare;
+  }
+  return out;
+}
+
+/**
+ * Which arrows have been matched, kept across a reload.
+ *
+ * Placing sixteen sentences takes a while, so losing it to an accidental reload is
+ * worth avoiding. Nothing else is stored and nothing leaves the browser.
+ */
+export class Progress {
+  constructor(mapId, stamp, storage) {
+    this.key = `cmap:${STORE_VERSION}:${mapId}`;
+    this.stamp = stamp;
+    this.store = storage || (typeof localStorage === 'undefined' ? null : localStorage);
+    this.placed = new Set();
+    this.load();
+  }
+
+  load() {
+    if (!this.store) return;
+    try {
+      const saved = JSON.parse(this.store.getItem(this.key) || 'null');
+      // A map whose sentences have been edited discards its own saved answers
+      // rather than restoring them against the wrong arrows.
+      if (saved && saved.stamp === this.stamp && Array.isArray(saved.placed)) {
+        this.placed = new Set(saved.placed);
+      }
+    } catch (e) { /* a corrupt or unreadable store just means no progress */ }
+  }
+
+  save() {
+    if (!this.store) return;
+    try {
+      this.store.setItem(this.key, JSON.stringify({ stamp: this.stamp, placed: [...this.placed] }));
+    } catch (e) { /* full or blocked */ }
+  }
+
+  has(n) { return this.placed.has(n); }
+  add(n) { this.placed.add(n); this.save(); }
+  clear() { this.placed.clear(); this.save(); }
+}
 
 /* -----------------------------------------------------------------------------
  * Geometry
@@ -132,11 +213,11 @@ export class MapView {
     this.root = root;
     this.data = data;
     this.nodeById = new Map(data.nodes.map((n) => [n.id, n]));
-    // Which arrows have had their answer looked at. In memory only: there is
-    // nothing to earn here, so there is nothing to save, and a reload gives a
-    // clean map, which is what someone coming back to practise wants.
-    this.shown = new Set();
+    this.progress = new Progress(data.id, stampOf(data));
+    // The arrow a picked sentence will go to. Nothing can be placed until one is
+    // chosen, so this is the first click of every pair.
     this.active = null;
+    this.tries = new Map();
     this.scale = 1;
     this.build();
   }
@@ -165,6 +246,15 @@ export class MapView {
       b.addEventListener('click', () => (factor ? this.setScale(this.scale * factor) : this.fit()));
       zoom.appendChild(b);
     }
+    const over = el('button', 'cm-btn', 'Start over');
+    over.type = 'button';
+    over.addEventListener('click', () => {
+      this.progress.clear();
+      this.tries.clear();
+      this.active = null;
+      this.render();
+    });
+    zoom.appendChild(over);
     status.appendChild(zoom);
     this.root.appendChild(status);
 
@@ -204,7 +294,7 @@ export class MapView {
 
       const badge = el('button', 'cm-badge', String(e.n));
       badge.type = 'button';
-      badge.addEventListener('click', () => this.showArrow(e.n));
+      badge.addEventListener('click', () => this.pick(e.n));
       this.stage.appendChild(badge);
 
       this.edgeEls.set(e.n, { path, head, tail, badge });
@@ -223,15 +313,46 @@ export class MapView {
     this.root.appendChild(legend);
 
     this.work = el('div', 'cm-work cm-panel');
+    this.work.appendChild(el('p', 'cm-work__body',
+      'Click an arrow on the map, then click the sentence that belongs on it.'));
     this.root.appendChild(this.work);
-    this.renderIdle();
 
-    this.root.appendChild(this.answerFold());
+    // The numbered sheet and the scrambled list, side by side on a wide screen.
+    const board = el('div', 'cm-board');
+    this.sheetEl = el('ol', 'cm-sheet');
+    const sheetCol = el('div', 'cm-board__col');
+    sheetCol.appendChild(el('h2', null, 'The arrows'));
+    sheetCol.appendChild(this.sheetEl);
+    const listCol = el('div', 'cm-board__col');
+    listCol.appendChild(el('h2', null, 'The sentences'));
+    listCol.appendChild(el('p', 'cm-hint',
+      'Click an arrow on the map or a numbered line, then click the sentence that ' +
+      'belongs on it. A few of these are false and belong nowhere.'));
+    this.listEl = el('div', 'cm-list');
+    listCol.appendChild(this.listEl);
+    board.append(sheetCol, listCol);
+    this.root.appendChild(board);
+
+    // Every answer, for a student who is stuck. It fills the sheet in rather than
+    // printing a second copy of it somewhere else.
+    const giveUp = el('details', 'cm-fold');
+    giveUp.appendChild(el('summary', null, 'Fill in the ones I have not got'));
+    const giveBody = el('div', 'cm-fold__body');
+    giveBody.appendChild(el('p', 'cm-hint',
+      'This places every remaining sentence. The reason behind each one is worth ' +
+      'reading even when the sentence was handed to you.'));
+    const giveBtn = el('button', 'cm-btn', 'Fill them all in');
+    giveBtn.type = 'button';
+    giveBtn.addEventListener('click', () => this.revealAll());
+    giveBody.appendChild(giveBtn);
+    giveUp.appendChild(giveBody);
+    this.root.appendChild(giveUp);
+
     this.root.appendChild(this.inventoryFold());
     if (d.benchmarks && d.benchmarks.length) this.root.appendChild(this.benchmarkFold());
 
+    this.render();
     typeset(this.root).then(() => this.layout());
-    this.paint();
 
     // MathJax finishing, a font arriving, or a resize all change a node's measured
     // box, and every arrow is clipped to those boxes.
@@ -249,9 +370,9 @@ export class MapView {
   paperCallout() {
     const box = el('div', 'cm-paper');
     const lede = el('p', 'cm-paper__lede');
-    lede.innerHTML = 'Start on paper. The worksheet has the same diagram with room to ' +
-      'write, and nothing on this page is saved, so there is nothing to lose by ' +
-      'working it out first and checking here afterwards.';
+    lede.innerHTML = 'Start on paper if you can. The worksheet has the same diagram ' +
+      'with room to write your own sentence for each arrow, which is harder than ' +
+      'picking one off a list and worth more to you.';
     box.appendChild(lede);
     const link = el('a', 'cm-btn cm-btn--primary', 'The worksheet (PDF)');
     link.href = this.data.pdf;
@@ -259,53 +380,6 @@ export class MapView {
     link.rel = 'noopener';
     box.appendChild(link);
     return box;
-  }
-
-  /**
-   * Every answer, behind one toggle.
-   *
-   * Opening it also reveals every arrow on the map, so the list and the diagram
-   * agree. There is no attempt to make this hard to reach: a student who wants the
-   * answers has them, and the toggle is there so that a student who wants to think
-   * first is not shown them by accident.
-   */
-  answerFold() {
-    const fold = el('details', 'cm-fold cm-fold--answers');
-    fold.appendChild(el('summary', null, 'Show the answers'));
-    const body = el('div', 'cm-fold__body');
-
-    const ol = document.createElement('ol');
-    for (const e of this.data.edges) {
-      const from = this.nodeById.get(e.from);
-      const to = this.nodeById.get(e.to);
-      const li = el('li');
-      li.value = e.n;
-      li.innerHTML =
-        `<span class="cm-named__ends">${this.plainLabel(from)} → ${this.plainLabel(to)}` +
-        (e.kind === 'equiv' ? ', both ways' : '') + '</span>' +
-        e.statement +
-        (e.why ? `<span class="cm-named__why">${e.why}</span>` : '');
-      ol.appendChild(li);
-    }
-    body.appendChild(ol);
-
-    if (this.data.mistakes && this.data.mistakes.length) {
-      body.appendChild(el('h2', null, 'Claims that look right and are not'));
-      const ul = document.createElement('ul');
-      for (const m of this.data.mistakes) {
-        const li = el('li');
-        li.innerHTML = m;
-        ul.appendChild(li);
-      }
-      body.appendChild(ul);
-    }
-
-    fold.appendChild(body);
-    fold.addEventListener('toggle', () => {
-      if (fold.open) this.revealAll();
-      typeset(body);
-    });
-    return fold;
   }
 
   plainLabel(node) {
@@ -365,7 +439,7 @@ export class MapView {
 
       parts.path.setAttribute('d', `M ${p0.x} ${p0.y} Q ${c.x} ${c.y} ${p1.x} ${p1.y}`);
       parts.path.setAttribute('class', 'cm-edge' +
-        (this.shown.has(e.n) ? ' cm-edge--shown' : '') +
+        (this.progress.has(e.n) ? ' cm-edge--shown' : '') +
         (this.active === e.n ? ' cm-edge--active' : ''));
 
       // Every arrow keeps its head. Nothing is being withheld: the direction is the
@@ -379,7 +453,7 @@ export class MapView {
         parts.tail.setAttribute('d', '');
       }
       const headCls = 'cm-arrowhead' +
-        (this.shown.has(e.n) ? ' cm-arrowhead--shown' : '') +
+        (this.progress.has(e.n) ? ' cm-arrowhead--shown' : '') +
         (this.active === e.n ? ' cm-arrowhead--active' : '');
       parts.head.setAttribute('class', headCls);
       parts.tail.setAttribute('class', headCls);
@@ -423,17 +497,19 @@ export class MapView {
     body.innerHTML = node.definition || '';
     this.work.appendChild(body);
 
-    this.work.appendChild(el('p', 'cm-hint',
-      'Click a numbered circle to see what that arrow says.'));
     typeset(this.work);
-    this.paint();
+    this.render();
   }
 
-  /** One arrow's answer, on its own. */
-  showArrow(n) {
+  /**
+   * Choose the arrow the next picked sentence belongs to.
+   *
+   * An arrow that is already filled in shows what was put on it and why, so this is
+   * both the first half of a match and the way to read back an answer.
+   */
+  pick(n) {
     const edge = this.data.edges.find((e) => e.n === n);
     if (!edge) return;
-    this.shown.add(n);
     this.active = n;
 
     for (const box of this.nodeEls.values()) box.classList.remove('cm-node--lit');
@@ -450,46 +526,142 @@ export class MapView {
     head.appendChild(ends);
     this.work.appendChild(head);
 
-    const body = el('p', 'cm-work__body');
-    body.innerHTML = edge.statement;
-    this.work.appendChild(body);
-
-    if (edge.why) {
-      const why = el('p', 'cm-hint');
-      why.innerHTML = edge.why;
-      this.work.appendChild(why);
+    if (this.progress.has(n)) {
+      const body = el('p', 'cm-work__body');
+      body.innerHTML = edge.statement;
+      this.work.appendChild(body);
+      if (edge.why) {
+        const why = el('p', 'cm-hint');
+        why.innerHTML = edge.why;
+        this.work.appendChild(why);
+      }
+    } else {
+      this.work.appendChild(el('p', 'cm-work__body',
+        'Now click the sentence that belongs on this arrow.'));
     }
 
     typeset(this.work);
-    this.paint();
+    this.render();
   }
 
+  /** Try a sentence against the chosen arrow. */
+  offer(item, button) {
+    if (this.active === null) {
+      this.say('Choose an arrow first, on the map or in the numbered list.', false);
+      return;
+    }
+    const edge = this.data.edges.find((e) => e.n === this.active);
+    if (this.progress.has(edge.n)) {
+      this.say(`Arrow ${edge.n} is already filled in. Choose another arrow.`, false);
+      return;
+    }
+
+    if (item.n === edge.n) {
+      this.progress.add(edge.n);
+      this.active = null;
+      this.render();
+      this.pick(edge.n);
+      return;
+    }
+
+    this.tries.set(edge.n, (this.tries.get(edge.n) || 0) + 1);
+    button.classList.add('cm-option--spent');
+    // A sentence that belongs to no arrow earns a different answer from one that
+    // belongs to a different arrow.
+    this.say(item.n === null
+      ? 'That sentence is false. Find the step in it that fails.'
+      : `That one belongs on another arrow. Check which two boxes arrow ${edge.n} joins.`, false);
+  }
+
+  say(message, ok) {
+    const note = el('p', ok ? 'cm-verdict cm-verdict--ok' : 'cm-verdict cm-verdict--no', message);
+    const old = this.work.querySelector ? this.work.querySelector('.cm-verdict') : null;
+    if (old) old.remove();
+    this.work.appendChild(note);
+  }
+
+  /** Fill in every arrow that is still empty. */
   revealAll() {
-    for (const e of this.data.edges) this.shown.add(e.n);
-    this.paint();
+    for (const e of this.data.edges) this.progress.add(e.n);
+    this.active = null;
+    this.render();
   }
 
   /* ---- redraw ---------------------------------------------------------- */
 
-  paint() {
+  /** Everything the placed set decides: the badges, the sheet, the list, the count. */
+  render() {
     for (const e of this.data.edges) {
       const badge = this.edgeEls.get(e.n).badge;
-      const seen = this.shown.has(e.n);
-      badge.className = 'cm-badge' + (seen ? ' cm-badge--shown' : '') +
+      const done = this.progress.has(e.n);
+      badge.className = 'cm-badge' + (done ? ' cm-badge--shown' : '') +
         (this.active === e.n ? ' cm-badge--active' : '');
-      badge.setAttribute('aria-label', `Arrow ${e.n}` + (seen ? ', answer shown' : ''));
+      badge.setAttribute('aria-label', `Arrow ${e.n}` + (done ? ', filled in' : ', empty'));
     }
+
     const total = this.data.edges.length;
-    this.countEl.textContent = this.shown.size === 0
-      ? `${total} arrows`
-      : `${this.shown.size} of ${total} arrows looked at`;
+    const done = this.progress.placed.size;
+    this.countEl.textContent = `${done} of ${total} arrows filled in`;
+
+    this.renderSheet();
+    this.renderList();
     this.layout();
   }
 
-  renderIdle() {
-    this.work.textContent = '';
-    this.work.appendChild(el('p', 'cm-work__idle',
-      'Click a numbered circle for that arrow, or a box to be reminded what it means.'));
+  /** The numbered lines, blank until their sentence is placed. */
+  renderSheet() {
+    this.sheetEl.textContent = '';
+    for (const e of this.data.edges) {
+      const li = el('li', 'cm-sheet__row' + (this.active === e.n ? ' is-active' : ''));
+      li.value = e.n;
+      const slot = el('button', 'cm-slot' + (this.progress.has(e.n) ? ' cm-slot--full' : ''));
+      slot.type = 'button';
+      if (this.progress.has(e.n)) slot.innerHTML = e.statement;
+      else slot.textContent = 'empty';
+      slot.addEventListener('click', () => this.pick(e.n));
+      li.appendChild(slot);
+      this.sheetEl.appendChild(li);
+    }
+    typeset(this.sheetEl);
+  }
+
+  /**
+   * The scrambled sentences that are still unplaced, plus the false ones.
+   *
+   * The order comes from a seed, so placing a sentence removes one line and moves
+   * nothing else. A fresh shuffle on every render would rearrange everything a
+   * student had already read past.
+   */
+  renderList() {
+    this.listEl.textContent = '';
+    const items = this.bank();
+    if (items.length === 0) {
+      this.listEl.appendChild(el('p', 'cm-hint', 'Every sentence is placed.'));
+      return;
+    }
+    for (const item of items) {
+      const b = el('button', 'cm-option');
+      b.type = 'button';
+      b.innerHTML = item.statement;
+      b.addEventListener('click', () => this.offer(item, b));
+      this.listEl.appendChild(b);
+    }
+    typeset(this.listEl);
+  }
+
+  /**
+   * Unplaced sentences and the false ones, in one stable scrambled order.
+   *
+   * The whole list is scrambled first and the placed ones are filtered out after.
+   * Scrambling the shorter list instead reorders all of it: Fisher-Yates on n-1
+   * items draws a different permutation from the same seed, so every placement
+   * rearranged the page. There is a test for this.
+   */
+  bank() {
+    const all = this.data.edges.map((e) => ({ n: e.n, statement: e.statement }));
+    for (const m of this.data.mistakes || []) all.push({ n: null, statement: m });
+    return seededShuffle(all, this.progress.stamp)
+      .filter((i) => i.n === null || !this.progress.has(i.n));
   }
 }
 

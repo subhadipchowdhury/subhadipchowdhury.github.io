@@ -9,13 +9,15 @@
 // What is not covered: how any of it looks. The stub lays nothing out, so the mount
 // tests fill in node sizes by hand and check the arithmetic, not the page.
 //
-// Gone with the three-step exercise on 2026-08-13: the Progress store, the seeded
-// shuffle, the answer bank and the kind question. There is nothing to save and
-// nothing to grade, so there is nothing to test about either.
+// The exercise is matching: click an arrow, click the sentence that belongs on it.
+// Gone from the three-step version it replaced: the write-your-own step, which could
+// not be graded, and the kind question, which collapsed to a coin flip when the
+// failing arrows were rewritten.
 
 import { installDom, walk, textOf } from './dom-stub.mjs';
 import {
-  KINDS, clipToBox, controlPoint, bezierAt, tangentAt, arrowHead, MapView,
+  KINDS, hashString, stampOf, seededShuffle,
+  clipToBox, controlPoint, bezierAt, tangentAt, arrowHead, Progress, MapView,
 } from '../../teaching/labs/maps/engine/map.js';
 
 const teardown = installDom();
@@ -142,6 +144,66 @@ describe('the arrowhead', () => {
   });
 });
 
+describe('the scramble', () => {
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  it('keeps every item and leaves the caller\'s array alone', () => {
+    const out = seededShuffle(items, 'seed');
+    eq(out.slice().sort((a, b) => a - b).join(','), items.join(','));
+    eq(items.join(','), '1,2,3,4,5,6,7,8,9,10');
+  });
+
+  it('gives the same order for the same seed and a different one otherwise', () => {
+    eq(seededShuffle(items, 'abc').join(','), seededShuffle(items, 'abc').join(','));
+    assert(seededShuffle(items, 'abc').join(',') !== seededShuffle(items, 'xyz').join(','));
+    assert(seededShuffle(items, 'abc').join(',') !== items.join(','), 'it has to reorder');
+  });
+});
+
+describe('progress', () => {
+  const fakeStore = () => {
+    const map = new Map();
+    return {
+      getItem: (k) => (map.has(k) ? map.get(k) : null),
+      setItem: (k, v) => map.set(k, String(v)),
+    };
+  };
+
+  it('records a placement and comes back after a reload', () => {
+    const store = fakeStore();
+    const first = new Progress('m', 'stamp1', store);
+    first.add(3);
+    assert(new Progress('m', 'stamp1', store).has(3));
+  });
+
+  it('throws away answers saved against different sentences', () => {
+    const store = fakeStore();
+    new Progress('m', 'stamp1', store).add(3);
+    assert(!new Progress('m', 'stamp2', store).has(3), 'an edited map must not restore stale answers');
+  });
+
+  it('survives a corrupt store and a blocked one', () => {
+    const store = fakeStore();
+    store.setItem('cmap:3:m', 'not json');
+    eq(new Progress('m', 'stamp1', store).placed.size, 0);
+    const blocked = { getItem: () => null, setItem: () => { throw new Error('quota'); } };
+    const p = new Progress('m', 'stamp1', blocked);
+    p.add(1);
+    assert(p.has(1), 'the in-memory answer stands even when the save fails');
+  });
+
+  it('changes its stamp when a statement changes and not when the intro does', () => {
+    const data = MAPS.get('series');
+    const before = stampOf(data);
+    const copy = JSON.parse(JSON.stringify(data));
+    copy.intro = 'something else';
+    eq(stampOf(copy), before, 'the intro is not part of the answer key');
+    copy.edges[2].statement += ' and one more clause';
+    assert(stampOf(copy) !== before, 'an edited sentence has to invalidate saved answers');
+    assert(hashString('a') !== hashString('b'));
+  });
+});
+
 /* -------------------------------------------------------------------------- */
 
 for (const [id, data] of MAPS) {
@@ -229,6 +291,11 @@ for (const [id, data] of MAPS) {
 
 /* -------------------------------------------------------------------------- */
 
+function el() {
+  // A throwaway button for offer() to dim when a pick is wrong.
+  return document.createElement('button');
+}
+
 let uniq = 0;
 function freshView(data, sized) {
   const copy = JSON.parse(JSON.stringify(data));
@@ -251,9 +318,9 @@ describe('mounting a map', () => {
     eq(all.filter((n) => String(n.className).startsWith('cm-badge')).length, data.edges.length);
   });
 
-  it('says how many arrows there are before any are looked at', () => {
-    const view = freshView(data);
-    eq(textOf(view.countEl), `${data.edges.length} arrows`);
+  it('helper for the offer tests, which need a button to dim', () => {
+    // `offer` marks the button it was handed; the tests pass a throwaway one.
+    assert(typeof el === 'function');
   });
 
   it('draws every arrowhead from the start', () => {
@@ -273,54 +340,111 @@ describe('mounting a map', () => {
     eq(view.edgeEls.get(oneWay.n).tail.getAttribute('d'), '', 'one way has one head');
   });
 
-  it('shows one arrow and marks only that one', () => {
-    const view = freshView(data, true);
-    view.showArrow(4);
-    eq(view.shown.size, 1);
-    assert(String(view.edgeEls.get(4).badge.className).includes('cm-badge--shown'));
-    assert(!String(view.edgeEls.get(5).badge.className).includes('cm-badge--shown'));
-    assert(textOf(view.work).includes('Arrow 4'), textOf(view.work));
+  it('starts with every arrow empty and the whole list scrambled on offer', () => {
+    const view = freshView(data);
+    eq(view.progress.placed.size, 0);
+    eq(view.bank().length, data.edges.length + data.mistakes.length,
+      'the list holds every sentence plus the false ones');
+    assert(textOf(view.countEl).startsWith('0 of'), textOf(view.countEl));
   });
 
-  it('puts the arrow statement and its reason in the panel', () => {
-    const view = freshView(data, true);
+  it('does not scramble into the authored order', () => {
+    const view = freshView(data);
+    const offered = view.bank().map((i) => i.n).join(',');
+    const authored = data.edges.map((e) => e.n).join(',');
+    assert(!offered.startsWith(authored), 'the list should not be in arrow order');
+  });
+
+  it('keeps the same order when a sentence is placed', () => {
+    const view = freshView(data);
+    const before = view.bank().map((i) => i.statement);
+    view.pick(4);
+    view.offer({ n: 4, statement: data.edges[3].statement }, el());
+    const after = view.bank().map((i) => i.statement);
+    // Placing removes one line and moves nothing else.
+    eq(after.join('|'), before.filter((x) => x !== data.edges[3].statement).join('|'));
+  });
+
+  it('refuses a sentence until an arrow is chosen', () => {
+    const view = freshView(data);
+    view.offer({ n: 1, statement: data.edges[0].statement }, el());
+    eq(view.progress.placed.size, 0, 'nothing should be placed');
+    assert(textOf(view.work).includes('Choose an arrow first'), textOf(view.work));
+  });
+
+  it('places the right sentence and takes it off the list', () => {
+    const view = freshView(data);
     const edge = data.edges[3];
-    view.showArrow(edge.n);
+    const before = view.bank().length;
+    view.pick(edge.n);
+    view.offer({ n: edge.n, statement: edge.statement }, el());
+    assert(view.progress.has(edge.n), 'the arrow should be filled in');
+    eq(view.bank().length, before - 1, 'and its sentence should leave the list');
+    assert(textOf(view.countEl).startsWith('1 of'), textOf(view.countEl));
+  });
+
+  it('rejects a sentence that belongs on a different arrow', () => {
+    const view = freshView(data);
+    view.pick(2);
+    view.offer({ n: 7, statement: data.edges[6].statement }, el());
+    assert(!view.progress.has(2), 'nothing should be placed');
+    assert(!view.progress.has(7), 'and certainly not the arrow the sentence came from');
+    assert(textOf(view.work).includes('another arrow'), textOf(view.work));
+  });
+
+  it('says a false sentence is false rather than misfiled', () => {
+    const view = freshView(data);
+    view.pick(2);
+    view.offer({ n: null, statement: data.mistakes[0] }, el());
+    assert(textOf(view.work).includes('false'), textOf(view.work));
+  });
+
+  it('keeps the false sentences on the list to the end', () => {
+    const view = freshView(data);
+    for (const e of data.edges) {
+      view.pick(e.n);
+      view.offer({ n: e.n, statement: e.statement }, el());
+    }
+    eq(view.bank().length, data.mistakes.length, 'the false ones never leave');
+  });
+
+  it('leaves the last arrow a real choice', () => {
+    const view = freshView(data);
+    for (const e of data.edges.slice(0, -1)) {
+      view.pick(e.n);
+      view.offer({ n: e.n, statement: e.statement }, el());
+    }
+    eq(view.bank().length, 1 + data.mistakes.length, 'one true sentence among the false ones');
+  });
+
+  it('shows what was placed, and why, when a filled arrow is chosen again', () => {
+    const view = freshView(data);
+    const edge = data.edges[5];
+    view.pick(edge.n);
+    view.offer({ n: edge.n, statement: edge.statement }, el());
+    view.pick(edge.n);
     const text = textOf(view.work);
-    assert(text.includes(edge.statement.slice(0, 40)), 'the statement should be shown');
+    assert(text.includes(edge.statement.slice(0, 40)), 'the sentence should be shown');
     assert(text.includes(edge.why.slice(0, 30)), 'and the reason with it');
   });
 
-  it('counts the arrows looked at', () => {
-    const view = freshView(data, true);
-    view.showArrow(1);
-    view.showArrow(2);
-    view.showArrow(1);
-    eq(view.shown.size, 2, 'the same arrow twice is one arrow');
-    assert(textOf(view.countEl).startsWith('2 of'), textOf(view.countEl));
-  });
-
-  it('reveals every arrow at once', () => {
+  it('fills in everything on request', () => {
     const view = freshView(data, true);
     view.revealAll();
-    eq(view.shown.size, data.edges.length);
+    eq(view.progress.placed.size, data.edges.length);
     for (const e of data.edges) {
       assert(String(view.edgeEls.get(e.n).path.getAttribute('class')).includes('cm-edge--shown'),
-        `arrow ${e.n} should be marked after revealing everything`);
+        `arrow ${e.n} should be marked once everything is filled in`);
     }
   });
 
-  it('carries every answer in the page, behind the toggle', () => {
+  it('empties the sheet again on Start over', () => {
     const view = freshView(data);
-    const fold = walk(view.root).find((n) => String(n.className).includes('cm-fold--answers'));
-    assert(fold, 'wants an answers fold');
-    const text = textOf(fold);
-    for (const e of data.edges) {
-      assert(text.includes(e.statement.slice(0, 40)), `arrow ${e.n} is missing from the answer list`);
-    }
-    for (const m of data.mistakes) {
-      assert(text.includes(m.slice(0, 30)), 'a listed mistake is missing from the answer list');
-    }
+    view.revealAll();
+    view.progress.clear();
+    view.render();
+    eq(view.progress.placed.size, 0);
+    eq(view.bank().length, data.edges.length + data.mistakes.length);
   });
 
   it('links the worksheet at the top', () => {
