@@ -23,7 +23,7 @@ import maptex
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALIDATOR = ROOT / "tools" / "validate.mjs"
-OUT_DIR = ROOT / "teaching" / "labs" / "maps" / "data"
+DATA_DIR = ROOT / "teaching" / "labs" / "data" / "maps"
 
 KINDS = ("holds", "equiv")
 
@@ -438,8 +438,8 @@ def write(data):
     for e in data["edges"]:
         del e["badge_tikz"], e["draw"]
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    path = OUT_DIR / f"{data['id']}.json"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    path = DATA_DIR / f"{data['id']}.json"
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
     print(
         f"wrote {path.relative_to(ROOT)}  "

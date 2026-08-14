@@ -11,7 +11,7 @@ adds to close exactly that gap. Arrow 5 was "uniform convergence does not give a
 differentiable limit" and now says what does: uniform convergence of the
 derivatives. Both counterexamples survive in the reason lines and the benchmarks.
 
-Run it to rewrite teaching/labs/maps/data/func-sequences.json.
+Run it to rewrite teaching/labs/data/maps/func-sequences.json.
 """
 
 import sys

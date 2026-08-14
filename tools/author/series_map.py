@@ -11,7 +11,7 @@ is now C to E, a convergent series has terms tending to zero, with the divergenc
 test as its contrapositive. 14 is now C to N, which is the definition of conditional
 convergence. Both counterexamples survive in the reason lines and in the benchmarks.
 
-Run it to rewrite teaching/labs/maps/data/series.json.
+Run it to rewrite teaching/labs/data/maps/series.json.
 """
 
 import sys

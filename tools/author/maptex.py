@@ -29,7 +29,7 @@ import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TEX_DIR = ROOT / "tools" / "author" / "tex"
-PDF_DIR = ROOT / "teaching" / "labs" / "maps"
+PDF_DIR = ROOT / "teaching" / "labs" / "worksheets"
 
 PDFLATEX = shutil.which("pdflatex") or "/Library/TeX/texbin/pdflatex"
 
@@ -292,6 +292,6 @@ def build(data):
         if not solutions:
             PDF_DIR.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(pdf, PDF_DIR / f"{data['id']}.pdf")
-            served = f"/teaching/labs/maps/{data['id']}.pdf"
+            served = f"/teaching/labs/worksheets/{data['id']}.pdf"
 
     return served

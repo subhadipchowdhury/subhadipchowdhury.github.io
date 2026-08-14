@@ -95,6 +95,8 @@ class LabController {
   constructor(root, spec, specUrl) {
     this.root = root;
     this.spec = spec;
+    // A setup figure is named relative to data/, so specs/ and figures/ have to
+    // stay siblings there. build_labs.py writes the other half of this.
     this.base = specUrl.replace(/specs\/[^/]*$/, '');
     this.progress = new Progress(spec.lab_id);
     this.puzzles = spec.puzzles || [];

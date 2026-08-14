@@ -37,8 +37,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 NOTEBOOK_DIR = ROOT / 'teaching/labs/notebooks'
-SPEC_DIR = ROOT / 'teaching/labs/specs'
-OUT_DIR = ROOT / 'teaching/labs/out'
+SPEC_DIR = ROOT / 'teaching/labs/data/specs'
+FIGURE_DIR = ROOT / 'teaching/labs/data/figures'
 VALIDATOR = ROOT / 'tools/validate.mjs'
 JSC = pathlib.Path(
     '/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc'
@@ -259,7 +259,10 @@ def collect(cell):
     return {'stdout': ''.join(text).rstrip('\n'), 'images': images}
 
 
-def write_setup_images(lab_id, cell_id, images, out_dir):
+def write_setup_images(lab_id, cell_id, images, fig_dir):
+    if not images:
+        return []
+    fig_dir.mkdir(parents=True, exist_ok=True)
     paths = []
     seen = {}
     for k, png in enumerate(images):
@@ -269,8 +272,8 @@ def write_setup_images(lab_id, cell_id, images, out_dir):
             paths.append(seen[digest])
             continue
         name = f'{cell_id}-{k}.png'
-        (out_dir / name).write_bytes(raw)
-        rel = f'out/{lab_id}/{name}'
+        (fig_dir / name).write_bytes(raw)
+        rel = f'figures/{lab_id}/{name}'
         seen[digest] = rel
         paths.append(rel)
     return paths
@@ -285,10 +288,11 @@ def build_spec(nb_path, nb, captured, carried):
     lab = nb['metadata']['lab']
     lab_id = lab['lab_id']
     puzzles = []
-    out_dir = OUT_DIR / lab_id
+    # A lab whose setups only print text gets no directory at all, rather than an
+    # empty one. write_setup_images creates it when it has something to put in it.
+    fig_dir = FIGURE_DIR / lab_id
     if captured:
-        out_dir.mkdir(parents=True, exist_ok=True)
-        for stale in out_dir.glob('*.png'):
+        for stale in fig_dir.glob('*.png'):
             stale.unlink()
 
     for index, cell in enumerate(nb['cells']):
@@ -315,7 +319,7 @@ def build_spec(nb_path, nb, captured, carried):
                 'intro_html': render_markdown(setup['intro'].strip()) if setup.get('intro') else '',
                 'caption_html': render_markdown(setup['caption'].strip()) if setup.get('caption') else '',
                 'stdout': shot['stdout'] if captured else kept.get('stdout', ''),
-                'figures': (write_setup_images(lab_id, meta['cell_id'], shot['images'], out_dir)
+                'figures': (write_setup_images(lab_id, meta['cell_id'], shot['images'], fig_dir)
                             if captured else kept.get('figures', [])),
             }
         puzzles.append(gate)

@@ -21,7 +21,7 @@
     "caption_html": "<p>The degree-20 polynomial passes through all 21 nodes and misses the function by nearly 60 between them. Read the right-hand panel for where it misses: across the middle half of the interval the error stays under a fiftieth, in the second gap from the end it reaches four, and in the last gap it reaches 60. This is Runge’s phenomenon, after the German mathematician and physicist Carl David Tolmé Runge, who published it in 1901. It is not roundoff, it does not go away in exact arithmetic, and the only thing left to blame is where the nodes are.</p>",
     "stdout": "degree  4   nodes  5   max |f - p| =    0.438\ndegree 12   nodes 13   max |f - p| =    3.663\ndegree 20   nodes 21   max |f - p| =   59.822",
     "figures": [
-     "out/lab1-runge/chebnodes-0.png"
+     "figures/lab1-runge/chebnodes-0.png"
     ]
    },
    "blocks": [

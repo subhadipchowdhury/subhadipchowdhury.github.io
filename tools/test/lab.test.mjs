@@ -20,9 +20,9 @@ const readText = typeof read === 'function'
 
 const slurp = (p) => JSON.parse(String(readText(p, 'utf8')));
 
-const index = slurp('teaching/labs/specs/index.json');
+const index = slurp('teaching/labs/data/specs/index.json');
 const specs = new Map(
-  index.map((entry) => [entry.lab_id, slurp(`teaching/labs/specs/${entry.lab_id}.json`)]),
+  index.map((entry) => [entry.lab_id, slurp(`teaching/labs/data/specs/${entry.lab_id}.json`)]),
 );
 
 let served = null;
@@ -52,14 +52,14 @@ function has(text, needle, msg) {
   }
 }
 
-const SPEC_URL = '/teaching/labs/specs/lab2-newton.json';
+const SPEC_URL = '/teaching/labs/data/specs/lab2-newton.json';
 const ids = spec.puzzles.map((p) => p.cell_id);
 
 async function open(labSpec, { fresh = true } = {}) {
   served = labSpec;
   if (fresh) localStorage.clear();
   const root = document.createElement('div');
-  const lab = await mountLab(root, `/teaching/labs/specs/${labSpec.lab_id}.json`);
+  const lab = await mountLab(root, `/teaching/labs/data/specs/${labSpec.lab_id}.json`);
   return { root, lab };
 }
 

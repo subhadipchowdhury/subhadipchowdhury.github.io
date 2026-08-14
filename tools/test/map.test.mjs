@@ -29,8 +29,8 @@ const readText = typeof read === 'function'
 const slurp = (p) => JSON.parse(String(readText(p, 'utf8')));
 
 const MAPS = new Map([
-  ['series', slurp('teaching/labs/maps/data/series.json')],
-  ['func-sequences', slurp('teaching/labs/maps/data/func-sequences.json')],
+  ['series', slurp('teaching/labs/data/maps/series.json')],
+  ['func-sequences', slurp('teaching/labs/data/maps/func-sequences.json')],
 ]);
 
 let passed = 0;
@@ -280,7 +280,7 @@ for (const [id, data] of MAPS) {
     });
 
     it('names a worksheet that exists', () => {
-      eq(data.pdf, `/teaching/labs/maps/${id}.pdf`, `unexpected pdf path ${data.pdf}`);
+      eq(data.pdf, `/teaching/labs/worksheets/${id}.pdf`, `unexpected pdf path ${data.pdf}`);
       // The JSON claiming a worksheet that was never built would put a dead link in
       // the callout at the top of the page.
       const bytes = readText('teaching' + data.pdf.slice('/teaching'.length));

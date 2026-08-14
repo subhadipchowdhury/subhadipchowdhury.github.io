@@ -8,11 +8,11 @@ layout: compress
   engine/lab.css so the bar and the footer cannot drift between the three.
 
   The page itself is front matter only. Everything inside .cm is built at runtime
-  by engine/map/map.js from maps/data/{map_id}.json, which tools/author writes.
+  by engine/map/map.js from data/maps/{map_id}.json, which tools/author writes.
 
   Front matter a page supplies:
     title   shown in <title>; map.js writes the h1 from the data
-    map_id  names the data file under maps/data/
+    map_id  names the data file under data/maps/
     robots  false, as on every lab and applet
 {% endcomment %}
 
@@ -37,7 +37,7 @@ layout: compress
 
     <main class="main-wrapper">
       <div class="cm" id="cm-root"
-           data-map="{{ '/teaching/labs/maps/data/' | append: page.map_id | append: '.json' | relative_url }}">
+           data-map="{{ '/teaching/labs/data/maps/' | append: page.map_id | append: '.json' | relative_url }}">
         <noscript>
           <p class="cm-noscript">This map is drawn and checked in your browser, so
           it needs JavaScript. Turn it on for this page and reload. The printed
