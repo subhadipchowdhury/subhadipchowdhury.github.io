@@ -75,7 +75,7 @@ describe('naming things the student can see', () => {
   });
 
   it('names an entry the way the notation writes it', () => {
-    eq(describeCell('T', [0, 2]), 'T[0, 2]');
+    eq(describeCell('T', [0, 2]), 'T[0][2]');
     eq(describeCell('c', [3]), 'c[3]');
     eq(describeCell('p', []), 'p');
   });
@@ -136,7 +136,7 @@ describe('the algorithm ran and the numbers are wrong', () => {
 
     eq(v.stage, 'compare');
     eq(v.why, 'first_wrong_entry');
-    has(v.message, 'T[0, 1]');
+    has(v.message, 'T[0][1]');
     has(v.message, 'with j = 1 and i = 0');
     has(v.detail, 'nothing had written to yet');
     eq(v.blockId, 'rec');
@@ -145,7 +145,7 @@ describe('the algorithm ran and the numbers are wrong', () => {
   it('reports an entry the algorithm never fills in', () => {
     const v = check(withBlank(CORRECT, 'bound', 'n−j−2'));
     eq(v.why, 'entry_never_written');
-    has(v.message, 'never fills in T[2, 1]');
+    has(v.message, 'never fills in T[2][1]');
   });
 
   it('discloses no reference value in any of those messages', () => {

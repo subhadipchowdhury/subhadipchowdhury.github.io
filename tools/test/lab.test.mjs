@@ -187,8 +187,10 @@ await it('carries the lab intro and the puzzle count', async () => {
   const intro = textOf(root.querySelector('.lab-intro'));
   has(intro, 'scrambled order', 'the intro must say what a puzzle is');
   assert(/indentation/i.test(intro), 'the intro must say indentation counts');
-  assert(intro.includes('\u2190'), 'the intro must define the assignment arrow');
-  has(intro, 'includes both', 'and say that a to b is inclusive');
+  // Either notation, since the arrow form and the "let \u2026 be" form both need
+  // saying and a lab may be written in either.
+  assert(/let .+ be|\u2190/.test(intro), 'the intro must say how a step stores a value');
+  has(intro, 'includes both', 'and say that a range is inclusive');
   has(textOf(root.querySelector('.lab-progress')), `0 of ${ids.length} done`);
 });
 
@@ -493,8 +495,8 @@ await it('describes the attempt without describing the answer', async () => {
     lab: spec, gate, view, verdict: { message: 'Not yet.' }, attempts: 5,
   });
   has(text, 'Newton form and divided differences');
-  has(text, 'function divided_differences(x, y):');
-  has(text, '            T[i, j] ←', 'indentation preserved');
+  has(text, 'function divided_differences, given nodes x and values y:');
+  has(text, '            let T[i][j] be', 'indentation preserved');
   has(text, '⟨?den⟩ = x[i+j] − x[i]');
   has(text, 'Attempts: 5');
 });

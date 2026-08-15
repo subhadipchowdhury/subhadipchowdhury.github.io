@@ -852,6 +852,149 @@ function f(A, d):
 });
 
 // ---------------------------------------------------------------------------
+// The English notation
+// ---------------------------------------------------------------------------
+//
+// Every step is a sentence. The words are matched by value on a name token
+// rather than reserved in the tokenizer, because a, b, n, t, u and in are all
+// variables in one lab or another, so the tests below check both that the
+// sentences work and that those names still do.
+
+describe('English notation', () => {
+  it('let stores a value, into a name or an entry', () => {
+    const r = exec([
+      'function f, given nothing n:',
+      '    let p be 2 · n',
+      '    let xs be a list of 3 zeros',
+      '    let xs[1] be p',
+      '    report xs',
+    ].join('\n'), { env: { n: 5 }, call: 'f(n)' });
+    eq(r.value, [0, 10, 0]);
+  });
+
+  it('a table, a row, a column, and copying into either', () => {
+    const r = exec([
+      'function f, given values v:',
+      '    let T be a table of 2 by 3 zeros',
+      '    copy v into row 1 of T',
+      '    copy 7 into column 0 of T',
+      '    let a be row 1 of T',
+      '    let b be column 2 of T',
+      '    report a and b and T',
+    ].join('\n'), { env: { v: [1, 2, 3] }, call: 'f(v)' });
+    eq(r.value[0], [7, 2, 3], 'the row after the column overwrote entry 0');
+    eq(r.value[1], [0, 3], 'the column runs down every row');
+    eq(r.value[2], [[7, 0, 0], [7, 2, 3]]);
+  });
+
+  it('taking a row hands back a copy, not the table’s own row', () => {
+    const r = exec([
+      'function f, given table T:',
+      '    let r be row 0 of T',
+      '    let r[0] be 99',
+      '    report T',
+    ].join('\n'), { env: { T: [[1, 2], [3, 4]] }, call: 'f(T)' });
+    eq(r.value, [[1, 2], [3, 4]], 'the table is untouched');
+  });
+
+  it('the number of entries in x is length(x)', () => {
+    const r = exec([
+      'function f, given nodes x:',
+      '    let n be the number of entries in x',
+      '    report n',
+    ].join('\n'), { env: { x: [4, 5, 6] }, call: 'f(x)' });
+    eq(r.value, 3);
+  });
+
+  it('for each takes the name just before "from" as its variable', () => {
+    const r = exec([
+      'function f, given a count n:',
+      '    let s be 0',
+      '    for each row i from 1 to n:',
+      '        let s be s + i',
+      '    for each k from n down to 1:',
+      '        let s be s + 10',
+      '    report s',
+    ].join('\n'), { env: { n: 3 }, call: 'f(n)' });
+    eq(r.value, 36, '1+2+3 then three tens');
+  });
+
+  it('report separates its values rather than joining them with "and"', () => {
+    const r = exec([
+      'function f, given nothing n:',
+      '    report n and n + 1',
+    ].join('\n'), { env: { n: 4 }, call: 'f(n)' });
+    eq(r.value, [4, 5], 'two values, not a boolean');
+  });
+
+  it('given names the parameter as the last word of each group', () => {
+    const r = exec([
+      'function f, given the ends a and b, and the degree n:',
+      '    report a + b + n',
+    ].join('\n'), { env: { a: 1, b: 2, n: 3 }, call: 'f(a, b, n)' });
+    eq(r.value, 6);
+  });
+
+  it('the words are not reserved, so a, b, n, t and u stay variables', () => {
+    const r = exec([
+      'function f, given a, b, n, t and u:',
+      '    let row be a + b',
+      '    let of be n · t',
+      '    report row + of + u',
+    ].join('\n'), { env: { a: 1, b: 2, n: 3, t: 4, u: 5 }, call: 'f(a, b, n, t, u)' });
+    eq(r.value, 20);
+  });
+
+  it('T[i][j] and T[i, j] are the same entry', () => {
+    eq(evalExpression('T[1][0]', { T: [[1, 2], [3, 4]] }), 3);
+    eq(evalExpression('T[1, 0]', { T: [[1, 2], [3, 4]] }), 3);
+    const r = exec([
+      'function f, given table T:',
+      '    let T[0][1] be 9',
+      '    report T[0, 1]',
+    ].join('\n'), { env: { T: [[1, 2], [3, 4]] }, call: 'f(T)' });
+    eq(r.value, 9);
+  });
+
+  it('both notations parse, so a lab can be converted on its own', () => {
+    const english = exec([
+      'function f, given nodes x:',
+      '    let n be the number of entries in x',
+      '    report n',
+    ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' });
+    const symbolic = exec([
+      'function f(x):',
+      '    n ← length(x)',
+      '    return n',
+    ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' });
+    eq(english.value, symbolic.value);
+  });
+
+  it('says what it wanted when a sentence is incomplete', () => {
+    throws(() => exec('let p 0\n'), 'be', 'a missing "be"');
+    throws(() => exec([
+      'function f, given nodes x:',
+      '    for each i 0 to 3:',
+      '        let p be i',
+      '    report p',
+    ].join('\n')), 'from', 'a missing "from"');
+    throws(() => exec([
+      'function f, given nodes x:',
+      '    copy x into T',
+      '    report x',
+    ].join('\n')), 'row', 'a copy with no row or column');
+  });
+
+  it('a row or column of something that is not a table says so', () => {
+    throws(() => exec([
+      'function f, given nodes x:',
+      '    let r be row 0 of x',
+      '    report r',
+    ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' }), 'no rows or columns');
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 

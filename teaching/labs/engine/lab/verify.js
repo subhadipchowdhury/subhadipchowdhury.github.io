@@ -684,7 +684,7 @@ function findFirst(got, ref, name) {
     for (let i = 0; i < Math.min(ref.length, got.length); i++) {
       for (let j = 0; j < Math.min(ref[i].length, got[i].length); j++) {
         if (!valuesEqual(got[i][j], ref[i][j], 1e-9)) {
-          return `Not yet. ${name}[${i}, ${j}] should be ${fmtNum(ref[i][j])}; yours is ${fmtNum(got[i][j])}.`;
+          return `Not yet. ${name}[${i}][${j}] should be ${fmtNum(ref[i][j])}; yours is ${fmtNum(got[i][j])}.`;
         }
       }
     }

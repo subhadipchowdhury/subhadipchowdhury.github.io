@@ -320,6 +320,46 @@ function checkStructure(gate, where) {
   for (const m of allText.matchAll(/⟨\?([^⟩]+)⟩/g)) {
     if (!gate.blanks?.[m[1].trim()]) bad(where, `block text uses blank "${m[1].trim()}", which is not declared`);
   }
+
+  checkBlockLines(gate, where);
+}
+
+// Two rules about a tile staying a tile. Neither is about grammar: the
+// interpreter already rejects a line it cannot read.
+
+// Every step of the English notation opens with one of these. `return` is not
+// among them on purpose, because `report` is the word in that notation.
+const OPENERS = ['function', 'let', 'copy', 'for', 'if', 'else', 'while', 'report', 'print'];
+
+// Only these three can open a line in the English notation and nothing else, so
+// seeing one means the gate has been converted and the opener rule applies. A
+// gate still written with arrows is left alone, and starts being checked on the
+// commit that converts it.
+const ENGLISH_ONLY = ['let', 'copy', 'report'];
+
+// A tile wider than this scrolls sideways on a phone, and a step a reader has to
+// scroll is a step they skip. The widest line in either lab is 57.
+const LINE_LIMIT = 64;
+
+function checkBlockLines(gate, where) {
+  const lines = [...gate.blocks, ...(gate.distractors || [])]
+    .flatMap((b) => b.lines.map((l) => ({ id: b.id, text: String(l.text) })));
+  const opener = (text) => text.trim().split(/\s+/)[0];
+  const english = lines.some((l) => ENGLISH_ONLY.includes(opener(l.text)));
+
+  for (const line of lines) {
+    // A blank shows as an input roughly its declared width, not as its marker.
+    const shown = line.text.replace(/⟨\?([^⟩]+)⟩/g, (_, name) => {
+      const w = gate.blanks?.[name.trim()]?.width;
+      return 'x'.repeat(Number.isFinite(w) ? w : 10);
+    });
+    if (shown.length > LINE_LIMIT) {
+      bad(where, `block "${line.id}" is ${shown.length} characters wide, over the ${LINE_LIMIT} a tile shows without scrolling`);
+    }
+    if (english && !OPENERS.includes(opener(line.text))) {
+      bad(where, `block "${line.id}" starts with "${opener(line.text)}"; in this notation a step opens with one of ${OPENERS.join(', ')}`);
+    }
+  }
 }
 
 function correctSubmission(gate) {

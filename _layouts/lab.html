@@ -44,22 +44,42 @@ layout: compress
       <details class="lab-notation">
         <summary>Notation used in these puzzles</summary>
         <div class="lab-notation__body">
+          <p>Every step is a sentence. Read one out loud and it says what it
+          does.</p>
+
           <dl>
-            <dt><code>a ← b</code></dt>
-            <dd>assigns. <code>=</code> compares and never assigns.</dd>
+            <dt><code>let p be 0</code></dt>
+            <dd>stores a value. Nothing in these puzzles uses <code>=</code> to
+            store; <code>=</code> only ever compares.</dd>
 
-            <dt><code>for i ← 0 to 3:</code></dt>
-            <dd>runs i = 0, 1, 2, 3. A range includes both ends, so the bound is
-            the last index visited, not a count.</dd>
+            <dt><code>for each row i from 0 to 3:</code></dt>
+            <dd>runs i = 0, 1, 2, 3. Both ends are included, so the bound is the
+            last index visited and not a count. The loop variable is the name
+            just before <code>from</code>, and the words in front of it are there
+            to be read.</dd>
 
-            <dt><code>for i ← 3 down to 0:</code></dt>
-            <dd>runs the same four values, counting down.</dd>
+            <dt><code>for each k from 3 down to 0:</code></dt>
+            <dd>the same four values, counting down.</dd>
 
-            <dt><code>x[0]</code>, <code>T[i, j]</code></dt>
-            <dd>subscripts start at 0. Arrays take one, tables take two.</dd>
+            <dt><code>x[0]</code>, <code>T[i][j]</code></dt>
+            <dd>subscripts start at 0. An array takes one; a table takes a row
+            and then an entry along that row.</dd>
 
-            <dt><code>x[0..n−1]</code></dt>
-            <dd>a slice, ends included.</dd>
+            <dt><code>row 0 of T</code>, <code>column 0 of T</code></dt>
+            <dd>a whole row or a whole column. Taking one hands back a copy.</dd>
+
+            <dt><code>copy y into column 0 of T</code></dt>
+            <dd>fills a whole row or column in one step.</dd>
+
+            <dt><code>the number of entries in x</code></dt>
+            <dd>how long x is.</dd>
+
+            <dt><code>a table of n by n zeros</code></dt>
+            <dd>and <code>a list of n zeros</code> for one dimension.</dd>
+
+            <dt><code>report p</code>, <code>report c and T</code></dt>
+            <dd>hands the answer back and stops. <code>print p</code> shows a
+            value without stopping.</dd>
 
             <dt><code>a · b</code>, <code>a − b</code></dt>
             <dd>multiplication and subtraction. In a blank you can type
@@ -69,16 +89,21 @@ layout: compress
             <dd>likewise <code>!=</code>, <code>&lt;=</code> and <code>pi</code>
             in a blank.</dd>
 
-            <dt><code>length(x)</code></dt>
-            <dd>along with <code>abs</code>, <code>sqrt</code>, <code>cos</code>,
-            <code>sin</code>, <code>exp</code>, <code>max</code>,
-            <code>min</code>, <code>sum</code>, <code>zeros</code> and
-            <code>solve</code>.</dd>
+            <dt><code>abs(x)</code></dt>
+            <dd>along with <code>sqrt</code>, <code>cos</code>, <code>sin</code>,
+            <code>exp</code>, <code>max</code>, <code>min</code>,
+            <code>sum</code> and <code>solve</code>.</dd>
           </dl>
 
           <p>Two things differ from Python on purpose. Dividing by zero stops the
           program instead of returning infinity, and a subscript outside the
           array stops it instead of wrapping to the other end.</p>
+
+          <p>One lab hasn't been rewritten into sentences yet, so its steps use
+          <code>n ← length(x)</code> where these use <code>let n be the number of
+          entries in x</code>, and <code>T[i, j]</code> where these use
+          <code>T[i][j]</code>. The arrow stores a value, the same way
+          <code>let</code> does.</p>
         </div>
       </details>
 

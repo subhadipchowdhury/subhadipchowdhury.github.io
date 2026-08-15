@@ -73,27 +73,27 @@ $$f[x_i] = y_i, \qquad f[x_i,\dots,x_{i+j}] = \frac{f[x_{i+1},\dots,x_{i+j}] - f
 
 so a difference of order $j$ comes from two differences of order $j-1$. Let's collect them in a table $T$ with
 
-$$T[i,\,j] = f[x_i,\dots,x_{i+j}],$$
+$$T[i][j] = f[x_i,\dots,x_{i+j}],$$
 
 so column $j$ holds every difference of order $j$, and column $0$ is the data itself. A difference of order $j$ needs $j+1$ consecutive nodes to exist, so column $j$ runs $j$ entries shorter than column $0$, and the part of the table that gets filled in is a triangle. The coefficients $c_0,\dots,c_{n-1}$ sit along its top row.
 
 Turn that recurrence into an algorithm that works for any $n$: fill $T$ one column at a time, then read the coefficients off the top row. Two expressions are left blank.
 
-Let's settle the notation first. A range in this notation includes both of its ends, so `for k ← 0 to 3` runs $k = 0, 1, 2, 3$. The bound you write is the last index the loop visits, not the number of passes it makes.
+Let's settle the notation first. A range includes both of its ends, so `for each k from 0 to 3` runs $k = 0, 1, 2, 3$. The bound you write is the last index the loop visits, not the number of passes it makes.
 
 Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row. Write the index of the last row that column $j$ fills. Then write the two nodes that belong in the denominator.
 ''',
 
     'blocks': [
-        block('def', 'function divided_differences(x, y):', [10, 10], 'def divided_differences'),
-        block('n', 'n ← length(x)', [25, 25], 'n = len'),
-        block('tab', 'T ← zeros(n, n)', [26, 26], 'np.zeros'),
-        block('col0', 'T[0..n−1, 0] ← y', [27, 27], 'table[:, 0]'),
-        block('loopj', 'for j ← 1 to n−1:', [28, 28], 'for j in range(1, n)'),
-        block('loopi', 'for i ← 0 to ⟨?bound⟩:', [29, 29], 'for i in range(n - j)'),
-        block('rec', 'T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩', [30, 30], 'table[i, j]'),
-        block('coef', 'c ← T[0, 0..n−1]', [31, 31], 'coeffs = table[0'),
-        block('ret', 'return c, T', [32, 32], 'return coeffs'),
+        block('def', 'function divided_differences, given nodes x and values y:', [10, 10], 'def divided_differences'),
+        block('n', 'let n be the number of entries in x', [25, 25], 'n = len'),
+        block('tab', 'let T be a table of n by n zeros', [26, 26], 'np.zeros'),
+        block('col0', 'copy y into column 0 of T', [27, 27], 'table[:, 0]'),
+        block('loopj', 'for each order j from 1 to n−1:', [28, 28], 'for j in range(1, n)'),
+        block('loopi', 'for each row i from 0 to ⟨?bound⟩:', [29, 29], 'for i in range(n - j)'),
+        block('rec', 'let T[i][j] be (T[i+1][j−1] − T[i][j−1]) / ⟨?den⟩', [30, 30], 'table[i, j]'),
+        block('coef', 'let c be row 0 of T', [31, 31], 'coeffs = table[0'),
+        block('ret', 'report c and T', [32, 32], 'return coeffs'),
     ],
 
     'solution': [
@@ -114,9 +114,14 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
     },
 
     'distractors': [
-        decoy('d_num', 'T[i, j] ← (T[i, j−1] − T[i+1, j−1]) / ⟨?den⟩', 'rec', 'num_reversed'),
-        fused('d_swap', ['for i ← 0 to n−1:', 'for j ← 1 to n−i−1:'], 'loopj', 'loops_swapped'),
-        decoy('d_colc', 'c ← T[0..n−1, 0]', 'coef', 'col_not_row'),
+        decoy('d_num', 'let T[i][j] be (T[i][j−1] − T[i+1][j−1]) / ⟨?den⟩', 'rec', 'num_reversed'),
+        fused(
+            'd_swap',
+            ['for each row i from 0 to n−1:', 'for each order j from 1 to n−i−1:'],
+            'loopj',
+            'loops_swapped',
+        ),
+        decoy('d_colc', 'let c be column 0 of T', 'coef', 'col_not_row'),
     ],
 
     'wrong_blanks': {
@@ -144,22 +149,22 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
     'annotations': [
         {
             'blocks': ['loopj', 'loopi'],
-            'text': "The pseudocode range 1 to n−1 includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n−1, so the two conventions describe the same loop.",
+            'text': "The pseudocode says from 1 to n−1 and includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n−1, so the two describe the same loop.",
         },
         {
             'blocks': ['coef'],
-            'text': "The .copy() stops the returned coefficients from aliasing the top row of the table, so writing to one won't change the other. It doesn't affect any value computed.",
+            'text': "Taking row 0 of the table hands back a copy of it, which is what the .copy() in the Python does too, so writing to the coefficients afterwards won't change the table. It doesn't affect any value computed.",
         },
     ],
 
     'feedback': {
         'num_reversed': 'The magnitudes in your table are right, but the signs alternate from one column to the next. Look again at the order of subtraction in your numerator: a divided difference subtracts the earlier value from the later one.',
-        'loops_swapped': 'Your loops visit the (i, j) pairs in a different order. Computing T[i, j] reads two entries out of column j−1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?',
-        'col_not_row': "You returned n values, but they aren't the coefficients. The coefficients are the top entry of each column, so they lie along row 0. Which subscript changes as you move across a row?",
-        'den_j_not_ij': 'T[i, j] is the divided difference over the nodes x_i through x_{i+j}. Your denominator uses a different pair. Which two of those nodes are the outer ones?',
+        'loops_swapped': 'Your loops visit the (i, j) pairs in a different order. Computing T[i][j] reads two entries out of column j−1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?',
+        'col_not_row': "You returned n values, but they aren't the coefficients. The coefficients are the top entry of each column, and the top entries lie along row 0.",
+        'den_j_not_ij': 'T[i][j] is the divided difference over the nodes x_i through x_{i+j}. Your denominator uses a different pair. Which two of those nodes are the outer ones?',
         'den_neighbour': 'You divided by the gap between two adjacent nodes. That works in column 1, where a difference does span a single interval, but a difference of order j spans j of them.',
         'bound_full': 'Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j−1 exist, and that fails one row earlier each time j grows.',
-        'bound_off_by_one': 'Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i, j] reads T[i, j−1] and T[i+1, j−1], so find the largest i for which both of those were filled in.',
+        'bound_off_by_one': 'Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i][j] reads T[i][j−1] and T[i+1][j−1], so find the largest i for which both of those were filled in.',
     },
 }
 
@@ -216,11 +221,11 @@ One warning. The previous puzzle bounded the *columns*, which get shorter as the
     'prefill': 'all',
 
     'blocks': [
-        block('def', 'function print_dd_table(x, T):', [4, 4], 'def print_dd_table'),
-        block('n', 'n ← length(x)', [9, 9], 'n = len(x)'),
-        block('loopi', 'for i ← 0 to n−1:', [12, 12], 'for i in range(n)'),
-        block('loopj', 'for j ← 0 to ⟨?rowlen⟩:', [14, 14], 'for j in range(n - i)'),
-        block('pr', 'print T[i, j]', [15, 15], 'row +='),
+        block('def', 'function print_dd_table, given nodes x and table T:', [4, 4], 'def print_dd_table'),
+        block('n', 'let n be the number of entries in x', [9, 9], 'n = len(x)'),
+        block('loopi', 'for each row i from 0 to n−1:', [12, 12], 'for i in range(n)'),
+        block('loopj', 'for each entry j from 0 to ⟨?rowlen⟩:', [14, 14], 'for j in range(n - i)'),
+        block('pr', 'print T[i][j]', [15, 15], 'row +='),
     ],
 
     'solution': [
@@ -304,12 +309,12 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
 ''',
 
     'blocks': [
-        block('def', 'function newton_eval(xn, c, t):', [4, 4], 'def newton_eval'),
-        block('n', 'n ← length(c)', [18, 18], 'n = len(coeffs)'),
-        block('init', 'p ← c[⟨?init⟩]', [19, 19], 'np.full_like'),
-        block('loop', 'for k ← n−2 down to 0:', [20, 20], 'for k in range(n - 2'),
-        block('upd', 'p ← p · (t − xn[k]) + c[k]', [21, 21], 'result = result *'),
-        block('ret', 'return p', [22, 22], 'return result'),
+        block('def', 'function newton_eval, given nodes xn, coefficients c and t:', [4, 4], 'def newton_eval'),
+        block('n', 'let n be the number of entries in c', [18, 18], 'n = len(coeffs)'),
+        block('init', 'let p be c[⟨?init⟩]', [19, 19], 'np.full_like'),
+        block('loop', 'for each k from n−2 down to 0:', [20, 20], 'for k in range(n - 2'),
+        block('upd', 'let p be p · (t − xn[k]) + c[k]', [21, 21], 'result = result *'),
+        block('ret', 'report p', [22, 22], 'return result'),
     ],
 
     'solution': [
@@ -326,8 +331,8 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
     },
 
     'distractors': [
-        decoy('d_fwd', 'for k ← 1 to n−1:', 'loop', 'sweep_forward'),
-        decoy('d_node', 'p ← p · (t − c[k]) + c[k]', 'upd', 'shift_by_coeff'),
+        decoy('d_fwd', 'for each k from 1 to n−1:', 'loop', 'sweep_forward'),
+        decoy('d_node', 'let p be p · (t − c[k]) + c[k]', 'upd', 'shift_by_coeff'),
     ],
 
     'wrong_blanks': {
@@ -354,7 +359,7 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
     'annotations': [
         {
             'blocks': ['init', 'upd'],
-            'text': 'The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of p ← c[n−1], and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
+            'text': 'The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of "let p be c[n−1]", and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
         },
     ],
 
@@ -401,9 +406,11 @@ NOTEBOOK_LAB = {
         'answer. Indentation counts as much as order, since a step one level in '
         'runs once for every pass of the loop above it. The notebook opens once '
         'all three are done.\n\n'
-        'The steps are pseudocode rather than Python. `←` is assignment, `·` is '
-        'multiplication, subscripts start at 0, and the range `a to b` includes '
-        'both $a$ and $b$.'
+        'The steps are pseudocode rather than Python, and each one is a sentence '
+        'you can read out loud. `let p be 0` stores a value, `copy y into '
+        'column 0 of T` fills a whole column, and `report p` hands the answer '
+        'back. Subscripts start at 0, and `from a to b` includes both $a$ and '
+        '$b$. The key above the puzzles has the rest.'
     ),
 }
 

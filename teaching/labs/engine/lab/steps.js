@@ -49,10 +49,10 @@ export function passPhrase(loops) {
   return `with ${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
 }
 
-/** T[0, 2] for a table entry, c[3] for an array entry. */
+/** T[0][2] for a table entry, c[3] for an array entry, as the blocks write it. */
 export function describeCell(name, cell) {
   if (!cell || !cell.length) return name;
-  return `${name}[${cell.join(', ')}]`;
+  return name + cell.map((k) => `[${k}]`).join('');
 }
 
 // ---------------------------------------------------------------------------

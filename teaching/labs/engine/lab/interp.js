@@ -251,10 +251,15 @@ class ExprParser {
         const subs = [];
         do { subs.push(this.parseSubscript()); } while (this.eat(','));
         this.expect(']', 'a closing bracket');
-        if (subs.length > 2) {
+        // T[i][j] is T[i, j]. Merging here rather than nesting means the
+        // evaluator, the error messages and the write log see one shape whichever
+        // way the author wrote it.
+        e = e.node === 'index'
+          ? { ...e, subs: e.subs.concat(subs) }
+          : { node: 'index', target: e, subs, where: e.where, col: e.col };
+        if (e.subs.length > 2) {
           throw new ParseError('The notation has 1-D arrays and 2-D tables, so at most two subscripts.', { ...open.where, col: open.col });
         }
-        e = { node: 'index', target: e, subs, where: e.where, col: e.col };
       } else {
         return e;
       }
@@ -274,6 +279,34 @@ class ExprParser {
   eat(type) {
     if (this.at(type)) { this.next(); return true; }
     return false;
+  }
+
+  // The English notation's words are matched by value on a `name` token rather
+  // than reserved in the tokenizer, because `a`, `b`, `n`, `t`, `u` and `in` are
+  // all variables in one lab or another and reserving them would break the
+  // symbolic notation. The cost is that a handful of words cannot be variable
+  // names in a position where the grammar is looking for them; see WORDS.
+  atWord(w) {
+    const t = this.peek();
+    return t.type === 'name' && t.value === w;
+  }
+
+  atAnyWord(...ws) { return ws.some((w) => this.atWord(w)); }
+
+  eatWord(w) {
+    if (this.atWord(w)) { this.next(); return true; }
+    return false;
+  }
+
+  expectWord(w, what) {
+    if (!this.atWord(w)) {
+      const got = this.peek();
+      throw new ParseError(
+        `Expected ${what || `"${w}"`} but found ${describeToken(got)}.`,
+        { ...got.where, col: got.col },
+      );
+    }
+    return this.next();
   }
 
   parsePrimary() {
@@ -424,12 +457,29 @@ function parseStatement(lines, i, blanks) {
   if (head.type === 'function') {
     parser.next();
     const name = parser.expect('name', 'a function name').value;
-    parser.expect('(', 'an opening parenthesis');
+    // Two spellings of the same header. "function f(x, y):" is the symbolic one;
+    // "function f, given nodes x and values y:" is the English one, where each
+    // group of words before a separator ends in the parameter it describes.
     const params = [];
-    if (!parser.at(')')) {
-      do { params.push(parser.expect('name', 'a parameter name').value); } while (parser.eat(','));
+    if (parser.eat(',')) {
+      parser.expectWord('given', 'the word "given" after the function name');
+      for (;;) {
+        const words = [];
+        while (parser.at('name')) words.push(parser.next().value);
+        if (words.length) params.push(words[words.length - 1]);
+        if (parser.eat(',') || parser.eat('and')) continue;
+        break;
+      }
+      if (!params.length) {
+        throw new ParseError('"given" has to name at least one thing the function is handed.', where);
+      }
+    } else {
+      parser.expect('(', 'an opening parenthesis, or a comma and "given"');
+      if (!parser.at(')')) {
+        do { params.push(parser.expect('name', 'a parameter name').value); } while (parser.eat(','));
+      }
+      parser.expect(')', 'a closing parenthesis');
     }
-    parser.expect(')', 'a closing parenthesis');
     endOfHeader('function');
     const { body, next } = requireBody(lines, i + 1, line.indent, blanks, 'function');
     return { stmt: { node: 'funcdef', name, params, body, where }, next };
@@ -437,8 +487,21 @@ function parseStatement(lines, i, blanks) {
 
   if (head.type === 'for') {
     parser.next();
-    const varName = parser.expect('name', 'a loop variable').value;
-    parser.expect(GETS, 'an arrow after the loop variable');
+    // "for j ← 1 to n−1:" against "for each order j from 1 to n−1:". The arrow
+    // decides, and it can only be the second token in the symbolic form.
+    const symbolic = parser.peek(1).type === GETS;
+    let varName;
+    if (symbolic) {
+      varName = parser.expect('name', 'a loop variable').value;
+      parser.expect(GETS, 'an arrow after the loop variable');
+    } else {
+      // Everything between "for" and "from" is the reader's, except the last
+      // word, which is the loop variable.
+      let tok = parser.expect('name', 'a loop variable');
+      while (parser.at('name') && parser.peek().value !== 'from') tok = parser.next();
+      varName = tok.value;
+      parser.expectWord('from', 'the word "from" before the first value');
+    }
     const from = parser.parseExpression();
     let descending = false;
     if (parser.eat('down')) { descending = true; }
@@ -480,6 +543,41 @@ function parseStatement(lines, i, blanks) {
     return { stmt: { node: 'return', values, where }, next: i + 1 };
   }
 
+  // "report c and T" is "return c, T". The values parse above the binding power
+  // of the boolean "and", so the word separates them here rather than joining
+  // them into a conjunction. Nothing in this notation returns a true/false value.
+  if (head.type === 'name' && head.value === 'report') {
+    parser.next();
+    const values = [];
+    if (!parser.at('eol')) {
+      do { values.push(parser.parseExpression(BP.and + 1)); } while (parser.eat('and') || parser.eat(','));
+    }
+    parser.expect('eol', 'the end of the line');
+    return { stmt: { node: 'return', values, where }, next: i + 1 };
+  }
+
+  // "let n be length(x)", "let T[i][j] be …", and the worded right-hand sides.
+  if (head.type === 'name' && head.value === 'let') {
+    parser.next();
+    const target = parseTarget(parser);
+    parser.expectWord('be', 'the word "be" after what is being set');
+    const value = parseWordedValue(parser, where);
+    parser.expect('eol', 'the end of the line');
+    return { stmt: { node: 'assign', targets: [target], value, where }, next: i + 1 };
+  }
+
+  // "copy y into column 0 of T", and any worded value on the left, so that
+  // "copy row p of U into row k of U" works: a row swap is then three honest
+  // lines with a temporary rather than a magic verb.
+  if (head.type === 'name' && head.value === 'copy') {
+    parser.next();
+    const value = parseWordedValue(parser, where);
+    parser.expectWord('into', 'the word "into" after what is being copied');
+    const target = parseAxisTarget(parser, where);
+    parser.expect('eol', 'the end of the line');
+    return { stmt: { node: 'assign', targets: [target], value, where }, next: i + 1 };
+  }
+
   if (head.type === 'print') {
     parser.next();
     const values = [];
@@ -497,6 +595,75 @@ function parseStatement(lines, i, blanks) {
   const value = parser.parseExpression();
   parser.expect('eol', 'the end of the line');
   return { stmt: { node: 'assign', targets, value, where }, next: i + 1 };
+}
+
+// The words the English notation looks for. They are matched by value, not
+// reserved, so any of them can still be a variable somewhere the grammar is not
+// looking for it. Do not name a variable after one of these anyway.
+export const WORDS = [
+  'let', 'be', 'copy', 'into', 'report', 'given', 'each', 'from',
+  'row', 'column', 'of', 'a', 'an', 'the', 'list', 'table', 'by',
+  'number', 'entries', 'in', 'zeros',
+];
+
+/**
+ * The right-hand side of a `let`. Four worded forms, then any expression.
+ *
+ *   the number of entries in x        length(x)
+ *   a list of n+1 zeros              zeros(n+1)
+ *   a table of n by n zeros          zeros(n, n)
+ *   row 0 of T  /  column 0 of T     the whole row or column
+ */
+function parseWordedValue(parser, where) {
+  if (parser.atWord('the') && parser.peek(1).type === 'name' && parser.peek(1).value === 'number') {
+    parser.next();
+    parser.next();
+    parser.expectWord('of', 'the word "of" after "the number"');
+    parser.expectWord('entries', 'the word "entries" after "the number of"');
+    parser.expectWord('in', 'the word "in" after "entries"');
+    const arg = parser.parseExpression();
+    return { node: 'call', name: 'length', args: [arg], where, col: 0 };
+  }
+
+  if (parser.atAnyWord('a', 'an') && parser.peek(1).type === 'name'
+      && (parser.peek(1).value === 'list' || parser.peek(1).value === 'table')) {
+    parser.next();
+    const kind = parser.next().value;
+    parser.expectWord('of', `the word "of" after "${kind}"`);
+    const args = [parser.parseExpression()];
+    if (kind === 'table') {
+      parser.expectWord('by', 'the word "by" between the two sizes of a table');
+      args.push(parser.parseExpression());
+    }
+    parser.expectWord('zeros', 'the word "zeros" at the end');
+    return { node: 'call', name: 'zeros', args, where, col: 0 };
+  }
+
+  if (parser.atAnyWord('row', 'column')) return parseAxisSlice(parser, where);
+
+  return parser.parseExpression();
+}
+
+// "row 0 of T" or "column 0 of T", as a value.
+function parseAxisSlice(parser, where) {
+  const axis = parser.next().value;
+  const at = parser.parseExpression();
+  parser.expectWord('of', `the word "of" after the ${axis} number`);
+  const t = parser.expect('name', 'the name of a table');
+  return { node: 'axisSlice', axis, at, name: t.value, where, col: t.col };
+}
+
+// The same thing as somewhere to store into.
+function parseAxisTarget(parser, where) {
+  if (!parser.atAnyWord('row', 'column')) {
+    const got = parser.peek();
+    throw new ParseError(
+      `Expected "row" or "column" after "into" but found ${describeToken(got)}.`,
+      { ...got.where, col: got.col },
+    );
+  }
+  const slice = parseAxisSlice(parser, where);
+  return { kind: 'axisSlice', axis: slice.axis, at: slice.at, name: slice.name, where: slice.where, col: slice.col };
 }
 
 function parseElseChain(lines, i, indent, blanks) {
@@ -526,14 +693,18 @@ function parseElseChain(lines, i, indent, blanks) {
 function parseTarget(parser) {
   const t = parser.peek();
   const name = parser.expect('name', 'something to assign to').value;
-  if (parser.at('[')) {
-    parser.next();
-    const subs = [];
+  if (!parser.at('[')) return { kind: 'name', name, where: t.where, col: t.col };
+  // T[i][j] and T[i, j] are the same target; see the merge in parsePostfix.
+  const subs = [];
+  while (parser.at('[')) {
+    const open = parser.next();
     do { subs.push(parser.parseSubscript()); } while (parser.eat(','));
     parser.expect(']', 'a closing bracket');
-    return { kind: 'index', name, subs, where: t.where, col: t.col };
+    if (subs.length > 2) {
+      throw new ParseError('The notation has 1-D arrays and 2-D tables, so at most two subscripts.', { ...open.where, col: open.col });
+    }
   }
-  return { kind: 'name', name, where: t.where, col: t.col };
+  return { kind: 'index', name, subs, where: t.where, col: t.col };
 }
 
 /**
@@ -894,7 +1065,40 @@ class Interp {
     this.snapshots = snap;
   }
 
+  // A table by name, for the row and column forms, with its shape checked once.
+  axisTable(name, node, scope) {
+    if (!scope.has(name)) {
+      throw new RuntimeError(`"${name}" has no value at this point.`, { kind: 'name', name, ...node.where });
+    }
+    const container = scope.get(name);
+    if (!isArr2(container)) {
+      throw new RuntimeError(
+        `"${name}" is ${shapeOf(container)}, so it has no rows or columns.`,
+        { kind: 'shape', ...node.where },
+      );
+    }
+    return { container, rows: container.length, cols: container[0].length };
+  }
+
   assignTo(target, value, scope) {
+    if (target.kind === 'axisSlice') {
+      const { container, rows, cols } = this.axisTable(target.name, target, scope);
+      const at = needInt(this.eval(target.at, scope), `A ${target.axis} number`, target.where);
+      if (target.axis === 'row') {
+        const i = this.checkIndex(at, rows, target.name, 0, target.where);
+        const idx = Array.from({ length: cols }, (_, k) => k);
+        assignSlice1(container[i], idx, value, target);
+        idx.forEach((j) => this.noteWrite(target.name, [i, j], container[i][j], target.where));
+        return;
+      }
+      const j = this.checkIndex(at, cols, target.name, 1, target.where);
+      const idx = Array.from({ length: rows }, (_, k) => k);
+      const vals = spreadValues(value, rows, target);
+      idx.forEach((i, k) => { container[i][j] = vals[k]; });
+      idx.forEach((i) => this.noteWrite(target.name, [i, j], container[i][j], target.where));
+      return;
+    }
+
     if (target.kind === 'name') {
       scope.set(target.name, value);
       if (this.logging) {
@@ -1040,6 +1244,19 @@ class Interp {
       case 'binary': return this.evalBinary(expr, scope);
 
       case 'index': return this.evalIndex(expr, scope);
+
+      case 'axisSlice': {
+        const { container, rows, cols } = this.axisTable(expr.name, expr, scope);
+        const at = needInt(this.eval(expr.at, scope), `A ${expr.axis} number`, expr.where);
+        if (expr.axis === 'row') {
+          const i = this.checkIndex(at, rows, expr.name, 0, expr.where);
+          // A copy, so "let c be row 0 of T" does not alias the table. This is
+          // the .copy() the notebook's Python does on the same line.
+          return container[i].slice();
+        }
+        const j = this.checkIndex(at, cols, expr.name, 1, expr.where);
+        return container.map((r) => r[j]);
+      }
 
       case 'call': return this.evalCall(expr, scope);
 
