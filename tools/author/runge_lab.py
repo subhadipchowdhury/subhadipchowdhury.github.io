@@ -109,12 +109,12 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
 ''',
 
     'blocks': [
-        block('def', 'function chebyshev_nodes(a, b, n):', [4, 4], 'def chebyshev_nodes'),
-        block('alloc', 'x ← zeros(n+1)', [16, 16], 'x = np.zeros'),
-        block('loop', 'for k ← 0 to n:', [17, 17], 'for k in range'),
-        block('theta', 'θ ← ((2·k + 1) / ⟨?frac⟩) · π', [18, 18], 'theta ='),
-        block('proj', 'u ← cos(θ)', [19, 19], 'u = np.cos'),
-        block('node', 'x[k] ← ⟨?map⟩', [20, 20], 'x[k] ='),
+        block('def', 'function chebyshev_nodes, given ends a and b and degree n:', [4, 4], 'def chebyshev_nodes'),
+        block('alloc', 'let x be a list of n+1 zeros', [16, 16], 'x = np.zeros'),
+        block('loop', 'for each k from 0 to n:', [17, 17], 'for k in range'),
+        block('theta', 'let θ be ((2·k + 1) / ⟨?frac⟩) · π', [18, 18], 'theta ='),
+        block('proj', 'let u be cos(θ)', [19, 19], 'u = np.cos'),
+        block('node', 'let x[k] be ⟨?map⟩', [20, 20], 'x[k] ='),
         block('ret', 'return x', [21, 21], 'return x'),
     ],
 
@@ -139,8 +139,8 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
     # than a harder puzzle. Where the pressure goes instead is `wrong_blanks`,
     # which cost nothing on the board.
     'distractors': [
-        decoy('d_second', 'θ ← (k / n) · π', 'theta', 'angle_second_kind'),
-        decoy('d_short', 'x ← zeros(n)', 'alloc', 'count_off_by_one'),
+        decoy('d_second', 'let θ be (k / n) · π', 'theta', 'angle_second_kind'),
+        decoy('d_short', 'let x be a list of n zeros', 'alloc', 'count_off_by_one'),
     ],
 
     'wrong_blanks': {
@@ -171,7 +171,7 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
     'annotations': [
         {
             'blocks': ['loop'],
-            'text': "The pseudocode range 0 to n includes both ends, while Python's range(n + 1) stops before n + 1. Both give k = 0, 1, ..., n, which is the n+1 nodes.",
+            'text': "The pseudocode says from 0 to n and includes both ends, while Python's range(n + 1) stops before n + 1. Both give k = 0, 1, ..., n, which is the n+1 nodes.",
         },
         {
             'blocks': ['node'],
@@ -229,19 +229,19 @@ interpolates: at $x_k$ every term but the $k$th is zero, and the term left stand
 
 So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.
 
-Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: `m ← length(xn)` is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.
+Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: $m$ is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.
 ''',
 
     'blocks': [
-        block('def', 'function lagrange_eval(xn, yn, t):', [4, 4], 'def lagrange_eval'),
-        block('m', 'm ← length(xn)', [17, 17], 'm = len(nodes)'),
-        block('p0', 'p ← 0', [18, 18], 'result = np.zeros_like'),
-        block('loopi', 'for i ← 0 to m−1:', [19, 19], 'for i in range(m)'),
-        block('L1', 'L ← 1', [20, 20], 'Li = np.ones_like'),
-        block('loopj', 'for j ← 0 to m−1:', [21, 21], 'for j in range(m)'),
-        block('guard', 'if ⟨?guard⟩:', [22, 22], 'if j != i'),
-        block('prod', 'L ← L · ⟨?factor⟩', [23, 23], 'Li = Li *'),
-        block('add', 'p ← p + yn[i] · L', [24, 24], 'result = result +'),
+        block('def', 'function lagrange_eval, given nodes xn, values yn and point t:', [4, 4], 'def lagrange_eval'),
+        block('m', 'let m be the number of entries in xn', [17, 17], 'm = len(nodes)'),
+        block('p0', 'let p be 0', [18, 18], 'result = np.zeros_like'),
+        block('loopi', 'for each term i from 0 to m−1:', [19, 19], 'for i in range(m)'),
+        block('L1', 'let L be 1', [20, 20], 'Li = np.ones_like'),
+        block('loopj', 'for each node j from 0 to m−1:', [21, 21], 'for j in range(m)'),
+        block('guard', 'if ⟨?guard⟩ then:', [22, 22], 'if j != i'),
+        block('prod', 'let L be L · ⟨?factor⟩', [23, 23], 'Li = Li *'),
+        block('add', 'let p be p + yn[i] · L', [24, 24], 'result = result +'),
         block('ret', 'return p', [25, 25], 'return result'),
     ],
 
@@ -273,9 +273,9 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
     # back out; see the note in HANDOFF.md, and note that one of them is what
     # found the degenerate probe set the fourth probe below now covers.
     'distractors': [
-        decoy('d_last', 'p ← yn[i] · L', 'add', 'sum_overwritten'),
-        decoy('d_zero', 'L ← 0', 'L1', 'product_starts_at_zero'),
-        decoy('d_plus', 'L ← L + ⟨?factor⟩', 'prod', 'terms_added'),
+        decoy('d_last', 'let p be yn[i] · L', 'add', 'sum_overwritten'),
+        decoy('d_zero', 'let L be 0', 'L1', 'product_starts_at_zero'),
+        decoy('d_plus', 'let L be L + ⟨?factor⟩', 'prod', 'terms_added'),
     ],
 
     'wrong_blanks': {
@@ -311,11 +311,11 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
     'annotations': [
         {
             'blocks': ['p0', 'L1', 'prod'],
-            'text': 'The Python evaluates a whole array of query points at once. np.zeros_like(xq) is p ← 0 at every one of them, np.ones_like(xq) is L ← 1, and the product line runs on all of them simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
+            'text': 'The Python evaluates a whole array of query points at once. np.zeros_like(xq) is "let p be 0" at every one of them, np.ones_like(xq) is "let L be 1", and the product line runs on all of them simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
         },
         {
             'blocks': ['loopi', 'loopj'],
-            'text': "The pseudocode range 0 to m−1 includes both ends and Python's range(m) stops before m, so both run over all m nodes.",
+            'text': "The pseudocode says from 0 to m−1 and includes both ends, while Python's range(m) stops before m, so both run over all m nodes.",
         },
     ],
 
@@ -368,8 +368,12 @@ NOTEBOOK_LAB = {
         'Drag them into the workspace, set the indentation, fill in the '
         'blanks, and check your answer. Indentation counts as much as order, '
         'since a step one level in runs once for every pass of the loop above '
-        'it. The steps are pseudocode rather than Python, and the key above '
-        'lists the notation. The notebook opens once both puzzles are done.'
+        'it. The notebook opens once both puzzles are done.\n\n'
+        'The steps are pseudocode rather than Python, and each one is a '
+        'sentence you can read out loud. `let` stores a value, and `for`, '
+        '`if`, `else`, `while` and `return` do what they do in code. '
+        'Subscripts start at 0, and `from a to b` includes both $a$ and $b$. '
+        'The key above the puzzles has the rest.'
     ),
 }
 

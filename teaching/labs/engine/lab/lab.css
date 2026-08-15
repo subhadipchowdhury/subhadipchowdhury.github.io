@@ -108,8 +108,10 @@ html[data-theme="dark"] {
   color: var(--color-muted);
 }
 
+/* Padding on all four sides since notation.js opens the body with a sentence.
+   The old hand-written markup started with the dl and borrowed its top margin. */
 .lab-notation__body {
-  padding: 0 0.9rem 0.9rem;
+  padding: 0.9rem;
   border-top: 1px solid var(--border-color);
 }
 

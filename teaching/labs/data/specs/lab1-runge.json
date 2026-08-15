@@ -3,7 +3,7 @@
  "order": 1,
  "title": "Runge's phenomenon and Chebyshev nodes",
  "blurb": "Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.",
- "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It does not always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>These two puzzles build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The steps are pseudocode rather than Python, and the key above lists the notation. The notebook opens once both puzzles are done.</p>",
+ "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It does not always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>These two puzzles build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The notebook opens once both puzzles are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. The key above the puzzles has the rest.</p>",
  "series": [
   "lab1-runge",
   "lab2-newton",
@@ -29,7 +29,7 @@
      "id": "def",
      "lines": [
       {
-       "text": "function chebyshev_nodes(a, b, n):",
+       "text": "function chebyshev_nodes, given ends a and b and degree n:",
        "indent": 0
       }
      ],
@@ -43,7 +43,7 @@
      "id": "alloc",
      "lines": [
       {
-       "text": "x ← zeros(n+1)",
+       "text": "let x be a list of n+1 zeros",
        "indent": 0
       }
      ],
@@ -57,7 +57,7 @@
      "id": "loop",
      "lines": [
       {
-       "text": "for k ← 0 to n:",
+       "text": "for each k from 0 to n:",
        "indent": 0
       }
      ],
@@ -71,7 +71,7 @@
      "id": "theta",
      "lines": [
       {
-       "text": "θ ← ((2·k + 1) / ⟨?frac⟩) · π",
+       "text": "let θ be ((2·k + 1) / ⟨?frac⟩) · π",
        "indent": 0
       }
      ],
@@ -85,7 +85,7 @@
      "id": "proj",
      "lines": [
       {
-       "text": "u ← cos(θ)",
+       "text": "let u be cos(θ)",
        "indent": 0
       }
      ],
@@ -99,7 +99,7 @@
      "id": "node",
      "lines": [
       {
-       "text": "x[k] ← ⟨?map⟩",
+       "text": "let x[k] be ⟨?map⟩",
        "indent": 0
       }
      ],
@@ -180,7 +180,7 @@
      "id": "d_second",
      "lines": [
       {
-       "text": "θ ← (k / n) · π",
+       "text": "let θ be (k / n) · π",
        "indent": 0
       }
      ],
@@ -191,7 +191,7 @@
      "id": "d_short",
      "lines": [
       {
-       "text": "x ← zeros(n)",
+       "text": "let x be a list of n zeros",
        "indent": 0
       }
      ],
@@ -263,7 +263,7 @@
      "blocks": [
       "loop"
      ],
-     "text": "The pseudocode range 0 to n includes both ends, while Python's range(n + 1) stops before n + 1. Both give k = 0, 1, ..., n, which is the n+1 nodes."
+     "text": "The pseudocode says from 0 to n and includes both ends, while Python's range(n + 1) stops before n + 1. Both give k = 0, 1, ..., n, which is the n+1 nodes."
     },
     {
      "blocks": [
@@ -403,7 +403,7 @@
      "num": 7
     }
    ],
-   "hash": "940db936355179ac",
+   "hash": "06b41c9e3bc54053",
    "python": "# ---------------------------------------------------------------------------\n# Chebyshev nodes\n# ---------------------------------------------------------------------------\ndef chebyshev_nodes(a, b, n):\n    \"\"\"Return n+1 Chebyshev nodes (first kind) on [a, b].\n\n    Each node is the projection down onto [a, b] of the midpoint of one of\n    the n+1 arcs that n+2 equally spaced points cut the semicircle above the\n    interval into.\n\n    Parameters\n    ----------\n    a, b : float   endpoints of the interval\n    n    : int     polynomial degree (so we get n+1 nodes)\n    \"\"\"\n    x = np.zeros(n + 1)\n    for k in range(n + 1):\n        theta = (2 * k + 1) / (2 * (n + 1)) * np.pi\n        u = np.cos(theta)\n        x[k] = 0.5 * (a + b) + 0.5 * (b - a) * u\n    return x",
    "brief_html": "<p>The error is no mystery. If $f$ has $n+1$ continuous derivatives on $[a,b]$, then interpolation at the nodes $x_0,\\dots,x_n$ leaves</p>\n<p>$$f(x) - p_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}\\,\\omega(x), \\qquad \\omega(x) = (x-x_0)(x-x_1)\\cdots(x-x_n),$$</p>\n<p>for some $\\xi$ between the smallest and largest of $x, x_0, \\dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That is the same lopsidedness the figure above has. So let's put more nodes near the ends.</p>\n<p>How many more, and where? A good answer came from the Russian mathematician Pafnuty Chebyshev (1821-1894), and it starts as a picture rather than a formula:</p>\n<ol>\n<li>Draw a semicircle with the interval $[a,b]$ as its diameter.</li>\n<li>Mark $n+2$ equally spaced points along the arc, both endpoints included, so the arc is cut into $n+1$ equal pieces.</li>\n<li>Take the midpoint of each piece, which gives $n+1$ points on the arc.</li>\n<li>Drop each one straight down onto the interval.</li>\n</ol>\n<p>Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That is the shape $\\omega$ wanted.</p>\n<p>Now turn the picture into arithmetic. Measure $\\theta$ from the right-hand end of the interval, so the arc runs from $\\theta = 0$ to $\\theta = \\pi$ and a point at angle $\\theta$ on the unit semicircle over $[-1,1]$ sits above $u = \\cos\\theta$. Write the two blanks: the denominator that lands $\\theta$ at the midpoint of the $k$th piece, given the $2k+1$ already sitting in the numerator, and the map that carries $u$ to the matching point of $[a,b]$. The map has to send $u = -1$ to $a$ and $u = 1$ to $b$.</p>\n<p>The nodes come out running from near $b$ down to near $a$. Interpolation doesn't mind.</p>"
   },
@@ -422,7 +422,7 @@
      "id": "def",
      "lines": [
       {
-       "text": "function lagrange_eval(xn, yn, t):",
+       "text": "function lagrange_eval, given nodes xn, values yn and point t:",
        "indent": 0
       }
      ],
@@ -436,7 +436,7 @@
      "id": "m",
      "lines": [
       {
-       "text": "m ← length(xn)",
+       "text": "let m be the number of entries in xn",
        "indent": 0
       }
      ],
@@ -450,7 +450,7 @@
      "id": "p0",
      "lines": [
       {
-       "text": "p ← 0",
+       "text": "let p be 0",
        "indent": 0
       }
      ],
@@ -464,7 +464,7 @@
      "id": "loopi",
      "lines": [
       {
-       "text": "for i ← 0 to m−1:",
+       "text": "for each term i from 0 to m−1:",
        "indent": 0
       }
      ],
@@ -478,7 +478,7 @@
      "id": "L1",
      "lines": [
       {
-       "text": "L ← 1",
+       "text": "let L be 1",
        "indent": 0
       }
      ],
@@ -492,7 +492,7 @@
      "id": "loopj",
      "lines": [
       {
-       "text": "for j ← 0 to m−1:",
+       "text": "for each node j from 0 to m−1:",
        "indent": 0
       }
      ],
@@ -506,7 +506,7 @@
      "id": "guard",
      "lines": [
       {
-       "text": "if ⟨?guard⟩:",
+       "text": "if ⟨?guard⟩ then:",
        "indent": 0
       }
      ],
@@ -520,7 +520,7 @@
      "id": "prod",
      "lines": [
       {
-       "text": "L ← L · ⟨?factor⟩",
+       "text": "let L be L · ⟨?factor⟩",
        "indent": 0
       }
      ],
@@ -534,7 +534,7 @@
      "id": "add",
      "lines": [
       {
-       "text": "p ← p + yn[i] · L",
+       "text": "let p be p + yn[i] · L",
        "indent": 0
       }
      ],
@@ -628,7 +628,7 @@
      "id": "d_last",
      "lines": [
       {
-       "text": "p ← yn[i] · L",
+       "text": "let p be yn[i] · L",
        "indent": 0
       }
      ],
@@ -639,7 +639,7 @@
      "id": "d_zero",
      "lines": [
       {
-       "text": "L ← 0",
+       "text": "let L be 0",
        "indent": 0
       }
      ],
@@ -650,7 +650,7 @@
      "id": "d_plus",
      "lines": [
       {
-       "text": "L ← L + ⟨?factor⟩",
+       "text": "let L be L + ⟨?factor⟩",
        "indent": 0
       }
      ],
@@ -780,14 +780,14 @@
       "L1",
       "prod"
      ],
-     "text": "The Python evaluates a whole array of query points at once. np.zeros_like(xq) is p ← 0 at every one of them, np.ones_like(xq) is L ← 1, and the product line runs on all of them simultaneously. It is the arithmetic you wrote, applied to many values of t at a time."
+     "text": "The Python evaluates a whole array of query points at once. np.zeros_like(xq) is \"let p be 0\" at every one of them, np.ones_like(xq) is \"let L be 1\", and the product line runs on all of them simultaneously. It is the arithmetic you wrote, applied to many values of t at a time."
     },
     {
      "blocks": [
       "loopi",
       "loopj"
      ],
-     "text": "The pseudocode range 0 to m−1 includes both ends and Python's range(m) stops before m, so both run over all m nodes."
+     "text": "The pseudocode says from 0 to m−1 and includes both ends, while Python's range(m) stops before m, so both run over all m nodes."
     }
    ],
    "feedback": {
@@ -947,9 +947,9 @@
      "num": 10
     }
    ],
-   "hash": "603039922b2975e0",
+   "hash": "97bc706abf4b646e",
    "python": "# ---------------------------------------------------------------------------\n# The interpolating polynomial, evaluated via the Lagrange formula\n# ---------------------------------------------------------------------------\ndef lagrange_eval(nodes, values, xq):\n    \"\"\"Evaluate the polynomial interpolating (nodes[i], values[i]) at xq.\n\n    Parameters\n    ----------\n    nodes  : array (m,)  distinct x-coordinates of the data\n    values : array (m,)  y-coordinates, values[i] = f(nodes[i])\n    xq     : array       points at which to evaluate the interpolant\n    \"\"\"\n    nodes  = np.asarray(nodes,  dtype=float)\n    values = np.asarray(values, dtype=float)\n    xq     = np.asarray(xq,     dtype=float)\n\n    m = len(nodes)\n    result = np.zeros_like(xq)\n    for i in range(m):\n        Li = np.ones_like(xq)\n        for j in range(m):\n            if j != i:\n                Li = Li * (xq - nodes[j]) / (nodes[i] - nodes[j])\n        result = result + values[i] * Li\n    return result",
-   "brief_html": "<p>One route to that polynomial is to write $p(x) = c_0 + c_1x + c_2x^2 + c_3x^3$, substitute the four points and solve for the $c_k$. Let's not. If we choose the basis to suit the data, the coefficients turn out to be the data.</p>\n<p>Ask for one polynomial per node, $L_0,\\dots,L_n$, each of them equal to $1$ at its own node and $0$ at every other node. Then</p>\n<p>$$p(x) = y_0L_0(x) + y_1L_1(x) + \\cdots + y_nL_n(x)$$</p>\n<p>interpolates: at $x_k$ every term but the $k$th is zero, and the term left standing is $y_k \\cdot 1$. This is the Lagrange form, named for the Italian-French mathematician Joseph-Louis Lagrange, who published it in 1795, though Edward Waring had written it down in 1779.</p>\n<p>So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.</p>\n<p>Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: <code>m ← length(xn)</code> is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.</p>"
+   "brief_html": "<p>One route to that polynomial is to write $p(x) = c_0 + c_1x + c_2x^2 + c_3x^3$, substitute the four points and solve for the $c_k$. Let's not. If we choose the basis to suit the data, the coefficients turn out to be the data.</p>\n<p>Ask for one polynomial per node, $L_0,\\dots,L_n$, each of them equal to $1$ at its own node and $0$ at every other node. Then</p>\n<p>$$p(x) = y_0L_0(x) + y_1L_1(x) + \\cdots + y_nL_n(x)$$</p>\n<p>interpolates: at $x_k$ every term but the $k$th is zero, and the term left standing is $y_k \\cdot 1$. This is the Lagrange form, named for the Italian-French mathematician Joseph-Louis Lagrange, who published it in 1795, though Edward Waring had written it down in 1779.</p>\n<p>So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.</p>\n<p>Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: $m$ is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.</p>"
   }
  ]
 }

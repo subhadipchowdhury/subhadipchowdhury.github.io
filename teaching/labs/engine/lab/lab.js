@@ -7,7 +7,7 @@
 import { PuzzleView } from './puzzle.js';
 import { buildReference, verify } from './verify.js';
 import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
-import { buildNotationKey, detectNotation } from './notation.js';
+import { buildNotationKey } from './notation.js';
 
 const STORE_VERSION = 2;
 const DEV_KEY = 'lab:dev';
@@ -224,11 +224,10 @@ class LabController {
     view.submit();
   }
 
-  // The key describes whichever notation this lab's own blocks are written in,
-  // so a converted lab and an unconverted one can sit side by side. See
-  // notation.js for why it is not markup in the layout any more.
+  // One copy of the key, rendered here rather than written into the layout and
+  // the demo page separately. See notation.js.
   buildNotation() {
-    return buildNotationKey(detectNotation(this.puzzles), document);
+    return buildNotationKey(document);
   }
 
   buildHeader() {

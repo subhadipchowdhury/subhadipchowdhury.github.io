@@ -118,26 +118,23 @@ for (const entry of index) {
     assert(walk(root).length > 30, 'the tree is suspiciously small');
   });
 
-  // The key is generated from the lab's own blocks rather than written into a
-  // layout, so it has to describe the notation this lab is actually in. While the
-  // two labs disagree, that is the property worth checking on every one of them.
-  await it('carries a notation key describing its own notation', async () => {
+  // The key is generated rather than written into a layout, so the property to
+  // check is that every lab gets one and that it describes the notation the
+  // blocks are actually in.
+  await it('carries the notation key, matching the notation of its blocks', async () => {
     const { root } = await open(labSpec);
     const key = root.querySelector('.lab-notation');
     assert(key, 'no notation key');
     const text = textOf(key);
+    has(text, 'let p be 0', 'the key has to show how a step stores a value');
+    has(text, 'Dividing by zero', 'and the two departures from Python');
+
     const blockText = labSpec.puzzles
       .flatMap((g) => [...g.blocks, ...(g.distractors || [])])
       .flatMap((b) => b.lines.map((l) => l.text))
       .join('\n');
-    if (/^\s*let\b/m.test(blockText)) {
-      has(text, 'let p be 0', 'a lab written in sentences needs the sentence key');
-      assert(!text.includes('a ← b'), 'and must not offer the arrow as how to store');
-    } else {
-      has(text, 'a ← b', 'a lab written with arrows needs the arrow key');
-      assert(!text.includes('let p be 0'), 'and must not offer let');
-    }
-    has(text, 'Dividing by zero', 'both notations share the departures paragraph');
+    assert(!blockText.includes('\u2190'),
+      'a block still using the arrow would be described by the wrong key');
   });
 
   await it('opens the first puzzle and shuts the rest', async () => {

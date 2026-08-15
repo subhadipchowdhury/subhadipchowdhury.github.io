@@ -333,21 +333,14 @@ function checkStructure(gate, where) {
 // `return` and `print` are all still the words they are in code.
 const OPENERS = ['function', 'let', 'for', 'if', 'else', 'while', 'return', 'print'];
 
-// `let` is the one opener only the English notation uses, so seeing it means the
-// gate has been converted and the opener rule applies to all of it. A gate still
-// written with arrows is left alone, and starts being checked on the commit that
-// converts it.
-const ENGLISH_ONLY = ['let'];
-
 // A tile wider than this scrolls sideways on a phone, and a step a reader has to
-// scroll is a step they skip. The widest line in either lab is 57.
+// scroll is a step they skip. The widest line in either lab is 62.
 const LINE_LIMIT = 64;
 
 function checkBlockLines(gate, where) {
   const lines = [...gate.blocks, ...(gate.distractors || [])]
     .flatMap((b) => b.lines.map((l) => ({ id: b.id, text: String(l.text) })));
   const opener = (text) => text.trim().split(/\s+/)[0];
-  const english = lines.some((l) => ENGLISH_ONLY.includes(opener(l.text)));
 
   for (const line of lines) {
     // A blank shows as an input roughly its declared width, not as its marker.
@@ -358,8 +351,8 @@ function checkBlockLines(gate, where) {
     if (shown.length > LINE_LIMIT) {
       bad(where, `block "${line.id}" is ${shown.length} characters wide, over the ${LINE_LIMIT} a tile shows without scrolling`);
     }
-    if (english && !OPENERS.includes(opener(line.text))) {
-      bad(where, `block "${line.id}" starts with "${opener(line.text)}"; in this notation a step opens with one of ${OPENERS.join(', ')}`);
+    if (!OPENERS.includes(opener(line.text))) {
+      bad(where, `block "${line.id}" starts with "${opener(line.text)}"; a step opens with one of ${OPENERS.join(', ')}`);
     }
   }
 }
