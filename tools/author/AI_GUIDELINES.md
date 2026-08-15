@@ -132,9 +132,13 @@ A shorter version, the same three points compressed into three paragraphs, sits
 in the footer of the library index at `teaching/labs/index.html` under
 `.cat-ai`. A student who never opens a lab still sees it there.
 
-The whole disclosure is duplicated in `tools/demo/lab-demo.html`, which stands in
-for the layout locally. Change one and change the other. That makes three copies
-of this text in total; keep them in step.
+Part 2 is one paragraph, worded identically in five places: `_layouts/lab.html`,
+`_layouts/map.html`, `_layouts/applet.html`, `teaching/labs/index.html` and
+`tools/demo/lab-demo.html`, the last of which stands in for the layout locally.
+It opens by naming the Leiden Declaration rather than citing it at the end, lists
+everything the model helped build (engine, concept maps, applets, pipeline, first
+drafts), says what was checked, and takes responsibility for what was missed.
+Change one copy and change all five; keep them in step.
 
 Keep it plain. The first draft of this disclosure carried lines like "Both are
 mistakes, and stopping is more use to you than quietly carrying on" and "asks
