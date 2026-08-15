@@ -6,7 +6,7 @@ rather than rendering it as a page.
 
 | Kind | What it is | Where |
 |---|---|---|
-| Lab | Rebuild the algorithm from scrambled pseudocode, then the notebook opens. | `guided/lab<N>-<name>.html` |
+| Lab | Rebuild the algorithm from scrambled pseudocode, answer a few questions about what it means, then the notebook opens. | `guided/lab<N>-<name>.html` |
 | Applet | One page to play with. Nothing to hand in, nothing gated. | `applets/<course>/<name>.html` |
 | Concept map | A chapter's theorems with the arrows blank. Match each to its statement. | `maps/<name>.html` |
 
@@ -14,7 +14,7 @@ A page file is front matter only, or front matter plus its own markup for an
 applet. Everything else is either engine code or generated data.
 
 The lab directory is `guided/` rather than `labs/`, which would read
-`/teaching/labs/labs/lab1-runge/`. `LAB_DIR` in `index.html` is the one place
+`/teaching/labs/labs/lab1-newton/`. `LAB_DIR` in `index.html` is the one place
 that knows the name; a lab card carries an id, not a filename.
 
 ## Layout
@@ -26,7 +26,7 @@ that knows the name; a lab card carries an id, not a filename.
 
     engine/
       shell.css           the standalone page shell all three kinds load first
-      lab/                interp, verify, puzzle, feedback, lab.js, lab.css
+      lab/                interp, verify, puzzle, quiz, feedback, lab.js, lab.css
       map/                map.js, map.css
       applet/             applet.js, applet.css
 

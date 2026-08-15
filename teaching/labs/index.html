@@ -517,8 +517,8 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
   // systems" or "root-finding" finds those cards only through this field.
   var ACT = [
     { course:'intro', kind:'lab', topic:'Python & Jupyter', title:'Python & Jupyter: a quick start', blurb:'Get comfortable with Python, numpy, and the notebook interface before diving into the activities.', libs:['numpy','matplotlib','mpmath'], updated:'2026-07-30', status:'drafted', nb:'intro/python_coding_tutorial.ipynb' },
-    { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab1-runge', blurb:'Equally spaced nodes make the interpolant blow up near the ends as the degree rises. Find the nodes that fix it.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
-    { course:'na', kind:'lab', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab2-newton', blurb:'Fill in the divided-difference table, then add one term at a time and see what each new node changes.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/newton_divided_differences.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:"Runge's phenomenon & Chebyshev nodes", lab:'lab2-runge', blurb:'Equally spaced nodes make the interpolant blow up near the ends as the degree rises. Find the nodes that fix it.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/interpolation_runge_chebyshev.ipynb' },
+    { course:'na', kind:'lab', topic:'Interpolation', title:'Newton form & divided differences', lab:'lab1-newton', blurb:'Fill in the divided-difference table, then add one term at a time and see what each new node changes.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-08-13', status:'finalized', nb:'na/newton_divided_differences.ipynb' },
     { course:'na', kind:'lab', topic:'Interpolation', title:'Cubic splines & boundary conditions', blurb:'Compare natural, clamped, and not-a-knot splines through the same points.', libs:['numpy','matplotlib','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/cubic_splines.ipynb' },
     { course:'na', kind:'lab', topic:'Differentiation', title:'The optimal-h U-curve', blurb:'Trace truncation against roundoff error and locate the finite best step size.', libs:['numpy','matplotlib','mpmath','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/numerical_differentiation_optimal_h.ipynb' },
     { course:'na', kind:'lab', topic:'Differentiation', title:'Floating point & catastrophic cancellation', blurb:'Measure cancellation against a 50-digit reference, then rewrite the formula to remove it.', libs:['numpy','matplotlib','mpmath','ipywidgets'], updated:'2026-07-30', status:'drafted', nb:'na/floating_point_cancellation.ipynb' },
@@ -566,7 +566,7 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
 
   // Every lab page lives here, one directory per kind of page, the way applet
   // pages live under applets/ and maps under maps/. It is not `labs/`, because
-  // that would read /teaching/labs/labs/lab1-runge/.
+  // that would read /teaching/labs/labs/lab1-newton/.
   var LAB_DIR = 'guided/';
 
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',

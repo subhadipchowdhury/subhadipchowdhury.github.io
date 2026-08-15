@@ -1,17 +1,24 @@
 """Turn an annotated notebook into a lab spec.
 
     ~/.venvs/labs/bin/python tools/build_labs.py              # every annotated notebook
-    ~/.venvs/labs/bin/python tools/build_labs.py lab2-newton  # one lab
+    ~/.venvs/labs/bin/python tools/build_labs.py lab1-newton  # one lab
     ~/.venvs/labs/bin/python tools/build_labs.py --no-run     # skip the notebook run
 
 The venv is deliberately outside this folder: an in-repo `.venv/` cannot survive
 OneDrive, which dereferences the interpreter into a text stub.
 
-A lab page carries the puzzles and nothing else. Everything else the notebook
-holds stays in the notebook, which is what the student opens once the puzzles
-are done. The one exception is a puzzle's `setup`: where it is the output that
-raises the question, that output belongs beside the question. Those are run here
-and shipped with the puzzle they motivate.
+A lab page carries the gates and nothing else. Everything else the notebook
+holds stays in the notebook, which is what the student opens once the gates are
+done. The one exception is a gate's `setup`: where it is the output that raises
+the question, that output belongs beside the question. Those are run here and
+shipped with the gate they motivate.
+
+A gate is one of two kinds, and its cell metadata says which in `mode`:
+
+- `gated`, a Parsons puzzle. Blocks pinned to Python lines, blanks, probes.
+- `quiz`, a concept check. Multiple-choice questions about the mathematics, with
+  no Python behind them, so none of the line-number machinery applies. The cell it
+  hangs off decides where it sits on the page and nothing more.
 
 So this script does four things:
 
@@ -55,6 +62,10 @@ COLAB_BASE = (
 
 class BuildError(Exception):
     pass
+
+
+# A cell carries a gate when its `lab` metadata has one of these modes.
+GATE_MODES = ('gated', 'quiz')
 
 
 # ---------------------------------------------------------------------------
@@ -171,12 +182,76 @@ def build_reveal(gate, lines, cell_index):
     ]
 
 
+def build_questions(meta, cell_index):
+    """Render a concept check's prose, and check its shape before the validator.
+
+    The markdown goes to HTML here so the page can drop a stem or an option in
+    with no renderer of its own, the same way a brief and a setup caption are
+    handled. The raw markdown is dropped rather than shipped beside the HTML: two
+    copies of one sentence is a drift waiting to happen.
+    """
+    questions = meta.get('questions') or []
+    if not questions:
+        raise BuildError(f'cell {cell_index}: a quiz with no questions')
+
+    seen = set()
+    out = []
+    for question in questions:
+        qid = question.get('id')
+        where = f'cell {cell_index}, question "{qid}"'
+        if not qid:
+            raise BuildError(f'cell {cell_index}: a question with no id')
+        if qid in seen:
+            raise BuildError(f'cell {cell_index}: two questions share the id "{qid}"')
+        seen.add(qid)
+        if not question.get('stem'):
+            raise BuildError(f'{where}: no stem')
+
+        options = question.get('options') or []
+        ids = [o.get('id') for o in options]
+        if len(set(ids)) != len(ids):
+            raise BuildError(f'{where}: two options share an id')
+        if question.get('answer') not in ids:
+            raise BuildError(
+                f'{where}: answer {question.get("answer")!r} is not one of its options '
+                f'({", ".join(str(i) for i in ids)})'
+            )
+
+        built = {
+            'id': qid,
+            'stem_html': render_markdown(question['stem'].strip()),
+            'answer': question['answer'],
+            'options': [],
+        }
+        if question.get('shuffle') is False:
+            built['shuffle'] = False
+        for option in options:
+            if not option.get('id'):
+                raise BuildError(f'{where}: an option with no id')
+            if not option.get('text'):
+                raise BuildError(f'{where}: option "{option["id"]}" has no text')
+            if not option.get('why'):
+                raise BuildError(
+                    f'{where}: option "{option["id"]}" has no why. Every option needs '
+                    'one: a wrong option to say what the pick got wrong, the answer to '
+                    'say why it is the answer.'
+                )
+            built['options'].append({
+                'id': option['id'],
+                'text_html': render_markdown(option['text'].strip()),
+                'why_html': render_markdown(option['why'].strip()),
+            })
+        out.append(built)
+    return out
+
+
 def gate_hash(gate):
     """Per gate, so revising one puzzle does not reset a student's progress on
     the others in the same lab."""
     payload = {
         key: gate.get(key)
-        for key in ('blocks', 'solution', 'blanks', 'distractors', 'wrong_blanks', 'probes')
+        for key in ('blocks', 'solution', 'blanks', 'distractors', 'wrong_blanks',
+                    'probes', 'questions')
     }
     return hashlib.sha256(
         json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()
@@ -189,11 +264,11 @@ def gate_hash(gate):
 
 
 def setups(nb):
-    """(cell_id, setup) for every puzzle that ships a motivating output."""
+    """(cell_id, setup) for every gate that ships a motivating output."""
     found = []
     for cell in nb['cells']:
         meta = cell.get('metadata', {}).get('lab') or {}
-        if meta.get('mode') == 'gated' and meta.get('setup', {}).get('code'):
+        if meta.get('mode') in GATE_MODES and meta.get('setup', {}).get('code'):
             found.append((meta['cell_id'], meta['setup']))
     return found
 
@@ -300,16 +375,21 @@ def build_spec(nb_path, nb, captured, carried):
 
     for index, cell in enumerate(nb['cells']):
         meta = cell.get('metadata', {}).get('lab')
-        if not meta or meta.get('mode') != 'gated':
+        if not meta or meta.get('mode') not in GATE_MODES:
             continue
 
         source = cell_source(cell)
         lines = source.split('\n')
         gate = {k: v for k, v in meta.items() if k not in ('mode', 'brief')}
-        check_py_refs(gate, lines, index)
-        gate['reveal'] = build_reveal(gate, lines, index)
+        if meta['mode'] == 'quiz':
+            gate['kind'] = 'quiz'
+            gate['questions'] = build_questions(meta, index)
+        else:
+            gate['kind'] = 'puzzle'
+            check_py_refs(gate, lines, index)
+            gate['reveal'] = build_reveal(gate, lines, index)
+            gate['python'] = source
         gate['hash'] = gate_hash(gate)
-        gate['python'] = source
         if meta.get('brief'):
             gate['brief_html'] = render_markdown(meta['brief'].strip())
 

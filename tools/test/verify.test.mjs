@@ -4,7 +4,9 @@
 // computes the right thing. Everything else here is about the quality of the
 // message a student sees when it does not.
 
-import { buildReference, verify, renderTriangle, expressionsAgree } from '../../teaching/labs/engine/lab/verify.js';
+import {
+  buildReference, verify, verifyQuiz, renderTriangle, expressionsAgree,
+} from '../../teaching/labs/engine/lab/verify.js';
 import { valuesEqual } from '../../teaching/labs/engine/lab/interp.js';
 import {
   DIVDIFF_GATE, REF_TABLE, REF_COEFFS, CORRECT, swapBlock, withBlank,
@@ -258,6 +260,82 @@ describe('blank equivalence sampling', () => {
   it('separates the real answer from the wrong ones', () => {
     assert(!expressionsAgree('x[i+j] - x[i]', 'x[i+1] - x[i]', spec, probe));
     assert(!expressionsAgree('x[i+j] - x[i]', 'x[j] - x[i]', spec, probe));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The concept check
+// ---------------------------------------------------------------------------
+
+// Small and local: a quiz gate is nothing but its questions, so a fixture built
+// here says more than one imported from a lab that may be reworded.
+const QUIZ = {
+  cell_id: 'q',
+  kind: 'quiz',
+  questions: [
+    {
+      id: 'a',
+      answer: 'right',
+      options: [
+        { id: 'right', text_html: 'yes', why_html: 'because of the thing' },
+        { id: 'wrong', text_html: 'no', why_html: 'you swapped the two factors' },
+      ],
+    },
+    {
+      id: 'b',
+      answer: 'r2',
+      options: [
+        { id: 'r2', text_html: 'yes', why_html: 'the symmetric one' },
+        { id: 'w2', text_html: 'no', why_html: 'that is the fourth difference' },
+      ],
+    },
+  ],
+};
+
+describe('verifyQuiz', () => {
+  it('passes only when every question is right', () => {
+    eq(verifyQuiz(QUIZ, { picks: { a: 'right', b: 'r2' } }).ok, true);
+    eq(verifyQuiz(QUIZ, { picks: { a: 'right', b: 'w2' } }).ok, false);
+    eq(verifyQuiz(QUIZ, { picks: { a: 'wrong', b: 'r2' } }).ok, false);
+  });
+
+  it('does not pass a block that has not been answered', () => {
+    eq(verifyQuiz(QUIZ, { picks: {} }).ok, false);
+    eq(verifyQuiz(QUIZ, { picks: { a: 'right' } }).ok, false, 'one of two is not a pass');
+    eq(verifyQuiz(QUIZ, {}).ok, false);
+  });
+
+  it('counts how many are right, which is what the block-level note says', () => {
+    const verdict = verifyQuiz(QUIZ, { picks: { a: 'right', b: 'w2' } });
+    eq(verdict.right, 1);
+    eq(verdict.total, 2);
+  });
+
+  it('hands back the diagnosis written for the option picked', () => {
+    const verdict = verifyQuiz(QUIZ, { picks: { a: 'wrong', b: 'w2' } });
+    has(verdict.results.a.why_html, 'swapped the two factors');
+    has(verdict.results.b.why_html, 'fourth difference');
+  });
+
+  // The answer's own why explains why it is the answer, and that belongs in the
+  // reveal a solved block opens. Handing it back here would print it beside a
+  // question the student has just got right, which gives the game away on a
+  // block that is only partly right.
+  it('says nothing about a question that is right', () => {
+    const verdict = verifyQuiz(QUIZ, { picks: { a: 'right', b: 'w2' } });
+    eq(verdict.results.a.ok, true);
+    eq(verdict.results.a.why_html, '');
+  });
+
+  it('treats an unanswered question as wrong rather than crashing', () => {
+    const verdict = verifyQuiz(QUIZ, { picks: { a: 'right' } });
+    eq(verdict.results.b.ok, false);
+    eq(verdict.results.b.picked, null);
+    eq(verdict.results.b.why_html, '', 'there is no option to have a why');
+  });
+
+  it('a block with no questions cannot pass', () => {
+    eq(verifyQuiz({ cell_id: 'empty', questions: [] }, { picks: {} }).ok, false);
   });
 });
 

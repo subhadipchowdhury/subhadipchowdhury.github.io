@@ -5,8 +5,8 @@
 // for the key to follow the notation. It is data here instead, and `lab.js`
 // renders it above the puzzles. One notation, one key, one file to edit.
 //
-// It briefly held a second table for the arrow notation, while `lab2-newton` was
-// converted to sentences and `lab1-runge` was not. Both are converted now, and
+// It briefly held a second table for the arrow notation, while `lab1-newton` was
+// converted to sentences and `lab2-runge` was not. Both are converted now, and
 // `tools/validate.mjs` requires every step to open with one of the keywords
 // listed here, so a gate cannot go back to arrows without failing the build. The
 // interpreter still reads the arrow notation, and the fixture under

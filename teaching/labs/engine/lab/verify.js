@@ -109,6 +109,44 @@ export function buildReference(gate) {
 // ---------------------------------------------------------------------------
 
 /**
+ * Grading a concept-check block. Nothing here interprets anything: a question is
+ * right when the picked option is the one the author marked. The block passes
+ * only when every question does, and the per-question results carry the
+ * diagnosis written for the option the student actually picked, never the one
+ * written for the answer.
+ *
+ * @param {Object} gate         a gate with `questions`
+ * @param {Object} submission   { picks: {questionId: optionId} }
+ * @returns {Object} verdict
+ *   ok        every question right
+ *   results   questionId -> { ok, picked, why_html }
+ *   right     how many were right
+ *   total     how many there are
+ */
+export function verifyQuiz(gate, submission) {
+  const picks = submission?.picks || {};
+  const questions = gate.questions || [];
+  const results = {};
+  let right = 0;
+
+  for (const question of questions) {
+    const picked = picks[question.id] ?? null;
+    const ok = picked != null && picked === question.answer;
+    if (ok) right += 1;
+    const option = (question.options || []).find((o) => o.id === picked);
+    results[question.id] = {
+      ok,
+      picked,
+      // The answer's own `why` explains why it is right and belongs in the
+      // reveal, so it is not handed back here.
+      why_html: ok ? '' : (option?.why_html || option?.why || ''),
+    };
+  }
+
+  return { ok: questions.length > 0 && right === questions.length, results, right, total: questions.length };
+}
+
+/**
  * @param {Object} gate       the gate spec from the lab JSON
  * @param {Object} submission { placements: [{id, indent}], blanks: {name: text} }
  * @param {Array}  reference  from buildReference

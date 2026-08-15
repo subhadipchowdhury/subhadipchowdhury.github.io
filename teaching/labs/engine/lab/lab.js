@@ -5,7 +5,8 @@
 // else the notebook holds stays in the notebook, which opens at the end.
 
 import { PuzzleView } from './puzzle.js';
-import { buildReference, verify } from './verify.js';
+import { QuizView } from './quiz.js';
+import { buildReference, verify, verifyQuiz } from './verify.js';
 import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
 import { buildNotationKey } from './notation.js';
 
@@ -16,6 +17,12 @@ const DEV_KEY = 'lab:dev';
 // live together rather than as literals at either end of an event handler.
 const SHOW_REVEAL = 'show what you built';
 const HIDE_REVEAL = 'hide what you built';
+const SHOW_WHY = 'show why these are the answers';
+const HIDE_WHY = 'hide why these are the answers';
+
+// A gate is a puzzle unless it says otherwise. `kind` here is the gate's kind and
+// has nothing to do with a library card's `kind`.
+function isQuiz(gate) { return gate?.kind === 'quiz'; }
 
 // Test mode. Turn it on with ?dev=1 on the URL and off with ?dev=0, or with the
 // button in the bar it adds. It sticks in localStorage so it survives reloads,
@@ -211,11 +218,16 @@ class LabController {
     return bar;
   }
 
-  /** Fill in a puzzle's own solution and submit it. Test mode only. */
+  /** Fill in a gate's own answer and submit it. Test mode only. */
   solveForTesting(cellId) {
     const gate = this.puzzles.find((g) => g.cell_id === cellId);
     const view = this.views.get(cellId);
     if (!gate || !view) return;
+    if (isQuiz(gate)) {
+      for (const question of gate.questions || []) view.pick(question.id, question.answer);
+      view.submit();
+      return;
+    }
     view.placements = gate.solution.map((s) => ({ ...s }));
     view.blanks = Object.fromEntries(
       Object.entries(gate.blanks || {}).map(([name, blank]) => [name, blank.answer]),
@@ -267,6 +279,7 @@ class LabController {
   buildPuzzle(gate, index) {
     const section = el('section', 'lab-puzzle-block');
     section.dataset.gate = gate.cell_id;
+    section.dataset.kind = isQuiz(gate) ? 'quiz' : 'puzzle';
 
     const eyebrow = el('p', 'lab-gate__eyebrow');
     eyebrow.textContent = `${index + 1} of ${this.puzzles.length}`;
@@ -294,7 +307,7 @@ class LabController {
 
   buildLocked() {
     const box = el('div', 'lab-locked');
-    box.textContent = 'Opens once you\u2019ve solved or set aside the puzzle above.';
+    box.textContent = 'Opens once the one above is done or set aside.';
     return box;
   }
 
@@ -336,6 +349,8 @@ class LabController {
       return host;
     }
 
+    if (isQuiz(gate)) return this.buildQuizBoard(gate, host);
+
     let reference;
     try {
       reference = buildReference(gate);
@@ -368,6 +383,87 @@ class LabController {
       host.appendChild(solve);
     }
     return host;
+  }
+
+  // A quiz has no tray, no reference program and no ladder. What it shares with a
+  // puzzle is everything outside the board: the status, the saved picks, the
+  // solved bar and the way it opens the next gate.
+  buildQuizBoard(gate, host) {
+    const id = gate.cell_id;
+    if (this.status.get(id) === 'parked') host.appendChild(this.parkedNote());
+
+    const mount = el('div');
+    host.appendChild(mount);
+
+    const saved = this.saved.get(id);
+    const view = new QuizView(mount, gate, {
+      state: saved,
+      typeset: (node) => this.typeset(node),
+      onChange: (state) => this.progress.write(id, gate.hash, { status: this.status.get(id), ...state }),
+      onReset: () => this.progress.write(id, gate.hash, { status: 'open', attempts: 0 }),
+      onSubmit: (submission) => this.onQuizSubmit(gate, view, submission),
+    });
+    this.views.set(id, view);
+    this.typeset(mount);
+
+    if (this.dev) {
+      const solve = el('button', 'lab-dev__btn lab-dev__btn--inline');
+      solve.type = 'button';
+      solve.textContent = 'Answer this one';
+      solve.addEventListener('click', () => this.solveForTesting(id));
+      host.appendChild(solve);
+    }
+    return host;
+  }
+
+  onQuizSubmit(gate, view, submission) {
+    const id = gate.cell_id;
+    const verdict = verifyQuiz(gate, submission);
+    view.attempts += 1;
+    view.mark(verdict.results);
+
+    if (verdict.ok) {
+      view.setFeedback(null);
+      view.freeze();
+      this.status.set(id, 'solved');
+      this.progress.markConcept(gate.concept);
+      this.progress.write(id, gate.hash, { status: 'solved', ...view.getState() });
+      this.saved.set(id, view.getState());
+      this.relock();
+
+      const host = this.root.querySelector(`.lab-gate[data-gate="${id}"]`);
+      const solved = this.buildSolvedBar(gate, view.getSubmission());
+      host?.appendChild(solved);
+      this.openNext();
+      this.updateProgressLabel();
+      solved.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
+      return;
+    }
+
+    // Each wrong pick already carries its own diagnosis under the question it
+    // belongs to, so the block-level note says how far off the set is and
+    // nothing else. Two attempts in, it also offers the way onward.
+    const card = el('div');
+    card.setAttribute('role', 'status');
+    const lead = el('p', 'lq-feedback__lead');
+    lead.textContent = verdict.right === 0
+      ? 'None of these is right yet. There is a note under each one.'
+      : `${verdict.right} of ${verdict.total} are right. There is a note under each of the others.`;
+    card.appendChild(lead);
+    if (view.attempts >= 2) card.appendChild(this.quizActions(gate, view));
+    view.setFeedback(card);
+    this.progress.write(id, gate.hash, { status: 'open', ...view.getState() });
+  }
+
+  quizActions(gate, view) {
+    const wrap = el('div', 'lq-feedback__actions');
+    const park = el('button', 'lp-action');
+    park.type = 'button';
+    park.textContent = 'Set these aside and carry on';
+    park.title = 'Opens the rest of the lab. These questions stay here for whenever you want them.';
+    park.addEventListener('click', () => this.park(gate, view));
+    wrap.appendChild(park);
+    return wrap;
   }
 
   parkedNote() {
@@ -530,14 +626,18 @@ class LabController {
   // typed them, so the pseudocode column stays their own work; a gate restored
   // from an older save with no blanks recorded falls back to the model answer.
   buildSolvedBar(gate, submission) {
+    const quiz = isQuiz(gate);
+    const shown = quiz ? HIDE_WHY : HIDE_REVEAL;
+    const hidden = quiz ? SHOW_WHY : SHOW_REVEAL;
+
     const box = el('div', 'lab-solved');
     const bar = el('div', 'lab-solved__head lab-solved__head--bar');
     const label = el('span');
-    label.textContent = 'Solved';
+    label.textContent = quiz ? 'All right' : 'Solved';
     bar.appendChild(label);
     const toggle = el('button', 'lab-doc-toggle');
     toggle.type = 'button';
-    toggle.textContent = SHOW_REVEAL;
+    toggle.textContent = hidden;
     bar.appendChild(toggle);
     box.appendChild(bar);
 
@@ -549,18 +649,50 @@ class LabController {
     let body = null;
     toggle.addEventListener('click', () => {
       if (!body) {
-        body = this.buildRevealBody(gate, {
-          placements: submission?.placements ?? gate.solution,
-          blanks: submission?.blanks ?? {},
-        });
+        body = quiz
+          ? this.buildQuizWhyBody(gate)
+          : this.buildRevealBody(gate, {
+            placements: submission?.placements ?? gate.solution,
+            blanks: submission?.blanks ?? {},
+          });
         box.appendChild(body);
         this.typeset(body);
         body.hidden = false;
       } else {
         body.hidden = !body.hidden;
       }
-      toggle.textContent = body.hidden ? SHOW_REVEAL : HIDE_REVEAL;
+      toggle.textContent = body.hidden ? hidden : shown;
     });
+    return box;
+  }
+
+  // What a quiz has instead of a reveal: each question with the answer named and
+  // the reason it is the answer. This is the half a student is actually here for,
+  // and it is written on the answer option rather than in the stem so that
+  // getting it right is what unlocks it.
+  buildQuizWhyBody(gate) {
+    const box = el('div', 'lab-solved__body');
+    const list = el('ol', 'lq-why');
+    for (const question of gate.questions || []) {
+      const item = el('li', 'lq-why__item');
+      const stem = el('div', 'lq-why__stem');
+      stem.innerHTML = question.stem_html || question.stem || '';
+      item.appendChild(stem);
+
+      const answer = (question.options || []).find((o) => o.id === question.answer);
+      if (answer) {
+        const said = el('p', 'lq-why__answer');
+        said.innerHTML = answer.text_html || answer.text || '';
+        item.appendChild(said);
+        if (answer.why_html || answer.why) {
+          const why = el('div', 'lq-why__text');
+          why.innerHTML = answer.why_html || answer.why;
+          item.appendChild(why);
+        }
+      }
+      list.appendChild(item);
+    }
+    box.appendChild(list);
     return box;
   }
 
@@ -594,7 +726,9 @@ class LabController {
     if (left) {
       this.launch.setAttribute('aria-disabled', 'true');
       this.launch.removeAttribute('href');
-      this.finaleNote.textContent = left === 1 ? 'One puzzle to go.' : `${left} puzzles to go.`;
+      // "puzzles" was accurate while every gate was one. A lab can now mix
+      // puzzles and concept checks, so the count stays and the noun goes.
+      this.finaleNote.textContent = left === 1 ? 'One more to go.' : `${left} more to go.`;
     } else {
       this.launch.removeAttribute('aria-disabled');
       this.launch.setAttribute('href', this.spec.colab);

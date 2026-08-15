@@ -799,6 +799,196 @@ html[data-theme="dark"] {
 }
 
 /* --------------------------------------------------------------------------
+ * The concept check
+ *
+ * Prose, not code, so this borrows the sans stack and none of the monospace
+ * machinery. An option is a label wrapping its radio, which makes the whole row
+ * the hit target, and rows are given room rather than a measure: a stem or an
+ * option is a sentence and fills the column it is in.
+ * ----------------------------------------------------------------------- */
+
+.lab-quiz {
+  font-family: var(--shell-sans);
+}
+
+.lq-head { margin-bottom: 1rem; }
+
+.lq-title {
+  font-family: var(--shell-serif);
+  font-size: 1.05rem;
+  margin: 0 0 0.3rem;
+}
+
+.lq-note {
+  font-size: 0.86rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.lq-questions {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;   /* the site sets ul,ol { padding-left: 1em } globally */
+  display: grid;
+  gap: 1.1rem;
+}
+
+.lq-question {
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  background: var(--shell-sunken);
+}
+
+.lq-question.is-right { border-left-color: var(--lab-ok-fg); }
+
+.lq-question.is-wrong { border-left-color: var(--lab-err-fg); }
+
+.lq-stem { font-size: 0.95rem; line-height: 1.6; }
+
+.lq-stem p { margin: 0 0 0.5rem; }
+
+.lq-options {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+
+.lq-option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.lq-option:hover { background: var(--lab-note-bg); }
+
+.lq-option.is-picked {
+  border-color: var(--lab-block-border);
+  background: var(--lab-block);
+  box-shadow: var(--lab-block-shadow);
+}
+
+.lq-radio { margin: 0; }
+
+.lq-option__text p { margin: 0; }
+
+.lq-verdict[hidden] { display: none; }
+
+.lq-verdict {
+  margin-top: 0.7rem;
+  border-radius: 5px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  background: var(--lab-err-bg);
+  color: var(--lab-err-fg);
+}
+
+.lq-question.is-right .lq-verdict {
+  background: var(--lab-ok-bg);
+  color: var(--lab-ok-fg);
+}
+
+.lq-verdict__lead { margin: 0; font-weight: 600; }
+
+.lq-verdict__why { margin-top: 0.35rem; }
+
+.lq-verdict__why p { margin: 0 0 0.4rem; }
+
+.lq-verdict__why p:last-child { margin-bottom: 0; }
+
+.lq-feedback {
+  margin-top: 0.9rem;
+  border-radius: 6px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  background: var(--lab-note-bg);
+}
+
+.lq-feedback__lead { margin: 0; }
+
+.lq-feedback__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.lq-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.lq-check {
+  font-family: var(--shell-sans);
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--color-surface);
+  cursor: pointer;
+}
+
+.lq-check:disabled { opacity: 0.5; cursor: default; }
+
+.lq-attempts {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-right: auto;
+}
+
+.lq-reset {
+  font-family: var(--shell-sans);
+  font-size: 0.82rem;
+  background: none;
+  border: 0;
+  color: var(--color-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: 2.75rem;
+}
+
+/* What a solved quiz shows instead of the two monospace columns. */
+.lq-why {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+  gap: 0.9rem;
+  font-family: var(--shell-sans);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.lq-why__stem { color: var(--color-muted); }
+
+.lq-why__stem p { margin: 0 0 0.3rem; }
+
+.lq-why__answer {
+  margin: 0.2rem 0 0.3rem;
+  font-weight: 600;
+}
+
+.lq-why__text p { margin: 0 0 0.4rem; }
+
+.lq-why__text p:last-child { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
  * Narrow screens
  * ----------------------------------------------------------------------- */
 

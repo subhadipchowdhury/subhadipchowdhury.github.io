@@ -1,7 +1,7 @@
 // Build-time validation of a lab spec.
 //
-//     node tools/validate.mjs teaching/labs/data/specs/lab2-newton.json
-//     jsc -m tools/validate.mjs -- teaching/labs/data/specs/lab2-newton.json
+//     node tools/validate.mjs teaching/labs/data/specs/lab1-newton.json
+//     jsc -m tools/validate.mjs -- teaching/labs/data/specs/lab1-newton.json
 //
 // build_labs.py runs this and refuses to ship a spec it rejects. The main check
 // pushes every distractor and every wrong answer through the real grader, and
@@ -89,6 +89,7 @@ const IMPERATIVES = [
   'write', 'build', 'turn', 'fill', 'print', 'arrange', 'complete', 'decide',
   'evaluate', 'place', 'drag', 'find', 'state', 'rearrange', 'reconstruct',
   'assemble', 'sort', 'give', 'compute', 'solve', 'derive', 'read', 'replace',
+  'pick', 'choose', 'answer', 'take', 'suppose',
 ];
 
 function textOf(html) {
@@ -128,6 +129,15 @@ function everyString(spec) {
     }
     for (const message of Object.values(gate.feedback || {})) {
       out.push([`${gate.cell_id} feedback`, message]);
+    }
+    // A concept check is nothing but prose, so every part of it goes through the
+    // same rules a brief does.
+    for (const question of gate.questions || []) {
+      out.push([`${gate.cell_id}/${question.id} stem`, question.stem_html]);
+      for (const option of question.options || []) {
+        out.push([`${gate.cell_id}/${question.id} option ${option.id}`, option.text_html]);
+        out.push([`${gate.cell_id}/${question.id} why ${option.id}`, option.why_html]);
+      }
     }
   }
   return out;
@@ -232,9 +242,12 @@ function checkEditorial(spec) {
     const at = `${where}/${gate.cell_id}`;
     const brief = textOf(gate.brief_html);
 
-    if (brief.length < 300) {
-      bad(at, 'the brief is too thin to solve from. State the mathematics the '
-        + 'puzzle turns on, then what is being asked');
+    // A puzzle's brief has to be solvable-from on its own. A quiz's brief only
+    // has to frame the questions, which carry the mathematics themselves.
+    const floor = gate.kind === 'quiz' ? 150 : 300;
+    if (brief.length < floor) {
+      bad(at, `the brief is ${brief.length} characters, under the ${floor} this gate `
+        + 'needs. State the mathematics it turns on, then what is being asked');
     }
     // An instruction is a sentence that opens with a verb. Asking for that,
     // rather than for a stock phrase, leaves the wording free.
@@ -269,6 +282,10 @@ function checkEditorial(spec) {
 // ---------------------------------------------------------------------------
 
 function checkStructure(gate, where) {
+  if (gate.kind === 'quiz') {
+    checkQuiz(gate, where);
+    return;
+  }
   const blockIds = new Set(gate.blocks.map((b) => b.id));
   const decoyIds = new Set((gate.distractors || []).map((d) => d.id));
 
@@ -322,6 +339,84 @@ function checkStructure(gate, where) {
   }
 
   checkBlockLines(gate, where);
+}
+
+// A concept check has no program behind it, so nothing here can be settled by
+// running anything. What can be checked is that the question is answerable and
+// that every option a student can pick has something written for picking it.
+//
+// The block size is 2 to 4. One question is three guesses from a pass, which is
+// the reason a block is graded as a unit in the first place, and past four the
+// block stops being a check and becomes a quiz to sit.
+const QUIZ_MIN = 2;
+const QUIZ_MAX = 4;
+const OPTIONS_MIN = 3;
+const OPTIONS_MAX = 5;
+
+function checkQuiz(gate, where) {
+  const questions = gate.questions || [];
+  if (questions.length < QUIZ_MIN || questions.length > QUIZ_MAX) {
+    bad(where, `${questions.length} question(s); a block holds ${QUIZ_MIN} to ${QUIZ_MAX}`);
+  }
+
+  const seen = new Set();
+  for (const question of questions) {
+    const at = `${where}/${question.id}`;
+    if (seen.has(question.id)) bad(where, `two questions share the id "${question.id}"`);
+    seen.add(question.id);
+
+    const stem = textOf(question.stem_html);
+    if (stem.length < 40) {
+      bad(at, `the stem is ${stem.length} characters. Say what is being asked in a sentence`);
+    }
+    // The point of a concept check is the concept, so a stem that quotes code is
+    // usually a puzzle in the wrong clothes.
+    if (/\bdef |\brange\(|np\./.test(stem)) {
+      notes.push(`${at}: the stem mentions Python. A concept check asks about the `
+        + 'mathematics; if it needs code, it wants to be a puzzle');
+    }
+
+    const options = question.options || [];
+    if (options.length < OPTIONS_MIN || options.length > OPTIONS_MAX) {
+      bad(at, `${options.length} option(s); a question offers ${OPTIONS_MIN} to ${OPTIONS_MAX}`);
+    }
+
+    const ids = new Set();
+    const texts = new Map();
+    for (const option of options) {
+      if (!option.id) bad(at, 'an option with no id');
+      if (ids.has(option.id)) bad(at, `two options share the id "${option.id}"`);
+      ids.add(option.id);
+
+      const text = textOf(option.text_html).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      if (!text) bad(at, `option "${option.id}" has no text`);
+      else if (texts.has(text)) {
+        bad(at, `options "${texts.get(text)}" and "${option.id}" say the same thing`);
+      } else texts.set(text, option.id);
+
+      // Every option, not only the wrong ones. A student who picks the answer is
+      // owed the reason it is the answer, and that text is what the solved block
+      // shows in place of a reveal.
+      const why = textOf(option.why_html);
+      if (!why) {
+        bad(at, `option "${option.id}" has no why. A wrong option says what the pick `
+          + 'got wrong; the answer says why it is the answer');
+      } else if (why.length < 40) {
+        notes.push(`${at}: the why for "${option.id}" is ${why.length} characters, which `
+          + 'is probably a verdict rather than a diagnosis');
+      }
+    }
+
+    if (!ids.has(question.answer)) {
+      bad(at, `the answer "${question.answer}" is not one of the options`);
+    }
+    // An option nobody would pick is a wasted line on the page. This cannot be
+    // checked mechanically; what can be checked is that a distinct wrong answer
+    // exists at all.
+    if (ids.size - 1 < OPTIONS_MIN - 1) {
+      bad(at, 'fewer than two wrong options, so there is nothing to get wrong');
+    }
+  }
 }
 
 // Two rules about a tile staying a tile. Neither is about grammar: the
@@ -524,6 +619,18 @@ let checked = 0;
 for (const gate of gates) {
   const where = `${spec.lab_id}/${gate.cell_id}`;
   checkStructure(gate, where);
+
+  // A concept check has no program, so every check below it is about something
+  // it does not have. Its own rules ran inside checkStructure.
+  if (gate.kind === 'quiz') {
+    const questions = gate.questions || [];
+    const options = questions.reduce((n, q) => n + (q.options || []).length, 0);
+    checked += 1;
+    say(`  ${gate.cell_id}: ${questions.length} questions, ${options} options, `
+      + `${options - questions.length} written diagnoses — every option accounted for`);
+    continue;
+  }
+
   checkBlankAnswers(gate, where);
   checkReveal(gate, where);
 

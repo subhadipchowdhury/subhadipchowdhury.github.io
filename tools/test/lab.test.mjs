@@ -3,7 +3,7 @@
 // The first half runs against every built lab, so a new one is covered the
 // moment it exists: the page builds, puzzles open in order, the notebook stays
 // shut until they are done, and progress survives a reload. The second half is
-// specific to lab2-newton, where the exact wording and the exact wrong answers
+// specific to lab1-newton, where the exact wording and the exact wrong answers
 // are worth pinning.
 //
 // These run on a DOM stub, so nothing here says how anything looks. Editorial
@@ -28,7 +28,7 @@ const specs = new Map(
 let served = null;
 globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => served });
 
-const spec = specs.get('lab2-newton');
+const spec = specs.get('lab1-newton');
 
 const { mountLab } = await import('../../teaching/labs/engine/lab/lab.js');
 
@@ -52,7 +52,7 @@ function has(text, needle, msg) {
   }
 }
 
-const SPEC_URL = '/teaching/labs/data/specs/lab2-newton.json';
+const SPEC_URL = '/teaching/labs/data/specs/lab1-newton.json';
 const ids = spec.puzzles.map((p) => p.cell_id);
 
 async function open(labSpec, { fresh = true } = {}) {
@@ -70,7 +70,13 @@ function gateOf(id) { return spec.puzzles.find((p) => p.cell_id === id); }
 function solveIn(lab, labSpec, id) {
   const gate = labSpec.puzzles.find((p) => p.cell_id === id);
   const view = lab.views.get(id);
-  if (!view) fail(`puzzle ${id} has no live view; it is ${lab.status.get(id)}`);
+  if (!view) fail(`gate ${id} has no live view; it is ${lab.status.get(id)}`);
+  // A concept check has no arrangement, so answering it is picking the answers.
+  if (gate.kind === 'quiz') {
+    for (const question of gate.questions) view.pick(question.id, question.answer);
+    view.submit();
+    return;
+  }
   view.placements = gate.solution.map((s) => ({ ...s }));
   view.blanks = Object.fromEntries(
     Object.entries(gate.blanks || {}).map(([name, b]) => [name, b.answer]),
@@ -79,17 +85,7 @@ function solveIn(lab, labSpec, id) {
   view.submit();
 }
 
-function solve(lab, id) {
-  const gate = gateOf(id);
-  const view = lab.views.get(id);
-  if (!view) fail(`puzzle ${id} has no live view; it is ${lab.status.get(id)}`);
-  view.placements = gate.solution.map((s) => ({ ...s }));
-  view.blanks = Object.fromEntries(
-    Object.entries(gate.blanks || {}).map(([name, b]) => [name, b.answer]),
-  );
-  view.render();
-  view.submit();
-}
+function solve(lab, id) { solveIn(lab, spec, id); }
 
 // A solved puzzle shows a one-line bar, and the two columns are built on the
 // first press of its toggle. Anything asserting about the reveal has to press it
@@ -130,7 +126,7 @@ for (const entry of index) {
     has(text, 'Dividing by zero', 'and the two departures from Python');
 
     const blockText = labSpec.puzzles
-      .flatMap((g) => [...g.blocks, ...(g.distractors || [])])
+      .flatMap((g) => [...(g.blocks || []), ...(g.distractors || [])])
       .flatMap((b) => b.lines.map((l) => l.text))
       .join('\n');
     // Every operator a student reads is one they could type. validate.mjs fails
@@ -190,7 +186,7 @@ for (const entry of index) {
 }
 
 // ---------------------------------------------------------------------------
-// lab2-newton in particular
+// lab1-newton in particular
 // ---------------------------------------------------------------------------
 
 served = spec;
@@ -266,18 +262,22 @@ await it('introduces its data before any output refers to it', async () => {
 
 await it('nothing refers to output the student has not been shown', async () => {
   const { root, lab } = await freshLab();
-  // Puzzle 2 talks about a filled table, so it has to show one first.
+  // The evaluation puzzle talks about a filled table, so it has to show one first.
   solve(lab, 'divdiff');
-  const second = root.querySelector('.lab-puzzle-block[data-gate="ddprint"]');
-  const setup = second.querySelector('.lab-setup');
-  assert(setup, 'the printing puzzle has to show the table it is reacting to');
+  solve(lab, 'ddcheck');
+  const later = root.querySelector('.lab-puzzle-block[data-gate="neweval"]');
+  const setup = later.querySelector('.lab-setup');
+  assert(setup, 'the evaluation puzzle has to show the table it is reacting to');
   has(textOf(setup), 'algorithm you just built', 'and say where the numbers came from');
   has(textOf(setup), '0.3222', 'and the actual numbers in it');
 });
 
 await it('every puzzle explains itself before asking anything', async () => {
   for (const gate of spec.puzzles) {
-    assert(gate.brief_html && gate.brief_html.length > 400,
+    // A quiz's brief only frames its questions, which carry the mathematics
+    // themselves, so it is held to the lower bar validate.mjs holds it to.
+    const floor = gate.kind === 'quiz' ? 200 : 400;
+    assert(gate.brief_html && gate.brief_html.length > floor,
       `${gate.cell_id} has no real brief`);
   }
 });
@@ -293,11 +293,15 @@ await it('the first brief gives the definition and the table it goes in', async 
 await it('the evaluation puzzle shows the coefficients that raise the question', async () => {
   const { root, lab } = await freshLab();
   solve(lab, 'divdiff');
-  solve(lab, 'ddprint');
+  solve(lab, 'ddcheck');
   const section = root.querySelector('.lab-puzzle-block[data-gate="neweval"]');
   const setup = section.querySelector('.lab-setup');
-  assert(setup, 'the third puzzle should open with the output that motivates it');
-  has(textOf(setup), 'top row of the triangle you just printed');
+  assert(setup, 'the last puzzle should open with the output that motivates it');
+  // The printing gate that used to sit here is gone and its exposition moved
+  // into this setup, so the setup now has to carry all three: the padding the
+  // square array shows, the triangle without it, and the coefficient row.
+  has(textOf(setup), 'anti-diagonal', 'the square array needs its zeros accounted for');
+  has(textOf(setup), 'first row of that triangle', 'and the coefficients located in it');
   has(textOf(setup), 'c = [');
   has(textOf(setup), 'p(2.5)', 'and name the question the coefficients cannot answer');
 });
@@ -315,14 +319,13 @@ await it('a solve opens the next one', async () => {
   solve(lab, ids[0]);
   eq(lab.status.get(ids[0]), 'solved');
   eq(lab.status.get(ids[1]), 'open');
-  eq(lab.status.get(ids[2]), 'locked');
-  has(textOf(root.querySelector('.lab-progress')), '1 of 3');
+  has(textOf(root.querySelector('.lab-progress')), `1 of ${ids.length}`);
 });
 
 await it('the notebook is shut until every puzzle is done', async () => {
   const { root, lab } = await freshLab();
   eq(root.querySelector('.lab-launch').getAttribute('aria-disabled'), 'true');
-  has(textOf(root.querySelector('.lab-finale')), '3 puzzles to go');
+  has(textOf(root.querySelector('.lab-finale')), `${ids.length} more to go`);
   ids.forEach((id) => solve(lab, id));
   const launch = root.querySelector('.lab-launch');
   assert(!launch.getAttribute('aria-disabled'), 'the notebook should be open now');
@@ -335,8 +338,7 @@ await it('setting a puzzle aside also opens the notebook', async () => {
   eq(lab.status.get(ids[0]), 'parked');
   eq(lab.status.get(ids[1]), 'open');
   assert(!root.querySelector('.lab-solved'), 'setting aside must not reveal anything');
-  solve(lab, ids[1]);
-  solve(lab, ids[2]);
+  ids.slice(1).forEach((id) => solve(lab, id));
   assert(!root.querySelector('.lab-launch').getAttribute('aria-disabled'));
 });
 
@@ -398,8 +400,8 @@ await it('numbers a single annotated line in the singular', async () => {
 });
 
 await it('lists three annotated lines rather than chaining them on "and"', async () => {
-  // lab1-runge/lageval is the first annotation to name three blocks.
-  const runge = specs.get('lab1-runge');
+  // lab2-runge/lageval is the first annotation to name three blocks.
+  const runge = specs.get('lab2-runge');
   const { root, lab } = await open(runge);
   solveIn(lab, runge, 'chebnodes');
   solveIn(lab, runge, 'lageval');
@@ -419,27 +421,165 @@ await it('quotes the blanks the student typed, not the model answer', async () =
   has(textOf(root.querySelector('.lab-solved')), '-(x[i] - x[i+j])');
 });
 
-group = 'a pre-placed puzzle';
-await it('arrives in order with an empty tray', async () => {
-  const { lab } = await freshLab();
+group = 'the concept check';
+const quizGate = gateOf('ddcheck');
+
+await it('is a gate like any other, and opens when the puzzle above it is solved', async () => {
+  const { root, lab } = await freshLab();
+  eq(lab.status.get('ddcheck'), 'locked');
   solve(lab, 'divdiff');
-  const view = lab.views.get('ddprint');
-  eq(view.placements.map((p) => p.id), ['def', 'n', 'loopi', 'loopj', 'pr']);
-  eq(view.tray.length, 0);
-  eq(view.blanks, {});
+  eq(lab.status.get('ddcheck'), 'open');
+  const section = root.querySelector('.lab-puzzle-block[data-gate="ddcheck"]');
+  eq(section.dataset.kind, 'quiz');
+  assert(section.querySelector('.lab-quiz'), 'no quiz board');
+  assert(!section.querySelector('.lp-workspace'), 'a quiz has no workspace');
 });
 
-await it('is answered by the blank alone, and rejects the bound from above', async () => {
+await it('asks about the mathematics, and never shows a line of code', async () => {
+  // The whole point of the format. A stem that quotes Python is a puzzle in the
+  // wrong clothes, and validate.mjs says so too.
+  for (const question of quizGate.questions) {
+    const text = [question.stem_html, ...question.options.map((o) => o.text_html)].join(' ');
+    assert(!/&lt;|\bdef |\brange\(|np\./.test(text), `${question.id} shows code`);
+  }
+});
+
+await it('holds every question, with every option offered', async () => {
   const { root, lab } = await freshLab();
   solve(lab, 'divdiff');
-  const view = lab.views.get('ddprint');
-  view.blanks = { rowlen: 'n-j-1' };
+  const board = root.querySelector('.lab-quiz');
+  eq(board.querySelectorAll('.lq-question').length, quizGate.questions.length);
+  for (const question of quizGate.questions) {
+    const item = board.querySelector(`.lq-question[data-q="${question.id}"]`);
+    assert(item, `${question.id} is not on the page`);
+    eq(item.querySelectorAll('.lq-option').length, question.options.length);
+  }
+});
+
+await it('will not pass until every question is answered', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddcheck');
+  view.pick('matrix', 'lower');
   view.submit();
-  eq(lab.status.get('ddprint'), 'open');
-  has(textOf(root.querySelector('.lp-feedback')), 'in its own upper bound');
-  view.blanks = { rowlen: 'n-i-1' };
+  eq(lab.status.get('ddcheck'), 'open');
+  has(textOf(root.querySelector('.lq-feedback')), 'still unanswered');
+  // An incomplete block is not an attempt: nothing was checked.
+  eq(view.attempts, 0);
+});
+
+await it('passes when all of them are right, and not when one is not', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddcheck');
+  view.pick('matrix', 'lower');
+  view.pick('leading', 'one');
+  view.pick('reorder', 'nothing');
   view.submit();
-  eq(lab.status.get('ddprint'), 'solved');
+  eq(lab.status.get('ddcheck'), 'open', 'two of three is not a pass');
+  has(textOf(root.querySelector('.lq-feedback')), '2 of 3 are right');
+
+  view.pick('reorder', 'same_poly');
+  view.submit();
+  eq(lab.status.get('ddcheck'), 'solved');
+});
+
+await it('puts the diagnosis for the option picked under that question', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddcheck');
+  view.pick('matrix', 'ident');
+  view.pick('leading', 'six');
+  view.pick('reorder', 'same_poly');
+  view.submit();
+
+  const board = root.querySelector('.lab-quiz');
+  const matrix = board.querySelector('.lq-question[data-q="matrix"]');
+  has(textOf(matrix.querySelector('.lq-verdict')), 'Lagrange basis',
+    'the identity matrix is the Lagrange basis, and the note has to say so');
+  const leading = board.querySelector('.lq-question[data-q="leading"]');
+  has(textOf(leading.querySelector('.lq-verdict')), 'factorial');
+  // The one that is right says so and gives nothing away.
+  const reorder = board.querySelector('.lq-question[data-q="reorder"]');
+  has(textOf(reorder.querySelector('.lq-verdict')), 'Right.');
+  assert(!textOf(reorder.querySelector('.lq-verdict')).includes('symmetric in its arguments'),
+    'the reason an answer is right belongs in the reveal, not beside a half-right block');
+});
+
+await it('retires a diagnosis once the student moves off that option', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddcheck');
+  view.pick('matrix', 'ident');
+  view.pick('leading', 'one');
+  view.pick('reorder', 'same_poly');
+  view.submit();
+  const matrix = () => root.querySelector('.lab-quiz .lq-question[data-q="matrix"]');
+  has(textOf(matrix().querySelector('.lq-verdict')), 'Lagrange basis');
+  view.pick('matrix', 'upper');
+  eq(textOf(matrix().querySelector('.lq-verdict')), '',
+    'a note about the identity matrix must not sit under a pick of upper triangular');
+});
+
+await it('offers a way onward after two checks, like a puzzle does', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  const view = lab.views.get('ddcheck');
+  for (const attempt of [1, 2]) {
+    view.pick('matrix', 'upper');
+    view.pick('leading', 'six');
+    view.pick('reorder', 'nothing');
+    view.submit();
+    eq(view.attempts, attempt);
+  }
+  const park = root.querySelector('.lq-feedback__actions .lp-action');
+  assert(park, 'no way to set the block aside after two checks');
+  park.dispatch('click');
+  eq(lab.status.get('ddcheck'), 'parked');
+  eq(lab.status.get('neweval'), 'open', 'setting it aside opens the rest of the lab');
+});
+
+await it('the reveal is the reason each answer is the answer', async () => {
+  const { root, lab } = await freshLab();
+  solve(lab, 'divdiff');
+  solve(lab, 'ddcheck');
+  const host = root.querySelector('.lab-gate[data-gate="ddcheck"]');
+  has(textOf(host.querySelector('.lab-solved')), 'All right');
+  const toggle = host.querySelector('.lab-doc-toggle');
+  has(textOf(toggle), 'why these are the answers');
+  toggle.dispatch('click');
+  const why = textOf(host.querySelector('.lab-solved__body'));
+  has(why, 'forward substitution', 'the linear-algebra answer explains itself');
+  has(why, 'leading coefficient', 'and so does the one about the top difference');
+  // Every question, and the answer named rather than only argued for.
+  eq(host.querySelectorAll('.lq-why__item').length, quizGate.questions.length);
+});
+
+await it('remembers its answers across a reload', async () => {
+  localStorage.clear();
+  const first = await mountLab(document.createElement('div'), SPEC_URL);
+  solve(first, 'divdiff');
+  first.views.get('ddcheck').pick('leading', 'one');
+  const again = await mountLab(document.createElement('div'), SPEC_URL);
+  eq(again.views.get('ddcheck').picks, { leading: 'one' });
+});
+
+await it('an edited question starts the block over and leaves the others alone', async () => {
+  localStorage.clear();
+  const lab1 = await mountLab(document.createElement('div'), SPEC_URL);
+  solve(lab1, 'divdiff');
+  solve(lab1, 'ddcheck');
+
+  // What build_labs.py does when a question is reworded: the gate hash covers
+  // `questions`, so the saved picks stop matching.
+  const edited = JSON.parse(JSON.stringify(spec));
+  edited.puzzles[1].hash = 'reworded';
+  globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => edited });
+  const lab2 = await mountLab(document.createElement('div'), SPEC_URL);
+  eq(lab2.status.get('divdiff'), 'solved', 'the puzzle above keeps its work');
+  eq(lab2.status.get('ddcheck'), 'open');
+  eq(lab2.views.get('ddcheck').picks, {});
+  globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => spec });
 });
 
 group = 'wrong answers';

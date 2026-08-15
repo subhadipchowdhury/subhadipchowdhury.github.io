@@ -22,8 +22,9 @@ import sys
 
 NOTEBOOK = pathlib.Path('teaching/labs/notebooks/na/newton_divided_differences.ipynb')
 
-# The reference divided-difference table for x = [0, 1, 3, 6], y = [1, 4, 2, 8],
-# used as the input to the printing puzzle, which has no table of its own.
+# The reference divided-difference table for x = [0, 1, 3, 6], y = [1, 4, 2, 8].
+# Kept whole, though only its top row is used now, because the top row is only
+# meaningful next to the table it came out of.
 REF_TABLE = [
     [1.0, 3.0, -4 / 3, (0.6 + 4 / 3) / 6],
     [4.0, -1.0, 0.6, 0.0],
@@ -169,113 +170,170 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
 }
 
 # ---------------------------------------------------------------------------
-# Gate 2: printing the triangle
+# Gate 2: the concept check
 # ---------------------------------------------------------------------------
 #
-# Pre-placed on purpose. The whole reason this gate exists is one contrast: the
-# cell above bounds the shrinking dimension by n-j-1 over columns, this one
-# bounds it by n-i-1 over rows, and a student who pattern-matched the first
-# bound writes the wrong one here. Arranging five obvious lines around that adds
-# nothing, and the Python is string building, so most of the reveal would be
-# dimmed bookkeeping. The transposed-nest decoy is gone too: it teaches the same
-# which-loop-is-outer lesson the previous puzzle just finished teaching.
+# Three questions about what the table means, in the slot the printing puzzle
+# used to hold. They sit after divdiff and before neweval, so nothing here may
+# depend on the evaluation algorithm: at this point the student has built the
+# table and nothing else.
+#
+# One question per idea, and each one is a fact a student can carry out of the
+# lab: the linear algebra the Newton basis is doing, the order-k difference of a
+# degree-k polynomial, and what a reordering of the nodes does and does not
+# change. Every wrong option is a mistake somebody actually makes, which is why
+# each has a diagnosis rather than a verdict.
 
-DDPRINT = {
-    'mode': 'gated',
-    'cell_id': 'ddprint',
-    'concept': 'print_dd_table',
-    'title': 'Print the table as a triangle',
-    'setup': {
-        'intro': 'Running the algorithm you just built on those four points fills this table:',
-        'code': (
-            "print('nodes  x =', x_data)\n"
-            "print('values y =', y_data)\n"
-            "print()\n"
-            "print(np.array2string(table, precision=4, suppress_small=True))"
-        ),
-        'caption': (
-            "Most of those entries aren't data. Column $j$ has one fewer entry "
-            'than column $j-1$, so nothing below the anti-diagonal was ever '
-            'assigned, and the zeros sitting there are what `np.zeros` left '
-            'behind. Printed as a square, the padding ends up right next to the '
-            'numbers we actually want.'
-        ),
-    },
+
+def option(oid, text, why):
+    return {'id': oid, 'text': text, 'why': why}
+
+
+DDCHECK = {
+    'mode': 'quiz',
+    'cell_id': 'ddcheck',
+    'concept': 'newton_basis',
+    'title': 'What the table is telling you',
     'brief': r'''
-Let's print it as the triangle it really is, one row per node:
+You've built the table. Before we evaluate anything with it, let's ask what it means, because the recurrence is the mechanical half of Newton's form and this is the other half.
 
-```
-  x_i   |  f[.] (order increases left -> right)
- 0.000  |    1.0000    3.0000   -1.3333    0.3222
- 1.000  |    4.0000   -1.0000    0.6000
- 3.000  |    2.0000    2.0000
- 6.000  |    8.0000
-```
-
-Row $i$ starts at node $x_i$ and lists the divided differences that begin there: $f[x_i]$, then $f[x_i,x_{i+1}]$, then $f[x_i,x_{i+1},x_{i+2}]$, and so on. The row stops when the next difference would need a node past $x_{n-1}$.
-
-The lines are already in order here, so only the inner bound is missing. Write the index of the last entry in row $i$.
-
-One warning. The previous puzzle bounded the *columns*, which get shorter as the order $j$ grows; this one bounds the *rows*, which get shorter as the starting index $i$ moves down. Writing the earlier bound out of habit is the usual mistake.
+Pick one answer for each of the three. A wrong pick tells you what it got wrong rather than what the answer is, and none of them needs code.
 ''',
-    'prefill': 'all',
 
-    'blocks': [
-        block('def', 'function print_dd_table, given nodes x and table T:', [4, 4], 'def print_dd_table'),
-        block('n', 'let n be the number of entries in x', [9, 9], 'n = len(x)'),
-        block('loopi', 'for each row i from 0 to n-1:', [12, 12], 'for i in range(n)'),
-        block('loopj', 'for each entry j from 0 to ⟨?rowlen⟩:', [14, 14], 'for j in range(n - i)'),
-        block('pr', 'print T[i][j]', [15, 15], 'row +='),
-    ],
-
-    'solution': [
-        {'id': 'def', 'indent': 0},
-        {'id': 'n', 'indent': 1},
-        {'id': 'loopi', 'indent': 1},
-        {'id': 'loopj', 'indent': 2},
-        {'id': 'pr', 'indent': 3},
-    ],
-
-    'blanks': {
-        'rowlen': {'kind': 'range_end', 'answer': 'n-i-1', 'env': ['n', 'i', 'j'], 'width': 8},
-    },
-
-    'distractors': [],
-
-    'wrong_blanks': {
-        'rowlen': [
-            {'text': 'n-1', 'why': 'rowlen_square'},
-            {'text': 'n-j-1', 'why': 'rowlen_uses_j'},
-            {'text': 'n-i', 'why': 'rowlen_off_by_one'},
-        ],
-    },
-
-    'probes': [
-        {'env': {'x': NODES, 'T': REF_TABLE}, 'call': 'print_dd_table(x, T)'},
-    ],
-    'trace': [],
-    'compare': 'prints',
-
-    'py_head': [1, 3],
-    'py_doc': [5, 8],
-    'py_glue': [10, 11, 13, 16],
-    'annotations': [
+    'questions': [
         {
-            'blocks': ['pr'],
-            'text': 'The Python builds each row into a string and prints it once the row is finished, rather than printing entry by entry. The output is identical either way.',
+            'id': 'matrix',
+            'stem': r'''
+Let's put the interpolation conditions in matrix form. Write the polynomial in the Newton basis,
+
+$$p(x) = \sum_{j=0}^{n-1} c_j N_j(x), \qquad N_0(x) = 1, \quad N_j(x) = (x-x_0)(x-x_1)\cdots(x-x_{j-1}),$$
+
+and impose $p(x_i) = y_i$ at each of the $n$ nodes. That's a square system $Ac = y$ with $A_{ij} = N_j(x_i)$. What does $A$ look like?
+''',
+            'answer': 'lower',
+            'options': [
+                option(
+                    'lower',
+                    r"It's lower triangular, and its diagonal entries are all nonzero.",
+                    r'''
+$N_j$ was built to vanish at $x_0,\dots,x_{j-1}$, so $A_{ij} = 0$ whenever $j > i$: row $i$ runs out at column $i$. The diagonal entry $N_i(x_i) = \prod_{k<i}(x_i-x_k)$ is a product of nonzero gaps, so it never vanishes and the system has exactly one solution.
+
+Now solve it by forward substitution and watch what the first rows give you: $c_0 = y_0$, then $c_1 = (y_1-c_0)/(x_1-x_0)$. That's the divided-difference recurrence, arrived at from the linear algebra instead of from the telescoping argument, and the $\mathcal{O}(n^2)$ cost of filling the table is the cost of the substitution. It also says in one line why appending a node is cheap: a new node adds a row at the bottom, and forward substitution never revisits a row it has passed.
+''',
+                ),
+                option(
+                    'upper',
+                    r"It's upper triangular, and its diagonal entries are all nonzero.",
+                    r'''
+You have the triangle the right shape and the wrong way up. Which entries of $A$ are forced to vanish? $N_j$ is zero at the nodes $x_0,\dots,x_{j-1}$, so the zeros land where the basis function's index runs ahead of the node's, and $A_{ij} = 0$ for $j > i$ puts them above the diagonal.
+''',
+                ),
+                option(
+                    'vander',
+                    r"It's dense: it's the Vandermonde matrix $A_{ij} = x_i^{\,j}$ all over again.",
+                    r'''
+That's the matrix the monomial basis $1, x, x^2, \dots$ gives, and getting away from it is most of the reason for changing basis: it has no forced zeros and it conditions badly as $n$ grows. A Newton basis function vanishes at every node before its own, and each of those zeros is an entry of $A$ you get for free.
+''',
+                ),
+                option(
+                    'ident',
+                    r"It's the identity matrix.",
+                    r'''
+That's the Lagrange basis, where $\ell_i(x_j)$ is $1$ if $i = j$ and $0$ otherwise, which is exactly why those coefficients need no solving: $c = y$. Newton's basis functions aren't $1$ at one node and $0$ at the others. Each vanishes at every node before it and is generally nonzero at every node after it, which leaves a triangle rather than a diagonal.
+''',
+                ),
+            ],
+        },
+        {
+            'id': 'leading',
+            'stem': r'''
+Take $f(x) = x^3$ and any four distinct nodes $x_0, x_1, x_2, x_3$. What is $f[x_0,x_1,x_2,x_3]$?
+
+You can answer this without computing a single difference.
+''',
+            'answer': 'one',
+            # A natural order, so it keeps the one it was written in.
+            'shuffle': False,
+            'options': [
+                option('zero', r"It's $0$.", r'''
+$0$ is what the *fourth* difference of a cubic gives, and every higher one. An order $k$ difference annihilates every polynomial of degree less than $k$; at degree exactly $k$ something survives. What survives at $k = 3$ for a cubic?
+'''),
+                option('one', r"It's $1$, whatever the nodes are.", r'''
+The order $k$ divided difference of a degree $k$ polynomial is its leading coefficient. Two ways to see it here.
+
+With calculus: $f[x_0,\dots,x_k] = f^{(k)}(\xi)/k!$ for some $\xi$ between the outermost nodes, and $f^{(3)}(x) = 6$ is constant, so the difference is $6/3! = 1$ wherever $\xi$ happened to land.
+
+Without: $f[x_0,x_1,x_2,x_3]$ is the coefficient of the highest Newton term, so it's the coefficient of $x^3$ in the interpolating cubic. The cubic through four points of $x^3$ is $x^3$ itself, by uniqueness, so that coefficient is $1$.
+
+The general fact is worth keeping: order $k$ differences kill everything of degree below $k$ and return the leading coefficient at degree exactly $k$. That's also why the last column of a table built from polynomial data goes quiet.
+'''),
+                option('six', r"It's $6$, whatever the nodes are.", r'''
+You've found $f^{(3)}$ and stopped one step early. The relation between a divided difference and a derivative carries a factorial,
+
+$$f[x_0,\dots,x_k] = \frac{f^{(k)}(\xi)}{k!},$$
+
+so what a difference of order $k$ returns is the $k$th Taylor coefficient rather than the $k$th derivative. Divide by $3!$.
+'''),
+                option('depends', r'It depends on the nodes.', r'''
+The intermediate differences do depend on the nodes, so this is a reasonable guess, and the top one doesn't. Compute it on the four nodes of this lab and then on four others: $f[x_0,x_1,x_2,x_3]$ is the coefficient of $x^3$ in the cubic interpolating $x^3$ at those four points, and that cubic is $x^3$ whichever four points you pick.
+'''),
+            ],
+        },
+        {
+            'id': 'reorder',
+            'stem': r'''
+We fixed the node order at the start and nothing forced that choice. Suppose you reverse the list, feeding in $x_3, x_2, x_1, x_0$ with their values, and build the table again. What changes?
+''',
+            'answer': 'same_poly',
+            'options': [
+                option(
+                    'same_poly',
+                    r'The polynomial is the same, and so is the last coefficient, but the ones in between generally change.',
+                    r'''
+Three separate things are going on here. The polynomial can't change, since there's exactly one polynomial of degree less than $n$ through $n$ points with distinct $x$ values, and reordering data doesn't change the data. The last coefficient can't change either: $f[x_0,\dots,x_{n-1}]$ takes every node as an argument and a divided difference is symmetric in its arguments. There's a second reason for that one, which needs no symmetry at all, since it's the coefficient of $x^{n-1}$ in $p$ and therefore a property of $p$ alone.
+
+What does change is everything in between, because $c_k = f[x_0,\dots,x_k]$ depends on *which* $k+1$ nodes come first in the list, and reversing it changes that set. So the same polynomial comes out in a different nested form, with $c_0$ going from $y_0$ to $y_{n-1}$.
+''',
+                ),
+                option(
+                    'diff_poly',
+                    r'The polynomial itself changes, since its coefficients do.',
+                    r'''
+The coefficients do change, and that's the trap. They're coordinates in a basis that depends on the node order itself, since $N_j(x) = (x-x_0)\cdots(x-x_{j-1})$ is built from the first $j$ nodes in the list. Different coordinates in a different basis can perfectly well describe the same vector, and uniqueness says that here they have to.
+''',
+                ),
+                option(
+                    'nothing',
+                    r'Nothing changes at all, because a divided difference is symmetric in its arguments.',
+                    r'''
+The symmetry is real, and it's exactly why the *last* coefficient survives a reordering: $f[x_0,\dots,x_{n-1}]$ takes all $n$ nodes, so permuting them changes nothing. But $c_1 = f[x_0,x_1]$ takes two, and which two depends on the order. Symmetry in the arguments isn't symmetry in which arguments the function is handed.
+''',
+                ),
+                option(
+                    'only_c0',
+                    r"Only $c_0$ changes, since it's the one coefficient that names a single node.",
+                    r'''
+$c_0$ does change, from $y_0$ to $y_{n-1}$, so half of this is right. Now look at $c_1 = f[x_0,x_1]$, a difference over the first two nodes in the list. Are those the same two nodes after the reversal?
+''',
+                ),
+            ],
         },
     ],
-
-    'feedback': {
-        'rowlen_square': 'You printed the whole square array, including entries the algorithm never assigned. Those zeros came from np.zeros and say nothing about the data.',
-        'rowlen_uses_j': "The loop is about to assign j, so j can't appear in its own upper bound. Which index tells you how far down the table this row sits?",
-        'rowlen_off_by_one': 'Every row has one entry too many. The last difference in row i is the one that reaches node x_{n-1}. A range includes both of its ends, so what goes here is that entry\'s index, not the number of entries in the row.',
-    },
 }
 
 # ---------------------------------------------------------------------------
 # Gate 3: nested evaluation
 # ---------------------------------------------------------------------------
+#
+# The printing puzzle that used to sit in the middle slot is gone, the concept
+# check above has taken that slot, and the puzzle's exposition (the square array
+# with its padding zeros, and the triangle) is now this gate's setup. It was never a Parsons puzzle: every line was pre-placed and
+# the whole of it was one loop bound, n-i-1 over rows against the n-j-1 over
+# columns next door. That contrast cannot be set up without warning the student
+# about it, and the warning is the answer, so the gate had nothing left to ask.
+# The Python was string building too, which made most of its reveal dimmed
+# bookkeeping. print_dd_table still lives in the notebook and still prints the
+# triangle here; it just isn't something the student has to rebuild.
 
 NEWEVAL = {
     'mode': 'gated',
@@ -283,10 +341,32 @@ NEWEVAL = {
     'concept': 'newton_eval',
     'title': 'Evaluate the polynomial at a point',
     'setup': {
-        'intro': 'The Newton coefficients are the top row of the triangle you just printed:',
-        'code': "print('c =', np.array2string(coeffs, precision=4))",
+        'intro': (
+            'Running the algorithm you just built on those four points fills this '
+            "table. Let's print it twice, first as the square array it lives in "
+            'and then as the triangle it really is:'
+        ),
+        'code': (
+            "print('nodes  x =', x_data)\n"
+            "print('values y =', y_data)\n"
+            "print()\n"
+            "print(np.array2string(table, precision=4, suppress_small=True))\n"
+            "print()\n"
+            "print_dd_table(x_data, table)\n"
+            "print()\n"
+            "print('c =', np.array2string(coeffs, precision=4))"
+        ),
         'caption': (
-            "Reading those into Newton's form, the cubic through our four points is\n\n"
+            "Most of the entries in that square aren't data. Column $j$ has one "
+            'fewer entry than column $j-1$, so nothing below the anti-diagonal '
+            'was ever assigned, and the zeros sitting there are what `np.zeros` '
+            'left behind. The triangle drops them. Row $i$ of it starts at node '
+            '$x_i$ and lists the divided differences that begin there, $f[x_i]$, '
+            'then $f[x_i,x_{i+1}]$, and so on until the next one would need a '
+            'node past $x_{n-1}$.\n\n'
+            "The coefficients we're after are the first row of that triangle. "
+            "Reading them into Newton's form, the cubic through our four points "
+            'is\n\n'
             '$$p(x) = 1 + 3(x-0) - 1.3333(x-0)(x-1) + 0.3222(x-0)(x-1)(x-3).$$\n\n'
             "So we have the polynomial. We still can't get a number out of it, "
             'though: nothing built so far will tell us what $p(2.5)$ is.'
@@ -375,37 +455,42 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
 # Cell-by-cell plan
 # ---------------------------------------------------------------------------
 
-# The lab page carries the puzzles and nothing else. Every other cell stays in
-# the notebook, which is what the student opens once the puzzles are done.
+# The lab page carries the gates and nothing else. Every other cell stays in the
+# notebook, which is what the student opens once the gates are done. The concept
+# check hangs off cell 5, the cell that produces the table it asks about, which
+# also puts it between the two puzzles where it belongs.
 
 CELLS = {
     3: DIVDIFF,
-    4: DDPRINT,
+    5: DDCHECK,
     7: NEWEVAL,
 }
 
 NOTEBOOK_LAB = {
-    'lab_id': 'lab2-newton',
-    'order': 2,
+    'lab_id': 'lab1-newton',
+    'order': 1,
     'title': 'Newton form and divided differences',
     'blurb': 'Build the divided-difference table, then the nested evaluation that uses it.',
-    'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
+    'series': ['lab1-newton', 'lab2-runge', 'lab3-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
     'intro': (
         "Through $n$ points with distinct $x$ values there's exactly one "
         'polynomial of degree less than $n$. Finding it is one thing; computing '
-        'with it is another. These three puzzles build the machinery: the '
-        'coefficients first, then a readable display of the table they come out '
-        'of, then a cheap way to evaluate the polynomial at a point.\n\n'
+        'with it is another. These three steps build the machinery and then ask '
+        'what it means: the coefficients first, then three questions about the '
+        'table they come out of, then a cheap way to evaluate the polynomial at '
+        'a point.\n\n'
         "We'll work throughout with the same four points,\n\n"
         r'$$x = 0,\; 1,\; 3,\; 6 \qquad y = 1,\; 4,\; 2,\; 8,$$' '\n\n'
         "so the polynomial we're after is a cubic. Any output you see on this "
         'page came from running these algorithms on those four points.\n\n'
-        'Each puzzle hands you the steps of an algorithm in scrambled order. '
-        'Drag them into the workspace, set the indentation, and check your '
-        'answer. Indentation counts as much as order, since a step one level in '
-        'runs once for every pass of the loop above it. The notebook opens once '
-        'all three are done.\n\n'
+        'The first and last hand you the steps of an algorithm in scrambled '
+        'order. Drag them into the workspace, set the indentation, and check '
+        'your answer. Indentation counts as much as order, since a step one '
+        'level in runs once for every pass of the loop above it. The middle one '
+        'asks three multiple-choice questions about the mathematics rather than '
+        'the code, and answers them together. The notebook opens once all three '
+        'are done.\n\n'
         'The steps are pseudocode rather than Python, and each one is a sentence '
         'you can read out loud. `let` stores a value, and `for`, `if`, `else`, '
         '`while` and `return` do what they do in code. Subscripts start at 0, '

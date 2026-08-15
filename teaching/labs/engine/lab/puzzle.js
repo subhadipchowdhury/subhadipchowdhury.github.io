@@ -912,8 +912,17 @@ export function initialState(gate) {
 // must not be the solution order. Derived from the ids so it needs no RNG.
 export function defaultOrder(gate) {
   const ids = [...gate.solution.map((s) => s.id), ...(gate.distractors || []).map((d) => d.id)];
-  return ids
-    .map((id) => ({ id, key: hash(`${gate.cell_id}:${id}`) }))
+  return stableOrder(gate.cell_id, ids);
+}
+
+/**
+ * The same shuffle, for anything else that has to scramble a short list of ids
+ * once and then keep that order for good. quiz.js orders a question's options
+ * with it.
+ */
+export function stableOrder(seed, ids) {
+  return [...ids]
+    .map((id) => ({ id, key: hash(`${seed}:${id}`) }))
     .sort((a, b) => a.key - b.key)
     .map((x) => x.id);
 }

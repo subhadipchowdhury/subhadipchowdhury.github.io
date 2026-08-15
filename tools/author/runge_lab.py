@@ -339,43 +339,200 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
 }
 
 # ---------------------------------------------------------------------------
+# Gate 3: the concept check
+# ---------------------------------------------------------------------------
+#
+# After both puzzles, because all three questions are about what the comparison
+# claims rather than about how to compute either half of it, and because the
+# minimax question needs omega to have been named.
+#
+# Each wrong option is a position a student can hold coherently after finishing
+# the lab. The first question's "f isn't smooth enough" is the one worth having:
+# it is the answer almost everyone gives, and the notebook says in as many words
+# that it is wrong.
+
+
+def option(oid, text, why):
+    return {'id': oid, 'text': text, 'why': why}
+
+
+WHYCHEB = {
+    'mode': 'quiz',
+    'cell_id': 'chebcheck',
+    'concept': 'why_chebyshev',
+    'title': 'What the comparison actually claims',
+    'brief': r'''
+Both algorithms are built, so let's step back and ask what the comparison between the two node families is really saying. The three questions below are about the mathematics rather than the code, and none of them needs anything you haven't already seen on this page.
+
+Pick one answer for each. A wrong pick tells you what it got wrong rather than what the answer is.
+''',
+
+    'questions': [
+        {
+            'id': 'whydiverge',
+            'stem': r'''
+Runge's function $f(x) = 1/(1+25x^2)$ is infinitely differentiable at every point of $[-1,1]$. Interpolate it at equally spaced nodes and the fit gets *worse* as the degree goes up. Which of these is the reason?
+''',
+            'answer': 'poles',
+            'options': [
+                option(
+                    'poles',
+                    r'$\max|f^{(n+1)}|$ grows faster than $\max|\omega|$ shrinks, because $f$ has poles at $\pm i/5$, close to the interval in the complex plane.',
+                    r'''
+Both factors in the error formula move with $n$ and the question is which one wins. For equally spaced nodes $\max|\omega|$ does shrink, but for this $f$ the derivative term grows like $(n+1)!\,5^{\,n+1}$, and the $5$ is the reciprocal of the distance from the interval to the nearest singularity of $f$. The poles at $\pm i/5$ sit a fifth of a unit off the real axis, and that is what outruns the node spacing.
+
+The lesson generalises past this example: how smooth $f$ is on the interval isn't the property that decides convergence. How far $f$ continues off the interval before it breaks is.
+''',
+                ),
+                option(
+                    'notsmooth',
+                    r"$f$ isn't smooth enough on $[-1,1]$ for the error formula to apply.",
+                    r'''
+$f$ is a rational function whose denominator has no real zero, so on $[-1,1]$ it has derivatives of every order and the error formula applies at every degree. That's the point of the example: nothing at all is wrong with $f$ on the interval, which is why the divergence is surprising enough to have a name.
+
+So look instead at the two factors in the bound as $n$ grows, and at what sets the size of $\max|f^{(n+1)}|$. It isn't smoothness on the interval.
+''',
+                ),
+                option(
+                    'roundoff',
+                    r'Rounding error in evaluating a high-degree polynomial swamps the answer.',
+                    r'''
+Roundoff isn't the cause. The divergence happens in exact arithmetic and it's what the error formula predicts, so it's a fact about interpolation at equally spaced nodes rather than about floating point. The error sweep says the same thing: it grows smoothly and geometrically in $n$, at about a factor of $1.5$ per degree, and roundoff doesn't behave like that.
+''',
+                ),
+                option(
+                    'omega_end',
+                    r'$|\omega|$ is large near $\pm 1$, so the fit is bad near the endpoints and fine everywhere else.',
+                    r'''
+The first half is true and the conclusion doesn't follow from it. $|\omega|$ does peak near the ends, and that's where the oscillations show up, but the quantity that grows without bound is $\max_x|f-p_n|$ over the whole interval. A fit that's excellent in the middle and unbounded near the ends has still diverged, and it's the maximum that any error bound has to control.
+''',
+                ),
+            ],
+        },
+        {
+            'id': 'minimax',
+            'stem': r'''
+Everything that depends on where the nodes went sits in $\omega(x) = \prod_k (x - x_k)$, which is monic of degree $n+1$. Among *all* monic polynomials of degree $n+1$, how small can $\max_{[-1,1]}|\omega|$ be made?
+''',
+            'answer': 'twopow',
+            'options': [
+                option(
+                    'twopow',
+                    r'$2^{-n}$, attained by putting the roots at the Chebyshev nodes.',
+                    r'''
+That minimum is the whole reason for putting the nodes there. The scaled Chebyshev polynomial $2^{-n}T_{n+1}$ is monic and swings between $+2^{-n}$ and $-2^{-n}$ at $n+2$ points of the interval, and that equioscillation is what forces it to be the best: a monic competitor with a strictly smaller maximum would have to differ from it by a polynomial of degree at most $n+1$ that changes sign $n+1$ times, which is one root more than such a polynomial has.
+
+Then compare the two families. $2^{-n}$ halves with every degree, and the table shows what the equally spaced maximum does beside it.
+''',
+                ),
+                option(
+                    'equi',
+                    r'$2^{-n}$, attained by putting the roots at equally spaced points.',
+                    r'''
+You have the right number and the wrong nodes, and the ratio column in the table is the measure of how wrong: equally spaced roots give a larger $\max|\omega|$, and the gap widens with $n$. Which node family makes $|\omega|$ oscillate with equal peaks instead of bulging near the ends?
+''',
+                ),
+                option(
+                    'zero',
+                    r'It can be made as small as you like, by choosing the roots well enough.',
+                    r'''
+Monic is what stops that. The leading coefficient is pinned at $1$, so $\omega$ can't be scaled down, and moving the roots only redistributes where it's large. Something has to give: push $|\omega|$ down in the middle and it comes up at the ends. There's a genuine floor, and one node family sits exactly on it.
+''',
+                ),
+                option(
+                    'factorial',
+                    r'$1/(n+1)!$, attained by putting the roots at the Chebyshev nodes.',
+                    r'''
+The nodes are right and the number is too small to be possible: from degree $3$ up, $1/(n+1)!$ is below $2^{-n}$, and no monic polynomial of degree $n+1$ gets under $2^{-n}$ on $[-1,1]$. The factorial in the error formula comes from the derivative term, $f^{(n+1)}(\xi)/(n+1)!$, and not from $\omega$.
+''',
+                ),
+            ],
+        },
+        {
+            'id': 'lagsum',
+            'stem': r'''
+The Lagrange basis functions satisfy $L_i(x_j) = 1$ when $i = j$ and $0$ otherwise. Without expanding anything, what is $\sum_i L_i(x)$?
+''',
+            'answer': 'one',
+            'options': [
+                option(
+                    'one',
+                    r"It's the constant $1$, at every $x$.",
+                    r'''
+Interpolate the constant function $g(x) = 1$. Its Lagrange form is $\sum_i g(x_i)L_i(x)$, which is $\sum_i L_i(x)$, and the constant $1$ is itself a polynomial of degree less than $n$ through those same points. Uniqueness leaves room for only one such polynomial, so the sum is $1$ everywhere and not only at the nodes.
+
+Two things to take from it. It's the cheapest test there is on an implementation of $L_i$, since the values have to sum to $1$ at any $x$ you try. And it says the $L_i$ are a partition of unity, so a Lagrange interpolant is a weighted average of the data whose weights always sum to $1$, though (unlike an average) the weights are free to be negative away from the nodes.
+''',
+                ),
+                option(
+                    'zero',
+                    r"It's $0$ except at the nodes, where it's $1$.",
+                    r'''
+That's the value at the nodes and you've read it off correctly there: at $x_j$, one term is $1$ and the rest are $0$. But the sum is a polynomial of degree less than $n$ that takes the value $1$ at $n$ distinct points, and $n$ values pin such a polynomial down completely. What else has those $n$ values?
+''',
+                ),
+                option(
+                    'depends',
+                    r"It depends on the nodes, so there's nothing general to say.",
+                    r'''
+Each $L_i$ depends on the nodes, so this is the cautious answer, and the sum doesn't. Interpolate the constant function $1$ and ask what its coefficients in this basis are, then add them up.
+''',
+                ),
+                option(
+                    'xpoly',
+                    r"It's a polynomial of degree $n-1$ with no simpler form.",
+                    r'''
+It is a polynomial of degree at most $n-1$, so that much is right, and it has a much simpler form than that. Evaluate it at each node in turn, count how many of its values you now know, and ask how much freedom a polynomial of degree at most $n-1$ has left after that.
+''',
+                ),
+            ],
+        },
+    ],
+}
+
+# ---------------------------------------------------------------------------
 # Cell-by-cell plan
 # ---------------------------------------------------------------------------
 
-# The lab page carries the puzzles and nothing else. The plots of omega, the
-# error sweep and the sliders stay in the notebook, which is what the student
-# opens once the puzzles are done.
+# The lab page carries the gates and nothing else. The plots of omega, the error
+# sweep and the sliders stay in the notebook, which is what the student opens once
+# the gates are done. The concept check hangs off cell 10, the cell that draws and
+# tabulates omega, which also puts it after both puzzles.
 
 CELLS = {
     5: CHEBNODES,
     7: LAGEVAL,
+    10: WHYCHEB,
 }
 
 NOTEBOOK_LAB = {
-    'lab_id': 'lab1-runge',
-    'order': 1,
+    'lab_id': 'lab2-runge',
+    'order': 2,
     'title': "Runge's phenomenon and Chebyshev nodes",
     'blurb': 'Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.',
-    'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
+    'series': ['lab1-newton', 'lab2-runge', 'lab3-splines'],
     'colab_path': 'na/interpolation_runge_chebyshev.ipynb',
     'intro': (
         "Adding more data points ought to improve a polynomial fit. It doesn't "
         'always: on equally spaced nodes the error for a perfectly smooth '
         'function can grow without bound as the degree goes up.\n\n'
-        'These two puzzles build the pair of algorithms behind that story: '
+        'Two puzzles here build the pair of algorithms behind that story: '
         'where to put the interpolation nodes so the error stays under '
         'control, and how to write down the polynomial through them without '
-        'solving for a single coefficient.\n\n'
+        'solving for a single coefficient. Three questions at the end ask what '
+        'the comparison between the two node families actually claims.\n\n'
         "We'll work throughout on $[-1,1]$ with Runge's function\n\n"
         r'$$f(x) = \frac{1}{1 + 25x^2},$$' '\n\n'
         'and every number and figure on this page was computed with the nodes '
         'equally spaced. The Chebyshev half of the comparison is in the '
         'notebook.\n\n'
-        'Each puzzle hands you the steps of an algorithm in scrambled order. '
-        'Drag them into the workspace, set the indentation, fill in the '
-        'blanks, and check your answer. Indentation counts as much as order, '
-        'since a step one level in runs once for every pass of the loop above '
-        'it. The notebook opens once both puzzles are done.\n\n'
+        'Each of the first two hands you the steps of an algorithm in '
+        'scrambled order. Drag them into the workspace, set the indentation, '
+        'fill in the blanks, and check your answer. Indentation counts as much '
+        'as order, since a step one level in runs once for every pass of the '
+        'loop above it. The last one is multiple choice, about the mathematics '
+        'rather than the code, and its three questions are answered together. '
+        'The notebook opens once all three are done.\n\n'
         'The steps are pseudocode rather than Python, and each one is a '
         'sentence you can read out loud. `let` stores a value, and `for`, '
         '`if`, `else`, `while` and `return` do what they do in code. '

@@ -7,7 +7,10 @@
 // in. Sweeping across the workspace and asserting that every level is reachable
 // and held is the regression test for both.
 
-import { snapIndent, INDENT_STICK, defaultOrder } from '../../teaching/labs/engine/lab/puzzle.js';
+import {
+  snapIndent, INDENT_STICK, defaultOrder, initialState, stableOrder,
+} from '../../teaching/labs/engine/lab/puzzle.js';
+import { optionOrder } from '../../teaching/labs/engine/lab/quiz.js';
 import { DIVDIFF_GATE } from './fixtures/divdiff-gate.mjs';
 
 let passed = 0;
@@ -142,6 +145,77 @@ describe('tray order', () => {
     const order = defaultOrder(DIVDIFF_GATE);
     const want = [...DIVDIFF_GATE.blocks, ...DIVDIFF_GATE.distractors].map((b) => b.id).sort();
     eq([...order].sort(), want);
+  });
+});
+
+// `prefill` pre-places some or all of the lines, leaving the work in what is left.
+// Not to be confused with fading: every gate in both labs is already a faded
+// Parsons problem, because fading is the blanks, and this is a separate axis of
+// scaffolding. No lab ships a pre-placed board at the moment (the printing gate
+// that did was cut from the Newton lab), so the mechanism is covered here rather
+// than through a page, and it stays covered while no spec exercises it.
+describe('a pre-placed puzzle', () => {
+  it('places nothing when no prefill is asked for', () => {
+    eq(initialState(DIVDIFF_GATE), { placements: [], blanks: {} });
+  });
+
+  it('places every line, in solution order, for "all"', () => {
+    const state = initialState({ ...DIVDIFF_GATE, prefill: 'all' });
+    eq(state.placements, DIVDIFF_GATE.solution);
+    eq(state.blanks, {}, 'the blanks are the work, so they start empty');
+  });
+
+  it('places the first n lines for a count, leaving the rest in the tray', () => {
+    const state = initialState({ ...DIVDIFF_GATE, prefill: 3 });
+    eq(state.placements.map((p) => p.id), DIVDIFF_GATE.solution.slice(0, 3).map((s) => s.id));
+  });
+
+  it('hands back copies, so moving a placed line cannot edit the solution', () => {
+    const gate = { ...DIVDIFF_GATE, prefill: 'all' };
+    const state = initialState(gate);
+    state.placements[0].indent = 7;
+    eq(gate.solution[0].indent, DIVDIFF_GATE.solution[0].indent);
+  });
+});
+
+describe('option order', () => {
+  // The same shuffle the tray uses, so an answer does not sit in the slot it was
+  // authored in and does not move between visits either.
+  const QUESTION = {
+    id: 'leading',
+    options: [{ id: 'zero' }, { id: 'one' }, { id: 'six' }, { id: 'depends' }],
+  };
+  const gate = { cell_id: 'ddcheck' };
+
+  it('is stable across calls', () => {
+    eq(optionOrder(gate, QUESTION), optionOrder(gate, QUESTION));
+  });
+
+  it('holds every option exactly once', () => {
+    eq([...optionOrder(gate, QUESTION)].sort(), ['depends', 'one', 'six', 'zero']);
+  });
+
+  it('does not simply keep the authored order', () => {
+    const authored = QUESTION.options.map((o) => o.id);
+    assert(optionOrder(gate, QUESTION).join('|') !== authored.join('|'),
+      'this fixture exists to show the shuffle happens; pick other ids if it ever agrees');
+  });
+
+  it('keeps the authored order when the question asks it to', () => {
+    const fixed = { ...QUESTION, shuffle: false };
+    eq(optionOrder(gate, fixed), ['zero', 'one', 'six', 'depends']);
+  });
+
+  it('gives two questions in one block different orders', () => {
+    const other = { ...QUESTION, id: 'reorder' };
+    assert(optionOrder(gate, QUESTION).join('|') !== optionOrder(gate, other).join('|'),
+      'the seed includes the question id, so two questions should not agree');
+  });
+
+  it('stableOrder leaves the list it was handed alone', () => {
+    const ids = ['a', 'b', 'c'];
+    stableOrder('seed', ids);
+    eq(ids, ['a', 'b', 'c']);
   });
 });
 

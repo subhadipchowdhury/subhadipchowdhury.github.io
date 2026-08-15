@@ -1,12 +1,12 @@
 {
- "lab_id": "lab1-runge",
- "order": 1,
+ "lab_id": "lab2-runge",
+ "order": 2,
  "title": "Runge's phenomenon and Chebyshev nodes",
  "blurb": "Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.",
- "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It doesn't always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>These two puzzles build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The notebook opens once both puzzles are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. <code>*</code> multiplies, <code>!=</code> means \"is not equal to\" and <code>&lt;=</code> means \"is at most\". Every symbol here is one you can type, so a blank takes exactly what you read. The key above the puzzles has the rest.</p>",
+ "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It doesn't always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>Two puzzles here build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient. Three questions at the end ask what the comparison between the two node families actually claims.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each of the first two hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The last one is multiple choice, about the mathematics rather than the code, and its three questions are answered together. The notebook opens once all three are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. <code>*</code> multiplies, <code>!=</code> means \"is not equal to\" and <code>&lt;=</code> means \"is at most\". Every symbol here is one you can type, so a blank takes exactly what you read. The key above the puzzles has the rest.</p>",
  "series": [
-  "lab1-runge",
-  "lab2-newton",
+  "lab1-newton",
+  "lab2-runge",
   "lab3-splines"
  ],
  "source": "notebooks/na/interpolation_runge_chebyshev.ipynb",
@@ -21,7 +21,7 @@
     "caption_html": "<p>The degree-20 polynomial passes through all 21 nodes and misses the function by nearly 60 between them. Read the right-hand panel for where it misses: across the middle half of the interval the error stays under a fiftieth, in the second gap from the end it reaches four, and in the last gap it reaches 60. This is Runge’s phenomenon, after the German mathematician and physicist Carl David Tolmé Runge, who published it in 1901. It isn't roundoff, it doesn't go away in exact arithmetic, and the only thing left to blame is where the nodes are.</p>",
     "stdout": "degree  4   nodes  5   max |f - p| =    0.438\ndegree 12   nodes 13   max |f - p| =    3.663\ndegree 20   nodes 21   max |f - p| =   59.822",
     "figures": [
-     "figures/lab1-runge/chebnodes-0.png"
+     "figures/lab2-runge/chebnodes-0.png"
     ]
    },
    "blocks": [
@@ -282,6 +282,7 @@
     "map_centred_on_zero": "The length is right and the position isn't. Your nodes are centred on 0 wherever [a, b] happens to lie, so both ends miss: u = -1 lands on (a-b)/2 rather than a, and u = +1 on (b-a)/2 rather than b.",
     "map_full_width": "The centre is right and the width is twice what it should be, so the nodes nearest the ends fall outside the interval altogether. From the centre of [a, b] to either end is half its length."
    },
+   "kind": "puzzle",
    "reveal": [
     {
      "n": 1,
@@ -403,8 +404,8 @@
      "num": 7
     }
    ],
-   "hash": "04c850de16e8731b",
    "python": "# ---------------------------------------------------------------------------\n# Chebyshev nodes\n# ---------------------------------------------------------------------------\ndef chebyshev_nodes(a, b, n):\n    \"\"\"Return n+1 Chebyshev nodes (first kind) on [a, b].\n\n    Each node is the projection down onto [a, b] of the midpoint of one of\n    the n+1 arcs that n+2 equally spaced points cut the semicircle above the\n    interval into.\n\n    Parameters\n    ----------\n    a, b : float   endpoints of the interval\n    n    : int     polynomial degree (so we get n+1 nodes)\n    \"\"\"\n    x = np.zeros(n + 1)\n    for k in range(n + 1):\n        theta = (2 * k + 1) / (2 * (n + 1)) * np.pi\n        u = np.cos(theta)\n        x[k] = 0.5 * (a + b) + 0.5 * (b - a) * u\n    return x",
+   "hash": "2432e7e14c0b8b2d",
    "brief_html": "<p>The error is no mystery. If $f$ has $n+1$ continuous derivatives on $[a,b]$, then interpolation at the nodes $x_0,\\dots,x_n$ leaves</p>\n<p>$$f(x) - p_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}\\,\\omega(x), \\qquad \\omega(x) = (x-x_0)(x-x_1)\\cdots(x-x_n),$$</p>\n<p>for some $\\xi$ between the smallest and largest of $x, x_0, \\dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That's the same lopsidedness the figure above has. So let's put more nodes near the ends.</p>\n<p>How many more, and where? A good answer came from the Russian mathematician Pafnuty Chebyshev (1821-1894), and it starts as a picture rather than a formula:</p>\n<ol>\n<li>Draw a semicircle with the interval $[a,b]$ as its diameter.</li>\n<li>Mark $n+2$ equally spaced points along the arc, both endpoints included, so the arc is cut into $n+1$ equal pieces.</li>\n<li>Take the midpoint of each piece, which gives $n+1$ points on the arc.</li>\n<li>Drop each one straight down onto the interval.</li>\n</ol>\n<p>Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That's the shape $\\omega$ wanted.</p>\n<p>Now turn the picture into arithmetic. Measure $\\theta$ from the right-hand end of the interval, so the arc runs from $\\theta = 0$ to $\\theta = \\pi$ and a point at angle $\\theta$ on the unit semicircle over $[-1,1]$ sits above $u = \\cos\\theta$. Write the two blanks: the denominator that lands $\\theta$ at the midpoint of the $k$th piece, given the $2k+1$ already sitting in the numerator, and the map that carries $u$ to the matching point of $[a,b]$. The map has to send $u = -1$ to $a$ and $u = 1$ to $b$.</p>\n<p>The nodes come out running from near $b$ down to near $a$. Interpolation doesn't mind.</p>"
   },
   {
@@ -809,6 +810,7 @@
     "factor_precedence": "In this notation / binds tighter than -, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.",
     "factor_no_denominator": "Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node."
    },
+   "kind": "puzzle",
    "reveal": [
     {
      "n": 1,
@@ -956,9 +958,100 @@
      "num": 10
     }
    ],
-   "hash": "bdba2f1c70542837",
    "python": "# ---------------------------------------------------------------------------\n# The interpolating polynomial, evaluated via the Lagrange formula\n# ---------------------------------------------------------------------------\ndef lagrange_eval(nodes, values, xq):\n    \"\"\"Evaluate the polynomial interpolating (nodes[i], values[i]) at xq.\n\n    Parameters\n    ----------\n    nodes  : array (m,)  distinct x-coordinates of the data\n    values : array (m,)  y-coordinates, values[i] = f(nodes[i])\n    xq     : array       points at which to evaluate the interpolant\n    \"\"\"\n    nodes  = np.asarray(nodes,  dtype=float)\n    values = np.asarray(values, dtype=float)\n    xq     = np.asarray(xq,     dtype=float)\n\n    m = len(nodes)\n    result = np.zeros_like(xq)\n    for i in range(m):\n        Li = np.ones_like(xq)\n        for j in range(m):\n            if j != i:\n                Li = Li * (xq - nodes[j]) / (nodes[i] - nodes[j])\n        result = result + values[i] * Li\n    return result",
+   "hash": "0357c7eeca611b3e",
    "brief_html": "<p>One route to that polynomial is to write $p(x) = c_0 + c_1x + c_2x^2 + c_3x^3$, substitute the four points and solve for the $c_k$. Let's not. If we choose the basis to suit the data, the coefficients turn out to be the data.</p>\n<p>Ask for one polynomial per node, $L_0,\\dots,L_n$, each of them equal to $1$ at its own node and $0$ at every other node. Then</p>\n<p>$$p(x) = y_0L_0(x) + y_1L_1(x) + \\cdots + y_nL_n(x)$$</p>\n<p>interpolates: at $x_k$ every term but the $k$th is zero, and the term left standing is $y_k \\cdot 1$. This is the Lagrange form, named for the Italian-French mathematician Joseph-Louis Lagrange, who published it in 1795, though Edward Waring had written it down in 1779.</p>\n<p>So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.</p>\n<p>Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: $m$ is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.</p>"
+  },
+  {
+   "cell_id": "chebcheck",
+   "concept": "why_chebyshev",
+   "title": "What the comparison actually claims",
+   "questions": [
+    {
+     "id": "whydiverge",
+     "stem_html": "<p>Runge's function $f(x) = 1/(1+25x^2)$ is infinitely differentiable at every point of $[-1,1]$. Interpolate it at equally spaced nodes and the fit gets <em>worse</em> as the degree goes up. Which of these is the reason?</p>",
+     "answer": "poles",
+     "options": [
+      {
+       "id": "poles",
+       "text_html": "<p>$\\max|f^{(n+1)}|$ grows faster than $\\max|\\omega|$ shrinks, because $f$ has poles at $\\pm i/5$, close to the interval in the complex plane.</p>",
+       "why_html": "<p>Both factors in the error formula move with $n$ and the question is which one wins. For equally spaced nodes $\\max|\\omega|$ does shrink, but for this $f$ the derivative term grows like $(n+1)!\\,5^{\\,n+1}$, and the $5$ is the reciprocal of the distance from the interval to the nearest singularity of $f$. The poles at $\\pm i/5$ sit a fifth of a unit off the real axis, and that is what outruns the node spacing.</p>\n<p>The lesson generalises past this example: how smooth $f$ is on the interval isn't the property that decides convergence. How far $f$ continues off the interval before it breaks is.</p>"
+      },
+      {
+       "id": "notsmooth",
+       "text_html": "<p>$f$ isn't smooth enough on $[-1,1]$ for the error formula to apply.</p>",
+       "why_html": "<p>$f$ is a rational function whose denominator has no real zero, so on $[-1,1]$ it has derivatives of every order and the error formula applies at every degree. That's the point of the example: nothing at all is wrong with $f$ on the interval, which is why the divergence is surprising enough to have a name.</p>\n<p>So look instead at the two factors in the bound as $n$ grows, and at what sets the size of $\\max|f^{(n+1)}|$. It isn't smoothness on the interval.</p>"
+      },
+      {
+       "id": "roundoff",
+       "text_html": "<p>Rounding error in evaluating a high-degree polynomial swamps the answer.</p>",
+       "why_html": "<p>Roundoff isn't the cause. The divergence happens in exact arithmetic and it's what the error formula predicts, so it's a fact about interpolation at equally spaced nodes rather than about floating point. The error sweep says the same thing: it grows smoothly and geometrically in $n$, at about a factor of $1.5$ per degree, and roundoff doesn't behave like that.</p>"
+      },
+      {
+       "id": "omega_end",
+       "text_html": "<p>$|\\omega|$ is large near $\\pm 1$, so the fit is bad near the endpoints and fine everywhere else.</p>",
+       "why_html": "<p>The first half is true and the conclusion doesn't follow from it. $|\\omega|$ does peak near the ends, and that's where the oscillations show up, but the quantity that grows without bound is $\\max_x|f-p_n|$ over the whole interval. A fit that's excellent in the middle and unbounded near the ends has still diverged, and it's the maximum that any error bound has to control.</p>"
+      }
+     ]
+    },
+    {
+     "id": "minimax",
+     "stem_html": "<p>Everything that depends on where the nodes went sits in $\\omega(x) = \\prod_k (x - x_k)$, which is monic of degree $n+1$. Among <em>all</em> monic polynomials of degree $n+1$, how small can $\\max_{[-1,1]}|\\omega|$ be made?</p>",
+     "answer": "twopow",
+     "options": [
+      {
+       "id": "twopow",
+       "text_html": "<p>$2^{-n}$, attained by putting the roots at the Chebyshev nodes.</p>",
+       "why_html": "<p>That minimum is the whole reason for putting the nodes there. The scaled Chebyshev polynomial $2^{-n}T_{n+1}$ is monic and swings between $+2^{-n}$ and $-2^{-n}$ at $n+2$ points of the interval, and that equioscillation is what forces it to be the best: a monic competitor with a strictly smaller maximum would have to differ from it by a polynomial of degree at most $n+1$ that changes sign $n+1$ times, which is one root more than such a polynomial has.</p>\n<p>Then compare the two families. $2^{-n}$ halves with every degree, and the table shows what the equally spaced maximum does beside it.</p>"
+      },
+      {
+       "id": "equi",
+       "text_html": "<p>$2^{-n}$, attained by putting the roots at equally spaced points.</p>",
+       "why_html": "<p>You have the right number and the wrong nodes, and the ratio column in the table is the measure of how wrong: equally spaced roots give a larger $\\max|\\omega|$, and the gap widens with $n$. Which node family makes $|\\omega|$ oscillate with equal peaks instead of bulging near the ends?</p>"
+      },
+      {
+       "id": "zero",
+       "text_html": "<p>It can be made as small as you like, by choosing the roots well enough.</p>",
+       "why_html": "<p>Monic is what stops that. The leading coefficient is pinned at $1$, so $\\omega$ can't be scaled down, and moving the roots only redistributes where it's large. Something has to give: push $|\\omega|$ down in the middle and it comes up at the ends. There's a genuine floor, and one node family sits exactly on it.</p>"
+      },
+      {
+       "id": "factorial",
+       "text_html": "<p>$1/(n+1)!$, attained by putting the roots at the Chebyshev nodes.</p>",
+       "why_html": "<p>The nodes are right and the number is too small to be possible: from degree $3$ up, $1/(n+1)!$ is below $2^{-n}$, and no monic polynomial of degree $n+1$ gets under $2^{-n}$ on $[-1,1]$. The factorial in the error formula comes from the derivative term, $f^{(n+1)}(\\xi)/(n+1)!$, and not from $\\omega$.</p>"
+      }
+     ]
+    },
+    {
+     "id": "lagsum",
+     "stem_html": "<p>The Lagrange basis functions satisfy $L_i(x_j) = 1$ when $i = j$ and $0$ otherwise. Without expanding anything, what is $\\sum_i L_i(x)$?</p>",
+     "answer": "one",
+     "options": [
+      {
+       "id": "one",
+       "text_html": "<p>It's the constant $1$, at every $x$.</p>",
+       "why_html": "<p>Interpolate the constant function $g(x) = 1$. Its Lagrange form is $\\sum_i g(x_i)L_i(x)$, which is $\\sum_i L_i(x)$, and the constant $1$ is itself a polynomial of degree less than $n$ through those same points. Uniqueness leaves room for only one such polynomial, so the sum is $1$ everywhere and not only at the nodes.</p>\n<p>Two things to take from it. It's the cheapest test there is on an implementation of $L_i$, since the values have to sum to $1$ at any $x$ you try. And it says the $L_i$ are a partition of unity, so a Lagrange interpolant is a weighted average of the data whose weights always sum to $1$, though (unlike an average) the weights are free to be negative away from the nodes.</p>"
+      },
+      {
+       "id": "zero",
+       "text_html": "<p>It's $0$ except at the nodes, where it's $1$.</p>",
+       "why_html": "<p>That's the value at the nodes and you've read it off correctly there: at $x_j$, one term is $1$ and the rest are $0$. But the sum is a polynomial of degree less than $n$ that takes the value $1$ at $n$ distinct points, and $n$ values pin such a polynomial down completely. What else has those $n$ values?</p>"
+      },
+      {
+       "id": "depends",
+       "text_html": "<p>It depends on the nodes, so there's nothing general to say.</p>",
+       "why_html": "<p>Each $L_i$ depends on the nodes, so this is the cautious answer, and the sum doesn't. Interpolate the constant function $1$ and ask what its coefficients in this basis are, then add them up.</p>"
+      },
+      {
+       "id": "xpoly",
+       "text_html": "<p>It's a polynomial of degree $n-1$ with no simpler form.</p>",
+       "why_html": "<p>It is a polynomial of degree at most $n-1$, so that much is right, and it has a much simpler form than that. Evaluate it at each node in turn, count how many of its values you now know, and ask how much freedom a polynomial of degree at most $n-1$ has left after that.</p>"
+      }
+     ]
+    }
+   ],
+   "kind": "quiz",
+   "hash": "31c8d1b62924dc45",
+   "brief_html": "<p>Both algorithms are built, so let's step back and ask what the comparison between the two node families is really saying. The three questions below are about the mathematics rather than the code, and none of them needs anything you haven't already seen on this page.</p>\n<p>Pick one answer for each. A wrong pick tells you what it got wrong rather than what the answer is.</p>"
   }
  ]
 }
