@@ -174,6 +174,32 @@ for (const entry of index) {
     eq(again.lab.status.get(firstId), 'solved');
   });
 
+  // A finished lab has to be able to go back to blank, for a student who wants
+  // the practice a second time.
+  await it('goes back to blank once it is finished, and stays blank', async () => {
+    const { root, lab } = await open(labSpec);
+    const box = root.querySelector('.lab-restart');
+    assert(box, 'the notebook card carries no way to start over');
+    eq(box.hidden, true, 'and it should not offer one before the lab is done');
+
+    for (const gate of labSpec.puzzles) solveIn(lab, labSpec, gate.cell_id);
+    eq(box.hidden, false, 'a finished lab should offer a fresh start');
+    box.querySelector('.lp-action').dispatch('click');
+
+    eq(lab.allDone(), false, 'the lab should be blank now');
+    eq(lab.status.get(labSpec.puzzles[0].cell_id), 'open');
+    for (const gate of labSpec.puzzles.slice(1)) {
+      eq(lab.status.get(gate.cell_id), 'locked', `${gate.cell_id} should be shut again`);
+    }
+    eq(root.querySelector('.lab-launch').getAttribute('aria-disabled'), 'true');
+    eq(root.querySelector('.lab-restart').hidden, true, 'and it should stop offering');
+
+    const again = await open(labSpec, { fresh: false });
+    for (const gate of labSpec.puzzles) {
+      assert(!again.lab.done(gate.cell_id), `${gate.cell_id} came back done after a reload`);
+    }
+  });
+
   await it('shows every puzzle a brief before asking anything', async () => {
     const { root, lab } = await open(labSpec);
     for (const gate of labSpec.puzzles) {
@@ -644,6 +670,19 @@ await it('revising one puzzle resets only that one', async () => {
   has(textOf(root), 'has changed since you were last here');
 
   globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => spec });
+});
+
+await it('starting over gives back the board a first-time student sees', async () => {
+  localStorage.clear();
+  const root = document.createElement('div');
+  const lab = await mountLab(root, SPEC_URL);
+  const blank = JSON.stringify(lab.views.get(ids[0]).getState());
+  for (const id of ids) solve(lab, id);
+
+  root.querySelector('.lab-restart .lp-action').dispatch('click');
+  eq(JSON.parse(JSON.stringify(lab.views.get(ids[0]).getState())), JSON.parse(blank));
+  assert(!root.querySelector('.lab-solved'), 'a solved bar survived');
+  eq(root.querySelectorAll('.lab-locked').length, ids.length - 1);
 });
 
 group = 'the office-hours snapshot';

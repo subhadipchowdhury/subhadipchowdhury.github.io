@@ -798,6 +798,19 @@ html[data-theme="dark"] {
   pointer-events: none;
 }
 
+/* Starting over. It appears under the notebook link once every gate is done, so
+   it is the last thing on the page rather than something to press on the way
+   past. No display of its own, or [hidden] would stop working. */
+.lab-restart {
+  border-top: 1px solid var(--border-color);
+  margin-top: 1.1rem;
+  padding-top: 0.9rem;
+}
+
+.lab-restart[hidden] { display: none; }
+
+.lab-restart p { margin: 0 0 0.7rem; }
+
 /* --------------------------------------------------------------------------
  * The concept check
  *

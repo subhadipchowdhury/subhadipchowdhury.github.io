@@ -90,6 +90,10 @@ class Progress {
     }
   }
 
+  clear(cellId) {
+    try { localStorage.removeItem(this.key(cellId)); } catch { /* ignore */ }
+  }
+
   markConcept(name) {
     if (!name) return;
     try {
@@ -153,10 +157,27 @@ class LabController {
 
   allDone() { return this.puzzles.every((g) => this.done(g.cell_id)); }
 
+  // A solved gate is frozen, so without this there is no way back to a blank
+  // page short of clearing the browser's storage. Offered once the lab is done;
+  // see buildRestart.
+  restart() {
+    for (const gate of this.puzzles) {
+      this.progress.clear(gate.cell_id);
+      this.saved.set(gate.cell_id, null);
+      this.status.set(gate.cell_id, 'locked');
+    }
+    this.relock();
+    this.render();
+    this.root.scrollIntoView?.({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
+  }
+
   // -------------------------------------------------------------------------
 
   render() {
     this.root.innerHTML = '';
+    // A gate that has just been shut keeps no live view, or "Solve this one" in
+    // test mode would submit into a board that is no longer on the page.
+    this.views.clear();
     if (this.dev) this.root.appendChild(this.buildDevBar());
     this.root.appendChild(this.buildNotation());
     this.root.appendChild(this.buildHeader());
@@ -199,9 +220,7 @@ class LabController {
     wipe.type = 'button';
     wipe.textContent = 'Clear progress';
     wipe.addEventListener('click', () => {
-      for (const gate of this.puzzles) {
-        try { localStorage.removeItem(this.progress.key(gate.cell_id)); } catch { /* ignore */ }
-      }
+      for (const gate of this.puzzles) this.progress.clear(gate.cell_id);
       window.location?.reload?.();
     });
     bar.appendChild(wipe);
@@ -716,8 +735,28 @@ class LabController {
     card.appendChild(this.launch);
     this.finaleNote = el('p', 'lab-progress');
     card.appendChild(this.finaleNote);
+    card.appendChild(this.buildRestart());
     this.updateFinale();
     return card;
+  }
+
+  // For a student who wants the practice again. Hidden until the lab is done,
+  // since before that a puzzle already has its own reset.
+  buildRestart() {
+    const box = el('div', 'lab-restart');
+    const note = el('p', 'lab-progress');
+    note.textContent = 'Starting over clears every answer on this page and shuts '
+      + 'the notebook again.';
+    box.appendChild(note);
+
+    const start = el('button', 'lp-action');
+    start.type = 'button';
+    start.textContent = 'Start the lab over';
+    start.addEventListener('click', () => this.restart());
+    box.appendChild(start);
+
+    this.restartBox = box;
+    return box;
   }
 
   updateFinale() {
@@ -734,6 +773,7 @@ class LabController {
       this.launch.setAttribute('href', this.spec.colab);
       this.finaleNote.textContent = '';
     }
+    if (this.restartBox) this.restartBox.hidden = !!left;
   }
 
   typeset(node) {
