@@ -333,9 +333,24 @@ function checkStructure(gate, where) {
 // `return` and `print` are all still the words they are in code.
 const OPENERS = ['function', 'let', 'for', 'if', 'else', 'while', 'return', 'print'];
 
-// A tile wider than this scrolls sideways on a phone, and a step a reader has to
-// scroll is a step they skip. The widest line in either lab is 62.
-const LINE_LIMIT = 64;
+// How wide a step may be, in characters, counting a blank as its declared width.
+//
+// The number is the tablet bound, worked out rather than picked. IBM Plex Mono
+// advances 0.6em, `.lp-block` is 0.72rem below the 820px breakpoint, and the
+// deepest indent in any lab is four levels at `--lp-indent: 1.4rem`. Subtract the
+// 2rem page gutters, the workspace padding and the block's own padding and an
+// 820px viewport shows 91 characters at that depth. So 88 is "no sideways scroll
+// on anything down to a small tablet", with a little room.
+//
+// It was 64 for one day, on the stated grounds that a wider tile scrolls on a
+// phone. That reason is wrong: the same arithmetic gives 29 characters at indent
+// four on a 390px phone, so *every* step in both labs scrolls there whatever this
+// number is, and no notation could avoid it. `.lp-block` carries
+// `overflow-x: auto` for exactly that case, and its comment already called it a
+// last resort on a narrow phone. 64 was also below the widest line the arrow
+// notation shipped, and it cost real copy: `chebnodes` lost the articles from its
+// header to fit under it, for nothing.
+const LINE_LIMIT = 88;
 
 function checkBlockLines(gate, where) {
   const lines = [...gate.blocks, ...(gate.distractors || [])]

@@ -309,7 +309,7 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
 ''',
 
     'blocks': [
-        block('def', 'function newton_eval, given nodes xn, coefficients c and t:', [4, 4], 'def newton_eval'),
+        block('def', 'function newton_eval, given nodes xn, coefficients c and point t:', [4, 4], 'def newton_eval'),
         block('n', 'let n be the number of entries in c', [18, 18], 'n = len(coeffs)'),
         block('init', 'let p be c[⟨?init⟩]', [19, 19], 'np.full_like'),
         block('loop', 'for each k from n−2 down to 0:', [20, 20], 'for k in range(n - 2'),

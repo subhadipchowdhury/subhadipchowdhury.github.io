@@ -29,7 +29,7 @@
      "id": "def",
      "lines": [
       {
-       "text": "function chebyshev_nodes, given ends a and b and degree n:",
+       "text": "function chebyshev_nodes, given the ends a and b, and the degree n:",
        "indent": 0
       }
      ],
@@ -403,7 +403,7 @@
      "num": 7
     }
    ],
-   "hash": "06b41c9e3bc54053",
+   "hash": "a0faa02ce1f24e98",
    "python": "# ---------------------------------------------------------------------------\n# Chebyshev nodes\n# ---------------------------------------------------------------------------\ndef chebyshev_nodes(a, b, n):\n    \"\"\"Return n+1 Chebyshev nodes (first kind) on [a, b].\n\n    Each node is the projection down onto [a, b] of the midpoint of one of\n    the n+1 arcs that n+2 equally spaced points cut the semicircle above the\n    interval into.\n\n    Parameters\n    ----------\n    a, b : float   endpoints of the interval\n    n    : int     polynomial degree (so we get n+1 nodes)\n    \"\"\"\n    x = np.zeros(n + 1)\n    for k in range(n + 1):\n        theta = (2 * k + 1) / (2 * (n + 1)) * np.pi\n        u = np.cos(theta)\n        x[k] = 0.5 * (a + b) + 0.5 * (b - a) * u\n    return x",
    "brief_html": "<p>The error is no mystery. If $f$ has $n+1$ continuous derivatives on $[a,b]$, then interpolation at the nodes $x_0,\\dots,x_n$ leaves</p>\n<p>$$f(x) - p_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}\\,\\omega(x), \\qquad \\omega(x) = (x-x_0)(x-x_1)\\cdots(x-x_n),$$</p>\n<p>for some $\\xi$ between the smallest and largest of $x, x_0, \\dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That is the same lopsidedness the figure above has. So let's put more nodes near the ends.</p>\n<p>How many more, and where? A good answer came from the Russian mathematician Pafnuty Chebyshev (1821-1894), and it starts as a picture rather than a formula:</p>\n<ol>\n<li>Draw a semicircle with the interval $[a,b]$ as its diameter.</li>\n<li>Mark $n+2$ equally spaced points along the arc, both endpoints included, so the arc is cut into $n+1$ equal pieces.</li>\n<li>Take the midpoint of each piece, which gives $n+1$ points on the arc.</li>\n<li>Drop each one straight down onto the interval.</li>\n</ol>\n<p>Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That is the shape $\\omega$ wanted.</p>\n<p>Now turn the picture into arithmetic. Measure $\\theta$ from the right-hand end of the interval, so the arc runs from $\\theta = 0$ to $\\theta = \\pi$ and a point at angle $\\theta$ on the unit semicircle over $[-1,1]$ sits above $u = \\cos\\theta$. Write the two blanks: the denominator that lands $\\theta$ at the midpoint of the $k$th piece, given the $2k+1$ already sitting in the numerator, and the map that carries $u$ to the matching point of $[a,b]$. The map has to send $u = -1$ to $a$ and $u = 1$ to $b$.</p>\n<p>The nodes come out running from near $b$ down to near $a$. Interpolation doesn't mind.</p>"
   },

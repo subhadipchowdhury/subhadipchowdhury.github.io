@@ -109,7 +109,7 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
 ''',
 
     'blocks': [
-        block('def', 'function chebyshev_nodes, given ends a and b and degree n:', [4, 4], 'def chebyshev_nodes'),
+        block('def', 'function chebyshev_nodes, given the ends a and b, and the degree n:', [4, 4], 'def chebyshev_nodes'),
         block('alloc', 'let x be a list of n+1 zeros', [16, 16], 'x = np.zeros'),
         block('loop', 'for each k from 0 to n:', [17, 17], 'for k in range'),
         block('theta', 'let θ be ((2·k + 1) / ⟨?frac⟩) · π', [18, 18], 'theta ='),
