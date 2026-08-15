@@ -59,13 +59,23 @@ export const BLANK_CLOSE = '⟩'; // ⟩
 
 // Students type ASCII into blanks; the board and the block text use the real
 // glyphs. Both are accepted everywhere, normalised here once.
+//
+// There are four spellings of ≠ because there is no ≠ key and a student reaches
+// for whichever one they have seen: != from C and Python, /= from Ada and Haskell,
+// <> from Pascal, BASIC, SQL and Excel, ~= from MATLAB. Guessing the house
+// spelling is not what any of these puzzles is testing. Order matters: =/= has to
+// fold before /= does, or the tail folds first and leaves "=≠", whose error
+// message points at a glyph the student never typed.
 const ASCII_FOLD = [
   [/<->/g, GETS],
   [/<-/g, GETS],
   [/<=/g, LE],
   [/>=/g, GE],
+  [/=\/=/g, NE],
   [/!=/g, NE],
   [/\/=/g, NE],
+  [/<>/g, NE],
+  [/~=/g, NE],
   [/\*/g, TIMES],
   [/\bpi\b/g, PI],
 ];

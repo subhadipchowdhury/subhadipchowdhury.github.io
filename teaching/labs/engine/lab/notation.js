@@ -37,7 +37,7 @@ const ENTRIES = [
   [['a · b', 'a − b'],
     'multiplication and subtraction. In a blank you can type * and - instead.'],
   [['i ≠ j', 'i ≤ j', 'π'],
-    'likewise !=, <= and pi in a blank.'],
+    'likewise <= and pi in a blank. For ≠ any of !=, /=, <> and ~= will do, since there is no key for it and you may have met a different one.'],
   [['abs(x)'],
     'along with sqrt, cos, sin, exp, max, min, sum and solve.'],
 ];

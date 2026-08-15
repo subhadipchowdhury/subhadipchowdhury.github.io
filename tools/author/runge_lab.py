@@ -373,7 +373,9 @@ NOTEBOOK_LAB = {
         'sentence you can read out loud. `let` stores a value, and `for`, '
         '`if`, `else`, `while` and `return` do what they do in code. '
         'Subscripts start at 0, and `from a to b` includes both $a$ and $b$. '
-        'The key above the puzzles has the rest.'
+        "There's no key for · or ≠, so type `*` and `!=` in a blank, along "
+        "with `-` for − and `pi` for π. The key above the puzzles has the "
+        'rest.'
     ),
 }
 

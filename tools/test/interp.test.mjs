@@ -116,6 +116,24 @@ describe('expressions', () => {
     eq(evalExpression('pi > 3'), true);
   });
 
+  it('takes every spelling of ≠, since there is no key for it', () => {
+    // != is C and Python, /= is Ada and Haskell, <> is Pascal and SQL, ~= is
+    // MATLAB. lab1-runge's guard blank is the one that needs this.
+    for (const ne of ['≠', '!=', '/=', '<>', '~=', '=/=']) {
+      eq(evalExpression(`1 ${ne} 2`), true, `${ne} should mean ≠`);
+      eq(evalExpression(`2 ${ne} 2`), false, `${ne} should mean ≠`);
+    }
+  });
+
+  it('and the ≠ spellings do not swallow the other comparisons', () => {
+    eq(evalExpression('1 <= 2'), true);
+    eq(evalExpression('2 >= 2'), true);
+    eq(evalExpression('1 < 2'), true);
+    eq(evalExpression('2 > 1'), true);
+    eq(evalExpression('2 = 2'), true);
+    eq(evalExpression('1 <= 1 and 2 >= 2'), true);
+  });
+
   it('comparisons and logic', () => {
     eq(evalExpression('3 = 3'), true);
     eq(evalExpression('3 ≠ 3'), false);
