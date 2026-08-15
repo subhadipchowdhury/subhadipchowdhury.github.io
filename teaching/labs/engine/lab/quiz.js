@@ -133,8 +133,6 @@ export class QuizView {
 
       for (const [optionId, { input, label }] of row.inputs) {
         input.checked = optionId === picked;
-        if (optionId === picked) input.setAttribute('checked', 'checked');
-        else input.removeAttribute('checked');
         input.disabled = this.frozen;
         label.classList.toggle('is-picked', optionId === picked);
       }
@@ -145,7 +143,7 @@ export class QuizView {
     }
 
     this.attemptLabel.textContent = this.attempts
-      ? `${this.attempts} check${this.attempts === 1 ? '' : 's'} so far`
+      ? `${this.attempts} check${this.attempts === 1 ? '' : 's'}`
       : '';
     this.checkBtn.disabled = this.frozen;
     this.resetBtn.disabled = this.frozen;
@@ -200,12 +198,15 @@ export class QuizView {
   }
 
   reset() {
+    if (this.frozen) return;
     this.picks = {};
     this.marks.clear();
     for (const question of this.questions) this.setVerdict(question.id, null);
+    this.attempts = 0;
     this.setFeedback(null);
-    this.opts.onReset?.();
+    this.changed();
     this.render();
+    this.opts.onReset?.();
   }
 
   changed() {
@@ -256,7 +257,10 @@ export class QuizView {
     this.opts.typeset?.(node);
   }
 
-  /** A block the student has set aside keeps its picks and stops accepting new ones. */
+  /**
+   * Stop accepting picks, which happens when the block is right and never when it
+   * is set aside: a block set aside stays workable, the way a parked puzzle does.
+   */
   freeze() {
     this.frozen = true;
     this.root.dataset.frozen = 'true';

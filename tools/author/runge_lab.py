@@ -14,7 +14,8 @@ because the picture is what raises the question the formula answers.
 
 Line numbers below are 1-based into each cell's own source. build_labs.py checks
 every one against its py_match substring and fails the build when an edit has
-shifted them. Cells 5 and 7 were rewritten for this lab: chebyshev_nodes is the
+shifted them, and the concept check on cell 10 has none of it, since it has no
+Python behind it. Cells 5 and 7 were rewritten for this lab: chebyshev_nodes is the
 loop it describes rather than three vectorized lines, and lagrange_eval takes
 its length before allocating, so the Python lines pair with the pseudocode in
 the order the reveal shows them.
@@ -381,14 +382,14 @@ Runge's function $f(x) = 1/(1+25x^2)$ is infinitely differentiable at every poin
                     r'''
 Both factors in the error formula move with $n$ and the question is which one wins. For equally spaced nodes $\max|\omega|$ does shrink, but for this $f$ the derivative term grows like $(n+1)!\,5^{\,n+1}$, and the $5$ is the reciprocal of the distance from the interval to the nearest singularity of $f$. The poles at $\pm i/5$ sit a fifth of a unit off the real axis, and that is what outruns the node spacing.
 
-The lesson generalises past this example: how smooth $f$ is on the interval isn't the property that decides convergence. How far $f$ continues off the interval before it breaks is.
+So the property that decides convergence isn't smoothness on the interval. It's how far $f$ continues off the interval before it breaks, and that distance is what the $5^{\,n+1}$ is measuring.
 ''',
                 ),
                 option(
                     'notsmooth',
                     r"$f$ isn't smooth enough on $[-1,1]$ for the error formula to apply.",
                     r'''
-$f$ is a rational function whose denominator has no real zero, so on $[-1,1]$ it has derivatives of every order and the error formula applies at every degree. That's the point of the example: nothing at all is wrong with $f$ on the interval, which is why the divergence is surprising enough to have a name.
+$f$ is a rational function whose denominator has no real zero, so on $[-1,1]$ it has derivatives of every order and the error formula applies at every degree. Nothing at all is wrong with $f$ on the interval, and that is why the divergence was surprising enough to get a name.
 
 So look instead at the two factors in the bound as $n$ grows, and at what sets the size of $\max|f^{(n+1)}|$. It isn't smoothness on the interval.
 ''',
@@ -404,7 +405,7 @@ Roundoff isn't the cause. The divergence happens in exact arithmetic and it's wh
                     'omega_end',
                     r'$|\omega|$ is large near $\pm 1$, so the fit is bad near the endpoints and fine everywhere else.',
                     r'''
-The first half is true and the conclusion doesn't follow from it. $|\omega|$ does peak near the ends, and that's where the oscillations show up, but the quantity that grows without bound is $\max_x|f-p_n|$ over the whole interval. A fit that's excellent in the middle and unbounded near the ends has still diverged, and it's the maximum that any error bound has to control.
+$|\omega|$ does peak near the ends, and that's where the oscillations show up. What grows without bound, though, is $\max_x|f-p_n|$ over the whole interval, so a fit that's excellent in the middle and unbounded near the ends has still diverged. The maximum is what any error bound has to control.
 ''',
                 ),
             ],
@@ -420,7 +421,7 @@ Everything that depends on where the nodes went sits in $\omega(x) = \prod_k (x 
                     'twopow',
                     r'$2^{-n}$, attained by putting the roots at the Chebyshev nodes.',
                     r'''
-That minimum is the whole reason for putting the nodes there. The scaled Chebyshev polynomial $2^{-n}T_{n+1}$ is monic and swings between $+2^{-n}$ and $-2^{-n}$ at $n+2$ points of the interval, and that equioscillation is what forces it to be the best: a monic competitor with a strictly smaller maximum would have to differ from it by a polynomial of degree at most $n+1$ that changes sign $n+1$ times, which is one root more than such a polynomial has.
+The scaled Chebyshev polynomial $2^{-n}T_{n+1}$ is monic, and on $[-1,1]$ it swings between $+2^{-n}$ and $-2^{-n}$ at $n+2$ points. That equioscillation forces it to be optimal: a monic competitor with a strictly smaller maximum would have to differ from it by a polynomial of degree at most $n+1$ that changes sign $n+1$ times, which is one root more than a polynomial of that degree has. So $2^{-n}$ is the floor, and putting the nodes at the roots of $T_{n+1}$ is how you sit on it.
 
 Then compare the two families. $2^{-n}$ halves with every degree, and the table shows what the equally spaced maximum does beside it.
 ''',
@@ -429,14 +430,14 @@ Then compare the two families. $2^{-n}$ halves with every degree, and the table 
                     'equi',
                     r'$2^{-n}$, attained by putting the roots at equally spaced points.',
                     r'''
-You have the right number and the wrong nodes, and the ratio column in the table is the measure of how wrong: equally spaced roots give a larger $\max|\omega|$, and the gap widens with $n$. Which node family makes $|\omega|$ oscillate with equal peaks instead of bulging near the ends?
+You have the right number and the wrong nodes. The ratio column in the table says how wrong: equally spaced roots give a larger $\max|\omega|$, and the gap widens with $n$. Which node family makes $|\omega|$ oscillate with equal peaks instead of bulging near the ends?
 ''',
                 ),
                 option(
                     'zero',
                     r'It can be made as small as you like, by choosing the roots well enough.',
                     r'''
-Monic is what stops that. The leading coefficient is pinned at $1$, so $\omega$ can't be scaled down, and moving the roots only redistributes where it's large. Something has to give: push $|\omega|$ down in the middle and it comes up at the ends. There's a genuine floor, and one node family sits exactly on it.
+Being monic stops it. The leading coefficient is pinned at $1$, so $\omega$ can't be scaled down, and moving the roots only redistributes where it's large: push $|\omega|$ down in the middle and it comes up at the ends. There's a genuine floor, and one node family sits exactly on it.
 ''',
                 ),
                 option(
@@ -461,7 +462,7 @@ The Lagrange basis functions satisfy $L_i(x_j) = 1$ when $i = j$ and $0$ otherwi
                     r'''
 Interpolate the constant function $g(x) = 1$. Its Lagrange form is $\sum_i g(x_i)L_i(x)$, which is $\sum_i L_i(x)$, and the constant $1$ is itself a polynomial of degree less than $n$ through those same points. Uniqueness leaves room for only one such polynomial, so the sum is $1$ everywhere and not only at the nodes.
 
-Two things to take from it. It's the cheapest test there is on an implementation of $L_i$, since the values have to sum to $1$ at any $x$ you try. And it says the $L_i$ are a partition of unity, so a Lagrange interpolant is a weighted average of the data whose weights always sum to $1$, though (unlike an average) the weights are free to be negative away from the nodes.
+It's also the cheapest test there is on an implementation of $L_i$, since the values have to sum to $1$ at any $x$ you try. And it says the $L_i$ are a partition of unity, so a Lagrange interpolant is a weighted average of the data whose weights always sum to $1$, though (unlike an average) the weights are free to be negative away from the nodes.
 ''',
                 ),
                 option(
@@ -475,7 +476,7 @@ That's the value at the nodes and you've read it off correctly there: at $x_j$, 
                     'depends',
                     r"It depends on the nodes, so there's nothing general to say.",
                     r'''
-Each $L_i$ depends on the nodes, so this is the cautious answer, and the sum doesn't. Interpolate the constant function $1$ and ask what its coefficients in this basis are, then add them up.
+Each $L_i$ depends on the nodes, so this is the cautious answer. The sum doesn't. Interpolate the constant function $1$ and ask what its coefficients in this basis are, then add them up.
 ''',
                 ),
                 option(
@@ -560,8 +561,8 @@ def main():
         nb['cells'][index].setdefault('metadata', {})['lab'] = plan
 
     NOTEBOOK.write_text(json.dumps(nb, indent=1, ensure_ascii=False) + '\n')
-    gated = [p['cell_id'] for p in CELLS.values()]
-    print(f'seeded {NOTEBOOK} with {len(gated)} puzzles: {", ".join(gated)}')
+    seeded = [p['cell_id'] for p in CELLS.values()]
+    print(f'seeded {NOTEBOOK} with {len(seeded)} gates: {", ".join(seeded)}')
 
 
 if __name__ == '__main__':

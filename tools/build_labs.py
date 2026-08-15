@@ -22,12 +22,12 @@ A gate is one of two kinds, and its cell metadata says which in `mode`:
 
 So this script does four things:
 
-1. Reads `metadata.lab` from the notebook and from each gated cell, and checks
-   every block's line range against its py_match substring. An edit that shifts
-   line numbers fails here rather than mispointing the reveal.
-2. Runs the notebook, then runs each puzzle's setup code in the same kernel and
+1. Reads `metadata.lab` from the notebook and from each cell carrying a gate. For
+   a puzzle it checks every block's line range against its py_match substring, so
+   an edit that shifts line numbers fails here rather than mispointing the reveal.
+2. Runs the notebook, then runs each gate's setup code in the same kernel and
    captures what it prints and draws. The run doubles as a check that the thing
-   the puzzles unlock still works.
+   the gates unlock still works.
 3. Hands the spec to tools/validate.mjs, which pushes every distractor and every
    wrong answer through the grader.
 4. Writes the spec JSON and any setup figures.
@@ -408,7 +408,7 @@ def build_spec(nb_path, nb, captured, carried):
         puzzles.append(gate)
 
     if not puzzles:
-        raise BuildError('no cell carries a gated `lab` key')
+        raise BuildError('no cell carries a `lab` key in a gate mode')
 
     rel = nb_path.relative_to(NOTEBOOK_DIR).as_posix()
     return {
@@ -488,7 +488,7 @@ def build_one(nb_path, nb, run):
     SPEC_DIR.mkdir(parents=True, exist_ok=True)
     spec_path = SPEC_DIR / f'{lab_id}.json'
     spec_path.write_text(json.dumps(spec, ensure_ascii=False, indent=1) + '\n')
-    print(f'  {len(spec["puzzles"])} puzzles, wrote {spec_path.relative_to(ROOT)}')
+    print(f'  {len(spec["puzzles"])} gates, wrote {spec_path.relative_to(ROOT)}')
 
     for line in run_validator(spec_path).split('\n'):
         if line.strip():

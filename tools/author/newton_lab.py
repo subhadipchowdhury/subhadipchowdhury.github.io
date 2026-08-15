@@ -13,7 +13,8 @@ match before running, or your edit is lost.
 
 Line numbers below are 1-based into each cell's own source. build_labs.py checks
 every one against its py_match substring and fails the build when an edit has
-shifted them.
+shifted them. The concept check has none of that: it has no Python behind it, and
+the cell it hangs off decides where it sits on the page and nothing more.
 """
 
 import json
@@ -256,16 +257,16 @@ You can answer this without computing a single difference.
             'shuffle': False,
             'options': [
                 option('zero', r"It's $0$.", r'''
-$0$ is what the *fourth* difference of a cubic gives, and every higher one. An order $k$ difference annihilates every polynomial of degree less than $k$; at degree exactly $k$ something survives. What survives at $k = 3$ for a cubic?
+The *fourth* difference of a cubic is $0$, and so is every higher one. An order $k$ difference annihilates every polynomial of degree less than $k$; at degree exactly $k$ something survives. What survives at $k = 3$ for a cubic?
 '''),
                 option('one', r"It's $1$, whatever the nodes are.", r'''
-The order $k$ divided difference of a degree $k$ polynomial is its leading coefficient. Two ways to see it here.
+The order $k$ divided difference of a degree $k$ polynomial is its leading coefficient. Let's see that two ways.
 
 With calculus: $f[x_0,\dots,x_k] = f^{(k)}(\xi)/k!$ for some $\xi$ between the outermost nodes, and $f^{(3)}(x) = 6$ is constant, so the difference is $6/3! = 1$ wherever $\xi$ happened to land.
 
 Without: $f[x_0,x_1,x_2,x_3]$ is the coefficient of the highest Newton term, so it's the coefficient of $x^3$ in the interpolating cubic. The cubic through four points of $x^3$ is $x^3$ itself, by uniqueness, so that coefficient is $1$.
 
-The general fact is worth keeping: order $k$ differences kill everything of degree below $k$ and return the leading coefficient at degree exactly $k$. That's also why the last column of a table built from polynomial data goes quiet.
+In general, order $k$ differences kill everything of degree below $k$ and return the leading coefficient at degree exactly $k$, which is also why the last column of a table built from polynomial data goes quiet.
 '''),
                 option('six', r"It's $6$, whatever the nodes are.", r'''
 You've found $f^{(3)}$ and stopped one step early. The relation between a divided difference and a derivative carries a factorial,
@@ -275,7 +276,7 @@ $$f[x_0,\dots,x_k] = \frac{f^{(k)}(\xi)}{k!},$$
 so what a difference of order $k$ returns is the $k$th Taylor coefficient rather than the $k$th derivative. Divide by $3!$.
 '''),
                 option('depends', r'It depends on the nodes.', r'''
-The intermediate differences do depend on the nodes, so this is a reasonable guess, and the top one doesn't. Compute it on the four nodes of this lab and then on four others: $f[x_0,x_1,x_2,x_3]$ is the coefficient of $x^3$ in the cubic interpolating $x^3$ at those four points, and that cubic is $x^3$ whichever four points you pick.
+The intermediate differences do depend on the nodes, so this is a reasonable guess. The top one doesn't. Compute it on the four nodes of this lab and then on four others: $f[x_0,x_1,x_2,x_3]$ is the coefficient of $x^3$ in the cubic interpolating $x^3$ at those four points, and that cubic is $x^3$ whichever four points you pick.
 '''),
             ],
         },
@@ -299,14 +300,14 @@ What does change is everything in between, because $c_k = f[x_0,\dots,x_k]$ depe
                     'diff_poly',
                     r'The polynomial itself changes, since its coefficients do.',
                     r'''
-The coefficients do change, and that's the trap. They're coordinates in a basis that depends on the node order itself, since $N_j(x) = (x-x_0)\cdots(x-x_{j-1})$ is built from the first $j$ nodes in the list. Different coordinates in a different basis can perfectly well describe the same vector, and uniqueness says that here they have to.
+The coefficients do change, and that still doesn't move the polynomial. They're coordinates in a basis that depends on the node order itself, since $N_j(x) = (x-x_0)\cdots(x-x_{j-1})$ is built from the first $j$ nodes in the list. Different coordinates in a different basis can perfectly well describe the same vector, and uniqueness says that here they have to.
 ''',
                 ),
                 option(
                     'nothing',
                     r'Nothing changes at all, because a divided difference is symmetric in its arguments.',
                     r'''
-The symmetry is real, and it's exactly why the *last* coefficient survives a reordering: $f[x_0,\dots,x_{n-1}]$ takes all $n$ nodes, so permuting them changes nothing. But $c_1 = f[x_0,x_1]$ takes two, and which two depends on the order. Symmetry in the arguments isn't symmetry in which arguments the function is handed.
+That symmetry does save the *last* coefficient: $f[x_0,\dots,x_{n-1}]$ takes all $n$ nodes as arguments, so permuting them changes nothing. But $c_1 = f[x_0,x_1]$ takes two, and which two depends on the order. Symmetry in the arguments isn't symmetry in which arguments the function is handed.
 ''',
                 ),
                 option(
@@ -518,8 +519,8 @@ def main():
         nb['cells'][index].setdefault('metadata', {})['lab'] = plan
 
     NOTEBOOK.write_text(json.dumps(nb, indent=1, ensure_ascii=False) + '\n')
-    gated = [p['cell_id'] for p in CELLS.values()]
-    print(f'seeded {NOTEBOOK} with {len(gated)} puzzles: {", ".join(gated)}')
+    seeded = [p['cell_id'] for p in CELLS.values()]
+    print(f'seeded {NOTEBOOK} with {len(seeded)} gates: {", ".join(seeded)}')
 
 
 if __name__ == '__main__':

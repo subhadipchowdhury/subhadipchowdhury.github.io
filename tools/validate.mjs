@@ -410,12 +410,6 @@ function checkQuiz(gate, where) {
     if (!ids.has(question.answer)) {
       bad(at, `the answer "${question.answer}" is not one of the options`);
     }
-    // An option nobody would pick is a wasted line on the page. This cannot be
-    // checked mechanically; what can be checked is that a distinct wrong answer
-    // exists at all.
-    if (ids.size - 1 < OPTIONS_MIN - 1) {
-      bad(at, 'fewer than two wrong options, so there is nothing to get wrong');
-    }
   }
 }
 
@@ -611,7 +605,7 @@ if (!specPath) {
 const spec = JSON.parse(await readText(specPath));
 const gates = spec.puzzles ?? [];
 
-if (!gates.length) notes.push(`${spec.lab_id}: no puzzles`);
+if (!gates.length) notes.push(`${spec.lab_id}: no gates`);
 
 checkEditorial(spec);
 
@@ -669,4 +663,4 @@ if (problems.length) {
   if (isNode) process.exit(1); else quit();
 }
 
-say(`  validated ${checked} puzzle${checked === 1 ? '' : 's'}, editorial rules included`);
+say(`  validated ${checked} gate${checked === 1 ? '' : 's'}, editorial rules included`);

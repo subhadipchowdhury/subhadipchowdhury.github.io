@@ -549,12 +549,12 @@
       {
        "id": "zero",
        "text_html": "<p>It's $0$.</p>",
-       "why_html": "<p>$0$ is what the <em>fourth</em> difference of a cubic gives, and every higher one. An order $k$ difference annihilates every polynomial of degree less than $k$; at degree exactly $k$ something survives. What survives at $k = 3$ for a cubic?</p>"
+       "why_html": "<p>The <em>fourth</em> difference of a cubic is $0$, and so is every higher one. An order $k$ difference annihilates every polynomial of degree less than $k$; at degree exactly $k$ something survives. What survives at $k = 3$ for a cubic?</p>"
       },
       {
        "id": "one",
        "text_html": "<p>It's $1$, whatever the nodes are.</p>",
-       "why_html": "<p>The order $k$ divided difference of a degree $k$ polynomial is its leading coefficient. Two ways to see it here.</p>\n<p>With calculus: $f[x_0,\\dots,x_k] = f^{(k)}(\\xi)/k!$ for some $\\xi$ between the outermost nodes, and $f^{(3)}(x) = 6$ is constant, so the difference is $6/3! = 1$ wherever $\\xi$ happened to land.</p>\n<p>Without: $f[x_0,x_1,x_2,x_3]$ is the coefficient of the highest Newton term, so it's the coefficient of $x^3$ in the interpolating cubic. The cubic through four points of $x^3$ is $x^3$ itself, by uniqueness, so that coefficient is $1$.</p>\n<p>The general fact is worth keeping: order $k$ differences kill everything of degree below $k$ and return the leading coefficient at degree exactly $k$. That's also why the last column of a table built from polynomial data goes quiet.</p>"
+       "why_html": "<p>The order $k$ divided difference of a degree $k$ polynomial is its leading coefficient. Let's see that two ways.</p>\n<p>With calculus: $f[x_0,\\dots,x_k] = f^{(k)}(\\xi)/k!$ for some $\\xi$ between the outermost nodes, and $f^{(3)}(x) = 6$ is constant, so the difference is $6/3! = 1$ wherever $\\xi$ happened to land.</p>\n<p>Without: $f[x_0,x_1,x_2,x_3]$ is the coefficient of the highest Newton term, so it's the coefficient of $x^3$ in the interpolating cubic. The cubic through four points of $x^3$ is $x^3$ itself, by uniqueness, so that coefficient is $1$.</p>\n<p>In general, order $k$ differences kill everything of degree below $k$ and return the leading coefficient at degree exactly $k$, which is also why the last column of a table built from polynomial data goes quiet.</p>"
       },
       {
        "id": "six",
@@ -564,7 +564,7 @@
       {
        "id": "depends",
        "text_html": "<p>It depends on the nodes.</p>",
-       "why_html": "<p>The intermediate differences do depend on the nodes, so this is a reasonable guess, and the top one doesn't. Compute it on the four nodes of this lab and then on four others: $f[x_0,x_1,x_2,x_3]$ is the coefficient of $x^3$ in the cubic interpolating $x^3$ at those four points, and that cubic is $x^3$ whichever four points you pick.</p>"
+       "why_html": "<p>The intermediate differences do depend on the nodes, so this is a reasonable guess. The top one doesn't. Compute it on the four nodes of this lab and then on four others: $f[x_0,x_1,x_2,x_3]$ is the coefficient of $x^3$ in the cubic interpolating $x^3$ at those four points, and that cubic is $x^3$ whichever four points you pick.</p>"
       }
      ],
      "shuffle": false
@@ -582,12 +582,12 @@
       {
        "id": "diff_poly",
        "text_html": "<p>The polynomial itself changes, since its coefficients do.</p>",
-       "why_html": "<p>The coefficients do change, and that's the trap. They're coordinates in a basis that depends on the node order itself, since $N_j(x) = (x-x_0)\\cdots(x-x_{j-1})$ is built from the first $j$ nodes in the list. Different coordinates in a different basis can perfectly well describe the same vector, and uniqueness says that here they have to.</p>"
+       "why_html": "<p>The coefficients do change, and that still doesn't move the polynomial. They're coordinates in a basis that depends on the node order itself, since $N_j(x) = (x-x_0)\\cdots(x-x_{j-1})$ is built from the first $j$ nodes in the list. Different coordinates in a different basis can perfectly well describe the same vector, and uniqueness says that here they have to.</p>"
       },
       {
        "id": "nothing",
        "text_html": "<p>Nothing changes at all, because a divided difference is symmetric in its arguments.</p>",
-       "why_html": "<p>The symmetry is real, and it's exactly why the <em>last</em> coefficient survives a reordering: $f[x_0,\\dots,x_{n-1}]$ takes all $n$ nodes, so permuting them changes nothing. But $c_1 = f[x_0,x_1]$ takes two, and which two depends on the order. Symmetry in the arguments isn't symmetry in which arguments the function is handed.</p>"
+       "why_html": "<p>That symmetry does save the <em>last</em> coefficient: $f[x_0,\\dots,x_{n-1}]$ takes all $n$ nodes as arguments, so permuting them changes nothing. But $c_1 = f[x_0,x_1]$ takes two, and which two depends on the order. Symmetry in the arguments isn't symmetry in which arguments the function is handed.</p>"
       },
       {
        "id": "only_c0",
@@ -598,7 +598,7 @@
     }
    ],
    "kind": "quiz",
-   "hash": "fcfa334dd425712a",
+   "hash": "915abda792defd1a",
    "brief_html": "<p>You've built the table. Before we evaluate anything with it, let's ask what it means, because the recurrence is the mechanical half of Newton's form and this is the other half.</p>\n<p>Pick one answer for each of the three. A wrong pick tells you what it got wrong rather than what the answer is, and none of them needs code.</p>"
   },
   {
