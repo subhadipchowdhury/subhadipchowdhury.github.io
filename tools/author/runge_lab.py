@@ -112,7 +112,7 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
         block('def', 'function chebyshev_nodes, given the ends a and b, and the degree n:', [4, 4], 'def chebyshev_nodes'),
         block('alloc', 'let x be a list of n+1 zeros', [16, 16], 'x = np.zeros'),
         block('loop', 'for each k from 0 to n:', [17, 17], 'for k in range'),
-        block('theta', 'let θ be ((2·k + 1) / ⟨?frac⟩) · π', [18, 18], 'theta ='),
+        block('theta', 'let θ be ((2*k + 1) / ⟨?frac⟩) * π', [18, 18], 'theta ='),
         block('proj', 'let u be cos(θ)', [19, 19], 'u = np.cos'),
         block('node', 'let x[k] be ⟨?map⟩', [20, 20], 'x[k] ='),
         block('ret', 'return x', [21, 21], 'return x'),
@@ -129,8 +129,8 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
     ],
 
     'blanks': {
-        'frac': {'kind': 'expr', 'answer': '2·(n+1)', 'env': ['n', 'k'], 'width': 10},
-        'map': {'kind': 'expr', 'answer': '(a+b)/2 + ((b−a)/2)·u', 'env': ['a', 'b', 'u'], 'width': 24},
+        'frac': {'kind': 'expr', 'answer': '2*(n+1)', 'env': ['n', 'k'], 'width': 10},
+        'map': {'kind': 'expr', 'answer': '(a+b)/2 + ((b-a)/2)*u', 'env': ['a', 'b', 'u'], 'width': 24},
     },
 
     # Two decoys, which is where this started and where Dip wants it: seven
@@ -139,20 +139,20 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
     # than a harder puzzle. Where the pressure goes instead is `wrong_blanks`,
     # which cost nothing on the board.
     'distractors': [
-        decoy('d_second', 'let θ be (k / n) · π', 'theta', 'angle_second_kind'),
+        decoy('d_second', 'let θ be (k / n) * π', 'theta', 'angle_second_kind'),
         decoy('d_short', 'let x be a list of n zeros', 'alloc', 'count_off_by_one'),
     ],
 
     'wrong_blanks': {
         'frac': [
             {'text': 'n+1', 'why': 'frac_past_pi'},
-            {'text': '2·n', 'why': 'frac_arc_count'},
-            {'text': '2·n + 1', 'why': 'frac_odd_denominator'},
+            {'text': '2*n', 'why': 'frac_arc_count'},
+            {'text': '2*n + 1', 'why': 'frac_odd_denominator'},
         ],
         'map': [
-            {'text': '(b−a)·u', 'why': 'map_no_centre'},
-            {'text': '((b−a)/2)·u', 'why': 'map_centred_on_zero'},
-            {'text': '(a+b)/2 + (b−a)·u', 'why': 'map_full_width'},
+            {'text': '(b-a)*u', 'why': 'map_no_centre'},
+            {'text': '((b-a)/2)*u', 'why': 'map_centred_on_zero'},
+            {'text': '(a+b)/2 + (b-a)*u', 'why': 'map_full_width'},
         ],
     },
 
@@ -236,12 +236,12 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         block('def', 'function lagrange_eval, given nodes xn, values yn and point t:', [4, 4], 'def lagrange_eval'),
         block('m', 'let m be the number of entries in xn', [17, 17], 'm = len(nodes)'),
         block('p0', 'let p be 0', [18, 18], 'result = np.zeros_like'),
-        block('loopi', 'for each term i from 0 to m−1:', [19, 19], 'for i in range(m)'),
+        block('loopi', 'for each term i from 0 to m-1:', [19, 19], 'for i in range(m)'),
         block('L1', 'let L be 1', [20, 20], 'Li = np.ones_like'),
-        block('loopj', 'for each node j from 0 to m−1:', [21, 21], 'for j in range(m)'),
+        block('loopj', 'for each node j from 0 to m-1:', [21, 21], 'for j in range(m)'),
         block('guard', 'if ⟨?guard⟩ then:', [22, 22], 'if j != i'),
-        block('prod', 'let L be L · ⟨?factor⟩', [23, 23], 'Li = Li *'),
-        block('add', 'let p be p + yn[i] · L', [24, 24], 'result = result +'),
+        block('prod', 'let L be L * ⟨?factor⟩', [23, 23], 'Li = Li *'),
+        block('add', 'let p be p + yn[i] * L', [24, 24], 'result = result +'),
         block('ret', 'return p', [25, 25], 'return result'),
     ],
 
@@ -259,10 +259,10 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
     ],
 
     'blanks': {
-        'guard': {'kind': 'cond', 'answer': 'j ≠ i', 'env': ['i', 'j'], 'width': 8},
+        'guard': {'kind': 'cond', 'answer': 'j != i', 'env': ['i', 'j'], 'width': 8},
         'factor': {
             'kind': 'expr',
-            'answer': '(t − xn[j]) / (xn[i] − xn[j])',
+            'answer': '(t - xn[j]) / (xn[i] - xn[j])',
             'env': ['t', 'xn', 'i', 'j'],
             'width': 32,
         },
@@ -273,7 +273,7 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
     # back out; see the note in HANDOFF.md, and note that one of them is what
     # found the degenerate probe set the fourth probe below now covers.
     'distractors': [
-        decoy('d_last', 'let p be yn[i] · L', 'add', 'sum_overwritten'),
+        decoy('d_last', 'let p be yn[i] * L', 'add', 'sum_overwritten'),
         decoy('d_zero', 'let L be 0', 'L1', 'product_starts_at_zero'),
         decoy('d_plus', 'let L be L + ⟨?factor⟩', 'prod', 'terms_added'),
     ],
@@ -284,15 +284,15 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
             {'text': 'j < i', 'why': 'guard_partial'},
         ],
         'factor': [
-            {'text': '(t − xn[j]) / (xn[j] − xn[i])', 'why': 'factor_sign'},
-            {'text': '(t − xn[i]) / (xn[j] − xn[i])', 'why': 'factor_roles_swapped'},
-            {'text': '(t − xn[j])', 'why': 'factor_no_denominator'},
+            {'text': '(t - xn[j]) / (xn[j] - xn[i])', 'why': 'factor_sign'},
+            {'text': '(t - xn[i]) / (xn[j] - xn[i])', 'why': 'factor_roles_swapped'},
+            {'text': '(t - xn[j])', 'why': 'factor_no_denominator'},
             # The one blank in either lab that has to be bracketed, since it is a
             # quotient of two differences. Dropping either pair of brackets gives a
             # subtraction with a quotient inside it, and both slips used to fall
             # through to the message that discloses a reference value.
-            {'text': 't − xn[j] / (xn[i] − xn[j])', 'why': 'factor_precedence'},
-            {'text': '(t − xn[j]) / xn[i] − xn[j]', 'why': 'factor_precedence'},
+            {'text': 't - xn[j] / (xn[i] - xn[j])', 'why': 'factor_precedence'},
+            {'text': '(t - xn[j]) / xn[i] - xn[j]', 'why': 'factor_precedence'},
         ],
     },
 
@@ -321,7 +321,7 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         },
         {
             'blocks': ['loopi', 'loopj'],
-            'text': "The pseudocode says from 0 to m−1 and includes both ends, while Python's range(m) stops before m, so both run over all m nodes.",
+            'text': "The pseudocode says from 0 to m-1 and includes both ends, while Python's range(m) stops before m, so both run over all m nodes.",
         },
     ],
 
@@ -333,7 +333,7 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         'guard_partial': 'Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.',
         'factor_sign': 'Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.',
         'factor_roles_swapped': 'You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.',
-        'factor_precedence': 'In this notation / binds tighter than −, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.',
+        'factor_precedence': 'In this notation / binds tighter than -, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.',
         'factor_no_denominator': 'Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node.',
     },
 }
@@ -380,9 +380,9 @@ NOTEBOOK_LAB = {
         'sentence you can read out loud. `let` stores a value, and `for`, '
         '`if`, `else`, `while` and `return` do what they do in code. '
         'Subscripts start at 0, and `from a to b` includes both $a$ and $b$. '
-        "There's no key for · or ≠, so type `*` and `!=` in a blank, along "
-        "with `-` for − and `pi` for π. The key above the puzzles has the "
-        'rest.'
+        '`*` multiplies, `!=` means "is not equal to" and `<=` means "is at '
+        'most". Every symbol here is one you can type, so a blank takes '
+        'exactly what you read. The key above the puzzles has the rest.'
     ),
 }
 

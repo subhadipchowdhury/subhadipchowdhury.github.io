@@ -147,7 +147,7 @@ function start(state) {
         }),
       }));
       view.render();
-      status.textContent = `${verdict.stage} · ${verdict.why ?? ''} · attempt ${view.attempts}`;
+      status.textContent = `${verdict.stage} * ${verdict.why ?? ''} * attempt ${view.attempts}`;
     },
     onChange: () => { status.textContent = ''; },
   });

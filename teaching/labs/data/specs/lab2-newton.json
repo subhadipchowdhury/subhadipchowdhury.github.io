@@ -3,7 +3,7 @@
  "order": 2,
  "title": "Newton form and divided differences",
  "blurb": "Build the divided-difference table, then the nested evaluation that uses it.",
- "intro_html": "<p>Through $n$ points with distinct $x$ values there is exactly one polynomial of degree less than $n$. Finding it is one thing; computing with it is another. These three puzzles build the machinery: the coefficients first, then a readable display of the table they come out of, then a cheap way to evaluate the polynomial at a point.</p>\n<p>We'll work throughout with the same four points,</p>\n<p>$$x = 0,\\; 1,\\; 3,\\; 6 \\qquad y = 1,\\; 4,\\; 2,\\; 8,$$</p>\n<p>so the polynomial we're after is a cubic. Any output you see on this page came from running these algorithms on those four points.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The notebook opens once all three are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. There's no key for · or ≠, so type <code>*</code> and <code>!=</code> in a blank, along with <code>-</code> for − and <code>pi</code> for π. The key above the puzzles has the rest.</p>",
+ "intro_html": "<p>Through $n$ points with distinct $x$ values there is exactly one polynomial of degree less than $n$. Finding it is one thing; computing with it is another. These three puzzles build the machinery: the coefficients first, then a readable display of the table they come out of, then a cheap way to evaluate the polynomial at a point.</p>\n<p>We'll work throughout with the same four points,</p>\n<p>$$x = 0,\\; 1,\\; 3,\\; 6 \\qquad y = 1,\\; 4,\\; 2,\\; 8,$$</p>\n<p>so the polynomial we're after is a cubic. Any output you see on this page came from running these algorithms on those four points.</p>\n<p>Each puzzle hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The notebook opens once all three are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. <code>*</code> multiplies, <code>!=</code> means \"is not equal to\" and <code>&lt;=</code> means \"is at most\". Every symbol here is one you can type, so a blank takes exactly what you read. The key above the puzzles has the rest.</p>",
  "series": [
   "lab1-runge",
   "lab2-newton",
@@ -77,7 +77,7 @@
      "id": "loopj",
      "lines": [
       {
-       "text": "for each order j from 1 to n−1:",
+       "text": "for each order j from 1 to n-1:",
        "indent": 0
       }
      ],
@@ -105,7 +105,7 @@
      "id": "rec",
      "lines": [
       {
-       "text": "let T[i][j] be (T[i+1][j−1] − T[i][j−1]) / ⟨?den⟩",
+       "text": "let T[i][j] be (T[i+1][j-1] - T[i][j-1]) / ⟨?den⟩",
        "indent": 0
       }
      ],
@@ -185,7 +185,7 @@
    "blanks": {
     "bound": {
      "kind": "range_end",
-     "answer": "n−j−1",
+     "answer": "n-j-1",
      "env": [
       "n",
       "i",
@@ -195,7 +195,7 @@
     },
     "den": {
      "kind": "expr",
-     "answer": "x[i+j] − x[i]",
+     "answer": "x[i+j] - x[i]",
      "env": [
       "x",
       "i",
@@ -209,7 +209,7 @@
      "id": "d_num",
      "lines": [
       {
-       "text": "let T[i][j] be (T[i][j−1] − T[i+1][j−1]) / ⟨?den⟩",
+       "text": "let T[i][j] be (T[i][j-1] - T[i+1][j-1]) / ⟨?den⟩",
        "indent": 0
       }
      ],
@@ -220,11 +220,11 @@
      "id": "d_swap",
      "lines": [
       {
-       "text": "for each row i from 0 to n−1:",
+       "text": "for each row i from 0 to n-1:",
        "indent": 0
       },
       {
-       "text": "for each order j from 1 to n−i−1:",
+       "text": "for each order j from 1 to n-i-1:",
        "indent": 1
       }
      ],
@@ -246,21 +246,21 @@
    "wrong_blanks": {
     "den": [
      {
-      "text": "x[j] − x[i]",
+      "text": "x[j] - x[i]",
       "why": "den_j_not_ij"
      },
      {
-      "text": "x[i+1] − x[i]",
+      "text": "x[i+1] - x[i]",
       "why": "den_neighbour"
      }
     ],
     "bound": [
      {
-      "text": "n−1",
+      "text": "n-1",
       "why": "bound_full"
      },
      {
-      "text": "n−j",
+      "text": "n-j",
       "why": "bound_off_by_one"
      }
     ]
@@ -306,7 +306,7 @@
       "loopj",
       "loopi"
      ],
-     "text": "The pseudocode says from 1 to n−1 and includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n−1, so the two describe the same loop."
+     "text": "The pseudocode says from 1 to n-1 and includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n-1, so the two describe the same loop."
     },
     {
      "blocks": [
@@ -317,12 +317,12 @@
    ],
    "feedback": {
     "num_reversed": "The magnitudes in your table are right, but the signs alternate from one column to the next. Look again at the order of subtraction in your numerator: a divided difference subtracts the earlier value from the later one.",
-    "loops_swapped": "Your loops visit the (i, j) pairs in a different order. Computing T[i][j] reads two entries out of column j−1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?",
+    "loops_swapped": "Your loops visit the (i, j) pairs in a different order. Computing T[i][j] reads two entries out of column j-1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?",
     "col_not_row": "You returned n values, but they aren't the coefficients. The coefficients are the top entry of each column, and the top entries lie along row 0.",
     "den_j_not_ij": "T[i][j] is the divided difference over the nodes x_i through x_{i+j}. Your denominator uses a different pair. Which two of those nodes are the outer ones?",
     "den_neighbour": "You divided by the gap between two adjacent nodes. That works in column 1, where a difference does span a single interval, but a difference of order j spans j of them.",
-    "bound_full": "Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j−1 exist, and that fails one row earlier each time j grows.",
-    "bound_off_by_one": "Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i][j] reads T[i][j−1] and T[i+1][j−1], so find the largest i for which both of those were filled in."
+    "bound_full": "Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j-1 exist, and that fails one row earlier each time j grows.",
+    "bound_off_by_one": "Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i][j] reads T[i][j-1] and T[i+1][j-1], so find the largest i for which both of those were filled in."
    },
    "reveal": [
     {
@@ -504,7 +504,7 @@
      "num": 9
     }
    ],
-   "hash": "3c7b0e5ac92a5995",
+   "hash": "bd93689f17c1077e",
    "python": "# ---------------------------------------------------------------------------\n# The divided-difference table\n# ---------------------------------------------------------------------------\n# Newton's form writes the interpolating polynomial as\n#\n#   p(x) = c0 + c1 (x-x0) + c2 (x-x0)(x-x1) + ... + cn (x-x0)...(x-x_{n-1})\n#\n# and the coefficients c_k come out of the triangular table built here.\n\ndef divided_differences(x, y):\n    \"\"\"Build the divided-difference table for data (x[i], y[i]).\n\n    Parameters\n    ----------\n    x : array (n,)  distinct nodes\n    y : array (n,)  values, y[i] = f(x[i])\n\n    Returns\n    -------\n    coeffs : array (n,)   Newton coefficients c_0 .. c_{n-1}\n    table  : array (n,n)  the triangular table; unwritten entries stay zero\n    \"\"\"\n    x = np.asarray(x, dtype=float)\n    y = np.asarray(y, dtype=float)\n    n = len(x)\n    table = np.zeros((n, n))\n    table[:, 0] = y\n    for j in range(1, n):\n        for i in range(n - j):\n            table[i, j] = (table[i + 1, j - 1] - table[i, j - 1]) / (x[i + j] - x[i])\n    coeffs = table[0, :].copy()\n    return coeffs, table",
    "brief_html": "<p>Newton's form builds the interpolating polynomial one node at a time. Start with $p_0(x) = c_0$ and set $c_0 = y_0$. At each later step, add a term that vanishes at every node already matched:</p>\n<p>$$p_k(x) = p_{k-1}(x) + c_k(x-x_0)(x-x_1)\\cdots(x-x_{k-1}).$$</p>\n<p>Since the new term is zero at $x_0,\\dots,x_{k-1}$, the earlier data stay interpolated, and the single condition $p_k(x_k) = y_k$ pins down $c_k$. Solve for the $c_k$ and they turn out to be <strong>divided differences</strong>, given by the recurrence</p>\n<p>$$f[x_i] = y_i, \\qquad f[x_i,\\dots,x_{i+j}] = \\frac{f[x_{i+1},\\dots,x_{i+j}] - f[x_i,\\dots,x_{i+j-1}]}{x_{i+j}-x_i},$$</p>\n<p>so a difference of order $j$ comes from two differences of order $j-1$. Let's collect them in a table $T$ with</p>\n<p>$$T[i][j] = f[x_i,\\dots,x_{i+j}],$$</p>\n<p>so column $j$ holds every difference of order $j$, and column $0$ is the data itself. A difference of order $j$ needs $j+1$ consecutive nodes to exist, so column $j$ runs $j$ entries shorter than column $0$, and the part of the table that gets filled in is a triangle. The coefficients $c_0,\\dots,c_{n-1}$ sit along its top row.</p>\n<p>Turn that recurrence into an algorithm that works for any $n$: fill $T$ one column at a time, then read the coefficients off the top row. Two expressions are left blank.</p>\n<p>Let's settle the notation first. A range includes both of its ends, so <code>for each k from 0 to 3</code> runs $k = 0, 1, 2, 3$. The bound you write is the last index the loop visits, not the number of passes it makes.</p>\n<p>Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row. Write the index of the last row that column $j$ fills. Then write the two nodes that belong in the denominator.</p>"
   },
@@ -552,7 +552,7 @@
      "id": "loopi",
      "lines": [
       {
-       "text": "for each row i from 0 to n−1:",
+       "text": "for each row i from 0 to n-1:",
        "indent": 0
       }
      ],
@@ -616,7 +616,7 @@
    "blanks": {
     "rowlen": {
      "kind": "range_end",
-     "answer": "n−i−1",
+     "answer": "n-i-1",
      "env": [
       "n",
       "i",
@@ -629,15 +629,15 @@
    "wrong_blanks": {
     "rowlen": [
      {
-      "text": "n−1",
+      "text": "n-1",
       "why": "rowlen_square"
      },
      {
-      "text": "n−j−1",
+      "text": "n-j-1",
       "why": "rowlen_uses_j"
      },
      {
-      "text": "n−i",
+      "text": "n-i",
       "why": "rowlen_off_by_one"
      }
     ]
@@ -708,7 +708,7 @@
    "feedback": {
     "rowlen_square": "You printed the whole square array, including entries the algorithm never assigned. Those zeros came from np.zeros and say nothing about the data.",
     "rowlen_uses_j": "The loop is about to assign j, so j can't appear in its own upper bound. Which index tells you how far down the table this row sits?",
-    "rowlen_off_by_one": "Every row has one entry too many. The last difference in row i is the one that reaches node x_{n−1}. A range includes both of its ends, so what goes here is that entry's index, not the number of entries in the row."
+    "rowlen_off_by_one": "Every row has one entry too many. The last difference in row i is the one that reaches node x_{n-1}. A range includes both of its ends, so what goes here is that entry's index, not the number of entries in the row."
    },
    "reveal": [
     {
@@ -802,7 +802,7 @@
      "role": "glue"
     }
    ],
-   "hash": "208e2f8800e5aa63",
+   "hash": "d09be0a74ca17c82",
    "python": "# ---------------------------------------------------------------------------\n# A readable printout of the triangular table\n# ---------------------------------------------------------------------------\ndef print_dd_table(x, table):\n    \"\"\"Pretty-print the divided-difference table as a triangle.\n\n    Row i, column j holds f[x_i, ..., x_{i+j}].\n    \"\"\"\n    n = len(x)\n    print(\"  x_i   |  f[.] (order increases left -> right)\")\n    print(\"-\" * 60)\n    for i in range(n):\n        row = f\"{x[i]:6.3f} |\"\n        for j in range(n - i):\n            row += f\" {table[i, j]:10.4f}\"\n        print(row)",
    "brief_html": "<p>Let's print it as the triangle it really is, one row per node:</p>\n<pre><code>  x_i   |  f[.] (order increases left -&gt; right)\n 0.000  |    1.0000    3.0000   -1.3333    0.3222\n 1.000  |    4.0000   -1.0000    0.6000\n 3.000  |    2.0000    2.0000\n 6.000  |    8.0000\n</code></pre>\n<p>Row $i$ starts at node $x_i$ and lists the divided differences that begin there: $f[x_i]$, then $f[x_i,x_{i+1}]$, then $f[x_i,x_{i+1},x_{i+2}]$, and so on. The row stops when the next difference would need a node past $x_{n-1}$.</p>\n<p>The lines are already in order here, so only the inner bound is missing. Write the index of the last entry in row $i$.</p>\n<p>One warning. The previous puzzle bounded the <em>columns</em>, which get shorter as the order $j$ grows; this one bounds the <em>rows</em>, which get shorter as the starting index $i$ moves down. Writing the earlier bound out of habit is the usual mistake.</p>"
   },
@@ -863,7 +863,7 @@
      "id": "loop",
      "lines": [
       {
-       "text": "for each k from n−2 down to 0:",
+       "text": "for each k from n-2 down to 0:",
        "indent": 0
       }
      ],
@@ -877,7 +877,7 @@
      "id": "upd",
      "lines": [
       {
-       "text": "let p be p · (t − xn[k]) + c[k]",
+       "text": "let p be p * (t - xn[k]) + c[k]",
        "indent": 0
       }
      ],
@@ -931,7 +931,7 @@
    "blanks": {
     "init": {
      "kind": "index",
-     "answer": "n−1",
+     "answer": "n-1",
      "env": [
       "n"
      ],
@@ -943,7 +943,7 @@
      "id": "d_fwd",
      "lines": [
       {
-       "text": "for each k from 1 to n−1:",
+       "text": "for each k from 1 to n-1:",
        "indent": 0
       }
      ],
@@ -954,7 +954,7 @@
      "id": "d_node",
      "lines": [
       {
-       "text": "let p be p · (t − c[k]) + c[k]",
+       "text": "let p be p * (t - c[k]) + c[k]",
        "indent": 0
       }
      ],
@@ -1049,14 +1049,14 @@
       "init",
       "upd"
      ],
-     "text": "The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of \"let p be c[n−1]\", and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time."
+     "text": "The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of \"let p be c[n-1]\", and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time."
     }
    ],
    "feedback": {
-    "sweep_forward": "You're sweeping from k = 1 upward. The nesting is evaluated from the innermost bracket outward, and the innermost bracket holds c[n−1], so k has to run the other way.",
-    "shift_by_coeff": "You subtracted a coefficient from t. Every factor in Newton's form looks like (t − x_k), measuring how far t sits from a node, so what gets subtracted has to be a node.",
-    "init_first": "c[0] is the outermost coefficient and gets added last. The loop runs downward from k = n−2, so p has to start at whatever sits in the innermost bracket.",
-    "init_past_end": "There's no coefficient at that index. There are n of them and the subscripts start at 0, so the last one is c[n−1]."
+    "sweep_forward": "You're sweeping from k = 1 upward. The nesting is evaluated from the innermost bracket outward, and the innermost bracket holds c[n-1], so k has to run the other way.",
+    "shift_by_coeff": "You subtracted a coefficient from t. Every factor in Newton's form looks like (t - x_k), measuring how far t sits from a node, so what gets subtracted has to be a node.",
+    "init_first": "c[0] is the outermost coefficient and gets added last. The loop runs downward from k = n-2, so p has to start at whatever sits in the innermost bracket.",
+    "init_past_end": "There's no coefficient at that index. There are n of them and the subscripts start at 0, so the last one is c[n-1]."
    },
    "reveal": [
     {
@@ -1182,7 +1182,7 @@
      "num": 6
     }
    ],
-   "hash": "3f756554f64a2411",
+   "hash": "c5463c7245faba54",
    "python": "# ---------------------------------------------------------------------------\n# Nested evaluation\n# ---------------------------------------------------------------------------\ndef newton_eval(x_nodes, coeffs, xq):\n    \"\"\"Evaluate the Newton-form polynomial at the query points xq.\n\n    Parameters\n    ----------\n    x_nodes : array (n,)  interpolation nodes, in the order used to build coeffs\n    coeffs  : array (n,)  Newton coefficients from divided_differences\n    xq      : array       query points\n\n    Returns\n    -------\n    array   the interpolant evaluated at xq\n    \"\"\"\n    xq = np.asarray(xq, dtype=float)\n    n = len(coeffs)\n    result = np.full_like(xq, coeffs[n - 1])\n    for k in range(n - 2, -1, -1):\n        result = result * (xq - x_nodes[k]) + coeffs[k]\n    return result",
    "brief_html": "<p>Written out term by term,</p>\n<p>$$p(t) = c_0 + c_1(t-x_0) + c_2(t-x_0)(t-x_1) + \\cdots + c_{n-1}(t-x_0)\\cdots(t-x_{n-2}),$$</p>\n<p>the $k$th term costs $k$ multiplications, so the whole sum costs $\\mathcal{O}(n^2)$ at every point we ask about. That is wasteful, since each term rebuilds a product the term before it had already computed. What if we factor the shared pieces out? The sum nests:</p>\n<p>$$p(t) = c_0 + (t-x_0)\\Bigl(c_1 + (t-x_1)\\bigl(c_2 + \\cdots + (t-x_{n-2})\\,c_{n-1}\\bigr)\\Bigr),$$</p>\n<p>and now each step is one multiplication and one addition, so the cost drops to $\\mathcal{O}(n)$. This is Horner's rule, applied to the Newton basis instead of to the powers of $x$.</p>\n<p>Read the nested form from the inside out: start with the value in the innermost bracket, then repeatedly multiply by $(t - x_k)$ and add $c_k$, working outward until you reach $c_0$.</p>\n<p>Write that sweep as a loop. Two things decide it: which coefficient you start from, and which way $k$ runs.</p>"
   }

@@ -35,9 +35,9 @@ export function stepText(lines, index, blanks = {}) {
     const filled = String(blanks[name.trim()] ?? '').trim();
     if (filled === '') return '___';
     // A blank parses as a sub-expression, so its contents are bracketed however
-    // the student wrote them. Quoting "/ x[j] − x[i]" would read as something
+    // the student wrote them. Quoting "/ x[j] - x[i]" would read as something
     // else entirely, so anything with an operator in it keeps its brackets.
-    return /[+\-−*·/^]/.test(filled) && !/^\(.*\)$/.test(filled) ? `(${filled})` : filled;
+    return /[-+*/^]/.test(filled) && !/^\(.*\)$/.test(filled) ? `(${filled})` : filled;
   });
 }
 

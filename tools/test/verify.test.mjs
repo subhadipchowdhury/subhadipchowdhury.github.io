@@ -62,12 +62,12 @@ describe('accepting', () => {
     // T ← zeros(n, n) now runs before n exists, so this particular swap fails.
     // The one that must pass is moving `coef` and `ret` relative to nothing,
     // and rewriting the bound as an equivalent expression.
-    const v = check(withBlank(CORRECT, 'bound', 'n − j − 1'));
+    const v = check(withBlank(CORRECT, 'bound', 'n - j - 1'));
     assert(v.ok, `whitespace in a blank must not matter: ${v.message}`);
   });
 
   it('an algebraically rearranged blank passes', () => {
-    const v = check(withBlank(CORRECT, 'den', '−(x[i] − x[i+j])'));
+    const v = check(withBlank(CORRECT, 'den', '-(x[i] - x[i+j])'));
     assert(v.ok, `a correct but rearranged denominator must pass: ${v.message}`);
   });
 
@@ -142,37 +142,37 @@ describe('authored feedback for placed decoys', () => {
 });
 
 describe('authored feedback for wrong blanks', () => {
-  it('den = x[i+1] − x[i]', () => {
-    const v = check(withBlank(CORRECT, 'den', 'x[i+1] − x[i]'));
+  it('den = x[i+1] - x[i]', () => {
+    const v = check(withBlank(CORRECT, 'den', 'x[i+1] - x[i]'));
     eq(v.why, 'den_neighbour');
     has(v.message, 'adjacent nodes');
   });
 
-  it('den = x[j] − x[i], which divides by zero, still gets its written message', () => {
-    const v = check(withBlank(CORRECT, 'den', 'x[j] − x[i]'));
+  it('den = x[j] - x[i], which divides by zero, still gets its written message', () => {
+    const v = check(withBlank(CORRECT, 'den', 'x[j] - x[i]'));
     eq(v.why, 'den_j_not_ij');
     has(v.detail, 'divides by zero', 'the crash becomes the supporting detail');
   });
 
   it('a differently spelled version of the same mistake matches', () => {
-    const v = check(withBlank(CORRECT, 'den', '−(x[i] − x[i+1])'));
+    const v = check(withBlank(CORRECT, 'den', '-(x[i] - x[i+1])'));
     eq(v.why, 'den_neighbour', 'the same wrong expression rearranged must match');
   });
 
-  it('bound = n−1 runs off the table and gets its written message', () => {
-    const v = check(withBlank(CORRECT, 'bound', 'n−1'));
+  it('bound = n-1 runs off the table and gets its written message', () => {
+    const v = check(withBlank(CORRECT, 'bound', 'n-1'));
     eq(v.why, 'bound_full');
     has(v.message, 'every row of the table');
   });
 
-  it('bound = n−j', () => {
-    const v = check(withBlank(CORRECT, 'bound', 'n−j'));
+  it('bound = n-j', () => {
+    const v = check(withBlank(CORRECT, 'bound', 'n-j'));
     eq(v.why, 'bound_off_by_one');
   });
 
   it('a wrong blank nobody anticipated falls through to the classifier', () => {
     // Two rows short in every column: not an authored case.
-    const v = check(withBlank(CORRECT, 'bound', 'n−j−2'));
+    const v = check(withBlank(CORRECT, 'bound', 'n-j-2'));
     assert(v.why !== 'bound_full' && v.why !== 'bound_off_by_one',
       `should not match an authored wrong answer, got ${v.why}`);
     assert(v.message.length > 20, 'and should still say something useful');
@@ -208,7 +208,7 @@ describe('the structural classifier', () => {
   it('the generic fallback discloses exactly one entry', () => {
     const bare = { ...gate, feedback: {} };
     const ref = buildReference(bare);
-    const v = verify(bare, withBlank(CORRECT, 'bound', 'n−j−2'), ref);
+    const v = verify(bare, withBlank(CORRECT, 'bound', 'n-j-2'), ref);
     const numbers = v.message.match(/-?\d+\.?\d*/g) || [];
     assert(numbers.length <= 4, `at most one disclosed value plus its subscripts: "${v.message}"`);
   });
@@ -228,7 +228,7 @@ describe('runtime failures', () => {
   it('the probe input is named in a runtime message', () => {
     const bare = { ...gate, feedback: {}, wrong_blanks: {} };
     const ref = buildReference(bare);
-    const v = verify(bare, withBlank(CORRECT, 'bound', 'n−1'), ref);
+    const v = verify(bare, withBlank(CORRECT, 'bound', 'n-1'), ref);
     eq(v.stage, 'run');
     has(v.message, 'x = [0, 1, 3, 6]');
   });
@@ -252,12 +252,12 @@ describe('blank equivalence sampling', () => {
   const probe = gate.probes[0];
 
   it('recognises rearrangements', () => {
-    assert(expressionsAgree('x[i+j] − x[i]', '−(x[i] − x[i+j])', spec, probe));
+    assert(expressionsAgree('x[i+j] - x[i]', '-(x[i] - x[i+j])', spec, probe));
   });
 
   it('separates the real answer from the wrong ones', () => {
-    assert(!expressionsAgree('x[i+j] − x[i]', 'x[i+1] − x[i]', spec, probe));
-    assert(!expressionsAgree('x[i+j] − x[i]', 'x[j] − x[i]', spec, probe));
+    assert(!expressionsAgree('x[i+j] - x[i]', 'x[i+1] - x[i]', spec, probe));
+    assert(!expressionsAgree('x[i+j] - x[i]', 'x[j] - x[i]', spec, probe));
   });
 });
 

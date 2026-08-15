@@ -133,8 +133,14 @@ for (const entry of index) {
       .flatMap((g) => [...g.blocks, ...(g.distractors || [])])
       .flatMap((b) => b.lines.map((l) => l.text))
       .join('\n');
-    assert(!blockText.includes('\u2190'),
-      'a block still using the arrow would be described by the wrong key');
+    // Every operator a student reads is one they could type. validate.mjs fails
+    // the build over this too; here it is checked on the rendered page, which is
+    // where a glyph would actually be seen.
+    for (const glyph of ['\u00b7', '\u2212', '\u2260', '\u2264', '\u2265', '\u2190']) {
+      assert(!blockText.includes(glyph), `a block still shows "${glyph}"`);
+      assert(!textOf(root.querySelector('.lab-intro')).includes(glyph),
+        `the intro still shows "${glyph}"`);
+    }
   });
 
   await it('opens the first puzzle and shuts the rest', async () => {
@@ -407,10 +413,10 @@ await it('quotes the blanks the student typed, not the model answer', async () =
   const { root, lab } = await freshLab();
   const view = lab.views.get('divdiff');
   view.placements = gateOf('divdiff').solution.map((s) => ({ ...s }));
-  view.blanks = { bound: 'n−j−1', den: '−(x[i] − x[i+j])' };
+  view.blanks = { bound: 'n-j-1', den: '-(x[i] - x[i+j])' };
   view.submit();
   expand(root, 'divdiff');
-  has(textOf(root.querySelector('.lab-solved')), '−(x[i] − x[i+j])');
+  has(textOf(root.querySelector('.lab-solved')), '-(x[i] - x[i+j])');
 });
 
 group = 'a pre-placed puzzle';
@@ -427,11 +433,11 @@ await it('is answered by the blank alone, and rejects the bound from above', asy
   const { root, lab } = await freshLab();
   solve(lab, 'divdiff');
   const view = lab.views.get('ddprint');
-  view.blanks = { rowlen: 'n−j−1' };
+  view.blanks = { rowlen: 'n-j-1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'open');
   has(textOf(root.querySelector('.lp-feedback')), 'in its own upper bound');
-  view.blanks = { rowlen: 'n−i−1' };
+  view.blanks = { rowlen: 'n-i-1' };
   view.submit();
   eq(lab.status.get('ddprint'), 'solved');
 });
@@ -442,7 +448,7 @@ await it('a decoy gets the message written for it', async () => {
   const view = lab.views.get('divdiff');
   view.placements = gateOf('divdiff').solution
     .map((s) => (s.id === 'rec' ? { id: 'd_num', indent: 3 } : { ...s }));
-  view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
+  view.blanks = { bound: 'n-j-1', den: 'x[i+j] - x[i]' };
   view.submit();
   eq(lab.status.get('divdiff'), 'open');
   has(textOf(root.querySelector('.lp-feedback')), 'signs alternate');
@@ -454,7 +460,7 @@ await it('shows the student their own table and never the reference', async () =
   const view = lab.views.get('divdiff');
   view.placements = gateOf('divdiff').solution
     .map((s) => (s.id === 'rec' ? { id: 'd_num', indent: 3 } : { ...s }));
-  view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
+  view.blanks = { bound: 'n-j-1', den: 'x[i+j] - x[i]' };
   view.submit();
   const text = root.querySelector('.lp-feedback__trace').textContent;
   has(text, '-3', 'their own sign-flipped column');
@@ -506,7 +512,7 @@ await it('describes the attempt without describing the answer', async () => {
   const gate = gateOf('divdiff');
   const view = lab.views.get('divdiff');
   view.placements = gate.solution.map((s) => (s.id === 'rec' ? { id: 'd_num', indent: 3 } : { ...s }));
-  view.blanks = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
+  view.blanks = { bound: 'n-j-1', den: 'x[i+j] - x[i]' };
   view.submit();
 
   const { attemptSnapshot } = await import('../../teaching/labs/engine/lab/feedback.js');
@@ -516,7 +522,7 @@ await it('describes the attempt without describing the answer', async () => {
   has(text, 'Newton form and divided differences');
   has(text, 'function divided_differences, given nodes x and values y:');
   has(text, '            let T[i][j] be', 'indentation preserved');
-  has(text, '⟨?den⟩ = x[i+j] − x[i]');
+  has(text, '⟨?den⟩ = x[i+j] - x[i]');
   has(text, 'Attempts: 5');
 });
 

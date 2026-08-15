@@ -14,11 +14,11 @@ export const DIVDIFF_GATE = {
     { id: 'def', lines: [{ text: 'function divided_differences(x, y):', indent: 0 }], py: [10, 10], py_match: 'def divided_differences' },
     { id: 'n', lines: [{ text: 'n ← length(x)', indent: 0 }], py: [25, 25], py_match: 'n = len' },
     { id: 'tab', lines: [{ text: 'T ← zeros(n, n)', indent: 0 }], py: [26, 26], py_match: 'np.zeros' },
-    { id: 'col0', lines: [{ text: 'T[0..n−1, 0] ← y', indent: 0 }], py: [27, 27], py_match: 'table[:, 0]' },
-    { id: 'loopj', lines: [{ text: 'for j ← 1 to n−1:', indent: 0 }], py: [28, 28], py_match: 'for j in range(1, n)' },
+    { id: 'col0', lines: [{ text: 'T[0..n-1, 0] ← y', indent: 0 }], py: [27, 27], py_match: 'table[:, 0]' },
+    { id: 'loopj', lines: [{ text: 'for j ← 1 to n-1:', indent: 0 }], py: [28, 28], py_match: 'for j in range(1, n)' },
     { id: 'loopi', lines: [{ text: 'for i ← 0 to ⟨?bound⟩:', indent: 0 }], py: [29, 29], py_match: 'for i in range(n - j)' },
-    { id: 'rec', lines: [{ text: 'T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩', indent: 0 }], py: [30, 30], py_match: 'table[i, j]' },
-    { id: 'coef', lines: [{ text: 'c ← T[0, 0..n−1]', indent: 0 }], py: [31, 31], py_match: 'coeffs = table[0' },
+    { id: 'rec', lines: [{ text: 'T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / ⟨?den⟩', indent: 0 }], py: [30, 30], py_match: 'table[i, j]' },
+    { id: 'coef', lines: [{ text: 'c ← T[0, 0..n-1]', indent: 0 }], py: [31, 31], py_match: 'coeffs = table[0' },
     { id: 'ret', lines: [{ text: 'return c, T', indent: 0 }], py: [32, 32], py_match: 'return coeffs' },
   ],
 
@@ -35,29 +35,29 @@ export const DIVDIFF_GATE = {
   ],
 
   blanks: {
-    bound: { kind: 'range_end', answer: 'n−j−1', env: ['n', 'j'], width: 8 },
-    den: { kind: 'expr', answer: 'x[i+j] − x[i]', env: ['x', 'i', 'j'], width: 14 },
+    bound: { kind: 'range_end', answer: 'n-j-1', env: ['n', 'j'], width: 8 },
+    den: { kind: 'expr', answer: 'x[i+j] - x[i]', env: ['x', 'i', 'j'], width: 14 },
   },
 
   distractors: [
     {
       id: 'd_num',
-      lines: [{ text: 'T[i, j] ← (T[i, j−1] − T[i+1, j−1]) / ⟨?den⟩', indent: 0 }],
+      lines: [{ text: 'T[i, j] ← (T[i, j-1] - T[i+1, j-1]) / ⟨?den⟩', indent: 0 }],
       near: 'rec',
       why: 'num_reversed',
     },
     {
       id: 'd_swap',
       lines: [
-        { text: 'for i ← 0 to n−1:', indent: 0 },
-        { text: 'for j ← 1 to n−i−1:', indent: 1 },
+        { text: 'for i ← 0 to n-1:', indent: 0 },
+        { text: 'for j ← 1 to n-i-1:', indent: 1 },
       ],
       near: 'loopj',
       why: 'loops_swapped',
     },
     {
       id: 'd_colc',
-      lines: [{ text: 'c ← T[0..n−1, 0]', indent: 0 }],
+      lines: [{ text: 'c ← T[0..n-1, 0]', indent: 0 }],
       near: 'coef',
       why: 'col_not_row',
     },
@@ -65,12 +65,12 @@ export const DIVDIFF_GATE = {
 
   wrong_blanks: {
     den: [
-      { text: 'x[j] − x[i]', why: 'den_j_not_ij' },
-      { text: 'x[i+1] − x[i]', why: 'den_neighbour' },
+      { text: 'x[j] - x[i]', why: 'den_j_not_ij' },
+      { text: 'x[i+1] - x[i]', why: 'den_neighbour' },
     ],
     bound: [
-      { text: 'n−1', why: 'bound_full' },
-      { text: 'n−j', why: 'bound_off_by_one' },
+      { text: 'n-1', why: 'bound_full' },
+      { text: 'n-j', why: 'bound_off_by_one' },
     ],
   },
 
@@ -108,7 +108,7 @@ export const REF_COEFFS = REF_TABLE[0].slice();
 // A solved submission, for tests that need a valid baseline to perturb.
 export const CORRECT = {
   placements: DIVDIFF_GATE.solution.map((s) => ({ ...s })),
-  blanks: { bound: 'n−j−1', den: 'x[i+j] − x[i]' },
+  blanks: { bound: 'n-j-1', den: 'x[i+j] - x[i]' },
 };
 
 // Swap one block for another, keeping the indent. Returns a fresh submission.

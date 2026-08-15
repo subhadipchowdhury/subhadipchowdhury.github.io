@@ -47,42 +47,55 @@ export class RuntimeError extends LabError {
 // Notation constants
 // ---------------------------------------------------------------------------
 
-export const GETS = '←'; // ←
-export const MINUS = '−'; // −
-export const TIMES = '·'; // ·
-export const LE = '≤'; // ≤
-export const GE = '≥'; // ≥
-export const NE = '≠'; // ≠
+// The operators are the ones on a keyboard. A student reads exactly what they
+// would type, which is Dip's call on 2026-08-14 and the end of a problem the
+// notation had from the start: it used to print `·`, `−`, `≠` and `≤` and accept
+// `*`, `-`, `!=` and `<=`, so every glyph was one thing to read and another to
+// type. `notation.js` says in words what `!=` and `<=` mean, since that is the
+// one thing the ASCII spelling does not say for itself.
+//
+// Names are still allowed to be mathematical: `π` and `θ` are values, not
+// operators, and `θ` is what the Chebyshev construction calls that angle.
+export const GETS = '←'; // ←, the older notation's assignment; nothing displays it
+export const MINUS = '-';
+export const TIMES = '*';
+export const LE = '<=';
+export const GE = '>=';
+export const NE = '!=';
 export const PI = 'π'; // π
 export const BLANK_OPEN = '⟨'; // ⟨
 export const BLANK_CLOSE = '⟩'; // ⟩
 
-// Students type ASCII into blanks; the board and the block text use the real
-// glyphs. Both are accepted everywhere, normalised here once.
+// Everything folds towards the keyboard.
 //
-// There are four spellings of ≠ because there is no ≠ key and a student reaches
-// for whichever one they have seen: != from C and Python, /= from Ada and Haskell,
-// <> from Pascal, BASIC, SQL and Excel, ~= from MATLAB. Guessing the house
-// spelling is not what any of these puzzles is testing. Order matters: =/= has to
-// fold before /= does, or the tail folds first and leaves "=≠", whose error
-// message points at a glyph the student never typed.
-const ASCII_FOLD = [
+// The glyphs are still read, because material written before the change used them
+// and because a student who pastes `≠` in from somewhere should not be punished for
+// it. There are five spellings of `!=` for the same reason: a student reaches for
+// whichever one they have seen, `!=` from C and Python, `/=` from Ada and Haskell,
+// `<>` from Pascal, BASIC, SQL and Excel, `~=` from MATLAB. Guessing the house
+// spelling is not what any of these puzzles is testing.
+//
+// Order matters twice. `<->` and `<-` fold before `<=` so the arrow survives, and
+// `=/=` folds before `/=` or the tail goes first and leaves `=!=`.
+const FOLD = [
   [/<->/g, GETS],
   [/<-/g, GETS],
-  [/<=/g, LE],
-  [/>=/g, GE],
+  [/≤/g, LE],
+  [/≥/g, GE],
   [/=\/=/g, NE],
-  [/!=/g, NE],
   [/\/=/g, NE],
   [/<>/g, NE],
   [/~=/g, NE],
-  [/\*/g, TIMES],
+  [/≠/g, NE],
+  [/·/g, TIMES],
+  [/−/g, MINUS],
   [/\bpi\b/g, PI],
 ];
 
+/** Normalise a line to the keyboard spellings the tokenizer works in. */
 export function foldAscii(text) {
   let out = text;
-  for (const [re, to] of ASCII_FOLD) out = out.replace(re, to);
+  for (const [re, to] of FOLD) out = out.replace(re, to);
   return out;
 }
 
@@ -95,10 +108,12 @@ const KEYWORDS = new Set([
   'and', 'or', 'not', 'print',
 ]);
 
+// Longest first inside each family, since the tokenizer takes the first match:
+// '..' before '.', and '<=' '>=' '!=' before '<' '>' '='.
 const PUNCT = [
   '..', // range, must precede '.'
-  GETS, LE, GE, NE, TIMES, MINUS,
-  '(', ')', '[', ']', ',', ':', '+', '-', '/', '^', '=', '<', '>',
+  GETS, LE, GE, NE,
+  '(', ')', '[', ']', ',', ':', '+', '-', '*', '/', '^', '=', '<', '>',
 ];
 
 function isDigit(c) { return c >= '0' && c <= '9'; }
@@ -159,9 +174,7 @@ function tokenizeLine(text, where) {
 
     const p = PUNCT.find((op) => src.startsWith(op, i));
     if (p) {
-      // ASCII hyphen is the minus sign; the tokenizer folds it so the parser
-      // only ever sees one subtraction operator.
-      push(p === '-' ? MINUS : p, p === '-' ? MINUS : p, i);
+      push(p, p, i);
       i += p.length;
       continue;
     }

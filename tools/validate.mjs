@@ -352,10 +352,32 @@ const OPENERS = ['function', 'let', 'for', 'if', 'else', 'while', 'return', 'pri
 // header to fit under it, for nothing.
 const LINE_LIMIT = 88;
 
+// Operators a student cannot type. The interpreter still reads all of them, so
+// nothing breaks if one appears; what breaks is the promise that a blank takes
+// exactly what the block shows. π is not here on purpose: it is a value, like θ,
+// and no blank in any lab needs it typed.
+const GLYPHS = [
+  ['·', '*'], ['−', '-'], ['≠', '!='], ['≤', '<='], ['≥', '>='], ['←', 'let … be …'],
+];
+
 function checkBlockLines(gate, where) {
   const lines = [...gate.blocks, ...(gate.distractors || [])]
     .flatMap((b) => b.lines.map((l) => ({ id: b.id, text: String(l.text) })));
   const opener = (text) => text.trim().split(/\s+/)[0];
+
+  // Also over the blank answers and the wrong answers, since those are compared
+  // against what a student types.
+  const typed = [
+    ...Object.entries(gate.blanks || {}).map(([n, s]) => ({ id: `blank ${n}`, text: String(s.answer) })),
+    ...Object.entries(gate.wrong_blanks || {}).flatMap(([n, xs]) => xs.map((a) => ({ id: `wrong answer for ${n}`, text: String(a.text) }))),
+  ];
+  for (const line of [...lines, ...typed]) {
+    for (const [glyph, ascii] of GLYPHS) {
+      if (line.text.includes(glyph)) {
+        bad(where, `${line.id} uses "${glyph}", which is not on a keyboard; write "${ascii}"`);
+      }
+    }
+  }
 
   for (const line of lines) {
     // A blank shows as an input roughly its declared width, not as its marker.

@@ -12,6 +12,7 @@ import {
   parseProgram, run, evalExpression, linesFromSource, valuesEqual,
   ParseError, RuntimeError,
 } from '../../teaching/labs/engine/lab/interp.js';
+import * as interp from '../../teaching/labs/engine/lab/interp.js';
 
 // ---------------------------------------------------------------------------
 // Harness
@@ -101,12 +102,12 @@ function exec(source, { blanks = {}, env = {}, call = null, trace = [] } = {}) {
 
 describe('expressions', () => {
   it('arithmetic and precedence', () => {
-    eq(evalExpression('2 + 3 · 4'), 14);
-    eq(evalExpression('(2 + 3) · 4'), 20);
+    eq(evalExpression('2 + 3 * 4'), 14);
+    eq(evalExpression('(2 + 3) * 4'), 20);
     eq(evalExpression('2 ^ 3 ^ 2'), 512, 'power is right-associative');
-    eq(evalExpression('−3 ^ 2'), -9, 'unary minus binds looser than power');
+    eq(evalExpression('-3 ^ 2'), -9, 'unary minus binds looser than power');
     eq(evalExpression('7 / 2'), 3.5);
-    eq(evalExpression('1 − 2 − 3'), -4, 'subtraction is left-associative');
+    eq(evalExpression('1 - 2 - 3'), -4, 'subtraction is left-associative');
   });
 
   it('accepts ASCII for the typed glyphs', () => {
@@ -116,16 +117,35 @@ describe('expressions', () => {
     eq(evalExpression('pi > 3'), true);
   });
 
-  it('takes every spelling of ≠, since there is no key for it', () => {
-    // != is C and Python, /= is Ada and Haskell, <> is Pascal and SQL, ~= is
-    // MATLAB. lab1-runge's guard blank is the one that needs this.
-    for (const ne of ['≠', '!=', '/=', '<>', '~=', '=/=']) {
-      eq(evalExpression(`1 ${ne} 2`), true, `${ne} should mean ≠`);
-      eq(evalExpression(`2 ${ne} 2`), false, `${ne} should mean ≠`);
+  it('takes every spelling of !=, since there is no key for the glyph', () => {
+    // != is C and Python, /= is Ada and Haskell, <> is Pascal, BASIC, SQL and
+    // Excel, ~= is MATLAB. lab1-runge's guard blank is the one that needs this.
+    for (const ne of ['!=', '/=', '<>', '~=', '=/=', '\u2260']) {
+      eq(evalExpression(`1 ${ne} 2`), true, `${ne} should mean !=`);
+      eq(evalExpression(`2 ${ne} 2`), false, `${ne} should mean !=`);
     }
   });
 
-  it('and the ≠ spellings do not swallow the other comparisons', () => {
+  it('reads the glyphs it no longer prints', () => {
+    // The blocks are ASCII since 2026-08-14, but a student pasting a glyph in
+    // from older material, or from the notebook, should not be punished for it.
+    eq(evalExpression('2 \u00b7 3'), 6, 'the multiplication dot');
+    eq(evalExpression('5 \u2212 2'), 3, 'the typographic minus');
+    eq(evalExpression('1 \u2264 1'), true);
+    eq(evalExpression('2 \u2265 2'), true);
+    eq(evalExpression('1 \u2260 2'), true);
+  });
+
+  it('folds towards the keyboard, so one shape reaches the parser', () => {
+    const { foldAscii } = interp;
+    eq(foldAscii('2 \u00b7 3 \u2212 1'), '2 * 3 - 1');
+    eq(foldAscii('i \u2260 j'), 'i != j');
+    eq(foldAscii('i <> j'), 'i != j');
+    eq(foldAscii('i \u2264 j'), 'i <= j');
+    eq(foldAscii('x <- 1'), 'x \u2190 1', 'the older assignment arrow survives the <= rule');
+  });
+
+  it('and the != spellings do not swallow the other comparisons', () => {
     eq(evalExpression('1 <= 2'), true);
     eq(evalExpression('2 >= 2'), true);
     eq(evalExpression('1 < 2'), true);
@@ -136,14 +156,14 @@ describe('expressions', () => {
 
   it('comparisons and logic', () => {
     eq(evalExpression('3 = 3'), true);
-    eq(evalExpression('3 ≠ 3'), false);
+    eq(evalExpression('3 != 3'), false);
     eq(evalExpression('3 <= 3'), true);
     eq(evalExpression('1 < 2 and 2 < 3'), true);
     eq(evalExpression('not (1 < 2)'), false);
   });
 
   it('library functions', () => {
-    eq(evalExpression('abs(−3)'), 3);
+    eq(evalExpression('abs(-3)'), 3);
     eq(evalExpression('max(2, 9)'), 9);
     eq(evalExpression('min([4, 1, 7])'), 1);
     eq(evalExpression('sum([1, 2, 3])'), 6);
@@ -177,7 +197,7 @@ describe('indexing', () => {
   });
 
   it('rejects negative and out-of-range subscripts', () => {
-    throws(() => evalExpression('x[−1]', env), 'never go negative',
+    throws(() => evalExpression('x[-1]', env), 'never go negative',
       'negative index must raise, since Python would silently wrap');
     throws(() => evalExpression('x[4]', env), 'outside x');
     throws(() => evalExpression('T[0, 5]', env), 'outside T');
@@ -233,7 +253,7 @@ function two():
 
 function use():
     a, b ← two()
-    return a · 10 + b
+    return a * 10 + b
 `, { call: 'use()' });
     eq(r.value, 12);
   });
@@ -255,12 +275,12 @@ function sign(x):
     if x > 0:
         return 1
     else if x < 0:
-        return −1
+        return -1
     else:
         return 0
 `;
     eq(exec(src, { call: 'sign(5)' }).value, 1);
-    eq(exec(src, { call: 'sign(−5)' }).value, -1);
+    eq(exec(src, { call: 'sign(-5)' }).value, -1);
     eq(exec(src, { call: 'sign(0)' }).value, 0);
   });
 
@@ -269,7 +289,7 @@ function sign(x):
 function f():
     n ← 1
     while n < 100:
-        n ← n · 2
+        n ← n * 2
     return n
 `, { call: 'f()' });
     eq(r.value, 128);
@@ -279,7 +299,7 @@ function f():
     const r = exec(`
 function f(T):
     for i ← 0 to 1:
-        for j ← 0 to 1 − i:
+        for j ← 0 to 1 - i:
             print T[i, j]
 `, { env: { T: [[1, 2], [3, 4]] }, call: 'f(T)' });
     eq(r.prints.map((p) => p.values[0]), [1, 2, 3]);
@@ -380,22 +400,22 @@ const DIVDIFF = `
 function divided_differences(x, y):
     n ← length(x)
     T ← zeros(n, n)
-    T[0..n−1, 0] ← y
-    for j ← 1 to n−1:
+    T[0..n-1, 0] ← y
+    for j ← 1 to n-1:
         for i ← 0 to ⟨?bound⟩:
-            T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩
-    c ← T[0, 0..n−1]
+            T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / ⟨?den⟩
+    c ← T[0, 0..n-1]
     return c, T
 `;
 
-const DIVDIFF_BLANKS = { bound: 'n−j−1', den: 'x[i+j] − x[i]' };
+const DIVDIFF_BLANKS = { bound: 'n-j-1', den: 'x[i+j] - x[i]' };
 
 const NEWTON_EVAL = `
 function newton_eval(xn, c, t):
     n ← length(c)
     p ← c[⟨?init⟩]
-    for k ← n−2 down to 0:
-        p ← p · (t − xn[k]) + c[k]
+    for k ← n-2 down to 0:
+        p ← p * (t - xn[k]) + c[k]
     return p
 `;
 
@@ -445,8 +465,8 @@ describe('divided_differences distractors are probe-distinguishable', () => {
 
   it('d_num: reversed numerator', () => {
     const got = variant(DIVDIFF.replace(
-      'T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩',
-      'T[i, j] ← (T[i, j−1] − T[i+1, j−1]) / ⟨?den⟩',
+      'T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / ⟨?den⟩',
+      'T[i, j] ← (T[i, j-1] - T[i+1, j-1]) / ⟨?den⟩',
     ));
     ne(got[0], REF_COEFFS);
     // The design's feedback string claims sign alternation by column; check it,
@@ -455,13 +475,13 @@ describe('divided_differences distractors are probe-distinguishable', () => {
     for (let j = 1; j < 4; j++) {
       for (let i = 0; i < 4 - j; i++) {
         eq(table[i][j], Math.pow(-1, j) * REF_TABLE[i][j],
-          `column ${j} should be (−1)^${j} times the reference`);
+          `column ${j} should be (-1)^${j} times the reference`);
       }
     }
   });
 
   it('d_colc: coefficients read off the first column', () => {
-    const got = variant(DIVDIFF.replace('c ← T[0, 0..n−1]', 'c ← T[0..n−1, 0]'));
+    const got = variant(DIVDIFF.replace('c ← T[0, 0..n-1]', 'c ← T[0..n-1, 0]'));
     ne(got[0], REF_COEFFS);
     eq(got[0], [1, 4, 2, 8], 'reading the column gives the y-values back');
   });
@@ -470,34 +490,34 @@ describe('divided_differences distractors are probe-distinguishable', () => {
     // The fused distractor swaps both headers; with j outer replaced by i, the
     // entries T[i+1, j-1] are read before they are written.
     caught(() => variant(DIVDIFF
-      .replace('for j ← 1 to n−1:', 'for i ← 0 to n−1:')
-      .replace('for i ← 0 to ⟨?bound⟩:', 'for j ← 1 to n−i−1:'))[0], REF_COEFFS);
+      .replace('for j ← 1 to n-1:', 'for i ← 0 to n-1:')
+      .replace('for i ← 0 to ⟨?bound⟩:', 'for j ← 1 to n-i-1:'))[0], REF_COEFFS);
   });
 
-  it('wrong blank den = x[j] − x[i]', () => {
+  it('wrong blank den = x[j] - x[i]', () => {
     // At i = j the spread collapses to zero, so this one is caught by the
     // division rather than by a wrong number. Either way it cannot pass.
-    const err = caught(() => variant(DIVDIFF, { den: 'x[j] − x[i]' })[0], REF_COEFFS);
+    const err = caught(() => variant(DIVDIFF, { den: 'x[j] - x[i]' })[0], REF_COEFFS);
     if (err) eq(err.kind, 'divzero');
   });
 
-  it('wrong blank den = x[i+1] − x[i]', () => {
-    caught(() => variant(DIVDIFF, { den: 'x[i+1] − x[i]' })[0], REF_COEFFS);
+  it('wrong blank den = x[i+1] - x[i]', () => {
+    caught(() => variant(DIVDIFF, { den: 'x[i+1] - x[i]' })[0], REF_COEFFS);
   });
 
-  it('wrong blank bound = n−1 runs off the table', () => {
-    throws(() => variant(DIVDIFF, { bound: 'n−1' }), (e) => e.kind === 'index',
+  it('wrong blank bound = n-1 runs off the table', () => {
+    throws(() => variant(DIVDIFF, { bound: 'n-1' }), (e) => e.kind === 'index',
       'the wrong bound should read past the last row');
   });
 
-  it('wrong blank bound = n−j leaves the last column wrong', () => {
-    caught(() => variant(DIVDIFF, { bound: 'n−j' })[0], REF_COEFFS);
+  it('wrong blank bound = n-j leaves the last column wrong', () => {
+    caught(() => variant(DIVDIFF, { bound: 'n-j' })[0], REF_COEFFS);
   });
 
   it('an algebraically equivalent denominator still passes', () => {
-    eq(variant(DIVDIFF, { den: '−(x[i] − x[i+j])' })[0], REF_COEFFS,
+    eq(variant(DIVDIFF, { den: '-(x[i] - x[i+j])' })[0], REF_COEFFS,
       'semantic checking must accept a rearranged but correct blank');
-    eq(variant(DIVDIFF, { den: '(x[i+j]) − (x[i])' })[0], REF_COEFFS);
+    eq(variant(DIVDIFF, { den: '(x[i+j]) - (x[i])' })[0], REF_COEFFS);
   });
 
   it('a reordering that computes the same thing passes', () => {
@@ -506,11 +526,11 @@ describe('divided_differences distractors are probe-distinguishable', () => {
 function divided_differences(x, y):
     T ← zeros(length(x), length(x))
     n ← length(x)
-    T[0..n−1, 0] ← y
-    for j ← 1 to n−1:
+    T[0..n-1, 0] ← y
+    for j ← 1 to n-1:
         for i ← 0 to ⟨?bound⟩:
-            T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / ⟨?den⟩
-    c ← T[0, 0..n−1]
+            T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / ⟨?den⟩
+    c ← T[0, 0..n-1]
     return c, T
 `;
     eq(variant(reordered)[0], REF_COEFFS);
@@ -521,7 +541,7 @@ describe('newton_eval', () => {
   const withCoeffs = { xn: PROBE.x, c: REF_COEFFS };
 
   const at = (t, blanks = {}, source = NEWTON_EVAL) => exec(source, {
-    blanks: { init: 'n−1', ...blanks }, env: { ...withCoeffs, t }, call: 'newton_eval(xn, c, t)',
+    blanks: { init: 'n-1', ...blanks }, env: { ...withCoeffs, t }, call: 'newton_eval(xn, c, t)',
   }).value;
 
   it('reproduces the data at the nodes', () => {
@@ -542,12 +562,12 @@ describe('newton_eval', () => {
   });
 
   it('d_fwd: a forward sweep is wrong', () => {
-    const fwd = NEWTON_EVAL.replace('for k ← n−2 down to 0:', 'for k ← 1 to n−1:');
+    const fwd = NEWTON_EVAL.replace('for k ← n-2 down to 0:', 'for k ← 1 to n-1:');
     ne(at(0.5, {}, fwd), at(0.5));
   });
 
   it('d_node: shifting by coefficients instead of nodes is wrong', () => {
-    const bad = NEWTON_EVAL.replace('p ← p · (t − xn[k]) + c[k]', 'p ← p · (t − c[k]) + c[k]');
+    const bad = NEWTON_EVAL.replace('p ← p * (t - xn[k]) + c[k]', 'p ← p * (t - c[k]) + c[k]');
     ne(at(0.5, {}, bad), at(0.5));
   });
 
@@ -564,7 +584,7 @@ describe('newton_eval', () => {
     // The forward-sweep distractor is a different cubic, so it crosses the
     // correct one somewhere. A single probe can land on a crossing; this checks
     // that crossings exist and that none of the three chosen probes is near one.
-    const fwd = NEWTON_EVAL.replace('for k ← n−2 down to 0:', 'for k ← 1 to n−1:');
+    const fwd = NEWTON_EVAL.replace('for k ← n-2 down to 0:', 'for k ← 1 to n-1:');
     const diff = (t) => at(t, {}, fwd) - at(t);
 
     let crossings = 0;
@@ -587,7 +607,7 @@ describe('print_dd_table', () => {
   const PRINTER = `
 function print_dd_table(x, T):
     n ← length(x)
-    for i ← 0 to n−1:
+    for i ← 0 to n-1:
         for j ← 0 to ⟨?rowlen⟩:
             print T[i, j]
 `;
@@ -596,29 +616,29 @@ function print_dd_table(x, T):
     blanks, env: { x: PROBE.x, T: REF_TABLE }, call: 'print_dd_table(x, T)',
   }).prints.map((p) => p.subs[0].join(','));
 
-  const reference = visits({ rowlen: 'n−i−1' });
+  const reference = visits({ rowlen: 'n-i-1' });
 
-  it('visits the triangle, row i having n−i entries', () => {
+  it('visits the triangle, row i having n-i entries', () => {
     eq(reference.length, 10, '4 + 3 + 2 + 1');
     eq(reference[0], '0,0');
     eq(reference[reference.length - 1], '3,0');
   });
 
-  it('wrong blank n−1 prints the whole square', () => {
-    const got = visits({ rowlen: 'n−1' });
+  it('wrong blank n-1 prints the whole square', () => {
+    const got = visits({ rowlen: 'n-1' });
     ne(got.length, reference.length);
     eq(got.length, 16);
   });
 
-  it('wrong blank n−j−1 cannot even be evaluated: j is the loop variable', () => {
-    throws(() => visits({ rowlen: 'n−j−1' }), 'has no value at this point');
+  it('wrong blank n-j-1 cannot even be evaluated: j is the loop variable', () => {
+    throws(() => visits({ rowlen: 'n-j-1' }), 'has no value at this point');
   });
 
   it('d_swap: the transposed nest prints a different set of entries', () => {
     const swapped = PRINTER
-      .replace('for i ← 0 to n−1:', 'for j ← 0 to n−1:')
-      .replace('for j ← 0 to ⟨?rowlen⟩:', 'for i ← 0 to n−j−1:');
-    const got = visits({ rowlen: 'n−i−1' }, swapped);
+      .replace('for i ← 0 to n-1:', 'for j ← 0 to n-1:')
+      .replace('for j ← 0 to ⟨?rowlen⟩:', 'for i ← 0 to n-j-1:');
+    const got = visits({ rowlen: 'n-i-1' }, swapped);
     ne(got.join('|'), reference.join('|'));
   });
 });
@@ -632,18 +652,18 @@ describe('chebyshev_nodes', () => {
 function chebyshev_nodes(a, b, n):
     x ← zeros(n+1)
     for k ← 0 to n:
-        θ ← ((2·k + 1) / ⟨?frac⟩) · π
+        θ ← ((2*k + 1) / ⟨?frac⟩) * π
         u ← cos(θ)
         x[k] ← ⟨?map⟩
     return x
 `;
-  const BLANKS = { frac: '2·(n+1)', map: '(a+b)/2 + ((b−a)/2)·u' };
+  const BLANKS = { frac: '2*(n+1)', map: '(a+b)/2 + ((b-a)/2)*u' };
 
   const nodes = (a, b, n, blanks = {}, source = CHEB) => exec(source, {
     blanks: { ...BLANKS, ...blanks }, env: { a, b, n }, call: 'chebyshev_nodes(a, b, n)',
   }).value;
 
-  it('first-kind nodes stay strictly inside [−1, 1]', () => {
+  it('first-kind nodes stay strictly inside [-1, 1]', () => {
     const x = nodes(-1, 1, 3);
     eq(x.length, 4);
     x.forEach((v) => assert(Math.abs(v) < 1, `node ${v} must be interior`));
@@ -668,7 +688,7 @@ function chebyshev_nodes(a, b, n):
   });
 
   it('d_second: the second-kind angle lands a node on each endpoint', () => {
-    const second = CHEB.replace('θ ← ((2·k + 1) / ⟨?frac⟩) · π', 'θ ← (k / n) · π');
+    const second = CHEB.replace('θ ← ((2*k + 1) / ⟨?frac⟩) * π', 'θ ← (k / n) * π');
     const x = nodes(0, 4, 3, {}, second);
     assert(x.some((v) => Math.abs(v - 4) < 1e-12) && x.some((v) => Math.abs(v) < 1e-12),
       'projecting the marks rather than the arc midpoints should hit both a and b');
@@ -685,37 +705,37 @@ function chebyshev_nodes(a, b, n):
       const x = nodes(-1, 1, n, { frac: 'n+1' });
       const repeats = x.filter((v, k) => x.some((w, l) => l > k && Math.abs(v - w) < 1e-9));
       assert(repeats.length > 0,
-        `n = ${n}: the angles for k and n−k are reflections, so their nodes agree`);
+        `n = ${n}: the angles for k and n-k are reflections, so their nodes agree`);
     }
   });
 
   it('frac_arc_count: dividing by 2n overshoots π, and the last two nodes agree', () => {
     for (const n of [2, 3, 5]) {
-      const x = nodes(-1, 1, n, { frac: '2·n' });
-      eq(x[n], x[n - 1], `n = ${n}: cos(π + π/2n) = cos(π − π/2n)`);
+      const x = nodes(-1, 1, n, { frac: '2*n' });
+      eq(x[n], x[n - 1], `n = ${n}: cos(π + π/2n) = cos(π - π/2n)`);
     }
   });
 
   it('map_no_centre: dropping the centre leaves [a, b]', () => {
-    const x = nodes(0, 4, 3, { map: '(b−a)·u' });
+    const x = nodes(0, 4, 3, { map: '(b-a)*u' });
     assert(x.some((v) => v < 0), 'without the centre term the nodes straddle zero instead of [0, 4]');
   });
 
   it('map_centred_on_zero: dropping only the centre keeps the spacing', () => {
-    const x = nodes(0, 4, 3, { map: '((b−a)/2)·u' });
+    const x = nodes(0, 4, 3, { map: '((b-a)/2)*u' });
     const right = nodes(0, 4, 3);
     x.forEach((v, k) => {
       if (k === 0) return;
       eq(v - x[k - 1], right[k] - right[k - 1], `gap ${k} should match the answer's`);
     });
-    // It agrees with the answer on [−1, 1], which is why chebnodes has a second
+    // It agrees with the answer on [-1, 1], which is why chebnodes has a second
     // probe on [0, 4].
-    eq(nodes(-1, 1, 4, { map: '((b−a)/2)·u' }), nodes(-1, 1, 4));
+    eq(nodes(-1, 1, 4, { map: '((b-a)/2)*u' }), nodes(-1, 1, 4));
     ne(x, right, 'on [0, 4] it is off by the centre');
   });
 
   it('map_full_width: the whole length doubles the interval', () => {
-    const x = nodes(0, 4, 4, { map: '(a+b)/2 + (b−a)·u' });
+    const x = nodes(0, 4, 4, { map: '(a+b)/2 + (b-a)*u' });
     assert(Math.min(...x) < 0 && Math.max(...x) > 4, 'the outer nodes should fall outside [0, 4]');
     eq(x[0] + x[x.length - 1], 4, 'the centre is still right, so it is the width that is wrong');
   });
@@ -726,15 +746,15 @@ describe('lagrange_eval', () => {
 function lagrange_eval(xn, yn, t):
     m ← length(xn)
     p ← 0
-    for i ← 0 to m−1:
+    for i ← 0 to m-1:
         L ← 1
-        for j ← 0 to m−1:
+        for j ← 0 to m-1:
             if ⟨?guard⟩:
-                L ← L · ⟨?factor⟩
-        p ← p + yn[i] · L
+                L ← L * ⟨?factor⟩
+        p ← p + yn[i] * L
     return p
 `;
-  const BLANKS = { guard: 'j ≠ i', factor: '(t − xn[j]) / (xn[i] − xn[j])' };
+  const BLANKS = { guard: 'j != i', factor: '(t - xn[j]) / (xn[i] - xn[j])' };
 
   const at = (t, blanks = {}, source = LAGRANGE) => exec(source, {
     blanks: { ...BLANKS, ...blanks }, env: { xn: PROBE.x, yn: PROBE.y, t }, call: 'lagrange_eval(xn, yn, t)',
@@ -747,7 +767,7 @@ function lagrange_eval(xn, yn, t):
   it('agrees with the Newton form everywhere, since the polynomial is unique', () => {
     for (const t of [0.5, 2.0, 5.0, -1.25]) {
       const newton = exec(NEWTON_EVAL, {
-        blanks: { init: 'n−1' }, env: { xn: PROBE.x, c: REF_COEFFS, t }, call: 'newton_eval(xn, c, t)',
+        blanks: { init: 'n-1' }, env: { xn: PROBE.x, c: REF_COEFFS, t }, call: 'newton_eval(xn, c, t)',
       }).value;
       eq(at(t), newton, `Lagrange and Newton must agree at t = ${t}`);
     }
@@ -759,7 +779,7 @@ function lagrange_eval(xn, yn, t):
   });
 
   it('a guard that lets every j through divides by zero too', () => {
-    const err = throws(() => at(0.5, { guard: 'j ≥ 0' }), 'divides by zero');
+    const err = throws(() => at(0.5, { guard: 'j >= 0' }), 'divides by zero');
     eq(err.kind, 'divzero');
   });
 
@@ -769,9 +789,9 @@ function lagrange_eval(xn, yn, t):
 
   it('factor_sign: an even number of factors would hide a flipped denominator', () => {
     // Why lab1-runge probes lageval with four nodes and not five. Each L_i has
-    // m−1 factors, so flipping the sign of every denominator multiplies L_i by
-    // (−1)^(m−1): visible when m is even, invisible when m is odd.
-    const flipped = { factor: '(t − xn[j]) / (xn[j] − xn[i])' };
+    // m-1 factors, so flipping the sign of every denominator multiplies L_i by
+    // (-1)^(m-1): visible when m is even, invisible when m is odd.
+    const flipped = { factor: '(t - xn[j]) / (xn[j] - xn[i])' };
     eq(PROBE.x.length, 4, 'the four-node probe is what makes this catchable');
     eq(at(0.5, flipped), -at(0.5), 'four nodes: three factors, so the sign flips');
 
@@ -783,11 +803,11 @@ function lagrange_eval(xn, yn, t):
   });
 
   it('factor_roles_swapped: exchanging i and j moves the root off x_j', () => {
-    caught(() => at(0.5, { factor: '(t − xn[i]) / (xn[j] − xn[i])' }), at(0.5));
+    caught(() => at(0.5, { factor: '(t - xn[i]) / (xn[j] - xn[i])' }), at(0.5));
   });
 
   it('d_last: overwriting the sum leaves the last term alone', () => {
-    const last = LAGRANGE.replace('p ← p + yn[i] · L', 'p ← yn[i] · L');
+    const last = LAGRANGE.replace('p ← p + yn[i] * L', 'p ← yn[i] * L');
     caught(() => at(0.5, {}, last), at(0.5));
   });
 
@@ -797,7 +817,7 @@ function lagrange_eval(xn, yn, t):
   });
 
   it('d_plus: adding the factors is not multiplying them', () => {
-    const plus = LAGRANGE.replace('L ← L · ⟨?factor⟩', 'L ← L + ⟨?factor⟩');
+    const plus = LAGRANGE.replace('L ← L * ⟨?factor⟩', 'L ← L + ⟨?factor⟩');
     caught(() => at(0.5, {}, plus), at(0.5));
   });
 });
@@ -805,20 +825,20 @@ function lagrange_eval(xn, yn, t):
 describe('spline interior equations', () => {
   const INTERIOR = `
 function spline_interior_equations(x, y):
-    n ← length(x) − 1
+    n ← length(x) - 1
     h ← zeros(n)
-    for i ← 0 to n−1:
-        h[i] ← x[i+1] − x[i]
+    for i ← 0 to n-1:
+        h[i] ← x[i+1] - x[i]
     A ← zeros(n+1, n+1)
     d ← zeros(n+1)
-    for i ← 1 to n−1:
-        A[i, i−1] ← h[i−1]
-        A[i, i] ← 2 · (h[i−1] + h[i])
+    for i ← 1 to n-1:
+        A[i, i-1] ← h[i-1]
+        A[i, i] ← 2 * (h[i-1] + h[i])
         A[i, i+1] ← h[i]
         d[i] ← ⟨?rhs⟩
     return A, d
 `;
-  const BLANKS = { rhs: '6 · ((y[i+1] − y[i]) / h[i] − (y[i] − y[i−1]) / h[i−1])' };
+  const BLANKS = { rhs: '6 * ((y[i+1] - y[i]) / h[i] - (y[i] - y[i-1]) / h[i-1])' };
 
   const build = (blanks = {}, source = INTERIOR) => exec(source, {
     blanks: { ...BLANKS, ...blanks }, env: PROBE, call: 'spline_interior_equations(x, y)', trace: ['A', 'd'],
@@ -837,14 +857,14 @@ function spline_interior_equations(x, y):
     eq(d[2], 6 * ((8 - 2) / 3 - (2 - 4) / 2));
   });
 
-  it('the loop from 0 reads h[−1] and is caught, where Python would wrap silently', () => {
-    const bad = INTERIOR.replace('for i ← 1 to n−1:', 'for i ← 0 to n−1:');
+  it('the loop from 0 reads h[-1] and is caught, where Python would wrap silently', () => {
+    const bad = INTERIOR.replace('for i ← 1 to n-1:', 'for i ← 0 to n-1:');
     const err = throws(() => build({}, bad), 'never go negative');
     eq(err.kind, 'index');
   });
 
   it('dropping the 2 changes the diagonal', () => {
-    const bad = INTERIOR.replace('A[i, i] ← 2 · (h[i−1] + h[i])', 'A[i, i] ← h[i−1] + h[i]');
+    const bad = INTERIOR.replace('A[i, i] ← 2 * (h[i-1] + h[i])', 'A[i, i] ← h[i-1] + h[i]');
     const got = build({}, bad).value[0];
     ne(got[1], [1, 6, 2, 0]);
   });
@@ -882,7 +902,7 @@ describe('English notation', () => {
   it('let stores a value, into a name or an entry', () => {
     const r = exec([
       'function f, given nothing n:',
-      '    let p be 2 · n',
+      '    let p be 2 * n',
       '    let xs be a list of 3 zeros',
       '    let xs[1] be p',
       '    return xs',
@@ -957,7 +977,7 @@ describe('English notation', () => {
     const r = exec([
       'function f, given a, b, n, t and u:',
       '    let row be a + b',
-      '    let of be n · t',
+      '    let of be n * t',
       '    return row + of + u',
     ].join('\n'), { env: { a: 1, b: 2, n: 3, t: 4, u: 5 }, call: 'f(a, b, n, t, u)' });
     eq(r.value, 20);
@@ -1010,7 +1030,7 @@ describe('English notation', () => {
       `    if v > 0${then}:`,
       '        return 1',
       `    else if v < 0${then}:`,
-      '        return 0 − 1',
+      '        return 0 - 1',
       '    else:',
       '        return 0',
     ].join('\n');
@@ -1029,7 +1049,7 @@ describe('English notation', () => {
       '        let s be s + y[k]',
       '    return s',
     ].join('\n'), { env: { y: [10, 1, 20, 2, 30], n: 4 }, call: 'f(y, n)' }).value;
-    eq(sum('for each k from 1 to n−1 in steps of 2:'), 3, 'the odd entries');
+    eq(sum('for each k from 1 to n-1 in steps of 2:'), 3, 'the odd entries');
     eq(sum('for each k from 0 to n in steps of 2:'), 60, 'the even entries');
     eq(sum('for each k from n down to 0 in steps of 2:'), 60, 'and counting down');
   });

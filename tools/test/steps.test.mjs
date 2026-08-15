@@ -52,19 +52,19 @@ describe('naming things the student can see', () => {
 
   it('quotes a step with the blanks as the student filled them', () => {
     const recIndex = lines.findIndex((l) => l.blockId === 'rec');
-    eq(stepText(lines, recIndex, { den: 'x[i+j] − x[i]' }),
-      'T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / (x[i+j] − x[i])');
+    eq(stepText(lines, recIndex, { den: 'x[i+j] - x[i]' }),
+      'T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / (x[i+j] - x[i])');
   });
 
   it('brackets a substituted blank, since the blank was its own expression', () => {
     const recIndex = lines.findIndex((l) => l.blockId === 'rec');
-    has(stepText(lines, recIndex, { den: 'x[j] − x[i]' }), '/ (x[j] − x[i])',
-      'an unbracketed "/ x[j] − x[i]" would read as a different expression');
+    has(stepText(lines, recIndex, { den: 'x[j] - x[i]' }), '/ (x[j] - x[i])',
+      'an unbracketed "/ x[j] - x[i]" would read as a different expression');
   });
 
   it('leaves a bracketed blank alone, and an empty one as a gap', () => {
     const recIndex = lines.findIndex((l) => l.blockId === 'rec');
-    has(stepText(lines, recIndex, { den: '(x[i+j] − x[i])' }), '/ (x[i+j] − x[i])');
+    has(stepText(lines, recIndex, { den: '(x[i+j] - x[i])' }), '/ (x[i+j] - x[i])');
     has(stepText(lines, recIndex, {}), '/ ___');
   });
 
@@ -92,7 +92,7 @@ describe('the algorithm stopped', () => {
   });
 
   it('names the step it stopped at', () => {
-    has(v.message, 'T[i, j] ← (T[i+1, j−1] − T[i, j−1]) / (x[i+j] − x[i])');
+    has(v.message, 'T[i, j] ← (T[i+1, j-1] - T[i, j-1]) / (x[i+j] - x[i])');
   });
 
   it('names the pass it was on', () => {
@@ -108,7 +108,7 @@ describe('the algorithm stopped', () => {
   });
 
   it('keeps the authored message first when there is one, and adds the location', () => {
-    const w = check(withBlank(CORRECT, 'bound', 'n−j'));
+    const w = check(withBlank(CORRECT, 'bound', 'n-j'));
     eq(w.why, 'bound_off_by_one');
     has(w.message, 'one row too far');
     has(w.detail, 'with j = 1 and i = 3');
@@ -118,7 +118,7 @@ describe('the algorithm stopped', () => {
     // A while loop is the only way to hang this gate, so the report is built
     // directly rather than through a submission.
     const err = { kind: 'cap', line: 0, loops: [{ name: 'j', value: 1 }] };
-    const r = crashReport(err, [{ text: 'for j ← 1 to n−1:', blockId: 'loopj' }], {}, 'the test input');
+    const r = crashReport(err, [{ text: 'for j ← 1 to n-1:', blockId: 'loopj' }], {}, 'the test input');
     has(r.message, 'never finished');
     has(r.message, 'with j = 1');
   });
@@ -143,7 +143,7 @@ describe('the algorithm ran and the numbers are wrong', () => {
   });
 
   it('reports an entry the algorithm never fills in', () => {
-    const v = check(withBlank(CORRECT, 'bound', 'n−j−2'));
+    const v = check(withBlank(CORRECT, 'bound', 'n-j-2'));
     eq(v.why, 'entry_never_written');
     has(v.message, 'never fills in T[2][1]');
   });
@@ -151,8 +151,8 @@ describe('the algorithm ran and the numbers are wrong', () => {
   it('discloses no reference value in any of those messages', () => {
     const cases = [
       withBlank(CORRECT, 'bound', 'n'),
-      withBlank(CORRECT, 'bound', 'n−j−2'),
-      withBlank(CORRECT, 'den', 'x[i+j] − x[j]'),
+      withBlank(CORRECT, 'bound', 'n-j-2'),
+      withBlank(CORRECT, 'den', 'x[i+j] - x[j]'),
     ];
     for (const sub of cases) {
       const v = check(sub);
@@ -176,15 +176,15 @@ describe('a gate whose answer is one number', () => {
       { id: 'def', lines: [{ text: 'function newton_eval(xn, c, t):', indent: 0 }] },
       { id: 'n', lines: [{ text: 'n ← length(c)', indent: 0 }] },
       { id: 'init', lines: [{ text: 'p ← c[⟨?init⟩]', indent: 0 }] },
-      { id: 'loop', lines: [{ text: 'for k ← n−2 down to 0:', indent: 0 }] },
-      { id: 'upd', lines: [{ text: 'p ← p · (t − xn[k]) + c[k]', indent: 0 }] },
+      { id: 'loop', lines: [{ text: 'for k ← n-2 down to 0:', indent: 0 }] },
+      { id: 'upd', lines: [{ text: 'p ← p * (t - xn[k]) + c[k]', indent: 0 }] },
       { id: 'ret', lines: [{ text: 'return p', indent: 0 }] },
     ],
     solution: [
       { id: 'def', indent: 0 }, { id: 'n', indent: 1 }, { id: 'init', indent: 1 },
       { id: 'loop', indent: 1 }, { id: 'upd', indent: 2 }, { id: 'ret', indent: 1 },
     ],
-    blanks: { init: { kind: 'index', answer: 'n−1', env: ['n'], width: 6 } },
+    blanks: { init: { kind: 'index', answer: 'n-1', env: ['n'], width: 6 } },
     distractors: [],
     probes: [{
       env: { xn: [0, 1, 3, 6], c: [1, 3, -4 / 3, (0.6 + 4 / 3) / 6], t: 2.5 },
@@ -198,7 +198,7 @@ describe('a gate whose answer is one number', () => {
   it('names a coefficient the sweep never uses', () => {
     const v = verify(EVAL_GATE, {
       placements: EVAL_GATE.solution.map((s) => ({ ...s })),
-      blanks: { init: 'n−2' },
+      blanks: { init: 'n-2' },
     }, ref);
     eq(v.why, 'input_never_read');
     has(v.message, 'never uses c[3]');
@@ -208,7 +208,7 @@ describe('a gate whose answer is one number', () => {
   it('still passes the right answer', () => {
     const v = verify(EVAL_GATE, {
       placements: EVAL_GATE.solution.map((s) => ({ ...s })),
-      blanks: { init: 'n−1' },
+      blanks: { init: 'n-1' },
     }, ref);
     assert(v.ok, `expected a pass, got: ${v.message}`);
   });

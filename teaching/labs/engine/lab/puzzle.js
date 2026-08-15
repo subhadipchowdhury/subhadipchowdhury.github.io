@@ -936,17 +936,18 @@ function describeBlock(block, placed) {
   return placed ? text : `${text}. In the tray.`;
 }
 
-// Screen readers say nothing useful for ← · ≤ and the like, so the label spells
-// the notation out.
+// A screen reader reads "!=" as punctuation or as nothing, so the label spells the
+// operators out. Two-character operators go first, or "<=" is read as "less than"
+// and then an orphaned "equals".
 function speak(text) {
   return text
     .replace(/⟨\?[^⟩]+⟩/g, ' blank ')
     .replace(/←/g, ' gets ')
-    .replace(/·/g, ' times ')
-    .replace(/−/g, ' minus ')
-    .replace(/≤/g, ' at most ')
-    .replace(/≥/g, ' at least ')
-    .replace(/≠/g, ' is not ')
+    .replace(/<=/g, ' at most ')
+    .replace(/>=/g, ' at least ')
+    .replace(/!=/g, ' is not ')
+    .replace(/\*/g, ' times ')
+    .replace(/-/g, ' minus ')
     .replace(/\.\./g, ' through ')
     .replace(/\[/g, ' sub ')
     .replace(/\]/g, ' ')

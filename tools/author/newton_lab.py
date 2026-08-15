@@ -89,9 +89,9 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
         block('n', 'let n be the number of entries in x', [25, 25], 'n = len'),
         block('tab', 'let T be a table of n by n zeros', [26, 26], 'np.zeros'),
         block('col0', 'let column 0 of T be y', [27, 27], 'table[:, 0]'),
-        block('loopj', 'for each order j from 1 to n−1:', [28, 28], 'for j in range(1, n)'),
+        block('loopj', 'for each order j from 1 to n-1:', [28, 28], 'for j in range(1, n)'),
         block('loopi', 'for each row i from 0 to ⟨?bound⟩:', [29, 29], 'for i in range(n - j)'),
-        block('rec', 'let T[i][j] be (T[i+1][j−1] − T[i][j−1]) / ⟨?den⟩', [30, 30], 'table[i, j]'),
+        block('rec', 'let T[i][j] be (T[i+1][j-1] - T[i][j-1]) / ⟨?den⟩', [30, 30], 'table[i, j]'),
         block('coef', 'let c be row 0 of T', [31, 31], 'coeffs = table[0'),
         block('ret', 'return c and T', [32, 32], 'return coeffs'),
     ],
@@ -109,15 +109,15 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
     ],
 
     'blanks': {
-        'bound': {'kind': 'range_end', 'answer': 'n−j−1', 'env': ['n', 'i', 'j'], 'width': 8},
-        'den': {'kind': 'expr', 'answer': 'x[i+j] − x[i]', 'env': ['x', 'i', 'j'], 'width': 14},
+        'bound': {'kind': 'range_end', 'answer': 'n-j-1', 'env': ['n', 'i', 'j'], 'width': 8},
+        'den': {'kind': 'expr', 'answer': 'x[i+j] - x[i]', 'env': ['x', 'i', 'j'], 'width': 14},
     },
 
     'distractors': [
-        decoy('d_num', 'let T[i][j] be (T[i][j−1] − T[i+1][j−1]) / ⟨?den⟩', 'rec', 'num_reversed'),
+        decoy('d_num', 'let T[i][j] be (T[i][j-1] - T[i+1][j-1]) / ⟨?den⟩', 'rec', 'num_reversed'),
         fused(
             'd_swap',
-            ['for each row i from 0 to n−1:', 'for each order j from 1 to n−i−1:'],
+            ['for each row i from 0 to n-1:', 'for each order j from 1 to n-i-1:'],
             'loopj',
             'loops_swapped',
         ),
@@ -126,17 +126,17 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
 
     'wrong_blanks': {
         'den': [
-            {'text': 'x[j] − x[i]', 'why': 'den_j_not_ij'},
-            {'text': 'x[i+1] − x[i]', 'why': 'den_neighbour'},
+            {'text': 'x[j] - x[i]', 'why': 'den_j_not_ij'},
+            {'text': 'x[i+1] - x[i]', 'why': 'den_neighbour'},
         ],
         'bound': [
-            {'text': 'n−1', 'why': 'bound_full'},
-            {'text': 'n−j', 'why': 'bound_off_by_one'},
+            {'text': 'n-1', 'why': 'bound_full'},
+            {'text': 'n-j', 'why': 'bound_off_by_one'},
         ],
     },
 
-    # Strictly unequal spacing on purpose: it separates x[i+j]−x[i] from
-    # x[i+1]−x[i] and from x[j]−x[i] at several entries at once.
+    # Strictly unequal spacing on purpose: it separates x[i+j]-x[i] from
+    # x[i+1]-x[i] and from x[j]-x[i] at several entries at once.
     'probes': [
         {'env': {'x': NODES, 'y': VALUES}, 'call': 'divided_differences(x, y)'},
     ],
@@ -149,7 +149,7 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
     'annotations': [
         {
             'blocks': ['loopj', 'loopi'],
-            'text': "The pseudocode says from 1 to n−1 and includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n−1, so the two describe the same loop.",
+            'text': "The pseudocode says from 1 to n-1 and includes both ends, while Python's range(1, n) stops before n. Both give j = 1, 2, ..., n-1, so the two describe the same loop.",
         },
         {
             'blocks': ['coef'],
@@ -159,12 +159,12 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
 
     'feedback': {
         'num_reversed': 'The magnitudes in your table are right, but the signs alternate from one column to the next. Look again at the order of subtraction in your numerator: a divided difference subtracts the earlier value from the later one.',
-        'loops_swapped': 'Your loops visit the (i, j) pairs in a different order. Computing T[i][j] reads two entries out of column j−1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?',
+        'loops_swapped': 'Your loops visit the (i, j) pairs in a different order. Computing T[i][j] reads two entries out of column j-1, so the whole of that column has to be finished before column j starts. Which loop has to be on the outside for that?',
         'col_not_row': "You returned n values, but they aren't the coefficients. The coefficients are the top entry of each column, and the top entries lie along row 0.",
         'den_j_not_ij': 'T[i][j] is the divided difference over the nodes x_i through x_{i+j}. Your denominator uses a different pair. Which two of those nodes are the outer ones?',
         'den_neighbour': 'You divided by the gap between two adjacent nodes. That works in column 1, where a difference does span a single interval, but a difference of order j spans j of them.',
-        'bound_full': 'Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j−1 exist, and that fails one row earlier each time j grows.',
-        'bound_off_by_one': 'Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i][j] reads T[i][j−1] and T[i+1][j−1], so find the largest i for which both of those were filled in.',
+        'bound_full': 'Your inner loop runs over every row. Column j has an entry in row i only when both of the entries it reads from column j-1 exist, and that fails one row earlier each time j grows.',
+        'bound_off_by_one': 'Your inner loop goes one row too far. If you were counting how many rows column j fills, that count is one more than the last index, and the bound here is the index. Computing T[i][j] reads T[i][j-1] and T[i+1][j-1], so find the largest i for which both of those were filled in.',
     },
 }
 
@@ -173,8 +173,8 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
 # ---------------------------------------------------------------------------
 #
 # Pre-placed on purpose. The whole reason this gate exists is one contrast: the
-# cell above bounds the shrinking dimension by n−j−1 over columns, this one
-# bounds it by n−i−1 over rows, and a student who pattern-matched the first
+# cell above bounds the shrinking dimension by n-j-1 over columns, this one
+# bounds it by n-i-1 over rows, and a student who pattern-matched the first
 # bound writes the wrong one here. Arranging five obvious lines around that adds
 # nothing, and the Python is string building, so most of the reveal would be
 # dimmed bookkeeping. The transposed-nest decoy is gone too: it teaches the same
@@ -223,7 +223,7 @@ One warning. The previous puzzle bounded the *columns*, which get shorter as the
     'blocks': [
         block('def', 'function print_dd_table, given nodes x and table T:', [4, 4], 'def print_dd_table'),
         block('n', 'let n be the number of entries in x', [9, 9], 'n = len(x)'),
-        block('loopi', 'for each row i from 0 to n−1:', [12, 12], 'for i in range(n)'),
+        block('loopi', 'for each row i from 0 to n-1:', [12, 12], 'for i in range(n)'),
         block('loopj', 'for each entry j from 0 to ⟨?rowlen⟩:', [14, 14], 'for j in range(n - i)'),
         block('pr', 'print T[i][j]', [15, 15], 'row +='),
     ],
@@ -237,16 +237,16 @@ One warning. The previous puzzle bounded the *columns*, which get shorter as the
     ],
 
     'blanks': {
-        'rowlen': {'kind': 'range_end', 'answer': 'n−i−1', 'env': ['n', 'i', 'j'], 'width': 8},
+        'rowlen': {'kind': 'range_end', 'answer': 'n-i-1', 'env': ['n', 'i', 'j'], 'width': 8},
     },
 
     'distractors': [],
 
     'wrong_blanks': {
         'rowlen': [
-            {'text': 'n−1', 'why': 'rowlen_square'},
-            {'text': 'n−j−1', 'why': 'rowlen_uses_j'},
-            {'text': 'n−i', 'why': 'rowlen_off_by_one'},
+            {'text': 'n-1', 'why': 'rowlen_square'},
+            {'text': 'n-j-1', 'why': 'rowlen_uses_j'},
+            {'text': 'n-i', 'why': 'rowlen_off_by_one'},
         ],
     },
 
@@ -269,7 +269,7 @@ One warning. The previous puzzle bounded the *columns*, which get shorter as the
     'feedback': {
         'rowlen_square': 'You printed the whole square array, including entries the algorithm never assigned. Those zeros came from np.zeros and say nothing about the data.',
         'rowlen_uses_j': "The loop is about to assign j, so j can't appear in its own upper bound. Which index tells you how far down the table this row sits?",
-        'rowlen_off_by_one': 'Every row has one entry too many. The last difference in row i is the one that reaches node x_{n−1}. A range includes both of its ends, so what goes here is that entry\'s index, not the number of entries in the row.',
+        'rowlen_off_by_one': 'Every row has one entry too many. The last difference in row i is the one that reaches node x_{n-1}. A range includes both of its ends, so what goes here is that entry\'s index, not the number of entries in the row.',
     },
 }
 
@@ -312,8 +312,8 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
         block('def', 'function newton_eval, given nodes xn, coefficients c and point t:', [4, 4], 'def newton_eval'),
         block('n', 'let n be the number of entries in c', [18, 18], 'n = len(coeffs)'),
         block('init', 'let p be c[⟨?init⟩]', [19, 19], 'np.full_like'),
-        block('loop', 'for each k from n−2 down to 0:', [20, 20], 'for k in range(n - 2'),
-        block('upd', 'let p be p · (t − xn[k]) + c[k]', [21, 21], 'result = result *'),
+        block('loop', 'for each k from n-2 down to 0:', [20, 20], 'for k in range(n - 2'),
+        block('upd', 'let p be p * (t - xn[k]) + c[k]', [21, 21], 'result = result *'),
         block('ret', 'return p', [22, 22], 'return result'),
     ],
 
@@ -327,12 +327,12 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
     ],
 
     'blanks': {
-        'init': {'kind': 'index', 'answer': 'n−1', 'env': ['n'], 'width': 6},
+        'init': {'kind': 'index', 'answer': 'n-1', 'env': ['n'], 'width': 6},
     },
 
     'distractors': [
-        decoy('d_fwd', 'for each k from 1 to n−1:', 'loop', 'sweep_forward'),
-        decoy('d_node', 'let p be p · (t − c[k]) + c[k]', 'upd', 'shift_by_coeff'),
+        decoy('d_fwd', 'for each k from 1 to n-1:', 'loop', 'sweep_forward'),
+        decoy('d_node', 'let p be p * (t - c[k]) + c[k]', 'upd', 'shift_by_coeff'),
     ],
 
     'wrong_blanks': {
@@ -359,15 +359,15 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
     'annotations': [
         {
             'blocks': ['init', 'upd'],
-            'text': 'The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of "let p be c[n−1]", and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
+            'text': 'The Python evaluates a whole array of query points at once. np.full_like is the vectorized twin of "let p be c[n-1]", and the update line runs on every point simultaneously. It is the arithmetic you wrote, applied to many values of t at a time.',
         },
     ],
 
     'feedback': {
-        'sweep_forward': "You're sweeping from k = 1 upward. The nesting is evaluated from the innermost bracket outward, and the innermost bracket holds c[n−1], so k has to run the other way.",
-        'shift_by_coeff': "You subtracted a coefficient from t. Every factor in Newton's form looks like (t − x_k), measuring how far t sits from a node, so what gets subtracted has to be a node.",
-        'init_first': 'c[0] is the outermost coefficient and gets added last. The loop runs downward from k = n−2, so p has to start at whatever sits in the innermost bracket.',
-        'init_past_end': "There's no coefficient at that index. There are n of them and the subscripts start at 0, so the last one is c[n−1].",
+        'sweep_forward': "You're sweeping from k = 1 upward. The nesting is evaluated from the innermost bracket outward, and the innermost bracket holds c[n-1], so k has to run the other way.",
+        'shift_by_coeff': "You subtracted a coefficient from t. Every factor in Newton's form looks like (t - x_k), measuring how far t sits from a node, so what gets subtracted has to be a node.",
+        'init_first': 'c[0] is the outermost coefficient and gets added last. The loop runs downward from k = n-2, so p has to start at whatever sits in the innermost bracket.',
+        'init_past_end': "There's no coefficient at that index. There are n of them and the subscripts start at 0, so the last one is c[n-1].",
     },
 }
 
@@ -410,9 +410,9 @@ NOTEBOOK_LAB = {
         'you can read out loud. `let` stores a value, and `for`, `if`, `else`, '
         '`while` and `return` do what they do in code. Subscripts start at 0, '
         'and `from a to b` includes both $a$ and $b$. '
-        "There's no key for · or ≠, so type `*` and `!=` in a blank, along "
-        "with `-` for − and `pi` for π. The key above the puzzles has the "
-        'rest.'
+        '`*` multiplies, `!=` means "is not equal to" and `<=` means "is at '
+        'most". Every symbol here is one you can type, so a blank takes '
+        'exactly what you read. The key above the puzzles has the rest.'
     ),
 }
 
