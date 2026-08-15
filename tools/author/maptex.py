@@ -250,8 +250,8 @@ def _document(data, solutions):
     parts.append("")
     parts.append(r"\vfill")
     parts.append(r"{\scriptsize\color{inkgrey} Contents by Subhadip Chowdhury, "
-                 r"licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked the "
-                 r"mathematics myself.\par}")
+                 r"licensed CC BY-NC-SA 4.0. Built with AI assistance. I checked most of "
+                 r"the mathematics myself; errors that got through are mine.\par}")
     parts.append(r"\end{document}")
     return "\n".join(parts) + "\n"
 
