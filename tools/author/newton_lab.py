@@ -88,12 +88,12 @@ Column $j$ is shorter than column $j-1$, so the inner loop can't reach every row
         block('def', 'function divided_differences, given nodes x and values y:', [10, 10], 'def divided_differences'),
         block('n', 'let n be the number of entries in x', [25, 25], 'n = len'),
         block('tab', 'let T be a table of n by n zeros', [26, 26], 'np.zeros'),
-        block('col0', 'copy y into column 0 of T', [27, 27], 'table[:, 0]'),
+        block('col0', 'let column 0 of T be y', [27, 27], 'table[:, 0]'),
         block('loopj', 'for each order j from 1 to n−1:', [28, 28], 'for j in range(1, n)'),
         block('loopi', 'for each row i from 0 to ⟨?bound⟩:', [29, 29], 'for i in range(n - j)'),
         block('rec', 'let T[i][j] be (T[i+1][j−1] − T[i][j−1]) / ⟨?den⟩', [30, 30], 'table[i, j]'),
         block('coef', 'let c be row 0 of T', [31, 31], 'coeffs = table[0'),
-        block('ret', 'report c and T', [32, 32], 'return coeffs'),
+        block('ret', 'return c and T', [32, 32], 'return coeffs'),
     ],
 
     'solution': [
@@ -314,7 +314,7 @@ Write that sweep as a loop. Two things decide it: which coefficient you start fr
         block('init', 'let p be c[⟨?init⟩]', [19, 19], 'np.full_like'),
         block('loop', 'for each k from n−2 down to 0:', [20, 20], 'for k in range(n - 2'),
         block('upd', 'let p be p · (t − xn[k]) + c[k]', [21, 21], 'result = result *'),
-        block('ret', 'report p', [22, 22], 'return result'),
+        block('ret', 'return p', [22, 22], 'return result'),
     ],
 
     'solution': [
@@ -407,10 +407,10 @@ NOTEBOOK_LAB = {
         'runs once for every pass of the loop above it. The notebook opens once '
         'all three are done.\n\n'
         'The steps are pseudocode rather than Python, and each one is a sentence '
-        'you can read out loud. `let p be 0` stores a value, `copy y into '
-        'column 0 of T` fills a whole column, and `report p` hands the answer '
-        'back. Subscripts start at 0, and `from a to b` includes both $a$ and '
-        '$b$. The key above the puzzles has the rest.'
+        'you can read out loud. `let` stores a value, and `for`, `if`, `else`, '
+        '`while` and `return` do what they do in code. Subscripts start at 0, '
+        'and `from a to b` includes both $a$ and $b$. The key above the puzzles '
+        'has the rest.'
     ),
 }
 

@@ -507,9 +507,17 @@ function parseStatement(lines, i, blanks) {
     if (parser.eat('down')) { descending = true; }
     parser.expect('to', descending ? 'the word "to" after "down"' : 'the word "to"');
     const to = parser.parseExpression();
+    // "in steps of 2" for a loop that skips. Written out rather than spelled as
+    // a modulo test in the body, because the step is a property of the loop.
+    let step = null;
+    if (parser.eatWord('in')) {
+      parser.expectWord('steps', 'the word "steps" after "in"');
+      parser.expectWord('of', 'the word "of" after "steps"');
+      step = parser.parseExpression();
+    }
     endOfHeader('for');
     const { body, next } = requireBody(lines, i + 1, line.indent, blanks, 'for');
-    return { stmt: { node: 'for', varName, from, to, descending, body, where }, next };
+    return { stmt: { node: 'for', varName, from, to, step, descending, body, where }, next };
   }
 
   if (head.type === 'while') {
@@ -523,6 +531,7 @@ function parseStatement(lines, i, blanks) {
   if (head.type === 'if') {
     parser.next();
     const cond = parser.parseExpression();
+    parser.eatWord('then');
     endOfHeader('if');
     const { body, next } = requireBody(lines, i + 1, line.indent, blanks, 'if');
     const { chain, after } = parseElseChain(lines, next, line.indent, blanks);
@@ -533,49 +542,18 @@ function parseStatement(lines, i, blanks) {
     throw new ParseError('This "else" has no "if" above it at the same level.', where);
   }
 
+  // "return c, T" and "return c and T" are the same statement. The values parse
+  // above the binding power of the boolean "and", so the word separates them
+  // rather than joining them into a conjunction; nothing in this notation
+  // returns a true/false value, so no reading is lost.
   if (head.type === 'return') {
     parser.next();
     const values = [];
     if (!parser.at('eol')) {
-      do { values.push(parser.parseExpression()); } while (parser.eat(','));
+      do { values.push(parser.parseExpression(BP.and + 1)); } while (parser.eat(',') || parser.eat('and'));
     }
     parser.expect('eol', 'the end of the line');
     return { stmt: { node: 'return', values, where }, next: i + 1 };
-  }
-
-  // "report c and T" is "return c, T". The values parse above the binding power
-  // of the boolean "and", so the word separates them here rather than joining
-  // them into a conjunction. Nothing in this notation returns a true/false value.
-  if (head.type === 'name' && head.value === 'report') {
-    parser.next();
-    const values = [];
-    if (!parser.at('eol')) {
-      do { values.push(parser.parseExpression(BP.and + 1)); } while (parser.eat('and') || parser.eat(','));
-    }
-    parser.expect('eol', 'the end of the line');
-    return { stmt: { node: 'return', values, where }, next: i + 1 };
-  }
-
-  // "let n be length(x)", "let T[i][j] be …", and the worded right-hand sides.
-  if (head.type === 'name' && head.value === 'let') {
-    parser.next();
-    const target = parseTarget(parser);
-    parser.expectWord('be', 'the word "be" after what is being set');
-    const value = parseWordedValue(parser, where);
-    parser.expect('eol', 'the end of the line');
-    return { stmt: { node: 'assign', targets: [target], value, where }, next: i + 1 };
-  }
-
-  // "copy y into column 0 of T", and any worded value on the left, so that
-  // "copy row p of U into row k of U" works: a row swap is then three honest
-  // lines with a temporary rather than a magic verb.
-  if (head.type === 'name' && head.value === 'copy') {
-    parser.next();
-    const value = parseWordedValue(parser, where);
-    parser.expectWord('into', 'the word "into" after what is being copied');
-    const target = parseAxisTarget(parser, where);
-    parser.expect('eol', 'the end of the line');
-    return { stmt: { node: 'assign', targets: [target], value, where }, next: i + 1 };
   }
 
   if (head.type === 'print') {
@@ -586,6 +564,22 @@ function parseStatement(lines, i, blanks) {
     }
     parser.expect('eol', 'the end of the line');
     return { stmt: { node: 'print', values, where }, next: i + 1 };
+  }
+
+  // One keyword for every kind of assignment:
+  //   let n be the number of entries in x
+  //   let T[i][j] be (…) / (…)
+  //   let column 0 of T be y
+  //   let row k of U be row p of U        (which is how a swap is written)
+  if (head.type === 'name' && head.value === 'let') {
+    parser.next();
+    const target = looksLikeAxisTarget(parser)
+      ? parseAxisTarget(parser, where)
+      : parseTarget(parser);
+    parser.expectWord('be', 'the word "be" after what is being set');
+    const value = parseWordedValue(parser, where);
+    parser.expect('eol', 'the end of the line');
+    return { stmt: { node: 'assign', targets: [target], value, where }, next: i + 1 };
   }
 
   // Assignment. Targets are names or indexed names; the arrow separates.
@@ -601,7 +595,7 @@ function parseStatement(lines, i, blanks) {
 // reserved, so any of them can still be a variable somewhere the grammar is not
 // looking for it. Do not name a variable after one of these anyway.
 export const WORDS = [
-  'let', 'be', 'copy', 'into', 'report', 'given', 'each', 'from',
+  'let', 'be', 'given', 'each', 'from', 'then', 'steps',
   'row', 'column', 'of', 'a', 'an', 'the', 'list', 'table', 'by',
   'number', 'entries', 'in', 'zeros',
 ];
@@ -644,6 +638,20 @@ function parseWordedValue(parser, where) {
   return parser.parseExpression();
 }
 
+// Whether the target of a `let` is "row 3 of T" rather than a variable that
+// happens to be called row. It opens with row or column, and an "of" reaches the
+// "be" ahead of it. Deciding this by lookahead rather than by reserving the two
+// words keeps `let row be a + b` legal, which a test pins.
+function looksLikeAxisTarget(parser) {
+  if (!parser.atAnyWord('row', 'column')) return false;
+  for (let k = 1; ; k++) {
+    const t = parser.peek(k);
+    if (t.type === 'eol') return false;
+    if (t.type === 'name' && t.value === 'be') return false;
+    if (t.type === 'name' && t.value === 'of') return true;
+  }
+}
+
 // "row 0 of T" or "column 0 of T", as a value.
 function parseAxisSlice(parser, where) {
   const axis = parser.next().value;
@@ -655,13 +663,6 @@ function parseAxisSlice(parser, where) {
 
 // The same thing as somewhere to store into.
 function parseAxisTarget(parser, where) {
-  if (!parser.atAnyWord('row', 'column')) {
-    const got = parser.peek();
-    throw new ParseError(
-      `Expected "row" or "column" after "into" but found ${describeToken(got)}.`,
-      { ...got.where, col: got.col },
-    );
-  }
   const slice = parseAxisSlice(parser, where);
   return { kind: 'axisSlice', axis: slice.axis, at: slice.at, name: slice.name, where: slice.where, col: slice.col };
 }
@@ -677,6 +678,7 @@ function parseElseChain(lines, i, indent, blanks) {
   if (parser.at('if')) {
     parser.next();
     const cond = parser.parseExpression();
+    parser.eatWord('then');
     parser.expect(':', 'a colon after "else if"');
     parser.expect('eol', 'the end of the line');
     const { body, next } = requireBody(lines, i + 1, indent, blanks, 'else if');
@@ -994,12 +996,21 @@ class Interp {
       case 'for': {
         const from = needInt(this.eval(stmt.from, scope), 'A loop bound', stmt.where);
         const to = needInt(this.eval(stmt.to, scope), 'A loop bound', stmt.where);
+        const step = stmt.step === null || stmt.step === undefined
+          ? 1
+          : needInt(this.eval(stmt.step, scope), 'A loop step', stmt.where);
+        if (step < 1) {
+          throw new RuntimeError(
+            `A loop step has to be 1 or more; this one is ${step}. Use "down to" to count backwards.`,
+            { kind: 'shape', ...stmt.where },
+          );
+        }
         // Not popped in a finally, on purpose: an error propagating out of the
         // body should leave the stack holding the pass it happened on.
         const frame = { name: stmt.varName, value: from };
         this.loops.push(frame);
         if (stmt.descending) {
-          for (let v = from; v >= to; v--) {
+          for (let v = from; v >= to; v -= step) {
             scope.set(stmt.varName, v);
             frame.value = v;
             this.tick(stmt.where);
@@ -1007,7 +1018,7 @@ class Interp {
             if (r) { this.loops.pop(); return r; }
           }
         } else {
-          for (let v = from; v <= to; v++) {
+          for (let v = from; v <= to; v += step) {
             scope.set(stmt.varName, v);
             frame.value = v;
             this.tick(stmt.where);

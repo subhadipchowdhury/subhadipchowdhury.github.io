@@ -118,6 +118,28 @@ for (const entry of index) {
     assert(walk(root).length > 30, 'the tree is suspiciously small');
   });
 
+  // The key is generated from the lab's own blocks rather than written into a
+  // layout, so it has to describe the notation this lab is actually in. While the
+  // two labs disagree, that is the property worth checking on every one of them.
+  await it('carries a notation key describing its own notation', async () => {
+    const { root } = await open(labSpec);
+    const key = root.querySelector('.lab-notation');
+    assert(key, 'no notation key');
+    const text = textOf(key);
+    const blockText = labSpec.puzzles
+      .flatMap((g) => [...g.blocks, ...(g.distractors || [])])
+      .flatMap((b) => b.lines.map((l) => l.text))
+      .join('\n');
+    if (/^\s*let\b/m.test(blockText)) {
+      has(text, 'let p be 0', 'a lab written in sentences needs the sentence key');
+      assert(!text.includes('a ← b'), 'and must not offer the arrow as how to store');
+    } else {
+      has(text, 'a ← b', 'a lab written with arrows needs the arrow key');
+      assert(!text.includes('let p be 0'), 'and must not offer let');
+    }
+    has(text, 'Dividing by zero', 'both notations share the departures paragraph');
+  });
+
   await it('opens the first puzzle and shuts the rest', async () => {
     const { root, lab } = await open(labSpec);
     const order = labSpec.puzzles.map((p) => p.cell_id);
@@ -187,9 +209,9 @@ await it('carries the lab intro and the puzzle count', async () => {
   const intro = textOf(root.querySelector('.lab-intro'));
   has(intro, 'scrambled order', 'the intro must say what a puzzle is');
   assert(/indentation/i.test(intro), 'the intro must say indentation counts');
-  // Either notation, since the arrow form and the "let \u2026 be" form both need
-  // saying and a lab may be written in either.
-  assert(/let .+ be|\u2190/.test(intro), 'the intro must say how a step stores a value');
+  // Either notation, since `let` and the arrow both need saying and a lab may be
+  // written in either.
+  assert(/\blet\b|\u2190/.test(intro), 'the intro must say how a step stores a value');
   has(intro, 'includes both', 'and say that a range is inclusive');
   has(textOf(root.querySelector('.lab-progress')), `0 of ${ids.length} done`);
 });

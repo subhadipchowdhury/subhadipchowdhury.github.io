@@ -41,71 +41,9 @@ layout: compress
     </div>
 
     <main class="main-wrapper">
-      <details class="lab-notation">
-        <summary>Notation used in these puzzles</summary>
-        <div class="lab-notation__body">
-          <p>Every step is a sentence. Read one out loud and it says what it
-          does.</p>
-
-          <dl>
-            <dt><code>let p be 0</code></dt>
-            <dd>stores a value. Nothing in these puzzles uses <code>=</code> to
-            store; <code>=</code> only ever compares.</dd>
-
-            <dt><code>for each row i from 0 to 3:</code></dt>
-            <dd>runs i = 0, 1, 2, 3. Both ends are included, so the bound is the
-            last index visited and not a count. The loop variable is the name
-            just before <code>from</code>, and the words in front of it are there
-            to be read.</dd>
-
-            <dt><code>for each k from 3 down to 0:</code></dt>
-            <dd>the same four values, counting down.</dd>
-
-            <dt><code>x[0]</code>, <code>T[i][j]</code></dt>
-            <dd>subscripts start at 0. An array takes one; a table takes a row
-            and then an entry along that row.</dd>
-
-            <dt><code>row 0 of T</code>, <code>column 0 of T</code></dt>
-            <dd>a whole row or a whole column. Taking one hands back a copy.</dd>
-
-            <dt><code>copy y into column 0 of T</code></dt>
-            <dd>fills a whole row or column in one step.</dd>
-
-            <dt><code>the number of entries in x</code></dt>
-            <dd>how long x is.</dd>
-
-            <dt><code>a table of n by n zeros</code></dt>
-            <dd>and <code>a list of n zeros</code> for one dimension.</dd>
-
-            <dt><code>report p</code>, <code>report c and T</code></dt>
-            <dd>hands the answer back and stops. <code>print p</code> shows a
-            value without stopping.</dd>
-
-            <dt><code>a · b</code>, <code>a − b</code></dt>
-            <dd>multiplication and subtraction. In a blank you can type
-            <code>*</code> and <code>-</code> instead.</dd>
-
-            <dt><code>i ≠ j</code>, <code>i ≤ j</code>, <code>π</code></dt>
-            <dd>likewise <code>!=</code>, <code>&lt;=</code> and <code>pi</code>
-            in a blank.</dd>
-
-            <dt><code>abs(x)</code></dt>
-            <dd>along with <code>sqrt</code>, <code>cos</code>, <code>sin</code>,
-            <code>exp</code>, <code>max</code>, <code>min</code>,
-            <code>sum</code> and <code>solve</code>.</dd>
-          </dl>
-
-          <p>Two things differ from Python on purpose. Dividing by zero stops the
-          program instead of returning infinity, and a subscript outside the
-          array stops it instead of wrapping to the other end.</p>
-
-          <p>One lab hasn't been rewritten into sentences yet, so its steps use
-          <code>n ← length(x)</code> where these use <code>let n be the number of
-          entries in x</code>, and <code>T[i, j]</code> where these use
-          <code>T[i][j]</code>. The arrow stores a value, the same way
-          <code>let</code> does.</p>
-        </div>
-      </details>
+      <!-- The notation key is built by engine/lab/notation.js and inserted by
+           lab.js, so it describes whichever notation this lab is written in and
+           there is one copy of it rather than one per page. -->
 
       <div class="lab" id="lab-root"
            data-spec="{{ '/teaching/labs/data/specs/' | append: page.lab_id | append: '.json' | relative_url }}">
@@ -121,7 +59,8 @@ layout: compress
     <footer class="shell-foot">
       <div class="shell-foot__inner">
         <p class="shell-foot__lede">I built these labs with AI assistance and
-        checked the mathematics myself. Nothing you do on this page leaves your
+        checked most of the mathematics myself. Some mistakes have probably
+        survived that, and they're mine. Nothing you do on this page leaves your
         browser.</p>
 
         <details class="shell-foot__more">
@@ -131,9 +70,13 @@ layout: compress
               <h2>How this lab was built</h2>
               <p>The puzzle engine, the build pipeline and the first drafts of
               the writing were built with the help of a large language model. I
-              checked every mathematical claim, every hint and every
-              wrong-answer message before it went up, and anything still wrong
-              in them is mine. The
+              have read and checked most of what it produced, the mathematics,
+              the hints and the wrong-answer messages, but not every line of it,
+              and there are almost certainly errors still in here. They are mine
+              rather than the model's, and I'd rather hear about them than not.
+              If a hint contradicts something you have worked out carefully, or
+              a message says something that looks wrong, trust your own
+              reasoning and tell me. The
               <a href="https://leidendeclaration.ai/">Leiden Declaration on
               Artificial Intelligence and Mathematics</a> asks for this kind of
               disclosure.</p>

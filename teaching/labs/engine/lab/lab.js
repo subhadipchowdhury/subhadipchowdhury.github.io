@@ -7,6 +7,7 @@
 import { PuzzleView } from './puzzle.js';
 import { buildReference, verify } from './verify.js';
 import { buildFeedbackCard, applyLadder, attemptSnapshot } from './feedback.js';
+import { buildNotationKey, detectNotation } from './notation.js';
 
 const STORE_VERSION = 2;
 const DEV_KEY = 'lab:dev';
@@ -150,6 +151,7 @@ class LabController {
   render() {
     this.root.innerHTML = '';
     if (this.dev) this.root.appendChild(this.buildDevBar());
+    this.root.appendChild(this.buildNotation());
     this.root.appendChild(this.buildHeader());
     if (this.wasReset) {
       this.root.appendChild(notice(
@@ -220,6 +222,13 @@ class LabController {
     );
     view.render();
     view.submit();
+  }
+
+  // The key describes whichever notation this lab's own blocks are written in,
+  // so a converted lab and an unconverted one can sit side by side. See
+  // notation.js for why it is not markup in the layout any more.
+  buildNotation() {
+    return buildNotationKey(detectNotation(this.puzzles), document);
   }
 
   buildHeader() {

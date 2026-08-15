@@ -867,20 +867,20 @@ describe('English notation', () => {
       '    let p be 2 · n',
       '    let xs be a list of 3 zeros',
       '    let xs[1] be p',
-      '    report xs',
+      '    return xs',
     ].join('\n'), { env: { n: 5 }, call: 'f(n)' });
     eq(r.value, [0, 10, 0]);
   });
 
-  it('a table, a row, a column, and copying into either', () => {
+  it('a table, a row, a column, and storing into either', () => {
     const r = exec([
       'function f, given values v:',
       '    let T be a table of 2 by 3 zeros',
-      '    copy v into row 1 of T',
-      '    copy 7 into column 0 of T',
+      '    let row 1 of T be v',
+      '    let column 0 of T be 7',
       '    let a be row 1 of T',
       '    let b be column 2 of T',
-      '    report a and b and T',
+      '    return a and b and T',
     ].join('\n'), { env: { v: [1, 2, 3] }, call: 'f(v)' });
     eq(r.value[0], [7, 2, 3], 'the row after the column overwrote entry 0');
     eq(r.value[1], [0, 3], 'the column runs down every row');
@@ -892,7 +892,7 @@ describe('English notation', () => {
       'function f, given table T:',
       '    let r be row 0 of T',
       '    let r[0] be 99',
-      '    report T',
+      '    return T',
     ].join('\n'), { env: { T: [[1, 2], [3, 4]] }, call: 'f(T)' });
     eq(r.value, [[1, 2], [3, 4]], 'the table is untouched');
   });
@@ -901,7 +901,7 @@ describe('English notation', () => {
     const r = exec([
       'function f, given nodes x:',
       '    let n be the number of entries in x',
-      '    report n',
+      '    return n',
     ].join('\n'), { env: { x: [4, 5, 6] }, call: 'f(x)' });
     eq(r.value, 3);
   });
@@ -914,15 +914,15 @@ describe('English notation', () => {
       '        let s be s + i',
       '    for each k from n down to 1:',
       '        let s be s + 10',
-      '    report s',
+      '    return s',
     ].join('\n'), { env: { n: 3 }, call: 'f(n)' });
     eq(r.value, 36, '1+2+3 then three tens');
   });
 
-  it('report separates its values rather than joining them with "and"', () => {
+  it('return separates its values rather than joining them with "and"', () => {
     const r = exec([
       'function f, given nothing n:',
-      '    report n and n + 1',
+      '    return n and n + 1',
     ].join('\n'), { env: { n: 4 }, call: 'f(n)' });
     eq(r.value, [4, 5], 'two values, not a boolean');
   });
@@ -930,7 +930,7 @@ describe('English notation', () => {
   it('given names the parameter as the last word of each group', () => {
     const r = exec([
       'function f, given the ends a and b, and the degree n:',
-      '    report a + b + n',
+      '    return a + b + n',
     ].join('\n'), { env: { a: 1, b: 2, n: 3 }, call: 'f(a, b, n)' });
     eq(r.value, 6);
   });
@@ -940,7 +940,7 @@ describe('English notation', () => {
       'function f, given a, b, n, t and u:',
       '    let row be a + b',
       '    let of be n · t',
-      '    report row + of + u',
+      '    return row + of + u',
     ].join('\n'), { env: { a: 1, b: 2, n: 3, t: 4, u: 5 }, call: 'f(a, b, n, t, u)' });
     eq(r.value, 20);
   });
@@ -951,7 +951,7 @@ describe('English notation', () => {
     const r = exec([
       'function f, given table T:',
       '    let T[0][1] be 9',
-      '    report T[0, 1]',
+      '    return T[0, 1]',
     ].join('\n'), { env: { T: [[1, 2], [3, 4]] }, call: 'f(T)' });
     eq(r.value, 9);
   });
@@ -960,7 +960,7 @@ describe('English notation', () => {
     const english = exec([
       'function f, given nodes x:',
       '    let n be the number of entries in x',
-      '    report n',
+      '    return n',
     ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' });
     const symbolic = exec([
       'function f(x):',
@@ -976,20 +976,73 @@ describe('English notation', () => {
       'function f, given nodes x:',
       '    for each i 0 to 3:',
       '        let p be i',
-      '    report p',
+      '    return p',
     ].join('\n')), 'from', 'a missing "from"');
     throws(() => exec([
       'function f, given nodes x:',
-      '    copy x into T',
-      '    report x',
-    ].join('\n')), 'row', 'a copy with no row or column');
+      '    let row 0 of x be 1',
+      '    return x',
+    ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' }), 'no rows or columns',
+    'a row of something that is not a table');
+  });
+
+  it('if … then, with the "then" optional', () => {
+    const src = (then) => [
+      'function sign, given a value v:',
+      `    if v > 0${then}:`,
+      '        return 1',
+      `    else if v < 0${then}:`,
+      '        return 0 − 1',
+      '    else:',
+      '        return 0',
+    ].join('\n');
+    for (const then of [' then', '']) {
+      eq(exec(src(then), { env: { v: 5 }, call: 'sign(v)' }).value, 1, `with "${then}"`);
+      eq(exec(src(then), { env: { v: -5 }, call: 'sign(v)' }).value, -1, `with "${then}"`);
+      eq(exec(src(then), { env: { v: 0 }, call: 'sign(v)' }).value, 0, `with "${then}"`);
+    }
+  });
+
+  it('a loop can take a step, up or down', () => {
+    const sum = (header) => exec([
+      'function f, given values y and a count n:',
+      '    let s be 0',
+      `    ${header}`,
+      '        let s be s + y[k]',
+      '    return s',
+    ].join('\n'), { env: { y: [10, 1, 20, 2, 30], n: 4 }, call: 'f(y, n)' }).value;
+    eq(sum('for each k from 1 to n−1 in steps of 2:'), 3, 'the odd entries');
+    eq(sum('for each k from 0 to n in steps of 2:'), 60, 'the even entries');
+    eq(sum('for each k from n down to 0 in steps of 2:'), 60, 'and counting down');
+  });
+
+  it('a step of zero or less is refused rather than hanging', () => {
+    const err = throws(() => exec([
+      'function f, given a count n:',
+      '    let s be 0',
+      '    for each k from 0 to n in steps of 0:',
+      '        let s be s + 1',
+      '    return s',
+    ].join('\n'), { env: { n: 3 }, call: 'f(n)' }), 'has to be 1 or more');
+    eq(err.kind, 'shape');
+  });
+
+  it('a swap is three lines and needs no verb of its own', () => {
+    const r = exec([
+      'function swap_rows, given table U, and rows k and p:',
+      '    let t be row k of U',
+      '    let row k of U be row p of U',
+      '    let row p of U be t',
+      '    return U',
+    ].join('\n'), { env: { U: [[1, 2], [3, 4]], k: 0, p: 1 }, call: 'swap_rows(U, k, p)' });
+    eq(r.value, [[3, 4], [1, 2]]);
   });
 
   it('a row or column of something that is not a table says so', () => {
     throws(() => exec([
       'function f, given nodes x:',
       '    let r be row 0 of x',
-      '    report r',
+      '    return r',
     ].join('\n'), { env: { x: [1, 2] }, call: 'f(x)' }), 'no rows or columns');
   });
 });

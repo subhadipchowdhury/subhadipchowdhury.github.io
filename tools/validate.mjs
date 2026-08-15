@@ -327,15 +327,17 @@ function checkStructure(gate, where) {
 // Two rules about a tile staying a tile. Neither is about grammar: the
 // interpreter already rejects a line it cannot read.
 
-// Every step of the English notation opens with one of these. `return` is not
-// among them on purpose, because `report` is the word in that notation.
-const OPENERS = ['function', 'let', 'copy', 'for', 'if', 'else', 'while', 'report', 'print'];
+// Every step opens with one of these, and they are the keywords a reader of
+// pseudocode already knows. The English notation adds exactly one word to the
+// list, `let`, and replaces no keyword: `if`, `then`, `else`, `for`, `while`,
+// `return` and `print` are all still the words they are in code.
+const OPENERS = ['function', 'let', 'for', 'if', 'else', 'while', 'return', 'print'];
 
-// Only these three can open a line in the English notation and nothing else, so
-// seeing one means the gate has been converted and the opener rule applies. A
-// gate still written with arrows is left alone, and starts being checked on the
-// commit that converts it.
-const ENGLISH_ONLY = ['let', 'copy', 'report'];
+// `let` is the one opener only the English notation uses, so seeing it means the
+// gate has been converted and the opener rule applies to all of it. A gate still
+// written with arrows is left alone, and starts being checked on the commit that
+// converts it.
+const ENGLISH_ONLY = ['let'];
 
 // A tile wider than this scrolls sideways on a phone, and a step a reader has to
 // scroll is a step they skip. The widest line in either lab is 57.
