@@ -83,7 +83,7 @@ CHEBNODES = {
             'from the end it reaches four, and in the last gap it reaches 60. '
             'This is Runge’s phenomenon, after the German mathematician and '
             'physicist Carl David Tolmé Runge, who published it in 1901. It '
-            'is not roundoff, it does not go away in exact arithmetic, and '
+            "isn't roundoff, it doesn't go away in exact arithmetic, and "
             'the only thing left to blame is where the nodes are.'
         ),
     },
@@ -92,7 +92,7 @@ The error is no mystery. If $f$ has $n+1$ continuous derivatives on $[a,b]$, the
 
 $$f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega(x), \qquad \omega(x) = (x-x_0)(x-x_1)\cdots(x-x_n),$$
 
-for some $\xi$ between the smallest and largest of $x, x_0, \dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That is the same lopsidedness the figure above has. So let's put more nodes near the ends.
+for some $\xi$ between the smallest and largest of $x, x_0, \dots, x_n$. The first factor belongs to $f$ and we can't do anything about it. The second one depends on nothing but where we put the nodes, and the nodes are ours to choose. For equally spaced nodes $|\omega|$ peaks near the two ends of the interval and is orders of magnitude smaller in the middle, and the gap between the two grows with $n$: at $n = 20$ it is a factor of about 7000. That's the same lopsidedness the figure above has. So let's put more nodes near the ends.
 
 How many more, and where? A good answer came from the Russian mathematician Pafnuty Chebyshev (1821-1894), and it starts as a picture rather than a formula:
 
@@ -101,7 +101,7 @@ How many more, and where? A good answer came from the Russian mathematician Pafn
 3. Take the midpoint of each piece, which gives $n+1$ points on the arc.
 4. Drop each one straight down onto the interval.
 
-Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That is the shape $\omega$ wanted.
+Equal steps along the arc come down as short steps where the arc is steep, so the nodes crowd towards $a$ and $b$ and thin out in the middle. That's the shape $\omega$ wanted.
 
 Now turn the picture into arithmetic. Measure $\theta$ from the right-hand end of the interval, so the arc runs from $\theta = 0$ to $\theta = \pi$ and a point at angle $\theta$ on the unit semicircle over $[-1,1]$ sits above $u = \cos\theta$. Write the two blanks: the denominator that lands $\theta$ at the midpoint of the $k$th piece, given the $2k+1$ already sitting in the numerator, and the map that carries $u$ to the matching point of $[a,b]$. The map has to send $u = -1$ to $a$ and $u = 1$ to $b$.
 
@@ -184,9 +184,9 @@ The nodes come out running from near $b$ down to near $a$. Interpolation doesn't
         'count_off_by_one': 'There is nowhere to put the last node. A polynomial of degree n is pinned down by n+1 values, and the construction produces exactly that many: cutting the arc at n+2 marks leaves n+1 pieces, and every piece contributes a node.',
         'frac_past_pi': 'Your angles run past pi and on around the circle, so the later nodes come back through the interval a second time and land on top of the earlier ones. The arc is a semicircle, so the last midpoint has to sit just short of pi.',
         'frac_arc_count': 'You divided the arc into n pieces rather than n+1. Count the pieces again: the n+2 marks, both ends included, have n+1 gaps between them, and each gap holds one node.',
-        'frac_odd_denominator': 'The denominator has to be twice the number of pieces, and 2n+1 is odd, so it is not twice anything. Yours sends the last angle to exactly pi, which puts the last node exactly on a, and the midpoint of a piece never lands on the end of the arc.',
+        'frac_odd_denominator': "The denominator has to be twice the number of pieces, and 2n+1 is odd, so it isn't twice anything. Yours sends the last angle to exactly pi, which puts the last node exactly on a, and the midpoint of a piece never lands on the end of the arc.",
         'map_no_centre': 'Your nodes are spread twice as wide as they should be, and nothing in your map mentions where the interval sits. Check the two ends of it: the map has to send u = -1 to a and u = +1 to b, and yours sends them to a-b and b-a instead.',
-        'map_centred_on_zero': 'The length is right and the position is not. Your nodes are centred on 0 wherever [a, b] happens to lie, so both ends miss: u = -1 lands on (a-b)/2 rather than a, and u = +1 on (b-a)/2 rather than b.',
+        'map_centred_on_zero': "The length is right and the position isn't. Your nodes are centred on 0 wherever [a, b] happens to lie, so both ends miss: u = -1 lands on (a-b)/2 rather than a, and u = +1 on (b-a)/2 rather than b.",
         'map_full_width': 'The centre is right and the width is twice what it should be, so the nodes nearest the ends fall outside the interval altogether. From the centre of [a, b] to either end is half its length.',
     },
 }
@@ -328,11 +328,11 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
     'feedback': {
         'sum_overwritten': 'Each pass throws away what the passes before it worked out, so what comes back is the last term on its own. Every one of the n+1 terms belongs in the answer, so p has to carry the running total from one pass to the next.',
         'product_starts_at_zero': 'A product that starts at zero stays at zero, so all of your L_i came out zero and so did p. The product of no factors at all is 1, the same way the sum of no terms at all is 0.',
-        'terms_added': 'L_i is the product of its factors, not the sum of them. A single factor going to zero has to take the whole of L_i to zero with it, and that is what a product does and a sum does not.',
+        'terms_added': "L_i is the product of its factors, not the sum of them. A single factor going to zero has to take the whole of L_i to zero with it, and that's what a product does and a sum doesn't.",
         'guard_inverted': 'That keeps the one factor the product has to leave out and drops the rest. It also divides by x_i minus x_i, which is zero. Which node is the one L_i must not vanish at?',
         'guard_partial': 'Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.',
         'factor_sign': 'Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.',
-        'factor_roles_swapped': 'You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.',
+        'factor_roles_swapped': "You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That's the one node where L_i isn't allowed to be zero.",
         'factor_precedence': 'In this notation / binds tighter than -, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.',
         'factor_no_denominator': 'Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node.',
     },
@@ -359,8 +359,8 @@ NOTEBOOK_LAB = {
     'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
     'colab_path': 'na/interpolation_runge_chebyshev.ipynb',
     'intro': (
-        'Adding more data points ought to improve a polynomial fit. It does '
-        'not always: on equally spaced nodes the error for a perfectly smooth '
+        "Adding more data points ought to improve a polynomial fit. It doesn't "
+        'always: on equally spaced nodes the error for a perfectly smooth '
         'function can grow without bound as the degree goes up.\n\n'
         'These two puzzles build the pair of algorithms behind that story: '
         'where to put the interpolation nodes so the error stays under '

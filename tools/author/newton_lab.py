@@ -288,7 +288,7 @@ NEWEVAL = {
         'caption': (
             "Reading those into Newton's form, the cubic through our four points is\n\n"
             '$$p(x) = 1 + 3(x-0) - 1.3333(x-0)(x-1) + 0.3222(x-0)(x-1)(x-3).$$\n\n'
-            'So we have the polynomial. We still cannot get a number out of it, '
+            "So we have the polynomial. We still can't get a number out of it, "
             'though: nothing built so far will tell us what $p(2.5)$ is.'
         ),
     },
@@ -392,7 +392,7 @@ NOTEBOOK_LAB = {
     'series': ['lab1-runge', 'lab2-newton', 'lab3-splines'],
     'colab_path': 'na/newton_divided_differences.ipynb',
     'intro': (
-        'Through $n$ points with distinct $x$ values there is exactly one '
+        "Through $n$ points with distinct $x$ values there's exactly one "
         'polynomial of degree less than $n$. Finding it is one thing; computing '
         'with it is another. These three puzzles build the machinery: the '
         'coefficients first, then a readable display of the table they come out '
