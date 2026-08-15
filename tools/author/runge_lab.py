@@ -287,6 +287,12 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
             {'text': '(t − xn[j]) / (xn[j] − xn[i])', 'why': 'factor_sign'},
             {'text': '(t − xn[i]) / (xn[j] − xn[i])', 'why': 'factor_roles_swapped'},
             {'text': '(t − xn[j])', 'why': 'factor_no_denominator'},
+            # The one blank in either lab that has to be bracketed, since it is a
+            # quotient of two differences. Dropping either pair of brackets gives a
+            # subtraction with a quotient inside it, and both slips used to fall
+            # through to the message that discloses a reference value.
+            {'text': 't − xn[j] / (xn[i] − xn[j])', 'why': 'factor_precedence'},
+            {'text': '(t − xn[j]) / xn[i] − xn[j]', 'why': 'factor_precedence'},
         ],
     },
 
@@ -327,6 +333,7 @@ Assemble the loops that build the sum at a single query point $t$. This algorith
         'guard_partial': 'Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.',
         'factor_sign': 'Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.',
         'factor_roles_swapped': 'You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.',
+        'factor_precedence': 'In this notation / binds tighter than −, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.',
         'factor_no_denominator': 'Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node.',
     },
 }

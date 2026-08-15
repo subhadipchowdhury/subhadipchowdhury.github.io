@@ -681,6 +681,14 @@
      {
       "text": "(t − xn[j])",
       "why": "factor_no_denominator"
+     },
+     {
+      "text": "t − xn[j] / (xn[i] − xn[j])",
+      "why": "factor_precedence"
+     },
+     {
+      "text": "(t − xn[j]) / xn[i] − xn[j]",
+      "why": "factor_precedence"
      }
     ]
    },
@@ -798,6 +806,7 @@
     "guard_partial": "Your product stops at j = i, so it leaves out every node after x_i and L_i comes out with degree i instead of n. The product runs over all the nodes but one.",
     "factor_sign": "Every factor has the right size and the wrong sign. A factor is divided by its own value at t = x_i, so it comes out to 1 there. Put t = x_i into yours and you get -1.",
     "factor_roles_swapped": "You have exchanged the roles of i and j. The factor that supplies the root at x_j has to vanish at t = x_j, and yours vanishes at t = x_i instead. That is the one node where L_i is not allowed to be zero.",
+    "factor_precedence": "In this notation / binds tighter than −, the same way it does in ordinary algebra, so what you typed is a subtraction with a quotient inside it rather than a quotient of two differences. Put brackets round each difference and the two operations happen in the order you meant.",
     "factor_no_denominator": "Every root is in the right place, so your L_i does vanish at all the other nodes. Nothing has made it 1 at its own node, though: put its own node in and out comes the product of the gaps from that node to each of the others, which is no particular number. Divide each factor by its own value there and every one of them turns into 1 at that node."
    },
    "reveal": [
@@ -947,7 +956,7 @@
      "num": 10
     }
    ],
-   "hash": "97bc706abf4b646e",
+   "hash": "56d3acd2c7b63c1b",
    "python": "# ---------------------------------------------------------------------------\n# The interpolating polynomial, evaluated via the Lagrange formula\n# ---------------------------------------------------------------------------\ndef lagrange_eval(nodes, values, xq):\n    \"\"\"Evaluate the polynomial interpolating (nodes[i], values[i]) at xq.\n\n    Parameters\n    ----------\n    nodes  : array (m,)  distinct x-coordinates of the data\n    values : array (m,)  y-coordinates, values[i] = f(nodes[i])\n    xq     : array       points at which to evaluate the interpolant\n    \"\"\"\n    nodes  = np.asarray(nodes,  dtype=float)\n    values = np.asarray(values, dtype=float)\n    xq     = np.asarray(xq,     dtype=float)\n\n    m = len(nodes)\n    result = np.zeros_like(xq)\n    for i in range(m):\n        Li = np.ones_like(xq)\n        for j in range(m):\n            if j != i:\n                Li = Li * (xq - nodes[j]) / (nodes[i] - nodes[j])\n        result = result + values[i] * Li\n    return result",
    "brief_html": "<p>One route to that polynomial is to write $p(x) = c_0 + c_1x + c_2x^2 + c_3x^3$, substitute the four points and solve for the $c_k$. Let's not. If we choose the basis to suit the data, the coefficients turn out to be the data.</p>\n<p>Ask for one polynomial per node, $L_0,\\dots,L_n$, each of them equal to $1$ at its own node and $0$ at every other node. Then</p>\n<p>$$p(x) = y_0L_0(x) + y_1L_1(x) + \\cdots + y_nL_n(x)$$</p>\n<p>interpolates: at $x_k$ every term but the $k$th is zero, and the term left standing is $y_k \\cdot 1$. This is the Lagrange form, named for the Italian-French mathematician Joseph-Louis Lagrange, who published it in 1795, though Edward Waring had written it down in 1779.</p>\n<p>So we need the $L_i$, and each one is a product built up one factor at a time. Two requirements decide the factors. $L_i$ has to vanish at the $n$ nodes other than $x_i$, and a factor can supply one of those roots. $L_i$ also has to equal $1$ at $x_i$, which fixes what each factor gets divided by. Count them and you get $n$ factors, so every $L_i$ has degree exactly $n$ and $p$ has degree at most $n$. It can come out lower: our four values are symmetric about $x = 0$, so the cubic term cancels and $p$ is really a quadratic.</p>\n<p>Assemble the loops that build the sum at a single query point $t$. This algorithm is handed the data rather than a degree, so it counts what it was given: $m$ is the number of nodes, one more than the degree. Two expressions are blank: the condition on $j$ that decides which factors go into $L_i$, and the factor itself.</p>"
   }
