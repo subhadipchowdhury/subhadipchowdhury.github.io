@@ -285,9 +285,11 @@ robots: false
   }
 
   /* The box inside a step sits under a step heading, so its own heading drops
-     a level and a size. */
+     a level and a size. The site right-aligns every h3, which a heading sitting
+     over a paragraph should not do. */
   .spec-panel h3 {
     font-size: 1.2rem;
+    text-align: left;
   }
 
   .spec-panel li strong {
