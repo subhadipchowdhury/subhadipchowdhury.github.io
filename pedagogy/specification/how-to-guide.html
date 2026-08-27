@@ -562,7 +562,7 @@ robots: false
         </li>
         <li class="is-aside">
           <span class="spec-check-gap"></span>
-          <a href="#becomes" data-toclink="becomes">What the document becomes</a>
+          <a href="#becomes" data-toclink="becomes">What the specification becomes</a>
         </li>
         <li>
           <button class="spec-check" data-check="s5" type="button" aria-pressed="false" aria-label="Mark step 5 as done">&#10003;</button>
@@ -628,7 +628,7 @@ robots: false
         </ol>
         <p>Leave <code>Project instructions</code> empty for now. You&rsquo;ll write them in <a href="#s5">Step 5</a>, once the specification exists.</p>
         <div class="spec-panel spec-panel--aside">
-          <h3>Where should the document live?</h3>
+          <h3>Does it have to be a <code>Projects</code> workspace?</h3>
           <p>Two other workspaces do the same job, and both put the specification on your own computer where Claude edits it in place, rather than you downloading it, editing it, and uploading the new copy every time a rule changes.</p>
           <ul>
             <li><strong>Cowork</strong> mounts folders from your computer into a project, and the scheduled review of <a href="#s9">Step 9</a> then runs inside that project. Cowork projects are desktop-only, aren&rsquo;t synced, and can&rsquo;t be shared with a colleague.</li>
@@ -693,11 +693,11 @@ robots: false
         </div>
 
         <p>The third pass adds what no amount of reading would reveal. The rejects show a few failures you kept a copy of. They can&rsquo;t show the draft you abandoned halfway, the topic you refuse to assign, or the framing you&rsquo;ve never once used. Ask yourself what makes you throw material away, and write those answers down.</p>
-        <p>Then stop, while the document is still thin. Most of the rules in mine arrived later, from cases I hadn&rsquo;t met yet, and you write yours in <a href="#s8">Step 8</a>.</p>
+        <p>Then stop, while the specification is still thin. Most of the rules in mine arrived later, from cases I hadn&rsquo;t met yet, and you write yours in <a href="#s8">Step 8</a>.</p>
       </section>
 
       <section class="spec-panel" id="becomes" data-sec="becomes">
-        <h2>What the document becomes</h2>
+        <h2>What the specification becomes</h2>
         <p>Over a term or two, mine has settled into six sections. Don&rsquo;t try to write them all today.</p>
         <ol>
           <li><strong>Purpose and audience.</strong> What the material is for, who the students are, what they have already seen, how they will be assessed.</li>
@@ -721,7 +721,7 @@ robots: false
           </div>
           <p class="spec-prompt__body" id="prompt-instructions">This project produces material for [course]. Treat [course]_specification.md as the authoritative reference and consult it before drafting anything. Where these instructions and the specification disagree, the specification wins. Mark anything you are unsure of, including computations, claims, and references, and do not paper over a gap in a derivation. Propose the structure of a new piece and wait for my approval before writing it out in full.</p>
         </div>
-        <p>Keep the instructions short and let them point at the document. You can revise a file properly, keep the old copies, and hand one to a colleague. A text box gives you none of that. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
+        <p>Keep the instructions short and let them point at the specification. You can revise a file properly, keep the old copies, and hand one to a colleague. A text box gives you none of that. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
       </section>
 
       <section class="section-block spec-step" id="s6" data-sec="s6">
@@ -735,7 +735,7 @@ robots: false
       <section class="section-block spec-step" id="s7" data-sec="s7">
         <p class="spec-step__kicker">Step 7</p>
         <h2>Test before you trust it</h2>
-        <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, work out which of three things happened: the document says nothing about that point, the document says the wrong thing, or the document is right and the model went straight past it. The first two you fix by editing. For the third, restate the rule as a prohibition, which a model follows more reliably than a preference. Two or three of these tests found most of what was missing in mine.</p>
+        <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, work out which of three things happened: the specification says nothing about that point, says the wrong thing, or is right and the model went straight past it. The first two you fix by editing. For the third, restate the rule as a prohibition, which a model follows more reliably than a preference. Two or three of these tests found most of what was missing in mine.</p>
         <p>The test checks style. Nothing in it, or in the specification, checks whether the content is correct. A model states a wrong claim as fluently as a right one, so read everything for accuracy before it reaches students. The line in the project instructions asking it to mark what it is unsure of helps a little, but only a little: it shows you where the model noticed a gap, and the errors that matter are the ones it made confidently. You check the content accuracy and the logic yourself.</p>
       </section>
 
@@ -746,9 +746,9 @@ robots: false
         <ol>
           <li>Find where it falls short.</li>
           <li>State the principle behind the shortfall rather than fixing the instance, and keep a running list of these. Say &ldquo;no question may name the theorem it is testing&rdquo; rather than &ldquo;cut the phrase mean value theorem from the hint in question 3.&rdquo;</li>
-          <li>Once the same infraction has appeared three or so times, promote the principle from that list into the document as a numbered rule.</li>
+          <li>Once the same infraction has appeared three or so times, promote the principle from that list into the specification as a numbered rule.</li>
         </ol>
-        <p>Correcting the model in conversation doesn&rsquo;t change the uploaded file, so promote a rule by editing the document and replacing the copy in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it one level up, so that it names the principle underneath.</p>
+        <p>Correcting the model in conversation doesn&rsquo;t change the uploaded file, so promote a rule by editing the specification and replacing the copy in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it one level up, so that it names the principle underneath.</p>
       </section>
 
       <section class="section-block spec-step" id="s9" data-sec="s9">
@@ -773,14 +773,14 @@ robots: false
       <section class="section-block spec-step" id="s10" data-sec="s10">
         <p class="spec-step__kicker">Step 10</p>
         <h2>Reorganize as it grows</h2>
-        <p>Past twenty pages or so, split the document into three layers so you can revise one without disturbing the others.</p>
+        <p>Past twenty pages or so, split the specification into three layers so you can revise one without disturbing the others.</p>
         <ul>
           <li><strong>Core.</strong> Principles that hold across everything you teach.</li>
           <li><strong>Context.</strong> The course and the term, which you swap out each time you teach it.</li>
           <li><strong>Conventions.</strong> One section for each kind of material, worksheets, exams, solution keys.</li>
         </ul>
         <p>The six sections map onto the layers. Purpose and audience becomes Context. Design principles, rejection triggers, and voice become Core. Format conventions and the annotated example become Conventions.</p>
-        <p>Once a term, do a structural pass yourself. Replace Context for the new quarter, condense the sections for kinds of material you aren&rsquo;t currently using instead of deleting them, and reconcile any rules that have changed so that two versions of the same rule don&rsquo;t both sit in the document. This is also where you write down a design that didn&rsquo;t work in class, since the specification will keep producing it until you say otherwise.</p>
+        <p>Once a term, do a structural pass yourself. Replace Context for the new quarter, condense the sections for kinds of material you aren&rsquo;t currently using instead of deleting them, and reconcile any rules that have changed so that two versions of the same rule don&rsquo;t both sit in the specification. This is also where you write down a design that didn&rsquo;t work in class, since the specification will keep producing it until you say otherwise.</p>
         <p>Review the project instructions in the same sitting, since they name the current course and the drafting workflow and go stale faster than the specification does. Ask the model to propose a revised set, read the proposal line by line before accepting any of it, and look in particular for instructions that have grown into a competing copy of the specification or that still describe a course you no longer teach.</p>
       </section>
 
