@@ -7,8 +7,11 @@ description: Pedagogy talks, collaborative learning materials, and faculty devel
 
 {% include page_title.html title=page.title %}
 
+{% include section_open.html %}
 
+* [Go to this link](/pedagogy/specification/) for my Teaching Matters column on writing a teaching specification, a companion how-to guide, and two public course specifications.
 
+{% include section_close.html %}
 
 {% include section_open.html %}
 
