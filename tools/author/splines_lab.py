@@ -391,7 +391,7 @@ BCCHECK = {
     'concept': 'boundary_conditions',
     'title': 'What the boundary condition costs',
     'brief': r'''
-Both halves of the machine are built. What's left is the pair of rows the interior equations refused to write, and the notebook fills them in two ways: "natural", which sets $M_0 = M_n = 0$, and "clamped", which imposes the true end slopes $f'(x_0)$ and $f'(x_n)$ when someone can supply them. On a plot the two splines are hard to tell apart; both interpolate every data point and both look smooth. The difference shows up when you measure. For $f(x) = \cos(x)\,e^{-0.15x}$ sampled at $9$ points on $[0,10]$, the notebook's error table puts the largest error on the two end panels at $8.5\times 10^{-2}$ for natural against $4.7\times 10^{-3}$ for clamped, a factor of eighteen, while on the middle third of the interval the two sit at $4.7\times 10^{-3}$ and $4.1\times 10^{-3}$, nearly tied.
+Both halves of the machine are built, so let's settle the pair of rows the interior equations refused to write. The notebook fills them in two ways: "natural", which sets $M_0 = M_n = 0$, and "clamped", which imposes the true end slopes $f'(x_0)$ and $f'(x_n)$ when someone can supply them. On a plot the two splines are hard to tell apart; both interpolate every data point and both look smooth. The difference shows up when you measure. For $f(x) = \cos(x)\,e^{-0.15x}$ sampled at $9$ points on $[0,10]$, the notebook's error table puts the largest error on the two end panels at $8.5\times 10^{-2}$ for natural against $4.7\times 10^{-3}$ for clamped, a factor of eighteen, while on the middle third of the interval the two sit at $4.7\times 10^{-3}$ and $4.1\times 10^{-3}$, nearly tied.
 
 Answer the three questions below, which are about what that table means rather than about how any code works. A wrong pick tells you what it got wrong rather than what the answer is.
 ''',
@@ -461,7 +461,7 @@ The factor per doubling is $2^p$, not $p$. Read $4$ as $2^p$ and the exponent is
                     'no_conv',
                     r"The natural spline isn't converging at the ends at all.",
                     r'''
-Not converging looks like errors that plateau or grow, the way the equispaced polynomial's do in the comparison further down the notebook. Here the end-panel error falls by four at every doubling, from $8.5\times 10^{-2}$ down to $2.9\times 10^{-4}$ and still falling. Slow convergence and no convergence differ by everything: one is a rate you can budget for, the other is a method you discard.
+Not converging looks like errors that plateau or grow, the way the equispaced polynomial's do in the comparison further down the notebook. Here the end-panel error falls by four at every doubling, from $8.5\times 10^{-2}$ down to $2.9\times 10^{-4}$ and still falling. Slow convergence is a rate you can budget for; no convergence is a method you discard.
 ''',
                 ),
                 option(
@@ -484,7 +484,7 @@ The notebook's last experiment samples Runge's function $f(x) = 1/(1+25x^2)$ at 
                     'degree_fixed',
                     r'Refining the spline adds panels without raising the degree, so its error involves $f^{(4)}$ and $h^4$ forever; refining the polynomial raises the degree, and its error term is what blows up.',
                     r'''
-Adding a node changes the polynomial's question: one more factor in $\omega$, one more derivative of $f$ in the numerator, and for this $f$ those derivatives grow like $(n+1)!\,5^{\,n+1}$. The spline never asks about more than the fourth derivative, however many nodes arrive, and $h^4 \max|f^{(4)}|$ per panel only shrinks as the panels narrow. Locality does the rest: each cubic takes its instructions from nearby data, so the ends can't poison the middle.
+Adding a node changes the polynomial's question: one more factor in $\omega$, one more derivative of $f$ in the numerator, and for this $f$ those derivatives grow like $(n+1)!\,5^{\,n+1}$. The spline never asks about more than the fourth derivative, however many nodes arrive, and $h^4 \max|f^{(4)}|$ per panel only shrinks as the panels narrow. The other half is locality: each cubic takes its instructions from nearby data, so the ends can't poison the middle.
 ''',
                 ),
                 option(
@@ -548,7 +548,7 @@ NOTEBOOK_LAB = {
         'actually costs.\n\n'
         "We'll work throughout with the four points\n\n"
         r'$$x = 0,\; 1,\; 3,\; 6 \qquad y = 1,\; 4,\; 2,\; 8,$$' '\n\n'
-        'whose panel widths are 1, 2 and 3. Unequal on purpose: several '
+        'whose panel widths are 1, 2 and 3, unequal on purpose: several '
         'wrong assemblies below agree with the right one exactly when '
         "adjacent panels tie, and these don't. Any output you see on this "
         'page came from these four points.\n\n'
