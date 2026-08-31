@@ -1199,6 +1199,16 @@ body.style-variant-a .papers {
 	margin-left: 0;
 }
 
+// kramdown's parse_block_html wraps the anchors in a <p>, which would otherwise
+// be the row's only flex child and swallow the gap above. Make that <p> the
+// flex container instead.
+.research-link-row p {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
 // Expandable panel that contains the abstract text itself.
 .abstract-panel {
 	margin: 0.75rem 0 0.35rem;

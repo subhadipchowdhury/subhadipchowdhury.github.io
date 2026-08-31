@@ -2,14 +2,22 @@
 layout: default
 title: Pedagogy
 navigation_weight: 3
-description: Pedagogy talks, collaborative learning materials, and faculty development work.
+description: Writing on teaching, collaborative learning materials, faculty development work, and pedagogy talks.
 ---
 
 {% include page_title.html title=page.title %}
 
 {% include section_open.html %}
 
-* [Go to this link](/pedagogy/specification/) for my Teaching Matters column on writing a teaching specification, a companion how-to guide, and two public course specifications.
+## Writing
+
+<div class="papers">
+**Teaching Your AI How You Teach**<br/> *Teaching Matters, Chicago Center for Teaching and Learning, August 2026.*
+
+<div class="research-link-row">
+<a class="abstract-toggle" href="https://teaching.uchicago.edu/resources/subhadip-chowdury-teaching-your-ai-how-you-teach" target="_blank" rel="noopener noreferrer">column</a><a class="abstract-toggle" href="/pedagogy/specification/how-to-guide/">how-to guide</a>
+</div>
+</div>
 
 {% include section_close.html %}
 
