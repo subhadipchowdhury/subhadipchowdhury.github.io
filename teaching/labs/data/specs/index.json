@@ -22,5 +22,11 @@
   "title": "Adaptive quadrature",
   "order": 4,
   "puzzles": 3
+ },
+ {
+  "lab_id": "least-squares",
+  "title": "Least squares and orthogonal polynomials",
+  "order": 5,
+  "puzzles": 3
  }
 ]
