@@ -18,7 +18,8 @@ description: A standing document that states how you build course material, writ
   }
 
   /* Sticky contents rail beside the prose. Collapses to a block above the
-     text under 860px. */
+     text under 860px, and stops being sticky under 700px tall, where there is
+     no room to pin it. It never scrolls on its own at any size. */
   .spec-shell {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
@@ -29,9 +30,6 @@ description: A standing document that states how you build course material, writ
   .spec-toc {
     position: sticky;
     top: 4.75rem; /* clears the sticky site header in its scrolled state */
-    max-height: calc(100vh - 6.5rem);
-    overflow: auto;
-    padding-right: 0.35rem;
   }
 
   .spec-toc__label {
@@ -440,10 +438,18 @@ description: A standing document that states how you build course material, writ
 
     .spec-toc {
       position: static;
-      max-height: none;
       margin-bottom: 1.6rem;
       padding: 0 0 1.2rem;
       border-bottom: 1px solid var(--border-color);
+    }
+  }
+
+  /* The rail runs about 560px. Below that plus the sticky offset there is no
+     room to pin it, so it reverts to ordinary content and scrolls with the page
+     rather than growing a scrollbar of its own. */
+  @media all and (max-height: 700px) {
+    .spec-toc {
+      position: static;
     }
   }
 
@@ -496,7 +502,6 @@ description: A standing document that states how you build course material, writ
 
     .spec-toc {
       position: static;
-      max-height: none;
       margin-bottom: 1.7rem;
       padding: 0 0 1.2rem;
       border-bottom: 1px solid var(--border-color);
