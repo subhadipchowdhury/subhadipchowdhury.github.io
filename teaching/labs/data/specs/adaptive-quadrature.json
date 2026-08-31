@@ -388,7 +388,7 @@
      "id": "def",
      "lines": [
       {
-       "text": "function adaptive_simpson, given a, b, tol, the estimate whole and the depth d:",
+       "text": "function adapt, given a, b, tol, the estimate whole and the depth d:",
        "indent": 0
       }
      ],
@@ -486,7 +486,7 @@
      "id": "recurse",
      "lines": [
       {
-       "text": "return adaptive_simpson(a, c, tol, left, d+1) + adaptive_simpson(c, b, tol, right, d+1)",
+       "text": "return adapt(a, c, tol, left, d+1) + adapt(c, b, tol, right, d+1)",
        "indent": 0
       }
      ],
@@ -566,7 +566,7 @@
      "id": "d_stale",
      "lines": [
       {
-       "text": "return adaptive_simpson(a, c, tol, whole, d+1) + adaptive_simpson(c, b, tol, whole, d+1)",
+       "text": "return adapt(a, c, tol, whole, d+1) + adapt(c, b, tol, whole, d+1)",
        "indent": 0
       }
      ],
@@ -607,15 +607,15 @@
    "probes": [
     {
      "env": {},
-     "call": "adaptive_simpson(0, 1, 0.001, ((1-0)/6) * (sqrt(0) + 4*sqrt((0+1)/2) + sqrt(1)), 0)"
+     "call": "adapt(0, 1, 0.001, ((1-0)/6) * (sqrt(0) + 4*sqrt((0+1)/2) + sqrt(1)), 0)"
     },
     {
      "env": {},
-     "call": "adaptive_simpson(0, 4, 0.001, ((4-0)/6) * (sqrt(0) + 4*sqrt((0+4)/2) + sqrt(4)), 0)"
+     "call": "adapt(0, 4, 0.001, ((4-0)/6) * (sqrt(0) + 4*sqrt((0+4)/2) + sqrt(4)), 0)"
     },
     {
      "env": {},
-     "call": "adaptive_simpson(1, 4, 0.0001, ((4-1)/6) * (sqrt(1) + 4*sqrt((1+4)/2) + sqrt(4)), 0)"
+     "call": "adapt(1, 4, 0.0001, ((4-1)/6) * (sqrt(1) + 4*sqrt((1+4)/2) + sqrt(4)), 0)"
     }
    ],
    "trace": [],
@@ -645,7 +645,7 @@
      "blocks": [
       "recurse"
      ],
-     "text": "The Python wraps one return across two lines to keep it readable. It is a single statement either way."
+     "text": "The pseudocode calls the function adapt where the Python calls it adaptive_simpson; the shorter name keeps the step on one line. The Python also wraps this one return across two lines to keep it readable, and it is a single statement either way."
     }
    ],
    "feedback": {
@@ -795,7 +795,7 @@
     }
    ],
    "python": "# ---------------------------------------------------------------------------\n# Adaptive Simpson with an interval-halving error estimate\n# ---------------------------------------------------------------------------\n# On each subinterval, compare one Simpson estimate for the whole of it\n# against the sum of two half-interval estimates. By Richardson reasoning\n# their difference divided by 15 estimates the error of the finer value; if\n# that is below the tolerance the value is accepted, with the estimate added\n# on as a cheap accuracy boost, and otherwise both halves recurse. A depth\n# cap prevents runaway subdivision.\n\ndef adaptive_simpson(f, a, b, tol, whole, depth):\n    \"\"\"Recursive core. whole is the single-panel estimate for [a, b].\"\"\"\n    c = (a + b) / 2.0\n    left = simpson_panel(f, a, c)\n    right = simpson_panel(f, c, b)\n    refined = left + right\n    if depth >= 30 or abs(refined - whole) <= 15.0 * tol:\n        return refined + (refined - whole) / 15.0\n    return (adaptive_simpson(f, a, c, tol, left, depth + 1) +\n            adaptive_simpson(f, c, b, tol, right, depth + 1))\n\n_v = adaptive_simpson(f_root, 0.0, 1.0, 1e-8, simpson_panel(f_root, 0.0, 1.0), 0)\nprint(f\"adaptive on sqrt(x) over [0,1]: {_v:.10f}   error {abs(_v - 2/3):.2e}\")",
-   "hash": "d7f21875fc13b3e6",
+   "hash": "f68c3c7b725de9ea",
    "brief_html": "<p>Let's spend the evaluations where the error is. That means two questions: how do we know, without the exact answer, how much error a piece of the interval still carries, and what do we do about it.</p>\n<p>The first has a classical answer. Suppose we estimate $\\int_a^b f$ twice, once with a single Simpson panel and once with two half-panels, calling the results $S_1$ and $S_2$. Simpson's local error scales as the fifth power of the panel width, and $S_2$ is two panels of half the width, so its error is smaller than $S_1$'s by a factor of $2^4 = 16$ (why?):</p>\n<p>$$S_1 = I + E, \\qquad S_2 = I + \\tfrac{E}{16}.$$</p>\n<p>Neither $I$ nor $E$ is available to us, but the difference of the two estimates is:</p>\n<p>$$S_2 - S_1 = -\\tfrac{15}{16}E \\quad\\Longrightarrow\\quad I - S_2 = -\\tfrac{E}{16} = \\frac{S_2 - S_1}{15}.$$</p>\n<p>So the gap between the two estimates, divided by $15$, is the error of the better one, and it costs nothing beyond the two estimates we already have. This is <strong>Richardson extrapolation</strong>, after the British mathematician and meteorologist Lewis Fry Richardson (1881-1953), who also made the first numerical weather forecast, by hand, over six weeks, for a six-hour prediction.</p>\n<p>Two things follow. Rearranged as $I \\approx S_2 + (S_2-S_1)/15$ it hands back a better answer than $S_2$ for free, so we may as well add the correction on. Read as a size, $|I - S_2| = |S_2 - S_1|/15$, it tells us whether we are done: to make the error of $S_2$ no more than a tolerance, demand that the gap between the estimates be no more than $15$ times that tolerance.</p>\n<p>Now the second question. Check the gap on the interval. If it is small enough, accept the corrected value and stop. If it isn't, cut the interval in half and ask the same question of each piece, which is a recursion, and each piece already carries the estimate it needs: the half-panel value computed here becomes the whole-interval estimate one level down. A depth cap stops the descent on an integrand that never satisfies us.</p>\n<p>Assemble it. The two blanks are the test that decides whether this piece is finished and the correction added to the value we accept.</p>"
   },
   {

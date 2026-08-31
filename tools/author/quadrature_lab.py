@@ -262,14 +262,14 @@ Assemble it. The two blanks are the test that decides whether this piece is fini
 ''',
 
     'blocks': [
-        block('def', 'function adaptive_simpson, given a, b, tol, the estimate whole and the depth d:', [11, 11], 'def adaptive_simpson'),
+        block('def', 'function adapt, given a, b, tol, the estimate whole and the depth d:', [11, 11], 'def adaptive_simpson'),
         block('mid', 'let c be (a+b)/2', [13, 13], 'c = (a + b)'),
         block('left', 'let left be ((c-a)/6) * (sqrt(a) + 4*sqrt((a+c)/2) + sqrt(c))', [14, 14], 'left = simpson_panel'),
         block('right', 'let right be ((b-c)/6) * (sqrt(c) + 4*sqrt((c+b)/2) + sqrt(b))', [15, 15], 'right = simpson_panel'),
         block('refined', 'let refined be left + right', [16, 16], 'refined = left + right'),
         block('test', 'if d >= 30 or abs(refined - whole) <= ⟨?test⟩ then:', [17, 17], 'if depth >= 30'),
         block('accept', 'return refined + ⟨?corr⟩', [18, 18], 'return refined +'),
-        block('recurse', 'return adaptive_simpson(a, c, tol, left, d+1) + adaptive_simpson(c, b, tol, right, d+1)', [19, 20], 'return (adaptive_simpson'),
+        block('recurse', 'return adapt(a, c, tol, left, d+1) + adapt(c, b, tol, right, d+1)', [19, 20], 'return (adaptive_simpson'),
     ],
 
     'solution': [
@@ -301,7 +301,7 @@ Assemble it. The two blanks are the test that decides whether this piece is fini
         decoy('d_coarse', 'return whole + ⟨?corr⟩', 'accept', 'corrects_the_coarse_one'),
         decoy(
             'd_stale',
-            'return adaptive_simpson(a, c, tol, whole, d+1) + adaptive_simpson(c, b, tol, whole, d+1)',
+            'return adapt(a, c, tol, whole, d+1) + adapt(c, b, tol, whole, d+1)',
             'recurse',
             'stale_baseline',
         ),
@@ -324,9 +324,9 @@ Assemble it. The two blanks are the test that decides whether this piece is fini
     # the recursion terminates on the tolerance rather than on the singularity,
     # which is the path the depth cap would otherwise hide.
     'probes': [
-        {'env': {}, 'call': f'adaptive_simpson(0, 1, 0.001, {_whole(0, 1)}, 0)'},
-        {'env': {}, 'call': f'adaptive_simpson(0, 4, 0.001, {_whole(0, 4)}, 0)'},
-        {'env': {}, 'call': f'adaptive_simpson(1, 4, 0.0001, {_whole(1, 4)}, 0)'},
+        {'env': {}, 'call': f'adapt(0, 1, 0.001, {_whole(0, 1)}, 0)'},
+        {'env': {}, 'call': f'adapt(0, 4, 0.001, {_whole(0, 4)}, 0)'},
+        {'env': {}, 'call': f'adapt(1, 4, 0.0001, {_whole(1, 4)}, 0)'},
     ],
     'trace': [],
     'compare': 'value',
@@ -342,7 +342,7 @@ Assemble it. The two blanks are the test that decides whether this piece is fini
         },
         {
             'blocks': ['recurse'],
-            'text': 'The Python wraps one return across two lines to keep it readable. It is a single statement either way.',
+            'text': 'The pseudocode calls the function adapt where the Python calls it adaptive_simpson; the shorter name keeps the step on one line. The Python also wraps this one return across two lines to keep it readable, and it is a single statement either way.',
         },
     ],
 
