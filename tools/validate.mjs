@@ -1,7 +1,7 @@
 // Build-time validation of a lab spec.
 //
-//     node tools/validate.mjs teaching/labs/data/specs/lab1-newton.json
-//     jsc -m tools/validate.mjs -- teaching/labs/data/specs/lab1-newton.json
+//     node tools/validate.mjs teaching/labs/data/specs/newton.json
+//     jsc -m tools/validate.mjs -- teaching/labs/data/specs/newton.json
 //
 // build_labs.py runs this and refuses to ship a spec it rejects. The main check
 // pushes every distractor and every wrong answer through the real grader, and

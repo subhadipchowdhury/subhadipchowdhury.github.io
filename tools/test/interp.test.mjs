@@ -119,7 +119,7 @@ describe('expressions', () => {
 
   it('takes every spelling of !=, since there is no key for the glyph', () => {
     // != is C and Python, /= is Ada and Haskell, <> is Pascal, BASIC, SQL and
-    // Excel, ~= is MATLAB. lab2-runge's guard blank is the one that needs this.
+    // Excel, ~= is MATLAB. runge's guard blank is the one that needs this.
     for (const ne of ['!=', '/=', '<>', '~=', '=/=', '\u2260']) {
       eq(evalExpression(`1 ${ne} 2`), true, `${ne} should mean !=`);
       eq(evalExpression(`2 ${ne} 2`), false, `${ne} should mean !=`);
@@ -647,7 +647,7 @@ function print_dd_table(x, T):
   });
 });
 
-// The two algorithms of lab2-runge, in the pseudocode that lab ships. The
+// The two algorithms of runge, in the pseudocode that lab ships. The
 // distractor and wrong-blank cases below are the mathematical reasons the
 // build-time validator can separate them; the validator checks the separation
 // itself, these check the tell each feedback message names.
@@ -792,7 +792,7 @@ function lagrange_eval(xn, yn, t):
   });
 
   it('factor_sign: an even number of factors would hide a flipped denominator', () => {
-    // Why lab2-runge probes lageval with four nodes and not five. Each L_i has
+    // Why runge probes lageval with four nodes and not five. Each L_i has
     // m-1 factors, so flipping the sign of every denominator multiplies L_i by
     // (-1)^(m-1): visible when m is even, invisible when m is odd.
     const flipped = { factor: '(t - xn[j]) / (xn[j] - xn[i])' };

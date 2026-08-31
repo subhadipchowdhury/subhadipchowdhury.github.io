@@ -125,7 +125,7 @@
 <body class="shell-page">
 
 <div class="demo-bar">
-  <strong>Lab page demo &middot; lab1-newton</strong>
+  <strong>Lab page demo &middot; newton</strong>
   <button id="wipe">Clear saved progress and reload</button>
   <span id="status"></span>
 </div>
@@ -217,7 +217,7 @@ if (!new URLSearchParams(location.search).has('dev')) {
   try { localStorage.setItem('lab:dev', '1'); } catch { /* ignore */ }
 }
 
-const lab = await mountLab(root, '/teaching/labs/data/specs/lab1-newton.json').catch((err) => {
+const lab = await mountLab(root, '/teaching/labs/data/specs/newton.json').catch((err) => {
   root.innerHTML = '';
   const p = document.createElement('p');
   p.className = 'lab-locked';

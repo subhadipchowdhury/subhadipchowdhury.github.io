@@ -1,13 +1,13 @@
 {
- "lab_id": "lab1-newton",
+ "lab_id": "newton",
  "order": 1,
  "title": "Newton form and divided differences",
  "blurb": "Build the divided-difference table, then the nested evaluation that uses it.",
  "intro_html": "<p>Through $n$ points with distinct $x$ values there's exactly one polynomial of degree less than $n$. Finding it is one thing; computing with it is another. These three steps build the machinery and then ask what it means: the coefficients first, then three questions about the table they come out of, then a cheap way to evaluate the polynomial at a point.</p>\n<p>We'll work throughout with the same four points,</p>\n<p>$$x = 0,\\; 1,\\; 3,\\; 6 \\qquad y = 1,\\; 4,\\; 2,\\; 8,$$</p>\n<p>so the polynomial we're after is a cubic. Any output you see on this page came from running these algorithms on those four points.</p>\n<p>The first and last hand you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The middle one asks three multiple-choice questions about the mathematics rather than the code, and answers them together. The notebook opens once all three are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. <code>*</code> multiplies, <code>!=</code> means \"is not equal to\" and <code>&lt;=</code> means \"is at most\". Every symbol here is one you can type, so a blank takes exactly what you read. The key above the puzzles has the rest.</p>",
  "series": [
-  "lab1-newton",
-  "lab2-runge",
-  "lab3-splines"
+  "newton",
+  "runge",
+  "splines"
  ],
  "source": "notebooks/na/newton_divided_differences.ipynb",
  "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/labs/notebooks/na/newton_divided_differences.ipynb",

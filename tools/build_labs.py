@@ -5,7 +5,7 @@ than one Mac, so no interpreter path is written down here; the venv lives outsid
 the synced folder and its path and Python version differ per machine.
 
     python tools/build_labs.py              # every annotated notebook
-    python tools/build_labs.py lab1-newton  # one lab
+    python tools/build_labs.py newton       # one lab
     python tools/build_labs.py --no-run     # skip the notebook run
 
 The venv is deliberately outside this folder: an in-repo `.venv/` cannot survive

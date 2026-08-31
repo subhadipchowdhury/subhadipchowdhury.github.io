@@ -14,7 +14,7 @@ A page file is front matter only, or front matter plus its own markup for an
 applet. Everything else is either engine code or generated data.
 
 The lab directory is `guided/` rather than `labs/`, which would read
-`/teaching/labs/labs/lab1-newton/`. `LAB_DIR` in `index.html` is the one place
+`/teaching/labs/labs/newton/`. `LAB_DIR` in `index.html` is the one place
 that knows the name; a lab card carries an id, not a filename.
 
 ## Layout

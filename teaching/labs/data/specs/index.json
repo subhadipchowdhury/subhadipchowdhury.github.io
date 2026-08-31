@@ -1,12 +1,12 @@
 [
  {
-  "lab_id": "lab1-newton",
+  "lab_id": "newton",
   "title": "Newton form and divided differences",
   "order": 1,
   "puzzles": 3
  },
  {
-  "lab_id": "lab2-runge",
+  "lab_id": "runge",
   "title": "Runge's phenomenon and Chebyshev nodes",
   "order": 2,
   "puzzles": 3

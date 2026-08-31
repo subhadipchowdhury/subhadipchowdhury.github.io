@@ -1,13 +1,13 @@
 {
- "lab_id": "lab2-runge",
+ "lab_id": "runge",
  "order": 2,
  "title": "Runge's phenomenon and Chebyshev nodes",
  "blurb": "Place the nodes where the error formula says they belong, then build the interpolant that shows the difference.",
  "intro_html": "<p>Adding more data points ought to improve a polynomial fit. It doesn't always: on equally spaced nodes the error for a perfectly smooth function can grow without bound as the degree goes up.</p>\n<p>Two puzzles here build the pair of algorithms behind that story: where to put the interpolation nodes so the error stays under control, and how to write down the polynomial through them without solving for a single coefficient. Three questions at the end ask what the comparison between the two node families actually claims.</p>\n<p>We'll work throughout on $[-1,1]$ with Runge's function</p>\n<p>$$f(x) = \\frac{1}{1 + 25x^2},$$</p>\n<p>and every number and figure on this page was computed with the nodes equally spaced. The Chebyshev half of the comparison is in the notebook.</p>\n<p>Each of the first two hands you the steps of an algorithm in scrambled order. Drag them into the workspace, set the indentation, fill in the blanks, and check your answer. Indentation counts as much as order, since a step one level in runs once for every pass of the loop above it. The last one is multiple choice, about the mathematics rather than the code, and its three questions are answered together. The notebook opens once all three are done.</p>\n<p>The steps are pseudocode rather than Python, and each one is a sentence you can read out loud. <code>let</code> stores a value, and <code>for</code>, <code>if</code>, <code>else</code>, <code>while</code> and <code>return</code> do what they do in code. Subscripts start at 0, and <code>from a to b</code> includes both $a$ and $b$. <code>*</code> multiplies, <code>!=</code> means \"is not equal to\" and <code>&lt;=</code> means \"is at most\". Every symbol here is one you can type, so a blank takes exactly what you read. The key above the puzzles has the rest.</p>",
  "series": [
-  "lab1-newton",
-  "lab2-runge",
-  "lab3-splines"
+  "newton",
+  "runge",
+  "splines"
  ],
  "source": "notebooks/na/interpolation_runge_chebyshev.ipynb",
  "colab": "https://colab.research.google.com/github/subhadipchowdhury/subhadipchowdhury.github.io/blob/master/teaching/labs/notebooks/na/interpolation_runge_chebyshev.ipynb",
@@ -21,7 +21,7 @@
     "caption_html": "<p>The degree-20 polynomial passes through all 21 nodes and misses the function by nearly 60 between them. Read the right-hand panel for where it misses: across the middle half of the interval the error stays under a fiftieth, in the second gap from the end it reaches four, and in the last gap it reaches 60. This is Runge’s phenomenon, after the German mathematician and physicist Carl David Tolmé Runge, who published it in 1901. It isn't roundoff, it doesn't go away in exact arithmetic, and the only thing left to blame is where the nodes are.</p>",
     "stdout": "degree  4   nodes  5   max |f - p| =    0.438\ndegree 12   nodes 13   max |f - p| =    3.663\ndegree 20   nodes 21   max |f - p| =   59.822",
     "figures": [
-     "figures/lab2-runge/chebnodes-0.png"
+     "figures/runge/chebnodes-0.png"
     ]
    },
    "blocks": [
