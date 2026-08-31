@@ -28,5 +28,11 @@
   "title": "Least squares and orthogonal polynomials",
   "order": 5,
   "puzzles": 3
+ },
+ {
+  "lab_id": "step-size",
+  "title": "Numerical differentiation and the optimal step size",
+  "order": 6,
+  "puzzles": 3
  }
 ]
