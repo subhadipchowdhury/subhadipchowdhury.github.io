@@ -125,7 +125,7 @@
 <body class="shell-page">
 
 <div class="demo-bar">
-  <strong>Lab page demo &middot; newton</strong>
+  <strong id="demo-title">Lab page demo</strong>
   <button id="wipe">Clear saved progress and reload</button>
   <span id="status"></span>
 </div>
@@ -217,7 +217,10 @@ if (!new URLSearchParams(location.search).has('dev')) {
   try { localStorage.setItem('lab:dev', '1'); } catch { /* ignore */ }
 }
 
-const lab = await mountLab(root, '/teaching/labs/data/specs/newton.json').catch((err) => {
+// ?lab=<id> picks the spec; the default stays the first lab.
+const labId = new URLSearchParams(location.search).get('lab') || 'newton';
+document.getElementById('demo-title').textContent = `Lab page demo · ${labId}`;
+const lab = await mountLab(root, `/teaching/labs/data/specs/${labId}.json`).catch((err) => {
   root.innerHTML = '';
   const p = document.createElement('p');
   p.className = 'lab-locked';
