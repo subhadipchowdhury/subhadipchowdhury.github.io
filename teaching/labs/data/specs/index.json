@@ -10,5 +10,11 @@
   "title": "Runge's phenomenon and Chebyshev nodes",
   "order": 2,
   "puzzles": 3
+ },
+ {
+  "lab_id": "splines",
+  "title": "Cubic splines and boundary conditions",
+  "order": 3,
+  "puzzles": 3
  }
 ]
