@@ -9,7 +9,9 @@ Running it again overwrites the lab metadata and nothing else. If you have since
 edited the metadata in JupyterLab's property inspector, update this file to
 match before running, or your edit is lost.
 
-    ~/.venvs/labs/bin/python tools/author/newton_lab.py
+Run it with the labs venv active; its path differs per machine.
+
+    python tools/author/newton_lab.py
 
 Line numbers below are 1-based into each cell's own source. build_labs.py checks
 every one against its py_match substring and fails the build when an edit has

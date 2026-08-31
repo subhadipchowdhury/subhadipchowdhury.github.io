@@ -9,9 +9,10 @@ The editorial rules are not restated here. They are read out of
 ``tools/validate.mjs``, which is the one place they live for the labs, so a
 phrase added to the tic list starts failing map prose in the same commit.
 
-Run a map's own script to write its JSON:
+Run a map's own script to write its JSON, with the labs venv active; the venv
+path differs per machine.
 
-    ~/.venvs/labs/bin/python tools/author/series_map.py
+    python tools/author/series_map.py
 """
 
 import json

@@ -1,8 +1,12 @@
 """Turn an annotated notebook into a lab spec.
 
-    ~/.venvs/labs/bin/python tools/build_labs.py              # every annotated notebook
-    ~/.venvs/labs/bin/python tools/build_labs.py lab1-newton  # one lab
-    ~/.venvs/labs/bin/python tools/build_labs.py --no-run     # skip the notebook run
+Run it with the labs venv active. This repo is edited from Windows and from more
+than one Mac, so no interpreter path is written down here; the venv lives outside
+the synced folder and its path and Python version differ per machine.
+
+    python tools/build_labs.py              # every annotated notebook
+    python tools/build_labs.py lab1-newton  # one lab
+    python tools/build_labs.py --no-run     # skip the notebook run
 
 The venv is deliberately outside this folder: an in-repo `.venv/` cannot survive
 OneDrive, which dereferences the interpreter into a text stub.

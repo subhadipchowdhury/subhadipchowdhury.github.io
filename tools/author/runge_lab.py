@@ -4,7 +4,9 @@ Same arrangement as newton_lab.py: the notebook is the source of truth once this
 has run, and this file is the readable form of the seed. Running it again
 overwrites the lab metadata and nothing else.
 
-    ~/.venvs/labs/bin/python tools/author/runge_lab.py
+Run it with the labs venv active; its path differs per machine.
+
+    python tools/author/runge_lab.py
 
 The lab follows Math 212 section 1.3: set the expectation, break it, name and
 attribute the phenomenon, diagnose the cause, give the fix as a numbered
