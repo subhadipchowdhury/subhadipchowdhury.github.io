@@ -15,7 +15,7 @@ description: Writing on teaching, collaborative learning materials, faculty deve
 **Teaching Your AI How You Teach**<br/> *Teaching Matters, Chicago Center for Teaching and Learning, August 2026.*
 
 <div class="research-link-row">
-<a class="abstract-toggle" href="https://teaching.uchicago.edu/resources/subhadip-chowdury-teaching-your-ai-how-you-teach" target="_blank" rel="noopener noreferrer">column</a><a class="abstract-toggle" href="/pedagogy/specification/how-to-guide/">how-to guide</a>
+<a class="abstract-toggle" href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach" target="_blank" rel="noopener noreferrer">column</a><a class="abstract-toggle" href="/pedagogy/specification/how-to-guide/">how-to guide</a>
 </div>
 </div>
 
