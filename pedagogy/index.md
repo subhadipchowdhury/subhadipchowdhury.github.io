@@ -15,7 +15,10 @@ description: Writing on teaching, collaborative learning materials, faculty deve
 **Teaching Your AI How You Teach**<br/> *Teaching Matters, Chicago Center for Teaching and Learning, August 2026.*
 
 <div class="research-link-row">
-<a class="abstract-toggle" href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach" target="_blank" rel="noopener noreferrer">column</a><a class="abstract-toggle" href="/pedagogy/specification/how-to-guide/">how-to guide</a>
+<button class="abstract-toggle" type="button" data-target="x-teaching-your-ai" aria-expanded="false">Abstract</button><a class="abstract-toggle" href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach" target="_blank" rel="noopener noreferrer">column</a><a class="abstract-toggle" href="/pedagogy/specification/how-to-guide/">how-to guide</a>
+</div>
+<div class="abstract-panel" id="x-teaching-your-ai" hidden>
+<p><strong>Abstract.</strong> In this essay, we discuss the benefits of leveraging an AI specifications document to build course material at scale to enable effortful, learning-focused student work in the classroom.</p>
 </div>
 </div>
 
