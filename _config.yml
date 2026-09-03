@@ -19,6 +19,7 @@ exclude:
   - tools
   - teaching/labs/notebooks
   - HANDOFF.md
+  - assets/CV/CV.tex
 
 defaults:
 
