@@ -18,3 +18,13 @@ tools/author/tex/*.log
 tools/author/tex/*.out
 tools/author/tex/*.pdf
 !tools/author/tex/*-solutions.pdf
+
+# The CV source travels through OneDrive, not git. Only the built PDF and the
+# HTML version at assets/CV/index.html are tracked.
+assets/CV/CV.tex
+assets/CV/*.aux
+assets/CV/*.log
+assets/CV/*.out
+assets/CV/*.fls
+assets/CV/*.fdb_latexmk
+assets/CV/*.synctex.gz
