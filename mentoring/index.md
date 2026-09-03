@@ -71,9 +71,9 @@ This is a list of senior IS (bachelor's thesis) by students I have advised.
 <div class="course">
 Summer 2022 - Kevin <span class="lastname">Yuan</span> '23 (Computer Science), Ussama <span class="lastname">Mustafa</span> '23 (Computer Science & Mathematics), Praneel <span class="lastname">Panchigar</span> '23 (Statistical & Data Sciences & Mathematics), supervised jointly with Brian <span class="lastname">Ramsay</span>
 
-<p>Client - The Goodyear Tire & Rubber Company - Non Pneumatic Tires division</p>
-<button class="abstract-toggle" type="button" data-target="x-the-goodyear-tire--rubber-company---non-pneumatic-tire-division" aria-expanded="false">Project Description</button>
-<div class="abstract-panel" id="x-the-goodyear-tire--rubber-company---non-pneumatic-tire-division" hidden>
+<p>Client - The Goodyear Tire & Rubber Company</p>
+<button class="abstract-toggle" type="button" data-target="x-goodyear-airless-tires" aria-expanded="false">Project Description</button>
+<div class="abstract-panel" id="x-goodyear-airless-tires" hidden>
 <p><strong>Abstract.</strong> Our project goal was to translate and package a multi-software analytical design calculator program for non-pneumatic tires into a single comprehensive Python program. The result was a combination of innovative scientific programming, creative organization of complex data structures and class objects, and rigorous application of cutting-edge Python libraries to create a product that was faster and more accurate than the client's original program.</p>
 </div>
 </div>
