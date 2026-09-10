@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept map demo</title>
+
+<!--
+  Stands in for _layouts/map.html, which only exists once Jekyll builds on GitHub's
+  side. Same stylesheets, same module, same data. Only the grey strip at the top is
+  the demo's own, and the theme button is wired here because javascript/theme.js is
+  not loaded.
+
+  Serve the repo root and open this file:
+
+      python -m http.server 8817
+      http://localhost:8817/tools/demo/map-demo.html
+
+  ?map=series (the default) or ?map=func-sequences picks the data. ?drawn=N and
+  ?claim=pair|reversed put the page into a state without clicking to it, which is how
+  a half-built map gets screenshotted; see "Looking at a page" in HANDOFF.md.
+
+  This page was the prototype for the withheld arrows, as map-build-demo.html with a
+  forked engine beside it. The fork landed in engine/map/map.js on 2026-09-10 and
+  this is what is left: a plain demo of the real thing.
+-->
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSansSerif.css">
+<link rel="stylesheet" href="https://uchicago-brand-fonts.s3.us-east-2.amazonaws.com/UChicagoSerif.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<style>
+  /* The site tokens shell.css and map.css consume, from css/stylesheet.scss. */
+  :root {
+    --color-bg: #D9D9D9;
+    --color-surface: #FFFFFF;
+    --color-card: rgba(255, 255, 255, 0.82);
+    --color-text: #262626;
+    --color-muted: #4D4D4D;
+    --accent: #800000;
+    --accent-rgb: 128, 0, 0;
+    --border-color: rgba(0, 42, 58, 0.12);
+    --focus-ring: #3EB1C8;
+    --code-bg: #ddd;
+  }
+  html[data-theme="dark"] {
+    --color-bg: #151515;
+    --color-surface: #232323;
+    --color-card: rgba(255, 255, 255, 0.045);
+    --color-text: #e4e4e4;
+    --color-muted: #a8a8a8;
+    --accent: #3EB1C8;
+    --accent-rgb: 62, 177, 200;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --focus-ring: #6fcfe0;
+    --code-bg: #333333;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: "UChicagoSansSerif-Regular", system-ui, sans-serif;
+  }
+  .main-wrapper {
+    width: 100%;
+    max-width: 1076px;
+    margin: 1.5rem auto 3rem;
+    padding: 1.5rem 2rem 3rem;
+    background: var(--color-surface);
+    border-radius: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  /* .theme-toggle base rules, copied from css/stylesheet.scss. The --bar variant
+     itself lives in engine/shell.css, with the rest of the chrome. */
+  .theme-toggle {
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    cursor: pointer;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+  }
+  .theme-toggle .fa-sun,
+  .theme-toggle .theme-toggle__label--to-light { display: none; }
+  .theme-toggle .fa-moon,
+  .theme-toggle .theme-toggle__label--to-dark { display: inline-block; }
+  html[data-theme="dark"] .theme-toggle .fa-moon,
+  html[data-theme="dark"] .theme-toggle .theme-toggle__label--to-dark { display: none; }
+  html[data-theme="dark"] .theme-toggle .fa-sun,
+  html[data-theme="dark"] .theme-toggle .theme-toggle__label--to-light { display: inline-block; }
+
+  /* The demo's own strip, not part of the page. */
+  .demo-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+  }
+  .demo-bar button,
+  .demo-bar a {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .demo-bar strong { font-weight: normal; color: var(--color-muted); }
+</style>
+<link rel="stylesheet" href="../../teaching/labs/engine/shell.css">
+<link rel="stylesheet" href="../../teaching/labs/engine/map/map.css">
+</head>
+<body class="shell-page">
+
+<div class="demo-bar">
+  <strong id="demo-title">Concept map demo</strong>
+  <a href="?map=series">series</a>
+  <a href="?map=func-sequences">func-sequences</a>
+  <a href="?drawn=5">5 drawn</a>
+  <a href="?drawn=5&amp;claim=pair">mid-claim</a>
+  <button id="wipe">Clear saved progress and reload</button>
+  <button id="theme-demo">Toggle theme</button>
+</div>
+
+<div class="shell-bar">
+  <div class="shell-bar__inner">
+    <a class="shell-bar__back" href="../../teaching/labs/">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      <span>Labs and Applets</span>
+    </a>
+    <button type="button" class="theme-toggle theme-toggle--bar" id="theme">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      <i class="fa-solid fa-sun" aria-hidden="true"></i>
+      <span class="theme-toggle__label theme-toggle__label--to-dark">Dark mode</span>
+      <span class="theme-toggle__label theme-toggle__label--to-light">Light mode</span>
+    </button>
+  </div>
+</div>
+
+<main class="main-wrapper">
+  <div class="cm" id="cm-root">
+    <p class="cm-intro" id="cm-loading">Loading the map…</p>
+  </div>
+</main>
+
+<script>
+  // A thrown module puts its message on the page. There is no console to read in a
+  // headless screenshot, and a silent failure looks like "Loading the map…" forever.
+  for (const ev of ['error', 'unhandledrejection']) {
+    window.addEventListener(ev, (e) => {
+      const p = document.createElement('p');
+      p.className = 'cm-noscript';
+      p.textContent = 'Script error: ' + (e.message || (e.reason && e.reason.message) || e.type);
+      document.getElementById('cm-root').appendChild(p);
+    });
+  }
+
+  // The data is pulled in with a blocking request, on purpose and only here.
+  //
+  // The real page fetches it from a module, which resolves after the load event, and
+  // `firefox --headless --screenshot` shoots at the load event: every screenshot came
+  // out as "Loading the map…". Doing it synchronously means the page is built by the
+  // time anything can look at it. The engine's own mountMap is still what the site
+  // uses, and it is what runs below when this request fails.
+  try {
+    const id = new URLSearchParams(location.search).get('map') || 'series';
+    const req = new XMLHttpRequest();
+    req.open('GET', `../../teaching/labs/data/maps/${id}.json`, false);
+    req.send();
+    window.DEMO_MAP = JSON.parse(req.responseText);
+  } catch (e) { /* fall through to the async path */ }
+</script>
+
+<script type="module">
+import { mountMap, MapView } from '../../teaching/labs/engine/map/map.js';
+
+const root = document.getElementById('cm-root');
+const params = new URLSearchParams(location.search);
+const mapId = params.get('map') || 'series';
+document.getElementById('demo-title').textContent = `Concept map demo · ${mapId}`;
+
+const view = window.DEMO_MAP
+  ? new MapView(root, window.DEMO_MAP)
+  : await mountMap(root, `../../teaching/labs/data/maps/${mapId}.json`).catch((err) => {
+      root.textContent = '';
+      const p = document.createElement('p');
+      p.className = 'cm-noscript';
+      p.textContent = 'The map failed to load: ' + err.message;
+      root.appendChild(p);
+      return null;
+    });
+
+// Two hooks for looking at a state without clicking to it. Demo only; there is
+// nothing like this in the engine.
+if (view) {
+  const drawn = Number(params.get('drawn') || 0);
+  if (drawn > 0) {
+    for (const e of view.data.edges.slice(0, drawn)) view.progress.add(e.n);
+    view.render();
+  }
+  // ?claim=pair leaves two boxes chosen and no sentence, which is the only state the
+  // dashed claim is visible in: choosing the sentence last grades on the third click.
+  // ?claim=reversed shows the wrong-direction message.
+  const claim = params.get('claim');
+  const open = view.data.edges.find((e) => !view.progress.has(e.n));
+  if (claim === 'pair' && open) {
+    view.tapNode(view.nodeById.get(open.from));
+    view.tapNode(view.nodeById.get(open.to));
+  } else if (claim === 'reversed' && open) {
+    view.tapItem(view.bank().find((i) => i.n === open.n));
+    view.tapNode(view.nodeById.get(open.to));
+    view.tapNode(view.nodeById.get(open.from));
+  }
+}
+
+// Stands in for javascript/theme.js, which the real page loads from head.html.
+const flip = () => {
+  const el = document.documentElement;
+  el.setAttribute('data-theme', el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+};
+document.getElementById('theme').addEventListener('click', flip);
+document.getElementById('theme-demo').addEventListener('click', flip);
+
+document.getElementById('wipe').addEventListener('click', () => {
+  localStorage.clear();
+  location.reload();
+});
+</script>
+</body>
+</html>

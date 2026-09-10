@@ -5,14 +5,16 @@ the map data rather than from a second hand-kept tex file is that the two cannot
 drift: the arrows, the boxes, the inventory and the closing question all come from
 one place.
 
-**The worksheet is the primary artefact.** As of 2026-08-13 the page is a checker: it
-draws the map, reveals one arrow at a time, and keeps the whole answer list behind a
-toggle. The work happens on paper, so the worksheet says so and carries the address of
-the page.
+**The worksheet is the primary artefact,** and since 2026-09-10 it is also the only
+place the arrows are drawn for a student. On the page they are withheld: a student
+puts each sentence between the two boxes it runs between, and the arrow appears once
+all three are right. On paper that cannot be graded, so here the arrows are drawn and
+numbered and the writing is what is asked for. The two are the same work in opposite
+directions, which is why the worksheet carries the address of the page.
 
 Arrows are drawn identically here and on the key, heads and all, with a head at each
-end where the relationship runs both ways. There is nothing left to withhold: the
-kind question is gone and every arrow holds in the direction drawn.
+end where the relationship runs both ways. There is nothing left to withhold on
+paper: the kind question is gone and every arrow holds in the direction drawn.
 
 `workbook.cls` is not used, because it is not in the repository or in the TeX Live
 tree. This is a standalone `article` with kpfonts, which is what Dip asked for.
@@ -194,9 +196,10 @@ def _document(data, solutions):
         )
         parts.append("")
         parts.append(
-            r"When you have had a go at all of them, check yourself at \url{" +
-            PAGE_URL + "/" + data["id"] + r"/}. That page draws the same map and will "
-            r"show you the answers one arrow at a time, or all at once."
+            r"When you've had a go at all of them, check yourself at \url{" +
+            PAGE_URL + "/" + data["id"] + r"/}. That page gives you these boxes with no "
+            r"arrows at all and asks you to put each sentence between the two boxes it "
+            r"runs between, which is the same work in the other direction."
         )
     parts.append("")
 

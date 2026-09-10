@@ -1,13 +1,15 @@
-/* Concept map pages: the diagram, the answer panel, and the list of named arrows.
+/* Concept map pages: the boxes, the claim being made, and the sentences.
  *
  * Same arrangement as the applets: the standalone chrome comes from
  * engine/shell.css (.shell-skip, .shell-bar, .shell-foot, .theme-toggle--bar) so
  * the bar and footer cannot drift, and this file adds a --cm-* layer.
  *
- * There is nothing hidden on this page: every arrow is drawn with its head from the
- * start, and looking at an arrow's answer only lifts it out of the background. So
- * "shown" is a weight and colour change, never colour alone, and the legend
- * distinguishes one-way from both-ways by the drawing rather than by hue.
+ * An arrow is on the page only once a student has built it, so most of the states
+ * here are about a claim in progress: the two chosen boxes, the dashed claim between
+ * them, and the three chips that say what has been chosen. None of them is carried
+ * by colour alone. The two ends of a claim are a solid ring and a dashed one, the
+ * claim arrow is dashed against solid, and the legend tells one way from both ways
+ * by the drawing rather than by hue.
  */
 
 :root {
@@ -210,6 +212,17 @@ html[data-theme="dark"] {
 .cm-arrowhead--shown { fill: var(--cm-holds); }
 .cm-arrowhead--active { fill: var(--cm-active); }
 
+/* The claim under construction, dashed against the solid arrows that have been
+   earned, and in the active colour rather than either arrow colour. */
+.cm-ghost {
+  fill: none;
+  stroke: var(--cm-active);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+}
+
+.cm-ghost__head { fill: var(--cm-active); stroke: none; }
+
 /* No width cap. The author decides where a label breaks, with \n in the data, and
    a cap here would break it somewhere else as well. The engine measures whatever
    box results and clips the arrows to that. */
@@ -231,6 +244,18 @@ html[data-theme="dark"] {
 
 .cm-node:hover { border-color: var(--accent); }
 .cm-node--lit { border-color: var(--cm-active); border-width: 2px; }
+
+/* The two ends of a claim: a solid ring where the relationship starts and a dashed
+   one where it ends, which is the same solid-against-dashed distinction the claim
+   arrow itself carries. */
+.cm-node--from,
+.cm-node--to {
+  border-color: var(--cm-active);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.12), var(--cm-node-shadow);
+}
+
+.cm-node--to { border-style: dashed; }
 
 .cm-node__letter {
   position: absolute;
@@ -326,6 +351,47 @@ html[data-theme="dark"] {
 
 .cm-work__body { margin: 0; font-size: 0.92rem; line-height: 1.55; }
 
+/* The three parts of a claim. No width cap on a chip: the sentence chip holds a
+   whole sentence and wraps, and the tracks are proportional so all three shrink
+   together. */
+.cm-claim {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.cm-chip {
+  flex: 1 1 12rem;
+  display: block;
+  padding: 0.4rem 0.6rem;
+  font: inherit;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-align: left;
+  color: var(--color-text);
+  background: var(--cm-field-bg);
+  border: 1px solid var(--cm-field-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cm-chip--item { flex: 2 1 20rem; }
+.cm-chip[disabled] { color: var(--color-muted); cursor: default; }
+.cm-chip.is-set { border-color: var(--cm-active); }
+.cm-chip:not([disabled]):hover { border-color: var(--accent); }
+
+.cm-chip__tag {
+  display: block;
+  font-family: var(--shell-semi);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.cm-chip__val { display: block; }
+
 .cm-hint {
   margin: 0.5rem 0 0;
   font-size: 0.84rem;
@@ -353,67 +419,21 @@ html[data-theme="dark"] {
 .cm-paper__lede { flex: 1 1 22rem; margin: 0; font-size: 0.92rem; line-height: 1.55; }
 
 /* --------------------------------------------------------------------------
- * The board: the numbered sheet beside the scrambled sentences
+ * The board: the sentences beside the arrows drawn so far
+ *
+ * The sentences take the wider track. They are what a student acts on, and the
+ * column beside them is empty until an arrow has been built.
  * ----------------------------------------------------------------------- */
-
-.cm-boardbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 0.9rem;
-  margin: 1.1rem 0 0;
-}
-
-.cm-boardbar .cm-hint { margin: 0; }
 
 .cm-board {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: 1.4rem;
   margin: 1.1rem 0 0;
   align-items: start;
 }
 
 .cm-board__col { min-width: 0; }
-
-.cm-sheet { margin: 0; padding-left: 1.9rem; }
-
-.cm-sheet__row { margin: 0 0 0.45rem; }
-
-/* The numbered line. Empty it reads as a ruled blank; full it holds the sentence,
-   which is why the two states differ in more than colour. */
-.cm-slot {
-  display: block;
-  width: 100%;
-  padding: 0.35rem 0.5rem;
-  font: inherit;
-  font-size: 0.86rem;
-  line-height: 1.45;
-  text-align: left;
-  color: var(--color-muted);
-  background: none;
-  border: 0;
-  border-bottom: 1px dashed var(--cm-field-border);
-  cursor: pointer;
-}
-
-.cm-slot:hover { color: var(--accent); border-bottom-color: var(--accent); }
-
-.cm-slot--full {
-  color: var(--color-text);
-  background: var(--cm-panel);
-  border: 1px solid var(--cm-panel-border);
-  border-left: 3px solid var(--cm-holds);
-  border-radius: 6px;
-}
-
-.cm-sheet__row.is-active .cm-slot {
-  color: var(--cm-active);
-  border-bottom-style: solid;
-  border-bottom-color: var(--cm-active);
-}
-
-.cm-sheet__row.is-active .cm-slot--full { border-left-color: var(--cm-active); }
 
 .cm-list { display: grid; gap: 0.4rem; }
 
@@ -434,9 +454,41 @@ html[data-theme="dark"] {
 
 .cm-option:hover { border-color: var(--accent); }
 
-/* Tried against the wrong arrow. Dimmed rather than removed, because it may well
-   belong to an arrow that has not been chosen yet. */
-.cm-option--spent { opacity: 0.55; }
+/* The sentence being placed. It stays in the list while the two boxes are chosen,
+   so the list is where a student rereads it. */
+.cm-option.is-chosen {
+  color: var(--color-text);
+  background: var(--cm-panel);
+  border-color: var(--cm-active);
+  border-width: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * The arrows drawn so far
+ * ----------------------------------------------------------------------- */
+
+.cm-found { display: grid; gap: 0.4rem; }
+
+.cm-found__row {
+  display: block;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-align: left;
+  color: var(--color-text);
+  background: var(--cm-panel);
+  border: 1px solid var(--cm-panel-border);
+  border-left: 3px solid var(--cm-holds);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cm-found__row:hover { border-color: var(--accent); }
+.cm-found__row.is-active { border-left-color: var(--cm-active); }
+.cm-found__ends { display: block; font-family: var(--shell-semi); }
+.cm-found__what { display: block; color: var(--color-muted); }
 
 .cm-verdict {
   margin: 0.7rem 0 0;

@@ -3,16 +3,17 @@
 // The geometry is pure and is tested directly, because an arrow anchored to the
 // wrong place is the failure nobody notices in a screenshot. Both built maps are
 // swept for the invariants the engine relies on, so a hand-edited JSON is caught
-// here as well as by tools/author/mapkit.py. And the mount tests check the reveal
-// behaviour, which is all the page does now.
+// here as well as by tools/author/mapkit.py. And the mount tests check the exercise.
 //
 // What is not covered: how any of it looks. The stub lays nothing out, so the mount
 // tests fill in node sizes by hand and check the arithmetic, not the page.
 //
-// The exercise is matching: click an arrow, click the sentence that belongs on it.
-// Gone from the three-step version it replaced: the write-your-own step, which could
-// not be graded, and the kind question, which collapsed to a coin flip when the
-// failing arrows were rewritten.
+// The exercise, since 2026-09-10: the arrows are not drawn, and a claim is three
+// choices, the sentence and the two boxes it runs between. The tests that went with
+// it are the ones that used to click a numbered badge to answer, because before an
+// arrow is built there is no badge on the map to click. Gone earlier: the
+// write-your-own step, which could not be graded, and the kind question, which
+// collapsed to a coin flip when the failing arrows were rewritten.
 
 import { installDom, walk, textOf } from './dom-stub.mjs';
 import {
@@ -291,11 +292,6 @@ for (const [id, data] of MAPS) {
 
 /* -------------------------------------------------------------------------- */
 
-function el() {
-  // A throwaway button for offer() to dim when a pick is wrong.
-  return document.createElement('button');
-}
-
 let uniq = 0;
 function freshView(data, sized) {
   const copy = JSON.parse(JSON.stringify(data));
@@ -306,6 +302,22 @@ function freshView(data, sized) {
     view.layout();
   }
   return view;
+}
+
+/** The bank item for an arrow, as a student would click it. */
+function itemFor(view, n) {
+  const found = view.bank().find((i) => i.n === n);
+  if (!found) fail(`arrow ${n} is not on the list`);
+  return found;
+}
+
+const boxOf = (view, id) => view.nodeById.get(id);
+
+/** Build one arrow the way a student does: the sentence, then the two boxes. */
+function claim(view, edge, reversed) {
+  view.tapItem(itemFor(view, edge.n));
+  view.tapNode(boxOf(view, reversed ? edge.to : edge.from));
+  view.tapNode(boxOf(view, reversed ? edge.from : edge.to));
 }
 
 describe('the stylesheet', () => {
@@ -324,170 +336,55 @@ describe('the stylesheet', () => {
     assert(/\.cm-board\s*\{[^}]*display:\s*grid/.test(css),
       'if .cm-board stops being a grid, check whether the guard is still load-bearing');
   });
+
+  it('draws the claim dashed rather than in a colour of its own', () => {
+    // A claim is told apart from a finished arrow by the drawing, not by hue, which
+    // is the standing rule for this page. Nothing else can check that here.
+    assert(/\.cm-ghost\s*\{[^}]*stroke-dasharray/.test(css), 'the claim should be dashed');
+    assert(/\.cm-node--to\s*\{[^}]*border-style:\s*dashed/.test(css),
+      "the claim's far end should be dashed too");
+  });
 });
 
-describe('mounting a map', () => {
+describe('the map before anything is claimed', () => {
   const data = MAPS.get('series');
 
   it('builds a badge per arrow and a box per node', () => {
     const view = freshView(data);
     const all = walk(view.root);
-    eq(all.filter((n) => n.className === 'cm-node').length, data.nodes.length);
+    eq(all.filter((n) => String(n.className).startsWith('cm-node')).length, data.nodes.length);
     eq(all.filter((n) => String(n.className).startsWith('cm-badge')).length, data.edges.length);
   });
 
-  it('helper for the offer tests, which need a button to dim', () => {
-    // `offer` marks the button it was handed; the tests pass a throwaway one.
-    assert(typeof el === 'function');
-  });
-
-  it('draws every arrowhead from the start', () => {
+  it('draws none of the arrows, and hides every number', () => {
     const view = freshView(data, true);
     for (const e of data.edges) {
-      assert(view.edgeEls.get(e.n).head.getAttribute('d'),
-        `arrow ${e.n} has no head; the direction is the information here`);
+      const parts = view.edgeEls.get(e.n);
+      eq(parts.path.getAttribute('d'), '', `arrow ${e.n} is drawn before it is earned`);
+      eq(parts.head.getAttribute('d'), '', `arrow ${e.n} has a head before it is earned`);
+      assert(parts.badge.hidden, `arrow ${e.n}'s number shows before it is earned`);
     }
   });
 
-  it('puts a second head on an arrow that runs both ways and not otherwise', () => {
-    const fs = MAPS.get('func-sequences');
-    const view = freshView(fs, true);
-    const both = fs.edges.find((e) => e.kind === 'equiv');
-    const oneWay = fs.edges.find((e) => e.kind === 'holds');
-    assert(view.edgeEls.get(both.n).tail.getAttribute('d'), 'both ways needs a head at each end');
-    eq(view.edgeEls.get(oneWay.n).tail.getAttribute('d'), '', 'one way has one head');
-  });
-
-  it('opens on the diagram alone, with the list shut', () => {
-    const view = freshView(data);
-    assert(view.board.hidden, 'the sheet and the sentences should start hidden');
-    assert(view.giveUp.hidden, 'and so should the fill-them-in toggle');
-    eq(textOf(view.boardBtn), 'Start matching');
-    assert(textOf(view.work).includes('Open the list below'), textOf(view.work));
-  });
-
-  it('opens the list when the button is used, and shuts it again', () => {
-    const view = freshView(data);
-    view.toggleBoard();
-    assert(!view.board.hidden);
-    eq(textOf(view.boardBtn), 'Hide the list');
-    assert(textOf(view.work).includes('then click the sentence'), textOf(view.work));
-    view.toggleBoard();
-    assert(view.board.hidden, 'and shuts again');
-  });
-
-  it('opens the list when an arrow is clicked, since that is half a match', () => {
-    const view = freshView(data);
-    view.pick(3);
-    assert(!view.board.hidden, 'clicking an arrow should open the list');
-    eq(view.active, 3);
-  });
-
-  it('starts with every arrow empty and the whole list scrambled on offer', () => {
+  it('counts nothing drawn and offers every sentence', () => {
     const view = freshView(data);
     eq(view.progress.placed.size, 0);
+    assert(textOf(view.countEl).startsWith('0 of'), textOf(view.countEl));
     eq(view.bank().length, data.edges.length + data.mistakes.length,
       'the list holds every sentence plus the false ones');
-    assert(textOf(view.countEl).startsWith('0 of'), textOf(view.countEl));
+  });
+
+  it('asks for all three parts in the panel', () => {
+    const view = freshView(data);
+    const said = textOf(view.work);
+    assert(said.includes('starts at') && said.includes('ends at'), said);
   });
 
   it('does not scramble into the authored order', () => {
     const view = freshView(data);
     const offered = view.bank().map((i) => i.n).join(',');
-    const authored = data.edges.map((e) => e.n).join(',');
-    assert(!offered.startsWith(authored), 'the list should not be in arrow order');
-  });
-
-  it('keeps the same order when a sentence is placed', () => {
-    const view = freshView(data);
-    const before = view.bank().map((i) => i.statement);
-    view.pick(4);
-    view.offer({ n: 4, statement: data.edges[3].statement }, el());
-    const after = view.bank().map((i) => i.statement);
-    // Placing removes one line and moves nothing else.
-    eq(after.join('|'), before.filter((x) => x !== data.edges[3].statement).join('|'));
-  });
-
-  it('refuses a sentence until an arrow is chosen', () => {
-    const view = freshView(data);
-    view.offer({ n: 1, statement: data.edges[0].statement }, el());
-    eq(view.progress.placed.size, 0, 'nothing should be placed');
-    assert(textOf(view.work).includes('Choose an arrow first'), textOf(view.work));
-  });
-
-  it('places the right sentence and takes it off the list', () => {
-    const view = freshView(data);
-    const edge = data.edges[3];
-    const before = view.bank().length;
-    view.pick(edge.n);
-    view.offer({ n: edge.n, statement: edge.statement }, el());
-    assert(view.progress.has(edge.n), 'the arrow should be filled in');
-    eq(view.bank().length, before - 1, 'and its sentence should leave the list');
-    assert(textOf(view.countEl).startsWith('1 of'), textOf(view.countEl));
-  });
-
-  it('rejects a sentence that belongs on a different arrow', () => {
-    const view = freshView(data);
-    view.pick(2);
-    view.offer({ n: 7, statement: data.edges[6].statement }, el());
-    assert(!view.progress.has(2), 'nothing should be placed');
-    assert(!view.progress.has(7), 'and certainly not the arrow the sentence came from');
-    assert(textOf(view.work).includes('another arrow'), textOf(view.work));
-  });
-
-  it('says a false sentence is false rather than misfiled', () => {
-    const view = freshView(data);
-    view.pick(2);
-    view.offer({ n: null, statement: data.mistakes[0] }, el());
-    assert(textOf(view.work).includes('false'), textOf(view.work));
-  });
-
-  it('keeps the false sentences on the list to the end', () => {
-    const view = freshView(data);
-    for (const e of data.edges) {
-      view.pick(e.n);
-      view.offer({ n: e.n, statement: e.statement }, el());
-    }
-    eq(view.bank().length, data.mistakes.length, 'the false ones never leave');
-  });
-
-  it('leaves the last arrow a real choice', () => {
-    const view = freshView(data);
-    for (const e of data.edges.slice(0, -1)) {
-      view.pick(e.n);
-      view.offer({ n: e.n, statement: e.statement }, el());
-    }
-    eq(view.bank().length, 1 + data.mistakes.length, 'one true sentence among the false ones');
-  });
-
-  it('shows what was placed, and why, when a filled arrow is chosen again', () => {
-    const view = freshView(data);
-    const edge = data.edges[5];
-    view.pick(edge.n);
-    view.offer({ n: edge.n, statement: edge.statement }, el());
-    view.pick(edge.n);
-    const text = textOf(view.work);
-    assert(text.includes(edge.statement.slice(0, 40)), 'the sentence should be shown');
-    assert(text.includes(edge.why.slice(0, 30)), 'and the reason with it');
-  });
-
-  it('fills in everything on request', () => {
-    const view = freshView(data, true);
-    view.revealAll();
-    eq(view.progress.placed.size, data.edges.length);
-    for (const e of data.edges) {
-      assert(String(view.edgeEls.get(e.n).path.getAttribute('class')).includes('cm-edge--shown'),
-        `arrow ${e.n} should be marked once everything is filled in`);
-    }
-  });
-
-  it('empties the sheet again on Start over', () => {
-    const view = freshView(data);
-    view.revealAll();
-    view.progress.clear();
-    view.render();
-    eq(view.progress.placed.size, 0);
-    eq(view.bank().length, data.edges.length + data.mistakes.length);
+    assert(!offered.startsWith(data.edges.map((e) => e.n).join(',')),
+      'the list should not be in arrow order');
   });
 
   it('links the worksheet at the top', () => {
@@ -499,17 +396,260 @@ describe('mounting a map', () => {
     assert(link, 'wants a link to the worksheet');
     eq(link.target, '_blank', 'the worksheet should not replace the map');
   });
+});
 
-  it('shows a box definition when the box is clicked', () => {
+describe('making a claim', () => {
+  const data = MAPS.get('series');
+  const edge = data.edges[0];
+
+  it('draws the arrow when the sentence and both boxes are right', () => {
+    const view = freshView(data, true);
+    claim(view, edge);
+    assert(view.progress.has(edge.n), 'a correct claim should draw its arrow');
+    assert(view.edgeEls.get(edge.n).path.getAttribute('d'), 'and set its path');
+    assert(view.edgeEls.get(edge.n).head.getAttribute('d'), 'and its head');
+    assert(!view.edgeEls.get(edge.n).badge.hidden, 'and show its number');
+    eq(view.sel.item, null, 'the sentence is spent');
+    eq(view.shownEdge, edge.n, 'and the panel reads the new arrow back');
+  });
+
+  it('takes the two boxes first and the sentence last', () => {
     const view = freshView(data);
-    view.showDefinition(data.nodes[2]);
+    view.tapNode(boxOf(view, edge.from));
+    view.tapNode(boxOf(view, edge.to));
+    assert(!view.progress.has(edge.n), 'two boxes alone are not a claim');
+    view.tapItem(itemFor(view, edge.n));
+    assert(view.progress.has(edge.n), 'the order of the three choices should not matter');
+  });
+
+  it('grades nothing until all three are chosen', () => {
+    const view = freshView(data);
+    view.tapItem(itemFor(view, edge.n));
+    view.tapNode(boxOf(view, edge.from));
+    eq(view.msg, null, 'one box in, nothing should have been graded');
+    eq(view.progress.placed.size, 0);
+  });
+
+  it('takes the sentence off the list and leaves the other arrows alone', () => {
+    const view = freshView(data, true);
+    const before = view.bank().length;
+    claim(view, edge);
+    eq(view.bank().length, before - 1, 'a drawn arrow keeps its sentence');
+    for (const other of data.edges) {
+      if (other.n === edge.n) continue;
+      eq(view.edgeEls.get(other.n).path.getAttribute('d'), '', `arrow ${other.n} leaked`);
+    }
+    assert(textOf(view.countEl).startsWith('1 of'), textOf(view.countEl));
+  });
+
+  it('reads an arrow back, with its reason, when its number is clicked', () => {
+    const view = freshView(data, true);
+    const e = data.edges[5];
+    claim(view, e);
+    view.tapNode(boxOf(view, data.nodes[0].id));   // move the panel off the arrow
+    view.showEdge(e.n);
     const text = textOf(view.work);
-    assert(text.includes('Box ' + data.nodes[2].letter), text);
+    assert(text.includes(e.statement.slice(0, 40)), 'the sentence should be shown');
+    assert(text.includes(e.why.slice(0, 30)), 'and the reason with it');
+  });
+
+  it('lists the arrows drawn so far, and nothing before that', () => {
+    const view = freshView(data);
+    assert(textOf(view.foundEl).includes('Nothing yet'), textOf(view.foundEl));
+    const e = data.edges[1];
+    claim(view, e);
+    assert(textOf(view.foundEl).includes(e.statement.slice(0, 24)), textOf(view.foundEl));
+  });
+
+  it('keeps the list order when a sentence is placed', () => {
+    const view = freshView(data);
+    const before = view.bank().map((i) => i.key);
+    const e = data.edges[4];
+    claim(view, e);
+    eq(view.bank().map((i) => i.key).join(','), before.filter((k) => k !== 'e' + e.n).join(','),
+      'placing a sentence should remove one line and move nothing else');
+  });
+
+  it('keeps the false sentences on the list to the end', () => {
+    const view = freshView(data);
+    for (const e of data.edges) claim(view, e);
+    eq(view.bank().length, data.mistakes.length, 'the false ones never leave');
+  });
+
+  it('leaves the last arrow a real choice', () => {
+    const view = freshView(data);
+    for (const e of data.edges.slice(0, -1)) claim(view, e);
+    eq(view.bank().length, 1 + data.mistakes.length, 'one true sentence among the false ones');
+  });
+});
+
+describe('getting a claim wrong', () => {
+  const data = MAPS.get('series');
+  const edge = data.edges.find((e) => e.kind === 'holds');
+
+  it('names the reversal when the pair is right and the direction is not', () => {
+    const view = freshView(data);
+    claim(view, edge, true);
+    assert(!view.progress.has(edge.n), 'a reversed one-way arrow is wrong');
+    assert(view.msg && view.msg.includes('other way'), view.msg);
+    eq(view.sel.from, null, 'the boxes are cleared to try again');
+    assert(view.sel.item, 'and the sentence is kept, since it is still unplaced');
+  });
+
+  it('says nothing about where the arrows are on a plain miss', () => {
+    const view = freshView(data);
+    const far = data.nodes.filter((n) => n.id !== edge.from && n.id !== edge.to);
+    view.tapItem(itemFor(view, edge.n));
+    view.tapNode(boxOf(view, far[0].id));
+    view.tapNode(boxOf(view, far[1].id));
+    assert(view.msg && view.msg.includes("doesn't run between"), view.msg);
+    assert(!/joined|another arrow/.test(view.msg),
+      'a miss should not report where the other arrows are');
+    eq(view.progress.placed.size, 0);
+  });
+
+  it('turns a false sentence away whatever boxes it is given', () => {
+    const view = freshView(data);
+    const bogus = view.bank().find((i) => i.n === null);
+    view.tapItem(bogus);
+    view.tapNode(boxOf(view, data.edges[0].from));
+    view.tapNode(boxOf(view, data.edges[0].to));
+    assert(view.msg && view.msg.includes('false'), view.msg);
+    eq(view.progress.placed.size, 0, 'nothing is drawn for a false sentence');
+    assert(view.bank().some((i) => i.n === null), 'and it stays on the list');
+  });
+});
+
+describe('an arrow that runs both ways', () => {
+  const data = MAPS.get('func-sequences');
+  const both = data.edges.find((e) => e.kind === 'equiv');
+  const oneWay = data.edges.find((e) => e.kind === 'holds');
+
+  it('exists in the func-sequences map, or these are vacuous', () => {
+    assert(both, 'no equiv arrow to test');
+    assert(KINDS.equiv, 'the kind should still be known to the engine');
+  });
+
+  it('takes its two boxes in either order', () => {
+    const a = freshView(data);
+    claim(a, both);
+    assert(a.progress.has(both.n), 'the authored direction should be accepted');
+    const b = freshView(data);
+    claim(b, both, true);
+    assert(b.progress.has(both.n), 'and so should the other one');
+  });
+
+  it('gets a head at each end, and a one-way arrow only gets one', () => {
+    const view = freshView(data, true);
+    claim(view, both);
+    claim(view, oneWay);
+    assert(view.edgeEls.get(both.n).tail.getAttribute('d'), 'both ways needs a head at each end');
+    eq(view.edgeEls.get(oneWay.n).tail.getAttribute('d'), '', 'one way has one head');
+  });
+});
+
+describe('choosing and unchoosing', () => {
+  const data = MAPS.get('series');
+
+  it('unsets a box when it is clicked again', () => {
+    const view = freshView(data);
+    const first = data.nodes[0].id;
+    view.tapNode(boxOf(view, first));
+    eq(view.sel.from, first);
+    view.tapNode(boxOf(view, first));
+    eq(view.sel.from, null, 'a second click on the origin should put it back');
+  });
+
+  it('starts a new pair when a third box is clicked', () => {
+    const view = freshView(data);
+    const [a, b, c] = data.nodes.map((n) => n.id);
+    view.tapNode(boxOf(view, a));
+    view.tapNode(boxOf(view, b));
+    view.tapNode(boxOf(view, c));
+    eq(view.sel.from, c, 'the third click becomes the new origin');
+    eq(view.sel.to, null);
+  });
+
+  it('unsets the sentence when it is clicked again', () => {
+    const view = freshView(data);
+    view.tapItem(itemFor(view, data.edges[2].n));
+    assert(view.sel.item);
+    view.tapItem(itemFor(view, data.edges[2].n));
+    eq(view.sel.item, null, 'clicking the held sentence should put it back');
+  });
+
+  it('shows the definition of the box just clicked', () => {
+    const view = freshView(data);
+    view.tapNode(boxOf(view, data.nodes[2].id));
+    const text = textOf(view.work);
+    assert(text.includes(data.nodes[2].letter), text);
     assert(text.includes(data.nodes[2].definition.slice(0, 25)), 'and its definition');
   });
 
+  it('draws the claim dashed once both boxes are chosen', () => {
+    const view = freshView(data, true);
+    eq(view.ghost.getAttribute('d'), '', 'nothing to draw yet');
+    view.tapNode(boxOf(view, data.edges[0].from));
+    eq(view.ghost.getAttribute('d'), '', 'one box is not a line');
+    view.tapNode(boxOf(view, data.edges[0].to));
+    assert(view.ghost.getAttribute('d'), 'two boxes should show the claim');
+    assert(view.ghostHead.getAttribute('d'), 'with a head, so the direction is visible');
+  });
+});
+
+describe('the way out and the way back', () => {
+  const data = MAPS.get('series');
+
+  it('draws every arrow on request', () => {
+    const view = freshView(data, true);
+    view.revealAll();
+    eq(view.progress.placed.size, data.edges.length);
+    for (const e of data.edges) {
+      assert(String(view.edgeEls.get(e.n).path.getAttribute('class')).includes('cm-edge--shown'),
+        `arrow ${e.n} should be marked once everything is drawn`);
+      assert(!view.edgeEls.get(e.n).badge.hidden, `arrow ${e.n}'s number should show`);
+    }
+    eq(view.bank().length, data.mistakes.length, 'only the false sentences are left');
+  });
+
+  it('empties the map again on Start over', () => {
+    const view = freshView(data, true);
+    view.revealAll();
+    view.progress.clear();
+    view.render();
+    eq(view.progress.placed.size, 0);
+    for (const e of data.edges) {
+      eq(view.edgeEls.get(e.n).path.getAttribute('d'), '', `arrow ${e.n} survived the reset`);
+    }
+    eq(view.bank().length, data.edges.length + data.mistakes.length);
+    assert(textOf(view.countEl).startsWith('0 of'), textOf(view.countEl));
+  });
+
+  it('keeps its answers across a remount, and drops them if the map is edited', () => {
+    const seed = JSON.parse(JSON.stringify(data));
+    seed.id = 'series-persist-test';
+    const edge = seed.edges[0];
+
+    const first = new MapView(document.createElement('div'), seed);
+    claim(first, edge);
+    assert(first.progress.has(edge.n));
+
+    const again = new MapView(document.createElement('div'), JSON.parse(JSON.stringify(seed)));
+    assert(again.progress.has(edge.n), 'a reload should keep the arrows already drawn');
+
+    const edited = JSON.parse(JSON.stringify(seed));
+    edited.edges[3].statement = edited.edges[3].statement + ' (reworded)';
+    const third = new MapView(document.createElement('div'), edited);
+    eq(third.progress.placed.size, 0, 'an edited map should discard its saved answers');
+  });
+});
+
+describe('the geometry a drawn arrow gets', () => {
+  const data = MAPS.get('series');
+
   it('clips an arrow to the measured box rather than to the node centre', () => {
     const view = freshView(data);
+    view.revealAll();
     const edge = data.edges[0];
     const from = view.nodeById.get(edge.from);
     const bare = view.edgeEls.get(edge.n).path.getAttribute('d');
@@ -527,6 +667,7 @@ describe('mounting a map', () => {
 
   it('keeps every badge on the stage', () => {
     const view = freshView(data, true);
+    view.revealAll();
     for (const e of data.edges) {
       const badge = view.edgeEls.get(e.n).badge;
       const x = parseFloat(badge.style.left);

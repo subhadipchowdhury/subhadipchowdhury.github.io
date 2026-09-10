@@ -141,13 +141,15 @@ DATA = {
     "id": "series",
     "title": "Infinite series",
     "intro": (
-        "Fifteen ideas from the chapter on series, with sixteen arrows between them and "
-        "nothing written on any arrow. Each arrow is a relationship that holds in the "
-        "direction drawn. Some are implications between properties, some record that one "
-        "box is defined in terms of another, and many name the theorem that decides a "
-        "question about the box it points at. State each one in your own words, then "
-        "check yourself against the list at the bottom. Click a box for its definition, "
-        "or a numbered circle for that one arrow."
+        "Fifteen ideas from the chapter on series, and sixteen arrows between them that "
+        "we haven't drawn. Every arrow is a relationship of some kind: a few are "
+        "implications between properties, some record that one box is defined in terms "
+        "of another, and many name the theorem that decides a question about the box the "
+        "arrow points at. The sentences that belong on the arrows are all below, "
+        "scrambled, and a few of them are false. Pick one, then click the box the "
+        "relationship starts at and the box it ends at, and we'll draw the arrow if all "
+        "three are right. Click a box on its own to see what it means. Let's see how "
+        "much of the chapter you can put back."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? There is more than one "

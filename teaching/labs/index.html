@@ -445,13 +445,13 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
       <div class="cat-footer-head">How these work</div>
       <p class="cat-footnote">A <strong>guided lab</strong> hands you the algorithms as scrambled pseudocode, and the notebook opens once you've put them back together.</p>
       <p class="cat-footnote">An <strong>applet</strong> is one page that computes and draws in your browser, with nothing to install and nothing to hand in.</p>
-      <p class="cat-footnote">A <strong>concept map</strong> is a chapter's theorems as boxes with nothing written on the arrows, and the exercise is to match the right sentence to each one.</p>
+      <p class="cat-footnote">A <strong>concept map</strong> is a chapter's theorems as boxes with no arrows between them, and the exercise is to put the arrows back: pick a sentence, then the two boxes it runs between.</p>
     </div>
     <div class="cat-foot-col">
       <div class="cat-footer-head"><span>🐍</span> Running the notebook</div>
       <p class="cat-footnote">The notebook a lab opens runs in <strong>Google Colab</strong>, which keeps NumPy, Matplotlib, SymPy and the rest on Google's machines, so there's nothing to install. You do need to be signed in to a Google account, and Colab will ask you to confirm before it runs a notebook it didn't write.</p>
       <p class="cat-footnote">Your changes aren't saved back here, so use <strong>File &rsaquo; Save a copy in Drive</strong> to keep your work.</p>
-      <p class="cat-footnote">The applets and the concept maps don't use Colab. They run in the page you open, and a map remembers which arrows you've matched on your own machine.</p>
+      <p class="cat-footnote">The applets and the concept maps don't use Colab. They run in the page you open, and a map remembers which arrows you've drawn on your own machine.</p>
     </div>
     <div class="cat-ai">
       <div class="cat-footer-head">How these were built</div>
@@ -548,9 +548,9 @@ description: Guided labs, applets, and concept maps for undergraduate mathematic
     { course:'analysis', kind:'applet', topic:'Sequences & Convergence', title:'Uniform vs pointwise convergence', blurb:'Compare fₙ→f pointwise against uniform convergence on an interval.', status:'planned', file:'applets/analysis/convergence-modes.html' },
     { course:'analysis', kind:'applet', topic:'Topology of ℝ', title:'The Cantor set', blurb:'Remove middle thirds and approach a set of measure zero.', status:'planned', file:'applets/analysis/cantor-set.html' },
 
-    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences of real numbers', blurb:'Match a sentence to every arrow, from the epsilon-N definition out to completeness.', status:'planned', file:'maps/sequences.html' },
-    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Infinite series', blurb:'Match a sentence to each of the sixteen arrows between the convergence tests.', updated:'2026-05-23', status:'finalized', href:'maps/series.html' },
-    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences and series of functions', blurb:'Separate pointwise from uniform convergence, and find which theorem needs which.', updated:'2026-05-23', status:'finalized', href:'maps/func-sequences.html' }
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences of real numbers', blurb:'Rebuild every arrow from the epsilon-N definition out to completeness.', status:'planned', file:'maps/sequences.html' },
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Infinite series', blurb:'Rebuild the sixteen arrows between the convergence tests, one sentence and two boxes at a time.', updated:'2026-05-23', status:'finalized', href:'maps/series.html' },
+    { course:'analysis', kind:'applet', flavor:'map', topic:'Concept Maps', title:'Sequences and series of functions', blurb:'Rebuild the arrows between pointwise and uniform convergence, and find which theorem needs which.', updated:'2026-05-23', status:'finalized', href:'maps/func-sequences.html' }
   ];
 
   var state = { courseFilter:'all', kindFilter:'all', query:'', showDrafts:false, sort:'updated' };

@@ -8,7 +8,7 @@ rather than rendering it as a page.
 |---|---|---|
 | Lab | Rebuild the algorithm from scrambled pseudocode, answer a few questions about what it means, then the notebook opens. | `guided/lab<N>-<name>.html` |
 | Applet | One page to play with. Nothing to hand in, nothing gated. | `applets/<course>/<name>.html` |
-| Concept map | A chapter's theorems with the arrows blank. Match each to its statement. | `maps/<name>.html` |
+| Concept map | A chapter's theorems as boxes with no arrows. Put each arrow back by naming it and saying which two boxes it runs between. | `maps/<name>.html` |
 
 A page file is front matter only, or front matter plus its own markup for an
 applet. Everything else is either engine code or generated data.
