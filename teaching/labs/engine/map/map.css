@@ -26,8 +26,6 @@
   --cm-holds: #1f6f4a;
   --cm-equiv: #1c5d99;
 
-  --cm-ok-bg: #e4f3ec;
-  --cm-ok-fg: #14684a;
   --cm-no-bg: #fbeceb;
   --cm-no-fg: #9d2f26;
 }
@@ -46,8 +44,6 @@ html[data-theme="dark"] {
   --cm-holds: #6fca9c;
   --cm-equiv: #74b6e8;
 
-  --cm-ok-bg: rgba(47, 169, 125, 0.16);
-  --cm-ok-fg: #7fdcb4;
   --cm-no-bg: rgba(206, 78, 68, 0.16);
   --cm-no-fg: #f0a29a;
 }
@@ -213,15 +209,14 @@ html[data-theme="dark"] {
 .cm-arrowhead--active { fill: var(--cm-active); }
 
 /* The claim under construction, dashed against the solid arrows that have been
-   earned, and in the active colour rather than either arrow colour. */
+   earned, and in the active colour rather than either arrow colour. No head: the
+   claim names two boxes and not a direction, and a head would say otherwise. */
 .cm-ghost {
   fill: none;
   stroke: var(--cm-active);
   stroke-width: 2;
   stroke-dasharray: 6 5;
 }
-
-.cm-ghost__head { fill: var(--cm-active); stroke: none; }
 
 /* No width cap. The author decides where a label breaks, with \n in the data, and
    a cap here would break it somewhere else as well. The engine measures whatever
@@ -245,17 +240,16 @@ html[data-theme="dark"] {
 .cm-node:hover { border-color: var(--accent); }
 .cm-node--lit { border-color: var(--cm-active); border-width: 2px; }
 
-/* The two ends of a claim: a solid ring where the relationship starts and a dashed
-   one where it ends, which is the same solid-against-dashed distinction the claim
-   arrow itself carries. */
-.cm-node--from,
-.cm-node--to {
+/* The two boxes in a claim. They look the same as each other on purpose: the claim
+   is a pair and not an ordered pair, and a start-and-end pair of styles would ask a
+   student to think about something nothing checks. Dashed, like the claim between
+   them, so a picked box is not told from a lit one by colour alone. */
+.cm-node--picked {
   border-color: var(--cm-active);
   border-width: 2px;
+  border-style: dashed;
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.12), var(--cm-node-shadow);
 }
-
-.cm-node--to { border-style: dashed; }
 
 .cm-node__letter {
   position: absolute;
@@ -351,9 +345,9 @@ html[data-theme="dark"] {
 
 .cm-work__body { margin: 0; font-size: 0.92rem; line-height: 1.55; }
 
-/* The three parts of a claim. No width cap on a chip: the sentence chip holds a
-   whole sentence and wraps, and the tracks are proportional so all three shrink
-   together. */
+/* The three parts of a claim: the sentence and the two boxes, which carry no order.
+   No width cap on a chip, since the sentence chip holds a whole sentence and wraps,
+   and the tracks are proportional so all three shrink together. */
 .cm-claim {
   display: flex;
   flex-wrap: wrap;
@@ -377,6 +371,7 @@ html[data-theme="dark"] {
 }
 
 .cm-chip--item { flex: 2 1 20rem; }
+.cm-chip--box { flex: 1 1 11rem; }
 .cm-chip[disabled] { color: var(--color-muted); cursor: default; }
 .cm-chip.is-set { border-color: var(--cm-active); }
 .cm-chip:not([disabled]):hover { border-color: var(--accent); }
@@ -498,7 +493,7 @@ html[data-theme="dark"] {
   border-radius: 6px;
 }
 
-.cm-verdict--ok { color: var(--cm-ok-fg); background: var(--cm-ok-bg); }
+/* One variant only. A right claim draws its arrow instead of saying so. */
 .cm-verdict--no { color: var(--cm-no-fg); background: var(--cm-no-bg); }
 
 /* --------------------------------------------------------------------------

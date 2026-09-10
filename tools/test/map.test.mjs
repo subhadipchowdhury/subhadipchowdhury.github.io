@@ -9,11 +9,13 @@
 // tests fill in node sizes by hand and check the arithmetic, not the page.
 //
 // The exercise, since 2026-09-10: the arrows are not drawn, and a claim is three
-// choices, the sentence and the two boxes it runs between. The tests that went with
-// it are the ones that used to click a numbered badge to answer, because before an
-// arrow is built there is no badge on the map to click. Gone earlier: the
-// write-your-own step, which could not be graded, and the kind question, which
-// collapsed to a coin flip when the failing arrows were rewritten.
+// choices, the sentence and the two boxes it runs between, in either order. The tests
+// that went with it are the ones that used to click a numbered badge to answer,
+// because before an arrow is built there is no badge on the map to click, and the one
+// that graded a reversed pair as wrong, because the order of the two boxes is no
+// longer part of the claim. Gone earlier: the write-your-own step, which could not be
+// graded, and the kind question, which collapsed to a coin flip when the failing
+// arrows were rewritten.
 
 import { installDom, walk, textOf } from './dom-stub.mjs';
 import {
@@ -313,7 +315,10 @@ function itemFor(view, n) {
 
 const boxOf = (view, id) => view.nodeById.get(id);
 
-/** Build one arrow the way a student does: the sentence, then the two boxes. */
+/**
+ * Build one arrow the way a student does: the sentence, then the two boxes. `reversed`
+ * clicks them the other way round, which has to be accepted just the same.
+ */
 function claim(view, edge, reversed) {
   view.tapItem(itemFor(view, edge.n));
   view.tapNode(boxOf(view, reversed ? edge.to : edge.from));
@@ -341,8 +346,15 @@ describe('the stylesheet', () => {
     // A claim is told apart from a finished arrow by the drawing, not by hue, which
     // is the standing rule for this page. Nothing else can check that here.
     assert(/\.cm-ghost\s*\{[^}]*stroke-dasharray/.test(css), 'the claim should be dashed');
-    assert(/\.cm-node--to\s*\{[^}]*border-style:\s*dashed/.test(css),
-      "the claim's far end should be dashed too");
+    assert(/\.cm-node--picked\s*\{[^}]*border-style:\s*dashed/.test(css),
+      'a box in the claim should be dashed too');
+  });
+
+  it('gives the two boxes of a claim one style, not a start and an end', () => {
+    // The order of the two boxes is not part of the claim, so styling them
+    // differently would ask a student to think about something nothing checks.
+    assert(!/cm-node--from|cm-node--to/.test(css),
+      'from/to styling came back; the claim is a pair, not an ordered pair');
   });
 });
 
@@ -374,10 +386,10 @@ describe('the map before anything is claimed', () => {
       'the list holds every sentence plus the false ones');
   });
 
-  it('asks for all three parts in the panel', () => {
+  it('asks for all three parts in the panel, and for no order', () => {
     const view = freshView(data);
     const said = textOf(view.work);
-    assert(said.includes('starts at') && said.includes('ends at'), said);
+    assert(said.includes('two boxes') && said.includes('either order'), said);
   });
 
   it('does not scramble into the authored order', () => {
@@ -422,11 +434,25 @@ describe('making a claim', () => {
     assert(view.progress.has(edge.n), 'the order of the three choices should not matter');
   });
 
+  it('takes the two boxes of a one-way arrow in either order', () => {
+    // The order is not part of the claim: naming the two ideas a sentence joins is
+    // the recall being tested, and the drawn arrow supplies the direction.
+    const view = freshView(data, true);
+    claim(view, edge, true);
+    assert(view.progress.has(edge.n), 'a reversed pair is the same claim');
+    const drawn = view.edgeEls.get(edge.n).path.getAttribute('d');
+    const straight = freshView(data, true);
+    claim(straight, edge);
+    eq(drawn, straight.edgeEls.get(edge.n).path.getAttribute('d'),
+      'and the arrow is drawn in its authored direction either way');
+  });
+
   it('grades nothing until all three are chosen', () => {
     const view = freshView(data);
     view.tapItem(itemFor(view, edge.n));
     view.tapNode(boxOf(view, edge.from));
     eq(view.msg, null, 'one box in, nothing should have been graded');
+    eq(view.sel.boxes.length, 1);
     eq(view.progress.placed.size, 0);
   });
 
@@ -487,12 +513,14 @@ describe('getting a claim wrong', () => {
   const data = MAPS.get('series');
   const edge = data.edges.find((e) => e.kind === 'holds');
 
-  it('names the reversal when the pair is right and the direction is not', () => {
+  it('clears the boxes and keeps the sentence', () => {
     const view = freshView(data);
-    claim(view, edge, true);
-    assert(!view.progress.has(edge.n), 'a reversed one-way arrow is wrong');
-    assert(view.msg && view.msg.includes('other way'), view.msg);
-    eq(view.sel.from, null, 'the boxes are cleared to try again');
+    const far = data.nodes.filter((n) => n.id !== edge.from && n.id !== edge.to);
+    view.tapItem(itemFor(view, edge.n));
+    view.tapNode(boxOf(view, far[0].id));
+    view.tapNode(boxOf(view, far[1].id));
+    assert(!view.progress.has(edge.n), 'the wrong pair should not draw the arrow');
+    eq(view.sel.boxes.length, 0, 'the boxes are cleared to try again');
     assert(view.sel.item, 'and the sentence is kept, since it is still unplaced');
   });
 
@@ -506,6 +534,17 @@ describe('getting a claim wrong', () => {
     assert(!/joined|another arrow/.test(view.msg),
       'a miss should not report where the other arrows are');
     eq(view.progress.placed.size, 0);
+  });
+
+  it('only counts a pair that joins the sentence\'s own two boxes', () => {
+    // One right box and one wrong box is a miss, which is the case a set comparison
+    // gets wrong if it is written as "any endpoint matches".
+    const view = freshView(data);
+    const other = data.nodes.find((n) => n.id !== edge.from && n.id !== edge.to);
+    view.tapItem(itemFor(view, edge.n));
+    view.tapNode(boxOf(view, edge.from));
+    view.tapNode(boxOf(view, other.id));
+    assert(!view.progress.has(edge.n), 'half a pair is not a claim');
   });
 
   it('turns a false sentence away whatever boxes it is given', () => {
@@ -530,7 +569,9 @@ describe('an arrow that runs both ways', () => {
     assert(KINDS.equiv, 'the kind should still be known to the engine');
   });
 
-  it('takes its two boxes in either order', () => {
+  it('is graded exactly like a one-way arrow', () => {
+    // Both kinds take either order now, so `kind` decides the arrowheads and nothing
+    // about grading.
     const a = freshView(data);
     claim(a, both);
     assert(a.progress.has(both.n), 'the authored direction should be accepted');
@@ -555,9 +596,18 @@ describe('choosing and unchoosing', () => {
     const view = freshView(data);
     const first = data.nodes[0].id;
     view.tapNode(boxOf(view, first));
-    eq(view.sel.from, first);
+    eq(view.sel.boxes.join(), first);
     view.tapNode(boxOf(view, first));
-    eq(view.sel.from, null, 'a second click on the origin should put it back');
+    eq(view.sel.boxes.length, 0, 'a second click on a box should put it back');
+  });
+
+  it('takes the first box back out and leaves the second, not the pair', () => {
+    const view = freshView(data);
+    const [a, b] = data.nodes.map((n) => n.id);
+    view.tapNode(boxOf(view, a));
+    view.tapNode(boxOf(view, b));
+    view.tapNode(boxOf(view, a));
+    eq(view.sel.boxes.join(), b, 'only the box clicked twice should leave');
   });
 
   it('starts a new pair when a third box is clicked', () => {
@@ -566,8 +616,7 @@ describe('choosing and unchoosing', () => {
     view.tapNode(boxOf(view, a));
     view.tapNode(boxOf(view, b));
     view.tapNode(boxOf(view, c));
-    eq(view.sel.from, c, 'the third click becomes the new origin');
-    eq(view.sel.to, null);
+    eq(view.sel.boxes.join(), c, 'the third click starts again with itself');
   });
 
   it('unsets the sentence when it is clicked again', () => {
@@ -593,7 +642,12 @@ describe('choosing and unchoosing', () => {
     eq(view.ghost.getAttribute('d'), '', 'one box is not a line');
     view.tapNode(boxOf(view, data.edges[0].to));
     assert(view.ghost.getAttribute('d'), 'two boxes should show the claim');
-    assert(view.ghostHead.getAttribute('d'), 'with a head, so the direction is visible');
+    // No head on it: the claim carries no direction, so nothing should draw one.
+    // Counting the elements rather than checking one field, since a head drawn
+    // under any other name is the same mistake.
+    const ghosts = walk(view.svg)
+      .filter((n) => String(n.getAttribute && n.getAttribute('class')).includes('cm-ghost'));
+    eq(ghosts.length, 1, 'one dashed line and nothing else belongs to a claim');
   });
 });
 

@@ -17,8 +17,8 @@
       http://localhost:8817/tools/demo/map-demo.html
 
   ?map=series (the default) or ?map=func-sequences picks the data. ?drawn=N and
-  ?claim=pair|reversed put the page into a state without clicking to it, which is how
-  a half-built map gets screenshotted; see "Looking at a page" in HANDOFF.md.
+  ?claim=pair|miss put the page into a state without clicking to it, which is how a
+  half-built map gets screenshotted; see "Looking at a page" in HANDOFF.md.
 
   This page was the prototype for the withheld arrows, as map-build-demo.html with a
   forked engine beside it. The fork landed in engine/map/map.js on 2026-09-10 and
@@ -222,16 +222,21 @@ if (view) {
   }
   // ?claim=pair leaves two boxes chosen and no sentence, which is the only state the
   // dashed claim is visible in: choosing the sentence last grades on the third click.
-  // ?claim=reversed shows the wrong-direction message.
+  // ?claim=miss puts a sentence against two boxes it does not join, for the message.
+  //
+  // There was a ?claim=reversed here for the wrong-direction message. The order of
+  // the two boxes stopped being graded on 2026-09-10, so a reversed pair is now a
+  // correct claim and there is no such message to look at.
   const claim = params.get('claim');
   const open = view.data.edges.find((e) => !view.progress.has(e.n));
   if (claim === 'pair' && open) {
     view.tapNode(view.nodeById.get(open.from));
     view.tapNode(view.nodeById.get(open.to));
-  } else if (claim === 'reversed' && open) {
+  } else if (claim === 'miss' && open) {
+    const far = view.data.nodes.filter((n) => n.id !== open.from && n.id !== open.to);
     view.tapItem(view.bank().find((i) => i.n === open.n));
-    view.tapNode(view.nodeById.get(open.to));
-    view.tapNode(view.nodeById.get(open.from));
+    view.tapNode(view.nodeById.get(far[0].id));
+    view.tapNode(view.nodeById.get(far[1].id));
   }
 }
 

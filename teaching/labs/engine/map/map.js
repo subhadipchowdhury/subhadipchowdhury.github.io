@@ -2,15 +2,22 @@
  *
  * A map is a fixed set of concepts as boxes, and a scrambled list of sentences, each
  * of which names the relationship one arrow between two of those boxes carries. The
- * arrows are not on the page. A claim is three choices: the sentence, the box the
- * relationship starts at, and the box it ends at. Get all three right and the arrow
- * is drawn, with its head and its number, and it stays.
+ * arrows are not on the page. A claim is three choices: the sentence and the two
+ * boxes it runs between, in either order. Get all three right and the arrow is drawn,
+ * in its authored direction, with its head and its number, and it stays.
  *
  * So a student rebuilds the diagram rather than annotating one. That is the change of
  * 2026-09-10, and the reason for it: with all sixteen arrows drawn from the first
  * paint, a student who half knows the chapter can place a sentence by looking at
  * which two boxes an arrow already joins. The structure was given away, and the
  * structure is what an exam asks for.
+ *
+ * Which of the two boxes the relationship starts at is **not** asked. Dip's call on
+ * 2026-09-10, the same day the arrows came off the page: picking the two ideas a
+ * sentence joins is the recall being trained, and making a student also nominate the
+ * hypothesis turned every claim into two questions, one of which a wrong guess
+ * punishes twice. The drawn arrow still carries its head, so the direction is
+ * something the map tells you rather than something it examines.
  *
  * The list is given in full from the start. It used to be a reward for solving the
  * first arrow, which protected nothing, because solving one arrow showed a student
@@ -35,8 +42,9 @@
  * cannot leave an arrow hanging in the middle of a box.
  */
 
-/* The two kinds of arrow. The kind decides whether the arrow gets one head or two,
- * and whether the order of the two boxes matters when a claim is graded.
+/* The two kinds of arrow. The kind decides whether the arrow gets one head or two.
+ * It has no part in grading: a claim names two boxes and not an order, so `holds` and
+ * `equiv` are graded identically.
  *
  * There were four. `caution`, for a theorem whose hypotheses are not the ones its
  * neighbours use, was cut as vague. `fails` went when the four arrows using it were
@@ -46,8 +54,13 @@
  */
 export const KINDS = {
   holds: { label: 'one way' },
-  equiv: { label: 'both ways' }
+  equiv: { label: 'both ways', both: true }
 };
+
+/** Does this kind of arrow get a head at each end? */
+function bothWays(kind) {
+  return !!(KINDS[kind] && KINDS[kind].both);
+}
 
 // 4 since 2026-09-10. A saved set of arrow numbers meant "matched" under the old
 // exercise and means "built" under this one, and a student halfway through the old
@@ -219,15 +232,15 @@ export class MapView {
     this.nodeById = new Map(data.nodes.map((n) => [n.id, n]));
     this.progress = new Progress(data.id, stampOf(data));
 
-    // The claim under construction. Nothing is graded until all three parts are
-    // chosen, and they can be chosen in any order.
-    this.sel = { item: null, from: null, to: null };
+    // The claim under construction: a sentence and up to two boxes. `boxes` is a
+    // list rather than a from/to pair because the order is not part of the claim.
+    // Nothing is graded until all three parts are chosen, in any order.
+    this.sel = { item: null, boxes: [] };
     // The last box clicked, whose definition sits under the claim, and the last
     // arrow drawn, whose reason sits there when no claim is open.
     this.lastNode = null;
     this.shownEdge = null;
     this.msg = null;
-    this.msgOk = false;
 
     this.scale = 1;
     this.build();
@@ -278,10 +291,10 @@ export class MapView {
     this.stage.appendChild(this.svg);
 
     // The claim, drawn dashed between the two chosen boxes. First into the SVG, so
-    // an arrow that has been earned always wins the pixel.
+    // an arrow that has been earned always wins the pixel. No head on it: a head
+    // would show a direction, and the claim does not carry one.
     this.ghost = svgEl('path', { class: 'cm-ghost' });
-    this.ghostHead = svgEl('path', { class: 'cm-ghost__head' });
-    this.svg.append(this.ghost, this.ghostHead);
+    this.svg.appendChild(this.ghost);
 
     this.nodeEls = new Map();
     for (const n of d.nodes) {
@@ -326,11 +339,13 @@ export class MapView {
     this.frame.appendChild(this.stage);
     this.root.appendChild(this.frame);
 
+    // Built from KINDS, so the legend cannot end up naming a kind the engine does
+    // not draw. It used to hold its own copy of the same two labels.
     const legend = el('div', 'cm-legend');
-    for (const [text, both] of [['one way', false], ['both ways', true]]) {
+    for (const kind of Object.keys(KINDS)) {
       const item = el('div', 'cm-legend__item');
-      item.append(el('span', 'cm-legend__sample' + (both ? ' cm-legend__sample--both' : '')),
-                  el('span', null, text));
+      item.append(el('span', 'cm-legend__sample' + (bothWays(kind) ? ' cm-legend__sample--both' : '')),
+                  el('span', null, KINDS[kind].label));
       legend.appendChild(item);
     }
     this.root.appendChild(legend);
@@ -490,7 +505,7 @@ export class MapView {
 
       const dirEnd = tangentAt(1, p0, c, p1);
       parts.head.setAttribute('d', arrowHead(p1, dirEnd, 10));
-      if (e.kind === 'equiv') {
+      if (bothWays(e.kind)) {
         const dirStart = tangentAt(0, p0, c, p1);
         parts.tail.setAttribute('d', arrowHead(p0, { x: -dirStart.x, y: -dirStart.y }, 10));
       } else {
@@ -513,21 +528,20 @@ export class MapView {
   /**
    * The claim, drawn dashed while it is being made.
    *
-   * Unbent, because the bend is authored and belongs to the real arrow: a dashed
-   * line on the chord says "these two, this way round" and nothing more.
+   * Unbent and headless: the bend is authored and belongs to the real arrow, and a
+   * head would claim a direction. A dashed line on the chord says "these two" and
+   * nothing more.
    */
   layoutGhost() {
-    const { from, to } = this.sel;
-    if (!from || !to || from === to) {
+    const [a, b] = this.sel.boxes;
+    if (!a || !b || a === b) {
       this.ghost.setAttribute('d', '');
-      this.ghostHead.setAttribute('d', '');
       return;
     }
-    const curve = this.curveFor(from, to, 0);
+    const curve = this.curveFor(a, b, 0);
     if (!curve) return;
     const { p0, p1, c } = curve;
     this.ghost.setAttribute('d', `M ${p0.x} ${p0.y} Q ${c.x} ${c.y} ${p1.x} ${p1.y}`);
-    this.ghostHead.setAttribute('d', arrowHead(p1, tangentAt(1, p0, c, p1), 10));
   }
 
   setScale(next) {
@@ -548,28 +562,30 @@ export class MapView {
   /* ---- making a claim -------------------------------------------------- */
 
   clearClaim() {
-    this.sel = { item: null, from: null, to: null };
+    this.sel = { item: null, boxes: [] };
     this.msg = null;
   }
 
   /**
-   * A box was clicked. It fills the next empty end of the claim, and its definition
-   * shows under the claim either way.
+   * A box was clicked. It joins the claim, and its definition shows under the claim
+   * either way.
+   *
+   * A box already in the claim comes back out, and a third box starts a fresh pair
+   * with itself, which is the only sensible reading of a third click.
    *
    * There is no separate look-up-a-definition mode. A box click always counts toward
    * the claim, because the alternative is a modifier key or a second hit area, and
    * every definition is in the fold below as well.
    */
   tapNode(node) {
-    const s = this.sel;
+    const boxes = this.sel.boxes;
     this.lastNode = node.id;
     this.msg = null;
 
-    if (s.from === node.id) s.from = null;
-    else if (s.to === node.id) s.to = null;
-    else if (s.from === null) s.from = node.id;
-    else if (s.to === null) s.to = node.id;
-    else { s.from = node.id; s.to = null; }
+    const at = boxes.indexOf(node.id);
+    if (at !== -1) boxes.splice(at, 1);
+    else if (boxes.length < 2) boxes.push(node.id);
+    else this.sel.boxes = [node.id];
 
     this.shownEdge = null;
     this.grade();
@@ -586,53 +602,48 @@ export class MapView {
   }
 
   /**
-   * Grade the claim, once a sentence and both boxes are chosen.
+   * Grade the claim, once a sentence and two boxes are chosen.
    *
-   * Order matters unless the arrow runs both ways. Getting the pair right and the
-   * direction wrong earns its own message: reversing an implication is the mistake
-   * this material punishes hardest, and naming it is worth more than the small hint
-   * it gives away.
+   * The two boxes are a pair and not an ordered pair, so either order is right and
+   * the kind of the arrow makes no difference here.
    */
   grade() {
-    const { item, from, to } = this.sel;
-    if (!item || !from || !to) return;
+    const { item, boxes } = this.sel;
+    if (!item || boxes.length < 2) return;
 
     if (item.n === null) {
-      this.sel.from = null;
-      this.sel.to = null;
+      this.sel.boxes = [];
       this.say("That one's false, so it doesn't belong anywhere on the map. Which " +
-        'step in it fails?', false);
+        'step in it fails?');
       return;
     }
 
     const want = this.data.edges.find((e) => e.n === item.n);
-    const forward = want.from === from && want.to === to;
-    const reversed = want.from === to && want.to === from;
+    const joins = boxes.includes(want.from) && boxes.includes(want.to);
 
-    if (forward || (reversed && want.kind === 'equiv')) {
+    if (joins) {
       this.progress.add(want.n);
       this.clearClaim();
       this.showEdge(want.n);
       return;
     }
 
-    this.sel.from = null;
-    this.sel.to = null;
-
-    if (reversed) {
-      this.say("You've got the right two boxes, and the relationship runs the other " +
-        'way. Which one is the hypothesis?', false);
-      return;
-    }
+    this.sel.boxes = [];
     // Whether those two boxes are joined by some other arrow is deliberately not
     // reported: it would say where an arrow is, which is what the exercise asks for.
-    this.say("That sentence doesn't run between those two boxes. Which idea does it " +
-      'start from, and which one does it land on?', false);
+    this.say("That sentence doesn't run between those two boxes. Which two ideas " +
+      'does it connect?');
   }
 
-  say(message, ok) {
+  /**
+   * The one thing the panel says back that is not a box or an arrow.
+   *
+   * There is no success message and no `ok` variant: a right claim draws its arrow
+   * and the panel shows that arrow's card, which is a better answer than a line of
+   * green text saying the same thing.
+   */
+  say(message) {
     this.msg = message;
-    this.msgOk = ok;
   }
 
   /**
@@ -667,8 +678,7 @@ export class MapView {
 
     for (const [id, box] of this.nodeEls) {
       box.className = 'cm-node' +
-        (this.sel.from === id ? ' cm-node--from' : '') +
-        (this.sel.to === id ? ' cm-node--to' : '') +
+        (this.sel.boxes.includes(id) ? ' cm-node--picked' : '') +
         (this.shownEdge !== null && this.edgeTouches(this.shownEdge, id) ? ' cm-node--lit' : '');
     }
 
@@ -698,8 +708,8 @@ export class MapView {
    */
   renderWork() {
     this.work.textContent = '';
-    const { item, from, to } = this.sel;
-    const claiming = !!(item || from || to);
+    const { item, boxes } = this.sel;
+    const claiming = !!item || boxes.length > 0;
 
     if (claiming) {
       this.work.appendChild(this.claimStrip());
@@ -707,8 +717,8 @@ export class MapView {
       this.work.appendChild(this.edgeCard(this.shownEdge));
     } else {
       this.work.appendChild(el('p', 'cm-work__body',
-        'Pick a sentence, then click the box the relationship starts at and the box ' +
-        "it ends at. Get all three right and we'll draw the arrow."));
+        'Pick a sentence, then click the two boxes it runs between, in either order. ' +
+        "Get all three right and we'll draw the arrow."));
     }
 
     if (this.lastNode) {
@@ -719,36 +729,47 @@ export class MapView {
       this.work.appendChild(def);
     }
 
-    if (this.msg) {
-      this.work.appendChild(el('p',
-        this.msgOk ? 'cm-verdict cm-verdict--ok' : 'cm-verdict cm-verdict--no', this.msg));
-    }
+    if (this.msg) this.work.appendChild(el('p', 'cm-verdict cm-verdict--no', this.msg));
 
     typeset(this.work);
   }
 
-  /** The three parts of the claim. Clicking one puts that choice back. */
+  /**
+   * The three parts of the claim. Clicking one puts that choice back.
+   *
+   * The two box chips are labelled "One box" and "The other box" rather than From and
+   * To, because the order is not part of the claim and a From label would ask a
+   * student for something nothing checks.
+   */
   claimStrip() {
     const strip = el('div', 'cm-claim');
-    const { item, from, to } = this.sel;
-    const TAGS = { item: 'Sentence', from: 'From', to: 'To' };
+    const { item, boxes } = this.sel;
 
-    const chip = (kind, label, filled, onClear) => {
+    const chip = (kind, tag, label, filled, onClear) => {
       const b = el('button', 'cm-chip cm-chip--' + kind + (filled ? ' is-set' : ''));
       b.type = 'button';
-      b.innerHTML = `<span class="cm-chip__tag">${TAGS[kind]}</span>` +
+      b.innerHTML = `<span class="cm-chip__tag">${tag}</span>` +
         `<span class="cm-chip__val">${label}</span>`;
       if (filled) b.addEventListener('click', onClear);
       else b.disabled = true;
       return b;
     };
 
-    strip.appendChild(chip('item', item ? item.statement : 'pick one from the list',
+    const drop = (id) => () => {
+      this.sel.boxes = this.sel.boxes.filter((x) => x !== id);
+      this.msg = null;
+      this.render();
+    };
+
+    strip.appendChild(chip('item', 'Sentence',
+      item ? item.statement : 'pick one from the list',
       !!item, () => { this.sel.item = null; this.msg = null; this.render(); }));
-    strip.appendChild(chip('from', from ? this.plainLabel(this.nodeById.get(from)) : 'click a box',
-      !!from, () => { this.sel.from = null; this.msg = null; this.render(); }));
-    strip.appendChild(chip('to', to ? this.plainLabel(this.nodeById.get(to)) : 'click a second box',
-      !!to, () => { this.sel.to = null; this.msg = null; this.render(); }));
+    strip.appendChild(chip('box', 'One box',
+      boxes[0] ? this.plainLabel(this.nodeById.get(boxes[0])) : 'click a box',
+      !!boxes[0], drop(boxes[0])));
+    strip.appendChild(chip('box', 'The other box',
+      boxes[1] ? this.plainLabel(this.nodeById.get(boxes[1])) : 'click a second box',
+      !!boxes[1], drop(boxes[1])));
 
     const clear = el('button', 'cm-btn', 'Clear all three');
     clear.type = 'button';
@@ -766,7 +787,7 @@ export class MapView {
     const ends = el('span', 'cm-work__name');
     ends.innerHTML = `${this.plainLabel(this.nodeById.get(edge.from))} → ` +
       `${this.plainLabel(this.nodeById.get(edge.to))}` +
-      (edge.kind === 'equiv' ? ' <em>(and back)</em>' : '');
+      (bothWays(edge.kind) ? ' <em>(and back)</em>' : '');
     head.appendChild(ends);
     card.appendChild(head);
 
@@ -794,7 +815,7 @@ export class MapView {
       const b = el('button', 'cm-found__row' + (this.shownEdge === e.n ? ' is-active' : ''));
       b.type = 'button';
       b.innerHTML = `<span class="cm-found__ends">${e.n}. ` +
-        `${this.plainLabel(this.nodeById.get(e.from))} ${e.kind === 'equiv' ? '↔' : '→'} ` +
+        `${this.plainLabel(this.nodeById.get(e.from))} ${bothWays(e.kind) ? '↔' : '→'} ` +
         `${this.plainLabel(this.nodeById.get(e.to))}</span>` +
         `<span class="cm-found__what">${e.statement}</span>`;
       b.addEventListener('click', () => this.showEdge(e.n));

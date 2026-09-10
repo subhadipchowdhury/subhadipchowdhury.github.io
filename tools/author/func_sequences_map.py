@@ -140,9 +140,10 @@ DATA = {
         "record that one box is defined in terms of another, and many name the theorem "
         "that decides a question about the box the arrow points at. The sentences that "
         "belong on the arrows are all below, scrambled, and a few of them are false. "
-        "Pick one, then click the box the relationship starts at and the box it ends at, "
-        "and we'll draw the arrow if all three are right. Most of this chapter turns on "
-        "one quantifier, so notice which arrows need the stronger kind of convergence."
+        "Pick one, then click the two boxes it runs between, in either order, and we'll "
+        "draw the arrow with its head on, so the finished map tells you which way each "
+        "relationship runs. Most of this chapter turns on one quantifier, so notice "
+        "which arrows need the stronger kind of convergence."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? One quantifier separates "

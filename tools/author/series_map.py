@@ -146,10 +146,11 @@ DATA = {
         "implications between properties, some record that one box is defined in terms "
         "of another, and many name the theorem that decides a question about the box the "
         "arrow points at. The sentences that belong on the arrows are all below, "
-        "scrambled, and a few of them are false. Pick one, then click the box the "
-        "relationship starts at and the box it ends at, and we'll draw the arrow if all "
-        "three are right. Click a box on its own to see what it means. Let's see how "
-        "much of the chapter you can put back."
+        "scrambled, and a few of them are false. Pick one, then click the two boxes it "
+        "runs between, in either order, and we'll draw the arrow. We put the head on "
+        "it, so the finished map tells you which way each relationship runs. Click a "
+        "box on its own to see what it means. Let's see how much of the chapter you "
+        "can put back."
     ),
     "reflection": (
         "Which single arrow carries the most of this chapter? There is more than one "
