@@ -57,11 +57,22 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 ### University of Chicago (GSL)
 
 <div class="course-grid">
-{% comment %}Codes here are Math catalog numbers except for CAAP, which sets
-CodePrefix to '' in the data to suppress the "Math " label.{% endcomment %}
+{% comment %}Codes here are Math catalog numbers. The CodePrefix conditional
+lets an entry suppress the "Math " label by setting CodePrefix to '' in the
+data.{% endcomment %}
 {% for course in site.data.courses_uchicago_gsl %}
 <div class="course">
 **{{ course.Name }} ({% if course.CodePrefix == nil %}Math {% else %}{{ course.CodePrefix }}{% endif %}{{ course.Code }})** {% for coursepage in course.Coursepages %}- {% if coursepage.Link %}[{{ coursepage.Duration }}]({{ coursepage.Link }}){% else %}{{ coursepage.Duration }}{% endif %} {% endfor %}
+</div>
+{% endfor %}
+</div>
+
+### Pre-Orientation Programs
+
+<div class="course-grid">
+{% for program in site.data.programs_preorientation %}
+<div class="course">
+**{{ program.Name }}** - {{ program.Terms }}
 </div>
 {% endfor %}
 </div>
