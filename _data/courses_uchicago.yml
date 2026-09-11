@@ -1,25 +1,36 @@
+-   Code: 212
+    Name: Advanced Numerical Analysis
+    Coursepages:
+        - Duration: Winter 2027 (scheduled)
+        - Duration: Winter 2026
+          Link: /assets/syllabi/2026WI_212.pdf
+
+-   Code: 211
+    Name: Basic Numerical Analysis
+    Coursepages:
+        - Duration: Autumn 2026 (scheduled)
+
+-   Code: 185
+    Name: Mathematical Methods in the Physical Sciences III (Differential Equations)
+    Coursepages:
+        - Duration: Autumn 2025
+          Link: /assets/syllabi/2025AU_185.pdf
+
+-   Code: 184
+    Name: Mathematical Methods in the Physical Sciences II (Multivariable and Vector Calculus)
+    Coursepages:
+        - Duration: Summer 2025
+          Link: /assets/syllabi/2025SU_184.pdf
+
+-   Code: 16310
+    Name: Honors Calculus III (IBL)
+    Coursepages:
+        - Duration: Spring 2027 (scheduled)
+
 -   Code: 163
     Name: Honors Calculus III
     Coursepages:
         - Duration: Spring 2026
-
--   Code: 212
-    Name: Advanced Numerical Analysis
-    Coursepages:
-        - Duration: Winter 2026
-          Link: /assets/syllabi/2026WI_212.pdf
-
--   Code: 185
-    Name: Mathematical Methods for Physical Sciences III (Differential Equations)
-    Coursepages:
-        - Duration: Autumn 2025
-          Link: /assets/syllabi/2025AU_185.pdf  
-
--   Code: 184
-    Name: Mathematical Methods for Physical Sciences II (Multivariable and Vector Calculus)
-    Coursepages:
-        - Duration: Summer 2025
-          Link: /assets/syllabi/2025SU_184.pdf  
 
 -   Code: 133
     Name: Elementary Functions and Calculus III

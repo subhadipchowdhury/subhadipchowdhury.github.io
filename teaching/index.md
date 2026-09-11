@@ -22,7 +22,7 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% include section_open.html accent=true %}
 
-## Past Courses
+## Courses
 
 ### University of Chicago
 
