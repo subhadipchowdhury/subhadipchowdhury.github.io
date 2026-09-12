@@ -67,6 +67,14 @@ data.{% endcomment %}
 {% endfor %}
 </div>
 
+<p></p>
+{% include section_close.html %}
+
+{% include section_open.html %}
+
+## Others
+
+
 ### Pre-Orientation Programs
 
 <div class="course-grid">
@@ -76,14 +84,6 @@ data.{% endcomment %}
 </div>
 {% endfor %}
 </div>
-
-<p></p>
-{% include section_close.html %}
-
-{% include section_open.html %}
-
-## Others
-
 
 ### Teaching Assistant
 
