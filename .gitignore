@@ -28,3 +28,9 @@ assets/CV/*.out
 assets/CV/*.fls
 assets/CV/*.fdb_latexmk
 assets/CV/*.synctex.gz
+assets/CV/*.xdv
+
+# The brand font files the CV source needs at compile time. They are licensed
+# to the university, so they travel through OneDrive with the source.
+assets/CV/*.otf
+assets/CV/*.ttf
