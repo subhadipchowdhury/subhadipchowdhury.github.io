@@ -1516,6 +1516,11 @@ body.style-variant-a .papers {
 			color: var(--color-muted);
 			font-size: 0.88rem;
 			line-height: 1.4;
+
+			// A date in two parts wraps between them, never inside a range.
+			.nb {
+				white-space: nowrap;
+			}
 		}
 
 		> .what {
