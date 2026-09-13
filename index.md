@@ -88,9 +88,9 @@ Some ongoing teaching-related work includes:
 - Using backward design to revise curricula in calculus and proof-based courses to align with alternate grading schemes.
 - Designing materials and establishing norms for the responsible and transparent use of generative AI in mathematics courses.
 
-**Pedagogy fellowships and grants.** I am an [Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/) at the Chicago Center for Teaching and Learning, appointed for 2025–2027. Previously, I served as a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows/) and co-led an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups/) titled “Discussion on Implementing Alternate Grading and Redesigning Assessment in Math.”
+I am an [Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/) at the Chicago Center for Teaching and Learning for 2025–2027. I previously served as a [Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows/) there, and co-led an [Exploratory Teaching Group](https://teaching.uchicago.edu/programs/exploratory-teaching-groups/) on implementing alternate grading and redesigning assessment in mathematics.
 
-**Materials from my current and past courses** are accessible through the [teaching page]({{ '/teaching/' | relative_url }}). Write-ups, slides, and resources related to collaborative learning, mastery-based grading, and AI-aware pedagogy will be posted on the [pedagogy page]({{ '/pedagogy/' | relative_url }}).
+Materials from my current and past courses are accessible through the [teaching page]({{ '/teaching/' | relative_url }}). Write-ups, slides, and resources related to collaborative learning, mastery-based grading, and AI-aware pedagogy will be posted on the [pedagogy page]({{ '/pedagogy/' | relative_url }}).
 
 
 </div>

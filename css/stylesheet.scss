@@ -887,6 +887,17 @@ nav#nav-mobile ul.expanded {
   h2 {
     text-align: center;
   }
+
+  // The children here are flex items, so a paragraph shorter than the row
+  // shrinks to its own text width and space-evenly then centers it. Prose and
+  // lists take the whole row instead, so a short line starts at the left edge
+  // like the long paragraphs beside it.
+  > p,
+  > ul,
+  > ol {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
 }
 
 // Basic section container with divider
