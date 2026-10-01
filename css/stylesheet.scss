@@ -183,7 +183,7 @@ a {
   font-optical-sizing: auto;
   font-weight: normal;           // Weight handled by font-family name
   color: var(--accent);       // Brand accent color
-  transition: 0.5s all;          // Smooth animation over 0.5 seconds
+  transition: color 0.2s ease;   // Keeps pace with a theme switch
 
   &:hover {
     // When user hovers over a link, add a dotted underline
