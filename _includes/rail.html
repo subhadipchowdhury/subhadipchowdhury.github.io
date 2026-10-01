@@ -3,10 +3,22 @@ The rail: a page's sections as a list of #links. Styled under RAIL in
 css/stylesheet.scss; javascript/rail.js marks the entry for the section being
 read.
 
-entries is what the rail holds: one or more <ul>s of links. The CV writes its
-own.
+Rendered twice: as the side rail pinned beside the document on wide screens,
+and as a closed "Contents" list under the page title below that. Only one is
+visible, and so only one is focusable, at any width.
+
+entries is what the rail holds: one or more <ul>s of links, each group after
+the first under a .rail__label. _layouts/rail.html builds them from a page's
+headings; the CV writes its own.
 
 Pass a variant: {% include rail.html variant="side" entries=entries %}
 {% endcomment %}
 
-<nav class="rail rail--{{ include.variant }}" aria-label="Contents">{{ include.entries }}</nav>
+{% if include.variant == "top" %}
+<details class="rail rail--top">
+	<summary class="abstract-toggle">Contents</summary>
+	<nav aria-label="Contents">{{ include.entries }}</nav>
+</details>
+{% else %}
+<nav class="rail rail--side" aria-label="Contents">{{ include.entries }}</nav>
+{% endif %}

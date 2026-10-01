@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: rail
 title: Research
 navigation_weight: 4
 description: Publications, preprints, expository writing, and research talks.
 ---
-
-{% include page_title.html title=page.title %}
 
 {% include section_open.html %}
 

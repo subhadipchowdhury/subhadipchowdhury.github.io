@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: rail
 title: Mentoring
 navigation_weight: 5
 description: Independent studies, REU mentoring, applied research advising, and expository talks.
 ---
-
-{% include page_title.html title=page.title %}
 
 {% include section_open.html accent=true %}
 

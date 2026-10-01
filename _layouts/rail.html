@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+{% comment %}
+  A page whose sections are listed in a rail. The entries come from the
+  page's own rendered headings: kramdown gives every h2 and h3 an id, so a
+  section added or renamed in the Markdown shows up here with no other edit.
+  Each h2 is an entry, verbatim; rail_depth: 3 in the front matter lists its
+  h3s under it. A page with child pages (parentnav, the pages its header
+  dropdown lists) gets them as a second group.
+
+  The title is rendered here rather than by the page, so that the top rail
+  can sit under it.
+{% endcomment %}
+
+{% capture entries %}
+<ul>
+{% assign sections = content | split: '<h2 id="' %}
+{% for section in sections offset: 1 %}
+	{% assign section_id = section | split: '"' | first %}
+	{% assign section_heading = section | split: '</h2>' | first | remove_first: section_id | remove_first: '">' | strip_html | strip %}
+	<li><a href="#{{ section_id }}">{{ section_heading }}</a>
+	{% if page.rail_depth == 3 %}
+		{% assign subsections = section | split: '<h3 id="' %}
+		{% if subsections.size > 1 %}
+		<ul>
+		{% for subsection in subsections offset: 1 %}
+			{% assign subsection_id = subsection | split: '"' | first %}
+			{% assign subsection_heading = subsection | split: '</h3>' | first | remove_first: subsection_id | remove_first: '">' | strip_html | strip %}
+			<li><a href="#{{ subsection_id }}">{{ subsection_heading }}</a></li>
+		{% endfor %}
+		</ul>
+		{% endif %}
+	{% endif %}
+	</li>
+{% endfor %}
+</ul>
+{% assign children = site.html_pages | where: "parentnav", page.title | sort: "subnav_weight" %}
+{% if children.size > 0 %}
+<p class="rail__label">Pages under {{ page.title }}</p>
+<ul>
+{% for child in children %}
+	<li><a href="{{ child.url | relative_url }}">{{ child.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endcapture %}
+
+{% include rail.html variant="side" entries=entries %}
+
+<div>
+{% include page_title.html title=page.title %}
+{% include rail.html variant="top" entries=entries %}
+{{ content }}
+</div>

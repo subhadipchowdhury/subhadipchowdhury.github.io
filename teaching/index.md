@@ -1,12 +1,11 @@
 ---
-layout: default
+layout: rail
 title: Teaching
 navigation_weight: 2
 has_subnav: 1
+rail_depth: 3
 description: Courses taught, syllabi, evaluations, and selected teaching resources.
 ---
-
-{% include page_title.html title=page.title %}
 
 {% include section_open.html %}
 

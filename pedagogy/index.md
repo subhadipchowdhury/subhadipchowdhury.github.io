@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: rail
 title: Pedagogy
 navigation_weight: 3
 description: Writing on teaching, collaborative learning materials, faculty development work, and pedagogy talks.
 ---
-
-{% include page_title.html title=page.title %}
 
 {% include section_open.html %}
 

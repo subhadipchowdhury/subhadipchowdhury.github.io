@@ -1196,14 +1196,17 @@ body.style-variant-a .papers {
 	line-height: 1;
 }
 
-// Visual state for an already-expanded abstract button.
-.abstract-toggle[aria-expanded="true"] {
+// Visual state for an already-expanded abstract button, or the summary of an
+// open <details>.
+.abstract-toggle[aria-expanded="true"],
+[open] > summary.abstract-toggle {
 	background: rgba(var(--accent-rgb), 0.1);
 	border-color: rgba(var(--accent-rgb), 0.75);
 	color: var(--accent);
 }
 
-.abstract-toggle[aria-expanded="true"]::after {
+.abstract-toggle[aria-expanded="true"]::after,
+[open] > summary.abstract-toggle::after {
 	transform: rotate(90deg);
 }
 
@@ -1685,7 +1688,8 @@ body.style-variant-a .papers {
    for the section being read with .is-current. Entries carry the section
    headings verbatim, so several wrap.
 
-     .rail--side   pinned beside the document
+     .rail--side   pinned beside the document on wide screens
+     .rail--top    the same entries, a closed list under the title below that
 
    A page with a side rail sets body.has-rail (see _layouts/default.html),
    which widens the card and makes it the grid the rail sits in.
@@ -1731,6 +1735,30 @@ body.style-variant-a .papers {
 			border-left-color: var(--accent);
 		}
 	}
+
+	// An h3 sits indented under its h2, on the same hairline.
+	ul ul {
+		border-left: 0;
+
+		a {
+			padding-left: 1.8em;
+			font-size: 0.94em;
+		}
+	}
+}
+
+// Names a group of entries, such as the pages under a section page.
+.rail__label {
+	margin: 0 0 0.65rem;
+	font-family: $code-font;
+	font-size: 0.7rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+
+	* + & {
+		margin-top: 1.4rem;
+	}
 }
 
 // Pinned a rem below where a jump to an anchor stops, so a section just
@@ -1756,6 +1784,25 @@ body.has-rail .rail--side {
 	display: none;
 }
 
+// The summary is the site's outline button; its open state and turned
+// chevron come with the .abstract-toggle rules.
+.rail--top {
+	margin: 0 0 1rem;
+
+	> summary {
+		margin-left: 0;
+		list-style: none;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+	}
+
+	nav {
+		margin-top: 0.8rem;
+	}
+}
+
 @media screen and (min-width: 76rem) {
 	body.has-rail .main-wrapper {
 		display: grid;
@@ -1767,6 +1814,10 @@ body.has-rail .rail--side {
 
 	body.has-rail .rail--side {
 		display: block;
+	}
+
+	body.has-rail .rail--top {
+		display: none;
 	}
 }
 
