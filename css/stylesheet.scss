@@ -71,7 +71,8 @@ $uchicago-white: #ffffff;
   --stripe:          #eee;                          // table odd rows
   --code-bg:         #ddd;                           // inline code background
   --border-color:    rgba(0, 42, 58, 0.12);         // subtle dividers
-  --focus-ring:      #{$uchicago-lightlake};        // keyboard focus outline
+  --focus-ring:      #{$uchicago-darklake};         // keyboard focus outline; 3:1 or better
+                                                    // on the card, the page and the footer
 }
 
 html[data-theme="dark"] {
