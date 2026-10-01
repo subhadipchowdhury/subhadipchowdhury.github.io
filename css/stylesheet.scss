@@ -289,6 +289,15 @@ ol li {
   }
 }
 
+// A jump to an anchor stops this far below the top of the window, clear of
+// the sticky header (5.1rem tall at the top of a page, 3.1rem once scrolled).
+// Lab pages have a bar of their own and are left alone.
+$header-clearance: 6rem;
+
+body:not(.shell-page) [id] {
+	scroll-margin-top: $header-clearance;
+}
+
 
 /* ==========================================================================
    HEADER ACTIONS - Wrapper holding the nav and the mobile menu trigger
@@ -1229,7 +1238,6 @@ body.style-variant-a .papers {
 	border-left: 4px solid var(--accent); // Strong left accent
 	border-radius: 0.2rem 0.65rem 0.65rem 0.2rem;
 	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
-	scroll-margin-top: 1.5rem; // Helps when linking/jumping to panels
 	overflow: hidden;
 	opacity: 0;                // Start invisible
 	transform: translateY(-0.35rem);
@@ -1495,7 +1503,6 @@ body.style-variant-a .papers {
 		margin: 1.55em 0 0.35em;
 		padding-bottom: 0.1em;
 		border-bottom: 1px solid var(--accent);
-		scroll-margin-top: 6rem; // clears the sticky header on #jumps
 
 		&:first-of-type {
 			margin-top: 1.2em;
@@ -2008,7 +2015,6 @@ body.style-variant-a .papers {
 .spec-step {
 	padding-bottom: 1.4rem;
 	margin-bottom: 1.7rem;
-	scroll-margin-top: 5rem;
 }
 
 .spec-step .spec-step__kicker {
@@ -2034,7 +2040,6 @@ body.style-variant-a .papers {
 	border: 1px solid rgba(var(--accent-rgb), 0.12);
 	border-left: 4px solid var(--accent);
 	border-radius: 0.2rem 0.65rem 0.65rem 0.2rem;
-	scroll-margin-top: 5rem;
 }
 
 .spec-panel h2,
