@@ -19,6 +19,32 @@ document.addEventListener("DOMContentLoaded", function () {
     (linksById[id] = linksById[id] || []).push(link);
   });
 
+  // Pointing at an entry, or tabbing to it, outlines the section it leads to:
+  // an h2's whole section block where it has one, otherwise the target
+  // itself. Only where there is a pointer to hover with, so a tap on a phone
+  // does not leave an outline behind.
+  if (window.matchMedia("(hover: hover)").matches) {
+    Object.keys(linksById).forEach(function (id) {
+      var target = document.getElementById(id);
+
+      if (!target) {
+        return;
+      }
+
+      var outlined = (target.matches("h2") && target.closest(".section-block")) || target;
+
+      linksById[id].forEach(function (link) {
+        function show() { outlined.classList.add("is-previewed"); }
+        function hide() { outlined.classList.remove("is-previewed"); }
+
+        link.addEventListener("mouseenter", show);
+        link.addEventListener("mouseleave", hide);
+        link.addEventListener("focus", show);
+        link.addEventListener("blur", hide);
+      });
+    });
+  }
+
   var sections = Object.keys(linksById)
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean)

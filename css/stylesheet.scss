@@ -1749,6 +1749,13 @@ body.style-variant-a .papers {
 	}
 }
 
+// The section a hovered or focused rail entry leads to (rail.js). An outline
+// takes no space, so nothing on the page moves.
+.is-previewed {
+	outline: 2px solid rgba(var(--accent-rgb), 0.35);
+	outline-offset: 4px;
+}
+
 // Names a group of entries, such as the pages under a section page.
 .rail__label {
 	margin: 0 0 0.65rem;
