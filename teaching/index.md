@@ -9,13 +9,13 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 {% include section_open.html %}
 
-* [Go to this link](/teaching/worksheet/) for my LaTeX workbook and worksheet template.
+* [Worksheet Template](/teaching/worksheet/): my LaTeX workbook and worksheet template.
 
-* [Go to this link](/teaching/evaluations/) to see my past course evaluations.
+* [Student Evaluations](/teaching/evaluations/): my past course evaluations.
 
-* [Go to this link](/teaching/recommendations/) if you are considering asking me to be a reference or for a letter of recommendation.
+* [Letter of Recommendation](/teaching/recommendations/): if you are considering asking me to be a reference or for a letter of recommendation.
 
-* [Go to this link](/teaching/labs/) for guided computational labs, interactive applets, and concept maps for different courses.
+* [Labs and Applets](/teaching/labs/): guided computational labs, interactive applets, and concept maps for different courses.
 
 {% include section_close.html %}
 
