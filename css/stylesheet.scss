@@ -789,7 +789,7 @@ nav#nav-mobile ul.expanded {
    ABOUT SECTION - Home page intro with profile picture and info
    
    Uses flexbox to arrange three main sections side-by-side with wrapping
-   on smaller screens. The order property controls arrangement.
+   on smaller screens, in source order: picture, contact, seals.
    ========================================================================== */
 
 .about {
@@ -814,10 +814,8 @@ nav#nav-mobile ul.expanded {
 	}
 }
 
-// Profile picture - positioned first in about section
+// Profile picture
 .picture{
-	order: 1;                  // Controls flex ordering
-	float: left;
 	img{
 		width: 12em;
 		display: block;
@@ -828,19 +826,16 @@ nav#nav-mobile ul.expanded {
 	}
 }
 
-// Contact info section - positioned second
+// Contact info section
 .mail{
-	order: 2;
 	padding: 1em;
 	display: flex;
 	flex-direction: column;    // Stack content vertically
 	justify-content: space-evenly; // Space items evenly
 }
 
-// University logos - positioned third
+// University logos
 .shield{
-	order: 3;
-	float: right;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -942,8 +937,6 @@ nav#nav-mobile ul.expanded {
 
 
 .experience {
-	order:1;
-	float:left;
 	h3 {
 		text-align: center;
 	}
@@ -965,8 +958,6 @@ nav#nav-mobile ul.expanded {
 }
 
 .education {
-	order:2;
-	float:right;
 	h3 {
 		text-align: center;
 	}
