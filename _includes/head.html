@@ -2,13 +2,18 @@
 	<meta charset="utf-8">
 
 	<script>
-		// Apply the saved theme before first paint to avoid a flash of light mode.
+		// Apply the theme before first paint to avoid a flash of light mode: the
+		// one the visitor chose with the toggle, or else the operating system's.
 		(function () {
+			var saved = null;
+
 			try {
-				if (localStorage.getItem('theme') === 'dark') {
-					document.documentElement.setAttribute('data-theme', 'dark');
-				}
+				saved = localStorage.getItem('theme');
 			} catch (e) {}
+
+			if (saved === 'dark' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
 		})();
 	</script>
 
