@@ -1690,6 +1690,8 @@ body.style-variant-a .papers {
 
      .rail--side   pinned beside the document on wide screens
      .rail--top    the same entries, a closed list under the title below that
+     .rail--checklist  the guide's look, a checkbox beside each step (see
+                   SPECIFICATION GUIDE)
 
    A page with a side rail sets body.has-rail (see _layouts/default.html),
    which widens the card and makes it the grid the rail sits in.
@@ -1768,10 +1770,10 @@ body.style-variant-a .papers {
 	top: $header-clearance + 1rem;
 }
 
-// The tallest rail, the CV's, runs 450px. Below that plus its top there is no
-// room to pin it, so it reverts to ordinary content and scrolls with the
+// The tallest rail, the guide's, runs 561px. Below that plus its top there is
+// no room to pin it, so it reverts to ordinary content and scrolls with the
 // page rather than growing a scrollbar of its own.
-@media (max-height: 38rem) {
+@media (max-height: 44rem) {
 	.rail--side {
 		position: static;
 	}
@@ -1855,48 +1857,38 @@ body.has-rail .rail--side {
 	--spec-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
-// Sticky contents rail beside the prose. Collapses to a block above the
-// text under 860px, and stops being sticky under 700px tall, where there is
-// no room to pin it. It never scrolls on its own at any size.
+// The guide's rail (see RAIL) beside the prose, collapsing to a block above
+// the text under 860px. The tracks give it 200px in the 960px card.
 .spec-shell {
 	display: grid;
-	grid-template-columns: 200px minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr) minmax(0, 3.25fr);
 	gap: 0 2.75rem;
 	align-items: start;
 }
 
-.spec-toc {
-	position: sticky;
-	top: 4.75rem; // clears the sticky site header in its scrolled state
-}
-
-.spec-toc__label {
-	font-family: var(--spec-mono);
-	font-size: 0.7rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	color: var(--color-muted);
-}
-
-.spec-toc ol {
+// The guide's look for the rail: a checkbox beside each step, sans entries,
+// and a tint rather than a hairline marking the current one.
+.rail--checklist ol {
 	list-style: none;
-	margin: 0.65rem 0 0;
+	margin: 0;
 	padding: 0;
 }
 
-.spec-toc li {
+.rail--checklist li {
 	display: flex;
 	gap: 0.55rem;
 	align-items: flex-start;
 	padding-left: 0;
 }
 
-.spec-toc li + li {
+.rail--checklist li + li {
 	margin-top: 0.1rem;
 }
 
-.spec-toc a {
+.rail--checklist a {
 	flex: 1;
+	margin-left: 0;
+	border-left: 0;
 	font-family: var(--spec-sans);
 	font-size: 0.86rem;
 	line-height: 1.35;
@@ -1905,13 +1897,13 @@ body.has-rail .rail--side {
 	color: var(--color-muted);
 }
 
-.spec-toc a:hover {
+.rail--checklist a:hover {
 	color: var(--accent);
 	text-decoration: none;
 	background: rgba(var(--accent-rgb), 0.06);
 }
 
-.spec-toc a.is-current {
+.rail--checklist a.is-current {
 	font-family: var(--spec-semi);
 	color: var(--accent);
 	background: rgba(var(--accent-rgb), 0.1);
@@ -1919,21 +1911,21 @@ body.has-rail .rail--side {
 
 // Entries that are not numbered steps use the italic serif of the two
 // interlude panels.
-.spec-toc li.is-aside {
+.rail--checklist li.is-aside {
 	margin: 0.35rem 0;
 }
 
-.spec-toc li.is-aside a {
+.rail--checklist li.is-aside a {
 	font-family: var(--spec-serif);
 	font-style: italic;
 }
 
-.spec-toc li.is-aside .spec-check-gap {
+.rail--checklist li.is-aside .spec-check-gap {
 	flex: none;
 	width: 15px;
 }
 
-.spec-toc li.is-done a {
+.rail--checklist li.is-done a {
 	opacity: 0.6;
 }
 
@@ -2272,20 +2264,11 @@ body.has-rail .rail--side {
 		grid-template-columns: 1fr;
 	}
 
-	.spec-toc {
+	.rail--checklist {
 		position: static;
 		margin-bottom: 1.6rem;
 		padding: 0 0 1.2rem;
 		border-bottom: 1px solid var(--border-color);
-	}
-}
-
-// The rail runs about 560px. Below that plus the sticky offset there is no
-// room to pin it, so it reverts to ordinary content and scrolls with the page
-// rather than growing a scrollbar of its own.
-@media all and (max-height: 700px) {
-	.spec-toc {
-		position: static;
 	}
 }
 
@@ -2333,7 +2316,7 @@ body.has-rail .rail--side {
 		grid-template-columns: 1fr;
 	}
 
-	.spec-toc {
+	.rail--checklist {
 		position: static;
 		margin-bottom: 1.7rem;
 		padding: 0 0 1.2rem;

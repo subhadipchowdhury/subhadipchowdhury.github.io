@@ -26,67 +26,67 @@ description: A standing document that states how you build course material, writ
 
   <div class="spec-shell">
 
-    <aside class="spec-toc" aria-label="Contents">
-      <div class="spec-toc__label">Contents</div>
+    <nav class="rail rail--side rail--checklist" aria-label="Contents">
+      <p class="rail__label">Contents</p>
       <ol>
         <li>
           <button class="spec-check" data-check="s1" type="button" aria-pressed="false" aria-label="Mark step 1 as done">&#10003;</button>
-          <a href="#s1" data-toclink="s1">1. Narrow the scope</a>
+          <a href="#s1">1. Narrow the scope</a>
         </li>
         <li>
           <button class="spec-check" data-check="s2" type="button" aria-pressed="false" aria-label="Mark step 2 as done">&#10003;</button>
-          <a href="#s2" data-toclink="s2">2. Create the project and put your examples in it</a>
+          <a href="#s2">2. Create the project and put your examples in it</a>
         </li>
         <li>
           <button class="spec-check" data-check="s3" type="button" aria-pressed="false" aria-label="Mark step 3 as done">&#10003;</button>
-          <a href="#s3" data-toclink="s3">3. Ask for the first draft</a>
+          <a href="#s3">3. Ask for the first draft</a>
         </li>
         <li>
           <button class="spec-check" data-check="s4" type="button" aria-pressed="false" aria-label="Mark step 4 as done">&#10003;</button>
-          <a href="#s4" data-toclink="s4">4. Fix the draft</a>
+          <a href="#s4">4. Fix the draft</a>
         </li>
         <li class="is-aside">
           <span class="spec-check-gap"></span>
-          <a href="#becomes" data-toclink="becomes">What the specification becomes</a>
+          <a href="#becomes">What the specification becomes</a>
         </li>
         <li>
           <button class="spec-check" data-check="s5" type="button" aria-pressed="false" aria-label="Mark step 5 as done">&#10003;</button>
-          <a href="#s5" data-toclink="s5">5. Add the specification and write the instructions</a>
+          <a href="#s5">5. Add the specification and write the instructions</a>
         </li>
         <li>
           <button class="spec-check" data-check="s6" type="button" aria-pressed="false" aria-label="Mark step 6 as done">&#10003;</button>
-          <a href="#s6" data-toclink="s6">6. Write a second, shorter document (optional)</a>
+          <a href="#s6">6. Write a second, shorter document (optional)</a>
         </li>
         <li>
           <button class="spec-check" data-check="s7" type="button" aria-pressed="false" aria-label="Mark step 7 as done">&#10003;</button>
-          <a href="#s7" data-toclink="s7">7. Test before you trust it</a>
+          <a href="#s7">7. Test before you trust it</a>
         </li>
         <li>
           <button class="spec-check" data-check="s8" type="button" aria-pressed="false" aria-label="Mark step 8 as done">&#10003;</button>
-          <a href="#s8" data-toclink="s8">8. Correct in use</a>
+          <a href="#s8">8. Correct in use</a>
         </li>
         <li>
           <button class="spec-check" data-check="s9" type="button" aria-pressed="false" aria-label="Mark step 9 as done">&#10003;</button>
-          <a href="#s9" data-toclink="s9">9. Put the review on a schedule (optional)</a>
+          <a href="#s9">9. Put the review on a schedule (optional)</a>
         </li>
         <li>
           <button class="spec-check" data-check="s10" type="button" aria-pressed="false" aria-label="Mark step 10 as done">&#10003;</button>
-          <a href="#s10" data-toclink="s10">10. Reorganize as it grows</a>
+          <a href="#s10">10. Reorganize as it grows</a>
         </li>
         <li class="is-aside">
           <span class="spec-check-gap"></span>
-          <a href="#help" data-toclink="help">Where to get help</a>
+          <a href="#help">Where to get help</a>
         </li>
       </ol>
       <div class="spec-progress">
         <span id="progress-count">0 / 10 done</span>
         <button id="progress-reset" type="button" hidden>reset</button>
       </div>
-    </aside>
+    </nav>
 
     <div class="spec-body">
 
-      <div class="spec-lede" data-sec="intro">
+      <div class="spec-lede">
         <p class="spec-lede__companion">A companion to the Teaching Matters column &ldquo;<a href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach">Teaching Your AI How You Teach</a>.&rdquo;</p>
         <p class="spec-lede__byline">Subhadip Chowdhury, Department of Mathematics</p>
         <p class="spec-lede__text">A specification is a standing document that states how you build course material, written in enough detail that an AI model can follow it. You write a first version in an afternoon, keep it in a project workspace, and correct it as you use it. This guide assumes no prior experience with these tools.</p>
@@ -94,13 +94,13 @@ description: A standing document that states how you build course material, writ
         <p class="spec-print-source">The web version at subhadipchowdhury.github.io/pedagogy/specification/how-to-guide/ is the copy I keep current, and there each prompt is a copy-to-clipboard block. This PDF is a snapshot of {{ site.time | date: "%B %-d, %Y" }} and won&rsquo;t be updated. Licensed CC BY-NC-SA 4.0.</p>
       </div>
 
-      <section class="section-block spec-step" id="s1" data-sec="s1">
+      <section class="section-block spec-step" id="s1">
         <p class="spec-step__kicker">Step 1</p>
         <h2>Narrow the scope</h2>
         <p>Pick one course and one kind of material: worksheets, problem sets, exam questions, lab handouts, discussion prompts, reading guides. You can&rsquo;t write down &ldquo;how I teach&rdquo; in an afternoon. You can write down &ldquo;how I write weekly discussion worksheets for Introductory Calculus.&rdquo; Add the other kinds later, as new sections.</p>
       </section>
 
-      <section class="section-block spec-step" id="s2" data-sec="s2">
+      <section class="section-block spec-step" id="s2">
         <p class="spec-step__kicker">Step 2</p>
         <h2>Create the project and put your examples in it</h2>
         <p>A project is a workspace that loads the same files and instructions into every conversation you start inside it, so you stop re-explaining yourself. Make it before you write anything else.</p>
@@ -123,7 +123,7 @@ description: A standing document that states how you build course material, writ
         </div>
       </section>
 
-      <section class="section-block spec-step" id="s3" data-sec="s3">
+      <section class="section-block spec-step" id="s3">
         <p class="spec-step__kicker">Step 3</p>
         <h2>Ask for the first draft</h2>
         <p>Start a conversation inside the project and ask for something like this.</p>
@@ -137,7 +137,7 @@ description: A standing document that states how you build course material, writ
         <p>Expect a draft that is more right than wrong and nowhere near finished. Correcting a stated rule takes far less time than composing one from a blank page.</p>
       </section>
 
-      <section class="section-block spec-step" id="s4" data-sec="s4">
+      <section class="section-block spec-step" id="s4">
         <p class="spec-step__kicker">Step 4</p>
         <h2>Fix the draft</h2>
         <p>Make three passes over what came back. This is the step that takes the afternoon.</p>
@@ -181,7 +181,7 @@ description: A standing document that states how you build course material, writ
         <p>Then stop, while the specification is still thin. Most of the rules in mine arrived later, from cases I hadn&rsquo;t met yet, and you write yours in <a href="#s8">Step 8</a>.</p>
       </section>
 
-      <section class="spec-panel" id="becomes" data-sec="becomes">
+      <section class="spec-panel" id="becomes">
         <h2>What the specification becomes</h2>
         <p>Over a term or two, mine has settled into six sections. Don&rsquo;t try to write them all today.</p>
         <ol>
@@ -194,7 +194,7 @@ description: A standing document that states how you build course material, writ
         </ol>
       </section>
 
-      <section class="section-block spec-step" id="s5" data-sec="s5">
+      <section class="section-block spec-step" id="s5">
         <p class="spec-step__kicker">Step 5</p>
         <h2>Add the specification and write the instructions</h2>
         <p>Save the corrected document as a file, named for the course: <code>calculus_specification.md</code>, or whatever the equivalent is for yours. Upload it to <code>Project knowledge</code> next to the examples, along with anything else the model should have on hand: syllabus, learning goals, the table of contents of the textbook, last year&rsquo;s exams.</p>
@@ -209,7 +209,7 @@ description: A standing document that states how you build course material, writ
         <p>Keep the instructions short and let them point at the specification. You can revise a file properly, keep the old copies, and hand one to a colleague. A text box gives you none of that. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
       </section>
 
-      <section class="section-block spec-step" id="s6" data-sec="s6">
+      <section class="section-block spec-step" id="s6">
         <p class="spec-step__kicker">Step 6 &middot; optional</p>
         <h2>Write a second, shorter document</h2>
         <p>Keep this one separate from the specification: it covers how the model talks to you while you&rsquo;re working, not what it produces. By default it will spend your reading time on validation, summary, and hedging.</p>
@@ -217,14 +217,14 @@ description: A standing document that states how you build course material, writ
         <p>Write your own version and add it as a skill. Because a skill loads only when the work appears to call for it, add a line in <code>Settings &gt; Profile</code> asking Claude to apply this one in every conversation.</p>
       </section>
 
-      <section class="section-block spec-step" id="s7" data-sec="s7">
+      <section class="section-block spec-step" id="s7">
         <p class="spec-step__kicker">Step 7</p>
         <h2>Test before you trust it</h2>
         <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, work out which of three things happened: the specification says nothing about that point, says the wrong thing, or is right and the model went straight past it. The first two you fix by editing. For the third, restate the rule as a prohibition, which a model follows more reliably than a preference. Two or three of these tests found most of what was missing in mine.</p>
         <p>The test checks style. Nothing in it, or in the specification, checks whether the content is correct. A model states a wrong claim as fluently as a right one, so read everything for accuracy before it reaches students. The line in the project instructions asking it to mark what it is unsure of helps a little, but only a little: it shows you where the model noticed a gap, and the errors that matter are the ones it made confidently. You check the content accuracy and the logic yourself.</p>
       </section>
 
-      <section class="section-block spec-step" id="s8" data-sec="s8">
+      <section class="section-block spec-step" id="s8">
         <p class="spec-step__kicker">Step 8</p>
         <h2>Correct in use</h2>
         <p>Each time you get a draft back:</p>
@@ -236,7 +236,7 @@ description: A standing document that states how you build course material, writ
         <p>Correcting the model in conversation doesn&rsquo;t change the uploaded file, so promote a rule by editing the specification and replacing the copy in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it one level up, so that it names the principle underneath.</p>
       </section>
 
-      <section class="section-block spec-step" id="s9" data-sec="s9">
+      <section class="section-block spec-step" id="s9">
         <p class="spec-step__kicker">Step 9 &middot; optional</p>
         <h2>Put the review on a schedule</h2>
         <p>Correcting as you go catches only what you happen to notice, so I run a scheduled pass as well. <code>Claude Cowork</code> runs a saved prompt on a schedule and can read your earlier conversations. The task writes a memo of proposals and never touches the specification, so promoting a rule is still an edit you make yourself. Mine runs every two weeks, on the following standing instructions.</p>
@@ -255,7 +255,7 @@ description: A standing document that states how you build course material, writ
         </div>
       </section>
 
-      <section class="section-block spec-step" id="s10" data-sec="s10">
+      <section class="section-block spec-step" id="s10">
         <p class="spec-step__kicker">Step 10</p>
         <h2>Reorganize as it grows</h2>
         <p>Past twenty pages or so, split the specification into three layers so you can revise one without disturbing the others.</p>
@@ -269,7 +269,7 @@ description: A standing document that states how you build course material, writ
         <p>Review the project instructions in the same sitting, since they name the current course and the drafting workflow and go stale faster than the specification does. Ask the model to propose a revised set, read the proposal line by line before accepting any of it, and look in particular for instructions that have grown into a competing copy of the specification or that still describe a course you no longer teach.</p>
       </section>
 
-      <section class="spec-panel spec-panel--help" id="help" data-sec="help">
+      <section class="spec-panel spec-panel--help" id="help">
         <h2>Where to get help</h2>
         <ul>
           <li>Claude Projects, which is the workspace described in <a href="#s2">Step 2</a>, at <a href="https://support.claude.com/en/articles/9517075-what-are-projects">https://support.claude.com/en/articles/9517075-what-are-projects</a></li>
@@ -287,8 +287,8 @@ description: A standing document that states how you build course material, writ
 </div>
 
 <script>
-  // Copy buttons on the pasteable prompts, per-step checkboxes kept in
-  // localStorage, and a contents rail that follows the scroll position.
+  // Copy buttons on the pasteable prompts, and per-step checkboxes kept in
+  // localStorage. javascript/rail.js marks the step being read.
   (function () {
     var STORE = 'teaching-spec-progress-v1';
     var STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
@@ -377,34 +377,5 @@ description: A standing document that states how you build course material, writ
     });
 
     paint();
-
-    /* ---- contents rail follows the scroll ---- */
-
-    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-sec]'));
-    var links = {};
-    Array.prototype.forEach.call(document.querySelectorAll('[data-toclink]'), function (a) {
-      links[a.getAttribute('data-toclink')] = a;
-    });
-
-    function setActive(id) {
-      Object.keys(links).forEach(function (key) {
-        links[key].classList.toggle('is-current', key === id);
-      });
-    }
-
-    if ('IntersectionObserver' in window) {
-      var visible = {};
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          visible[e.target.getAttribute('data-sec')] = e.isIntersecting;
-        });
-        // Highest section currently in the reading band wins.
-        for (var i = 0; i < sections.length; i++) {
-          var id = sections[i].getAttribute('data-sec');
-          if (visible[id]) { setActive(id); return; }
-        }
-      }, { rootMargin: '-12% 0px -70% 0px', threshold: 0 });
-      sections.forEach(function (s) { io.observe(s); });
-    }
   })();
 </script>
