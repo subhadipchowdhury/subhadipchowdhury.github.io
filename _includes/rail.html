@@ -1,0 +1,12 @@
+{% comment %}
+The rail: a page's sections as a list of #links. Styled under RAIL in
+css/stylesheet.scss; javascript/rail.js marks the entry for the section being
+read.
+
+entries is what the rail holds: one or more <ul>s of links. The CV writes its
+own.
+
+Pass a variant: {% include rail.html variant="side" entries=entries %}
+{% endcomment %}
+
+<nav class="rail rail--{{ include.variant }}" aria-label="Contents">{{ include.entries }}</nav>

@@ -1306,8 +1306,6 @@ body.style-variant-a .papers {
 	--cv-rule: rgba(0, 0, 0, 0.14);
 	--cv-fine: var(--color-muted);
 
-	max-width: 54rem;
-	margin: 0 auto;
 	font-family: $heading-font; // brand serif; has italic, semibold and bold
 	font-size: 1.075rem;
 	line-height: 1.42;
@@ -1410,59 +1408,6 @@ body.style-variant-a .papers {
 	.rv {
 		text-align: right;
 		white-space: nowrap;
-	}
-
-	/* ---- sticky section rail ----
-
-	   Entries carry the section headings verbatim, so several wrap. Hidden
-	   by default and switched on further down, at the width where the two
-	   columns actually fit. ---- */
-
-	.cv-rail {
-		display: none;
-		position: sticky;
-		top: 7rem; // clears the sticky site header
-		max-height: calc(100vh - 9rem);
-		overflow-y: auto;
-		padding-right: 0.5rem;
-		font-size: 0.82rem;
-		line-height: 1.3;
-
-		ul {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			border-left: 1px solid var(--cv-rule);
-		}
-
-		li {
-			margin: 0;
-			padding: 0;
-		}
-
-		a {
-			display: block;
-			// Generous vertical padding so the entries that wrap to two or
-			// three lines still read as separate items.
-			padding: 0.45em 0 0.45em 0.9em;
-			// Sits over the ul's border so the current marker replaces it
-			// rather than doubling it.
-			margin-left: -1px;
-			border-left: 1px solid transparent;
-			color: var(--color-muted);
-			text-decoration: none;
-
-			&:hover {
-				color: var(--accent);
-				border-left-color: var(--cv-rule);
-				text-decoration: none;
-			}
-
-			&.is-current {
-				color: var(--accent);
-				border-left-color: var(--accent);
-			}
-		}
 	}
 
 	/* ---- page actions, screen only ---- */
@@ -1657,31 +1602,6 @@ body.style-variant-a .papers {
 	}
 }
 
-// The rail only appears where both columns fit: 12.5rem of rail, a 2.5rem
-// gutter, 54rem of document and the card's padding. The breakpoint clears the
-// widened card itself, so it never grows to touch the window edges the way it
-// would between the two figures. Below this the CV stays the single centred
-// column it is on every other width.
-@media (min-width: 76rem) {
-	body.page-cv .main-wrapper {
-		max-width: 1180px;
-	}
-
-	.cv {
-		display: grid;
-		grid-template-columns: 12.5rem minmax(0, 54rem);
-		justify-content: center;
-		align-items: start;
-		gap: 0 2.5rem;
-		max-width: none;
-		margin: 0;
-
-		.cv-rail {
-			display: block;
-		}
-	}
-}
-
 /* Printing the CV drops the site chrome and the on-screen toolbar so the
    document runs edge to edge. Scoped to body.page-cv, because every other
    page still wants its header and footer on paper. The @page margin cannot
@@ -1699,7 +1619,6 @@ body.style-variant-a .papers {
 
 		.site-header,
 		.site-footer,
-		.cv-rail,
 		.cv-actions {
 			display: none !important;
 		}
@@ -1718,10 +1637,6 @@ body.style-variant-a .papers {
 			--cv-rule: rgba(0, 0, 0, 0.14);
 			--cv-fine: #48433d;
 
-			// Undo the two-column grid: on paper there is no rail.
-			display: block;
-			max-width: none;
-			margin: 0;
 			color: #211e1a;
 			font-size: 10.5pt;
 
@@ -1759,6 +1674,105 @@ body.style-variant-a .papers {
 				widows: 3;
 			}
 		}
+	}
+}
+
+
+/* ========================================================================
+   RAIL - the sticky list of a page's sections
+
+   _includes/rail.html renders it, and javascript/rail.js marks the entry
+   for the section being read with .is-current. Entries carry the section
+   headings verbatim, so several wrap.
+
+     .rail--side   pinned beside the document
+
+   A page with a side rail sets body.has-rail (see _layouts/default.html),
+   which widens the card and makes it the grid the rail sits in.
+   ======================================================================== */
+
+.rail {
+	font-family: $heading-font; // the entries are headings
+	font-size: 0.82rem;
+	line-height: 1.3;
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-left: 1px solid var(--border-color);
+	}
+
+	li {
+		margin: 0;
+		padding: 0;
+	}
+
+	a {
+		display: block;
+		// Generous vertical padding so the entries that wrap to two or
+		// three lines still read as separate items.
+		padding: 0.45em 0 0.45em 0.9em;
+		// Sits over the list's border so the current marker replaces it
+		// rather than doubling it.
+		margin-left: -1px;
+		border-left: 1px solid transparent;
+		font-family: inherit;
+		color: var(--color-muted);
+		text-decoration: none;
+
+		&:hover {
+			color: var(--accent);
+			text-decoration: none;
+		}
+
+		&.is-current {
+			color: var(--accent);
+			border-left-color: var(--accent);
+		}
+	}
+}
+
+// Pinned a rem below where a jump to an anchor stops, so a section just
+// jumped to has crossed this edge, which is the line rail.js marks against.
+.rail--side {
+	position: sticky;
+	top: $header-clearance + 1rem;
+}
+
+// The tallest rail, the CV's, runs 450px. Below that plus its top there is no
+// room to pin it, so it reverts to ordinary content and scrolls with the
+// page rather than growing a scrollbar of its own.
+@media (max-height: 38rem) {
+	.rail--side {
+		position: static;
+	}
+}
+
+// A side rail shows only where the widened card fits: 1180px of card clears
+// the 76rem breakpoint with room on both sides, so it never grows to touch
+// the window edges. Below that the page is the single column it always was.
+body.has-rail .rail--side {
+	display: none;
+}
+
+@media screen and (min-width: 76rem) {
+	body.has-rail .main-wrapper {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 4fr);
+		gap: 0 2.5rem;
+		align-items: start;
+		max-width: 1180px;
+	}
+
+	body.has-rail .rail--side {
+		display: block;
+	}
+}
+
+@media print {
+	body.has-rail .rail {
+		display: none;
 	}
 }
 

@@ -6,7 +6,11 @@ layout: compress
 <html lang="en">
   {% include head.html %}
   {% assign style_preview_pages = "Teaching|Pedagogy|Mentoring|Research" | split: "|" %}
-  <body class="page-{{ page.title | downcase | replace: ' ', '-' }}{% if style_preview_pages contains page.title %} style-variant-a{% endif %}">
+  {% comment %}
+    has-rail widens the card and makes it the grid a side rail sits in. A page
+    that writes its own rail, like the CV, sets rail: true.
+  {% endcomment %}
+  <body class="page-{{ page.title | downcase | replace: ' ', '-' }}{% if style_preview_pages contains page.title %} style-variant-a{% endif %}{% if page.rail %} has-rail{% endif %}">
     <header class="site-header">
       <div class="site-header__inner">
         <h1><a href="{{ '/' | relative_url }}">Subhadip Chowdhury</a></h1>
