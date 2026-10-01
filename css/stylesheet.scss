@@ -923,7 +923,10 @@ nav#nav-mobile ul.expanded {
 	h1 {
 		margin: 0;
 		font-family: $heading-font;
-		font-size: 2rem;
+		// Clear of the 1.8rem section headings on the rail pages, so the title
+		// reads as the level above them. Eases down on a phone.
+		font-size: clamp(2.1rem, 6vw, 2.6rem);
+		line-height: 1.15;
 		color: var(--accent);
 	}
 }
