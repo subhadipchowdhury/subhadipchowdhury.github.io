@@ -73,12 +73,44 @@ These sessions were co-led with Prof. <a href="https://mathematics.uchicago.edu/
 
 {% include section_open.html %}
 
-## Exploratory Teaching Group for Instructional Faculty
+## Pedagogy Fellowships
+
+Pedagogy Fellows form a year-long cohort of faculty and instructors at the [Chicago Center for Teaching and Learning](https://teaching.uchicago.edu/programs/pedagogy-fellows-program), and Associate Pedagogy Fellows provide collegial mentorship for them.
+
+<div class="course">
+**[Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/)** - 2026-27
+
+Organizing a pedagogy brown-bag series where instructional faculty in our department compare formats we’ve tried, such as oral exams, project-based finals and flipped classes.
+</div>
+
+<div class="course">
+**[Associate Pedagogy Fellow](https://teaching.uchicago.edu/programs/associate-pedagogy-fellows/)** - 2025-26
+
+Wrote a [Teaching Matters column](#writing) that grew out of discussions about generative AI with the other fellows.
+</div>
+
+<div class="course">
+**[Pedagogy Fellow](https://teaching.uchicago.edu/programs/pedagogy-fellows-program)** - 2024-25
+</div>
+
+{% include section_close.html %}
+
+{% include section_open.html %}
+
+## Exploratory Teaching Groups for Instructional Faculty
 
 Exploratory Teaching Groups are year-long faculty learning communities supported by the [Chicago Center for Teaching and Learning](https://teaching.uchicago.edu/past-exploratory-teaching-groups).
 
 <div class="course">
-**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - AY2024-25, co-led with Prof. <a href="https://mathematics.uchicago.edu/people/profile/kale-davies/">Kale <span class="lastname">Davies</span></a>
+**The Scholarship of Teaching and Learning in the Collaborative Learning Program** - 2026-27 (scheduled), co-chair with Prof. <a href="https://stat.uchicago.edu/people/profile/fei-liu/">Fei <span class="lastname">Liu</span></a>
+
+This continues the [Collaborative Learning](https://voices.uchicago.edu/collaborativelearning/) ETGs I’ve been part of since 2023.
+</div>
+
+<div class="course">
+**Discussion on Implementing Alternate Grading and Redesigning Assessment in Math** - 2024-25, co-chaired with Prof. <a href="https://mathematics.uchicago.edu/people/profile/kale-davies/">Kale <span class="lastname">Davies</span></a>
+
+We read *Grading for Growth* together and planned how to use mastery-based grading in our own courses, and several members started using it in Autumn 2025.
 </div>
 
 {% include section_close.html %}
