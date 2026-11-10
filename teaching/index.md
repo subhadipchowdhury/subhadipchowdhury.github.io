@@ -17,6 +17,8 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 * [Labs and Applets](/teaching/labs/): guided computational labs, interactive applets, and concept maps for different courses.
 
+* [Shared Course Materials](https://uchicagoedu-my.sharepoint.com/:f:/r/personal/subhadip_uchicago_edu/Documents/Courses/Shared%20Content?d=w9dc0a7358dcd472ab568571bf1fb721f&csf=1&web=1&e=0Xlm2A): course documents I share with other instructors, starting with the Math 163 oral final. Access is by request; open the link and use Request access.
+
 {% include section_close.html %}
 
 {% include section_open.html accent=true %}
