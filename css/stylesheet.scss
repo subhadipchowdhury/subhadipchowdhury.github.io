@@ -2475,3 +2475,49 @@ body.has-rail .rail--side {
 		color: var(--color-muted);
 	}
 }
+
+
+/* ========================================================================
+   SCREENSHOTS - a figure holding a light and a dark screenshot of the same
+   view, showing the one that matches the site's theme (html[data-theme],
+   set by javascript/theme.js). Used on /teaching/gradebook/. Both images
+   carry loading="lazy", so the hidden one is not fetched.
+   ======================================================================== */
+
+.shot {
+	margin: 1.5rem 0 2rem;
+}
+
+.shot img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--border-color);
+	border-radius: 0.4rem;
+}
+
+// A phone screenshot at a phone's width rather than the column's. The cap is
+// on an image, not on text.
+.shot--phone img {
+	max-width: 20rem;
+}
+
+.shot img.shot__dark {
+	display: none;
+}
+
+html[data-theme="dark"] .shot img.shot__light {
+	display: none;
+}
+
+html[data-theme="dark"] .shot img.shot__dark {
+	display: block;
+}
+
+.shot figcaption {
+	margin-top: 0.55rem;
+	font-size: 0.9rem;
+	line-height: 1.45;
+	color: var(--color-muted);
+}
+

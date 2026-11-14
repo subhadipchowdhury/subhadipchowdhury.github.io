@@ -17,6 +17,8 @@ description: Courses taught, syllabi, evaluations, and selected teaching resourc
 
 * [Labs and Applets](/teaching/labs/): guided computational labs, interactive applets, and concept maps for different courses.
 
+* [Mastery Gradebook](/teaching/gradebook/): my dashboard for standards-based grading with Gradescope and Canvas.
+
 * [Shared Course Material](https://uchicagoedu-my.sharepoint.com/:f:/r/personal/subhadip_uchicago_edu/Documents/Courses/Shared%20Content?d=w9dc0a7358dcd472ab568571bf1fb721f&csf=1&web=1&e=0Xlm2A): access is by request.
 
 {% include section_close.html %}
