@@ -2,7 +2,7 @@
 layout: rail
 title: Pedagogy
 navigation_weight: 3
-description: Writing on teaching, collaborative learning materials, faculty development work, and pedagogy talks.
+description: Writing on teaching, tools for instructors, collaborative learning materials, faculty development work, and pedagogy talks.
 ---
 
 {% include section_open.html %}
@@ -19,6 +19,14 @@ description: Writing on teaching, collaborative learning materials, faculty deve
 <p><strong>Abstract.</strong> In this essay, we discuss the benefits of leveraging an AI specifications document to build course material at scale to enable effortful, learning-focused student work in the classroom.</p>
 </div>
 </div>
+
+{% include section_close.html %}
+
+{% include section_open.html %}
+
+## Tools
+
+{% include page_cards.html parent=page.title %}
 
 {% include section_close.html %}
 

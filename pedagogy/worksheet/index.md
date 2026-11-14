@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Worksheet Template
-parentnav: Teaching
-subnav_weight: 21
+parentnav: Pedagogy
+subnav_weight: 32
+blurb: My LaTeX class for building a course workbook and standalone worksheets from the same source.
 description: A LaTeX class for building course workbooks and standalone worksheets.
 ---
 
