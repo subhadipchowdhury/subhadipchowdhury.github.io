@@ -4,7 +4,7 @@ kramdown:
 
 permalink: pretty
 
-url: "https://subhadipchowdhury.github.io/"
+url: "https://subhadipchowdhury.github.io"
 description: "Personal academic website of Subhadip Chowdhury: teaching, pedagogy, research, and mentoring."
   
 # tools/ holds the build scripts, the test suites, the authoring scripts and the
