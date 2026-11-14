@@ -476,8 +476,11 @@ nav#nav-main ul{
 			
 		}
 		
-		// Show dropdown menu when parent <li> is hovered
-		&:hover > ul{
+		// Show dropdown menu when parent <li> is hovered, or holds the focus:
+		// visibility: hidden takes the subnav links out of the tab order, so
+		// without :focus-within a keyboard could never reach them
+		&:hover > ul,
+		&:focus-within > ul{
 			visibility: visible;   // Make submenu visible
 			opacity: 1;            // Fade it in
 		}
