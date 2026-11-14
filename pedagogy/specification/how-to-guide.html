@@ -30,66 +30,48 @@ description: How I keep a teaching specification as a set of files in the folder
       <p class="rail__label">Contents</p>
       <ol>
         <li class="is-aside">
-          <span class="spec-check-gap"></span>
           <a href="#changes">What changed since the first version</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s1" type="button" aria-pressed="false" aria-label="Mark step 1 as done">&#10003;</button>
           <a href="#s1">1. Keep the course in one folder</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s2" type="button" aria-pressed="false" aria-label="Mark step 2 as done">&#10003;</button>
           <a href="#s2">2. Install Claude Code and open the folder</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s3" type="button" aria-pressed="false" aria-label="Mark step 3 as done">&#10003;</button>
           <a href="#s3">3. Write down how you teach</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s4" type="button" aria-pressed="false" aria-label="Mark step 4 as done">&#10003;</button>
           <a href="#s4">4. Test it before you trust it</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s5" type="button" aria-pressed="false" aria-label="Mark step 5 as done">&#10003;</button>
           <a href="#s5">5. Decide where each rule lives</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s6" type="button" aria-pressed="false" aria-label="Mark step 6 as done">&#10003;</button>
           <a href="#s6">6. Write the working notes, CLAUDE.md</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s7" type="button" aria-pressed="false" aria-label="Mark step 7 as done">&#10003;</button>
           <a href="#s7">7. Put the quarter in the folder</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s8" type="button" aria-pressed="false" aria-label="Mark step 8 as done">&#10003;</button>
           <a href="#s8">8. Let memory keep your corrections</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s9" type="button" aria-pressed="false" aria-label="Mark step 9 as done">&#10003;</button>
           <a href="#s9">9. Watch for Goodhart’s law</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s10" type="button" aria-pressed="false" aria-label="Mark step 10 as done">&#10003;</button>
           <a href="#s10">10. Turn routines into skills</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s11" type="button" aria-pressed="false" aria-label="Mark step 11 as done">&#10003;</button>
           <a href="#s11">11. Work in sessions, and check everything</a>
         </li>
         <li>
-          <button class="spec-check" data-check="s12" type="button" aria-pressed="false" aria-label="Mark step 12 as done">&#10003;</button>
           <a href="#s12">12. Consolidate at the end of the quarter</a>
         </li>
         <li class="is-aside">
-          <span class="spec-check-gap"></span>
           <a href="#help">Where to get help</a>
         </li>
       </ol>
-      <div class="spec-progress">
-        <span id="progress-count">0 / 12 done</span>
-        <button id="progress-reset" type="button" hidden>reset</button>
-      </div>
     </nav>
 
     <div class="spec-body">
@@ -419,12 +401,9 @@ a step works. If it is algebra the reader can do at a glance, write it in.</pre>
 </div>
 
 <script>
-  // Copy buttons on the pasteable prompts, and per-step checkboxes kept in
-  // localStorage. javascript/rail.js marks the step being read.
+  // Copy buttons on the pasteable prompts, and the "What changed" panel.
+  // javascript/rail.js marks the step being read.
   (function () {
-    var STORE = 'teaching-spec-progress-v2';
-    var STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12'];
-
     /* ---- copy buttons ---- */
 
     function fallbackCopy(text) {
@@ -445,8 +424,7 @@ a step works. If it is algebra the reader can do at a glance, write it in.</pre>
         var src = document.getElementById(btn.getAttribute('data-copy'));
         if (!src) return;
 
-        // The scheduled-review prompt is a list; copy it as one dashed item
-        // per line.
+        // A prompt written as a list is copied as one dashed item per line.
         var text = src.tagName === 'UL'
           ? Array.prototype.map.call(src.children, function (li) { return '- ' + li.textContent.trim(); }).join('\n')
           : src.textContent.trim();
@@ -484,46 +462,5 @@ a step works. If it is algebra the reader can do at a glance, write it in.</pre>
       window.addEventListener('beforeprint', openChanges);
       openIfTargeted();
     }
-
-    /* ---- step progress ---- */
-
-    var boxes = Array.prototype.slice.call(document.querySelectorAll('.spec-check'));
-    var count = document.getElementById('progress-count');
-    var reset = document.getElementById('progress-reset');
-    var done = {};
-
-    try { done = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (e) { done = {}; }
-
-    function save() {
-      try { localStorage.setItem(STORE, JSON.stringify(done)); } catch (e) {}
-    }
-
-    function paint() {
-      boxes.forEach(function (b) {
-        var on = !!done[b.getAttribute('data-check')];
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-        b.parentNode.classList.toggle('is-done', on);
-      });
-      var n = STEPS.filter(function (s) { return done[s]; }).length;
-      count.textContent = n + ' / ' + STEPS.length + ' done';
-      reset.hidden = n === 0;
-    }
-
-    boxes.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var key = b.getAttribute('data-check');
-        done[key] = !done[key];
-        save();
-        paint();
-      });
-    });
-
-    reset.addEventListener('click', function () {
-      done = {};
-      save();
-      paint();
-    });
-
-    paint();
   })();
 </script>
