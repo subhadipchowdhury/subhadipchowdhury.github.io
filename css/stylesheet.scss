@@ -1121,6 +1121,62 @@ body.style-variant-a .papers {
 }
 
 /* ========================================================================
+   PAGE CARDS - the pages under a section page (_includes/page_cards.html),
+   on Teaching and Pedagogy
+
+   Three equal tracks, so three or six cards fill their rows. Below 680px it
+   goes straight to one track: two would leave the third card alone. The
+   title link's ::after covers the card, so the whole card is the link while
+   the link's text stays the title alone.
+   ======================================================================== */
+
+.page-cards {
+	list-style: none;
+	padding: 0;
+	margin: 0.35rem 0;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.6rem;
+
+	@media (max-width: 680px) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.page-card {
+	position: relative;
+	margin: 0;
+	padding: 0.7rem 0.85rem 0.8rem;
+	background: var(--color-card);
+	border: 1px dashed rgba(var(--accent-rgb), 0.22); // as .course on these pages
+	border-radius: 0.35rem;
+	transition: border-color 0.2s ease;
+
+	&:hover,
+	&:focus-within {
+		border-style: solid;
+		border-color: rgba(var(--accent-rgb), 0.7);
+	}
+}
+
+.page-card__link {
+	font-family: $heading-font;
+	font-weight: 700;
+	font-size: 1.15rem;
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+	}
+}
+
+.page-card__blurb {
+	margin: 0.35rem 0 0;
+	font-size: 0.95rem;
+}
+
+/* ========================================================================
    RESEARCH ABSTRACTS - Lists, toggle buttons, and expandable panels
 
    These styles power the expandable abstract UI used on the research page.
