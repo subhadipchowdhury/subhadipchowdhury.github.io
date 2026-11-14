@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Writing a Teaching Specification
-description: A standing document that states how you build course material, written in enough detail that an AI model can follow it. A companion to the Teaching Matters column.
+title: Building a Course With a Teaching Specification
+description: How I keep a teaching specification as a set of files in the folder where a course lives, with Claude Code working in it, and keep it current over a quarter. A companion to the Teaching Matters column.
 ---
 
 <style>
@@ -29,49 +29,57 @@ description: A standing document that states how you build course material, writ
     <nav class="rail rail--side rail--checklist" aria-label="Contents">
       <p class="rail__label">Contents</p>
       <ol>
+        <li class="is-aside">
+          <span class="spec-check-gap"></span>
+          <a href="#changes">What changed since the first version</a>
+        </li>
         <li>
           <button class="spec-check" data-check="s1" type="button" aria-pressed="false" aria-label="Mark step 1 as done">&#10003;</button>
-          <a href="#s1">1. Narrow the scope</a>
+          <a href="#s1">1. Keep the course in one folder</a>
         </li>
         <li>
           <button class="spec-check" data-check="s2" type="button" aria-pressed="false" aria-label="Mark step 2 as done">&#10003;</button>
-          <a href="#s2">2. Create the project and put your examples in it</a>
+          <a href="#s2">2. Install Claude Code and open the folder</a>
         </li>
         <li>
           <button class="spec-check" data-check="s3" type="button" aria-pressed="false" aria-label="Mark step 3 as done">&#10003;</button>
-          <a href="#s3">3. Ask for the first draft</a>
+          <a href="#s3">3. Write down how you teach</a>
         </li>
         <li>
           <button class="spec-check" data-check="s4" type="button" aria-pressed="false" aria-label="Mark step 4 as done">&#10003;</button>
-          <a href="#s4">4. Fix the draft</a>
-        </li>
-        <li class="is-aside">
-          <span class="spec-check-gap"></span>
-          <a href="#becomes">What the specification becomes</a>
+          <a href="#s4">4. Test it before you trust it</a>
         </li>
         <li>
           <button class="spec-check" data-check="s5" type="button" aria-pressed="false" aria-label="Mark step 5 as done">&#10003;</button>
-          <a href="#s5">5. Add the specification and write the instructions</a>
+          <a href="#s5">5. Decide where each rule lives</a>
         </li>
         <li>
           <button class="spec-check" data-check="s6" type="button" aria-pressed="false" aria-label="Mark step 6 as done">&#10003;</button>
-          <a href="#s6">6. Write a second, shorter document (optional)</a>
+          <a href="#s6">6. Write the working notes, CLAUDE.md</a>
         </li>
         <li>
           <button class="spec-check" data-check="s7" type="button" aria-pressed="false" aria-label="Mark step 7 as done">&#10003;</button>
-          <a href="#s7">7. Test before you trust it</a>
+          <a href="#s7">7. Put the quarter in the folder</a>
         </li>
         <li>
           <button class="spec-check" data-check="s8" type="button" aria-pressed="false" aria-label="Mark step 8 as done">&#10003;</button>
-          <a href="#s8">8. Correct in use</a>
+          <a href="#s8">8. Let memory keep your corrections</a>
         </li>
         <li>
           <button class="spec-check" data-check="s9" type="button" aria-pressed="false" aria-label="Mark step 9 as done">&#10003;</button>
-          <a href="#s9">9. Put the review on a schedule (optional)</a>
+          <a href="#s9">9. Watch for Goodhart’s law</a>
         </li>
         <li>
           <button class="spec-check" data-check="s10" type="button" aria-pressed="false" aria-label="Mark step 10 as done">&#10003;</button>
-          <a href="#s10">10. Reorganize as it grows</a>
+          <a href="#s10">10. Turn routines into skills</a>
+        </li>
+        <li>
+          <button class="spec-check" data-check="s11" type="button" aria-pressed="false" aria-label="Mark step 11 as done">&#10003;</button>
+          <a href="#s11">11. Work in sessions, and check everything</a>
+        </li>
+        <li>
+          <button class="spec-check" data-check="s12" type="button" aria-pressed="false" aria-label="Mark step 12 as done">&#10003;</button>
+          <a href="#s12">12. Consolidate at the end of the quarter</a>
         </li>
         <li class="is-aside">
           <span class="spec-check-gap"></span>
@@ -79,7 +87,7 @@ description: A standing document that states how you build course material, writ
         </li>
       </ol>
       <div class="spec-progress">
-        <span id="progress-count">0 / 10 done</span>
+        <span id="progress-count">0 / 12 done</span>
         <button id="progress-reset" type="button" hidden>reset</button>
       </div>
     </nav>
@@ -87,63 +95,73 @@ description: A standing document that states how you build course material, writ
     <div class="spec-body">
 
       <div class="spec-lede">
-        <p class="spec-lede__companion">A companion to the Teaching Matters column &ldquo;<a href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach">Teaching Your AI How You Teach</a>.&rdquo;</p>
+        <p class="spec-lede__companion">A companion to the Teaching Matters column “<a href="https://teaching.uchicago.edu/resources/subhadip-chowdhury-teaching-your-ai-how-you-teach">Teaching Your AI How You Teach</a>.”</p>
         <p class="spec-lede__byline">Subhadip Chowdhury, Department of Mathematics</p>
-        <p class="spec-lede__text">A specification is a standing document that states how you build course material, written in enough detail that an AI model can follow it. You write a first version in an afternoon, keep it in a project workspace, and correct it as you use it. This guide assumes no prior experience with these tools.</p>
-        <p class="spec-lede__disclaimer">This page was drafted with <a href="https://claude.ai">Claude</a> and revised by me before posting.</p>
-        <p class="spec-print-source">The web version at subhadipchowdhury.github.io/pedagogy/specification/how-to-guide/ is the copy I keep current, and there each prompt is a copy-to-clipboard block. This PDF is a snapshot of {{ site.time | date: "%B %-d, %Y" }} and won&rsquo;t be updated. Licensed CC BY-NC-SA 4.0.</p>
+        <p class="spec-lede__text">The column argued that an AI model already has the content knowledge a course needs and lacks your knowledge of how to teach that content. Shulman called that pedagogical content knowledge, and it stays tacit until you write it down. A teaching specification is what you write down, in enough detail that a model can follow it. This guide is about writing it and keeping it current over a quarter.</p>
+        <p class="spec-lede__text">In my current setup the specification is no longer a single document. It is a set of markdown files, plain text with a few formatting marks, in the folder where the course lives on my own computer. Claude reads each kind at a different time. Each conversation with Claude is a separate session, and a new session starts with no record of earlier ones except what is written in these files. There are working notes it reads at the start of every session, short notes it writes each time I correct it, instructions for the jobs I repeat every week, and longer documents it opens when a job needs them. I can open any of these files, read what Claude has recorded, and change it.</p>
+        <p class="spec-lede__text">Claude Code, Anthropic’s AI assistant for working with files, works inside that folder from VS Code, Microsoft’s free editor. I now work there rather than in the Claude chat in a browser or the desktop app, mainly because I can watch it work. Its panel shows every file it opens, every command it runs and its output, and every edit it makes, with its reasoning between the steps. When a draft goes wrong, I can see which files it read and what it assumed.</p>
+        <p class="spec-lede__text">The examples come from my Autumn 2026 Numerical Analysis course. The guide assumes no prior experience with these tools, though you will be installing an editor.</p>
+        <p class="spec-lede__disclaimer">This page was drafted with Claude and revised by me before posting.</p>
+        <p class="spec-print-source">The web version at subhadipchowdhury.github.io/pedagogy/specification/how-to-guide/ is the copy I keep current, and there each prompt is a copy-to-clipboard block. This PDF is a snapshot of {{ site.time | date: "%B %-d, %Y" }} and won’t be updated. Licensed CC BY-NC-SA 4.0.</p>
       </div>
+
+      <section class="spec-panel" id="changes">
+        <h2>What changed since the first version</h2>
+        <p><a href="/pedagogy/specification/how-to-guide-v1/">The first version of this guide</a>, from August 2026, kept the specification as a single document in a Claude Projects workspace in the browser.</p>
+        <table class="spec-table">
+          <thead><tr><th>First version</th><th>This version</th></tr></thead>
+          <tbody>
+            <tr><td>One specification document</td><td>Several files, each read by Claude at a different time</td></tr>
+            <tr><td>Files uploaded to Project knowledge</td><td>The course folder itself</td></tr>
+            <tr><td>Project instructions, typed into a text box</td><td><code>CLAUDE.md</code>, a file in the folder</td></tr>
+            <tr><td>You edit the specification and upload it again</td><td>Claude edits files in place</td></tr>
+            <tr><td>A scheduled review searches old conversations for corrections</td><td>Claude writes each correction to memory as you make it, and you read what it wrote</td></tr>
+            <tr><td>One skill, for how Claude talks to you</td><td>Several skills, one for each routine job</td></tr>
+          </tbody>
+        </table>
+      </section>
 
       <section class="section-block spec-step" id="s1">
         <p class="spec-step__kicker">Step 1</p>
-        <h2>Narrow the scope</h2>
-        <p>Pick one course and one kind of material: worksheets, problem sets, exam questions, lab handouts, discussion prompts, reading guides. You can&rsquo;t write down &ldquo;how I teach&rdquo; in an afternoon. You can write down &ldquo;how I write weekly discussion worksheets for Introductory Calculus.&rdquo; Add the other kinds later, as new sections.</p>
+        <h2>Keep the course in one folder</h2>
+        <p>Put everything for one course in one folder, since Claude Code works on the files in the folder you open. Mine holds the lecture notes and their LaTeX sources, the homework and the assessments, the syllabus, the schedule and the standards, the textbooks and old notes I draw on, and the documents that make up the specification.</p>
+        <p>Keep it somewhere with version history, such as OneDrive or Box. Claude edits files in place, and with version history you can recover a file it rewrote badly. Because the folder syncs, you also have the same files on every computer you work from.</p>
       </section>
 
       <section class="section-block spec-step" id="s2">
         <p class="spec-step__kicker">Step 2</p>
-        <h2>Create the project and put your examples in it</h2>
-        <p>A project is a workspace that loads the same files and instructions into every conversation you start inside it, so you stop re-explaining yourself. Make it before you write anything else.</p>
+        <h2>Install Claude Code and open the folder</h2>
         <ol>
-          <li>Click <code>Projects</code> in the left sidebar, create a new one, and name it after the course.</li>
-          <li>Collect a dozen or so pieces of that material you&rsquo;ve already made and would hand out again. Hold two or three of them back and keep them out of the project, because you&rsquo;ll need work the model hasn&rsquo;t seen when you test the specification in <a href="#s7">Step 7</a>. The eight to ten that remain are what it learns from.</li>
-          <li>Pick those eight to ten for range: different weeks, different topics, the short ones alongside the long ones. A rule is whatever holds steady across pieces that otherwise have little in common, so ten varied pieces teach the model more than thirty near-copies. If your material is already compiled, a single file covering a whole year counts as one upload and reads fine.</li>
-          <li>Add two or three pieces you were unhappy with, and put the word <code>reject</code> in each filename, since the prompt in the next step refers to them that way. Upload these as separate files even if the rest of your material is one compiled file. They carry more per file than the successes do, because you can usually name what went wrong in a piece you shelved.</li>
-          <li>Upload everything to <code>Project knowledge</code>. Scans and photographs are usable, though the model reads a text or Word file more reliably than an image of one.</li>
+          <li>Install VS Code, a free editor from Microsoft, from code.visualstudio.com.</li>
+          <li>In VS Code, open the Extensions view from the Activity Bar on the left, search for Claude Code, install it, and sign in with your Claude account.</li>
+          <li>Open the course folder with <code>File &gt; Open Folder</code>, then open the Claude panel.</li>
         </ol>
-        <p>Leave <code>Project instructions</code> empty for now. You&rsquo;ll write them in <a href="#s5">Step 5</a>, once the specification exists.</p>
+        <p>Claude can now read, search and edit the files in that folder, and run commands on your computer, such as a Python script or the LaTeX compiler. By default it asks before it edits a file or runs a command. Keep that setting until you have seen how it works.</p>
+        <p>Because Claude works on your files directly, it can check a computation by writing a short Python script and running it, and it can compile a document written in LaTeX, a typesetting system, into a PDF and look at the pages that come out. Claude also writes a correction straight into the document, without a copy for you to download, edit and upload again.</p>
+        <p>VS Code is a programmer’s tool, so it will look unfamiliar if you have not used an editor before. The file list on the left and the Claude panel are all you need.</p>
         <div class="spec-panel spec-panel--aside">
-          <h3>Does it have to be a Projects workspace?</h3>
-          <p>Two other workspaces do the same job, and both put the specification on your own computer where Claude edits it in place, rather than you downloading it, editing it, and uploading the new copy every time a rule changes.</p>
-          <ul>
-            <li><strong>Cowork</strong> mounts folders from your computer into a project, and the scheduled review of <a href="#s9">Step 9</a> then runs inside that project. Cowork projects are desktop-only, aren&rsquo;t synced, and can&rsquo;t be shared with a colleague.</li>
-            <li><strong>Claude Code</strong> runs as a panel inside the VS Code editor and works directly in a folder of course material. The project instructions of <a href="#s5">Step 5</a> become a file called <code>CLAUDE.md</code> in that folder, and under version control you get a dated history of every rule you added and what prompted it. It&rsquo;s a programmer&rsquo;s tool, so expect unfamiliar surroundings if you don&rsquo;t already work in an editor.</li>
-          </ul>
-          <p>The steps below stay on the <code>Projects</code> route, which runs in a browser apart from the optional review in <a href="#s9">Step 9</a>. Nothing here locks you in, since the specification is the same file whichever workspace you keep it in.</p>
+          <h3>What stays on your computer</h3>
+          <p>Claude Code, the files it edits and the commands it runs are all on your computer. The language model behind Claude runs on Anthropic’s servers. Anything Claude reads, a file included, is sent there as part of the conversation. Under a commercial account, which includes the University’s Claude Enterprise plan, Anthropic does not train its models on that data unless the institution opts in. Check the University’s rules on student data before Claude reads any student work.</p>
+          <p>Nothing you do changes the model itself. Every new session starts with the same model and no record of your earlier sessions beyond the files in your folder. Over the quarter the text in those files grows, and Claude reads what it needs from them in each new session. You can therefore read everything it has recorded about your course, and correct it.</p>
         </div>
       </section>
 
       <section class="section-block spec-step" id="s3">
         <p class="spec-step__kicker">Step 3</p>
-        <h2>Ask for the first draft</h2>
-        <p>Start a conversation inside the project and ask for something like this.</p>
+        <h2>Write down how you teach</h2>
+        <p>Start with one kind of material in one course, such as worksheets, problem sets, exam questions or lab handouts, and add the other kinds later. Writing down how you teach in general is too large a first job.</p>
+        <p>Collect a dozen or so pieces of that material that you have already made and would hand out again. Hold two or three of them back for the test in Step 4, since that test needs work the model hasn’t seen. Pick the remaining eight to ten for range, from different weeks and topics, with the short ones alongside the long ones. Claude infers a rule from what stays the same across pieces that otherwise differ, so ten varied pieces show it more of your rules than thirty similar ones. Add two or three pieces you were unhappy with. For each of these you can usually say what went wrong, and that gives Claude a rule about what to avoid.</p>
+        <p>The files are already in the folder, so list them for Claude instead of uploading them.</p>
         <div class="spec-prompt">
           <div class="spec-prompt__head">
-            <span class="spec-prompt__label">Paste into the project</span>
+            <span class="spec-prompt__label">Paste into the Claude panel</span>
             <button class="spec-copy" data-copy="prompt-draft" type="button">Copy</button>
           </div>
-          <p class="spec-prompt__body" id="prompt-draft">Read the materials in this project. I want a specification document detailed enough that you could write a new piece in my style by following it. Infer the design rules I appear to be using, covering structure, sequencing, difficulty, voice, how much I explain versus how much I ask, and anything I consistently avoid. The files marked as rejects are ones I was unhappy with; say what distinguishes them from the rest. Write the result as a numbered list of rules. For each rule, name the file you drew it from, and mark anything you are guessing at.</p>
+          <p class="spec-prompt__body" id="prompt-draft">Read the files listed below. I want a specification document detailed enough that you could write a new piece in my style by following it. Infer the design rules I appear to be using, covering structure, sequencing, difficulty, voice, how much I explain versus how much I ask, and anything I consistently avoid. The files marked as rejects are ones I was unhappy with; say what distinguishes them from the rest. Write the result to <code>[course]_specification.md</code> as a numbered list of rules. For each rule, cite the file you drew it from, and mark anything you are guessing at. [list the files, marking the rejects]</p>
         </div>
-        <p>Expect a draft that is more right than wrong and nowhere near finished. Correcting a stated rule takes far less time than composing one from a blank page.</p>
-      </section>
-
-      <section class="section-block spec-step" id="s4">
-        <p class="spec-step__kicker">Step 4</p>
-        <h2>Fix the draft</h2>
-        <p>Make three passes over what came back. This is the step that takes the afternoon.</p>
-        <p>The first pass checks the inferred rules against the material. A model reading ten pieces generalizes from accidents, so it might report that you always open with a figure when seven of them happen to, or promote a constraint from one unit, the term you taught in a room with no projector, into a standing rule. Read each rule and ask whether your material actually follows it. Delete what is wrong about you and correct what is half right.</p>
-        <p>The second pass sharpens whatever is still vague. Keep a rule only if a colleague, reading a draft, could tell you whether it had been followed.</p>
-
+        <p>Some of the rules in Claude’s first draft will be right, some will be wrong, and many will be missing. Correcting a rule it has written down is still quicker than writing the rule yourself. Then read the draft yourself three times, each time looking for something different.</p>
+        <p>First, check each rule against your material. From only ten pieces, Claude may mistake coincidences for rules. It might report that you always open with a figure when seven of the ten happen to, or turn a constraint from one unit, such as the quarter you taught in a room with no projector, into a standing rule. Delete the rules that are wrong and correct the ones that are half right.</p>
+        <p>Second, sharpen whatever is still vague. Keep a rule only if a colleague, reading a draft, could tell you whether it had been followed.</p>
         <div class="spec-compare">
           <div class="spec-compare__pair">
             <div class="spec-compare__row spec-compare__row--vague">
@@ -152,7 +170,7 @@ description: A standing document that states how you build course material, writ
             </div>
             <div class="spec-compare__row spec-compare__row--usable">
               <span class="spec-compare__tag">Usable</span>
-              <span>Exposition is capped at 40 percent of the page. Every substantive derivation appears as a scaffolded exercise, never as finished text.</span>
+              <span>Exposition takes about 30 percent of the page and questions the rest. The hardest part of a question takes no more than five to seven minutes of focused work in class.</span>
             </div>
           </div>
           <div class="spec-compare__pair">
@@ -162,7 +180,7 @@ description: A standing document that states how you build course material, writ
             </div>
             <div class="spec-compare__row spec-compare__row--usable">
               <span class="spec-compare__tag">Usable</span>
-              <span>No question may name the feature that resolves it. If an item tells students what to notice before they notice it, cut that clause.</span>
+              <span>No sentence after an in-class question states what the question was meant to find. The tool a question needs, such as a theorem or a formula, never appears in the sentences just before it.</span>
             </div>
           </div>
           <div class="spec-compare__pair">
@@ -172,113 +190,227 @@ description: A standing document that states how you build course material, writ
             </div>
             <div class="spec-compare__row spec-compare__row--usable">
               <span class="spec-compare__tag">Usable</span>
-              <span>No em dashes. No &ldquo;you will find that.&rdquo; Second person throughout, and no exclamation points.</span>
+              <span>No em dashes or en dashes. “We” in the exposition, and “you” only for instructions at the keyboard, the reader’s own earlier work, and requests for the reader’s judgment.</span>
             </div>
           </div>
         </div>
-
-        <p>The third pass adds what no amount of reading would reveal. The rejects show a few failures you kept a copy of. They can&rsquo;t show the draft you abandoned halfway, the topic you refuse to assign, or the framing you&rsquo;ve never once used. Ask yourself what makes you throw material away, and write those answers down.</p>
-        <p>Then stop, while the specification is still thin. Most of the rules in mine arrived later, from cases I hadn&rsquo;t met yet, and you write yours in <a href="#s8">Step 8</a>.</p>
+        <p>Third, add what Claude could not have found in your material. The pieces you were unhappy with show only the failures you kept. They do not show drafts you abandoned, topics you refuse to assign, or framings you never use. Ask yourself what makes you throw material away, and write those answers down.</p>
+        <p>Stop there, even though the document is short. Most rules come later, from cases you haven’t met yet, and Steps 8 and 9 describe how to collect them.</p>
+        <div class="spec-panel spec-panel--aside">
+          <h3>What to write down</h3>
+          <p>Nearly everything worth writing down falls under six headings. Don’t try to write all six today.</p>
+          <ol>
+            <li><strong>Purpose and audience.</strong> What the material is for, who the students are, what they have already seen, and how they will be assessed.</li>
+            <li><strong>Design principles with their reasons.</strong> Why a question comes before the theorem it leads to, why a proof becomes an exercise with blanks, why a question uses a particular function only when its answer needs one. A model can extend a rule to a case you didn’t anticipate only if it knows why the rule is there.</li>
+            <li><strong>Rejection triggers,</strong> the things that make you throw a draft away, from your third reading. Left to itself, Claude writes material that reads like a standard textbook, so much of what you write down is what to reject.</li>
+            <li><strong>Voice and prose.</strong> Banned words and constructions, register, how you address students, and formatting habits.</li>
+            <li><strong>Format conventions.</strong> Section structure, numbering, length limits, the ratio of exposition to student work, and any typesetting or template details.</li>
+            <li><strong>An example of what you do write.</strong> A piece of material you consider correct, with notes on what each part is doing and why it sits there. This can be one of the pieces you held back, once you’ve finished testing with it.</li>
+          </ol>
+          <p>Give the sixth heading as much care as the third. A list of bans tells Claude only what to remove, and prose written from it comes out flat. For prose I now keep a separate description of how I write lecture notes. It cites passages from my own notes to show how a section motivates its reader, how the mathematics is made clear, and what reads as talking down to students.</p>
+        </div>
       </section>
 
-      <section class="spec-panel" id="becomes">
-        <h2>What the specification becomes</h2>
-        <p>Over a term or two, mine has settled into six sections. Don&rsquo;t try to write them all today.</p>
-        <ol>
-          <li><strong>Purpose and audience.</strong> What the material is for, who the students are, what they have already seen, how they will be assessed.</li>
-          <li><strong>Design principles with their reasons.</strong> Why prediction comes before computation, why a derivation or a proof becomes an exercise with blanks, why an applied context sometimes gets in the way. A model can extend a rule to a case you didn&rsquo;t anticipate only if it knows why the rule is there.</li>
-          <li><strong>Rejection triggers,</strong> from the third pass of <a href="#s4">Step 4</a>. Models default to the safe, textbook-shaped version of everything, so the prohibitions do more work here than the instructions do.</li>
-          <li><strong>Voice and prose.</strong> Banned words and constructions, register, how you address students, formatting habits.</li>
-          <li><strong>Format conventions.</strong> Section structure, numbering, length limits, the ratio of exposition to student work, and any typesetting or template details.</li>
-          <li><strong>One annotated example.</strong> A single piece of material you consider correct, with notes on what each part is doing and why it sits there. This can be one of the pieces you held back in <a href="#s2">Step 2</a>, once you&rsquo;ve finished testing with it.</li>
-        </ol>
+      <section class="section-block spec-step" id="s4">
+        <p class="spec-step__kicker">Step 4</p>
+        <h2>Test it before you trust it</h2>
+        <p>Ask Claude to produce one of the pieces you held back, then compare its version with yours. Wherever the output diverges from what you would have written, work out which of three things happened. The document does not cover that point, or it says the wrong thing, or it is right and Claude did not follow it. The first two you fix by editing the document. For the third, restate that one rule as a prohibition, which a model follows more reliably than a preference. In two or three of these tests I found most of what was missing from mine.</p>
+        <p>This test is about style, and whether the content is correct is the subject of Step 11.</p>
       </section>
 
       <section class="section-block spec-step" id="s5">
         <p class="spec-step__kicker">Step 5</p>
-        <h2>Add the specification and write the instructions</h2>
-        <p>Save the corrected document as a file, named for the course: <code>calculus_specification.md</code>, or whatever the equivalent is for yours. Upload it to <code>Project knowledge</code> next to the examples, along with anything else the model should have on hand: syllabus, learning goals, the table of contents of the textbook, last year&rsquo;s exams.</p>
-        <p>Now write the <code>Project instructions</code>. Four or five lines is enough.</p>
-        <div class="spec-prompt">
-          <div class="spec-prompt__head">
-            <span class="spec-prompt__label">Project instructions</span>
-            <button class="spec-copy" data-copy="prompt-instructions" type="button">Copy</button>
-          </div>
-          <p class="spec-prompt__body" id="prompt-instructions">This project produces material for [course]. Treat [course]_specification.md as the authoritative reference and consult it before drafting anything. Where these instructions and the specification disagree, the specification wins. Mark anything you are unsure of, including computations, claims, and references, and do not paper over a gap in a derivation. Propose the structure of a new piece and wait for my approval before writing it out in full.</p>
-        </div>
-        <p>Keep the instructions short and let them point at the specification. You can revise a file properly, keep the old copies, and hand one to a colleague. A text box gives you none of that. Come back to the instructions periodically, per <a href="#s10">Step 10</a>.</p>
+        <h2>Decide where each rule lives</h2>
+        <p>Claude does not read every file in the folder in every session. It reads a few files at the start of each session, and opens the rest when a job needs them or your prompt names them.</p>
+        <table class="spec-table">
+          <thead><tr><th>File</th><th>What goes in it</th><th>When Claude reads it</th></tr></thead>
+          <tbody>
+            <tr><td><code>CLAUDE.md</code></td><td>How to work in this folder, which document governs what, the order of work, and rules that hold for every job</td><td>In full, at the start of every session</td></tr>
+            <tr><td><code>MEMORY.md</code>, the index of memory notes</td><td>One line for each memory note</td><td>At the start of every session, up to its first 200 lines or 25 KB, whichever limit it reaches first</td></tr>
+            <tr><td>Memory notes</td><td>One correction or decision each, with its reason</td><td>When a job needs it</td></tr>
+            <tr><td>Skills</td><td>The steps of one routine job</td><td>Its description in every session, and the full steps when the job starts</td></tr>
+            <tr><td>Longer documents, such as the specification from Step 3, a description of your voice, the schedule and the standards</td><td>What one kind of work needs</td><td>When a job needs them or your prompt names them</td></tr>
+            <tr><td>Handoff notes</td><td>Where the last session stopped</td><td>At the start of a session, when you ask</td></tr>
+          </tbody>
+        </table>
+        <p>Put each rule in a file that Claude reads when the rule applies. A rule for every job goes in <code>CLAUDE.md</code>, and a rule for one kind of work goes in the document or skill for that work. When you ask for that work, mention the document in your prompt and check in the panel that Claude opened it, since Claude does not always follow a line in <code>CLAUDE.md</code> that tells it to read a document.</p>
       </section>
 
       <section class="section-block spec-step" id="s6">
-        <p class="spec-step__kicker">Step 6 &middot; optional</p>
-        <h2>Write a second, shorter document</h2>
-        <p>Keep this one separate from the specification: it covers how the model talks to you while you&rsquo;re working, not what it produces. By default it will spend your reading time on validation, summary, and hedging.</p>
-        <p>A skill is a named markdown file of instructions that Claude loads when the work calls for it. Mine is called <code>no-fluff-response</code>, and you can <a href="/pedagogy/specification/no-fluff-response.skill">download the packaged copy</a>. It requires the first sentence to be the answer or the correction, and it bans openings that praise the question, closing offers of further help, and narration of what the model is about to do.</p>
-        <p>Write your own version and add it as a skill. Because a skill loads only when the work appears to call for it, add a line in <code>Settings &gt; Profile</code> asking Claude to apply this one in every conversation.</p>
+        <p class="spec-step__kicker">Step 6</p>
+        <h2>Write the working notes, <code>CLAUDE.md</code></h2>
+        <p>Claude Code reads a file called <code>CLAUDE.md</code> at the top of the folder at the start of every session. In it you tell Claude how to work in this folder. Have Claude write a first version with the prompt below, then check that it covers five things.</p>
+        <ol>
+          <li>Which document governs what. The specification governs style and pedagogy, the schedule governs the calendar, and so on.</li>
+          <li>What each subfolder holds.</li>
+          <li>How to compile the documents, such as LaTeX source into PDF, and where the output goes.</li>
+          <li>The order of work for a new piece. Read the sources in the folder, check every computation, draft, read the prose against the specification, then compile the document and look at the output.</li>
+          <li>That Claude proposes each change and waits for your approval before writing it.</li>
+        </ol>
+        <div class="spec-prompt">
+          <div class="spec-prompt__head">
+            <span class="spec-prompt__label">Paste into the Claude panel</span>
+            <button class="spec-copy" data-copy="prompt-claudemd" type="button">Copy</button>
+          </div>
+          <p class="spec-prompt__body" id="prompt-claudemd">Read <code>[course]_specification.md</code> and look through this folder, then write a <code>CLAUDE.md</code> for this folder. It should say which document governs what, with the specification governing style and pedagogy, and what each subfolder holds. It should say how to compile the documents. It should give the order of work for a new piece, which is to read the sources in the folder, verify every number with a script before it enters a document, draft, check the prose against the specification, and compile the document and look at its pages. It should say that you propose each change and wait for my approval before writing it. Keep it under a page, and do not copy rules from the specification into it.</p>
+        </div>
+        <p>Keep it short. Claude reads the whole file at the start of every session. Anthropic’s documentation recommends keeping it under 200 lines, since everything Claude reads in a session shares its context window, the limited amount of text the model can take into account at once. A longer <code>CLAUDE.md</code> takes up more of that window and is followed less reliably. Two kinds of material tend to pile up in it over a quarter. Rules for one kind of work belong in the document for that work. A description of where each chapter stands goes stale as soon as you revise it, so keep it in the chapter file or in the dated handoff notes of Step 10.</p>
+        <p>Once you trust how Claude works, you can loosen the fifth item. In my folder, Claude now makes a change I asked for directly, after copying the file to an archive folder. Anything I did not ask for, it proposes first.</p>
       </section>
 
       <section class="section-block spec-step" id="s7">
         <p class="spec-step__kicker">Step 7</p>
-        <h2>Test before you trust it</h2>
-        <p>Ask the project to produce one of the pieces you held back in <a href="#s2">Step 2</a>, then compare its version against yours. Wherever the output diverges from what you would have written, work out which of three things happened: the specification says nothing about that point, says the wrong thing, or is right and the model went straight past it. The first two you fix by editing. For the third, restate the rule as a prohibition, which a model follows more reliably than a preference. Two or three of these tests found most of what was missing in mine.</p>
-        <p>The test checks style. Nothing in it, or in the specification, checks whether the content is correct. A model states a wrong claim as fluently as a right one, so read everything for accuracy before it reaches students. The line in the project instructions asking it to mark what it is unsure of helps a little, but only a little: it shows you where the model noticed a gap, and the errors that matter are the ones it made confidently. You check the content accuracy and the logic yourself.</p>
+        <h2>Put the quarter in the folder</h2>
+        <p>In backward design you start from what students will be assessed on and when, so put that in the folder as well. That means the syllabus, the schedule with its assessment dates, and for each assessment the standards or learning goals it covers, with sample questions if you publish them.</p>
+        <p>My course is graded by standards, and each standard is assessed at in-class sittings spread across the quarter. With the schedule and the standards in the folder, Claude plans from the assessment backward.</p>
+        <ul>
+          <li>When it plans a lecture, it starts from where the last one stopped and from what the next sitting will ask.</li>
+          <li>When it drafts a sitting, it checks what the lectures covered in the lecture notes themselves, not in the plan. It also checks the earlier sittings, so that the new one asks something different.</li>
+          <li>Before it proposes cutting a question from the notes, it checks whether an assessment asks for the kind of task that question practices. That rule came from my correction when it once proposed cutting such a question.</li>
+        </ul>
+        <p>After each class I tell Claude where the lecture stopped, and it records that.</p>
+        <p>Plans change during a quarter, so a note about the schedule goes out of date quickly. Mine includes a rule that such a note only records what was planned when it was written. Claude never treats it as a reason that something cannot happen. To find out what has been covered, Claude reads the current lecture notes and homework rather than the old plans.</p>
       </section>
 
       <section class="section-block spec-step" id="s8">
         <p class="spec-step__kicker">Step 8</p>
-        <h2>Correct in use</h2>
-        <p>Each time you get a draft back:</p>
-        <ol>
-          <li>Find where it falls short.</li>
-          <li>State the principle behind the shortfall rather than fixing the instance, and keep a running list of these. Say &ldquo;no question may name the theorem it is testing&rdquo; rather than &ldquo;cut the phrase mean value theorem from the hint in question 3.&rdquo;</li>
-          <li>Once the same infraction has appeared three or so times, promote the principle from that list into the specification as a numbered rule.</li>
-        </ol>
-        <p>Correcting the model in conversation doesn&rsquo;t change the uploaded file, so promote a rule by editing the specification and replacing the copy in <code>Project knowledge</code>. If the model keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it one level up, so that it names the principle underneath.</p>
+        <h2>Let memory keep your corrections</h2>
+        <p>Claude Code keeps a memory for each project, so that a correction you make in conversation is not lost when the session ends. When you correct it or settle a decision, it saves a short note as a markdown file. It also adds a one-line entry for the note to <code>MEMORY.md</code>, the index of memory notes. You can also tell it to remember something.</p>
+        <p>Between late September and November 13 my course project collected 134 notes. Ninety-three are corrections to how Claude works. Most of the rest record the state of the course, such as the decisions about each module, which questions each sitting used, and where each lecture stopped. A note gives the rule, the reason for it and how to apply it, and often quotes my words. The note below, shortened, records a correction about the fill-in blanks in my lecture notes.</p>
+        <div class="spec-prompt">
+          <div class="spec-prompt__head">
+            <span class="spec-prompt__label">Memory note, shortened</span>
+          </div>
+          <pre class="spec-prompt__body">---
+name: blanks-for-key-ideas-only
+description: A fill-in blank must ask for a key idea, never for algebra
+type: feedback
+---
+He cut a blank that asked for a sum after the integrals in it cancel:
+"it's just simplification. that should not be a question to ask this
+audience." The blank for the factor 1/16, which drives the whole error
+estimate, stays.
+
+Why: the readers are third- and fourth-year mathematics majors. A blank
+that only asks them to cancel terms is busywork, and it weakens the
+blanks that do carry an idea.
+
+How to apply: before placing a blank, ask whether the missing piece is an
+idea the argument turns on, such as a factor, a hypothesis or the reason
+a step works. If it is algebra the reader can do at a glance, write it in.</pre>
+        </div>
+        <p>The lines between the two <code>---</code> marks, the note’s frontmatter, give its name, a one-line description and its type. Claude uses the description to decide when the note is relevant.</p>
+        <div class="spec-panel spec-panel--aside">
+          <h3>A few more rules from my memory, shortened</h3>
+          <ul>
+            <li>“The length of the interval is halved at each step,” and not “Each step halves the length of the interval.” A sentence in which a machine, a method or a step does what only a person does reads as machine-written.</li>
+            <li>A section opens with the need it meets, stated in terms the reader already has, and does not describe the method until the questions have worked it out. An opening that summarizes a method the reader hasn’t met either gives the questions away or means nothing yet.</li>
+            <li>No sentence imagines what a student does or did. A hypothetical about cutting corners tells every reader they are suspected.</li>
+            <li>Sentences run at the length a mathematician would say them aloud, and every formula the argument turns on is displayed on a line of its own. Clipped short sentences read as machine-written.</li>
+            <li>A question asks students to “state the condition,” not to “name the condition.” “Name” asks for a label, and the point is the content.</li>
+          </ul>
+        </div>
+        <p>Read what it saves. The notes are files you can open, so you can fix or delete a wrong note as soon as you see it. By default Claude keeps these notes in <code>~/.claude/projects/&lt;project&gt;/memory/</code>, a hidden folder in your home directory. With one line in a settings file in the course folder, <code>.claude/settings.json</code>, you can move them into the course folder, where they show in the file list and sync to every computer you use.</p>
+        <div class="spec-prompt">
+          <div class="spec-prompt__head">
+            <span class="spec-prompt__label">Settings file</span>
+            <button class="spec-copy" data-copy="prompt-settings" type="button">Copy</button>
+          </div>
+          <pre class="spec-prompt__body" id="prompt-settings">{
+  "autoMemoryDirectory": "~/path/to/course folder/claude_memory"
+}</pre>
+        </div>
+        <p>Have each note state the principle behind a correction rather than the single case. A note should say “no question may mention the theorem it tests,” and not “cut the phrase mean value theorem from the hint in question 3.” When a note records only the single case, rewrite it or ask Claude to.</p>
       </section>
 
       <section class="section-block spec-step" id="s9">
-        <p class="spec-step__kicker">Step 9 &middot; optional</p>
-        <h2>Put the review on a schedule</h2>
-        <p>Correcting as you go catches only what you happen to notice, so I run a scheduled pass as well. <code>Claude Cowork</code> runs a saved prompt on a schedule and can read your earlier conversations. The task writes a memo of proposals and never touches the specification, so promoting a rule is still an edit you make yourself. Mine runs every two weeks, on the following standing instructions.</p>
-        <div class="spec-prompt">
-          <div class="spec-prompt__head">
-            <span class="spec-prompt__label">Standing instructions</span>
-            <button class="spec-copy" data-copy="prompt-schedule" type="button">Copy</button>
-          </div>
-          <ul class="spec-prompt__body" id="prompt-schedule">
-            <li>Read the conversations from the last fourteen days that concern the course material, and ignore the rest.</li>
-            <li>Keep only the durable items, meaning new or changed conventions, design decisions, prose constraints, and corrections I made to earlier guidance.</li>
-            <li>Check each of those against the current specification and discard anything it already covers.</li>
-            <li>Write a dated memo giving, for each surviving proposal, the target section, a one-line rationale, the conversation it came from, and old text and new text I can paste in directly.</li>
-            <li>Treat the specification as read-only, and when there is nothing worth adding, say so in one line rather than inventing something.</li>
-          </ul>
+        <p class="spec-step__kicker">Step 9</p>
+        <h2>Watch for Goodhart’s law</h2>
+        <p>Claude follows its notes eagerly, and a rule written for one situation tends to be applied to every situation that resembles it. I once gave Claude a sentence for introducing a result that follows a homework question. Later, every result in that chapter opened with the same sentence. Earlier, Claude had measured my own lecture notes and set target ranges for sentence length and pronoun use. It then revised a chapter until it fell inside nearly every range, and the chapter still read as if written for children.</p>
+        <div class="spec-panel spec-panel--aside spec-panel--key">
+          <h3>Goodhart’s law</h3>
+          <p>Claude treating a rule or a number as a target is, in my experience, the most common way this setup fails. Goodhart’s law, in Marilyn Strathern’s phrasing, says that “when a measure becomes a target, it ceases to be a good measure.” In both of my examples Claude met the target it had been given, the sentence or the ranges, and lost what the target was meant to achieve.</p>
         </div>
+        <p>I keep this in check with three habits.</p>
+        <ul>
+          <li>When you correct Claude, say whether the correction is for this one case or for every case like it. If Claude then applies it everywhere, tell it the correction was for one case, so that the note says so.</li>
+          <li>When a revision drops something you decided earlier in the same session, have Claude list your earlier instructions on that document and check the draft against the list before it shows you the next one.</li>
+          <li>When Claude keeps obeying the letter of a rule while missing its point, the rule is describing a symptom. Rewrite it to state the principle behind it.</li>
+        </ul>
       </section>
 
       <section class="section-block spec-step" id="s10">
         <p class="spec-step__kicker">Step 10</p>
-        <h2>Reorganize as it grows</h2>
-        <p>Past twenty pages or so, split the specification into three layers so you can revise one without disturbing the others.</p>
+        <h2>Turn routines into skills</h2>
+        <p>A skill is a set of instructions for one job, kept in its own folder as a file called <code>SKILL.md</code>, along with any scripts the job needs. You start a skill by typing a slash and its name, as in <code>/handoff</code>. Claude can also start one on its own when the job matches the skill’s description, unless the skill is set to start only when you type its name. Once you have walked Claude through the same job three times, have it write a skill for that job with the prompt below.</p>
+        <p>Mine are these.</p>
         <ul>
-          <li><strong>Core.</strong> Principles that hold across everything you teach.</li>
-          <li><strong>Context.</strong> The course and the term, which you swap out each time you teach it.</li>
-          <li><strong>Conventions.</strong> One section for each kind of material, worksheets, exams, solution keys.</li>
+          <li><strong><code>handoff</code>.</strong> A conversation does not carry over to the next session, or to another computer. At the end of a session, <code>/handoff</code> saves to memory any rule I gave that is not there yet. It then writes a note saying what was done, which files changed, what is waiting on me and what to do next, and adds it to <code>CURRENT.md</code>, the index of handoff notes. At the start of the next session, on whichever of my three computers I am using, <code>/handoff pickup</code> reads the newest note and tells me where we stopped.</li>
+          <li><strong><code>document-audit</code>.</strong> Before a document goes to students, Claude uses it to read each sentence against my rules and to record that the audit was done.</li>
+          <li><strong><code>no-fluff-response</code>.</strong> By default, Claude spends my reading time on validation, summary and hedging. This skill sets how it writes to me while we work. It requires the first sentence to be the answer or the correction, and it bans openings that praise the question, closing offers of further help, and narration of what the model is about to do. In <code>CLAUDE.md</code> I ask Claude to apply it to every reply. You can <a href="/pedagogy/specification/no-fluff-response.skill">download the packaged copy</a>.</li>
         </ul>
-        <p>The six sections map onto the layers. Purpose and audience becomes Context. Design principles, rejection triggers, and voice become Core. Format conventions and the annotated example become Conventions.</p>
-        <p>Once a term, do a structural pass yourself. Replace Context for the new quarter, condense the sections for kinds of material you aren&rsquo;t currently using instead of deleting them, and reconcile any rules that have changed so that two versions of the same rule don&rsquo;t both sit in the specification. This is also where you write down a design that didn&rsquo;t work in class, since the specification will keep producing it until you say otherwise.</p>
-        <p>Review the project instructions in the same sitting, since they name the current course and the drafting workflow and go stale faster than the specification does. Ask the model to propose a revised set, read the proposal line by line before accepting any of it, and look in particular for instructions that have grown into a competing copy of the specification or that still describe a course you no longer teach.</p>
+        <div class="spec-prompt">
+          <div class="spec-prompt__head">
+            <span class="spec-prompt__label">Paste into the Claude panel</span>
+            <button class="spec-copy" data-copy="prompt-skill" type="button">Copy</button>
+          </div>
+          <p class="spec-prompt__body" id="prompt-skill">Write a project skill for the job we just did, in <code>.claude/skills/[name]/SKILL.md</code>. Give the steps in order, the points where you stop and wait for my decision, and the files it reads and writes. Leave out anything that held only for this week.</p>
+        </div>
+      </section>
+
+      <section class="section-block spec-step" id="s11">
+        <p class="spec-step__kicker">Step 11</p>
+        <h2>Work in sessions, and check everything</h2>
+        <p>A session in my folder runs in the same order each time.</p>
+        <ol>
+          <li>I start with <code>/handoff pickup</code>, and Claude tells me where the last session stopped, what is waiting on me and what the note says to do next.</li>
+          <li>I ask for one piece of work, such as the next two pages of a chapter. Claude reads the chapter, the memory notes that apply and the sources in the folder, and opens the longer documents that the work needs.</li>
+          <li>Claude writes a short Python script for every computation, runs it, and keeps it in the folder, and only the checked values go into the document. My course folder has 137 of these scripts. That confirms the arithmetic, and I still judge whether the script computes the right thing.</li>
+          <li>Claude copies the file to an archive folder and edits it.</li>
+          <li>Claude reads each new sentence against my rules with the audit skill. Ask to see the audit itself, with a verdict on each sentence, since Claude can say it ran a check when it did not, and the panel shows whether it ran.</li>
+          <li>Claude compiles the PDF, renders its pages as images and looks at them for figures that collide, answer spaces too small to write in, and bad page breaks.</li>
+          <li>Claude lists every edit it made, quoting what it deleted, since a deletion is the one change you cannot see by reading the result. A report such as “Applied 13 replacements” gives you nothing to check.</li>
+          <li>I review the compiled PDF and correct what is wrong, and Claude saves the corrections to memory.</li>
+          <li>I end with <code>/handoff</code>.</li>
+        </ol>
+        <p>Following the specification does not make the content correct. A model states a wrong claim as fluently as a right one, and when asked to mark what it is unsure of, it marks only the gaps it noticed. Because Claude works on your own files, the scripts, the page check and the audit are cheap enough to run every time. You still check the content and the logic yourself.</p>
+        <p>For a long job, such as reading about a hundred past exams and textbooks before drafting an assessment, have Claude start a progress file that lists what is done and what comes next, and update it after each step. Claude can stop partway through a long job when you reach the usage limit of your plan, and anything it had not saved to a file is lost.</p>
+      </section>
+
+      <section class="section-block spec-step" id="s12">
+        <p class="spec-step__kicker">Step 12</p>
+        <h2>Consolidate at the end of the quarter</h2>
+        <p>Over a quarter, memory fills with notes that repeat each other, notes about plans that have since changed, and rules that belong in a longer document. Claude also reads only the first 200 lines or 25 KB of <code>MEMORY.md</code>, so in a long index the last entries go unread.</p>
+        <p>When the quarter ends, have Claude sort the memory with the prompt below. Durable rules about how you teach go into the longer documents, where the next course and a colleague can use them, and the few that must hold in every session go into <code>CLAUDE.md</code>. Notes about this quarter’s course go to an archive. Duplicates are merged, and you settle the conflicts.</p>
+        <div class="spec-prompt">
+          <div class="spec-prompt__head">
+            <span class="spec-prompt__label">Paste into the Claude panel</span>
+            <button class="spec-copy" data-copy="prompt-sort" type="button">Copy</button>
+          </div>
+          <p class="spec-prompt__body" id="prompt-sort">Read every note in the memory folder, and <code>CLAUDE.md</code>. Sort the notes into three groups. The first holds durable rules about how I teach or write, the second holds facts about this quarter’s course, and the third holds notes that duplicate or contradict another note. For each durable rule, give the document it belongs in, the section and the text to add, and say whether that document already covers it. List the duplicates and contradictions in pairs and propose how to settle each. Write all of this to a dated memo, and do not edit the documents or the notes.</p>
+        </div>
+        <p>Read the memo line by line before you accept any of it. Moving a rule into a longer document is an edit you approve yourself.</p>
+        <p>In the same sitting, revise the longer documents yourself. Rewrite the purpose and audience for the next course. Condense the sections for kinds of material you aren’t using instead of deleting them. Reconcile rules that have changed, so that two versions of the same rule don’t both sit in the folder. And write down any design that didn’t work in class, since Claude will keep producing it until you say otherwise.</p>
+        <p>Review <code>CLAUDE.md</code> then too. It names the current course and its files, so it goes out of date sooner than the longer documents. Look for rules that belong in a longer document, for descriptions of a quarter that is over, and for anything Claude no longer needs to read at the start of every session.</p>
+        <p>Sort what you keep into three layers, so that you can revise one without disturbing the others.</p>
+        <ul>
+          <li><strong>Core.</strong> Principles that hold across everything you teach, such as the design principles, rejection triggers and voice. They go in the longer documents you carry to the next course.</li>
+          <li><strong>Context.</strong> The course and the quarter, which you replace each time you teach it. They go in <code>CLAUDE.md</code>, the schedule and this quarter’s memory.</li>
+          <li><strong>Conventions.</strong> One set for each kind of material, such as worksheets, exams and solution keys, with its format and its example piece. They go in a document or a skill for that kind of material.</li>
+        </ul>
+        <p>Start the next course from the core and the conventions, and leave this quarter’s notes in the archive.</p>
       </section>
 
       <section class="spec-panel spec-panel--help" id="help">
         <h2>Where to get help</h2>
         <ul>
-          <li>Claude Projects, which is the workspace described in <a href="#s2">Step 2</a>, at <a href="https://support.claude.com/en/articles/9517075-what-are-projects">https://support.claude.com/en/articles/9517075-what-are-projects</a></li>
-          <li>Skills, which are used in <a href="#s6">Step 6</a>, at <a href="https://support.claude.com/en/articles/12512176-what-are-skills">https://support.claude.com/en/articles/12512176-what-are-skills</a></li>
-          <li>Projects in <code>Cowork</code>, the alternative noted in <a href="#s2">Step 2</a>, at <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork</a></li>
-          <li><code>Claude Code</code> in VS Code, the other alternative noted in <a href="#s2">Step 2</a>, at <a href="https://code.claude.com/docs/en/vs-code">https://code.claude.com/docs/en/vs-code</a></li>
-          <li>Scheduled tasks in <code>Cowork</code>, which are used in <a href="#s9">Step 9</a>, at <a href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork">https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork</a></li>
+          <li>Claude Code in VS Code, at <a href="https://code.claude.com/docs/en/vs-code">https://code.claude.com/docs/en/vs-code</a></li>
+          <li><code>CLAUDE.md</code> and memory, used in Steps 5, 6 and 8, at <a href="https://code.claude.com/docs/en/memory">https://code.claude.com/docs/en/memory</a></li>
+          <li>Skills, used in Step 10, at <a href="https://code.claude.com/docs/en/skills">https://code.claude.com/docs/en/skills</a></li>
+          <li>Permissions, which control what Claude asks before doing, at <a href="https://code.claude.com/docs/en/permissions">https://code.claude.com/docs/en/permissions</a></li>
+          <li>What Claude Code sends to Anthropic and how long it is kept, at <a href="https://code.claude.com/docs/en/data-usage">https://code.claude.com/docs/en/data-usage</a></li>
           <li>Claude training sessions and materials for UChicago accounts, at <a href="https://intranet.uchicago.edu/tools-and-resources/tools-and-applications/claude">https://intranet.uchicago.edu/tools-and-resources/tools-and-applications/claude</a></li>
-          <li>The CCTL&rsquo;s AI resources page and its one-on-one consultations for instructors, at <a href="https://teaching.uchicago.edu/resources/programming-and-resources-ai">https://teaching.uchicago.edu/resources/programming-and-resources-ai</a></li>
+          <li>The CCTL’s AI resources page and its one-on-one consultations for instructors, at <a href="https://teaching.uchicago.edu/resources/programming-and-resources-ai">https://teaching.uchicago.edu/resources/programming-and-resources-ai</a></li>
         </ul>
       </section>
 
@@ -290,8 +422,8 @@ description: A standing document that states how you build course material, writ
   // Copy buttons on the pasteable prompts, and per-step checkboxes kept in
   // localStorage. javascript/rail.js marks the step being read.
   (function () {
-    var STORE = 'teaching-spec-progress-v1';
-    var STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
+    var STORE = 'teaching-spec-progress-v2';
+    var STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12'];
 
     /* ---- copy buttons ---- */
 

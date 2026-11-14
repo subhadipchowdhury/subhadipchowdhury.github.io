@@ -1772,10 +1772,12 @@ body.style-variant-a .papers {
 	top: $header-clearance + 1rem;
 }
 
-// The tallest rail, the guide's, runs 561px. Below that plus its top there is
-// no room to pin it, so it reverts to ordinary content and scrolls with the
-// page rather than growing a scrollbar of its own.
-@media (max-height: 44rem) {
+// The tallest rail, the guide's, ran 561px with twelve entries; the second
+// version has fourteen, about 650px by the same measure (not remeasured).
+// Below that plus its top there is no room to pin it, so it reverts to
+// ordinary content and scrolls with the page rather than growing a scrollbar
+// of its own.
+@media (max-height: 48rem) {
 	.rail--side {
 		position: static;
 	}
@@ -1834,10 +1836,11 @@ body.has-rail .rail--side {
 
 /* ========================================================================
    SPECIFICATION GUIDE - the how-to served at
-   /pedagogy/specification/how-to-guide/
+   /pedagogy/specification/how-to-guide/, and its first version at
+   /pedagogy/specification/how-to-guide-v1/, which share these rules
 
-   A ten-step handout with a sticky contents rail, pasteable prompt blocks
-   and per-step checkboxes. Shaped like the CV section above: one root
+   A step-by-step handout with a sticky contents rail, pasteable prompt
+   blocks and per-step checkboxes. Shaped like the CV section above: one root
    class, a private --spec-* token layer, and everything themeable pulled
    from the global tokens so the page follows the dark-mode toggle.
 
@@ -1866,6 +1869,17 @@ body.has-rail .rail--side {
 	grid-template-columns: minmax(0, 1fr) minmax(0, 3.25fr);
 	gap: 0 2.75rem;
 	align-items: start;
+}
+
+// The guide's card widens to the 1180px the section pages get (see RAIL),
+// at the same breakpoint. Its own .spec-shell grid stays inside the card, so
+// it does not take body.has-rail, which would make the card the grid. Both
+// versions are listed by the body class the layout builds from the title.
+@media screen and (min-width: 76rem) {
+	body.page-writing-a-teaching-specification .main-wrapper,
+	body.page-building-a-course-with-a-teaching-specification .main-wrapper {
+		max-width: 1180px;
+	}
 }
 
 // The guide's look for the rail: a checkbox beside each step, sans entries,
@@ -2058,6 +2072,11 @@ body.has-rail .rail--side {
 	margin: 0;
 }
 
+// The second version's lede runs to several paragraphs.
+.spec-lede .spec-lede__text + .spec-lede__text {
+	margin-top: 1rem;
+}
+
 .spec-lede .spec-lede__disclaimer {
 	margin: 0.95rem 0 0;
 	font-size: 0.85rem;
@@ -2146,6 +2165,48 @@ body.has-rail .rail--side {
 	overflow-wrap: anywhere;
 }
 
+// The box that carries the guide's main warning (Goodhart's law, Step 9):
+// an accent heading instead of the muted italic of the other boxes.
+.spec-panel--key h3 {
+	font-style: normal;
+	color: var(--accent);
+}
+
+// ---- tables ----
+
+// The site's table rule bolds and centres every first cell, and Cayman makes
+// a table a block that keeps its content width; neither suits a table of
+// sentences.
+.spec-body table.spec-table {
+	display: table;
+	width: 100%;
+	margin: 0 0 1.2rem;
+	padding-top: 0;
+	font-size: 0.95rem;
+	line-height: 1.45;
+	word-break: normal;
+}
+
+.spec-body table.spec-table th,
+.spec-body table.spec-table td {
+	padding: 0.55rem 0.75rem;
+	text-align: left;
+	vertical-align: top;
+	border: 0;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.spec-body table.spec-table th {
+	font-family: var(--spec-semi);
+	font-weight: normal;
+	color: var(--color-muted);
+}
+
+.spec-body table.spec-table td:first-child {
+	font-weight: normal;
+	text-align: left;
+}
+
 // ---- pasteable prompts ----
 
 .spec-prompt {
@@ -2216,6 +2277,18 @@ body.has-rail .rail--side {
 
 .spec-prompt ul.spec-prompt__body li {
 	line-height: 1.6;
+}
+
+// A file shown in a prompt box, such as a memory note or a settings line:
+// wrapped rather than scrolled, in the box's own type, without the theme's
+// pre styling.
+.spec-prompt pre.spec-prompt__body {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	color: inherit;
 }
 
 // ---- vague / usable comparison ----
@@ -2295,17 +2368,21 @@ body.has-rail .rail--side {
 	// Scoped to this page's body class, because every other page still wants
 	// its chrome and its card on paper. The matching html rule cannot be scoped
 	// that way and stays inline on the page.
-	body.page-writing-a-teaching-specification {
+	body.page-writing-a-teaching-specification,
+	body.page-building-a-course-with-a-teaching-specification {
 		background: #fff;
 	}
 
 	body.page-writing-a-teaching-specification .site-header,
-	body.page-writing-a-teaching-specification .site-footer {
+	body.page-writing-a-teaching-specification .site-footer,
+	body.page-building-a-course-with-a-teaching-specification .site-header,
+	body.page-building-a-course-with-a-teaching-specification .site-footer {
 		display: none;
 	}
 
 	// Flatten the card so the page background does not print as a grey slab.
-	body.page-writing-a-teaching-specification .main-wrapper {
+	body.page-writing-a-teaching-specification .main-wrapper,
+	body.page-building-a-course-with-a-teaching-specification .main-wrapper {
 		max-width: none;
 		margin: 0;
 		padding: 0;
@@ -2343,7 +2420,8 @@ body.has-rail .rail--side {
 
 	.spec-prompt,
 	.spec-compare__pair,
-	.spec-panel--aside {
+	.spec-panel--aside,
+	.spec-table tr {
 		break-inside: avoid;
 	}
 
