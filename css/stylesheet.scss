@@ -2172,6 +2172,47 @@ body.has-rail .rail--side {
 	color: var(--accent);
 }
 
+// "What changed since the first version", closed by default: its heading is
+// the summary, with the accent chevron of .abstract-toggle turned when open.
+.spec-changes > summary {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	cursor: pointer;
+	list-style: none;
+}
+
+.spec-changes > summary::-webkit-details-marker {
+	display: none;
+}
+
+.spec-changes > summary h2 {
+	margin: 0;
+}
+
+.spec-changes > summary::after {
+	content: '\203A';
+	flex: none;
+	font-size: 1.5rem;
+	line-height: 1;
+	color: var(--accent);
+	transition: transform 0.25s ease;
+}
+
+.spec-changes[open] > summary {
+	margin-bottom: 0.85rem;
+}
+
+.spec-changes[open] > summary::after {
+	transform: rotate(90deg);
+}
+
+.spec-changes > summary:focus-visible {
+	outline: 2px solid var(--focus-ring);
+	outline-offset: 4px;
+}
+
 // ---- tables ----
 
 // The site's table rule bolds and centres every first cell, and Cayman makes

@@ -105,8 +105,8 @@ description: How I keep a teaching specification as a set of files in the folder
         <p class="spec-print-source">The web version at subhadipchowdhury.github.io/pedagogy/specification/how-to-guide/ is the copy I keep current, and there each prompt is a copy-to-clipboard block. This PDF is a snapshot of {{ site.time | date: "%B %-d, %Y" }} and won’t be updated. Licensed CC BY-NC-SA 4.0.</p>
       </div>
 
-      <section class="spec-panel" id="changes">
-        <h2>What changed since the first version</h2>
+      <details class="spec-panel spec-changes" id="changes">
+        <summary><h2>What changed since the first version</h2></summary>
         <p><a href="/pedagogy/specification/how-to-guide-v1/">The first version of this guide</a>, from August 2026, kept the specification as a single document in a Claude Projects workspace in the browser.</p>
         <table class="spec-table">
           <thead><tr><th>First version</th><th>This version</th></tr></thead>
@@ -119,7 +119,7 @@ description: How I keep a teaching specification as a set of files in the folder
             <tr><td>One skill, for how Claude talks to you</td><td>Several skills, one for each routine job</td></tr>
           </tbody>
         </table>
-      </section>
+      </details>
 
       <section class="section-block spec-step" id="s1">
         <p class="spec-step__kicker">Step 1</p>
@@ -468,6 +468,22 @@ a step works. If it is algebra the reader can do at a glance, write it in.</pre>
         }
       });
     });
+
+    /* ---- the "What changed" panel, closed until asked for ---- */
+
+    // It opens when the rail entry is clicked, when the page is reached with
+    // #changes, and before printing, since a closed <details> prints closed.
+    var changes = document.getElementById('changes');
+    if (changes) {
+      var openChanges = function () { changes.open = true; };
+      Array.prototype.forEach.call(document.querySelectorAll('a[href="#changes"]'), function (a) {
+        a.addEventListener('click', openChanges);
+      });
+      var openIfTargeted = function () { if (location.hash === '#changes') openChanges(); };
+      window.addEventListener('hashchange', openIfTargeted);
+      window.addEventListener('beforeprint', openChanges);
+      openIfTargeted();
+    }
 
     /* ---- step progress ---- */
 
