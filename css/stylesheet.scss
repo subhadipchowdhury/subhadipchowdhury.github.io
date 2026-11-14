@@ -1871,13 +1871,14 @@ body.has-rail .rail--side {
 	align-items: start;
 }
 
-// The guide's card widens to the 1180px the section pages get (see RAIL),
-// at the same breakpoint. Its own .spec-shell grid stays inside the card, so
-// it does not take body.has-rail, which would make the card the grid. Both
-// versions are listed by the body class the layout builds from the title.
+// The current guide takes the shared rail (rail: true), and with it the
+// 1180px card of the section pages. The first version keeps its own
+// .spec-shell grid and checklist inside the card, so it does not take
+// body.has-rail, which would make the card the grid; it gets the same width
+// here, at the same breakpoint, by the body class the layout builds from its
+// title.
 @media screen and (min-width: 76rem) {
-	body.page-writing-a-teaching-specification .main-wrapper,
-	body.page-building-a-course-with-a-teaching-specification .main-wrapper {
+	body.page-writing-a-teaching-specification .main-wrapper {
 		max-width: 1180px;
 	}
 }

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Building a Course With a Teaching Specification
+rail: true
 description: How I keep a teaching specification as a set of files in the folder where a course lives, with Claude Code working in it, and keep it current over a quarter. A companion to the Teaching Matters column.
 ---
 
@@ -20,59 +21,31 @@ description: How I keep a teaching specification as a set of files in the folder
   }
 </style>
 
+{% capture entries %}
+<ul>
+  <li><a href="#changes">What changed since the first version</a></li>
+  <li><a href="#s1">1. Keep the course in one folder</a></li>
+  <li><a href="#s2">2. Install Claude Code and open the folder</a></li>
+  <li><a href="#s3">3. Write down how you teach</a></li>
+  <li><a href="#s4">4. Test it before you trust it</a></li>
+  <li><a href="#s5">5. Decide where each rule lives</a></li>
+  <li><a href="#s6">6. Write the working notes, CLAUDE.md</a></li>
+  <li><a href="#s7">7. Put the quarter in the folder</a></li>
+  <li><a href="#s8">8. Let memory keep your corrections</a></li>
+  <li><a href="#s9">9. Watch for Goodhart’s law</a></li>
+  <li><a href="#s10">10. Turn routines into skills</a></li>
+  <li><a href="#s11">11. Work in sessions, and check everything</a></li>
+  <li><a href="#s12">12. Consolidate at the end of the quarter</a></li>
+  <li><a href="#help">Where to get help</a></li>
+</ul>
+{% endcapture %}
+
+{% include rail.html variant="side" entries=entries %}
+
 <div class="spec-guide">
 
   {% include page_title.html title=page.title %}
-
-  <div class="spec-shell">
-
-    <nav class="rail rail--side rail--checklist" aria-label="Contents">
-      <p class="rail__label">Contents</p>
-      <ol>
-        <li class="is-aside">
-          <a href="#changes">What changed since the first version</a>
-        </li>
-        <li>
-          <a href="#s1">1. Keep the course in one folder</a>
-        </li>
-        <li>
-          <a href="#s2">2. Install Claude Code and open the folder</a>
-        </li>
-        <li>
-          <a href="#s3">3. Write down how you teach</a>
-        </li>
-        <li>
-          <a href="#s4">4. Test it before you trust it</a>
-        </li>
-        <li>
-          <a href="#s5">5. Decide where each rule lives</a>
-        </li>
-        <li>
-          <a href="#s6">6. Write the working notes, CLAUDE.md</a>
-        </li>
-        <li>
-          <a href="#s7">7. Put the quarter in the folder</a>
-        </li>
-        <li>
-          <a href="#s8">8. Let memory keep your corrections</a>
-        </li>
-        <li>
-          <a href="#s9">9. Watch for Goodhart’s law</a>
-        </li>
-        <li>
-          <a href="#s10">10. Turn routines into skills</a>
-        </li>
-        <li>
-          <a href="#s11">11. Work in sessions, and check everything</a>
-        </li>
-        <li>
-          <a href="#s12">12. Consolidate at the end of the quarter</a>
-        </li>
-        <li class="is-aside">
-          <a href="#help">Where to get help</a>
-        </li>
-      </ol>
-    </nav>
+  {% include rail.html variant="top" entries=entries %}
 
     <div class="spec-body">
 
@@ -397,7 +370,6 @@ a step works. If it is algebra the reader can do at a glance, write it in.</pre>
       </section>
 
     </div>
-  </div>
 </div>
 
 <script>
