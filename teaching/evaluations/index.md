@@ -2,7 +2,7 @@
 layout: default
 title: Student Evaluations
 parentnav: Teaching
-subnav_weight: 23
+subnav_weight: 22
 blurb: Numerical summaries of my past course evaluations, semester by semester.
 description: Semester-by-semester teaching evaluation summaries.
 ---

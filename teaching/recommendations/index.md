@@ -2,7 +2,7 @@
 layout: default
 title: Letter of Recommendation
 parentnav: Teaching
-subnav_weight: 22
+subnav_weight: 21
 blurb: Read this before you ask me to be a reference or to write you a letter.
 description: Request guidelines and process for recommendation letters.
 ---
