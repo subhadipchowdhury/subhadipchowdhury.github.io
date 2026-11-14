@@ -1127,10 +1127,10 @@ body.style-variant-a .papers {
    PAGE CARDS - the pages under a section page (_includes/page_cards.html),
    on Teaching and Pedagogy
 
-   Three equal tracks, so three or six cards fill their rows. Below 680px it
-   goes straight to one track: two would leave the third card alone. The
-   title link's ::after covers the card, so the whole card is the link while
-   the link's text stays the title alone.
+   One track on a phone. Above 680px, three equal tracks, or two when there
+   are two or four cards (page-cards--N, from the include), so no row ends
+   in an empty slot. The title link's ::after covers the card, so the whole
+   card is the link while the link's text stays the title alone.
    ======================================================================== */
 
 .page-cards {
@@ -1138,11 +1138,18 @@ body.style-variant-a .papers {
 	padding: 0;
 	margin: 0.35rem 0;
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: minmax(0, 1fr);
 	gap: 0.6rem;
+}
 
-	@media (max-width: 680px) {
-		grid-template-columns: minmax(0, 1fr);
+@media (min-width: 681px) {
+	.page-cards {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.page-cards--2,
+	.page-cards--4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 

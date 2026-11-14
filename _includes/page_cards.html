@@ -5,12 +5,13 @@
   PAGE CARDS in css/stylesheet.scss.
 
   markdown="0" keeps kramdown (parse_block_html in _config.yml) from reading
-  the cards as Markdown.
+  the cards as Markdown. The page-cards--N class tells the stylesheet how
+  many cards there are, so it can pick the number of tracks.
 
   {% include page_cards.html parent=page.title %}
 {% endcomment %}
 {%- assign cards = site.html_pages | where: "parentnav", include.parent | sort: "subnav_weight" -%}
-<ul class="page-cards" markdown="0">
+<ul class="page-cards page-cards--{{ cards.size }}" markdown="0">
 {%- for card in cards %}
 <li class="page-card">
 <a class="page-card__link" href="{{ card.url | relative_url }}">{{ card.title }}</a>
