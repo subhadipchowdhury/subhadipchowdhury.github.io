@@ -11,6 +11,10 @@ description: A dashboard for courses graded by standards that turns Gradescope e
   (SCREENSHOTS) shows the one that matches the site's theme. Both versions are
   of the invented demo course; the light ones were captured on 2026-11-13 from
   the demo copy, the dark ones the same evening at the same window size.
+
+  Each figure carries markdown="0". _config.yml sets parse_block_html, and
+  without the attribute kramdown reads the caption as a paragraph that swallows
+  </figcaption> and </figure>, nesting every later figure inside the one before.
 {% endcomment %}
 
 {% include page_title.html title=page.title %}
@@ -25,25 +29,25 @@ If you grade by standards and use Gradescope, it should work for your course too
 
 The screenshots below show an invented course with made-up students.
 
-<figure class="shot">
+<figure class="shot" markdown="0">
   <img class="shot__light" src="/teaching/gradebook/summary.png" width="1600" height="1337" loading="lazy" alt="The Summary tab, with a bar for each standard showing how many students have mastered it and a chart of the median number of standards mastered after each assessment.">
   <img class="shot__dark" src="/teaching/gradebook/summary-dark.png" width="1600" height="1337" loading="lazy" alt="The Summary tab, with a bar for each standard showing how many students have mastered it and a chart of the median number of standards mastered after each assessment.">
   <figcaption>The summary page.</figcaption>
 </figure>
 
-<figure class="shot">
+<figure class="shot" markdown="0">
   <img class="shot__light" src="/teaching/gradebook/students.png" width="1600" height="1061" loading="lazy" alt="The Students tab, with one row per student giving the base grade, the number of standards mastered, the homework percentage and the mark on each standard.">
   <img class="shot__dark" src="/teaching/gradebook/students-dark.png" width="1600" height="1061" loading="lazy" alt="The Students tab, with one row per student giving the base grade, the number of standards mastered, the homework percentage and the mark on each standard.">
   <figcaption>One row per student, with the base grade from the checklist.</figcaption>
 </figure>
 
-<figure class="shot">
+<figure class="shot" markdown="0">
   <img class="shot__light" src="/teaching/gradebook/student-record.png" width="1600" height="937" loading="lazy" alt="One student's record, giving the standards mastered, homework, pending revisions and base grade, and then each standard's marks at every assessment in order.">
   <img class="shot__dark" src="/teaching/gradebook/student-record-dark.png" width="1600" height="937" loading="lazy" alt="One student's record, giving the standards mastered, homework, pending revisions and base grade, and then each standard's marks at every assessment in order.">
-  <figcaption>One student's record, with each standard's marks in order.</figcaption>
+  <figcaption>One student’s record, with each standard’s marks in order.</figcaption>
 </figure>
 
-<figure class="shot shot--phone">
+<figure class="shot shot--phone" markdown="0">
   <img class="shot__light" src="/teaching/gradebook/phone.png" width="720" height="1599" loading="lazy" alt="The read-only phone page, with the same summary laid out for a phone screen.">
   <img class="shot__dark" src="/teaching/gradebook/phone-dark.png" width="720" height="1599" loading="lazy" alt="The read-only phone page, with the same summary laid out for a phone screen.">
   <figcaption>The phone page.</figcaption>
